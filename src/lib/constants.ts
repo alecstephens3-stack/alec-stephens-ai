@@ -22,8 +22,8 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const STATS: Stat[] = [
-  { value: "50+", label: "Automations Delivered" },
-  { value: "500+", label: "Hours Saved for Clients" },
+  { value: "20+", label: "Automations Delivered" },
+  { value: "100+", label: "Hours Saved for Clients" },
   { value: "10+", label: "Platforms Integrated" },
 ];
 
@@ -137,7 +137,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Document Processing Automation",
     description:
-      "Built for a client who was spending hours manually sorting and extracting data from business documents. The automation reads incoming documents, classifies them, pulls out the key information, and routes everything to the right place.",
+      "Built for a client in the medical industry who was spending hours manually sorting and extracting data from patient and compliance documents. The automation reads incoming documents, classifies them, pulls out the key information, and routes everything to the right department.",
     tags: ["n8n", "Claude API", "OCR", "Webhooks"],
     metric: "85%",
     metricLabel: "Faster Processing",
@@ -145,7 +145,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Customer Communication Automation",
     description:
-      "An automation system built for a client that handles incoming customer inquiries across multiple channels. AI generates draft responses, routes messages to the right team member, and tracks response times. Cut average reply time by 3x.",
+      "An automation system built for a civil engineering firm that handles incoming client inquiries across multiple channels. AI generates draft responses, routes messages to the right project manager, and tracks response times. Cut average reply time by 3x.",
     tags: ["n8n", "Make.com", "Claude API", "APIs"],
     metric: "3x",
     metricLabel: "Faster Response Time",
