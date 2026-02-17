@@ -39,6 +39,12 @@ export function ContactCTA() {
               </h2>
 
               <p className="mt-6 max-w-md text-lg text-warm-gray">
+                Every engagement starts with a free 30-minute discovery call.
+                Projects typically start at{" "}
+                <span className="font-semibold text-white">$1,500</span>.
+              </p>
+
+              <p className="mt-4 max-w-md text-warm-gray">
                 Fill out the form and I&apos;ll get back to you within 24
                 hours. Or if you prefer, shoot me an email directly.
               </p>
