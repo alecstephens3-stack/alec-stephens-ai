@@ -80,27 +80,38 @@ export function Services() {
         <div className="grid gap-6 md:grid-cols-2">
           {SERVICES.map((service, index) => (
             <AnimateOnScroll key={service.title} delay={index * 100}>
-              <Card className="h-full">
-                <div className="mb-4 text-terracotta">
-                  {icons[service.icon]}
+              <Card className="relative h-full overflow-hidden">
+                {/* Background number watermark */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-3 right-4 font-heading font-bold leading-none text-black/[0.04]"
+                  style={{ fontSize: "5rem" }}
+                >
+                  {String(index + 1).padStart(2, "0")}
                 </div>
-                <h3 className="font-heading text-xl font-semibold text-black">
-                  {service.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-warm-gray">
-                  {service.description}
-                </p>
-                <ul className="mt-4 space-y-2">
-                  {service.capabilities.map((cap) => (
-                    <li
-                      key={cap}
-                      className="flex items-center gap-2 text-sm text-warm-gray"
-                    >
-                      <div className="h-1 w-1 rounded-full bg-terracotta" />
-                      {cap}
-                    </li>
-                  ))}
-                </ul>
+
+                <div className="relative z-10">
+                  <div className="mb-5 text-terracotta">
+                    {icons[service.icon]}
+                  </div>
+                  <h3 className="font-heading text-xl font-bold text-black">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 leading-relaxed text-warm-gray">
+                    {service.description}
+                  </p>
+                  <ul className="mt-5 space-y-2">
+                    {service.capabilities.map((cap) => (
+                      <li
+                        key={cap}
+                        className="flex items-center gap-2 text-sm text-warm-gray"
+                      >
+                        <div className="h-1 w-1 shrink-0 rounded-full bg-terracotta" />
+                        {cap}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </Card>
             </AnimateOnScroll>
           ))}

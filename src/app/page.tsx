@@ -4,7 +4,6 @@ import { Services } from "@/components/sections/services";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { CaseStudies } from "@/components/sections/case-studies";
 import { About } from "@/components/sections/about";
-import { Testimonials } from "@/components/sections/testimonials";
 import { ContactCTA } from "@/components/sections/contact-cta";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT_EMAIL } from "@/lib/constants";
 
@@ -51,7 +50,6 @@ export default function Home() {
       <HowItWorks />
       <CaseStudies />
       <About />
-      <Testimonials />
       <ContactCTA />
     </>
   );

@@ -2,8 +2,17 @@ import { NAV_LINKS, SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="bg-black py-16" aria-label="Site footer">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <footer className="relative overflow-hidden bg-black py-16" aria-label="Site footer">
+      {/* Decorative background wordmark */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-heading font-bold leading-none text-white/[0.025]"
+        style={{ fontSize: "clamp(6rem, 18vw, 16rem)" }}
+      >
+        AIOS
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             <a
@@ -19,7 +28,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-terracotta">
               Navigation
             </h3>
             <nav
@@ -39,7 +48,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-terracotta">
               Connect
             </h3>
             <div className="mt-4 flex flex-col gap-3">
