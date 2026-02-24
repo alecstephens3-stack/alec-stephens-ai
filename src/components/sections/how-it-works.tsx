@@ -16,15 +16,29 @@ export function HowItWorks() {
           {PROCESS_STEPS.map((step, index) => (
             <AnimateOnScroll key={step.number} delay={index * 150}>
               <div className="relative text-center md:text-left">
-                {/* Connector line (hidden on mobile, shown on md+) */}
+                {/* Connector line */}
                 {index < PROCESS_STEPS.length - 1 && (
-                  <div className="absolute top-8 left-[60%] hidden h-0.5 w-[calc(100%-20%)] bg-border md:block" />
+                  <div className="absolute top-10 left-[58%] hidden h-px w-[calc(100%-18%)] bg-border md:block" />
                 )}
 
-                <div className="font-heading text-5xl font-bold text-terracotta/20">
+                {/* Large faded step number */}
+                <div
+                  aria-hidden="true"
+                  className="font-heading font-bold leading-none text-black/[0.055]"
+                  style={{ fontSize: "clamp(5rem, 9vw, 7rem)" }}
+                >
                   {step.number}
                 </div>
-                <h3 className="mt-2 font-heading text-xl font-semibold text-black">
+
+                {/* Small indicator dot */}
+                <div className="mt-1 mb-3 flex items-center gap-2 justify-center md:justify-start">
+                  <div className="h-1.5 w-1.5 rounded-full bg-terracotta" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-terracotta">
+                    Step {step.number}
+                  </span>
+                </div>
+
+                <h3 className="font-heading text-xl font-bold text-black">
                   {step.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-warm-gray">

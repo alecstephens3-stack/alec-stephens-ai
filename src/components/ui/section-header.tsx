@@ -23,30 +23,34 @@ export function SectionHeader({
         align === "left" && "text-left"
       )}
     >
+      {/* Label with double rule */}
       <div
         className={cn(
-          "mb-4 flex items-center gap-3",
+          "mb-6 flex items-center gap-3",
           align === "center" && "justify-center"
         )}
       >
-        <div className="h-1 w-8 rounded-full bg-terracotta" />
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">
+        <span className="block h-px w-6 bg-terracotta" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-terracotta">
           {label}
         </span>
+        <span className="block h-px w-6 bg-terracotta" />
       </div>
+
       <h2
         className={cn(
-          "font-heading text-3xl font-bold md:text-4xl lg:text-5xl",
+          "font-heading font-bold leading-tight tracking-tight",
+          "text-4xl md:text-5xl lg:text-[3.5rem]",
           light ? "text-white" : "text-black"
         )}
       >
         {heading}
       </h2>
+
       {description && (
         <p
           className={cn(
-            "mt-4 max-w-2xl text-lg",
-            light ? "text-warm-gray" : "text-warm-gray",
+            "mt-5 max-w-2xl text-lg leading-relaxed text-warm-gray",
             align === "center" && "mx-auto"
           )}
         >
