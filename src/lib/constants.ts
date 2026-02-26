@@ -149,6 +149,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ["TypeScript", "PostgreSQL", "Prisma", "Python", "Telegram", "Claude API", "n8n", "Groq", "Notion API", "Vercel"],
     metric: "10hrs",
     metricLabel: "Ops Automated Per Week",
+    images: [
+      { src: "/images/case-studies/aios/telegram-chat.png", alt: "Conversational AI assistant (Charlie) responding to natural language queries via Telegram" },
+    ],
   },
 ];
 
