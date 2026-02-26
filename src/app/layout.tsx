@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, DM_Sans } from "next/font/google";
 import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
 
@@ -71,7 +70,6 @@ export default function RootLayout({
         </a>
         <Header />
         <main id="main-content">{children}</main>
-        <Footer />
       </body>
     </html>
   );

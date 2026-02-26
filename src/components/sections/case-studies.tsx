@@ -85,8 +85,8 @@ export function CaseStudies() {
 
                   {/* Image gallery */}
                   {study.images && study.images.length > 0 && (
-                    <div className="mt-6 lg:mt-0 lg:w-[55%] shrink-0">
-                      <div className="grid grid-cols-2 gap-2">
+                    <div className={`mt-6 lg:mt-0 shrink-0 ${study.images.length === 1 ? "lg:w-[42%]" : "lg:w-[55%]"}`}>
+                      <div className={`grid gap-2 ${study.images.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
                         {study.images.map((image, imgIndex) => (
                           <button
                             key={image.src}
@@ -98,8 +98,8 @@ export function CaseStudies() {
                               src={image.src}
                               alt={image.alt}
                               fill
-                              className="object-cover transition-transform duration-300 group-hover:scale-105"
-                              sizes="(max-width: 1024px) 50vw, 280px"
+                              className={`transition-transform duration-300 group-hover:scale-105 ${study.images!.length === 1 ? "object-contain" : "object-cover"}`}
+                              sizes="(max-width: 1024px) 50vw, 400px"
                             />
                             <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
                             <div className="absolute bottom-2 right-2 rounded-full bg-black/60 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">

@@ -145,7 +145,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "AI Operating System (AIOS)",
     description:
-      "A full-stack AI command center built to run a solo consulting business autonomously. A live PostgreSQL data layer (synced from Notion) feeds a conversational Telegram bot powered by Claude. The bot handles natural language queries, creates tasks, transcribes voice notes via Groq Whisper, generates formatted PDF morning briefs, and runs a YouTube research agent that pulls transcripts and synthesizes insights. Scheduled via launchd for a daily 9am JST briefing — no manual input required.",
+      "A full-stack AI command center I built to run my consulting business. DataOS is the data backbone, a PostgreSQL database synced from Notion that tracks clients, revenue, projects, and tasks in real time. Contextos is the business knowledge layer, keeping the AI grounded in strategy and context. Together they feed Charlie, a conversational Telegram bot built on Claude that answers questions about the business, creates tasks, transcribes voice notes via Groq Whisper, generates PDF morning briefs, and pulls YouTube transcripts for research. Runs automatically every morning with no manual input required.",
     tags: ["TypeScript", "PostgreSQL", "Prisma", "Python", "Telegram", "Claude API", "n8n", "Groq", "Notion API", "Vercel"],
     metric: "10hrs",
     metricLabel: "Ops Automated Per Week",
