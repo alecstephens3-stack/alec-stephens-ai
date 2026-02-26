@@ -5,8 +5,14 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function About() {
   return (
-    <section id="about" className="bg-deep-earth py-24" aria-label="About">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative overflow-hidden bg-deep-earth py-24" aria-label="About">
+      {/* Ambient terracotta glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-32 -right-32 z-0 h-[600px] w-[600px]"
+        style={{ background: "radial-gradient(circle, rgba(220,104,67,0.07) 0%, transparent 65%)" }}
+      />
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           label="About"
           heading="Built by Someone Who Gets It"

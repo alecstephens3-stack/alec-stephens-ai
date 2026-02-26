@@ -50,7 +50,8 @@ export function SectionHeader({
       {description && (
         <p
           className={cn(
-            "mt-5 max-w-2xl text-lg leading-relaxed text-warm-gray",
+            "mt-5 max-w-2xl text-lg leading-relaxed",
+            light ? "text-white/55" : "text-warm-gray",
             align === "center" && "mx-auto"
           )}
         >
