@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useShaderBackground } from "@/components/ui/animated-shader-hero";
+import { Typewriter } from "@/components/ui/typewriter";
 
 const TICKER_ITEMS = [
   "n8n",
@@ -84,7 +85,14 @@ export function Hero() {
               className="text-terracotta"
               style={{ fontStyle: "italic", letterSpacing: "-0.01em" }}
             >
-              Minutes.
+              <Typewriter
+                text={["Minutes.", "Results.", "Automations.", "Revenue."]}
+                speed={60}
+                deleteSpeed={35}
+                waitTime={2200}
+                cursorChar="_"
+                cursorClassName="ml-0.5"
+              />
             </em>
           </h1>
 
