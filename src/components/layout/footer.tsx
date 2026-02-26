@@ -6,10 +6,10 @@ export function Footer() {
       {/* Decorative background wordmark */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-heading font-bold leading-none text-white/[0.025]"
+        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-heading font-bold leading-none"
         style={{ fontSize: "clamp(6rem, 18vw, 16rem)" }}
       >
-        AIOS
+        <span className="text-white/[0.025]">Alec Stephens</span><span className="text-terracotta/30">.</span>
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

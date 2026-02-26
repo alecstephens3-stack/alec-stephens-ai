@@ -143,12 +143,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     metricLabel: "Faster Processing",
   },
   {
-    title: "Customer Communication Automation",
+    title: "AI Operating System (AIOS)",
     description:
-      "An automation system built for a civil engineering firm that handles incoming client inquiries across multiple channels. AI generates draft responses, routes messages to the right project manager, and tracks response times. Cut average reply time by 3x.",
-    tags: ["n8n", "Make.com", "Claude API", "APIs"],
-    metric: "3x",
-    metricLabel: "Faster Response Time",
+      "A full-stack AI command center built to run a solo consulting business autonomously. A live PostgreSQL data layer (synced from Notion) feeds a conversational Telegram bot powered by Claude. The bot handles natural language queries, creates tasks, transcribes voice notes via Groq Whisper, generates formatted PDF morning briefs, and runs a YouTube research agent that pulls transcripts and synthesizes insights. Scheduled via launchd for a daily 9am JST briefing — no manual input required.",
+    tags: ["TypeScript", "PostgreSQL", "Prisma", "Python", "Telegram", "Claude API", "n8n", "Groq", "Notion API", "Vercel"],
+    metric: "10hrs",
+    metricLabel: "Ops Automated Per Week",
   },
 ];
 
