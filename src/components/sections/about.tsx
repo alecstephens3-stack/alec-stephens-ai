@@ -13,10 +13,10 @@ export function About() {
               style={{ width: 180, height: 220 }}
             >
               <Image
-                src="/images/headshot.jpg"
+                src="/images/headshot.png"
                 alt="Alec Stephens"
                 fill
-                className="object-cover object-[60%_20%]"
+                className="object-cover object-center"
                 sizes="180px"
               />
             </div>

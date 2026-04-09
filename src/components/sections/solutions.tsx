@@ -33,7 +33,7 @@ export function Solutions() {
   return (
     <section
       id="solutions"
-      className="py-28 md:py-40"
+      className="pt-12 pb-28 md:pt-16 md:pb-40"
       aria-label="Solutions"
     >
       <div className="mx-auto max-w-5xl px-6">
