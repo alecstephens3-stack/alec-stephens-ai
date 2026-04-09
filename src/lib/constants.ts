@@ -1,10 +1,7 @@
 import type {
-  Service,
   CaseStudy,
-  Testimonial,
-  ProcessStep,
-  Stat,
   NavLink,
+  Solution,
 } from "@/types";
 
 export const SITE_NAME = "Alec Stephens AI Solutions";
@@ -14,180 +11,179 @@ export const SITE_DESCRIPTION =
   "AI automation consultant helping businesses in the USA, Japan, and around the world save time with n8n workflows, Claude API integrations, and custom automation solutions.";
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
+  { label: "Solutions", href: "#solutions" },
   { label: "Work", href: "#work" },
+  { label: "Services", href: "#services" },
+  { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
 ];
 
-export const STATS: Stat[] = [
-  { value: "20+", label: "Automations Delivered" },
-  { value: "100+", label: "Hours Saved for Clients" },
-  { value: "10+", label: "Platforms Integrated" },
-];
-
-export const SERVICES: Service[] = [
+export const SERVICES = [
+  {
+    title: "AI Strategy & Audits",
+    description:
+      "I analyze your operations, find the highest-ROI automation opportunities, and deliver a prioritized roadmap with clear cost savings.",
+    details: ["Operations analysis", "Cost-of-status-quo breakdown", "Prioritized AI roadmap", "Branded PDF deliverable"],
+  },
   {
     title: "AI Workflow Automation",
     description:
-      "I build custom n8n and Make.com workflows that take repetitive tasks off your plate. Data processing, notifications, API orchestration, all running reliably in the background.",
-    capabilities: [
-      "n8n & Make.com workflows",
-      "Data pipeline automation",
-      "API orchestration",
-      "Scheduled processing",
-    ],
-    icon: "workflow",
+      "End-to-end agentic workflows: AI agents connected to your real tools that execute multi-step processes autonomously. Built on n8n, Claude API, and custom integrations.",
+    details: ["Agentic AI workflows", "Custom n8n workflows", "Tool integrations", "Video walkthrough & documentation"],
   },
   {
-    title: "AI Strategy & Business Audits",
+    title: "AI App Development",
     description:
-      "Not sure where to start with automation? I'll dig into your current processes, find the biggest opportunities, and give you a prioritized plan with clear ROI estimates.",
-    capabilities: [
-      "Process analysis",
-      "Automation roadmapping",
-      "ROI assessment",
-      "Technology selection",
-    ],
-    icon: "strategy",
-  },
-  {
-    title: "Custom Integrations",
-    description:
-      "Your tools should talk to each other. I connect APIs, databases, and third-party services so your data flows where it needs to go without manual work.",
-    capabilities: [
-      "REST & GraphQL APIs",
-      "Database integrations",
-      "Third-party connectors",
-      "Data synchronization",
-    ],
-    icon: "integration",
-  },
-  {
-    title: "AI-Powered App Development",
-    description:
-      "Full-stack applications that use Claude, OpenAI, and other AI APIs to do things that weren't possible a year ago. Built on Next.js and PostgreSQL, deployed to production.",
-    capabilities: [
-      "Next.js applications",
-      "Claude & OpenAI integration",
-      "PostgreSQL databases",
-      "Production deployment",
-    ],
-    icon: "development",
+      "Full-stack applications with Claude and OpenAI integrations. From concept to production, built to solve a specific problem.",
+    details: ["Next.js + TypeScript", "AI API integrations", "Database design", "Deployment on Vercel"],
   },
 ];
 
-export const PROCESS_STEPS: ProcessStep[] = [
+export const SOLUTIONS: Solution[] = [
   {
-    number: "01",
-    title: "Discovery",
-    description:
-      "We hop on a call and talk through your workflows, your pain points, and what you're trying to achieve. I figure out where automation will make the biggest difference.",
+    title: "Instant Lead Response",
+    problem: "",
+    roiHook:
+      "Businesses that respond in under 5 minutes are 10x more likely to close the deal.",
+    industries: ["Dental", "HVAC", "Law Firms", "Real Estate", "Home Services"],
+    icon: "bolt",
   },
   {
-    number: "02",
-    title: "Design",
-    description:
-      "I map out the solution: the workflow logic, the integrations, how errors get handled, and how data moves through the system. You sign off before I start building.",
+    title: "Document Processing",
+    problem: "",
+    roiHook:
+      "Cut processing time by 80% and drop data entry errors to near zero.",
+    industries: ["Accounting", "Insurance", "Law", "Logistics", "Construction"],
+    icon: "document",
   },
   {
-    number: "03",
-    title: "Build",
-    description:
-      "I build it, test it thoroughly, and get it running in your environment. Nothing ships until it handles the edge cases and works the way it should.",
+    title: "Follow-up Sequences",
+    problem: "",
+    roiHook:
+      "Consistent follow-up sequences can double your conversion rate on existing leads.",
+    industries: ["Coaches", "Consultants", "Agencies", "B2B Services", "SaaS"],
+    icon: "refresh",
   },
   {
-    number: "04",
-    title: "Support",
-    description:
-      "After launch, I stick around to monitor things and make adjustments. The goal is an automation that keeps working long after the project wraps up.",
+    title: "Customer Revival",
+    problem: "",
+    roiHook:
+      "Reactivation campaigns average 1,200% ROI in the first 60 days. No new ad spend required.",
+    industries: ["Gyms", "Dental", "E-commerce", "SaaS", "Coaching"],
+    icon: "database",
+  },
+  {
+    title: "Status Reports & Alerts",
+    problem: "",
+    roiHook:
+      "The least exciting automation on the list. Also the one no business can live without once they have it.",
+    industries: ["Agencies", "Construction", "Sales Teams", "E-commerce", "Professional Services"],
+    icon: "chart",
+  },
+];
+
+export const PRICING_TIERS = [
+  {
+    name: "AI Business Audit",
+    price: "$500 \u2013 $1,500",
+    basis: "one-time",
+    description: "Diagnose before prescribing. I map your operations, find the leaks, and deliver a prioritized roadmap with ROI estimates.",
+    features: [
+      "Full operations analysis",
+      "Cost-of-status-quo breakdown",
+      "Prioritized automation roadmap",
+      "Branded PDF report",
+      "Follow-up strategy call",
+    ],
+    cta: "Start here",
+    highlighted: false,
+  },
+  {
+    name: "AI Implementation",
+    price: "$2,000 \u2013 $5,000",
+    basis: "fixed price",
+    description: "I build the system. Custom workflows, integrations, and AI-powered tools, scoped to your highest-impact opportunity.",
+    features: [
+      "Everything in the Audit",
+      "Agentic & n8n workflow builds",
+      "Full-stack API integrations",
+      "Complete system video walkthrough",
+      "30-day bug support guarantee",
+    ],
+    cta: "Let\u2019s build",
+    highlighted: true,
+  },
+  {
+    name: "AI Transformation Retainer",
+    price: "$1,000 \u2013 $3,000",
+    basis: "per month",
+    description: "Your ongoing AI partner. I continuously audit, implement, and improve your systems as your business evolves.",
+    features: [
+      "Everything in Implementation",
+      "Ongoing workflow optimization",
+      "New automation builds monthly",
+      "Priority support",
+      "Quarterly strategy reviews",
+    ],
+    cta: "Let\u2019s talk",
+    highlighted: false,
   },
 ];
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    title: "KanjiLens",
+    title: "Business Transformation Client",
     description:
-      "A full-stack AI learning app I built for studying Japanese. Snap a photo of any Japanese text, and it extracts the kanji, generates study packs with mnemonics and example sentences, and serves them up as SRS flashcards. Built while living in Japan to solve my own problem.",
-    tags: ["Next.js", "Claude API", "Prisma", "PostgreSQL", "n8n"],
-    metric: "90%",
-    metricLabel: "Faster Study Pack Creation",
+      "AI workflow automation for a professional coaching firm. Phase 1 delivered email triage, voice-to-task capture, and a daily briefing system. Phase 2 active: workspace overhaul, AI scheduling agent, and calendar-to-invoice automation.",
+    tags: ["n8n", "ClickUp AI", "Claude API", "Workflow Automation"],
+    metric: "5-7 hrs",
+    metricLabel: "Saved Per Week",
     images: [
-      { src: "/images/case-studies/kanjilens/street-sign.png", alt: "Japanese street sign used as input for KanjiLens OCR scanning" },
-      { src: "/images/case-studies/kanjilens/scan-results.png", alt: "KanjiLens scan results showing extracted kanji with new vs known indicators" },
-      { src: "/images/case-studies/kanjilens/study-card.png", alt: "AI-generated study card with readings, compounds, mnemonics, and example sentences" },
-      { src: "/images/case-studies/kanjilens/flashcard-review.png", alt: "SRS flashcard review interface with spaced repetition scoring" },
-    ],
-    demoVideo: "/videos/kanjilens-demo.mp4",
-  },
-  {
-    title: "AI Job Intelligence System",
-    description:
-      "An n8n automation that scrapes job listings from multiple sources, scores them with AI based on your skills and preferences, stores everything in a Notion database, and sends you a daily priority report. Turns hours of manual job hunting into a 2-minute morning email.",
-    tags: ["n8n", "PostgreSQL", "Claude API", "Notion", "Email"],
-    metric: "15hrs",
-    metricLabel: "Saved Weekly",
-    images: [
-      { src: "/images/case-studies/job-leads/n8n-workflow.png", alt: "Full n8n workflow for automated job lead scraping, scoring, and reporting" },
-      { src: "/images/case-studies/job-leads/notion-database.png", alt: "Notion database with AI-scored job leads showing company, priority, and match score" },
-      { src: "/images/case-studies/job-leads/daily-report.png", alt: "Daily job leads report email with priority scoring and AI-generated summaries" },
+      { src: "/images/case-studies/workthentic/monthly-report.png", alt: "Automated monthly hours report email for coaching client" },
     ],
   },
   {
-    title: "Document Processing Automation",
+    title: "Construction & Civil Engineering Client",
     description:
-      "Built for a client in the medical industry who was spending hours manually sorting and extracting data from patient and compliance documents. The automation reads incoming documents, classifies them, pulls out the key information, and routes everything to the right department.",
-    tags: ["n8n", "Claude API", "OCR", "Webhooks"],
-    metric: "85%",
-    metricLabel: "Faster Processing",
-  },
-  {
-    title: "AI Operating System (AIOS)",
-    description:
-      "A full-stack AI command center I built to run my consulting business. DataOS is the data backbone, a PostgreSQL database synced from Notion that tracks clients, revenue, projects, and tasks in real time. Contextos is the business knowledge layer, keeping the AI grounded in strategy and context. Together they feed Charlie, a conversational Telegram bot built on Claude that answers questions about the business, creates tasks, transcribes voice notes via Groq Whisper, generates PDF morning briefs, and pulls YouTube transcripts for research. Runs automatically every morning with no manual input required.",
-    tags: ["TypeScript", "PostgreSQL", "Prisma", "Python", "Telegram", "Claude API", "n8n", "Groq", "Notion API", "Vercel"],
-    metric: "10hrs",
-    metricLabel: "Ops Automated Per Week",
+      "A construction company based in Japan with 60+ years of excellent work but no way to showcase it. I helped them fully establish their online presence and implement AI in their business. Now their work speaks for itself online.",
+    tags: ["Next.js", "Tailwind CSS", "Web Design"],
+    metric: "Complete",
+    metricLabel: "Digital Transformation",
     images: [
-      { src: "/images/case-studies/aios/telegram-chat.png", alt: "Conversational AI assistant (Charlie) responding to natural language queries via Telegram" },
+      { src: "/images/case-studies/kamata/kamata-website.png", alt: "Construction company redesigned website" },
     ],
   },
-];
-
-export const TESTIMONIALS: Testimonial[] = [
   {
-    quote:
-      "Alec turned our manual reporting process into something that just runs on its own. What used to eat up 10 hours a week for our team now happens automatically.",
-    name: "Coming Soon",
-    title: "",
-    company: "",
+    title: "KiwiOpic",
+    description:
+      "KiwiOpic builds OPIC test preparation curriculum for Korean professionals. Their team was producing content manually, spending hours on tasks AI could handle in minutes. I integrated AI across their workflow: curriculum drafting, content formatting, review cycles, and process automation. 80% of their manual work is now handled by AI.",
+    tags: ["AI Integration", "Claude API", "Process Automation", "EdTech"],
+    metric: "80%",
+    metricLabel: "Manual Work Eliminated",
+    images: [
+      { src: "/images/case-studies/kiwiopic/platform.png", alt: "KiwiOpic OPIC test preparation platform" },
+    ],
   },
   {
-    quote:
-      "The workflow Alec built paid for itself in the first month. He took the time to understand our business before writing a single line of code, and it showed in the result.",
-    name: "Coming Soon",
-    title: "",
-    company: "",
-  },
-  {
-    quote:
-      "Working with Alec was different from other consultants we've tried. He didn't just build what we asked for. He found opportunities we hadn't even thought of.",
-    name: "Coming Soon",
-    title: "",
-    company: "",
+    title: "AIOS",
+    description:
+      "I don\u2019t just build AI systems for clients. I run my entire business on one. Autonomous agents manage my operations end to end: scheduling, research, reporting, client communication. If it works at this depth for me, imagine what it does for your business.",
+    tags: ["n8n", "Claude API", "Telegram", "PostgreSQL", "Prisma"],
+    metric: "100%",
+    metricLabel: "Business Ops Automated",
+    images: [
+      { src: "/images/case-studies/aios/dashboard.png", alt: "AIOS Mission Control dashboard showing clients, revenue, and automation health" },
+    ],
   },
 ];
 
 export const TECH_STACK = [
   "n8n",
-  "Make.com",
   "Claude API",
   "OpenAI",
   "Next.js",
   "TypeScript",
   "PostgreSQL",
   "Prisma",
-  "Tailwind CSS",
   "Vercel",
 ];
