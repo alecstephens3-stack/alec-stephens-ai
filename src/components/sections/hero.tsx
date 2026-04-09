@@ -3,7 +3,7 @@ import Image from "next/image";
 export function Hero() {
   return (
     <section
-      className="relative pt-40 pb-24 md:pt-52 md:pb-36"
+      className="relative pt-40 pb-10 md:pt-52 md:pb-14"
       aria-label="Hero"
     >
       <div className="mx-auto max-w-5xl px-6">
@@ -42,10 +42,10 @@ export function Hero() {
               style={{ width: 220, height: 280 }}
             >
               <Image
-                src="/images/headshot.jpg"
+                src="/images/headshot.png"
                 alt="Alec Stephens"
                 fill
-                className="object-cover object-[60%_20%]"
+                className="object-cover object-center"
                 sizes="220px"
                 priority
               />
@@ -55,19 +55,25 @@ export function Hero() {
 
         {/* Proof bar */}
         <div className="mt-20 animate-fade-in-up animation-delay-600">
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-xl border border-border bg-sand/40 px-8 py-5 md:justify-start">
-            <div className="flex items-center gap-2.5">
-              <span className="font-heading text-2xl font-bold text-black">5+</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 rounded-xl border border-border bg-sand/40 px-6 py-5 md:justify-between">
+            <div className="flex items-center gap-2">
+              <span className="font-heading text-xl font-bold text-black">5+</span>
               <span className="text-sm text-warm-gray">years on Upwork</span>
             </div>
             <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
-            <div className="flex items-center gap-2.5">
-              <span className="font-heading text-2xl font-bold text-terracotta">100%</span>
+            <div className="flex items-center gap-2">
+              <span className="font-heading text-xl font-bold text-terracotta">100%</span>
               <span className="text-sm text-warm-gray">Job Success Score</span>
             </div>
             <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
-            <div className="flex items-center gap-2.5">
-              <span className="text-sm text-warm-gray">Clients served across <span className="font-heading text-2xl font-bold text-black mx-1">3</span> countries</span>
+            <div className="flex items-center gap-1">
+              <span className="font-heading text-xl font-bold text-black">3</span>
+              <span className="text-sm text-warm-gray">countries served</span>
+            </div>
+            <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
+            <div className="flex items-center gap-2">
+              <span className="font-heading text-xl font-bold text-terracotta">Top Rated</span>
+              <span className="text-sm text-warm-gray">on Upwork</span>
             </div>
           </div>
         </div>
