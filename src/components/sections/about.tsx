@@ -1,89 +1,58 @@
-import { TECH_STACK } from "@/lib/constants";
-import { SectionHeader } from "@/components/ui/section-header";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-deep-earth py-24" aria-label="About">
-      {/* Ambient terracotta glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -right-32 z-0 h-[600px] w-[600px]"
-        style={{ background: "radial-gradient(circle, rgba(220,104,67,0.07) 0%, transparent 65%)" }}
-      />
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          label="About"
-          heading="Built by Someone Who Gets It"
-          light
-        />
-
-        <div className="grid gap-12 md:grid-cols-2">
-          <AnimateOnScroll>
-            <div className="space-y-6">
-              <p className="text-lg leading-relaxed text-white/80">
-                I&apos;m not an agency. I&apos;m an independent consultant who
-                does the strategy work and the technical work. When you hire me,
-                you&apos;re talking directly to the person building your
-                solution. No project managers, no handoffs.
-              </p>
-              <p className="text-lg leading-relaxed text-white/80">
-                I&apos;ve worked with clients in the USA, Japan, and around
-                the world, building everything from AI-powered learning apps to
-                complex multi-step workflow automations. My background in
-                full-stack development and business process analysis means I
-                don&apos;t just build automations. I find the ones that will
-                actually make a difference for your bottom line.
-              </p>
-              <p className="text-lg leading-relaxed text-white/80">
-                Every project starts with understanding how your business
-                actually works. From there, I build solutions that are reliable,
-                easy to maintain, and genuinely useful. Not flashy demos that
-                break the first time something unexpected happens.
-              </p>
+    <section id="about" className="bg-sand/50 py-28 md:py-40" aria-label="About">
+      <div className="mx-auto max-w-5xl px-6">
+        <AnimateOnScroll>
+          <div className="grid items-start gap-14 md:grid-cols-[auto_1fr] md:gap-20">
+            {/* Headshot placeholder — swap with real image once available */}
+            <div
+              className="relative shrink-0 overflow-hidden rounded-2xl bg-sand border border-border mx-auto md:mx-0"
+              style={{ width: 180, height: 220 }}
+            >
+              <Image
+                src="/images/headshot.jpg"
+                alt="Alec Stephens"
+                fill
+                className="object-cover object-[60%_20%]"
+                sizes="180px"
+              />
             </div>
-          </AnimateOnScroll>
 
-          <AnimateOnScroll delay={200}>
+            {/* Text */}
             <div>
-              <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-terracotta">
-                Tech Stack
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {TECH_STACK.map((tech) => (
-                  <Badge key={tech} className="bg-white/10 text-white/80">
-                    {tech}
-                  </Badge>
-                ))}
+              <h2 className="font-heading text-3xl font-bold tracking-tight text-black md:text-4xl">
+                About
+              </h2>
+
+              <div className="mt-8 max-w-2xl space-y-5">
+                <p className="text-lg leading-relaxed text-warm-gray">
+                  I lead every engagement personally. Strategy, architecture,
+                  and build. No account managers, no handoffs. The person on
+                  the call is the person building your system.
+                </p>
+                <p className="text-lg leading-relaxed text-warm-gray">
+                  I&apos;ve worked with clients in the US, Japan, South Korea,
+                  and around the world, building everything from AI learning apps
+                  to complex workflow automations. Every project starts with
+                  understanding how your business actually works.
+                </p>
               </div>
 
-              <div className="mt-10 space-y-6">
-                <div>
-                  <h3 className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-terracotta">
-                    What I Focus On
-                  </h3>
-                  <ul className="space-y-3">
-                    {[
-                      "Automations that handle edge cases without breaking",
-                      "Solutions built to last, not just to demo well",
-                      "Clear documentation so your team can understand the system",
-                      "Measurable ROI, not technology for its own sake",
-                    ].map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-3 text-white/70"
-                      >
-                        <div className="mt-2 h-1 w-1 shrink-0 rounded-full bg-terracotta" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <a
+                href="https://www.linkedin.com/in/alec-stephens-55b392213/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-light"
+              >
+                LinkedIn
+                <span aria-hidden="true">&rarr;</span>
+              </a>
             </div>
-          </AnimateOnScroll>
-        </div>
+          </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

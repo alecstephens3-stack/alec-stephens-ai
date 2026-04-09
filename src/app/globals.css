@@ -6,11 +6,11 @@
 
   --color-black: #0D0C0B;
   --color-dark-stone: #181614;
-  --color-deep-earth: #1A1715;
-  --color-warm-white: #FAFAF9;
-  --color-cream: #F2F1EF;
+  --color-cream: #F5F3F0;
+  --color-sand: #EDE5D8;
   --color-terracotta: #DC6843;
   --color-terracotta-light: #E8845F;
+  --color-charcoal: #374151;
   --color-warm-gray: #7A736D;
   --color-border: #E7E5E4;
 }
@@ -21,61 +21,58 @@ html {
 
 body {
   font-family: var(--font-body);
-  color: var(--color-black);
-  background-color: var(--color-warm-white);
+  color: var(--color-charcoal);
+  background-color: var(--color-cream);
 }
 
-/* Custom scrollbar */
+/* Subtle scrollbar */
 ::-webkit-scrollbar {
   width: 3px;
 }
 ::-webkit-scrollbar-track {
-  background: #0D0C0B;
+  background: var(--color-cream);
 }
 ::-webkit-scrollbar-thumb {
-  background: #DC6843;
+  background: var(--color-terracotta);
   border-radius: 2px;
 }
 
-/* Keyframes */
-@keyframes float-a {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(-50px) scale(1.04); }
-}
-
-@keyframes float-b {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(35px) scale(0.96); }
-}
-
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes fade-in-down {
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
+/* Hero fade-in-up — smooth cubic-bezier for cinematic feel */
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in-down {
-  animation: fade-in-down 0.8s ease-out forwards;
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
+  animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
 .animation-delay-200 { animation-delay: 0.2s; }
 .animation-delay-400 { animation-delay: 0.4s; }
-.animation-delay-600 { animation-delay: 0.6s; }
-.animation-delay-800 { animation-delay: 0.8s; }
+.animation-delay-600 { animation-delay: 0.65s; }
+
+/* Scroll-reveal — used by AnimateOnScroll component */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-reveal-up {
+  animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Image scale-in for case study images */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

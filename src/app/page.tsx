@@ -1,7 +1,6 @@
 import { Hero } from "@/components/sections/hero";
-import { StatsBar } from "@/components/sections/stats-bar";
+import { Solutions } from "@/components/sections/solutions";
 import { Services } from "@/components/sections/services";
-import { HowItWorks } from "@/components/sections/how-it-works";
 import { CaseStudies } from "@/components/sections/case-studies";
 import { About } from "@/components/sections/about";
 import { ContactCTA } from "@/components/sections/contact-cta";
@@ -45,9 +44,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <StatsBar />
+      <Solutions />
       <Services />
-      <HowItWorks />
       <CaseStudies />
       <About />
       <ContactCTA />

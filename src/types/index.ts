@@ -1,10 +1,3 @@
-export interface Service {
-  title: string;
-  description: string;
-  capabilities: string[];
-  icon: string;
-}
-
 export interface CaseStudyImage {
   src: string;
   alt: string;
@@ -20,25 +13,15 @@ export interface CaseStudy {
   demoVideo?: string;
 }
 
-export interface Testimonial {
-  quote: string;
-  name: string;
-  title: string;
-  company: string;
-}
-
-export interface ProcessStep {
-  number: string;
-  title: string;
-  description: string;
-}
-
-export interface Stat {
-  value: string;
-  label: string;
-}
-
 export interface NavLink {
   label: string;
   href: string;
+}
+
+export interface Solution {
+  title: string;
+  problem: string;
+  roiHook: string;
+  industries: string[];
+  icon: string;
 }

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,14 +32,14 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-black/95 backdrop-blur-md shadow-lg"
+          ? "bg-cream/80 backdrop-blur-md border-b border-border"
           : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <a
           href="#"
-          className="font-heading text-xl font-bold text-white transition-colors hover:text-terracotta"
+          className="font-heading text-lg font-bold text-black transition-colors hover:text-terracotta"
         >
           Alec Stephens<span className="text-terracotta">.</span>
         </a>
@@ -53,14 +52,17 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/70 transition-colors hover:text-terracotta"
+              className="text-sm font-medium text-warm-gray transition-colors hover:text-black"
             >
               {link.label}
             </a>
           ))}
-          <Button href="#contact" size="sm">
-            Get in Touch
-          </Button>
+          <a
+            href="#contact"
+            className="text-sm font-medium text-terracotta transition-colors hover:text-terracotta-light"
+          >
+            Get in touch &rarr;
+          </a>
         </nav>
 
         <button
@@ -72,19 +74,19 @@ export function Header() {
           <div className="flex flex-col gap-1.5">
             <span
               className={cn(
-                "block h-0.5 w-6 bg-white transition-all duration-300",
+                "block h-0.5 w-5 bg-black transition-all duration-300",
                 isMobileMenuOpen && "translate-y-2 rotate-45"
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-6 bg-white transition-all duration-300",
+                "block h-0.5 w-5 bg-black transition-all duration-300",
                 isMobileMenuOpen && "opacity-0"
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-6 bg-white transition-all duration-300",
+                "block h-0.5 w-5 bg-black transition-all duration-300",
                 isMobileMenuOpen && "-translate-y-2 -rotate-45"
               )}
             />
@@ -95,7 +97,7 @@ export function Header() {
       {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-black/98 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-40 bg-cream/98 transition-all duration-300 md:hidden",
           isMobileMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -110,18 +112,18 @@ export function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-heading text-2xl font-semibold text-white transition-colors hover:text-terracotta"
+              className="font-heading text-2xl font-semibold text-black transition-colors hover:text-terracotta"
             >
               {link.label}
             </a>
           ))}
-          <Button
+          <a
             href="#contact"
-            size="lg"
             onClick={() => setIsMobileMenuOpen(false)}
+            className="font-heading text-2xl font-semibold text-terracotta transition-colors hover:text-terracotta-light"
           >
-            Get in Touch
-          </Button>
+            Get in touch &rarr;
+          </a>
         </nav>
       </div>
     </header>
