@@ -4,9 +4,9 @@ import type {
   Solution,
 } from "@/types";
 
-export const SITE_NAME = "Alec Stephens AI Solutions";
-export const SITE_URL = "https://alecstephensai.com";
-export const CONTACT_EMAIL = "alecstephens3@gmail.com";
+export const SITE_NAME = "Stephens AI";
+export const SITE_URL = "https://stephensai.co";
+export const CONTACT_EMAIL = "alecstephensai@gmail.com";
 export const SITE_DESCRIPTION =
   "AI automation consultant helping businesses in the USA, Japan, and around the world save time with n8n workflows, Claude API integrations, and custom automation solutions.";
 

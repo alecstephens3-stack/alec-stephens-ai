@@ -12,11 +12,11 @@ export function Services() {
       >
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
               How I work
             </p>
             <h2
-              className="max-w-2xl font-heading font-bold tracking-tight text-black"
+              className="max-w-2xl font-heading font-medium tracking-tight text-black"
               style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
             >
               Diagnose, build, and support.
@@ -28,7 +28,7 @@ export function Services() {
               <AnimateOnScroll key={service.title} delay={index * 80}>
                 <div className="grid gap-6 border-t border-border py-14 md:grid-cols-[auto_1fr_1fr] md:gap-12 items-start">
                   {/* Number */}
-                  <span className="font-heading text-5xl font-bold text-sand tracking-tight select-none hidden md:block">
+                  <span className="font-heading text-5xl font-medium text-sand tracking-tight select-none hidden md:block">
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
@@ -41,9 +41,9 @@ export function Services() {
                       {service.details.map((detail) => (
                         <li
                           key={detail}
-                          className="flex items-center gap-2.5 text-sm text-warm-gray"
+                          className="flex items-center gap-2.5 text-sm text-ink-60"
                         >
-                          <span className="h-1 w-1 rounded-full bg-terracotta shrink-0" />
+                          <span className="h-1 w-1 rounded-full bg-salmon shrink-0" />
                           {detail}
                         </li>
                       ))}
@@ -51,7 +51,7 @@ export function Services() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-base leading-[1.8] text-warm-gray">
+                  <p className="text-base leading-[1.8] text-ink-60">
                     {service.description}
                   </p>
                 </div>
@@ -70,16 +70,16 @@ export function Services() {
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
             <div className="text-center">
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
                 Pricing
               </p>
               <h2
-                className="mx-auto max-w-2xl font-heading font-bold tracking-tight text-black"
+                className="mx-auto max-w-2xl font-heading font-medium tracking-tight text-black"
                 style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
               >
                 Simple, value-based pricing.
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-lg text-warm-gray">
+              <p className="mx-auto mt-4 max-w-lg text-lg text-ink-60">
                 Every engagement starts with understanding your business. Pick the depth that fits.
               </p>
             </div>
@@ -89,14 +89,14 @@ export function Services() {
             {PRICING_TIERS.map((tier, index) => (
               <AnimateOnScroll key={tier.name} delay={index * 100}>
                 <div
-                  className={`relative flex h-full flex-col rounded-2xl border p-8 transition-all duration-300 ${
+                  className={`relative flex h-full flex-col rounded-lg border p-8 transition-all duration-300 ${
                     tier.highlighted
-                      ? "border-terracotta/30 bg-white shadow-lg shadow-terracotta/5 ring-1 ring-terracotta/10"
+                      ? "border-salmon/30 bg-white shadow-lg shadow-salmon/5 ring-1 ring-salmon/10"
                       : "border-border bg-sand/30 hover:border-border hover:bg-sand/50"
                   }`}
                 >
                   {tier.highlighted && (
-                    <span className="absolute -top-3 left-8 rounded-full bg-terracotta px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
                       Most popular
                     </span>
                   )}
@@ -108,19 +108,19 @@ export function Services() {
                     </h3>
                     <div className="mt-3 flex items-baseline gap-1.5">
                       <span
-                        className={`font-heading font-bold tracking-tight ${
-                          tier.highlighted ? "text-terracotta" : "text-black"
+                        className={`font-heading font-medium tracking-tight ${
+                          tier.highlighted ? "text-salmon" : "text-black"
                         }`}
                         style={{ fontSize: "clamp(1.6rem, 2.5vw, 2rem)" }}
                       >
                         {tier.price}
                       </span>
                     </div>
-                    <span className="text-sm text-warm-gray">{tier.basis}</span>
+                    <span className="text-sm text-ink-60">{tier.basis}</span>
                   </div>
 
                   {/* Description */}
-                  <p className="mb-6 text-sm leading-relaxed text-warm-gray">
+                  <p className="mb-6 text-sm leading-relaxed text-ink-60">
                     {tier.description}
                   </p>
 
@@ -132,11 +132,11 @@ export function Services() {
                     {tier.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-start gap-2.5 text-sm text-charcoal"
+                        className="flex items-start gap-2.5 text-sm text-ink-90"
                       >
                         <svg
                           className={`mt-0.5 h-4 w-4 shrink-0 ${
-                            tier.highlighted ? "text-terracotta" : "text-warm-gray"
+                            tier.highlighted ? "text-salmon" : "text-ink-60"
                           }`}
                           fill="none"
                           viewBox="0 0 24 24"
@@ -157,10 +157,10 @@ export function Services() {
                   {/* CTA */}
                   <a
                     href="#contact"
-                    className={`block rounded-lg py-3.5 text-center font-heading text-sm font-semibold transition-all ${
+                    className={`block rounded-full py-3.5 text-center font-heading text-sm font-medium transition-all ${
                       tier.highlighted
-                        ? "bg-terracotta text-white hover:bg-terracotta-light"
-                        : "border border-border text-black hover:border-charcoal hover:bg-sand/50"
+                        ? "bg-salmon text-white hover:bg-salmon-deep"
+                        : "border border-border text-black hover:border-ink-90 hover:bg-sand/50"
                     }`}
                   >
                     {tier.cta}

@@ -15,20 +15,20 @@ export function ContactCTA() {
             {/* Left: copy */}
             <div>
               <h2
-                className="font-heading font-bold tracking-tight text-black"
+                className="font-heading font-medium tracking-tight text-black"
                 style={{ fontSize: "clamp(2.5rem, 4vw, 3.5rem)" }}
               >
                 Let&apos;s talk.
               </h2>
 
-              <p className="mt-4 max-w-md text-lg text-warm-gray">
+              <p className="mt-4 max-w-md text-lg text-ink-60">
                 Every engagement starts with a free discovery call.
                 Tell me what you&apos;re working on.
               </p>
 
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="mt-6 inline-block text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
+                className="mt-6 inline-block text-sm font-medium text-ink-60 transition-colors hover:text-salmon"
               >
                 {CONTACT_EMAIL}
               </a>
