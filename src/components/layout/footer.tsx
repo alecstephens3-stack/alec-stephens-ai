@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
 
 export function Footer() {
@@ -7,21 +8,28 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <a
             href="#"
-            className="font-heading text-lg font-bold text-black transition-colors hover:text-terracotta"
+            className="flex items-center transition-opacity hover:opacity-80"
+            aria-label="Stephens AI — home"
           >
-            Alec Stephens<span className="text-terracotta">.</span>
+            <Image
+              src="/logo-light.svg"
+              alt="Stephens AI"
+              width={160}
+              height={36}
+              className="h-7 w-auto"
+            />
           </a>
 
           <nav className="flex items-center gap-6" aria-label="Footer navigation">
             <a
               href="#work"
-              className="text-sm text-warm-gray transition-colors hover:text-black"
+              className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               Work
             </a>
             <a
               href="#services"
-              className="text-sm text-warm-gray transition-colors hover:text-black"
+              className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               Services
             </a>
@@ -29,13 +37,13 @@ export function Footer() {
               href="https://www.linkedin.com/in/alec-stephens-55b392213/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-warm-gray transition-colors hover:text-black"
+              className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               LinkedIn
             </a>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="text-sm text-warm-gray transition-colors hover:text-black"
+              className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               Email
             </a>
@@ -43,7 +51,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 text-center sm:text-left">
-          <p className="text-xs text-warm-gray">
+          <p className="text-xs text-ink-60">
             &copy; {new Date().getFullYear()} {SITE_NAME}
           </p>
         </div>

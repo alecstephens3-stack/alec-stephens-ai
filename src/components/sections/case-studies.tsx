@@ -12,12 +12,12 @@ export function CaseStudies() {
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
           <h2
-            className="font-heading font-bold tracking-tight text-black"
+            className="font-heading font-medium tracking-tight text-black"
             style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
           >
             Selected work
           </h2>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-warm-gray">
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-60">
             A few things I&apos;ve built. Each one solved a real problem.
           </p>
         </AnimateOnScroll>
@@ -39,24 +39,24 @@ export function CaseStudies() {
                     {/* Metric */}
                     <div className="mb-5 flex items-baseline gap-3">
                       <span
-                        className="font-heading font-bold text-terracotta"
+                        className="font-heading font-medium text-salmon"
                         style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)" }}
                       >
                         {study.metric}
                       </span>
-                      <span className="text-sm text-warm-gray">
+                      <span className="text-sm text-ink-60">
                         {study.metricLabel}
                       </span>
                     </div>
 
                     <h3
-                      className="font-heading font-bold text-black"
+                      className="font-heading font-medium text-black"
                       style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.75rem)" }}
                     >
                       {study.title}
                     </h3>
 
-                    <p className="mt-4 text-base leading-[1.75] text-warm-gray">
+                    <p className="mt-4 text-base leading-[1.75] text-ink-60">
                       {study.description}
                     </p>
 
@@ -65,7 +65,7 @@ export function CaseStudies() {
                       {study.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-warm-gray"
+                          className="rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-ink-60"
                         >
                           {tag}
                         </span>
@@ -75,7 +75,7 @@ export function CaseStudies() {
 
                   {/* Image side — or decorative block for text-only entries */}
                   {hasImage ? (
-                    <div className="overflow-hidden rounded-2xl border border-border bg-sand/50 shadow-sm">
+                    <div className="overflow-hidden rounded-lg border border-border bg-sand/50 shadow-sm">
                       <div className="relative aspect-[4/3] flex items-center justify-center p-4">
                         <Image
                           src={study.images![0].src}
@@ -87,7 +87,7 @@ export function CaseStudies() {
                       </div>
                     </div>
                   ) : (
-                    <div className="hidden md:block rounded-2xl bg-sand/60 border border-border aspect-[4/3]" aria-hidden="true" />
+                    <div className="hidden md:block rounded-lg bg-sand/60 border border-border aspect-[4/3]" aria-hidden="true" />
                   )}
                 </div>
               </AnimateOnScroll>

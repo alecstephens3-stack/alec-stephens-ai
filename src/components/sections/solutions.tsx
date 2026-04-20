@@ -38,27 +38,27 @@ export function Solutions() {
     >
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
             Solutions
           </p>
           <h2
-            className="max-w-3xl font-heading font-bold tracking-tight text-black"
+            className="max-w-3xl font-heading font-medium tracking-tight text-black"
             style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
           >
             Simple systems that save time, save money, and remove mistakes.
           </h2>
-          <p className="mt-4 max-w-2xl text-lg text-warm-gray">
+          <p className="mt-4 max-w-2xl text-lg text-ink-60">
             Built for real businesses. These are the workflows that actually
-            move the needle.
+            change the numbers.
           </p>
         </AnimateOnScroll>
 
         <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {SOLUTIONS.map((solution, index) => (
             <AnimateOnScroll key={solution.title} delay={index * 80}>
-              <div className="group flex h-full flex-col rounded-2xl border border-border bg-sand/30 p-7 transition-all duration-300 hover:border-terracotta/20 hover:bg-white hover:shadow-lg hover:shadow-terracotta/5">
+              <div className="group flex h-full flex-col rounded-lg border border-border bg-sand/30 p-7 transition-all duration-300 hover:border-salmon/20 hover:bg-white hover:shadow-lg hover:shadow-salmon/5">
                 {/* Icon */}
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-terracotta transition-colors group-hover:bg-terracotta/10">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-sand text-salmon transition-colors group-hover:bg-salmon/10">
                   {ICONS[solution.icon]}
                 </div>
 
@@ -68,7 +68,7 @@ export function Solutions() {
                 </h3>
 
                 {/* ROI hook */}
-                <p className="mt-3 text-sm font-medium leading-relaxed text-charcoal">
+                <p className="mt-3 text-sm font-medium leading-relaxed text-ink-90">
                   {solution.roiHook}
                 </p>
 
@@ -78,7 +78,7 @@ export function Solutions() {
                     {solution.industries.map((industry) => (
                       <span
                         key={industry}
-                        className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-medium text-warm-gray"
+                        className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-medium text-ink-60"
                       >
                         {industry}
                       </span>
@@ -93,9 +93,9 @@ export function Solutions() {
           <AnimateOnScroll delay={SOLUTIONS.length * 80}>
             <a
               href="#contact"
-              className="group flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-border p-7 text-center transition-all duration-300 hover:border-terracotta/30 hover:bg-sand/30"
+              className="group flex h-full flex-col items-center justify-center rounded-lg border border-dashed border-border p-7 text-center transition-all duration-300 hover:border-salmon/30 hover:bg-sand/30"
             >
-              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-warm-gray transition-colors group-hover:bg-terracotta/10 group-hover:text-terracotta">
+              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-sand text-ink-60 transition-colors group-hover:bg-salmon/10 group-hover:text-salmon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -103,7 +103,7 @@ export function Solutions() {
               <p className="font-heading text-sm font-semibold text-black">
                 Not sure which one you need?
               </p>
-              <p className="mt-1.5 text-sm text-warm-gray">
+              <p className="mt-1.5 text-sm text-ink-60">
                 Book a free consultation and I&apos;ll diagnose it.
               </p>
             </a>

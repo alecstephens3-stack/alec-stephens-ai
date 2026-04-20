@@ -46,16 +46,16 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-border bg-sand/50 p-8 text-center">
+      <div className="rounded-lg border border-border bg-sand/50 p-8 text-center">
         <h3 className="font-heading text-xl font-semibold text-black">
           Message sent.
         </h3>
-        <p className="mt-2 text-warm-gray">
+        <p className="mt-2 text-ink-60">
           I&apos;ll get back to you within 24 hours.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-4 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-light"
+          className="mt-4 text-sm font-medium text-salmon transition-colors hover:text-salmon-deep"
         >
           Send another message
         </button>
@@ -69,7 +69,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="contact-name"
-            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-warm-gray"
+            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
           >
             Name
           </label>
@@ -81,14 +81,14 @@ export function ContactForm() {
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, name: e.target.value }))
             }
-            className="w-full rounded-lg border border-border bg-cream px-4 py-3 text-black placeholder:text-warm-gray/50 focus:border-terracotta focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
+            className="w-full rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
             placeholder="Your name"
           />
         </div>
         <div>
           <label
             htmlFor="contact-email"
-            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-warm-gray"
+            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
           >
             Email
           </label>
@@ -100,7 +100,7 @@ export function ContactForm() {
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, email: e.target.value }))
             }
-            className="w-full rounded-lg border border-border bg-cream px-4 py-3 text-black placeholder:text-warm-gray/50 focus:border-terracotta focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
+            className="w-full rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
             placeholder="you@company.com"
           />
         </div>
@@ -109,7 +109,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="contact-message"
-          className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-warm-gray"
+          className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
         >
           Message
         </label>
@@ -121,7 +121,7 @@ export function ContactForm() {
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, message: e.target.value }))
           }
-          className="w-full resize-none rounded-lg border border-border bg-cream px-4 py-3 text-black placeholder:text-warm-gray/50 focus:border-terracotta focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
+          className="w-full resize-none rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
           placeholder="Tell me about your project..."
         />
       </div>
@@ -143,7 +143,7 @@ export function ContactForm() {
         type="submit"
         disabled={status === "sending"}
         className={cn(
-          "w-full rounded-lg bg-terracotta px-6 py-3.5 font-heading font-semibold text-white transition-all hover:bg-terracotta-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta",
+          "w-full rounded-full bg-salmon px-6 py-3.5 font-heading font-medium text-white transition-all hover:bg-salmon-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salmon",
           status === "sending" && "opacity-70 cursor-not-allowed"
         )}
       >

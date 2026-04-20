@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: "Alec Stephens AI Solutions <onboarding@resend.dev>",
+      from: "Stephens AI <onboarding@resend.dev>",
       to: CONTACT_EMAIL,
       replyTo: email,
       subject: `New consultation request from ${name}${company ? ` (${company})` : ""}`,

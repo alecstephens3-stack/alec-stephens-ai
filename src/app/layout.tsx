@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Outfit, DM_Sans } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -61,11 +61,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-terracotta focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
         >
           Skip to main content
         </a>

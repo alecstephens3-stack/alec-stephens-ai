@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 
@@ -32,16 +33,24 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-cream/80 backdrop-blur-md border-b border-border"
+          ? "bg-paper/80 backdrop-blur-md border-b border-border"
           : "bg-transparent"
       )}
     >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <a
           href="#"
-          className="font-heading text-lg font-bold text-black transition-colors hover:text-terracotta"
+          className="flex items-center transition-opacity hover:opacity-80"
+          aria-label="Stephens AI — home"
         >
-          Alec Stephens<span className="text-terracotta">.</span>
+          <Image
+            src="/logo-light.svg"
+            alt="Stephens AI"
+            width={180}
+            height={40}
+            priority
+            className="h-8 w-auto"
+          />
         </a>
 
         <nav
@@ -52,14 +61,14 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-warm-gray transition-colors hover:text-black"
+              className="text-sm font-medium text-ink-60 transition-colors hover:text-black"
             >
               {link.label}
             </a>
           ))}
           <a
             href="#contact"
-            className="text-sm font-medium text-terracotta transition-colors hover:text-terracotta-light"
+            className="text-sm font-medium text-salmon transition-colors hover:text-salmon-deep"
           >
             Get in touch &rarr;
           </a>
@@ -97,7 +106,7 @@ export function Header() {
       {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-cream/98 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-40 bg-paper/98 transition-all duration-300 md:hidden",
           isMobileMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -112,7 +121,7 @@ export function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-heading text-2xl font-semibold text-black transition-colors hover:text-terracotta"
+              className="font-heading text-2xl font-semibold text-black transition-colors hover:text-salmon"
             >
               {link.label}
             </a>
@@ -120,7 +129,7 @@ export function Header() {
           <a
             href="#contact"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-heading text-2xl font-semibold text-terracotta transition-colors hover:text-terracotta-light"
+            className="font-heading text-2xl font-semibold text-salmon transition-colors hover:text-salmon-deep"
           >
             Get in touch &rarr;
           </a>
