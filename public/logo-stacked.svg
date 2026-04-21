@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
-  <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round" transform="translate(150, 40)">
-    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"></path>
-    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"></path>
+  <g fill="none" stroke="#0A0A0A" stroke-width="18" stroke-linecap="round" transform="translate(150, 40)">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
   </g>
-  <circle cx="250" cy="140" r="11.5" fill="#DC6843"></circle>
-  <text x="250" y="325" text-anchor="middle" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="72" letter-spacing="10" fill="#0D0C0B">STEPHENS</text>
-  <text x="250" y="415" text-anchor="middle" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="72" letter-spacing="10" fill="#0D0C0B">AI</text>
+  <circle cx="250" cy="140" r="11.5" fill="#F47B6B"/>
+  <text x="250" y="340" text-anchor="middle" font-family="Inter Tight, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="72" letter-spacing="-2" fill="#0A0A0A">Stephens AI</text>
 </svg>

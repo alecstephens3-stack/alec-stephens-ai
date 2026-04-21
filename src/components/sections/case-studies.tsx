@@ -44,7 +44,7 @@ export function CaseStudies() {
                       >
                         {study.metric}
                       </span>
-                      <span className="text-sm text-ink-60">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
                         {study.metricLabel}
                       </span>
                     </div>
@@ -75,7 +75,7 @@ export function CaseStudies() {
 
                   {/* Image side — or decorative block for text-only entries */}
                   {hasImage ? (
-                    <div className="overflow-hidden rounded-lg border border-border bg-sand/50 shadow-sm">
+                    <div className="overflow-hidden rounded-lg border border-border bg-paper-raised">
                       <div className="relative aspect-[4/3] flex items-center justify-center p-4">
                         <Image
                           src={study.images![0].src}
