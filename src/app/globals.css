@@ -7,6 +7,7 @@
 @theme {
   --font-sans: var(--font-inter-tight), "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --font-heading: var(--font-inter-tight), "Inter Tight", "Helvetica Neue", Arial, sans-serif;
 
   /* Ink (text, borders, surfaces) */
   --color-ink: #0A0A0A;
@@ -27,24 +28,10 @@
   --color-salmon-deep: #E35F4D;
   --color-salmon-soft: #FDE6E1;
 
-  /* Legacy aliases (keep temporarily for any unmigrated components — point to new palette) */
-  --color-terracotta: #F47B6B;         /* salmon */
-  --color-terracotta-hover: #E35F4D;   /* salmon-deep */
-  --color-terracotta-light: #FDE6E1;   /* salmon-soft */
-  --color-dark-stone: #0A0A0A;         /* ink */
-  --color-dark-surface: #1A1A1A;       /* ink-90 */
-  --color-cream: #FFFFFF;              /* paper */
-  --color-cream-warm: #FAFAFA;         /* paper-raised */
-  --color-sand: #FAFAFA;               /* paper-raised (sand was a neutral tint, not a salmon tint) */
-  --color-off-white: #FFFFFF;          /* paper */
-  --color-charcoal: #1A1A1A;           /* ink-90 */
-  --color-warm-gray: #6B6B6B;          /* ink-60 */
-  --color-warm-gray-light: #A3A3A3;    /* ink-40 */
+  /* Kept aliases — still referenced by existing components. Point to canonical palette. */
+  --color-sand: #FAFAFA;               /* paper-raised */
   --color-border: #EDEDED;             /* ink-10 */
-  --color-red-accent: #E35F4D;         /* salmon-deep */
-  --color-green-accent: #0A0A0A;       /* ink (no secondary accent; success = ink) */
-
-  --color-black: #0A0A0A;
+  --color-black: #0A0A0A;              /* ink */
 
   /* Motion */
   --ease-brand: cubic-bezier(0.2, 0.8, 0.2, 1);

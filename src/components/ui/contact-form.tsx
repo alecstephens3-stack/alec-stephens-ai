@@ -69,7 +69,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="contact-name"
-            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
+            className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-60"
           >
             Name
           </label>
@@ -88,7 +88,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="contact-email"
-            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
+            className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-60"
           >
             Email
           </label>
@@ -109,7 +109,7 @@ export function ContactForm() {
       <div>
         <label
           htmlFor="contact-message"
-          className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-60"
+          className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-60"
         >
           Message
         </label>
@@ -127,11 +127,11 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-red-600">
+        <p className="text-sm text-ink-90">
           {errorMessage} You can also email me at{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="underline hover:text-red-500"
+            className="text-salmon underline underline-offset-2 hover:text-salmon-deep"
           >
             {CONTACT_EMAIL}
           </a>

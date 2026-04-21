@@ -38,7 +38,7 @@ export function Solutions() {
     >
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
+          <p className="mb-5 font-mono text-[13px] uppercase tracking-[0.12em] text-salmon">
             Solutions
           </p>
           <h2
@@ -56,7 +56,7 @@ export function Solutions() {
         <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {SOLUTIONS.map((solution, index) => (
             <AnimateOnScroll key={solution.title} delay={index * 80}>
-              <div className="group flex h-full flex-col rounded-lg border border-border bg-sand/30 p-7 transition-all duration-300 hover:border-salmon/20 hover:bg-white hover:shadow-lg hover:shadow-salmon/5">
+              <div className="group flex h-full flex-col rounded-lg border border-border bg-paper-raised p-7 transition-all duration-300 hover:border-ink-20 hover:bg-paper">
                 {/* Icon */}
                 <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-sand text-salmon transition-colors group-hover:bg-salmon/10">
                   {ICONS[solution.icon]}

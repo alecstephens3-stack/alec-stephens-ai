@@ -58,22 +58,22 @@ export function Hero() {
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 rounded-lg border border-border bg-sand/40 px-6 py-5 md:justify-between">
             <div className="flex items-center gap-2">
               <span className="font-heading text-xl font-medium text-black">5+</span>
-              <span className="text-sm text-ink-60">years on Upwork</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">years on Upwork</span>
             </div>
             <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
             <div className="flex items-center gap-2">
               <span className="font-heading text-xl font-medium text-salmon">100%</span>
-              <span className="text-sm text-ink-60">Job Success Score</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">Job Success Score</span>
             </div>
             <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
             <div className="flex items-center gap-1">
               <span className="font-heading text-xl font-medium text-black">3</span>
-              <span className="text-sm text-ink-60">countries served</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">countries served</span>
             </div>
             <div className="hidden h-5 w-px bg-border md:block" aria-hidden="true" />
             <div className="flex items-center gap-2">
               <span className="font-heading text-xl font-medium text-salmon">Top Rated</span>
-              <span className="text-sm text-ink-60">on Upwork</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">on Upwork</span>
             </div>
           </div>
         </div>

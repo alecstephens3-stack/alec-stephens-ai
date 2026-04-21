@@ -12,7 +12,7 @@ export function Services() {
       >
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
+            <p className="mb-5 font-mono text-[13px] uppercase tracking-[0.12em] text-salmon">
               How I work
             </p>
             <h2
@@ -70,7 +70,7 @@ export function Services() {
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
             <div className="text-center">
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-salmon">
+              <p className="mb-5 font-mono text-[13px] uppercase tracking-[0.12em] text-salmon">
                 Pricing
               </p>
               <h2
@@ -91,12 +91,12 @@ export function Services() {
                 <div
                   className={`relative flex h-full flex-col rounded-lg border p-8 transition-all duration-300 ${
                     tier.highlighted
-                      ? "border-salmon/30 bg-white shadow-lg shadow-salmon/5 ring-1 ring-salmon/10"
-                      : "border-border bg-sand/30 hover:border-border hover:bg-sand/50"
+                      ? "border-ink-90 bg-paper"
+                      : "border-border bg-paper-raised hover:border-ink-20"
                   }`}
                 >
                   {tier.highlighted && (
-                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-white">
                       Most popular
                     </span>
                   )}
