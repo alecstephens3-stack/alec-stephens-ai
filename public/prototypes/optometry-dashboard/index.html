@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Practice Intelligence — Wichita Family Vision</title>
+<meta name="viewport" content="width=800" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:       #0A0A0A;
+    --ink-60:    #6B6B6B;
+    --ink-40:    #A3A3A3;
+    --rule:      #EDEDED;
+    --paper:     #FFFFFF;
+    --paper-2:   #FAFAFA;
+    --salmon:    #F47B6B;
+    --salmon-soft:#FDE6E1;
+    --sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #E8E8E8; }
+  body {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); color: var(--ink);
+    -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+  }
+
+  .stage {
+    width: 800px; height: 600px; background: var(--paper);
+    position: relative; overflow: hidden; color: var(--ink);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 64px;
+    background: var(--paper-2); border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; padding: 0 40px;
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .mark {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 18px; letter-spacing: -0.01em;
+  }
+  .brand .mark .dot {
+    width: 7px; height: 7px; border-radius: 999px; background: var(--salmon);
+    display: inline-block; transform: translateY(-1px);
+  }
+  .brand .sep { color: var(--ink-60); font-size: 10px; font-family: var(--mono); letter-spacing: 0.08em; }
+  .topbar .time {
+    margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    color: var(--ink-60);
+  }
+
+  /* ---------- Eyebrows ---------- */
+  .eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+    padding: 0 40px; position: absolute; left: 0; right: 0;
+  }
+  .eyebrow .rule { flex: 1; height: 1px; background: var(--rule); }
+  .s-week   { top: 104px; }
+  .s-signal { top: 260px; }
+  .s-roster { top: 436px; }
+
+  /* ---------- KPI tiles ---------- */
+  .kpis {
+    position: absolute; top: 128px; left: 40px; right: 40px;
+    display: grid; grid-template-columns: 175px 175px 175px 165px; gap: 10px;
+    height: 100px;
+  }
+  .tile {
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 16px; position: relative;
+    display: flex; flex-direction: column;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 220ms ease;
+  }
+  .tile.hover   { border-color: #D7D7D7; }
+  .tile.click   {
+    transform: translateY(1px);
+    box-shadow: 0 0 0 2px rgba(10,10,10,0.08);
+  }
+  .tile.dark.click {
+    box-shadow: 0 0 28px 2px rgba(244,123,107,0.45), 0 0 0 2px rgba(244,123,107,0.6);
+  }
+  .tile .lbl {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .tile .val {
+    font-weight: 500; font-size: 34px; letter-spacing: -0.025em; line-height: 1;
+    margin-top: 18px; font-variant-numeric: tabular-nums;
+  }
+  .tile .sub {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60); margin-top: 8px;
+  }
+  .tile .sub.up { color: var(--salmon); }
+  .tile.dark { background: var(--ink); border-color: var(--ink); }
+  .tile.dark .lbl, .tile.dark .sub { color: var(--ink-40); }
+  .tile.dark .val { color: var(--salmon); }
+
+  /* ---------- Signal ---------- */
+  .signal {
+    position: absolute; top: 284px; left: 40px; right: 40px;
+    height: 120px; border: 1px solid var(--rule); padding: 20px; background: var(--paper);
+  }
+  .signal h2 {
+    margin: 0; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
+    color: var(--ink); line-height: 1;
+  }
+  .signal .meta {
+    margin-top: 9px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .bars {
+    margin-top: 14px; display: flex; align-items: flex-end; gap: 10px;
+    height: 28px;
+  }
+  .bar {
+    width: 42px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 11px;
+    position: relative;
+    transform-origin: bottom center;
+    transform: scaleY(var(--fill, 0));
+    transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1),
+                box-shadow 220ms ease;
+  }
+  .bar.soft { background: var(--salmon-soft); color: var(--ink); }
+  .bar.hot  { background: var(--salmon);      color: #fff; }
+  .bar.click { box-shadow: 0 0 0 2px rgba(244,123,107,0.55); }
+  .bar .val { opacity: 0; transition: opacity 200ms ease; font-variant-numeric: tabular-nums; }
+  .bar.filled .val { opacity: 1; }
+  .bars .note {
+    margin-left: 14px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+    opacity: 0; transition: opacity 400ms ease;
+  }
+  .bars .note.show { opacity: 1; }
+
+  /* ---------- Roster ---------- */
+  .roster {
+    position: absolute; top: 460px; left: 40px; right: 40px;
+    display: grid; grid-template-columns: 120px 140px 140px 160px 1fr;
+    row-gap: 24px;
+    font-weight: 500; font-size: 12px; color: var(--ink-60); line-height: 1;
+  }
+  .roster > span {
+    position: relative;
+    padding: 2px 0;
+    opacity: 0;
+    transform: translateY(10px);
+    color: var(--ink-60);
+    will-change: transform, opacity, color;
+  }
+  .roster > span.lit {
+    animation: boink 820ms cubic-bezier(0.34, 1.56, 0.48, 1.02) forwards;
+  }
+  @keyframes boink {
+    0%   { opacity: 0;   transform: translateY(10px) scale(0.92); }
+    55%  { opacity: 1;   transform: translateY(-3px) scale(1.04); }
+    78%  {                transform: translateY(1px)  scale(0.99); }
+    100% { opacity: 1;   transform: translateY(0)    scale(1); }
+  }
+  /* Uniform soft charcoal for lit cells; a few specific items keep salmon accent */
+  #roster > span.lit { color: #3A3A3A; }
+  #roster > span.accent.lit { color: #E35F4D; }
+  /* Hairline sweep across the roster area */
+  .roster-sweep {
+    position: absolute;
+    top: 452px; bottom: 44px;
+    left: 40px; width: 1px;
+    background: var(--salmon);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(0);
+    will-change: transform, opacity;
+  }
+  .roster-sweep.run {
+    animation: sweep-line 1900ms cubic-bezier(0.45,0,0.25,1) forwards;
+  }
+  @keyframes sweep-line {
+    0%   { opacity: 0; transform: translateX(0); }
+    12%  { opacity: 0.9; }
+    88%  { opacity: 0.9; }
+    100% { opacity: 0; transform: translateX(720px); }
+  }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40px;
+    border-top: 1px solid var(--rule); padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .footer .live { color: var(--salmon); display: inline-flex; align-items: center; gap: 6px; }
+  .footer .live .pulse {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--salmon);
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; }  50% { opacity: 0.35; }
+  }
+
+  /* ---------- Cursor ---------- */
+  .cursor {
+    position: absolute; left: 0; top: 0; width: 22px; height: 28px;
+    transform: translate(-6px, -4px);
+    pointer-events: none; z-index: 50;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+    will-change: transform;
+  }
+  .cursor.clicking .ring {
+    animation: click-ring 420ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .click-ring {
+    position: absolute; width: 14px; height: 14px; border-radius: 999px;
+    border: 1.5px solid rgba(244,123,107,0.9);
+    pointer-events: none; z-index: 49;
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  .click-ring.fire {
+    animation: ripple 480ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+  }
+  @keyframes ripple {
+    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; }
+    100% { transform: translate(-50%, -50%) scale(2.4); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage *, .stage *::before, .stage *::after {
+      animation: none !important; transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage" data-screen-label="Practice Intelligence Dashboard" id="stage">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">Stephens<span class="dot"></span>AI</span>
+      <span class="sep">· PRACTICE INTELLIGENCE</span>
+    </div>
+    <div class="time">MON 20 APR · 07:03</div>
+  </header>
+
+  <div class="eyebrow s-week"><span>01 · This week</span><span class="rule"></span></div>
+
+  <section class="kpis" aria-label="This week KPIs">
+    <div class="tile" id="tile-1">
+      <div class="lbl">Patients</div>
+      <div class="val" data-final="142" data-suffix="">0</div>
+      <div class="sub up">▲ 6% · 4-wk avg</div>
+    </div>
+    <div class="tile" id="tile-2">
+      <div class="lbl">Optical conv.</div>
+      <div class="val" data-final="64" data-suffix="%">0%</div>
+      <div class="sub">▼ 4 pts</div>
+    </div>
+    <div class="tile" id="tile-3">
+      <div class="lbl">Recall comp.</div>
+      <div class="val" data-final="71" data-suffix="%">0%</div>
+      <div class="sub">· In range</div>
+    </div>
+    <div class="tile dark" id="tile-4">
+      <div class="lbl">Top opportunity</div>
+      <div class="val" data-final="18.8" data-prefix="$" data-suffix="K" data-decimals="1">$0.0K</div>
+      <div class="sub">· 47 overdue patients</div>
+    </div>
+  </section>
+
+  <div class="eyebrow s-signal"><span>02 · Signal</span><span class="rule"></span></div>
+
+  <section class="signal" aria-label="Signal of the week">
+    <h2>Tuesday no-show rate climbing 3 weeks running</h2>
+    <div class="meta">Now 12% · clinic avg 4%</div>
+    <div class="bars">
+      <div class="bar soft" id="bar-1"><span class="val" data-final="8" data-suffix="%">0%</span></div>
+      <div class="bar soft" id="bar-2"><span class="val" data-final="9" data-suffix="%">0%</span></div>
+      <div class="bar hot"  id="bar-3"><span class="val" data-final="12" data-suffix="%">0%</span></div>
+      <div class="note" id="bars-note">· Recommend reviewing confirmations</div>
+    </div>
+  </section>
+
+  <div class="eyebrow s-roster"><span>03 · 12 KPIs tracked</span><span class="rule"></span></div>
+
+  <section class="roster" aria-label="KPI roster" id="roster">
+    <span>Patients</span><span class="accent">New patient %</span><span>No-show rate</span><span>Same-day cancel</span><span>Capture rate</span>
+    <span>Revenue / pt</span><span class="accent">CL patient %</span><span>Myopia attach</span><span>Recall compliance</span><span>Insurance mix</span>
+    <span>AR days</span><span class="accent">Top 5 leaks</span><span></span><span></span><span></span>
+  </section>
+  <div class="roster-sweep" id="roster-sweep"></div>
+
+  <footer class="footer">
+    <span>Stephens AI · Wichita Family Vision · v2.0</span>
+    <span class="live"><span class="pulse"></span>Live · sync 04:00 daily</span>
+  </footer>
+
+  <!-- Cursor -->
+  <svg class="cursor" id="cursor" viewBox="0 0 22 28" aria-hidden="true">
+    <path d="M2 2 L2 22 L7 17.5 L10.5 25 L13.5 24 L10 16.5 L17 16.5 Z"
+          fill="#0A0A0A" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+  </svg>
+  <div class="click-ring" id="ring"></div>
+
+</div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('ring');
+
+  // Helper: element center relative to stage
+  const center = (el) => {
+    const s = stage.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2 };
+  };
+
+  // ---------- Scripted timeline (seconds) ----------
+  // Total loop: 16s.
+  const LOOP = 16000;
+
+  // Cursor keyframes: array of {t, target, jitter?}. Target is el or {x,y}.
+  // Between keyframes we interpolate with ease-in-out.
+  const tileEls = [1,2,3,4].map(i => document.getElementById('tile-'+i));
+  const barEls  = [1,2,3].map(i => document.getElementById('bar-'+i));
+  const rosterCells = [...document.querySelectorAll('#roster > span')].filter(s => s.textContent.trim());
+
+  const path = [
+    { t: 0,     pos: { x: 60,  y: 540 } },
+    { t: 800,   target: tileEls[0] },
+    { t: 1200,  click: tileEls[0], count: 'tile-1' },
+    { t: 1700,  target: tileEls[1] },
+    { t: 2000,  click: tileEls[1], count: 'tile-2' },
+    { t: 2500,  target: tileEls[2] },
+    { t: 2800,  click: tileEls[2], count: 'tile-3' },
+    { t: 3300,  target: tileEls[3] },
+    { t: 3700,  click: tileEls[3], count: 'tile-4', glow: true },
+    { t: 4600,  target: { el: document.querySelector('.signal h2'), dy: 4 } },
+    { t: 5100,  target: barEls[0] },
+    { t: 5300,  click: barEls[0], bar: 0 },
+    { t: 5900,  target: barEls[1] },
+    { t: 6100,  click: barEls[1], bar: 1 },
+    { t: 6700,  target: barEls[2] },
+    { t: 6900,  click: barEls[2], bar: 2 },
+    { t: 7600,  showNote: true },
+    // Cursor retreats quietly to a resting position, then the roster reveals itself
+    { t: 8800,  target: { x: 740, y: 250 } },
+    { t: 9400,  sweep: true },
+    { t: 9500,  litCol: 0 },
+    { t: 9800,  litCol: 1 },
+    { t: 10100, litCol: 2 },
+    { t: 10400, litCol: 3 },
+    { t: 10700, litCol: 4 },
+    { t: LOOP,  target: { x: 740, y: 250 } },
+  ];
+
+  // Resolve target into {x,y}
+  const resolveTarget = (node) => {
+    if (!node) return null;
+    if (node.x !== undefined && node.y !== undefined) return { x: node.x, y: node.y };
+    if (node.el) {
+      const p = center(node.el);
+      return { x: p.x + (node.dx || 0), y: p.y + (node.dy || 0) };
+    }
+    return center(node);
+  };
+
+  // Build position keyframes (only entries with target or pos)
+  const posFrames = path
+    .filter(p => p.pos || p.target !== undefined)
+    .map(p => ({ t: p.t, pt: p.pos || resolveTarget(p.target) }));
+
+  // Easing
+  const easeInOut = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x+2, 2)/2;
+
+  const getPos = (ms) => {
+    // Find surrounding frames
+    for (let i = 0; i < posFrames.length - 1; i++) {
+      const a = posFrames[i], b = posFrames[i+1];
+      if (ms >= a.t && ms <= b.t) {
+        const k = (ms - a.t) / (b.t - a.t);
+        const e = easeInOut(k);
+        return {
+          x: a.pt.x + (b.pt.x - a.pt.x) * e,
+          y: a.pt.y + (b.pt.y - a.pt.y) * e,
+        };
+      }
+    }
+    return posFrames[0].pt;
+  };
+
+  // ---------- Counter rollup ----------
+  const tileValEls = {
+    'tile-1': document.querySelector('#tile-1 .val'),
+    'tile-2': document.querySelector('#tile-2 .val'),
+    'tile-3': document.querySelector('#tile-3 .val'),
+    'tile-4': document.querySelector('#tile-4 .val'),
+  };
+
+  const formatVal = (el, current) => {
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    return prefix + current.toFixed(decimals) + suffix;
+  };
+
+  // Simple tween runner
+  const tweens = [];
+  const tween = (el, finalVal, dur) => {
+    tweens.push({ el, from: 0, to: finalVal, start: performance.now(), dur });
+  };
+
+  // State machine for event triggering (fired once per loop)
+  let lastLoopPhase = -1;
+  const firedThisLoop = new Set();
+
+  // Bar grow
+  const setBar = (i, progress) => {
+    barEls[i].style.setProperty('--fill', progress);
+    if (progress >= 1) barEls[i].classList.add('filled');
+  };
+  const resetBars = () => {
+    barEls.forEach(b => { b.style.setProperty('--fill', 0); b.classList.remove('filled', 'click'); });
+    document.getElementById('bars-note').classList.remove('show');
+  };
+
+  // Reset function called at each loop start
+  const resetAll = () => {
+    tweens.length = 0;
+    Object.values(tileValEls).forEach(el => {
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      el.textContent = prefix + (0).toFixed(decimals) + suffix;
+    });
+    resetBars();
+    barEls.forEach(b => b.querySelector('.val').textContent = '0%');
+    document.querySelectorAll('.tile').forEach(t => t.classList.remove('hover','click'));
+    document.querySelectorAll('.roster > span').forEach(s => s.classList.remove('lit'));
+    const sw = document.getElementById('roster-sweep');
+    if (sw) sw.classList.remove('run');
+  };
+
+  // Click ring effect at current cursor position
+  const fireRing = (x, y, hotTarget) => {
+    ring.style.left = x + 'px';
+    ring.style.top  = y + 'px';
+    ring.classList.remove('fire');
+    // force reflow to restart animation
+    void ring.offsetWidth;
+    ring.style.borderColor = hotTarget ? 'rgba(244,123,107,0.9)' : 'rgba(10,10,10,0.55)';
+    ring.classList.add('fire');
+  };
+
+  // Event triggers by time in loop
+  const events = path.filter(p => p.click || p.count || p.bar !== undefined || p.showNote || p.litCol !== undefined || p.sweep);
+
+  // Tile counter durations
+  const countDur = {
+    'tile-1': 700,
+    'tile-2': 600,
+    'tile-3': 600,
+    'tile-4': 800,
+  };
+  const barCountDur = [400, 400, 450];
+
+  // Track hover state over tiles for passive highlight
+  const updateHover = (pt) => {
+    document.querySelectorAll('.tile').forEach(t => {
+      const r = t.getBoundingClientRect(); const s = stage.getBoundingClientRect();
+      const x = pt.x, y = pt.y;
+      const inside = x >= r.left - s.left && x <= r.right - s.left && y >= r.top - s.top && y <= r.bottom - s.top;
+      t.classList.toggle('hover', inside);
+    });
+  };
+
+  // Main render loop
+  let loopStart = performance.now();
+  const frame = (now) => {
+    let elapsed = now - loopStart;
+    if (elapsed >= LOOP) {
+      loopStart = now - (elapsed % LOOP);
+      elapsed = now - loopStart;
+      firedThisLoop.clear();
+      resetAll();
+    }
+
+    // Move cursor
+    const pt = getPos(elapsed);
+    cursor.style.transform = `translate(${pt.x - 6}px, ${pt.y - 4}px)`;
+    updateHover(pt);
+
+    // Fire events whose time has passed
+    for (const ev of events) {
+      if (elapsed >= ev.t && !firedThisLoop.has(ev)) {
+        firedThisLoop.add(ev);
+
+        if (ev.click) {
+          ev.click.classList.add('click');
+          setTimeout(() => ev.click.classList.remove('click'), 260);
+          const cp = resolveTarget(ev.click);
+          fireRing(cp.x, cp.y, !!ev.glow);
+        }
+
+        if (ev.count) {
+          const el = tileValEls[ev.count];
+          const final = parseFloat(el.dataset.final);
+          tween(el, final, countDur[ev.count] || 600);
+        }
+
+        if (ev.bar !== undefined) {
+          setBar(ev.bar, 1);
+          const valEl = barEls[ev.bar].querySelector('.val');
+          const final = parseFloat(valEl.dataset.final);
+          tween(valEl, final, barCountDur[ev.bar]);
+          // reveal % once bar fills
+          setTimeout(() => barEls[ev.bar].classList.add('filled'), 250);
+        }
+
+        if (ev.showNote) {
+          document.getElementById('bars-note').classList.add('show');
+        }
+
+        if (ev.sweep) {
+          const s = document.getElementById('roster-sweep');
+          s.classList.remove('run');
+          void s.offsetWidth;
+          s.classList.add('run');
+        }
+
+        if (ev.litCol !== undefined) {
+          // Light every cell in the given column (5-col grid). rosterCells only has non-empty cells.
+          const allCells = [...document.querySelectorAll('#roster > span')];
+          for (let r = 0; r < 3; r++) {
+            const cell = allCells[r * 5 + ev.litCol];
+            if (cell && cell.textContent.trim()) cell.classList.add('lit');
+          }
+        }
+      }
+    }
+
+    // Update tweens
+    for (let i = tweens.length - 1; i >= 0; i--) {
+      const tw = tweens[i];
+      const k = Math.min(1, (now - tw.start) / tw.dur);
+      const e = 1 - Math.pow(1 - k, 3); // ease-out cubic
+      const v = tw.from + (tw.to - tw.from) * e;
+      if (tw.el.dataset.final !== undefined) {
+        // tile style: might have prefix/suffix
+        tw.el.textContent = formatVal(tw.el, v);
+      }
+      if (k >= 1) tweens.splice(i, 1);
+    }
+
+    requestAnimationFrame(frame);
+  };
+
+  // Kick off
+  resetAll();
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
