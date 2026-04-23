@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 
@@ -38,10 +39,10 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-        <a
-          href="#"
+        <Link
+          href="/"
           className="flex items-center transition-opacity hover:opacity-80"
-          aria-label="Stephens AI — home"
+          aria-label="Stephens AI, home"
         >
           <Image
             src="/logo-light.svg"
@@ -51,27 +52,27 @@ export function Header() {
             priority
             className="h-8 w-auto"
           />
-        </a>
+        </Link>
 
         <nav
           className="hidden items-center gap-8 md:flex"
           aria-label="Main navigation"
         >
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="text-sm font-medium text-ink-60 transition-colors hover:text-black"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="text-sm font-medium text-salmon transition-colors hover:text-salmon-deep"
           >
             Get in touch &rarr;
-          </a>
+          </Link>
         </nav>
 
         <button
@@ -117,22 +118,22 @@ export function Header() {
           aria-label="Mobile navigation"
         >
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
               className="font-heading text-2xl font-semibold text-black transition-colors hover:text-salmon"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             onClick={() => setIsMobileMenuOpen(false)}
             className="font-heading text-2xl font-semibold text-salmon transition-colors hover:text-salmon-deep"
           >
             Get in touch &rarr;
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

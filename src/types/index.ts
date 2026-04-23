@@ -25,3 +25,28 @@ export interface Solution {
   industries: string[];
   icon: string;
 }
+
+export interface OptometryStat {
+  value: string;
+  caption: string;
+  accent?: boolean;
+}
+
+export interface OptometryModule {
+  number: string;
+  title: string;
+  problem: string;
+  solution: string;
+  howItWorks: string[];
+  roi: {
+    lead: string;
+    highlight: string;
+    trail: string;
+  };
+}
+
+export interface OptometryNode {
+  id: "dashboard" | "booking" | "recall" | "reviews" | "insurance";
+  label: string;
+  sub?: string;
+}

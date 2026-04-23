@@ -11,11 +11,11 @@ export const SITE_DESCRIPTION =
   "AI automation consultant helping businesses in the USA, Japan, and around the world save time with n8n workflows, Claude API integrations, and custom automation solutions.";
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
+  { label: "Solutions", href: "/#solutions" },
+  { label: "Work", href: "/#work" },
+  { label: "Services", href: "/#services" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "About", href: "/#about" },
 ];
 
 export const SERVICES = [
