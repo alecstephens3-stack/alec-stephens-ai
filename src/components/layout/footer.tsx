@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
 
 export function Footer() {
@@ -6,8 +7,8 @@ export function Footer() {
     <footer className="border-t border-border py-10" aria-label="Site footer">
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <a
-            href="#"
+          <Link
+            href="/"
             className="flex items-center transition-opacity hover:opacity-80"
             aria-label="Stephens AI — home"
           >
@@ -18,21 +19,21 @@ export function Footer() {
               height={36}
               className="h-7 w-auto"
             />
-          </a>
+          </Link>
 
           <nav className="flex items-center gap-6" aria-label="Footer navigation">
-            <a
-              href="#work"
+            <Link
+              href="/#work"
               className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               Work
-            </a>
-            <a
-              href="#services"
+            </Link>
+            <Link
+              href="/#services"
               className="text-sm text-ink-60 transition-colors hover:text-black"
             >
               Services
-            </a>
+            </Link>
             <a
               href="https://www.linkedin.com/in/alec-stephens-55b392213/"
               target="_blank"
