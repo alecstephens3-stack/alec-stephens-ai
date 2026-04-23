@@ -9,7 +9,7 @@ export const OPTOMETRY_HERO = {
   },
   lede:
     "We build intelligence layers on top of the software you already use. Compulink, RevolutionEHR, Crystal PM. Your clinic stops losing time to paperwork, and revenue to bad workflows. HIPAA-compliant. Deployed in weeks, not months.",
-  primaryCta: { label: "Book a 20-minute call", href: "/#contact?ref=optometry" },
+  primaryCta: { label: "Book a 20-minute call", href: "/#contact" },
   secondaryCta: { label: "See how it works", href: "#flagship" },
   trust: [
     "HIPAA-eligible",
@@ -166,8 +166,8 @@ export const OPTOMETRY_CTA = {
   },
   body:
     "Discovery calls are 20 minutes. We learn your practice, your stack, and your biggest friction points. No pitch, no pressure. You leave with at least one idea you can act on even if you never hire us.",
-  primary: { label: "Book a 20-minute call", href: "/#contact?ref=optometry" },
-  secondary: { label: "alecstephensai@gmail.com", href: "mailto:alecstephensai@gmail.com" },
+  primary: { label: "Book a 20-minute call", href: "/#contact" },
+  secondary: { label: "alec@stephensai.co", href: "mailto:alec@stephensai.co" },
 };
 
 export const OPTOMETRY_META = {
