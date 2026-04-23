@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -104,38 +105,36 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={cn(
-          "fixed inset-0 z-40 bg-paper/98 transition-all duration-300 md:hidden",
-          isMobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        )}
-      >
-        <nav
-          className="flex h-full flex-col items-center justify-center gap-8"
-          aria-label="Mobile navigation"
-        >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="font-heading text-2xl font-semibold text-black transition-colors hover:text-salmon"
+      {/* Portaled to body: header uses backdrop-filter, which would otherwise
+          become the containing block for this fixed overlay and clip it. */}
+      {isMobileMenuOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-40 bg-paper md:hidden">
+            <nav
+              className="flex h-full flex-col items-center justify-center gap-8"
+              aria-label="Mobile navigation"
             >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            href="/#contact"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-heading text-2xl font-semibold text-salmon transition-colors hover:text-salmon-deep"
-          >
-            Get in touch &rarr;
-          </Link>
-        </nav>
-      </div>
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-heading text-2xl font-semibold text-black transition-colors hover:text-salmon"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                href="/#contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="font-heading text-2xl font-semibold text-salmon transition-colors hover:text-salmon-deep"
+              >
+                Get in touch &rarr;
+              </Link>
+            </nav>
+          </div>,
+          document.body
+        )}
     </header>
   );
 }
