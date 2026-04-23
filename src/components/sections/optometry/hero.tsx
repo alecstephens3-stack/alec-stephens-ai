@@ -33,7 +33,7 @@ export function OptometryHero() {
         <div className="mt-10 flex flex-wrap items-center gap-5 md:mt-12 animate-fade-in-up animation-delay-600">
           <a
             href={primaryCta.href}
-            className="inline-flex items-center gap-2 rounded-full bg-black px-6 py-3.5 font-heading text-sm font-medium text-paper transition-colors hover:bg-salmon"
+            className="group inline-flex items-center gap-2 rounded-full bg-black px-6 py-3.5 font-heading text-sm font-medium text-paper transition-colors hover:bg-salmon"
           >
             {primaryCta.label}
             <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
