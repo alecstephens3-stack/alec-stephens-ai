@@ -44,9 +44,3 @@ export interface OptometryModule {
     trail: string;
   };
 }
-
-export interface OptometryNode {
-  id: "dashboard" | "booking" | "recall" | "reviews" | "insurance";
-  label: string;
-  sub?: string;
-}

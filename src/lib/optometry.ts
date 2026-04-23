@@ -1,4 +1,4 @@
-import type { OptometryModule, OptometryNode, OptometryStat } from "@/types";
+import type { OptometryModule, OptometryStat } from "@/types";
 
 export const OPTOMETRY_HERO = {
   eyebrow: "00 · Optometry",
@@ -155,13 +155,6 @@ export const OPTOMETRY_CONNECTION = {
   },
   body:
     "Weave and Demandforce are point tools that don't talk to each other. Stephens AI is a connected operating layer. Every module reads from and writes to the same patient data layer. Recall knows who Booking Guardian just scheduled. The Dashboard tracks how each module is performing. You aren't buying five tools. You're building one system that compounds every month it runs.",
-  nodes: [
-    { id: "dashboard", label: "Dashboard", sub: "flagship" },
-    { id: "booking", label: "Booking Guardian" },
-    { id: "recall", label: "Recall Engine" },
-    { id: "reviews", label: "Reviews" },
-    { id: "insurance", label: "Insurance Verify" },
-  ] as OptometryNode[],
 };
 
 export const OPTOMETRY_CTA = {
