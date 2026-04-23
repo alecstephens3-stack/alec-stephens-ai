@@ -6,7 +6,7 @@ import type {
 
 export const SITE_NAME = "Stephens AI";
 export const SITE_URL = "https://stephensai.co";
-export const CONTACT_EMAIL = "alecstephensai@gmail.com";
+export const CONTACT_EMAIL = "alec@stephensai.co";
 export const SITE_DESCRIPTION =
   "AI automation consultant helping businesses in the USA, Japan, and around the world save time with n8n workflows, Claude API integrations, and custom automation solutions.";
 
