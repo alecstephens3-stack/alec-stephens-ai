@@ -6,10 +6,10 @@ export function OptometryHero() {
   return (
     <section
       className="relative pt-32 pb-16 md:pt-40 md:pb-24"
-      aria-label="Optometry overview"
+      aria-label="Eyecare overview"
     >
       <div className="mx-auto max-w-5xl px-6">
-        <p className="mb-8 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-60 animate-fade-in-up">
+        <p className="mb-8 font-mono text-xs uppercase tracking-[0.12em] text-ink-60 animate-fade-in-up">
           {eyebrow}
         </p>
 
@@ -56,7 +56,7 @@ export function OptometryHero() {
           {trust.map((item, i) => (
             <span
               key={item}
-              className="flex items-center font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60"
+              className="flex items-center font-mono text-xs uppercase tracking-[0.06em] text-ink-60"
             >
               {item}
               {i < trust.length - 1 && (

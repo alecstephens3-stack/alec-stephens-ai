@@ -11,7 +11,7 @@ export function OptometryProblem() {
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
           <div className="mb-12 flex items-center gap-5 md:mb-16">
-            <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
+            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
               <span className="text-ink-40">01</span> · The problem
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -32,7 +32,7 @@ export function OptometryProblem() {
                 >
                   {stat.value}
                 </div>
-                <p className="mt-5 max-w-[28ch] font-mono text-[11px] uppercase leading-relaxed tracking-[0.06em] text-ink-60">
+                <p className="mt-5 max-w-[28ch] font-mono text-xs uppercase leading-relaxed tracking-[0.04em] text-ink-60 md:text-[11px] md:tracking-[0.06em]">
                   {stat.caption}
                 </p>
               </div>
