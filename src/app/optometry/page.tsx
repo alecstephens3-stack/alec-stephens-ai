@@ -32,7 +32,7 @@ export default function OptometryPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Stephens AI for optometry",
+    name: "Stephens AI for eyecare",
     description: OPTOMETRY_META.description,
     provider: {
       "@type": "ProfessionalService",
@@ -49,7 +49,7 @@ export default function OptometryPage() {
     ],
     audience: {
       "@type": "Audience",
-      audienceType: "Independent optometry practices",
+      audienceType: "Independent eyecare practices",
     },
   };
 
