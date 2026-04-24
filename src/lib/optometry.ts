@@ -1,23 +1,23 @@
 import type { OptometryModule, OptometryStat } from "@/types";
 
 export const OPTOMETRY_HERO = {
-  eyebrow: "00 · Optometry",
+  eyebrow: "00 · Eyecare",
   headline: {
     before: "AI systems built for ",
     accent: "independent",
-    after: " optometry practices.",
+    after: " eyecare practices.",
   },
   lede:
-    "We build intelligence layers on top of the software you already use. Compulink, RevolutionEHR, Crystal PM. Your clinic stops losing time to paperwork, and revenue to bad workflows. HIPAA-compliant. Deployed in weeks, not months.",
+    "We build intelligence layers on top of the software you already use. Compulink, RevolutionEHR, Crystal PM, Nextech. Your clinic stops losing time to paperwork, and revenue to bad workflows. HIPAA-eligible. Deployed in weeks, not months.",
   primaryCta: { label: "Book a 20-minute call", href: "/#contact" },
   secondaryCta: { label: "See how it works", href: "#flagship" },
   trust: [
     "HIPAA-eligible",
-    "Signed BAA",
+    "BAA before data access",
     "Compulink",
     "RevolutionEHR",
     "Crystal PM",
-    "Eyefinity",
+    "Nextech",
   ],
 };
 
@@ -28,8 +28,8 @@ export const OPTOMETRY_PROBLEM_STATS: OptometryStat[] = [
     accent: true,
   },
   {
-    value: "95%",
-    caption: "After-hours callers who never call back",
+    value: "7 in 10",
+    caption: "After-hours callers who reach voicemail and don't call back",
   },
   {
     value: "0",
@@ -38,10 +38,10 @@ export const OPTOMETRY_PROBLEM_STATS: OptometryStat[] = [
 ];
 
 export const OPTOMETRY_PROBLEM_CLOSER =
-  "Independent optometry practices aren't failing because owners don't work hard. They're failing because the software they pay for wasn't built to help them run the business. We fix that.";
+  "Independent eyecare practices aren't failing because owners don't work hard. They're failing because the software they pay for wasn't built to help them run the business. We fix that.";
 
 export const OPTOMETRY_FLAGSHIP = {
-  eyebrow: "Flagship",
+  eyebrow: "02 · Flagship",
   headline: {
     before: "Know what's working. Every ",
     accent: "Monday",
@@ -49,7 +49,7 @@ export const OPTOMETRY_FLAGSHIP = {
   },
   body: [
     "Your PM system collects everything. Every patient, every exam, every charge. It just doesn't tell you what any of it means.",
-    "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the 12 KPIs that actually move an optometry practice: capture rate, recall compliance, no-show rate, average revenue per patient, new patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
+    "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the KPIs that actually move an eyecare practice: optical capture rate, recall compliance, no-show rate, average revenue per patient, new-patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
     "Open it with your Monday morning coffee. Run your week.",
   ],
   videoCaption: "Dashboard walkthrough · 16 sec loop",
@@ -73,7 +73,7 @@ export const OPTOMETRY_FLAGSHIP = {
 
 export const OPTOMETRY_MODULES: OptometryModule[] = [
   {
-    number: "02",
+    number: "01",
     title: "Booking Guardian",
     problem:
       "Online schedulers book appointments that don't fit your schedule. Staff reschedules manually. Patients get annoyed.",
@@ -91,7 +91,7 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     },
   },
   {
-    number: "03",
+    number: "02",
     title: "Recall & Reactivation",
     problem:
       "Generic recall blasts from Demandforce and Weave work for maybe 5% of overdue patients. The other 95% is revenue walking out the door.",
@@ -109,7 +109,7 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     },
   },
   {
-    number: "04",
+    number: "03",
     title: "Reputation & Reviews",
     problem:
       "Happy patients don't leave Google reviews. Unhappy ones do. Your Google ranking is your patient acquisition.",
@@ -121,13 +121,13 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
       "Service-recovery alerts with AI-drafted responses for human approval",
     ],
     roi: {
-      lead: "Practices typically see ",
-      highlight: "5× more reviews",
-      trail: " and a full-star rating bump within 6 months. More reviews, higher local ranking, more patients.",
+      lead: "Routing review requests at the right moment typically produces ",
+      highlight: "3 to 5× more Google reviews",
+      trail: " over six months based on industry benchmarks. Higher ratings follow, local ranking improves, more patients find you.",
     },
   },
   {
-    number: "05",
+    number: "04",
     title: "Insurance Verification",
     problem:
       "Front desk burns 10 to 20 minutes per patient verifying benefits through portals and phone trees. Medical and vision eligibility both slow the morning down.",
@@ -147,7 +147,7 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
 ];
 
 export const OPTOMETRY_CONNECTION = {
-  eyebrow: "03 · How they fit",
+  eyebrow: "04 · How they fit",
   headline: {
     before: "Five modules. ",
     accent: "One",
@@ -171,8 +171,8 @@ export const OPTOMETRY_CTA = {
 };
 
 export const OPTOMETRY_META = {
-  title: "AI for independent optometry practices",
+  title: "AI for independent eyecare practices",
   description:
-    "Stephens AI builds HIPAA-compliant intelligence layers on top of Compulink, RevolutionEHR, and Crystal PM. Booking Guardian, Recall & Reactivation, Insurance Verification, Reviews, and a Monday-morning Practice Intelligence Dashboard. Deployed in weeks.",
+    "Stephens AI builds HIPAA-eligible intelligence layers on top of Compulink, RevolutionEHR, Crystal PM, and Nextech. Booking Guardian, Recall & Reactivation, Insurance Verification, Reviews, and a Monday-morning Practice Intelligence Dashboard. Deployed in weeks.",
   path: "/optometry",
 };
