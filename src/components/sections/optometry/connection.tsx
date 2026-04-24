@@ -13,7 +13,7 @@ export function OptometryConnection() {
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
           <div className="mb-10 flex items-center gap-5">
-            <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
+            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
               <span className="text-ink-40">{eyebrow.split(" · ")[0]}</span> ·{" "}
               {eyebrow.split(" · ")[1]}
             </span>
@@ -35,7 +35,37 @@ export function OptometryConnection() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={150}>
-          <div className="mt-12 md:mt-16" aria-label="Data flow diagram of five modules around a central dashboard">
+          {/* Mobile: stacked vertical flow. The SVG below renders at md+ widths only. */}
+          <div
+            className="mt-12 flex flex-col items-center gap-3 md:hidden"
+            aria-label="Data flow: four modules feed the dashboard, which emails the Monday briefing to the clinic owner"
+          >
+            <div className="grid w-full grid-cols-2 gap-2">
+              {["Booking Guardian", "Recall Engine", "Insurance Verify", "Reputation & Reviews"].map((m) => (
+                <div
+                  key={m}
+                  className="rounded-lg border border-border bg-paper px-3 py-3 text-center font-heading text-sm font-medium text-black"
+                >
+                  {m}
+                </div>
+              ))}
+            </div>
+            <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
+            <div className="w-full rounded-lg bg-salmon px-4 py-4 text-center font-heading text-base font-medium text-paper">
+              Dashboard
+              <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-paper/80">Flagship</div>
+            </div>
+            <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
+            <div className="w-full rounded-lg bg-ink px-4 py-4 text-center font-heading text-base font-medium text-paper">
+              Monday briefing, 7 AM
+            </div>
+            <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
+            <div className="rounded-lg border border-border bg-paper px-6 py-3 text-center font-heading text-sm font-medium text-black">
+              Clinic Owner
+            </div>
+          </div>
+
+          <div className="mt-12 hidden md:mt-16 md:block" aria-label="Data flow diagram of five modules around a central dashboard">
             <svg
               viewBox="0 0 900 440"
               xmlns="http://www.w3.org/2000/svg"
