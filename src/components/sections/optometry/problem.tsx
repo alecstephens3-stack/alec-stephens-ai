@@ -25,15 +25,24 @@ export function OptometryProblem() {
                 <div
                   className={`font-heading font-medium ${stat.accent ? "text-salmon" : "text-black"}`}
                   style={{
-                    fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.035em",
+                    fontSize: "clamp(2rem, 4vw, 3rem)",
+                    lineHeight: 1.05,
+                    letterSpacing: "-0.03em",
                   }}
                 >
                   {stat.value}
                 </div>
-                <p className="mt-5 max-w-[28ch] font-mono text-xs uppercase leading-relaxed tracking-[0.04em] text-ink-60 md:text-[11px] md:tracking-[0.06em]">
-                  {stat.caption}
+                <p className="mt-5 max-w-[32ch] text-base leading-snug text-ink-90 md:text-lg">
+                  {stat.highlight && stat.caption.includes(stat.highlight) ? (
+                    <>
+                      {stat.caption.slice(0, stat.caption.indexOf(stat.highlight))}
+                      <span className="font-medium text-salmon">
+                        {stat.highlight}
+                      </span>
+                    </>
+                  ) : (
+                    stat.caption
+                  )}
                 </p>
               </div>
             </AnimateOnScroll>

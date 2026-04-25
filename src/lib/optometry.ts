@@ -23,17 +23,20 @@ export const OPTOMETRY_HERO = {
 
 export const OPTOMETRY_PROBLEM_STATS: OptometryStat[] = [
   {
-    value: "8 min",
-    caption: "Average time front desk spends on a routine phone call",
+    value: "20 hrs/week",
+    caption: "Front-desk time burned on calls and portals that don't touch a patient.",
+    highlight: "don't touch a patient.",
     accent: true,
   },
   {
-    value: "7 in 10",
-    caption: "After-hours callers who reach voicemail and don't call back",
+    value: "Tuesday 9 PM",
+    caption: "When most prospective patients are searching for an eye doctor. Your phone is off.",
+    highlight: "Your phone is off.",
   },
   {
-    value: "0",
-    caption: "Actionable KPIs most clinic owners see each week",
+    value: "4 weeks late",
+    caption: "When most owners notice a problem started. By then it's a month of lost revenue.",
+    highlight: "a month of lost revenue.",
   },
 ];
 
@@ -49,7 +52,7 @@ export const OPTOMETRY_FLAGSHIP = {
   },
   body: [
     "Your PM system collects everything. Every patient, every exam, every charge. It just doesn't tell you what any of it means.",
-    "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the KPIs that actually move an eyecare practice: optical capture rate, recall compliance, no-show rate, average revenue per patient, new-patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
+    "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the numbers that actually move an eyecare practice: optical capture rate, recall compliance, no-show rate, average revenue per patient, new-patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
     "Open it with your Monday morning coffee. Run your week.",
   ],
   videoCaption: "Dashboard walkthrough · 16 sec loop",

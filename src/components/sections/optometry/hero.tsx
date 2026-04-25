@@ -53,7 +53,7 @@ export function OptometryHero() {
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end animate-fade-in-up animation-delay-400">
+          <div className="hidden sm:flex justify-center lg:justify-end animate-fade-in-up animation-delay-400">
             <HeroIllustration />
           </div>
         </div>

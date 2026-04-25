@@ -29,6 +29,7 @@ export interface Solution {
 export interface OptometryStat {
   value: string;
   caption: string;
+  highlight?: string;
   accent?: boolean;
 }
 
