@@ -174,7 +174,10 @@ export function OptometryFlagship() {
         <AnimateOnScroll delay={250}>
           <p className="mt-12 max-w-[68ch] text-base leading-relaxed text-ink-60">
             <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-40">
-              How it works &nbsp;&middot;&nbsp;
+              How it works
+            </span>
+            <span aria-hidden="true" className="mx-2 font-mono text-xs text-ink-40">
+              &middot;
             </span>
             {howItWorks}
           </p>

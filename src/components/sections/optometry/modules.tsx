@@ -46,13 +46,19 @@ export function OptometryModules() {
                 <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-60">
                   <p>
                     <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-40">
-                      Problem &nbsp;&middot;&nbsp;{" "}
+                      Problem
+                    </span>
+                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-40">
+                      &middot;
                     </span>
                     {module.problem}
                   </p>
                   <p>
                     <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-40">
-                      What we build &nbsp;&middot;&nbsp;{" "}
+                      What we build
+                    </span>
+                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-40">
+                      &middot;
                     </span>
                     {module.solution}
                   </p>
