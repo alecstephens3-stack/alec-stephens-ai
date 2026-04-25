@@ -89,7 +89,7 @@ export function OptometryFlagship() {
             {headline.after}
           </h2>
 
-          <div className="mt-8 max-w-[60ch] space-y-5 text-lg leading-relaxed text-ink-60">
+          <div className="mt-8 max-w-[60ch] space-y-5 text-lg leading-relaxed text-ink-90">
             {body.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -139,13 +139,13 @@ export function OptometryFlagship() {
               <div className="px-6 py-8 md:px-10 md:py-10">
                 <div className="mb-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-border pb-4 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
                   <span>
-                    <span className="text-ink-40">From</span>&nbsp; {mondayBriefFallback.from}
+                    <span className="text-ink-60">From</span>&nbsp; {mondayBriefFallback.from}
                   </span>
                   <span>
-                    <span className="text-ink-40">Subject</span>&nbsp; {mondayBriefFallback.subject}
+                    <span className="text-ink-60">Subject</span>&nbsp; {mondayBriefFallback.subject}
                   </span>
                   <span>
-                    <span className="text-ink-40">Date</span>&nbsp; {mondayBriefFallback.date}
+                    <span className="text-ink-60">Date</span>&nbsp; {mondayBriefFallback.date}
                   </span>
                 </div>
                 <div className="space-y-3 text-base leading-relaxed text-ink-90">
@@ -172,11 +172,11 @@ export function OptometryFlagship() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={250}>
-          <p className="mt-12 max-w-[68ch] text-base leading-relaxed text-ink-60">
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-40">
+          <p className="mt-12 max-w-[68ch] text-base leading-relaxed text-ink-90">
+            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
               How it works
             </span>
-            <span aria-hidden="true" className="mx-2 font-mono text-xs text-ink-40">
+            <span aria-hidden="true" className="mx-2 font-mono text-xs text-ink-60">
               &middot;
             </span>
             {howItWorks}
