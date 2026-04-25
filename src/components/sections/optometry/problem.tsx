@@ -12,13 +12,13 @@ export function OptometryProblem() {
         <AnimateOnScroll>
           <div className="mb-12 flex items-center gap-5 md:mb-16">
             <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
-              <span className="text-ink-40">01</span> · The problem
+              <span className="text-ink-60">01</span> · The problem
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
           </div>
         </AnimateOnScroll>
 
-        <div className="grid grid-cols-1 border-y border-ink-20 md:grid-cols-3 md:divide-x md:divide-border">
+        <div className="grid grid-cols-1 border-y border-border md:grid-cols-3 md:divide-x md:divide-border">
           {OPTOMETRY_PROBLEM_STATS.map((stat, i) => (
             <AnimateOnScroll key={stat.value} delay={i * 120}>
               <div className="px-2 py-10 md:px-8 md:py-12">
@@ -48,7 +48,7 @@ export function OptometryProblem() {
                   {stat.highlight && stat.caption.includes(stat.highlight) ? (
                     <>
                       {stat.caption.slice(0, stat.caption.indexOf(stat.highlight))}
-                      <span className="font-medium text-salmon">
+                      <span className="font-medium text-salmon-deep">
                         {stat.highlight}
                       </span>
                     </>

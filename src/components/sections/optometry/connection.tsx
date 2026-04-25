@@ -14,7 +14,7 @@ export function OptometryConnection() {
         <AnimateOnScroll>
           <div className="mb-10 flex items-center gap-5">
             <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
-              <span className="text-ink-40">{eyebrow.split(" · ")[0]}</span> ·{" "}
+              <span className="text-ink-60">{eyebrow.split(" · ")[0]}</span> ·{" "}
               {eyebrow.split(" · ")[1]}
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -53,7 +53,7 @@ export function OptometryConnection() {
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-salmon px-4 py-4 text-center font-heading text-base font-medium text-paper">
               Dashboard
-              <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-paper/80">Flagship</div>
+              <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-paper">Flagship</div>
             </div>
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-ink px-4 py-4 text-center font-heading text-base font-medium text-paper">
@@ -190,7 +190,7 @@ export function OptometryConnection() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={250}>
-          <p className="mx-auto mt-14 max-w-[60ch] text-base leading-relaxed text-ink-60 md:text-lg">
+          <p className="mx-auto mt-14 max-w-[60ch] text-base leading-relaxed text-ink-90 md:text-lg">
             {body}
           </p>
         </AnimateOnScroll>
