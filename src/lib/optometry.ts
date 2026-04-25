@@ -58,7 +58,7 @@ export const OPTOMETRY_FLAGSHIP = {
     "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the numbers that actually move an eyecare practice: optical capture rate, recall compliance, no-show rate, average revenue per patient, new-patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
     "Open it with your Monday morning coffee. Run your week.",
   ],
-  videoCaption: "Dashboard walkthrough · 16 sec loop",
+  videoCaption: "Dashboard walkthrough",
   videoEmbedSrc: "/prototypes/optometry-dashboard/index.html",
   videoPoster: "/images/optometry/dashboard-poster.svg",
   mondayBriefImage: "/images/optometry/monday-brief.svg",
@@ -164,7 +164,7 @@ export const OPTOMETRY_CONNECTION = {
 };
 
 export const OPTOMETRY_CTA = {
-  eyebrow: "● Booking · Q2 2026 · 3 slots",
+  eyebrow: "Currently booking new engagements",
   headline: {
     line1: "Your front desk.",
     line2: "Their Monday mornings.",
