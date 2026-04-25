@@ -61,17 +61,24 @@ export const OPTOMETRY_FLAGSHIP = {
   videoCaption: "Dashboard walkthrough",
   videoEmbedSrc: "/prototypes/optometry-dashboard/index.html",
   videoPoster: "/images/optometry/dashboard-poster.svg",
-  mondayBriefImage: "/images/optometry/monday-brief.svg",
-  mondayBriefFallback: {
+  mondayBrief: {
     from: "Stephens AI",
-    subject: "Week in review",
-    date: "Mon, Apr 20, 2026, 7:03 AM",
-    body: [
-      "Last week at Wichita Family Vision: 142 patients, up 6% from the 4-week average. Optical conversion was 64%, down 4 points, worth investigating. 3 no-shows, in line with trend. Recall compliance at 71%.",
-      "Top concern this week: Tuesday no-show rate has trended up 3 weeks running. Now 12% versus the 4% clinic average.",
-      "Top opportunity: 47 patients are currently overdue for recall, representing roughly $18,800 in potential revenue if recovered.",
-      "Recommended focus: review Tuesday scheduling. Are confirmations going out on schedule?",
+    subject: "Week in review · Wichita Family Vision",
+    date: "Mon 20 Apr · 07:03",
+    headline: "Last week: 142 patients, up 6% from the 4-week average.",
+    summary: [
+      "Optical conversion was 64%, down 4 points. Worth investigating.",
+      "3 no-shows, in line with trend. Recall compliance at 71%.",
     ],
+    topConcern:
+      "Tuesday no-show rate trending up 3 weeks running. Now 12% vs. 4% clinic average.",
+    topOpportunity:
+      "47 patients currently overdue for recall. Roughly $18,800 in potential revenue.",
+    recommendedFocus:
+      "Review Tuesday scheduling. Are confirmations going out on schedule?",
+    footerLeft: "Open dashboard →",
+    footerRight: "Delivered every Monday · 07:00",
+    caption: "The Monday briefing, 7 AM, delivered by email",
   },
   howItWorks:
     "Nightly sync from your PM system, warehoused in your dedicated encrypted database, AI-generated narrative briefing, delivered by email and accessible via web dashboard anytime.",
