@@ -2,7 +2,15 @@ import { OPTOMETRY_HERO } from "@/lib/optometry";
 import { HeroIllustration } from "./hero-illustration";
 
 export function OptometryHero() {
-  const { eyebrow, headline, lede, primaryCta, secondaryCta, trust } = OPTOMETRY_HERO;
+  const { eyebrow, headline, lede, ledeHighlight, primaryCta, secondaryCta, trust } = OPTOMETRY_HERO;
+  const ledeParts =
+    ledeHighlight && lede.includes(ledeHighlight)
+      ? {
+          before: lede.slice(0, lede.indexOf(ledeHighlight)),
+          highlight: ledeHighlight,
+          after: lede.slice(lede.indexOf(ledeHighlight) + ledeHighlight.length),
+        }
+      : null;
 
   return (
     <section
@@ -30,7 +38,15 @@ export function OptometryHero() {
             </h1>
 
             <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-ink-60 md:mt-10 md:text-xl animate-fade-in-up animation-delay-400">
-              {lede}
+              {ledeParts ? (
+                <>
+                  {ledeParts.before}
+                  <span className="text-salmon">{ledeParts.highlight}</span>
+                  {ledeParts.after}
+                </>
+              ) : (
+                lede
+              )}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-5 md:mt-12 animate-fade-in-up animation-delay-600">
@@ -53,7 +69,7 @@ export function OptometryHero() {
             </div>
           </div>
 
-          <div className="hidden sm:flex justify-center lg:justify-end animate-fade-in-up animation-delay-400">
+          <div className="flex justify-center lg:justify-end animate-fade-in-up animation-delay-400">
             <HeroIllustration />
           </div>
         </div>

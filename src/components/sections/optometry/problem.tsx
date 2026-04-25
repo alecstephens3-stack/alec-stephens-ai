@@ -23,14 +23,26 @@ export function OptometryProblem() {
             <AnimateOnScroll key={stat.value} delay={i * 120}>
               <div className="px-2 py-10 md:px-8 md:py-12">
                 <div
-                  className={`font-heading font-medium ${stat.accent ? "text-salmon" : "text-black"}`}
+                  className="font-heading font-medium text-black"
                   style={{
                     fontSize: "clamp(2rem, 4vw, 3rem)",
                     lineHeight: 1.05,
                     letterSpacing: "-0.03em",
                   }}
                 >
-                  {stat.value}
+                  {stat.valueAccent && stat.value.includes(stat.valueAccent) ? (
+                    <>
+                      {stat.value.slice(0, stat.value.indexOf(stat.valueAccent))}
+                      <span className="text-salmon">{stat.valueAccent}</span>
+                      {stat.value.slice(
+                        stat.value.indexOf(stat.valueAccent) + stat.valueAccent.length,
+                      )}
+                    </>
+                  ) : stat.accent ? (
+                    <span className="text-salmon">{stat.value}</span>
+                  ) : (
+                    stat.value
+                  )}
                 </div>
                 <p className="mt-5 max-w-[32ch] text-base leading-snug text-ink-90 md:text-lg">
                   {stat.highlight && stat.caption.includes(stat.highlight) ? (
