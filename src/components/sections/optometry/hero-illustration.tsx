@@ -204,8 +204,8 @@ export function HeroIllustration() {
         y={50}
         textAnchor="middle"
         fontFamily="var(--font-mono)"
-        fontSize="16"
-        letterSpacing="0.18em"
+        fontSize="22"
+        letterSpacing="0.08em"
         fill={INK_60}
         style={{ textTransform: "uppercase" }}
       >
@@ -216,8 +216,8 @@ export function HeroIllustration() {
         y={50}
         textAnchor="middle"
         fontFamily="var(--font-mono)"
-        fontSize="16"
-        letterSpacing="0.18em"
+        fontSize="22"
+        letterSpacing="0.08em"
         fill={SALMON_DEEP}
         style={{ textTransform: "uppercase" }}
       >
@@ -295,11 +295,11 @@ export function HeroIllustration() {
               <Glyph type={it.type} x={x} y={y} />
               <text
                 x={x}
-                y={y + 24}
+                y={y + 28}
                 textAnchor="middle"
                 fontFamily="var(--font-mono)"
-                fontSize="14"
-                letterSpacing="0.12em"
+                fontSize="18"
+                letterSpacing="0.10em"
                 fill={INK}
                 style={{ textTransform: "uppercase" }}
               >
@@ -331,8 +331,8 @@ export function HeroIllustration() {
         y={H - 14}
         textAnchor="middle"
         fontFamily="var(--font-mono)"
-        fontSize="14"
-        letterSpacing="0.18em"
+        fontSize="18"
+        letterSpacing="0.10em"
         fill={INK_60}
         style={{ textTransform: "uppercase" }}
       >

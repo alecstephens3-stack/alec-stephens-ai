@@ -9,6 +9,7 @@ export const OPTOMETRY_HERO = {
   },
   lede:
     "We build intelligence layers on top of the software you already use. Compulink, RevolutionEHR, Crystal PM, Nextech. Your clinic stops losing time to paperwork, and revenue to bad workflows. HIPAA-eligible. Deployed in weeks, not months.",
+  ledeHighlight: "on top of the software you already use.",
   primaryCta: { label: "Book a 20-minute call", href: "/#contact" },
   secondaryCta: { label: "See how it works", href: "#flagship" },
   trust: [
@@ -24,17 +25,19 @@ export const OPTOMETRY_HERO = {
 export const OPTOMETRY_PROBLEM_STATS: OptometryStat[] = [
   {
     value: "20 hrs/week",
+    valueAccent: "20",
     caption: "Front-desk time burned on calls and portals that don't touch a patient.",
     highlight: "don't touch a patient.",
-    accent: true,
   },
   {
     value: "Tuesday 9 PM",
+    valueAccent: "9 PM",
     caption: "When most prospective patients are searching for an eye doctor. Your phone is off.",
     highlight: "Your phone is off.",
   },
   {
     value: "4 weeks late",
+    valueAccent: "4",
     caption: "When most owners notice a problem started. By then it's a month of lost revenue.",
     highlight: "a month of lost revenue.",
   },
