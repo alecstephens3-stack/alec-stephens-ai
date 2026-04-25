@@ -52,7 +52,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 text-center sm:text-left">
-          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-40">
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
             &copy; {new Date().getFullYear()} {SITE_NAME}
           </p>
         </div>

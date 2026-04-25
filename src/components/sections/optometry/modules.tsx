@@ -12,7 +12,7 @@ export function OptometryModules() {
         <AnimateOnScroll>
           <div className="mb-10 flex items-center gap-5">
             <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
-              <span className="text-ink-40">03</span> · The rest of the system
+              <span className="text-ink-60">03</span> · The rest of the system
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
           </div>
@@ -33,7 +33,7 @@ export function OptometryModules() {
             <AnimateOnScroll key={module.number} delay={i * 100}>
               <article className="flex h-full flex-col bg-paper p-8 md:p-10">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-xs uppercase tracking-[0.08em] text-salmon">
+                  <span className="font-mono text-xs uppercase tracking-[0.08em] text-salmon-deep">
                     {module.number}
                   </span>
                   <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -43,21 +43,21 @@ export function OptometryModules() {
                   {module.title}
                 </h3>
 
-                <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-60">
+                <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-90">
                   <p>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-40">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
                       Problem
                     </span>
-                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-40">
+                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-60">
                       &middot;
                     </span>
                     {module.problem}
                   </p>
                   <p>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-40">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
                       What we build
                     </span>
-                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-40">
+                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-60">
                       &middot;
                     </span>
                     {module.solution}
@@ -80,7 +80,7 @@ export function OptometryModules() {
 
                 <p className="mt-auto pt-8 text-[15px] font-medium leading-snug text-black md:text-base">
                   {module.roi.lead}
-                  <span className="font-semibold text-salmon">
+                  <span className="font-semibold text-salmon-deep">
                     {module.roi.highlight}
                   </span>
                   {module.roi.trail}
