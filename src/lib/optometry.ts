@@ -60,6 +60,7 @@ export const OPTOMETRY_FLAGSHIP = {
   ],
   videoCaption: "Dashboard walkthrough",
   videoEmbedSrc: "/prototypes/optometry-dashboard/index.html",
+  videoEmbedSrcMobile: "/prototypes/optometry-dashboard-mobile/index.html",
   videoPoster: "/images/optometry/dashboard-poster.svg",
   mondayBrief: {
     from: "Stephens AI",
