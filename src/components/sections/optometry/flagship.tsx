@@ -98,7 +98,7 @@ export function OptometryFlagship() {
           <div className="mt-12 md:mt-16">
             <div
               ref={embedContainerRef}
-              className="relative overflow-hidden rounded-lg border border-border bg-ink aspect-[4/3]"
+              className="relative overflow-hidden rounded-lg border border-border bg-mat aspect-[4/3]"
             >
               {reducedMotion ? (
                 <Image
