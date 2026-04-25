@@ -8,6 +8,9 @@ import { OPTOMETRY_FLAGSHIP } from "@/lib/optometry";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const PROTOTYPE_WIDTH = 800;
 const PROTOTYPE_HEIGHT = 600;
+const MOBILE_PROTOTYPE_WIDTH = 360;
+const MOBILE_PROTOTYPE_HEIGHT = 480;
+const MOBILE_MAX_SCALE = 1.25;
 
 function subscribeReducedMotion(onChange: () => void) {
   const mq = window.matchMedia(REDUCED_MOTION_QUERY);
@@ -23,6 +26,32 @@ function getReducedMotionServerSnapshot() {
   return false;
 }
 
+function useEmbedScale(
+  ref: React.RefObject<HTMLDivElement | null>,
+  intrinsicWidth: number,
+  maxScale: number,
+  enabled: boolean,
+) {
+  useEffect(() => {
+    if (!enabled) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const applyScale = (width: number) => {
+      if (width <= 0) return;
+      const scale = Math.min(width / intrinsicWidth, maxScale);
+      el.style.setProperty("--embed-scale", String(scale));
+    };
+
+    applyScale(el.clientWidth);
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) applyScale(entry.contentRect.width);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref, intrinsicWidth, maxScale, enabled]);
+}
+
 export function OptometryFlagship() {
   const {
     eyebrow,
@@ -30,6 +59,7 @@ export function OptometryFlagship() {
     body,
     videoCaption,
     videoEmbedSrc,
+    videoEmbedSrcMobile,
     videoPoster,
     mondayBrief,
     howItWorks,
@@ -40,25 +70,11 @@ export function OptometryFlagship() {
     getReducedMotionSnapshot,
     getReducedMotionServerSnapshot,
   );
-  const embedContainerRef = useRef<HTMLDivElement | null>(null);
+  const desktopRef = useRef<HTMLDivElement | null>(null);
+  const mobileRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (reducedMotion) return;
-    const el = embedContainerRef.current;
-    if (!el) return;
-
-    const applyScale = (width: number) => {
-      if (width <= 0) return;
-      el.style.setProperty("--embed-scale", String(width / PROTOTYPE_WIDTH));
-    };
-
-    applyScale(el.clientWidth);
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) applyScale(entry.contentRect.width);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reducedMotion]);
+  useEmbedScale(desktopRef, PROTOTYPE_WIDTH, Infinity, !reducedMotion);
+  useEmbedScale(mobileRef, MOBILE_PROTOTYPE_WIDTH, MOBILE_MAX_SCALE, !reducedMotion);
 
   return (
     <section
@@ -96,11 +112,8 @@ export function OptometryFlagship() {
 
         <AnimateOnScroll delay={150}>
           <div className="mt-12 md:mt-16">
-            <div
-              ref={embedContainerRef}
-              className="relative overflow-hidden rounded-lg border border-border bg-ink aspect-[4/3]"
-            >
-              {reducedMotion ? (
+            {reducedMotion ? (
+              <div className="relative overflow-hidden rounded-lg border border-border bg-mat aspect-[4/3]">
                 <Image
                   src={videoPoster}
                   alt="Practice Intelligence Dashboard preview"
@@ -109,22 +122,48 @@ export function OptometryFlagship() {
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 1024px"
                 />
-              ) : (
-                <iframe
-                  src={videoEmbedSrc}
-                  title="Practice Intelligence Dashboard walkthrough"
-                  loading="lazy"
-                  sandbox="allow-scripts"
-                  className="absolute left-0 top-0 border-0"
-                  style={{
-                    width: PROTOTYPE_WIDTH,
-                    height: PROTOTYPE_HEIGHT,
-                    transform: "scale(var(--embed-scale, 1))",
-                    transformOrigin: "top left",
-                  }}
-                />
-              )}
-            </div>
+              </div>
+            ) : (
+              <>
+                <div
+                  ref={mobileRef}
+                  className="relative mx-auto overflow-hidden rounded-lg border border-border bg-mat aspect-[3/4] md:hidden"
+                  style={{ maxWidth: MOBILE_PROTOTYPE_WIDTH * MOBILE_MAX_SCALE }}
+                >
+                  <iframe
+                    src={videoEmbedSrcMobile}
+                    title="Practice Intelligence Dashboard walkthrough"
+                    loading="lazy"
+                    sandbox="allow-scripts"
+                    className="absolute left-0 top-0 border-0"
+                    style={{
+                      width: MOBILE_PROTOTYPE_WIDTH,
+                      height: MOBILE_PROTOTYPE_HEIGHT,
+                      transform: "scale(var(--embed-scale, 1))",
+                      transformOrigin: "top left",
+                    }}
+                  />
+                </div>
+                <div
+                  ref={desktopRef}
+                  className="relative hidden overflow-hidden rounded-lg border border-border bg-mat aspect-[4/3] md:block"
+                >
+                  <iframe
+                    src={videoEmbedSrc}
+                    title="Practice Intelligence Dashboard walkthrough"
+                    loading="lazy"
+                    sandbox="allow-scripts"
+                    className="absolute left-0 top-0 border-0"
+                    style={{
+                      width: PROTOTYPE_WIDTH,
+                      height: PROTOTYPE_HEIGHT,
+                      transform: "scale(var(--embed-scale, 1))",
+                      transformOrigin: "top left",
+                    }}
+                  />
+                </div>
+              </>
+            )}
             <p className="mt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
               {videoCaption}
             </p>
