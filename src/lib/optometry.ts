@@ -148,7 +148,7 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     solution:
       "Pre-appointment verification runs automatically 48 hours ahead. Staff walks in to pre-verified appointments and a flagged exception queue.",
     howItWorks: [
-      "Medical eligibility via clearinghouse API",
+      "Medical eligibility checked via clearinghouse — no portal logins or phone calls",
       "Vision portal verification available as premium scope",
       "Exception alerts with writeback to the patient record",
     ],
