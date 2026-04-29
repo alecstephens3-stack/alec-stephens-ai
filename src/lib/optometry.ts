@@ -155,7 +155,8 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     roi: {
       lead: "Reclaims ",
       highlight: "8 to 12 front-desk hours per week",
-      trail: ". Most day-of insurance surprises disappear.",
+      trail:
+        ". Day-of insurance surprises disappear. Patients aren't blindsided at check-in, mornings start without portal scrambling, and your team handles experience, not eligibility.",
     },
   },
 ];
