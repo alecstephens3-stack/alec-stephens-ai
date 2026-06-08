@@ -53,7 +53,7 @@ export function OptometryConnection() {
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-salmon px-4 py-4 text-center font-heading text-base font-medium text-paper">
               Dashboard
-              <div className="mt-1 font-mono text-[13px] uppercase tracking-[0.04em] text-paper/80">Flagship</div>
+              <div className="mt-1 font-mono text-[13px] uppercase tracking-[0.04em] text-paper">Flagship</div>
             </div>
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-ink px-4 py-4 text-center font-heading text-base font-medium text-paper">
@@ -190,7 +190,7 @@ export function OptometryConnection() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={250}>
-          <p className="mx-auto mt-14 max-w-[60ch] text-base leading-relaxed text-ink-60 md:text-lg">
+          <p className="mx-auto mt-14 max-w-[60ch] text-base leading-relaxed text-ink-90 md:text-lg">
             {body}
           </p>
         </AnimateOnScroll>

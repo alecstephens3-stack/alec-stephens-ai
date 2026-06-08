@@ -1,0 +1,323 @@
+<!doctype html>
+<!-- Sister file: ../optometry-dashboard/index.html — keep metric values in sync. -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Practice Intelligence — Wichita Family Vision (mobile)</title>
+<meta name="viewport" content="width=360" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:        #0A0A0A;
+    --ink-60:     #6B6B6B;
+    --ink-40:     #A3A3A3;
+    --rule:       #EDEDED;
+    --paper:      #FFFFFF;
+    --paper-2:    #FAFAFA;
+    --salmon:     #F47B6B;
+    --salmon-soft:#FDE6E1;
+    --sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #E8E8E8; }
+  body {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); color: var(--ink);
+    -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+  }
+
+  .stage {
+    width: 360px; height: 480px; background: var(--paper);
+    position: relative; overflow: hidden; color: var(--ink);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 48px;
+    background: var(--paper-2); border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; padding: 0 20px;
+  }
+  .brand { display: flex; align-items: baseline; gap: 8px; }
+  .brand .mark {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
+  }
+  .brand .mark .dot {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--salmon);
+    display: inline-block; transform: translateY(-1px);
+  }
+  .topbar .time {
+    margin-left: auto; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--ink-60);
+  }
+
+  /* ---------- Eyebrows ---------- */
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+    padding: 0 20px; position: absolute; left: 0; right: 0;
+  }
+  .eyebrow .rule { flex: 1; height: 1px; background: var(--rule); }
+  .s-week   { top: 64px; }
+  .s-signal { top: 280px; }
+
+  /* ---------- KPI tiles (2x2) ---------- */
+  .kpis {
+    position: absolute; top: 84px; left: 20px; right: 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    height: 184px;
+  }
+  .tile {
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 10px 12px; position: relative;
+    display: flex; flex-direction: column;
+    transition: border-color 160ms ease, box-shadow 220ms ease;
+  }
+  .tile.flash   {
+    box-shadow: 0 0 0 2px rgba(10,10,10,0.08);
+  }
+  .tile.dark.flash {
+    box-shadow: 0 0 24px 2px rgba(244,123,107,0.45), 0 0 0 2px rgba(244,123,107,0.6);
+  }
+  .tile .lbl {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .tile .val {
+    font-weight: 500; font-size: 28px; letter-spacing: -0.025em; line-height: 1;
+    margin-top: 10px; font-variant-numeric: tabular-nums;
+  }
+  .tile .sub {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60); margin-top: auto;
+  }
+  .tile .sub.up { color: var(--salmon); }
+  .tile.dark { background: var(--ink); border-color: var(--ink); }
+  .tile.dark .lbl, .tile.dark .sub { color: var(--ink-40); }
+  .tile.dark .val { color: var(--salmon); }
+
+  /* ---------- Signal ---------- */
+  .signal {
+    position: absolute; top: 300px; left: 20px; right: 20px;
+    height: 116px; border: 1px solid var(--rule); padding: 14px 16px; background: var(--paper);
+  }
+  .signal h2 {
+    margin: 0; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
+    color: var(--ink); line-height: 1.15;
+  }
+  .signal .meta {
+    margin-top: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .bars {
+    margin-top: 10px; display: flex; align-items: flex-end; gap: 6px;
+    height: 22px;
+  }
+  .bar {
+    width: 30px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 12px;
+    transform-origin: bottom center;
+    transform: scaleY(var(--fill, 0));
+    transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .bar.soft { background: var(--salmon-soft); color: var(--ink); }
+  .bar.hot  { background: var(--salmon);      color: #fff; }
+  .bar .val { opacity: 0; transition: opacity 200ms ease; font-variant-numeric: tabular-nums; }
+  .bar.filled .val { opacity: 1; }
+  .bars .note {
+    margin-left: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+    opacity: 0; transition: opacity 400ms ease;
+    align-self: center;
+  }
+  .bars .note.show { opacity: 1; }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 32px;
+    border-top: 1px solid var(--rule); padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-60);
+  }
+  .footer .live { color: var(--salmon); display: inline-flex; align-items: center; gap: 6px; }
+  .footer .live .pulse {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--salmon);
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; }  50% { opacity: 0.35; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage *, .stage *::before, .stage *::after {
+      animation: none !important; transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage" data-screen-label="Practice Intelligence Dashboard (mobile)" id="stage">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">Stephens<span class="dot"></span>AI</span>
+    </div>
+    <div class="time">MON 20 APR · 07:03</div>
+  </header>
+
+  <div class="eyebrow s-week"><span>01 · This week</span><span class="rule"></span></div>
+
+  <section class="kpis" aria-label="This week's metrics">
+    <div class="tile" id="tile-1">
+      <div class="lbl">Patients</div>
+      <div class="val" data-final="142">0</div>
+      <div class="sub up">▲ 6% · 4-wk avg</div>
+    </div>
+    <div class="tile dark" id="tile-2">
+      <div class="lbl">Top opportunity</div>
+      <div class="val" data-final="18.8" data-prefix="$" data-suffix="K" data-decimals="1">$0.0K</div>
+      <div class="sub">· 47 overdue</div>
+    </div>
+    <div class="tile" id="tile-3">
+      <div class="lbl">Optical conv.</div>
+      <div class="val" data-final="64" data-suffix="%">0%</div>
+      <div class="sub">▼ 4 pts</div>
+    </div>
+    <div class="tile" id="tile-4">
+      <div class="lbl">Recall comp.</div>
+      <div class="val" data-final="71" data-suffix="%">0%</div>
+      <div class="sub">· In range</div>
+    </div>
+  </section>
+
+  <div class="eyebrow s-signal"><span>02 · Signal</span><span class="rule"></span></div>
+
+  <section class="signal" aria-label="Signal of the week">
+    <h2>Tuesday no-show rate climbing 3 weeks running</h2>
+    <div class="meta">Now 12% · clinic avg 4%</div>
+    <div class="bars">
+      <div class="bar soft" id="bar-1"><span class="val" data-final="8" data-suffix="%">0%</span></div>
+      <div class="bar soft" id="bar-2"><span class="val" data-final="9" data-suffix="%">0%</span></div>
+      <div class="bar hot"  id="bar-3"><span class="val" data-final="12" data-suffix="%">0%</span></div>
+      <div class="note" id="bars-note">· Review confirmations</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Stephens AI · v2.0</span>
+    <span class="live"><span class="pulse"></span>Live · 04:00 sync</span>
+  </footer>
+
+</div>
+
+<script>
+(() => {
+  const LOOP = 10000;
+
+  const tileEls = [1,2,3,4].map(i => document.getElementById('tile-'+i));
+  const tileValEls = tileEls.map(t => t.querySelector('.val'));
+  const barEls  = [1,2,3].map(i => document.getElementById('bar-'+i));
+  const barValEls = barEls.map(b => b.querySelector('.val'));
+  const note = document.getElementById('bars-note');
+
+  // Timeline: [time, fn]
+  const timeline = [
+    [400,  () => fireTile(0)],
+    [950,  () => fireTile(1, true)],   // dark tile gets glow
+    [1500, () => fireTile(2)],
+    [2050, () => fireTile(3)],
+    [3200, () => fireBar(0)],
+    [3700, () => fireBar(1)],
+    [4200, () => fireBar(2)],
+    [4900, () => note.classList.add('show')],
+  ];
+
+  const tweens = [];
+  const tween = (el, finalVal, dur) => {
+    tweens.push({ el, from: 0, to: finalVal, start: performance.now(), dur });
+  };
+
+  const formatVal = (el, current) => {
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    return prefix + current.toFixed(decimals) + suffix;
+  };
+
+  const fireTile = (i, glow) => {
+    const tile = tileEls[i];
+    tile.classList.add('flash');
+    setTimeout(() => tile.classList.remove('flash'), 360);
+    const valEl = tileValEls[i];
+    const final = parseFloat(valEl.dataset.final);
+    tween(valEl, final, 600);
+  };
+
+  const fireBar = (i) => {
+    barEls[i].style.setProperty('--fill', 1);
+    setTimeout(() => barEls[i].classList.add('filled'), 250);
+    const valEl = barValEls[i];
+    const final = parseFloat(valEl.dataset.final);
+    tween(valEl, final, 400);
+  };
+
+  const resetAll = () => {
+    tweens.length = 0;
+    tileValEls.forEach(el => {
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      el.textContent = prefix + (0).toFixed(decimals) + suffix;
+    });
+    barEls.forEach(b => { b.style.setProperty('--fill', 0); b.classList.remove('filled'); });
+    barValEls.forEach(v => v.textContent = '0%');
+    tileEls.forEach(t => t.classList.remove('flash'));
+    note.classList.remove('show');
+  };
+
+  let loopStart = performance.now();
+  const fired = new Set();
+
+  const frame = (now) => {
+    let elapsed = now - loopStart;
+    if (elapsed >= LOOP) {
+      loopStart = now - (elapsed % LOOP);
+      elapsed = now - loopStart;
+      fired.clear();
+      resetAll();
+    }
+
+    for (const [t, fn] of timeline) {
+      if (elapsed >= t && !fired.has(t)) {
+        fired.add(t);
+        fn();
+      }
+    }
+
+    for (let i = tweens.length - 1; i >= 0; i--) {
+      const tw = tweens[i];
+      const k = Math.min(1, (now - tw.start) / tw.dur);
+      const e = 1 - Math.pow(1 - k, 3);
+      const v = tw.from + (tw.to - tw.from) * e;
+      tw.el.textContent = formatVal(tw.el, v);
+      if (k >= 1) tweens.splice(i, 1);
+    }
+
+    requestAnimationFrame(frame);
+  };
+
+  resetAll();
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
