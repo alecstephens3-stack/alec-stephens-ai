@@ -1,4 +1,5 @@
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { StatusChip } from "@/components/ui/status-chip";
 import { OPTOMETRY_CTA } from "@/lib/optometry";
 
 export function OptometryCta() {
@@ -12,9 +13,9 @@ export function OptometryCta() {
     >
       <div className="mx-auto max-w-5xl px-6 py-24 md:py-36">
         <AnimateOnScroll>
-          <p className="mb-8 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-40">
-            {eyebrow}
-          </p>
+          <div className="mb-8">
+            <StatusChip keyword="Booking" detail={eyebrow} status="accent" onDark />
+          </div>
 
           <h2
             className="max-w-[14ch] font-heading font-medium text-paper"
@@ -31,7 +32,7 @@ export function OptometryCta() {
             <span className="text-salmon">{headline.accent}</span>
           </h2>
 
-          <p className="mt-10 max-w-[56ch] text-base leading-relaxed text-ink-40 md:text-lg">
+          <p className="mt-10 max-w-[56ch] text-base leading-relaxed text-paper/75 md:text-lg">
             {body}
           </p>
 

@@ -78,7 +78,7 @@ export function Solutions() {
                     {solution.industries.map((industry) => (
                       <span
                         key={industry}
-                        className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-medium text-ink-60"
+                        className="rounded-full bg-sand px-2.5 py-1 text-[13px] font-medium text-ink-60"
                       >
                         {industry}
                       </span>

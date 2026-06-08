@@ -84,7 +84,7 @@ export function OptometryFlagship() {
     >
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.18em] text-salmon">
+          <p className="mb-6 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
             {eyebrow}
           </p>
         </AnimateOnScroll>
@@ -164,7 +164,7 @@ export function OptometryFlagship() {
                 </div>
               </>
             )}
-            <p className="mt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
+            <p className="mt-3 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
               {videoCaption}
             </p>
           </div>
@@ -173,7 +173,7 @@ export function OptometryFlagship() {
         <AnimateOnScroll delay={200}>
           <figure className="mt-16 md:mt-24">
             <div className="overflow-hidden rounded-lg border border-border bg-paper">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border bg-paper-raised px-6 py-4 font-mono text-xs uppercase tracking-[0.08em] text-ink-60 md:px-10">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border bg-paper-raised px-6 py-4 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60 md:px-10">
                 <span>
                   From&nbsp;&nbsp;
                   <span className="font-sans normal-case tracking-normal text-ink-90">
@@ -203,7 +203,7 @@ export function OptometryFlagship() {
                 <hr className="border-border" />
 
                 <div className="space-y-2">
-                  <p className="font-mono text-xs uppercase tracking-[0.12em] text-salmon-deep">
+                  <p className="font-mono text-[13px] uppercase tracking-[0.04em] text-salmon-deep">
                     Top concern
                   </p>
                   <p className="font-heading text-lg font-medium leading-snug text-ink-90">
@@ -212,7 +212,7 @@ export function OptometryFlagship() {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="font-mono text-xs uppercase tracking-[0.12em] text-salmon-deep">
+                  <p className="font-mono text-[13px] uppercase tracking-[0.04em] text-salmon-deep">
                     Top opportunity
                   </p>
                   <p className="font-heading text-lg font-medium leading-snug text-ink-90">
@@ -221,7 +221,7 @@ export function OptometryFlagship() {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="font-mono text-xs uppercase tracking-[0.12em] text-ink-60">
+                  <p className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
                     Recommended focus
                   </p>
                   <p className="text-base leading-relaxed text-ink-90">
@@ -230,13 +230,13 @@ export function OptometryFlagship() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-border px-6 py-4 font-mono text-xs uppercase tracking-[0.08em] text-ink-60 md:px-10">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-border px-6 py-4 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60 md:px-10">
                 <span>{mondayBrief.footerLeft}</span>
                 <span>{mondayBrief.footerRight}</span>
               </div>
             </div>
 
-            <figcaption className="mt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
+            <figcaption className="mt-3 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
               {mondayBrief.caption}
             </figcaption>
           </figure>
@@ -244,7 +244,7 @@ export function OptometryFlagship() {
 
         <AnimateOnScroll delay={250}>
           <p className="mt-12 max-w-[68ch] text-base leading-relaxed text-ink-90">
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
+            <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
               How it works
             </span>
             <span aria-hidden="true" className="mx-2 font-mono text-xs text-ink-60">

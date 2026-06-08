@@ -6,8 +6,27 @@
 
 @theme {
   --font-sans: var(--font-inter-tight), "Inter Tight", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --font-heading: var(--font-inter-tight), "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+
+  /* Type scale bumped 2026-06-08 for legibility (older clients). Body floor 17px;
+     nothing below 13px. Overrides Tailwind defaults so every text-* utility lifts. */
+  --text-xs: 0.8125rem;     /* 13px — absolute floor (was 12) */
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem;     /* 15px (was 14) */
+  --text-sm--line-height: 1.55;
+  --text-base: 1.0625rem;   /* 17px (was 16) */
+  --text-base--line-height: 1.6;
+  --text-lg: 1.1875rem;     /* 19px (was 18) */
+  --text-lg--line-height: 1.6;
+
+  /* Status palette — functional, scoped to status markers only. Salmon stays the brand accent. */
+  --color-status-good: #2E7A56;
+  --color-status-good-tint: rgba(46,122,86,0.10);
+  --color-status-warn: #946A12;
+  --color-status-warn-tint: rgba(176,130,40,0.15);
+  --color-status-bad: #B23A2F;
+  --color-status-bad-tint: rgba(178,58,47,0.10);
 
   /* Ink (text, borders, surfaces) */
   --color-ink: #0A0A0A;
@@ -46,6 +65,8 @@ html {
 
 body {
   font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17px base — legibility floor */
+  line-height: 1.6;
   color: var(--color-ink-90);
   background-color: var(--color-paper);
   font-feature-settings: "ss01", "cv11";

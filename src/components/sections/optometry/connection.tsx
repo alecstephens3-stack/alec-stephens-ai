@@ -13,8 +13,8 @@ export function OptometryConnection() {
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
           <div className="mb-10 flex items-center gap-5">
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
-              <span className="text-ink-60">{eyebrow.split(" · ")[0]}</span> ·{" "}
+            <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
+              <span className="text-salmon">{eyebrow.split(" · ")[0]}</span> ·{" "}
               {eyebrow.split(" · ")[1]}
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -53,7 +53,7 @@ export function OptometryConnection() {
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-salmon px-4 py-4 text-center font-heading text-base font-medium text-paper">
               Dashboard
-              <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-paper">Flagship</div>
+              <div className="mt-1 font-mono text-[13px] uppercase tracking-[0.04em] text-paper">Flagship</div>
             </div>
             <span aria-hidden="true" className="font-mono text-lg text-ink-40">&darr;</span>
             <div className="w-full rounded-lg bg-ink px-4 py-4 text-center font-heading text-base font-medium text-paper">
@@ -129,9 +129,9 @@ export function OptometryConnection() {
                   x="450"
                   y="238"
                   textAnchor="middle"
-                  fontFamily="JetBrains Mono, monospace"
-                  fontSize="10"
-                  letterSpacing="1.2"
+                  fontFamily="IBM Plex Mono, monospace"
+                  fontSize="11"
+                  letterSpacing="0.8"
                   fill="#FFFFFF"
                 >
                   FLAGSHIP

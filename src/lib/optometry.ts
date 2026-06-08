@@ -64,7 +64,7 @@ export const OPTOMETRY_FLAGSHIP = {
   videoPoster: "/images/optometry/dashboard-poster.svg",
   mondayBrief: {
     from: "Stephens AI",
-    subject: "Week in review · Wichita Family Vision",
+    subject: "Week in review",
     date: "Mon 20 Apr · 07:03",
     headline: "Last week: 142 patients, up 6% from the 4-week average.",
     summary: [
@@ -92,11 +92,11 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     problem:
       "Online schedulers book appointments that don't fit your schedule. Staff reschedules manually. Patients get annoyed.",
     solution:
-      "Every booking gets validated against provider availability, equipment, insurance, and staffing rules before it commits. Bad bookings re-route via SMS in under 60 seconds.",
+      "Every new booking is checked against provider availability, equipment, insurance, and staffing rules the moment it lands. Conflicts get flagged and re-routed to the patient by SMS in under 60 seconds, before they wreck your day.",
     howItWorks: [
-      "Validates every booking against 8 clinic rules",
-      "Auto-rebooks conflicts via SMS",
-      "Pulls waitlist patients into cancellation openings",
+      "Checks every booking against 8 clinic rules",
+      "Re-routes conflicts to the patient by SMS",
+      "Surfaces waitlist patients for cancellation openings",
     ],
     roi: {
       lead: "Prevents ",
@@ -150,7 +150,7 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     howItWorks: [
       "Medical eligibility checked via clearinghouse — no portal logins or phone calls",
       "Vision portal verification available as premium scope",
-      "Exception alerts with writeback to the patient record",
+      "Exception alerts to your front desk (writeback where your system supports it)",
     ],
     roi: {
       lead: "Reclaims ",
@@ -169,11 +169,11 @@ export const OPTOMETRY_CONNECTION = {
     after: " system.",
   },
   body:
-    "Weave and Demandforce are point tools that don't talk to each other. Stephens AI is a connected operating layer. Every module reads from and writes to the same patient data layer. Recall knows who Booking Guardian just scheduled. The Dashboard tracks how each module is performing. You aren't buying five tools. You're building one system that compounds every month it runs.",
+    "Weave and Demandforce are point tools that don't talk to each other. Stephens AI is a connected operating layer. Every module reads from your systems and coordinates through one shared layer, so Recall knows who Booking Guardian just flagged and the Dashboard tracks how each one is performing. You aren't buying five tools. You're building one system that compounds every month it runs.",
 };
 
 export const OPTOMETRY_CTA = {
-  eyebrow: "Currently booking new engagements",
+  eyebrow: "Q2 2026 · 3 slots open",
   headline: {
     line1: "Your front desk.",
     line2: "Their Monday mornings.",
