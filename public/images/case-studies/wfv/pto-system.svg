@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Auto-generated payroll report from a custom PTO system">
+  <defs>
+    <style>
+      .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+      .sans { font-family: 'Inter Tight', Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- document card -->
+  <rect x="56" y="46" width="688" height="508" rx="10" fill="#FFFFFF" stroke="#EDEDED" stroke-width="1.5"/>
+
+  <!-- header -->
+  <circle cx="92" cy="96" r="5" fill="#F47B6B"/>
+  <text x="112" y="101" class="mono" font-size="15" letter-spacing="1.2" fill="#6B6B6B">WEEKLY PAYROLL REPORT</text>
+  <text x="112" y="126" class="mono" font-size="13" letter-spacing="0.6" fill="#A3A3A3">MAY 24 — JUN 6, 2026</text>
+
+  <!-- status chip: AUTO-GENERATED (ledger chip) -->
+  <g>
+    <rect x="556" y="80" width="152" height="32" rx="3" fill="#FFFFFF" stroke="#EDEDED"/>
+    <rect x="556" y="80" width="152" height="32" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="572" y="101" class="mono" font-size="12" letter-spacing="0.8" fill="#2E7A56">AUTO-GENERATED</text>
+  </g>
+
+  <line x1="88" y1="150" x2="712" y2="150" stroke="#EDEDED" stroke-width="1"/>
+
+  <!-- column headers -->
+  <text x="92"  y="186" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">EMPLOYEE</text>
+  <text x="430" y="186" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">PTO HRS</text>
+  <text x="592" y="186" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">STATUS</text>
+
+  <!-- rows -->
+  <g class="sans" font-size="17" fill="#1A1A1A">
+    <text x="92" y="228">Employee A</text>
+    <text x="430" y="228" class="mono" fill="#1A1A1A">16.0</text>
+    <g><rect x="592" y="212" width="86" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/><text x="604" y="229" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">APPROVED</text></g>
+
+    <line x1="88" y1="248" x2="712" y2="248" stroke="#F5F5F5" stroke-width="1"/>
+    <text x="92" y="284">Employee B</text>
+    <text x="430" y="284" class="mono" fill="#1A1A1A">8.0</text>
+    <g><rect x="592" y="268" width="86" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/><text x="604" y="285" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">APPROVED</text></g>
+
+    <line x1="88" y1="304" x2="712" y2="304" stroke="#F5F5F5" stroke-width="1"/>
+    <text x="92" y="340">Employee C</text>
+    <text x="430" y="340" class="mono" fill="#1A1A1A">40.0</text>
+    <g><rect x="592" y="324" width="86" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/><text x="604" y="341" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">APPROVED</text></g>
+
+    <line x1="88" y1="360" x2="712" y2="360" stroke="#F5F5F5" stroke-width="1"/>
+    <text x="92" y="396">Employee D</text>
+    <text x="430" y="396" class="mono" fill="#1A1A1A">4.0</text>
+    <g><rect x="592" y="380" width="100" height="24" rx="3" fill="#946A12" fill-opacity="0.13"/><text x="604" y="397" class="mono" font-size="12" letter-spacing="0.6" fill="#946A12">PENDING</text></g>
+  </g>
+
+  <line x1="88" y1="420" x2="712" y2="420" stroke="#D4D4D4" stroke-width="1"/>
+
+  <!-- total -->
+  <text x="92" y="456" class="sans" font-size="15" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">TOTAL PTO</text>
+  <text x="430" y="456" class="mono" font-size="17" font-weight="600" fill="#1A1A1A">68.0</text>
+
+  <!-- metric band -->
+  <text x="92" y="516" class="sans" font-size="46" font-weight="500" letter-spacing="-1.5" fill="#F47B6B">60–100 hrs</text>
+  <text x="330" y="510" class="mono" font-size="13" letter-spacing="0.8" fill="#6B6B6B">ADMIN RETURNED</text>
+  <text x="330" y="528" class="mono" font-size="13" letter-spacing="0.8" fill="#6B6B6B">PER YEAR</text>
+</svg>

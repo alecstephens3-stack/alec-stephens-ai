@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="AI operating system control panel showing five autonomous agents and a central brain document">
+  <defs>
+    <style>
+      .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+      .sans { font-family: 'Inter Tight', Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- document card -->
+  <rect x="56" y="46" width="688" height="508" rx="10" fill="#FFFFFF" stroke="#EDEDED" stroke-width="1.5"/>
+
+  <!-- header -->
+  <circle cx="92" cy="96" r="5" fill="#F47B6B"/>
+  <text x="112" y="101" class="mono" font-size="15" letter-spacing="1.2" fill="#6B6B6B">AI OPERATING SYSTEM</text>
+  <text x="112" y="126" class="mono" font-size="13" letter-spacing="0.6" fill="#A3A3A3">AGENT CONTROL · LIVE</text>
+
+  <!-- status chip: ALL AGENTS LIVE (ledger chip) -->
+  <g>
+    <rect x="540" y="80" width="168" height="32" rx="3" fill="#FFFFFF" stroke="#EDEDED"/>
+    <rect x="540" y="80" width="168" height="32" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="556" y="101" class="mono" font-size="12" letter-spacing="0.8" fill="#2E7A56">ALL AGENTS LIVE</text>
+  </g>
+
+  <line x1="88" y1="150" x2="712" y2="150" stroke="#EDEDED" stroke-width="1"/>
+
+  <!-- column headers -->
+  <text x="92"  y="184" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">AGENT</text>
+  <text x="300" y="184" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">HANDLES</text>
+  <text x="584" y="184" class="sans" font-size="13" font-weight="600" letter-spacing="0.4" fill="#6B6B6B">STATUS</text>
+
+  <!-- rows -->
+  <g>
+    <!-- 1 -->
+    <text x="92"  y="222" class="sans" font-size="17" fill="#1A1A1A">Email Manager</text>
+    <text x="300" y="222" class="sans" font-size="15" fill="#6B6B6B">Inbox triage &amp; replies</text>
+    <rect x="584" y="206" width="92" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="596" y="223" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">RUNNING</text>
+    <line x1="88" y1="241" x2="712" y2="241" stroke="#F5F5F5" stroke-width="1"/>
+
+    <!-- 2 -->
+    <text x="92"  y="260" class="sans" font-size="17" fill="#1A1A1A">Scheduling</text>
+    <text x="300" y="260" class="sans" font-size="15" fill="#6B6B6B">Calendar &amp; booking replies</text>
+    <rect x="584" y="244" width="92" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="596" y="261" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">RUNNING</text>
+    <line x1="88" y1="279" x2="712" y2="279" stroke="#F5F5F5" stroke-width="1"/>
+
+    <!-- 3 -->
+    <text x="92"  y="298" class="sans" font-size="17" fill="#1A1A1A">Brain Dump</text>
+    <text x="300" y="298" class="sans" font-size="15" fill="#6B6B6B">Voice notes &#8594; tasks</text>
+    <rect x="584" y="282" width="92" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="596" y="299" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">RUNNING</text>
+    <line x1="88" y1="317" x2="712" y2="317" stroke="#F5F5F5" stroke-width="1"/>
+
+    <!-- 4 -->
+    <text x="92"  y="336" class="sans" font-size="17" fill="#1A1A1A">Meeting Notes</text>
+    <text x="300" y="336" class="sans" font-size="15" fill="#6B6B6B">Summaries &amp; action items</text>
+    <rect x="584" y="320" width="106" height="24" rx="3" fill="#946A12" fill-opacity="0.13"/>
+    <text x="596" y="337" class="mono" font-size="12" letter-spacing="0.6" fill="#946A12">DEPLOYING</text>
+    <line x1="88" y1="355" x2="712" y2="355" stroke="#F5F5F5" stroke-width="1"/>
+
+    <!-- 5 -->
+    <text x="92"  y="374" class="sans" font-size="17" fill="#1A1A1A">Invoicing</text>
+    <text x="300" y="374" class="sans" font-size="15" fill="#6B6B6B">Calendar &#8594; invoice</text>
+    <rect x="584" y="358" width="92" height="24" rx="3" fill="#2E7A56" fill-opacity="0.10"/>
+    <text x="596" y="375" class="mono" font-size="12" letter-spacing="0.6" fill="#2E7A56">RUNNING</text>
+  </g>
+
+  <!-- footer divider -->
+  <line x1="88" y1="404" x2="712" y2="404" stroke="#D4D4D4" stroke-width="1"/>
+
+  <!-- brain doc summary line -->
+  <rect x="92" y="434" width="6" height="6" fill="#F47B6B"/>
+  <text x="108" y="441" class="mono" font-size="13" letter-spacing="0.7" fill="#6B6B6B">BRAIN DOC</text>
+  <text x="206" y="441" class="sans" font-size="15" fill="#1A1A1A">one plain-English source of truth, on her voice</text>
+
+  <!-- metric band (bottom-left, mirrors the payroll graphic) -->
+  <text x="92" y="512" class="sans" font-size="46" font-weight="500" letter-spacing="-1.5" fill="#F47B6B">5 agents</text>
+  <text x="320" y="500" class="mono" font-size="13" letter-spacing="0.8" fill="#6B6B6B">RUNNING HER</text>
+  <text x="320" y="518" class="mono" font-size="13" letter-spacing="0.8" fill="#6B6B6B">OPERATIONS</text>
+</svg>

@@ -11,8 +11,8 @@ export function OptometryModules() {
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
           <div className="mb-10 flex items-center gap-5">
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
-              <span className="text-ink-60">03</span> · The rest of the system
+            <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
+              <span className="text-salmon">03</span> · The rest of the system
             </span>
             <span className="h-px flex-1 bg-border" aria-hidden="true" />
           </div>
@@ -33,7 +33,7 @@ export function OptometryModules() {
             <AnimateOnScroll key={module.number} delay={i * 100}>
               <article className="flex h-full flex-col bg-paper p-8 md:p-10">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-xs uppercase tracking-[0.08em] text-salmon-deep">
+                  <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-salmon-deep">
                     {module.number}
                   </span>
                   <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -45,20 +45,14 @@ export function OptometryModules() {
 
                 <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-90">
                   <p>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
-                      Problem
-                    </span>
-                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-60">
-                      &middot;
+                    <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
+                      Problem &nbsp;&middot;&nbsp;{" "}
                     </span>
                     {module.problem}
                   </p>
                   <p>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
-                      What we build
-                    </span>
-                    <span aria-hidden="true" className="mx-2 font-mono text-[11px] text-ink-60">
-                      &middot;
+                    <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
+                      What we build &nbsp;&middot;&nbsp;{" "}
                     </span>
                     {module.solution}
                   </p>
