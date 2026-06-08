@@ -12,7 +12,7 @@ export function Services() {
       >
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
-            <p className="mb-5 font-mono text-[13px] uppercase tracking-[0.12em] text-salmon">
+            <p className="mb-5 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
               How I work
             </p>
             <h2
@@ -70,7 +70,7 @@ export function Services() {
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
             <div className="text-center">
-              <p className="mb-5 font-mono text-[13px] uppercase tracking-[0.12em] text-salmon">
+              <p className="mb-5 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
                 Pricing
               </p>
               <h2
@@ -85,7 +85,7 @@ export function Services() {
             </div>
           </AnimateOnScroll>
 
-          <div className="mt-16 grid gap-6 lg:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-2">
             {PRICING_TIERS.map((tier, index) => (
               <AnimateOnScroll key={tier.name} delay={index * 100}>
                 <div
@@ -96,7 +96,7 @@ export function Services() {
                   }`}
                 >
                   {tier.highlighted && (
-                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-white">
+                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 font-mono text-[13px] uppercase tracking-[0.04em] text-white">
                       Most popular
                     </span>
                   )}

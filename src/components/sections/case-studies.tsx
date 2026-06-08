@@ -44,7 +44,7 @@ export function CaseStudies() {
                       >
                         {study.metric}
                       </span>
-                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-60">
+                      <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
                         {study.metricLabel}
                       </span>
                     </div>

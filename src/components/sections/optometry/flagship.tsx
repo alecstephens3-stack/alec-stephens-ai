@@ -70,7 +70,7 @@ export function OptometryFlagship() {
     >
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.18em] text-salmon">
+          <p className="mb-6 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
             {eyebrow}
           </p>
         </AnimateOnScroll>
@@ -127,7 +127,7 @@ export function OptometryFlagship() {
                 />
               )}
             </div>
-            <p className="mt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
+            <p className="mt-3 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
               {videoCaption}
             </p>
           </div>
@@ -137,15 +137,15 @@ export function OptometryFlagship() {
           <figure className="mt-16 overflow-hidden rounded-lg border border-border bg-paper md:mt-24">
             {briefImageFailed ? (
               <div className="px-6 py-8 md:px-10 md:py-10">
-                <div className="mb-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-border pb-4 font-mono text-xs uppercase tracking-[0.08em] text-ink-60">
+                <div className="mb-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-border pb-4 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
                   <span>
-                    <span className="text-ink-40">From</span>&nbsp; {mondayBriefFallback.from}
+                    <span className="text-ink-60">From</span>&nbsp; {mondayBriefFallback.from}
                   </span>
                   <span>
-                    <span className="text-ink-40">Subject</span>&nbsp; {mondayBriefFallback.subject}
+                    <span className="text-ink-60">Subject</span>&nbsp; {mondayBriefFallback.subject}
                   </span>
                   <span>
-                    <span className="text-ink-40">Date</span>&nbsp; {mondayBriefFallback.date}
+                    <span className="text-ink-60">Date</span>&nbsp; {mondayBriefFallback.date}
                   </span>
                 </div>
                 <div className="space-y-3 text-base leading-relaxed text-ink-90">
@@ -165,7 +165,7 @@ export function OptometryFlagship() {
                 onError={() => setBriefImageFailed(true)}
               />
             )}
-            <figcaption className="border-t border-border px-6 py-4 font-mono text-xs uppercase tracking-[0.08em] text-ink-60 md:px-10">
+            <figcaption className="border-t border-border px-6 py-4 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60 md:px-10">
               The Monday briefing, 7 AM, delivered by email
             </figcaption>
           </figure>
@@ -173,7 +173,7 @@ export function OptometryFlagship() {
 
         <AnimateOnScroll delay={250}>
           <p className="mt-12 max-w-[68ch] text-base leading-relaxed text-ink-60">
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-40">
+            <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
               How it works &nbsp;&middot;&nbsp;
             </span>
             {howItWorks}

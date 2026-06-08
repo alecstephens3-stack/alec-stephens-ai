@@ -20,7 +20,7 @@ export function OptometryHero() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-10">
           <div>
-            <p className="mb-8 font-mono text-xs uppercase tracking-[0.12em] text-ink-60 animate-fade-in-up">
+            <p className="mb-8 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60 animate-fade-in-up">
               {eyebrow}
             </p>
 
@@ -81,7 +81,7 @@ export function OptometryHero() {
           {trust.map((item, i) => (
             <span
               key={item}
-              className="flex items-center font-mono text-xs uppercase tracking-[0.06em] text-ink-60"
+              className="flex items-center font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60"
             >
               {item}
               {i < trust.length - 1 && (

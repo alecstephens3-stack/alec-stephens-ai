@@ -5,6 +5,7 @@ import { OptometryFlagship } from "@/components/sections/optometry/flagship";
 import { OptometryModules } from "@/components/sections/optometry/modules";
 import { OptometryConnection } from "@/components/sections/optometry/connection";
 import { OptometryCta } from "@/components/sections/optometry/cta";
+import { Callout } from "@/components/ui/callout";
 import { OPTOMETRY_META } from "@/lib/optometry";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
@@ -60,6 +61,14 @@ export default function OptometryPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <OptometryHero />
+      <div className="mx-auto max-w-5xl px-6">
+        <Callout label="Already in production">
+          This isn&apos;t a concept deck. I&apos;ve already built and shipped a full
+          custom system for a 27-person eyecare practice: time-off and payroll, end
+          to end, with the paper process eliminated. The intelligence layer below is
+          the next build on that same foundation.
+        </Callout>
+      </div>
       <OptometryProblem />
       <OptometryFlagship />
       <OptometryModules />
