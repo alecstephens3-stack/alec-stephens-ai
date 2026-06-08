@@ -58,20 +58,28 @@ export const OPTOMETRY_FLAGSHIP = {
     "Stephens AI pulls that data every night and turns it into a weekly briefing that takes 90 seconds to read. You see the numbers that actually move an eyecare practice: optical capture rate, recall compliance, no-show rate, average revenue per patient, new-patient mix, AR days. You see what's trending up, what's slipping, and what's costing you money this week, all in plain language with specific recommendations.",
     "Open it with your Monday morning coffee. Run your week.",
   ],
-  videoCaption: "Dashboard walkthrough · 16 sec loop",
+  videoCaption: "Dashboard walkthrough",
   videoEmbedSrc: "/prototypes/optometry-dashboard/index.html",
+  videoEmbedSrcMobile: "/prototypes/optometry-dashboard-mobile/index.html",
   videoPoster: "/images/optometry/dashboard-poster.svg",
-  mondayBriefImage: "/images/optometry/monday-brief.svg",
-  mondayBriefFallback: {
+  mondayBrief: {
     from: "Stephens AI",
     subject: "Week in review",
-    date: "Mon, Apr 20, 2026, 7:03 AM",
-    body: [
-      "Last week at your practice: 142 patients, up 6% from the 4-week average. Optical conversion was 64%, down 4 points, worth investigating. 3 no-shows, in line with trend. Recall compliance at 71%.",
-      "Top concern this week: Tuesday no-show rate has trended up 3 weeks running. Now 12% versus the 4% clinic average.",
-      "Top opportunity: 47 patients are currently overdue for recall, representing roughly $18,800 in potential revenue if recovered.",
-      "Recommended focus: review Tuesday scheduling. Are confirmations going out on schedule?",
+    date: "Mon 20 Apr · 07:03",
+    headline: "Last week: 142 patients, up 6% from the 4-week average.",
+    summary: [
+      "Optical conversion was 64%, down 4 points. Worth investigating.",
+      "3 no-shows, in line with trend. Recall compliance at 71%.",
     ],
+    topConcern:
+      "Tuesday no-show rate trending up 3 weeks running. Now 12% vs. 4% clinic average.",
+    topOpportunity:
+      "47 patients currently overdue for recall. Roughly $18,800 in potential revenue.",
+    recommendedFocus:
+      "Review Tuesday scheduling. Are confirmations going out on schedule?",
+    footerLeft: "Open dashboard →",
+    footerRight: "Delivered every Monday · 07:00",
+    caption: "The Monday briefing, 7 AM, delivered by email",
   },
   howItWorks:
     "Nightly sync from your PM system, warehoused in your dedicated encrypted database, AI-generated narrative briefing, delivered by email and accessible via web dashboard anytime.",
@@ -140,14 +148,15 @@ export const OPTOMETRY_MODULES: OptometryModule[] = [
     solution:
       "Pre-appointment verification runs automatically 48 hours ahead. Staff walks in to pre-verified appointments and a flagged exception queue.",
     howItWorks: [
-      "Medical eligibility via clearinghouse API",
+      "Medical eligibility checked via clearinghouse — no portal logins or phone calls",
       "Vision portal verification available as premium scope",
       "Exception alerts to your front desk (writeback where your system supports it)",
     ],
     roi: {
       lead: "Reclaims ",
       highlight: "8 to 12 front-desk hours per week",
-      trail: ". Most day-of insurance surprises disappear.",
+      trail:
+        ". Day-of insurance surprises disappear. Patients aren't blindsided at check-in, mornings start without portal scrambling, and your team handles experience, not eligibility.",
     },
   },
 ];

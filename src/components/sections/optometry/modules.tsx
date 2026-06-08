@@ -33,7 +33,7 @@ export function OptometryModules() {
             <AnimateOnScroll key={module.number} delay={i * 100}>
               <article className="flex h-full flex-col bg-paper p-8 md:p-10">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
+                  <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-salmon-deep">
                     {module.number}
                   </span>
                   <span className="h-px flex-1 bg-border" aria-hidden="true" />
@@ -43,7 +43,7 @@ export function OptometryModules() {
                   {module.title}
                 </h3>
 
-                <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-60">
+                <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-90">
                   <p>
                     <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
                       Problem &nbsp;&middot;&nbsp;{" "}
@@ -74,7 +74,7 @@ export function OptometryModules() {
 
                 <p className="mt-auto pt-8 text-[15px] font-medium leading-snug text-black md:text-base">
                   {module.roi.lead}
-                  <span className="font-semibold text-salmon">
+                  <span className="font-semibold text-salmon-deep">
                     {module.roi.highlight}
                   </span>
                   {module.roi.trail}

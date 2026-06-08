@@ -37,11 +37,11 @@ export function OptometryHero() {
               {headline.after}
             </h1>
 
-            <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-ink-60 md:mt-10 md:text-xl animate-fade-in-up animation-delay-400">
+            <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-ink-90 md:mt-10 md:text-xl animate-fade-in-up animation-delay-400">
               {ledeParts ? (
                 <>
                   {ledeParts.before}
-                  <span className="text-salmon">{ledeParts.highlight}</span>
+                  <span className="text-salmon-deep">{ledeParts.highlight}</span>
                   {ledeParts.after}
                 </>
               ) : (
