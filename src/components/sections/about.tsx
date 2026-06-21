@@ -29,7 +29,7 @@ const FOUNDERS: Founder[] = [
     objectPosition: "center 22%",
     linkedin: "https://www.linkedin.com/in/jusheenkim/",
     blurb: [
-      "I'm Jusheen, co-founder of Stephens AI. I studied computer science at UC Berkeley and spent three years as a lead software engineer at J.P. Morgan. I'm passionate about working with real people and giving them their time back — building automations and websites that handle the busywork so they can focus on what actually matters to them. I've worked with all kinds of clients, from healthcare practices and solo freelancers to SaaS companies.",
+      "I'm an ex-J.P. Morgan lead software engineer that's passionate about working with real people and giving them their time back — building automations and websites that handle the busywork so they can focus on what actually matters to them. I've worked with all kinds of clients, from healthcare practices and solo freelancers to SaaS companies.",
     ],
   },
 ];
