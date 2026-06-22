@@ -51,7 +51,7 @@ export function ContactForm() {
           Message sent.
         </h3>
         <p className="mt-2 text-ink-60">
-          I&apos;ll get back to you within 24 hours.
+          We&apos;ll get back to you within 24 hours.
         </p>
         <button
           onClick={() => setStatus("idle")}
@@ -122,13 +122,13 @@ export function ContactForm() {
             setFormData((prev) => ({ ...prev, message: e.target.value }))
           }
           className="w-full resize-none rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
-          placeholder="Tell me about your project..."
+          placeholder="Tell us about your project..."
         />
       </div>
 
       {status === "error" && (
         <p className="text-sm text-ink-90">
-          {errorMessage} You can also email me at{" "}
+          {errorMessage} You can also email us at{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="text-salmon underline underline-offset-2 hover:text-salmon-deep"

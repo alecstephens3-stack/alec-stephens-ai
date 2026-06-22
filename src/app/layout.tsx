@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "custom integrations",
     "AI development",
   ],
-  authors: [{ name: "Alec Stephens" }],
+  authors: [{ name: "Alec Stephens" }, { name: "Jusheen Kim" }],
   openGraph: {
     type: "website",
     locale: "en_US",
