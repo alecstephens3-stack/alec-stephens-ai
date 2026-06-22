@@ -23,7 +23,7 @@ export function ContactCTA() {
 
               <p className="mt-4 max-w-md text-lg text-ink-60">
                 Every engagement starts with a free discovery call.
-                Tell me what you&apos;re working on.
+                Tell us what you&apos;re working on.
               </p>
 
               <a

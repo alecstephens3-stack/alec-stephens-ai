@@ -13,7 +13,7 @@ export function Services() {
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
             <p className="mb-5 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
-              How I work
+              How we work
             </p>
             <h2
               className="max-w-2xl font-heading font-medium tracking-tight text-black"
