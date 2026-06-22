@@ -8,7 +8,7 @@ export const SITE_NAME = "Stephens AI";
 export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
 export const SITE_DESCRIPTION =
-  "AI consultant who finds where businesses lose time and money, then fixes it with custom AI systems. Custom internal software, agentic workflows, and full AI operating systems for teams in the US, Japan, and beyond.";
+  "AI consultants who find where businesses lose time and money, then fix it with custom AI systems. Custom internal software, agentic workflows, and full AI operating systems for teams in the US, Japan, and beyond.";
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Eyecare", href: "/optometry" },
@@ -23,7 +23,7 @@ export const SERVICES = [
   {
     title: "AI Strategy & Audits",
     description:
-      "I analyze your operations, find the highest-ROI opportunities, and deliver a prioritized roadmap with clear cost savings. Diagnosis before prescription.",
+      "We analyze your operations, find the highest-ROI opportunities, and deliver a prioritized roadmap with clear cost savings. Diagnosis before prescription.",
     details: ["Operations analysis", "Cost-of-status-quo breakdown", "Prioritized roadmap", "Branded PDF deliverable"],
   },
   {
@@ -88,7 +88,7 @@ export const PRICING_TIERS = [
     name: "AIOS Install Sessions",
     price: "$250",
     basis: "per session, or $1,000 for 5",
-    description: "The on-ramp. We install your AI operating system together over five working sessions. You own the build; I bring the tool fluency. Your business stops being bottlenecked by you.",
+    description: "The on-ramp. We install your AI operating system together over five working sessions. You own the build; we bring the tool fluency. Your business stops being bottlenecked by you.",
     features: [
       "Five 1-hour working sessions",
       "A working AIOS your agents can read",
@@ -102,7 +102,7 @@ export const PRICING_TIERS = [
     name: "AI Business Audit",
     price: "$500 – $1,500",
     basis: "one-time",
-    description: "Diagnose before prescribing. I map your operations, find the leaks, and deliver a prioritized roadmap with ROI estimates.",
+    description: "Diagnose before prescribing. We map your operations, find the leaks, and deliver a prioritized roadmap with ROI estimates.",
     features: [
       "Full operations analysis",
       "Cost-of-status-quo breakdown",
@@ -117,7 +117,7 @@ export const PRICING_TIERS = [
     name: "AI Implementation",
     price: "$2,000 – $15,000",
     basis: "fixed price",
-    description: "I build the system. Custom software, agentic workflows, and integrations, scoped to your highest-impact opportunity.",
+    description: "We build the system. Custom software, agentic workflows, and integrations, scoped to your highest-impact opportunity.",
     features: [
       "Everything in the Audit",
       "Custom software, not templates",
@@ -132,7 +132,7 @@ export const PRICING_TIERS = [
     name: "Transformation Retainer",
     price: "$2,000 – $4,000",
     basis: "per month",
-    description: "Your ongoing AI partner. I continuously audit, build, and improve your systems as the business evolves.",
+    description: "Your ongoing AI partner. We continuously audit, build, and improve your systems as the business evolves.",
     features: [
       "Everything in Implementation",
       "Ongoing optimization",
@@ -149,7 +149,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Independent Optometry Clinic",
     description:
-      "A 27-person eyecare practice ran time-off and payroll entirely on paper: handwritten request slips, manual balance tracking, payroll prepped by hand every period. I built them a full custom system on Google Workspace. A simple form feeds an engine that tracks balances, posts approvals to a shared calendar, notifies staff, and generates the payroll report automatically each pay period. All 26 employee records migrated, anniversary-based accrual, weekend-aware math, verified by a 22-check test suite.",
+      "A 27-person eyecare practice ran time-off and payroll entirely on paper: handwritten request slips, manual balance tracking, payroll prepped by hand every period. We built them a full custom system on Google Workspace. A simple form feeds an engine that tracks balances, posts approvals to a shared calendar, notifies staff, and generates the payroll report automatically each pay period. All 26 employee records migrated, anniversary-based accrual, weekend-aware math, verified by a 22-check test suite.",
     tags: ["Google Apps Script", "Custom Software", "Healthcare", "Payroll Automation"],
     metric: "60–100 hrs",
     metricLabel: "Admin returned per year",
@@ -160,7 +160,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Business Coaching Practice",
     description:
-      "A solo founder doing all her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. I built her a complete AI operating system: a team of agents that handle email, scheduling replies, voice-note-to-task capture, and meeting notes, plus an automated calendar-to-invoice workflow. A central brain document keeps every agent on her voice and editable in plain English. Now she reviews instead of doing.",
+      "A solo founder doing all her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. We built her a complete AI operating system: a team of agents that handle email, scheduling replies, voice-note-to-task capture, and meeting notes, plus an automated calendar-to-invoice workflow. A central brain document keeps every agent on her voice and editable in plain English. Now she reviews instead of doing.",
     tags: ["Claude API", "AI Agents", "ClickUp", "Voice-to-Task"],
     metric: "5 agents",
     metricLabel: "Running her operations",
@@ -171,7 +171,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Construction Company, Japan",
     description:
-      "A construction company with 60+ years of excellent work and no way to show it. I rebuilt and redesigned their site (six pages, mobile and desktop), set up Google Search Console, and corrected their Google Business Profile so search finally points to the right place. The result: a modern live site, proper search presence, an ongoing upkeep retainer, and word-of-mouth referrals to other businesses.",
+      "A construction company with 60+ years of excellent work and no way to show it. We rebuilt and redesigned their site (six pages, mobile and desktop), set up Google Search Console, and corrected their Google Business Profile so search finally points to the right place. The result: a modern live site, proper search presence, an ongoing upkeep retainer, and word-of-mouth referrals to other businesses.",
     tags: ["Next.js", "SEO", "Web Design", "Google Business"],
     metric: "Complete",
     metricLabel: "Digital transformation",
@@ -182,7 +182,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "Language Test-Prep Company",
     description:
-      "An education company builds OPIC speaking-test curriculum for Korean professionals. Their team produced everything by hand, spending hours on tasks AI handles in minutes. I integrated AI across their workflow: curriculum drafting, content formatting, review cycles, and process automation. Roughly 80% of the manual work is now handled by AI.",
+      "An education company builds OPIC speaking-test curriculum for Korean professionals. Their team produced everything by hand, spending hours on tasks AI handles in minutes. We integrated AI across their workflow: curriculum drafting, content formatting, review cycles, and process automation. Roughly 80% of the manual work is now handled by AI.",
     tags: ["Claude API", "AI Integration", "Process Automation", "EdTech"],
     metric: "80%",
     metricLabel: "Manual work cut",
@@ -191,9 +191,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
   },
   {
-    title: "Stephens AI — my own operations",
+    title: "Stephens AI — our own operations",
     description:
-      "I don’t just build AI systems for clients. I run my own consulting business on one. Autonomous agents handle client briefs, research, meeting intelligence, reporting, and daily operations. I test everything I build on myself before it ever reaches a client.",
+      "We don’t just build AI systems for clients. We run our own consulting business on one. Autonomous agents handle client briefs, research, meeting intelligence, reporting, and daily operations. We test everything we build on ourselves before it ever reaches a client.",
     tags: ["Claude Code", "n8n", "Telegram", "PostgreSQL"],
     metric: "24/7",
     metricLabel: "Self-operating business",

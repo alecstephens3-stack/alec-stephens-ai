@@ -17,8 +17,8 @@ const FOUNDERS: Founder[] = [
     photo: "/images/headshot.png",
     linkedin: "https://www.linkedin.com/in/alec-stephens-55b392213/",
     blurb: [
-      "I lead every engagement personally. Strategy, architecture, and build. No account managers, no handoffs. The person on the call is the person building your system.",
-      "I've worked with clients in the US, Japan, South Korea, and around the world, building everything from AI learning apps to complex workflow automations. Every project starts with understanding how your business actually works.",
+      "I'm dedicated to staying at the forefront of AI so I can create the best results for the people I work with. I started Stephens AI to help business owners put systems in place that actually work for them, and I'm passionate about solving the real problem instead of just adding more tech. I've built everything from custom software to full AI systems for businesses across the US, Japan, and South Korea, each one designed around how that business actually works.",
+      "I'm also an AI educator, helping everyday people get real value out of these tools. Outside of work, you'll find me learning a new language, traveling somewhere new, or out for a run.",
     ],
   },
   {
@@ -29,7 +29,7 @@ const FOUNDERS: Founder[] = [
     objectPosition: "center 22%",
     linkedin: "https://www.linkedin.com/in/jusheenkim/",
     blurb: [
-      "I'm an ex-J.P. Morgan lead software engineer that's passionate about working with real people and giving them their time back — building automations and websites that handle the busywork so they can focus on what actually matters to them. I've worked with all kinds of clients, from healthcare practices and solo freelancers to SaaS companies.",
+      "I'm an ex-J.P. Morgan lead software engineer that's passionate about working with real people and giving them their time back, building automations and websites that handle the busywork so they can focus on what actually matters to them. I've worked with all kinds of clients, from healthcare practices and solo freelancers to SaaS companies.",
     ],
   },
 ];
@@ -52,7 +52,7 @@ export function About() {
             About
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-60">
-            Stephens AI is just the two of us — here&apos;s who you&apos;ll be
+            Stephens AI is just the two of us. Here&apos;s who you&apos;ll be
             working with.
           </p>
 
