@@ -18,7 +18,7 @@ export function CaseStudies() {
             Selected work
           </h2>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-60">
-            A few things I&apos;ve built. Each one solved a real problem.
+            A few things we&apos;ve built. Each one solved a real problem.
           </p>
         </AnimateOnScroll>
 

@@ -63,7 +63,7 @@ export default function OptometryPage() {
       <OptometryHero />
       <div className="mx-auto max-w-5xl px-6">
         <Callout label="Already in production">
-          This isn&apos;t a concept deck. I&apos;ve already built and shipped a full
+          This isn&apos;t a concept deck. We&apos;ve already built and shipped a full
           custom system for a 27-person eyecare practice: time-off and payroll, end
           to end, with the paper process eliminated. The intelligence layer below is
           the next build on that same foundation.

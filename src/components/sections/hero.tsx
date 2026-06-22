@@ -15,14 +15,14 @@ export function Hero() {
               className="max-w-3xl font-heading font-medium leading-[1.05] tracking-tight text-black animate-fade-in-up"
               style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}
             >
-              I diagnose where businesses lose time, and fix it with AI.
+              We build systems that give business owners their time back.
             </h1>
 
             {/* Body */}
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-60 animate-fade-in-up animation-delay-200">
-              Most businesses know they should be using AI but don&apos;t know
-              where to start. I do the analysis, build the systems, and make
-              sure they actually work.
+              We map out where the time goes, and build the system that takes
+              it back. Sometimes that&apos;s AI, sometimes it&apos;s just good
+              software.
             </p>
 
             {/* CTA */}
@@ -35,18 +35,26 @@ export function Hero() {
             </a>
           </div>
 
-          {/* Right: headshot placeholder */}
-          <div className="animate-fade-in-up animation-delay-400 flex shrink-0 justify-center md:justify-end">
-            <div
-              className="relative overflow-hidden rounded-lg bg-sand border border-border"
-              style={{ width: 220, height: 280 }}
-            >
+          {/* Right: founders */}
+          <div className="animate-fade-in-up animation-delay-400 flex shrink-0 justify-center gap-3 md:justify-end">
+            <div className="relative aspect-[11/14] w-[150px] shrink-0 overflow-hidden rounded-lg border border-border bg-sand sm:w-[165px] md:w-[170px]">
               <Image
                 src="/images/headshot.png"
                 alt="Alec Stephens"
                 fill
                 className="object-cover object-center"
-                sizes="220px"
+                sizes="170px"
+                priority
+              />
+            </div>
+            <div className="relative aspect-[11/14] w-[150px] shrink-0 overflow-hidden rounded-lg border border-border bg-sand sm:w-[165px] md:w-[170px]">
+              <Image
+                src="/images/headshot-jusheen.png"
+                alt="Jusheen Kim"
+                fill
+                className="object-cover"
+                style={{ objectPosition: "center 22%" }}
+                sizes="170px"
                 priority
               />
             </div>

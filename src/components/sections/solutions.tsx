@@ -104,7 +104,7 @@ export function Solutions() {
                 Not sure which one you need?
               </p>
               <p className="mt-1.5 text-sm text-ink-60">
-                Book a free consultation and I&apos;ll diagnose it.
+                Book a free consultation and we&apos;ll diagnose it.
               </p>
             </a>
           </AnimateOnScroll>
