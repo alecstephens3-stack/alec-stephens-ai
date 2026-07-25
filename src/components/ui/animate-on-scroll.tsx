@@ -9,6 +9,11 @@ interface AnimateOnScrollProps {
   delay?: number;
 }
 
+/**
+ * Lens entrance: the staggered 700ms rise (18px travel, brand ease).
+ * Stagger siblings with delay steps of ~60ms. After entering, nothing
+ * moves except the scene lenses.
+ */
 export function AnimateOnScroll({
   children,
   className,
@@ -40,8 +45,8 @@ export function AnimateOnScroll({
       className={cn(className)}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(36px)",
-        transition: `opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+        transform: isVisible ? "translateY(0)" : "translateY(18px)",
+        transition: `opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}ms, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}ms`,
       }}
     >
       {children}

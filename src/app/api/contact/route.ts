@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, company, message } = body;
+    const { name, email, message } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -38,11 +38,10 @@ export async function POST(request: Request) {
       from: "Stephens AI <onboarding@resend.dev>",
       to: CONTACT_EMAIL,
       replyTo: email,
-      subject: `New consultation request from ${name}${company ? ` (${company})` : ""}`,
+      subject: `New consultation request from ${name}`,
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
-        company ? `Company: ${company}` : null,
         "",
         "Message:",
         message,

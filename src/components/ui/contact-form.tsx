@@ -3,12 +3,18 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { CONTACT_EMAIL } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
+
+const LABEL_CLASS =
+  "mb-2 block font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2";
+
+const FIELD_CLASS =
+  "w-full rounded-[12px] border border-rule bg-white/70 px-4 py-3 text-base text-ink placeholder:text-ink-2/70 transition-colors duration-[220ms] ease-brand focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company: "",
     message: "",
   });
   const [status, setStatus] = useState<
@@ -35,7 +41,7 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setFormData({ name: "", email: "", company: "", message: "" });
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       setStatus("error");
       setErrorMessage(
@@ -46,16 +52,16 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-lg border border-border bg-sand/50 p-8 text-center">
-        <h3 className="font-heading text-xl font-semibold text-black">
+      <div className="sai-tile rounded-tile p-8 text-center">
+        <h3 className="font-heading text-xl font-medium text-ink-90">
           Message sent.
         </h3>
-        <p className="mt-2 text-ink-60">
+        <p className="mt-3 text-base text-ink-2">
           We&apos;ll get back to you within 24 hours.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-4 text-sm font-medium text-salmon transition-colors hover:text-salmon-deep"
+          className="mt-5 text-[15px] font-medium text-accent transition-colors duration-[220ms] ease-brand hover:text-accent-deep"
         >
           Send another message
         </button>
@@ -64,13 +70,10 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-5">
         <div>
-          <label
-            htmlFor="contact-name"
-            className="mb-1.5 block font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60"
-          >
+          <label htmlFor="contact-name" className={LABEL_CLASS}>
             Name
           </label>
           <input
@@ -81,15 +84,12 @@ export function ContactForm() {
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, name: e.target.value }))
             }
-            className="w-full rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
+            className={FIELD_CLASS}
             placeholder="Your name"
           />
         </div>
         <div>
-          <label
-            htmlFor="contact-email"
-            className="mb-1.5 block font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60"
-          >
+          <label htmlFor="contact-email" className={LABEL_CLASS}>
             Email
           </label>
           <input
@@ -100,17 +100,14 @@ export function ContactForm() {
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, email: e.target.value }))
             }
-            className="w-full rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
+            className={FIELD_CLASS}
             placeholder="you@company.com"
           />
         </div>
       </div>
 
       <div>
-        <label
-          htmlFor="contact-message"
-          className="mb-1.5 block font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60"
-        >
+        <label htmlFor="contact-message" className={LABEL_CLASS}>
           Message
         </label>
         <textarea
@@ -121,17 +118,17 @@ export function ContactForm() {
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, message: e.target.value }))
           }
-          className="w-full resize-none rounded-lg border border-border bg-paper px-4 py-3 text-black placeholder:text-ink-60/50 focus:border-salmon focus:outline-none focus:ring-1 focus:ring-salmon transition-colors"
+          className={cn(FIELD_CLASS, "resize-none")}
           placeholder="Tell us about your project..."
         />
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-ink-90">
+        <p className="text-[15px] leading-relaxed text-ink-90">
           {errorMessage} You can also email us at{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="text-salmon underline underline-offset-2 hover:text-salmon-deep"
+            className="text-accent underline underline-offset-2 hover:text-accent-deep"
           >
             {CONTACT_EMAIL}
           </a>
@@ -139,16 +136,17 @@ export function ContactForm() {
         </p>
       )}
 
-      <button
+      <Button
+        variant="primary"
         type="submit"
         disabled={status === "sending"}
         className={cn(
-          "w-full rounded-full bg-salmon px-6 py-3.5 font-heading font-medium text-white transition-all hover:bg-salmon-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salmon",
-          status === "sending" && "opacity-70 cursor-not-allowed"
+          "w-full justify-center",
+          status === "sending" && "cursor-not-allowed opacity-70"
         )}
       >
         {status === "sending" ? "Sending..." : "Send"}
-      </button>
+      </Button>
     </form>
   );
 }

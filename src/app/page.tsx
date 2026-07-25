@@ -21,11 +21,18 @@ export default function Home() {
     ],
     email: CONTACT_EMAIL,
     areaServed: ["United States", "Japan", "Worldwide"],
-    founder: {
-      "@type": "Person",
-      name: "Alec Stephens",
-      jobTitle: "AI Automation Consultant",
-    },
+    founder: [
+      {
+        "@type": "Person",
+        name: "Alec Stephens",
+        jobTitle: "AI Automation Consultant",
+      },
+      {
+        "@type": "Person",
+        name: "Jusheen Kim",
+        jobTitle: "AI Automation Consultant",
+      },
+    ],
     knowsAbout: [
       "n8n",
       "Make.com",

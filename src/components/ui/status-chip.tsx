@@ -2,24 +2,38 @@ import { cn } from "@/lib/utils";
 
 type ChipStatus = "good" | "warn" | "bad" | "accent";
 
-const STATUS_TEXT: Record<ChipStatus, string> = {
+const LIGHT_TEXT: Record<ChipStatus, string> = {
   good: "text-status-good",
   warn: "text-status-warn",
   bad: "text-status-bad",
-  accent: "text-salmon",
+  accent: "text-accent",
 };
 
-const STATUS_TINT: Record<ChipStatus, string> = {
+const LIGHT_TINT: Record<ChipStatus, string> = {
   good: "bg-status-good-tint",
   warn: "bg-status-warn-tint",
   bad: "bg-status-bad-tint",
-  accent: "bg-salmon/10",
+  accent: "bg-accent-soft",
+};
+
+const NIGHT_TEXT: Record<ChipStatus, string> = {
+  good: "text-status-good-night",
+  warn: "text-status-warn-night",
+  bad: "text-status-bad-night",
+  accent: "text-accent-night",
+};
+
+const NIGHT_TINT: Record<ChipStatus, string> = {
+  good: "bg-status-good-night-tint",
+  warn: "bg-status-warn-night-tint",
+  bad: "bg-status-bad-night-tint",
+  accent: "bg-accent-soft",
 };
 
 /**
- * Ledger-chip status marker (brand standard, locked 2026-06-08).
- * Sharp-cornered two-cell chip with a subtle status tint on the keyword cell
- * and an internal divider. Replaces the retired dot-pill status badge.
+ * Ledger-chip status marker (Lens v3; the chip survives from v2 with a
+ * Schibsted keyword cell and 8px radius). Two cells: tinted keyword + fact.
+ * Status colors are functional and scoped to these chips only.
  */
 export function StatusChip({
   keyword,
@@ -37,16 +51,16 @@ export function StatusChip({
   return (
     <span
       className={cn(
-        "inline-flex items-stretch overflow-hidden rounded-[3px] border align-middle",
-        onDark ? "border-paper/25" : "border-border",
+        "inline-flex items-stretch overflow-hidden rounded-chip border align-middle",
+        onDark ? "border-nrule bg-white/5" : "border-rule bg-white/80",
         className,
       )}
     >
       <span
         className={cn(
-          "flex items-center px-3 py-1.5 font-mono text-[13px] uppercase tracking-[0.04em] whitespace-nowrap",
-          STATUS_TEXT[status],
-          onDark ? "bg-paper/5" : STATUS_TINT[status],
+          "flex items-center px-3 py-1.5 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] whitespace-nowrap",
+          onDark ? NIGHT_TEXT[status] : LIGHT_TEXT[status],
+          onDark ? NIGHT_TINT[status] : LIGHT_TINT[status],
         )}
       >
         {keyword}
@@ -54,8 +68,8 @@ export function StatusChip({
       {detail && (
         <span
           className={cn(
-            "flex items-center px-3 py-1.5 text-[14px] font-medium whitespace-nowrap",
-            onDark ? "border-l border-paper/25 text-paper/85" : "border-l border-border text-ink-90",
+            "flex items-center px-3 py-1.5 text-[15px] font-medium whitespace-nowrap",
+            onDark ? "border-l border-nrule text-cream" : "border-l border-rule text-ink-90",
           )}
         >
           {detail}

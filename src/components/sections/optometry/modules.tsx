@@ -1,26 +1,22 @@
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { BubbleList, Porthole } from "@/components/ui/lens-primitives";
 import { OPTOMETRY_MODULES } from "@/lib/optometry";
 
 export function OptometryModules() {
   return (
     <section
       id="modules"
-      className="py-24 md:py-36"
+      className="py-24 md:py-32"
       aria-label="The rest of the system"
     >
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <div className="mb-10 flex items-center gap-5">
-            <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
-              <span className="text-salmon">03</span> · The rest of the system
-            </span>
-            <span className="h-px flex-1 bg-border" aria-hidden="true" />
-          </div>
+          <Porthole>03 · The rest of the system</Porthole>
           <h2
-            className="max-w-[22ch] font-heading font-medium text-black"
+            className="mt-6 max-w-[22ch] font-heading font-medium text-ink-90"
             style={{
-              fontSize: "clamp(2rem, 4vw, 3.25rem)",
-              lineHeight: 1.05,
+              fontSize: "clamp(2rem, 3.8vw, 3rem)",
+              lineHeight: 1.06,
               letterSpacing: "-0.02em",
             }}
           >
@@ -28,61 +24,56 @@ export function OptometryModules() {
           </h2>
         </AnimateOnScroll>
 
-        <div className="mt-14 grid gap-px bg-border md:mt-20 md:grid-cols-2">
-          {OPTOMETRY_MODULES.map((module, i) => (
-            <AnimateOnScroll key={module.number} delay={i * 100}>
-              <article className="flex h-full flex-col bg-paper p-8 md:p-10">
-                <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-[14px] uppercase tracking-[0.04em] text-salmon-deep">
-                    {module.number}
-                  </span>
-                  <span className="h-px flex-1 bg-border" aria-hidden="true" />
-                </div>
-
-                <h3 className="mt-5 font-heading text-2xl font-medium tracking-tight text-black md:text-[1.75rem]">
-                  {module.title}
-                </h3>
-
-                <div className="mt-5 space-y-4 text-base leading-relaxed text-ink-90">
-                  <p>
-                    <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
-                      Problem &nbsp;&middot;&nbsp;{" "}
-                    </span>
-                    {module.problem}
-                  </p>
-                  <p>
-                    <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
-                      What we build &nbsp;&middot;&nbsp;{" "}
-                    </span>
-                    {module.solution}
-                  </p>
-                </div>
-
-                <ul className="mt-6 space-y-2">
-                  {module.howItWorks.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-base text-ink-90"
-                    >
-                      <span aria-hidden="true" className="mt-[2px] text-salmon">
-                        &rarr;
+        <AnimateOnScroll delay={80}>
+          <div className="sai-pane sai-streak mt-12 rounded-panel p-6 md:mt-16 md:p-10">
+            <div className="relative grid gap-6 md:grid-cols-2 md:gap-8">
+              {OPTOMETRY_MODULES.map((module, i) => (
+                <AnimateOnScroll key={module.number} delay={120 + i * 70} className="h-full">
+                  <article className="sai-tile flex h-full flex-col rounded-tile p-7 md:p-9">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-label text-[14.5px] font-bold uppercase tracking-[0.05em] text-accent">
+                        {module.number}
                       </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                      <span className="h-px flex-1 bg-rule" aria-hidden="true" />
+                    </div>
 
-                <p className="mt-auto pt-8 text-[15px] font-medium leading-snug text-black md:text-base">
-                  {module.roi.lead}
-                  <span className="font-semibold text-salmon-deep">
-                    {module.roi.highlight}
-                  </span>
-                  {module.roi.trail}
-                </p>
-              </article>
-            </AnimateOnScroll>
-          ))}
-        </div>
+                    <h3 className="mt-5 font-heading text-2xl font-medium tracking-tight text-ink-90">
+                      {module.title}
+                    </h3>
+
+                    <div className="mt-5 space-y-4 text-[15.5px] leading-relaxed text-ink-2">
+                      <p>
+                        <span className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-90">
+                          Problem &nbsp;&middot;&nbsp;{" "}
+                        </span>
+                        {module.problem}
+                      </p>
+                      <p>
+                        <span className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-90">
+                          What we build &nbsp;&middot;&nbsp;{" "}
+                        </span>
+                        {module.solution}
+                      </p>
+                    </div>
+
+                    <BubbleList
+                      className="mt-5 text-[15.5px] leading-relaxed text-ink-90"
+                      items={module.howItWorks}
+                    />
+
+                    <p className="mt-auto pt-8 text-base leading-relaxed text-ink-90">
+                      {module.roi.lead}
+                      <span className="font-label font-bold text-accent">
+                        {module.roi.highlight}
+                      </span>
+                      {module.roi.trail}
+                    </p>
+                  </article>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

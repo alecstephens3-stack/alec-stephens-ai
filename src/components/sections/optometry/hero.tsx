@@ -1,3 +1,5 @@
+import { ButtonLink } from "@/components/ui/button";
+import { Porthole } from "@/components/ui/lens-primitives";
 import { OPTOMETRY_HERO } from "@/lib/optometry";
 import { HeroIllustration } from "./hero-illustration";
 
@@ -14,81 +16,87 @@ export function OptometryHero() {
 
   return (
     <section
-      className="relative pt-32 pb-16 md:pt-40 md:pb-24"
+      className="relative pt-36 pb-16 md:pt-44 md:pb-24"
       aria-label="Eyecare overview"
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-10">
-          <div>
-            <p className="mb-8 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60 animate-fade-in-up">
-              {eyebrow}
-            </p>
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="sai-pane sai-streak rounded-window p-10 md:p-14">
+          <div className="relative grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-12">
+            <div>
+              <div className="sai-rise" style={{ animationDelay: "0ms" }}>
+                <Porthole>{eyebrow}</Porthole>
+              </div>
 
-            <h1
-              className="max-w-[18ch] font-heading font-medium text-black animate-fade-in-up animation-delay-200"
-              style={{
-                fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.035em",
-              }}
+              <h1
+                className="sai-rise mt-7 max-w-[18ch] font-heading font-medium text-ink-90"
+                style={{
+                  fontSize: "clamp(2.35rem, 4.6vw, 3.5rem)",
+                  lineHeight: 1.02,
+                  letterSpacing: "-0.03em",
+                  animationDelay: "80ms",
+                }}
+              >
+                {headline.before}
+                <em className="not-italic text-accent">{headline.accent}</em>
+                {headline.after}
+              </h1>
+
+              <p
+                className="sai-rise mt-7 max-w-[52ch] text-lg leading-relaxed text-ink-2 md:mt-8"
+                style={{ animationDelay: "160ms" }}
+              >
+                {ledeParts ? (
+                  <>
+                    {ledeParts.before}
+                    <span className="font-medium text-ink-90">{ledeParts.highlight}</span>
+                    {ledeParts.after}
+                  </>
+                ) : (
+                  lede
+                )}
+              </p>
+
+              <div
+                className="sai-rise mt-10 flex flex-wrap items-center gap-4 md:mt-12"
+                style={{ animationDelay: "240ms" }}
+              >
+                <ButtonLink href={primaryCta.href} variant="primary">
+                  {primaryCta.label}
+                  <span aria-hidden="true">&rarr;</span>
+                </ButtonLink>
+                <ButtonLink href={secondaryCta.href} variant="ghost">
+                  {secondaryCta.label}
+                  <span aria-hidden="true">&darr;</span>
+                </ButtonLink>
+              </div>
+            </div>
+
+            {/* Below sm the wrapper reclaims the pane's 40px padding so the
+                illustration renders 337px wide instead of 257px. That extra
+                width is what lets its type clear the 13px floor without the
+                SVG going oversized on desktop. */}
+            <div
+              className="sai-rise -mx-10 flex justify-center sm:mx-0 lg:justify-end"
+              style={{ animationDelay: "200ms" }}
             >
-              {headline.before}
-              <span className="text-salmon">{headline.accent}</span>
-              {headline.after}
-            </h1>
-
-            <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-ink-90 md:mt-10 md:text-xl animate-fade-in-up animation-delay-400">
-              {ledeParts ? (
-                <>
-                  {ledeParts.before}
-                  <span className="text-salmon-deep">{ledeParts.highlight}</span>
-                  {ledeParts.after}
-                </>
-              ) : (
-                lede
-              )}
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-5 md:mt-12 animate-fade-in-up animation-delay-600">
-              <a
-                href={primaryCta.href}
-                className="group inline-flex items-center gap-2 rounded-full bg-black px-6 py-3.5 font-heading text-sm font-medium text-paper transition-colors hover:bg-salmon"
-              >
-                {primaryCta.label}
-                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-                  &rarr;
-                </span>
-              </a>
-              <a
-                href={secondaryCta.href}
-                className="inline-flex items-center gap-2 font-heading text-sm font-medium text-ink-90 transition-colors hover:text-salmon"
-              >
-                {secondaryCta.label}
-                <span aria-hidden="true">&darr;</span>
-              </a>
+              <HeroIllustration />
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end animate-fade-in-up animation-delay-400">
-            <HeroIllustration />
+          <div
+            className="sai-rise relative mt-12 flex flex-wrap items-center gap-2.5 border-t border-rule pt-8 md:mt-16 md:pt-10"
+            aria-label="Compatible platforms"
+            style={{ animationDelay: "320ms" }}
+          >
+            {trust.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-rule bg-white/60 px-3 py-1 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2"
+              >
+                {item}
+              </span>
+            ))}
           </div>
-        </div>
-
-        <div
-          className="mt-16 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-6 md:mt-24 animate-fade-in-up animation-delay-600"
-          aria-label="Compatible platforms"
-        >
-          {trust.map((item, i) => (
-            <span
-              key={item}
-              className="flex items-center font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60"
-            >
-              {item}
-              {i < trust.length - 1 && (
-                <span className="ml-5 h-3 w-px bg-border" aria-hidden="true" />
-              )}
-            </span>
-          ))}
         </div>
       </div>
     </section>
