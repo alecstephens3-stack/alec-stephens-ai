@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Registration-bracket callout (brand standard, locked 2026-06-08).
- * Paper panel with salmon crop-mark brackets on the top-left + bottom-right
- * corners. Replaces the retired salmon left-border-bar callout. Use for the
- * one decision / proof / key-number moment per view.
+ * Registration-bracket callout (survives from v2, reskinned for Lens v3).
+ * A strong glass pane with crop-mark brackets on opposite corners — salmon
+ * at the top-left ramping to terracotta at the bottom-right. Never a
+ * left-border bar. Use for the one decision / proof / key-number moment
+ * per view.
  */
 export function Callout({
   label,
@@ -16,18 +17,17 @@ export function Callout({
   className?: string;
 }) {
   return (
-    <div className={cn("relative rounded-[4px] border border-border bg-paper p-7 md:p-9", className)}>
+    <div className={cn("relative rounded-card sai-pane-strong p-7 md:p-9", className)}>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -left-px -top-px h-5 w-5 rounded-tl-[4px] border-l-2 border-t-2 border-salmon"
+        className="pointer-events-none absolute left-3.5 top-3.5 h-5 w-5 rounded-tl-[2px] border-l-[3px] border-t-[3px] border-salmon"
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-px -right-px h-5 w-5 rounded-br-[4px] border-b-2 border-r-2 border-salmon"
+        className="pointer-events-none absolute bottom-3.5 right-3.5 h-5 w-5 rounded-br-[2px] border-b-[3px] border-r-[3px] border-accent"
       />
       {label && (
-        <div className="mb-4 flex items-center gap-2.5 font-mono text-[14px] uppercase tracking-[0.04em] text-ink-60">
-          <span className="h-[5px] w-[5px] bg-salmon" aria-hidden="true" />
+        <div className="mb-4 font-label text-[13.5px] font-semibold uppercase tracking-[0.07em] text-accent">
           {label}
         </div>
       )}

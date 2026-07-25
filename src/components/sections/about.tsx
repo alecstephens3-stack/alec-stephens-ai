@@ -45,75 +45,77 @@ function getInitials(name: string) {
 
 export function About() {
   return (
-    <section id="about" className="bg-sand/50 py-28 md:py-40" aria-label="About">
+    <section id="about" className="py-24 md:py-32" aria-label="About">
       <div className="mx-auto max-w-5xl px-6">
         <AnimateOnScroll>
-          <h2 className="font-heading text-3xl font-medium tracking-tight text-black md:text-4xl">
-            About
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-60">
-            Stephens AI is just the two of us. Here&apos;s who you&apos;ll be
-            working with.
-          </p>
+          <div className="sai-pane rounded-panel p-8 md:p-12">
+            <h2 className="font-heading text-3xl font-medium tracking-tight text-ink md:text-4xl">
+              About
+            </h2>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+              Stephens AI is just the two of us. Here&apos;s who you&apos;ll be
+              working with.
+            </p>
 
-          <div className="mt-14 grid items-start gap-12 md:mt-16 md:grid-cols-2 md:gap-16">
-            {FOUNDERS.map((founder) => (
-              <div key={founder.name}>
-                {/* Headshot — falls back to initials until a photo is set */}
-                <div
-                  className="relative overflow-hidden rounded-lg border border-border bg-sand"
-                  style={{ width: 180, height: 220 }}
-                >
-                  {founder.photo ? (
-                    <Image
-                      src={founder.photo}
-                      alt={founder.name}
-                      fill
-                      className="object-cover"
-                      style={{ objectPosition: founder.objectPosition ?? "center" }}
-                      sizes="180px"
-                    />
-                  ) : (
-                    <div
-                      className="flex h-full w-full items-center justify-center"
-                      aria-label={`${founder.name} headshot coming soon`}
-                    >
-                      <span className="font-heading text-4xl font-medium text-ink-40">
-                        {getInitials(founder.name)}
-                      </span>
-                    </div>
-                  )}
+            <div className="mt-14 grid items-start gap-12 md:mt-16 md:grid-cols-2 md:gap-16">
+              {FOUNDERS.map((founder) => (
+                <div key={founder.name}>
+                  {/* Headshot — falls back to initials until a photo is set */}
+                  <div
+                    className="sai-tile relative overflow-hidden rounded-tile"
+                    style={{ width: 180, height: 220 }}
+                  >
+                    {founder.photo ? (
+                      <Image
+                        src={founder.photo}
+                        alt={founder.name}
+                        fill
+                        className="object-cover"
+                        style={{ objectPosition: founder.objectPosition ?? "center" }}
+                        sizes="180px"
+                      />
+                    ) : (
+                      <div
+                        className="flex h-full w-full items-center justify-center"
+                        aria-label={`${founder.name} headshot coming soon`}
+                      >
+                        <span className="font-heading text-4xl font-medium text-ink-2">
+                          {getInitials(founder.name)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <h3 className="mt-7 font-heading text-2xl font-medium tracking-tight text-ink-90">
+                    {founder.name}
+                  </h3>
+                  <p className="mt-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-accent">
+                    {founder.role}
+                  </p>
+
+                  <div className="mt-5 max-w-xl space-y-4">
+                    {founder.blurb.map((paragraph, i) => (
+                      <p
+                        key={i}
+                        className="text-base leading-relaxed text-ink-90"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+
+                  <a
+                    href={founder.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 text-[15px] font-medium text-accent transition-colors duration-[220ms] ease-brand hover:text-accent-deep"
+                  >
+                    LinkedIn
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
                 </div>
-
-                <h3 className="mt-6 font-heading text-2xl font-medium tracking-tight text-black">
-                  {founder.name}
-                </h3>
-                <p className="mt-1 font-mono text-[13px] uppercase tracking-[0.04em] text-ink-60">
-                  {founder.role}
-                </p>
-
-                <div className="mt-4 max-w-xl space-y-4">
-                  {founder.blurb.map((paragraph, i) => (
-                    <p
-                      key={i}
-                      className="text-lg leading-relaxed text-ink-60"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-
-                <a
-                  href={founder.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-salmon transition-colors hover:text-salmon-deep"
-                >
-                  LinkedIn
-                  <span aria-hidden="true">&rarr;</span>
-                </a>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </AnimateOnScroll>
       </div>

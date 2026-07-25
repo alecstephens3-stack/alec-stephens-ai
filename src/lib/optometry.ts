@@ -173,7 +173,7 @@ export const OPTOMETRY_CONNECTION = {
 };
 
 export const OPTOMETRY_CTA = {
-  eyebrow: "Q2 2026 · 3 slots open",
+  eyebrow: "Now taking on new practices",
   headline: {
     line1: "Your front desk.",
     line2: "Their Monday mornings.",
