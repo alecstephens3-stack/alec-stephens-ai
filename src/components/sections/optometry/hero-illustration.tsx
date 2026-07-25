@@ -1,106 +1,99 @@
-const W = 780;
-const H = 540;
+const W = 600;
+const H = 412;
 
-const INK = "#0A0A0A";
-const INK_70 = "#3A3A3A";
-const INK_60 = "#6B6B6B";
-const INK_40 = "#A3A3A3";
-const PAPER = "#FFFFFF";
-const SALMON = "#F47B6B";
-const SALMON_DEEP = "#E35F4D";
+/* Lens v3 palette. Warm ink, translucent glass, terracotta as the only accent,
+   warm sky tones for washes, muted stone for tertiary marks. */
+const INK = "#171310";
+const INK_90 = "#241E19";
+const INK_2 = "#6E6258";
+const STONE = "#A8988A";
+const GLASS = "rgba(255, 255, 255, 0.85)";
+const GLASS_SOFT = "rgba(255, 255, 255, 0.66)";
+const SPECULAR = "rgba(255, 255, 255, 0.95)";
+const RULE = "rgba(23, 19, 16, 0.10)";
+const ACCENT = "#DC6843";
 
-const BX = 20;
-const BY = 70;
-const BW = 230;
-const BH = H - 140;
+/* LEGIBILITY FLOOR MATH (Lens v3: 13px body, 13.5px Schibsted caps, rendered).
+   Measured slot widths for this illustration:
+     390px viewport  -> 337px  (pane content box is 257px; the wrapper in
+                                hero.tsx reclaims the pane's 40px padding on
+                                each side below the sm breakpoint)
+     1440px viewport -> 407px  (max-w-5xl container, 56px pane padding,
+                                2-col grid with a 48px gap)
+   Mobile is the binding case, so every <text> must be at least
+     13.5 x 600 / 337 = 24.0 user units.
+   Both sizes below sit at 27 units => 15.2px mobile / 18.3px desktop, which
+   also keeps a 360px-wide phone (310px slot) at 13.9px.
+   That ratio is why this scene carries four text runs instead of twenty-one:
+   at a readable size, tiny scattered labels no longer fit, and the artwork
+   has to say it in shapes. */
+const LABEL_FS = 27;
+const CAPTION_FS = 27;
 
-const CX = W - 230;
-const CY = H / 2;
-const R = 140;
+const CARD_W = 164;
+const CARD_H = 60;
+
+/* The "before" pile: three tilted glass records, big enough to read. */
+const CARDS = [
+  { label: "claims", x: 40, y: 44, rot: -5.5 },
+  { label: "fax #14", x: 60, y: 140, rot: 3 },
+  { label: "denial", x: 36, y: 236, rot: -2 },
+];
+
+const CX = 440;
+const CY = 170;
+const R = 112;
+const EYE_R = 46;
 
 const ORBIT_ITEMS = [
-  { type: "doc", label: "Claims", ang: -90 },
-  { type: "chk", label: "Auth", ang: -30 },
-  { type: "inb", label: "Faxes", ang: 30 },
-  { type: "bill", label: "Posting", ang: 90 },
-  { type: "call", label: "Recalls", ang: 150 },
-  { type: "card", label: "Benefits", ang: 210 },
+  { key: "claims", type: "doc", ang: -90, trail: false },
+  { key: "auth", type: "chk", ang: -30, trail: true },
+  { key: "faxes", type: "inb", ang: 30, trail: true },
+  { key: "posting", type: "bill", ang: 90, trail: true },
+  { key: "recalls", type: "call", ang: 150, trail: false },
+  { key: "benefits", type: "card", ang: 210, trail: false },
 ] as const;
 
-const TARGET_ANGLES = [115, 135, 170, 190, 225, 250];
-
-const THREAD_SOURCES = [
-  { sx: BX + BW - 6, sy: BY + 35 },
-  { sx: BX + BW - 6, sy: BY + 90 },
-  { sx: BX + BW - 6, sy: BY + 150 },
-  { sx: BX + BW - 6, sy: BY + 220 },
-  { sx: BX + BW - 6, sy: BY + 290 },
-  { sx: BX + BW - 6, sy: BY + 370 },
+/* Each thread leaves a card's right edge and lands just short of the ring. */
+const THREADS = [
+  { sx: 204, sy: 74, ang: 205 },
+  { sx: 224, sy: 170, ang: 180 },
+  { sx: 200, sy: 266, ang: 155 },
 ];
-
-const MESS_LABELS = [
-  "claims",
-  "fax #14",
-  "denial",
-  "auth",
-  "recall",
-  "eligibility",
-  "ERA",
-  "statement",
-  "coding",
-  "no-show",
-  "intake",
-  "order",
-];
-
-const NO_TRAIL = new Set(["Claims", "Benefits", "Recalls"]);
-
-function seededChips(seed = 331) {
-  let s = seed;
-  const r = () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
-  return MESS_LABELS.map((label) => {
-    const w = label.length * 6.2 + 18;
-    const x = BX + 10 + r() * (BW - w - 10);
-    const y = BY + 10 + r() * (BH - 28);
-    return { label, w, x, y };
-  });
-}
 
 type GlyphType = (typeof ORBIT_ITEMS)[number]["type"];
 
 function Glyph({ type, x, y }: { type: GlyphType; x: number; y: number }) {
-  const stroke = INK;
+  const stroke = INK_90;
+  const hair = INK_2;
   const sw = 1.4;
-  const accent = SALMON_DEEP;
-  const transform = `translate(${x},${y}) scale(0.9)`;
+  const accent = ACCENT;
+  const transform = `translate(${x},${y}) scale(1.35)`;
 
   switch (type) {
     case "doc":
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <g transform="translate(-10,-12)">
-            <path d="M 0 0 L 14 0 L 20 6 L 20 24 L 0 24 Z" fill={PAPER} stroke={stroke} strokeWidth={sw} />
+            <path d="M 0 0 L 14 0 L 20 6 L 20 24 L 0 24 Z" fill={GLASS} stroke={stroke} strokeWidth={sw} />
             <path d="M 14 0 L 14 6 L 20 6" fill="none" stroke={stroke} strokeWidth={sw} />
-            <line x1="4" y1="12" x2="16" y2="12" stroke={stroke} strokeWidth="1" />
-            <line x1="4" y1="16" x2="14" y2="16" stroke={stroke} strokeWidth="1" />
-            <line x1="4" y1="20" x2="12" y2="20" stroke={stroke} strokeWidth="1" />
+            <line x1="4" y1="12" x2="16" y2="12" stroke={hair} strokeWidth="1" />
+            <line x1="4" y1="16" x2="14" y2="16" stroke={hair} strokeWidth="1" />
+            <line x1="4" y1="20" x2="12" y2="20" stroke={hair} strokeWidth="1" />
           </g>
         </g>
       );
     case "chk":
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <g transform="translate(-10,-12)">
-            <rect width="20" height="24" rx="2" fill={PAPER} stroke={stroke} strokeWidth={sw} />
-            <rect x="6" y="-2" width="8" height="4" rx="1" fill={PAPER} stroke={stroke} strokeWidth={sw} />
+            <rect width="20" height="24" rx="4" fill={GLASS} stroke={stroke} strokeWidth={sw} />
+            <rect x="6" y="-2" width="8" height="4" rx="2" fill={GLASS} stroke={stroke} strokeWidth={sw} />
             <path
               d="M 5 12 L 9 16 L 15 9"
               fill="none"
               stroke={accent}
-              strokeWidth="1.6"
+              strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -109,9 +102,9 @@ function Glyph({ type, x, y }: { type: GlyphType; x: number; y: number }) {
       );
     case "inb":
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <g transform="translate(-12,-10)">
-            <path d="M 0 10 L 4 0 L 20 0 L 24 10 L 24 18 L 0 18 Z" fill={PAPER} stroke={stroke} strokeWidth={sw} />
+            <path d="M 0 10 L 4 0 L 20 0 L 24 10 L 24 18 L 0 18 Z" fill={GLASS} stroke={stroke} strokeWidth={sw} />
             <line x1="0" y1="10" x2="8" y2="10" stroke={stroke} strokeWidth={sw} />
             <line x1="16" y1="10" x2="24" y2="10" stroke={stroke} strokeWidth={sw} />
             <line x1="8" y1="10" x2="10" y2="13" stroke={stroke} strokeWidth={sw} strokeLinecap="round" />
@@ -120,32 +113,24 @@ function Glyph({ type, x, y }: { type: GlyphType; x: number; y: number }) {
         </g>
       );
     case "bill":
+      /* The old "$" was an 11-unit <text> (6px rendered). Redrawn as a
+         terracotta total row so the glyph keeps its meaning without type. */
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <g transform="translate(-10,-12)">
-            <rect width="20" height="24" rx="2" fill={PAPER} stroke={stroke} strokeWidth={sw} />
-            <line x1="3" y1="8" x2="17" y2="8" stroke={stroke} strokeWidth="1" />
-            <line x1="3" y1="14" x2="17" y2="14" stroke={stroke} strokeWidth="1" />
-            <line x1="3" y1="20" x2="12" y2="20" stroke={stroke} strokeWidth="1" />
-            <text
-              x="14"
-              y="22"
-              fontFamily="var(--font-sans)"
-              fontSize="9"
-              fontWeight="700"
-              fill={accent}
-            >
-              $
-            </text>
+            <rect width="20" height="24" rx="4" fill={GLASS} stroke={stroke} strokeWidth={sw} />
+            <line x1="3.5" y1="8" x2="16.5" y2="8" stroke={hair} strokeWidth="1" />
+            <line x1="3.5" y1="13" x2="16.5" y2="13" stroke={hair} strokeWidth="1" />
+            <rect x="3.5" y="17.5" width="9" height="3.4" rx="1.7" fill={accent} />
           </g>
         </g>
       );
     case "call":
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <path
             d="M -10 -8 Q -12 -12, -8 -12 L -4 -12 Q -1 -12, -1 -8 L -1 -4 Q -1 0, -5 1 Q -4 4, 0 6 Q 4 7, 7 6 Q 8 3, 11 3 L 13 3 Q 14 4, 14 8 Q 14 12, 10 12 Q 0 12, -6 6 Q -10 -2, -10 -8 Z"
-            fill={PAPER}
+            fill={GLASS}
             stroke={stroke}
             strokeWidth={sw}
             strokeLinejoin="round"
@@ -154,12 +139,12 @@ function Glyph({ type, x, y }: { type: GlyphType; x: number; y: number }) {
       );
     case "card":
       return (
-        <g transform={transform}>
+        <g transform={transform} filter="url(#saiWarmShadow)">
           <g transform="translate(-12,-8)">
-            <rect width="24" height="16" rx="2" fill={PAPER} stroke={stroke} strokeWidth={sw} />
+            <rect width="24" height="16" rx="4" fill={GLASS} stroke={stroke} strokeWidth={sw} />
             <line x1="0" y1="5" x2="24" y2="5" stroke={stroke} strokeWidth="1" />
-            <line x1="3" y1="10" x2="14" y2="10" stroke={stroke} strokeWidth="1" />
-            <line x1="3" y1="13" x2="10" y2="13" stroke={stroke} strokeWidth="1" />
+            <line x1="3" y1="10" x2="14" y2="10" stroke={hair} strokeWidth="1" />
+            <line x1="3" y1="13" x2="10" y2="13" stroke={hair} strokeWidth="1" />
           </g>
         </g>
       );
@@ -169,7 +154,7 @@ function Glyph({ type, x, y }: { type: GlyphType; x: number; y: number }) {
 function Trail({ angDeg }: { angDeg: number }) {
   const out = [];
   for (let k = 1; k <= 3; k++) {
-    const a = ((angDeg - k * 5) * Math.PI) / 180;
+    const a = ((angDeg - k * 5.5) * Math.PI) / 180;
     const x = CX + Math.cos(a) * R;
     const y = CY + Math.sin(a) * R;
     out.push(
@@ -177,8 +162,8 @@ function Trail({ angDeg }: { angDeg: number }) {
         key={k}
         cx={x}
         cy={y}
-        r={Math.max(0.8, 3 - k * 0.45)}
-        fill={INK_40}
+        r={Math.max(0.9, 3.2 - k * 0.5)}
+        fill={STONE}
         opacity={Math.max(0, 1 - k * 0.22)}
       />
     );
@@ -187,157 +172,132 @@ function Trail({ angDeg }: { angDeg: number }) {
 }
 
 export function HeroIllustration() {
-  const chips = seededChips(331);
-
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
       role="img"
-      aria-label="Scattered practice inbox resolving into a single orbit of operations around the Stephens mark."
-      className="h-auto w-full max-w-[620px]"
+      aria-label="A scattered pile of practice paperwork resolving into a single orbit of handled work around the Stephens lens."
+      className="h-auto w-full max-w-[600px]"
       preserveAspectRatio="xMidYMid meet"
     >
+      <defs>
+        {/* Scene wash: the centre disc is a glass lens refracting the studio sky. */}
+        <radialGradient id="saiLensBelly" cx="34%" cy="26%" r="86%">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.97" />
+          <stop offset="52%" stopColor="#F7E7DA" />
+          <stop offset="100%" stopColor="#F2CFB8" />
+        </radialGradient>
+        <filter id="saiWarmShadow" x="-70%" y="-70%" width="240%" height="240%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#703E28" floodOpacity="0.18" />
+        </filter>
+        <filter id="saiWarmShadowLg" x="-70%" y="-70%" width="240%" height="240%">
+          <feDropShadow dx="0" dy="6" stdDeviation="11" floodColor="#703E28" floodOpacity="0.22" />
+        </filter>
+      </defs>
 
-      {/* Side headings */}
-      <text
-        x={BX + BW / 2}
-        y={50}
-        textAnchor="middle"
-        fontFamily="var(--font-mono)"
-        fontSize="22"
-        letterSpacing="0.08em"
-        fill={INK_60}
-        style={{ textTransform: "uppercase" }}
-      >
-        Inbox · scattered
-      </text>
-      <text
-        x={CX}
-        y={50}
-        textAnchor="middle"
-        fontFamily="var(--font-mono)"
-        fontSize="22"
-        letterSpacing="0.08em"
-        fill={SALMON_DEEP}
-        style={{ textTransform: "uppercase" }}
-      >
-        Stephens · handled
-      </text>
-
-      {/* Mess chips */}
+      {/* The pile: three tilted records, no accent yet. */}
       <g>
-        {chips.map((c, i) => (
-          <g key={i} transform={`translate(${c.x},${c.y})`}>
+        {CARDS.map((c) => (
+          <g
+            key={c.label}
+            transform={`rotate(${c.rot} ${c.x + CARD_W / 2} ${c.y + CARD_H / 2}) translate(${c.x},${c.y})`}
+            filter="url(#saiWarmShadow)"
+          >
             <rect
-              width={c.w}
-              height="20"
-              rx="10"
-              fill={PAPER}
-              stroke={INK_40}
-              strokeWidth="0.8"
+              width={CARD_W}
+              height={CARD_H}
+              rx="14"
+              fill={GLASS_SOFT}
+              stroke={RULE}
+              strokeWidth="1"
             />
             <text
-              x={c.w / 2}
-              y="13"
-              textAnchor="middle"
-              fontFamily="var(--font-mono)"
-              fontSize="9"
-              letterSpacing="0.14em"
-              fill={INK_70}
+              x="18"
+              y="29"
+              fontFamily="var(--font-label)"
+              fontSize={LABEL_FS}
+              fontWeight="600"
+              letterSpacing="0.05em"
+              fill={INK_2}
               style={{ textTransform: "uppercase" }}
             >
               {c.label}
             </text>
+            <line x1="18" y1="42" x2="112" y2="42" stroke={RULE} strokeWidth="1.4" />
+            <line x1="18" y1="50" x2="82" y2="50" stroke={RULE} strokeWidth="1.4" />
           </g>
         ))}
       </g>
 
-      {/* Six dashed threads */}
+      {/* Threads from the pile into the ring. */}
       <g>
-        {THREAD_SOURCES.map((s, i) => {
-          const a = (TARGET_ANGLES[i] * Math.PI) / 180;
-          const ex = CX + Math.cos(a) * (R + 14);
-          const ey = CY + Math.sin(a) * (R + 14);
-          const mx = (s.sx + ex) / 2;
-          const my = (s.sy + ey) / 2 + (i % 2 ? 22 : -22);
+        {THREADS.map((t, i) => {
+          const a = (t.ang * Math.PI) / 180;
+          const ex = CX + Math.cos(a) * (R + 18);
+          const ey = CY + Math.sin(a) * (R + 18);
+          const mx = (t.sx + ex) / 2;
+          const my = (t.sy + ey) / 2 + (i % 2 ? 20 : -20);
           return (
             <path
-              key={i}
-              d={`M ${s.sx} ${s.sy} Q ${mx} ${my} ${ex} ${ey}`}
+              key={t.ang}
+              d={`M ${t.sx} ${t.sy} Q ${mx} ${my} ${ex} ${ey}`}
               fill="none"
-              stroke={INK_60}
-              strokeWidth="1"
-              strokeDasharray="2 5"
+              stroke={STONE}
+              strokeWidth="1.2"
+              strokeDasharray="2 6"
               opacity="0.85"
             />
           );
         })}
       </g>
 
-      {/* Orbit ring + icons + labels + trails */}
+      {/* Orbit ring + glyphs + trails. The glyphs carry the meaning now;
+          their six micro-labels were the worst floor violation in the scene. */}
       <g>
-        <circle
-          cx={CX}
-          cy={CY}
-          r={R}
-          fill="none"
-          stroke={INK_40}
-          strokeWidth="1"
-          strokeDasharray="2 10"
-        />
+        <circle cx={CX} cy={CY} r={R} fill="none" stroke={STONE} strokeWidth="1.2" strokeDasharray="2 11" />
         {ORBIT_ITEMS.map((it) => {
           const a = (it.ang * Math.PI) / 180;
           const x = CX + Math.cos(a) * R;
           const y = CY + Math.sin(a) * R;
           return (
-            <g key={it.label}>
-              {!NO_TRAIL.has(it.label) && <Trail angDeg={it.ang} />}
+            <g key={it.key}>
+              {it.trail && <Trail angDeg={it.ang} />}
               <Glyph type={it.type} x={x} y={y} />
-              <text
-                x={x}
-                y={y + 28}
-                textAnchor="middle"
-                fontFamily="var(--font-mono)"
-                fontSize="18"
-                letterSpacing="0.10em"
-                fill={INK}
-                style={{ textTransform: "uppercase" }}
-              >
-                {it.label}
-              </text>
             </g>
           );
         })}
 
-        {/* Friendly eye at orbit center */}
-        <g transform={`translate(${CX},${CY})`}>
-          <circle r={40} fill={PAPER} stroke={INK} strokeWidth="2.4" />
-          <circle cy="3" r={40 * 0.36} fill={SALMON} />
-          <circle cy="3" r={40 * 0.14} fill={INK} />
-          <circle cx={-40 * 0.07} cy="0" r={40 * 0.06} fill={PAPER} />
+        {/* Friendly lens at orbit center */}
+        <g transform={`translate(${CX},${CY})`} filter="url(#saiWarmShadowLg)">
+          <circle r={EYE_R} fill="url(#saiLensBelly)" stroke={INK_90} strokeWidth="2.6" />
+          <circle cy="3" r={EYE_R * 0.36} fill={ACCENT} />
+          <circle cy="3" r={EYE_R * 0.14} fill={INK} />
+          <circle cx={-EYE_R * 0.07} cy="0" r={EYE_R * 0.06} fill={SPECULAR} />
           <path
-            d={`M ${-40 * 0.6} ${-40 - 4} Q 0 ${-40 - 14}, ${40 * 0.6} ${-40 - 4}`}
+            d={`M ${-EYE_R * 0.6} ${-EYE_R - 5} Q 0 ${-EYE_R - 16}, ${EYE_R * 0.6} ${-EYE_R - 5}`}
             fill="none"
-            stroke={INK}
-            strokeWidth="2"
+            stroke={INK_90}
+            strokeWidth="2.2"
             strokeLinecap="round"
           />
         </g>
       </g>
 
-      {/* Caption */}
+      {/* Caption, set on two lines so it clears the floor at mobile width. */}
       <text
         x={W / 2}
-        y={H - 14}
+        y={358}
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
-        fontSize="18"
-        letterSpacing="0.10em"
-        fill={INK_60}
-        style={{ textTransform: "uppercase" }}
+        fontFamily="var(--font-sans)"
+        fontSize={CAPTION_FS}
+        fontWeight="500"
+        letterSpacing="0.005em"
+        fill={INK_2}
       >
-        From the inbox you already have —{" "}
-        <tspan fill={SALMON_DEEP}>to one quiet center.</tspan>
+        From the inbox you already have —
+        <tspan x={W / 2} dy="36" fill={ACCENT}>
+          to one quiet center.
+        </tspan>
       </text>
     </svg>
   );

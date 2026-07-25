@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Inter_Tight, IBM_Plex_Mono } from "next/font/google";
+import { Inter_Tight, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Scene } from "@/components/ui/scene";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
 
@@ -12,10 +13,10 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: "--font-ibm-plex-mono",
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600", "700"],
   display: "swap",
 });
 
@@ -61,17 +62,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-cream"
         >
           Skip to main content
         </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <Scene />
+        <div className="relative z-[1]">
+          <Header />
+          <main id="main-content">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
