@@ -1,57 +1,60 @@
 import { SERVICES, PRICING_TIERS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { ButtonLink } from "@/components/ui/button";
+import {
+  BracketStamp,
+  BubbleList,
+  Porthole,
+} from "@/components/ui/lens-primitives";
 
+/**
+ * Services + Pricing. Each service gets its own pane; pricing is a hairline
+ * ledger inside one pane (no boxes per row, no zebra) with Schibsted numerals
+ * in terracotta doing the accounting.
+ */
 export function Services() {
   return (
     <>
       {/* ── Services ── */}
-      <section
-        id="services"
-        className="bg-sand/50 py-28 md:py-40"
-        aria-label="Services"
-      >
+      <section id="services" className="py-24 md:py-32" aria-label="Services">
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
-            <p className="mb-5 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
-              How we work
-            </p>
+            <Porthole>How we work</Porthole>
             <h2
-              className="max-w-2xl font-heading font-medium tracking-tight text-black"
+              className="mt-5 max-w-2xl font-heading font-medium tracking-tight text-ink-90"
               style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
             >
               Diagnose, build, and support.
             </h2>
           </AnimateOnScroll>
 
-          <div className="mt-20 space-y-0">
+          <div className="mt-14 space-y-6 md:mt-16">
             {SERVICES.map((service, index) => (
-              <AnimateOnScroll key={service.title} delay={index * 80}>
-                <div className="grid gap-6 border-t border-border py-14 md:grid-cols-[auto_1fr_1fr] md:gap-12 items-start">
+              <AnimateOnScroll key={service.title} delay={index * 70}>
+                <div className="sai-pane grid gap-7 rounded-panel p-8 md:grid-cols-[auto_1fr_1fr] md:items-start md:gap-12 md:p-11">
                   {/* Number */}
-                  <span className="font-heading text-5xl font-medium text-sand tracking-tight select-none hidden md:block">
+                  <span className="select-none font-label text-[26px] font-bold leading-none text-accent">
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
                   {/* Title + details */}
                   <div>
-                    <h3 className="font-heading text-xl font-semibold text-black">
+                    <h3 className="font-heading text-xl font-medium text-ink-90">
                       {service.title}
                     </h3>
-                    <ul className="mt-4 space-y-2">
-                      {service.details.map((detail) => (
-                        <li
-                          key={detail}
-                          className="flex items-center gap-2.5 text-sm text-ink-60"
-                        >
-                          <span className="h-1 w-1 rounded-full bg-salmon shrink-0" />
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
+                    {/* ul.sai-bullets zeroes its own margin (unlayered CSS
+                        beats a Tailwind mt-* utility), so the gap lives here. */}
+                    <div className="mt-4">
+                      <BubbleList
+                        items={service.details}
+                        className="text-[15px] text-ink-90"
+                      />
+                    </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-base leading-[1.8] text-ink-60">
+                  <p className="text-base leading-[1.8] text-ink-2">
                     {service.description}
                   </p>
                 </div>
@@ -62,113 +65,79 @@ export function Services() {
       </section>
 
       {/* ── Pricing ── */}
-      <section
-        id="pricing"
-        className="py-28 md:py-40"
-        aria-label="Pricing"
-      >
+      <section id="pricing" className="py-24 md:py-32" aria-label="Pricing">
         <div className="mx-auto max-w-5xl px-6">
           <AnimateOnScroll>
             <div className="text-center">
-              <p className="mb-5 font-mono text-[14px] uppercase tracking-[0.04em] text-salmon">
-                Pricing
-              </p>
+              <div className="flex justify-center">
+                <Porthole>Pricing</Porthole>
+              </div>
               <h2
-                className="mx-auto max-w-2xl font-heading font-medium tracking-tight text-black"
+                className="mx-auto mt-5 max-w-2xl font-heading font-medium tracking-tight text-ink-90"
                 style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
               >
                 Simple, value-based pricing.
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-lg text-ink-60">
+              <p className="mx-auto mt-4 max-w-lg text-lg text-ink-2">
                 Every engagement starts with understanding your business. Pick the depth that fits.
               </p>
             </div>
           </AnimateOnScroll>
 
-          <div className="mt-16 grid gap-6 md:grid-cols-2">
-            {PRICING_TIERS.map((tier, index) => (
-              <AnimateOnScroll key={tier.name} delay={index * 100}>
+          <AnimateOnScroll delay={70}>
+            <div className="sai-pane mt-14 rounded-panel p-8 md:mt-16 md:p-11">
+              {PRICING_TIERS.map((tier, index) => (
                 <div
-                  className={`relative flex h-full flex-col rounded-lg border p-8 transition-all duration-300 ${
-                    tier.highlighted
-                      ? "border-ink-90 bg-paper"
-                      : "border-border bg-paper-raised hover:border-ink-20"
-                  }`}
-                >
-                  {tier.highlighted && (
-                    <span className="absolute -top-3 left-8 rounded-full bg-salmon px-3 py-1 font-mono text-[13px] uppercase tracking-[0.04em] text-white">
-                      Most popular
-                    </span>
+                  key={tier.name}
+                  className={cn(
+                    "grid gap-7 py-9 md:grid-cols-[1.1fr_0.9fr_206px] md:items-start md:gap-10",
+                    index === 0 && "pt-0",
+                    index === PRICING_TIERS.length - 1
+                      ? "pb-0"
+                      : "border-b border-rule-soft",
                   )}
-
-                  {/* Header */}
-                  <div className="mb-6">
-                    <h3 className="font-heading text-lg font-semibold text-black">
+                >
+                  {/* Tier + description */}
+                  <div>
+                    {tier.highlighted && (
+                      <div className="-ml-3.5 mb-2">
+                        <BracketStamp>Most popular</BracketStamp>
+                      </div>
+                    )}
+                    <h3 className="font-heading text-xl font-medium text-ink-90">
                       {tier.name}
                     </h3>
-                    <div className="mt-3 flex items-baseline gap-1.5">
-                      <span
-                        className={`font-heading font-medium tracking-tight ${
-                          tier.highlighted ? "text-salmon" : "text-black"
-                        }`}
-                        style={{ fontSize: "clamp(1.6rem, 2.5vw, 2rem)" }}
-                      >
-                        {tier.price}
-                      </span>
-                    </div>
-                    <span className="text-sm text-ink-60">{tier.basis}</span>
+                    <p className="mt-3 text-[15.5px] leading-relaxed text-ink-2">
+                      {tier.description}
+                    </p>
                   </div>
 
-                  {/* Description */}
-                  <p className="mb-6 text-sm leading-relaxed text-ink-60">
-                    {tier.description}
-                  </p>
-
-                  {/* Divider */}
-                  <div className="mb-6 h-px bg-border" />
-
                   {/* Features */}
-                  <ul className="mb-8 flex-1 space-y-3">
-                    {tier.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-2.5 text-sm text-ink-90"
-                      >
-                        <svg
-                          className={`mt-0.5 h-4 w-4 shrink-0 ${
-                            tier.highlighted ? "text-salmon" : "text-ink-60"
-                          }`}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2.5}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  <BubbleList
+                    items={tier.features}
+                    className="text-[15px] text-ink-90"
+                  />
 
-                  {/* CTA */}
-                  <a
-                    href="#contact"
-                    className={`block rounded-full py-3.5 text-center font-heading text-sm font-medium transition-all ${
-                      tier.highlighted
-                        ? "bg-salmon text-white hover:bg-salmon-deep"
-                        : "border border-border text-black hover:border-ink-90 hover:bg-sand/50"
-                    }`}
-                  >
-                    {tier.cta}
-                  </a>
+                  {/* Price + CTA */}
+                  <div className="md:text-right">
+                    <div className="font-label text-[21px] font-bold leading-tight text-accent md:text-[22px]">
+                      {tier.price}
+                    </div>
+                    <div className="mt-1.5 text-[15px] text-ink-2">
+                      {tier.basis}
+                    </div>
+                    <ButtonLink
+                      href="#contact"
+                      variant={tier.highlighted ? "primary" : "ghost"}
+                      className="mt-5"
+                    >
+                      {tier.cta}
+                    </ButtonLink>
+                  </div>
                 </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
+              ))}
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
     </>
