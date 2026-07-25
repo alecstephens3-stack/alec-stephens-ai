@@ -28,12 +28,20 @@ export function ContactCTA() {
                   Tell us what you&apos;re working on.
                 </p>
 
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="mt-7 inline-block text-[15px] font-medium text-cream-2 transition-colors duration-[220ms] ease-brand hover:text-accent-night"
-                >
-                  {CONTACT_EMAIL}
-                </a>
+                <div className="mt-7 flex flex-col gap-1.5">
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="inline-block self-start text-[15px] font-medium text-cream-2 transition-colors duration-[220ms] ease-brand hover:text-accent-night"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
+                  <a
+                    href="mailto:jusheen@stephensai.co"
+                    className="inline-block self-start text-[15px] font-medium text-cream-2 transition-colors duration-[220ms] ease-brand hover:text-accent-night"
+                  >
+                    jusheen@stephensai.co
+                  </a>
+                </div>
               </div>
 
               {/* Right: form — the light sheet inside the dark window */}
