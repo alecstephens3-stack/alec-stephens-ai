@@ -174,6 +174,16 @@ body {
   .sai-pane, .sai-pane-strong { background: rgba(255, 255, 255, 0.92); }
 }
 
+/* The mobile menu sheet. Same pane recipe, deliberately without the frost:
+   a viewport-sized backdrop-filter forces a full-page rasterization the first
+   time it paints, and the sheet sits on its own opaque gradient, so there is
+   nothing behind it worth blurring. */
+.sai-sheet-pane {
+  background: var(--sai-glass);
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: var(--shadow-pane);
+}
+
 /* One specular streak per major pane, maximum. Apply alongside .sai-pane. */
 .sai-streak { position: relative; overflow: hidden; }
 .sai-streak::before {
@@ -269,6 +279,13 @@ section.sai-night .sai-ember {
 @keyframes sai-drift {
   from { transform: translateY(0); }
   to { transform: translateY(-26px); }
+}
+/* Phones hold the scene still. Five blur-filtered lenses drifting forever keep
+   the compositor working every frame, and that tax lands on scrolling and on
+   anything opening over the page. Parked, they rasterize once — the depth
+   tiers survive, the per-frame cost does not. */
+@media (max-width: 767px) {
+  .sai-lens { animation: none; }
 }
 
 /* ——— The porthole: section marker. A tiny lens, never a dot. ——— */
