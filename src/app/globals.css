@@ -23,13 +23,20 @@
   /* Ink (warm, not black) + night text */
   --color-ink: #171310;
   --color-ink-90: #241E19;
-  --color-ink-2: #6E6258;      /* secondary text on light — the LIGHTEST allowed */
+  --color-ink-2: #5A4F46;      /* secondary text on light — the LIGHTEST allowed.
+                                  5.45:1 on the darkest sky. #6E6258 was 4.05 and
+                                  failed AA wherever a lede sat on bare scene. */
   --color-cream: #F5F1E8;      /* primary text on night surfaces */
   --color-cream-2: #B3AB9E;    /* secondary text on night — the floor on dark */
 
   /* Accent — terracotta (the logo dot). Punctuation, never flood. */
+  /* #DC6843 is a MARK colour: bullets, rules, the slider thumb, the tick bar.
+     It is 2.36:1 on the darkest sky and must never carry text.
+     Display  = accent text at 24px+ (clears the 3:1 large-text bar everywhere).
+     Deep     = accent text below 24px (clears 4.5:1 everywhere, incl. bare sky). */
   --color-accent: #DC6843;
-  --color-accent-deep: #C55532;
+  --color-accent-display: #C55532;
+  --color-accent-deep: #8F3616;
   --color-accent-night: #FF8E76;
   --color-accent-soft: rgba(220, 104, 67, 0.08);
   --color-accent-line: rgba(220, 104, 67, 0.18);
@@ -107,6 +114,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -153,15 +161,13 @@ body {
 /* ——— The pane: the one light-glass recipe. ——— */
 .sai-pane {
   background: var(--sai-glass);
-  backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.35);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-pane);
 }
 .sai-pane-strong {
   background: var(--sai-glass-strong);
-  backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.35);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-float);
 }
@@ -173,6 +179,23 @@ body {
 @supports not (backdrop-filter: blur(1px)) {
   .sai-pane, .sai-pane-strong { background: rgba(255, 255, 255, 0.92); }
 }
+
+/* ——— The mobile sheet: opaque on purpose.
+   Deliberately NOT .sai-pane. A full-viewport backdrop-filter has to be
+   rasterized before the first frame can show, which on a phone reads as
+   "I pressed it and nothing happened." Nothing is visible behind a
+   full-screen sheet anyway, so the blur bought nothing and cost the
+   open. Reported by Jusheen 2026-08-14. ——— */
+.sai-sheet {
+  background: var(--sai-sky);
+  animation: sai-sheet-in 190ms var(--sai-ease) both;
+}
+@keyframes sai-sheet-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+
 
 /* One specular streak per major pane, maximum. Apply alongside .sai-pane. */
 .sai-streak { position: relative; overflow: hidden; }
@@ -240,6 +263,9 @@ section.sai-night .sai-ember {
   border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow: inset -10px -14px 30px rgba(220, 104, 67, 0.13), inset 8px 12px 26px rgba(255, 255, 255, 0.38), 0 26px 52px rgba(112, 62, 40, 0.14);
   animation: sai-drift var(--drift, 16s) ease-in-out infinite alternate;
+  /* Own compositing layer: without this the drift invalidates the backdrop
+     source for every blurred pane on the page, every frame, forever. */
+  will-change: transform;
 }
 .sai-lens::before {
   content: '';
@@ -291,7 +317,11 @@ section.sai-night .sai-ember {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  /* accent-deep, never accent. #DC6843 is 2.36:1 on the sky and fails AA at
+     any size. accent-deep carries enough margin to stay above 4.5:1 even where
+     a scene tint pool darkens the background under it, which moves with the
+     viewport because .sai-scene is fixed. */
+  color: var(--color-accent-deep);
 }
 .sai-port.on-night .disc {
   background:
@@ -351,7 +381,6 @@ section.sai-night .sai-ember {
   border-radius: var(--radius-flag);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112, 62, 40, 0.10);
   white-space: nowrap;
@@ -418,7 +447,6 @@ section.sai-night ul.sai-bullets li::before {
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid var(--sai-glass-edge);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 .sai-btn.ghost:hover { background: rgba(255, 255, 255, 0.8); transform: translateY(-2px); }
@@ -429,6 +457,45 @@ section.sai-night ul.sai-bullets li::before {
   to { opacity: 1; transform: none; }
 }
 .sai-rise { animation: sai-rise 700ms var(--sai-ease) both; }
+
+/* ——— Range input: the leak model's controls. Terracotta thumb on a
+   hairline track, sized for a finger on a phone. ——— */
+.sai-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.sai-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(23, 19, 16, 0.14);
+}
+.sai-range::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(23, 19, 16, 0.14);
+}
+.sai-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 3px 9px rgba(112, 62, 40, 0.3);
+}
+.sai-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 3px 9px rgba(112, 62, 40, 0.3);
+}
 
 /* Focus visibility — terracotta ring on glass. */
 :focus-visible {
@@ -454,7 +521,29 @@ section.sai-night ul.sai-bullets li::before {
   .sai-pane, .sai-pane-strong {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
   * { animation: none !important; }
 }
+
+/* ——— Blur budget. MUST STAY AT THE END OF THIS FILE.
+   These rules match .sai-lens / .sai-pane at equal specificity, so they only
+   win by source order. Moved above .sai-lens once and `animation: none`
+   silently did nothing while five infinite animations kept running.
+   The scene is a fixed layer of drifting lenses and 100px tint pools. Every
+   pane that samples it has to re-blur on every frame the scene moves, and a
+   page carries roughly twenty panes. On a phone that is a permanent battery
+   and thermal cost for an effect nobody is looking at, so small screens get a
+   cheaper blur and a still scene. The sheet also hides the scene outright:
+   nothing behind an opaque overlay needs compositing. ——— */
+@media (max-width: 768px) {
+  .sai-pane,
+  .sai-pane-strong {
+    backdrop-filter: blur(10px) saturate(1.15);
+  }
+  .sai-lens { animation: none; }
+  .sai-tint { filter: blur(60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sai-lens { animation: none; }
+}
+body:has(#mobile-menu) .sai-scene { display: none; }
