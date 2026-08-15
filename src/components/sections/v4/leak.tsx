@@ -80,7 +80,7 @@ export function Leak() {
         {/* controls */}
         <AnimateOnScroll>
           <div className="sai-pane h-full rounded-card p-5 md:p-6">
-            <p className="font-label text-[12.5px] font-semibold uppercase tracking-[0.06em] text-accent">
+            <p className="font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
               Your practice
             </p>
             <div className="mt-4 flex flex-col gap-5">
@@ -141,7 +141,7 @@ export function Leak() {
               <span className="font-heading text-[18px] font-medium text-ink">
                 Modeled first year cost of the gap
               </span>
-              <span className="font-heading text-[32px] font-medium leading-none tabular-nums tracking-[-0.02em] text-accent md:text-[38px]">
+              <span className="font-heading text-[32px] font-medium leading-none tabular-nums tracking-[-0.02em] text-accent-display md:text-[38px]">
                 {usd(model.total)}
               </span>
             </div>
@@ -152,7 +152,7 @@ export function Leak() {
                 <strong className="font-medium">{usd(model.yearOne)}</strong> in
                 year one, setup plus twelve months. It will not close all of
                 that gap. Nothing does. Close half of it and you are still{" "}
-                <strong className="font-medium text-accent">
+                <strong className="font-medium text-accent-deep">
                   {model.halfMultiple.toFixed(1)}x
                 </strong>{" "}
                 ahead in year one, and the gap stays closed instead of

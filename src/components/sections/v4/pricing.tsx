@@ -26,7 +26,7 @@ export function Pricing() {
               )}
             >
               {tier.badge && (
-                <p className="mb-3 font-label text-[12px] font-semibold uppercase tracking-[0.07em] text-accent">
+                <p className="mb-3 font-label text-[13px] font-semibold uppercase tracking-[0.07em] text-accent-deep">
                   {tier.badge}
                 </p>
               )}
@@ -42,12 +42,12 @@ export function Pricing() {
                 <p className="font-heading text-[34px] font-medium leading-none tracking-[-0.025em] text-ink">
                   {tier.setup}
                 </p>
-                <p className="mt-1.5 font-label text-[12.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
+                <p className="mt-1.5 font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
                   one time build
                 </p>
                 <p className="mt-3 text-[15px] text-ink">
                   then{" "}
-                  <span className="font-heading text-[19px] font-medium text-accent">
+                  <span className="font-heading text-[19px] font-medium text-accent-deep">
                     {tier.monthly}
                   </span>{" "}
                   <span className="text-ink-2">{tier.monthlyBasis}</span>
@@ -59,7 +59,7 @@ export function Pricing() {
                 className="mt-4 text-[14.5px] leading-[1.5] text-ink-2 [&>li]:py-1.5"
               />
 
-              <div className="mt-5 pt-1 [margin-top:auto]">
+              <div className="mt-auto pt-4">
                 <ButtonLink
                   href={CALENDLY}
                   external

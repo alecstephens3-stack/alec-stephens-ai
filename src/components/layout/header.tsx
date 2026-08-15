@@ -28,15 +28,6 @@ export function Header() {
   const sheetRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Close on route change (browser back included) so the sheet is never
-  // stranded open. Adjusting during render rather than in an effect: this is
-  // the supported pattern and it avoids a wasted commit.
-  const [lastPath, setLastPath] = useState(pathname);
-  if (lastPath !== pathname) {
-    setLastPath(pathname);
-    setIsMobileMenuOpen(false);
-  }
-
   const close = useCallback(() => {
     setIsMobileMenuOpen(false);
     triggerRef.current?.focus();
@@ -46,6 +37,10 @@ export function Header() {
     if (!isMobileMenuOpen) return;
 
     document.body.style.overflow = "hidden";
+    // aria-modal alone is unreliable in Safari with VoiceOver, so the page
+    // behind the sheet is taken out of the tree properly.
+    const main = document.getElementById("main-content");
+    main?.setAttribute("inert", "");
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -77,6 +72,7 @@ export function Header() {
 
     return () => {
       document.body.style.overflow = "";
+      main?.removeAttribute("inert");
       document.removeEventListener("keydown", onKeyDown);
       cancelAnimationFrame(raf);
     };
@@ -113,7 +109,7 @@ export function Header() {
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
                   "rounded-full px-3.5 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] transition-colors duration-[220ms] hover:bg-white/70 hover:text-ink",
-                  isActive ? "bg-white/70 text-accent" : "text-ink-2"
+                  isActive ? "bg-white/70 text-accent-deep" : "text-ink-2"
                 )}
               >
                 {link.label}
