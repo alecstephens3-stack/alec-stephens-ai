@@ -16,7 +16,15 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const FROM = process.env.CONTACT_FROM_EMAIL ?? "Stephens AI <hello@stephensai.co>";
+// Defaults to Resend's sandbox sender ON PURPOSE. It only delivers to the
+// Resend account owner's own address, which is a real limitation, but it is a
+// limitation that WORKS today. Pointing this at hello@stephensai.co before the
+// domain is verified in Resend would 403 every single submission and turn a
+// partly-working form into a fully broken one on merge.
+// Once stephensai.co (or send.stephensai.co) shows Verified in Resend, set
+// CONTACT_FROM_EMAIL in Vercel and this default stops being used.
+const FROM =
+  process.env.CONTACT_FROM_EMAIL ?? "Stephens AI <onboarding@resend.dev>";
 
 // Per-instance throttle. Good enough for a marketing form; swap for a shared
 // store if the site ever runs on more than a handful of lambdas.
@@ -38,10 +46,13 @@ export async function POST(request: Request) {
         { status: 429 }
       );
     }
-    hits.set(ip, [...recent, now]);
-    if (hits.size > 5000) hits.clear();
+    let body: Record<string, unknown>;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid submission." }, { status: 400 });
+    }
 
-    const body = await request.json();
     const { name, email, message, website } = body ?? {};
 
     // Honeypot: bots fill every field. Accept silently so they stop retrying.
@@ -79,6 +90,11 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Count the attempt only once it is a real send. Counting before
+    // validation locked out anyone who mistyped their email three times.
+    hits.set(ip, [...recent, now]);
+    if (hits.size > 5000) hits.clear();
 
     if (!resend) {
       console.error("RESEND_API_KEY is not configured");

@@ -11,7 +11,7 @@ export function Hero() {
           <AnimateOnScroll>
             <h1 className="font-heading text-[34px] font-medium leading-[1.08] tracking-[-0.025em] text-ink sm:text-[42px] md:text-[52px]">
               {HERO.headline.lead}{" "}
-              <span className="text-accent">{HERO.headline.accent}</span>{" "}
+              <span className="text-accent-display">{HERO.headline.accent}</span>{" "}
               {HERO.headline.tail}
             </h1>
           </AnimateOnScroll>

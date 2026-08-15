@@ -27,7 +27,7 @@ export function Problem() {
         {PROBLEMS.map((p, i) => (
           <AnimateOnScroll key={p.kicker} delay={i * 70}>
             <Card className="h-full">
-              <p className="font-label text-[12.5px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
+              <p className="font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
                 {p.kicker}
               </p>
               <h3 className="mt-2.5 font-heading text-[18px] font-medium leading-[1.25] text-ink">
@@ -92,7 +92,7 @@ export function Proof() {
               <blockquote className="font-heading text-[20px] font-medium leading-[1.3] text-ink md:text-[23px]">
                 &ldquo;{PROOF.quote.text}&rdquo;
               </blockquote>
-              <figcaption className="mt-2.5 font-label text-[12.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
+              <figcaption className="mt-2.5 font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
                 {PROOF.quote.attribution}
               </figcaption>
             </figure>
@@ -103,7 +103,7 @@ export function Proof() {
           <div className="grid h-full grid-cols-2 gap-4">
             {PROOF.stats.map((s) => (
               <Card key={s.label} className="flex flex-col justify-center !p-5">
-                <p className="font-heading text-[28px] font-medium leading-none tracking-[-0.02em] text-accent md:text-[32px]">
+                <p className="font-heading text-[28px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[32px]">
                   {s.value}
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.4] text-ink-2">
@@ -132,7 +132,7 @@ export function Timeline() {
         <div className="sai-pane grid gap-0 divide-y divide-rule-soft rounded-card p-1 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4">
           {TIMELINE.map((t) => (
             <div key={t.week} className="p-5">
-              <p className="font-label text-[12px] font-semibold uppercase tracking-[0.07em] text-accent-deep">
+              <p className="font-label text-[13px] font-semibold uppercase tracking-[0.07em] text-accent-deep">
                 {t.week}
               </p>
               <h3 className="mt-2 font-heading text-[16px] font-medium leading-[1.3] text-ink">
@@ -248,7 +248,7 @@ export function Founders() {
                 <h3 className="font-heading text-[18px] font-medium leading-tight text-ink">
                   {f.name}
                 </h3>
-                <p className="mt-0.5 font-label text-[12px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
+                <p className="mt-0.5 font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
                   {f.role}
                 </p>
                 <p className="mt-2 text-[14px] leading-[1.55] text-ink-2">
@@ -265,7 +265,7 @@ export function Founders() {
       <AnimateOnScroll delay={140}>
         <div className="sai-pane mt-4 rounded-card px-6 py-5">
           <p className="text-[14.5px] leading-[1.6] text-ink-2">
-            <span className="font-label text-[12px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
+            <span className="font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
               Outside eyecare&ensp;
             </span>
             Eyecare is where we go deep. We have also shipped:

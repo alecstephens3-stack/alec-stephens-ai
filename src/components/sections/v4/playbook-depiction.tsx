@@ -15,7 +15,7 @@ export function PlaybookDepiction() {
           <span className="h-2.5 w-2.5 rounded-full bg-[rgba(23,19,16,0.14)]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[rgba(23,19,16,0.10)]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[rgba(23,19,16,0.07)]" />
-          <span className="ml-2 font-label text-[12.5px] font-semibold uppercase tracking-[0.06em] text-ink-2">
+          <span className="ml-2 font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-ink-2">
             Front Desk Playbook
           </span>
         </div>
@@ -41,7 +41,7 @@ export function PlaybookDepiction() {
           <span className="text-[15px] text-ink">
             vision plan, medical complaint
           </span>
-          <span className="ml-auto hidden font-label text-[11.5px] font-semibold uppercase tracking-[0.06em] text-ink-2 sm:inline">
+          <span className="ml-auto hidden font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-ink-2 sm:inline">
             3 results
           </span>
         </div>
@@ -49,11 +49,11 @@ export function PlaybookDepiction() {
         {/* answer card */}
         <div className="mt-3 rounded-tile border border-[rgba(255,255,255,0.9)] bg-white/72 p-4 shadow-[inset_0_1px_0_#fff,0_6px_18px_rgba(112,62,40,0.07)]">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="font-heading text-[17px] font-medium leading-tight text-ink">
+            <p className="font-heading text-[17px] font-medium leading-tight text-ink">
               Refraction: collect or bill
-            </h3>
-            <span className="inline-flex overflow-hidden rounded-chip border border-[rgba(46,122,86,0.28)] font-label text-[11.5px] font-semibold uppercase tracking-[0.05em]">
-              <span className="bg-[rgba(46,122,86,0.12)] px-2 py-1 text-[#2E7A56]">
+            </p>
+            <span className="inline-flex overflow-hidden rounded-chip border border-[rgba(46,122,86,0.28)] font-label text-[13px] font-semibold uppercase tracking-[0.05em]">
+              <span className="bg-[rgba(46,122,86,0.12)] px-2 py-1 text-[#215B41]">
                 Answer
               </span>
               <span className="bg-white/70 px-2 py-1 text-ink">Collect</span>
@@ -67,7 +67,7 @@ export function PlaybookDepiction() {
 
           {/* the exception the tool forces open */}
           <div className="mt-3 rounded-flag border-l-[3px] border-l-accent bg-[rgba(220,104,67,0.07)] py-2.5 pl-3 pr-3">
-            <p className="font-label text-[11.5px] font-semibold uppercase tracking-[0.06em] text-accent">
+            <p className="font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
               Exception
             </p>
             <p className="mt-1 text-[14.5px] leading-[1.5] text-ink">
@@ -76,13 +76,13 @@ export function PlaybookDepiction() {
             </p>
           </div>
 
-          <p className="mt-3 font-label text-[11.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
+          <p className="mt-3 font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
             Updated 4 days ago by your office manager
           </p>
         </div>
       </div>
 
-      <figcaption className="mt-3 text-center font-label text-[12.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
+      <figcaption className="mt-3 text-center font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
         The playbook, as the front desk sees it
       </figcaption>
     </figure>

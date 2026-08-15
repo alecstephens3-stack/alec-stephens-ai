@@ -23,13 +23,20 @@
   /* Ink (warm, not black) + night text */
   --color-ink: #171310;
   --color-ink-90: #241E19;
-  --color-ink-2: #6E6258;      /* secondary text on light — the LIGHTEST allowed */
+  --color-ink-2: #5A4F46;      /* secondary text on light — the LIGHTEST allowed.
+                                  5.45:1 on the darkest sky. #6E6258 was 4.05 and
+                                  failed AA wherever a lede sat on bare scene. */
   --color-cream: #F5F1E8;      /* primary text on night surfaces */
   --color-cream-2: #B3AB9E;    /* secondary text on night — the floor on dark */
 
   /* Accent — terracotta (the logo dot). Punctuation, never flood. */
+  /* #DC6843 is a MARK colour: bullets, rules, the slider thumb, the tick bar.
+     It is 2.36:1 on the darkest sky and must never carry text.
+     Display  = accent text at 24px+ (clears the 3:1 large-text bar everywhere).
+     Deep     = accent text below 24px (clears 4.5:1 everywhere, incl. bare sky). */
   --color-accent: #DC6843;
-  --color-accent-deep: #C55532;
+  --color-accent-display: #C55532;
+  --color-accent-deep: #9E3D1B;
   --color-accent-night: #FF8E76;
   --color-accent-soft: rgba(220, 104, 67, 0.08);
   --color-accent-line: rgba(220, 104, 67, 0.18);
@@ -154,13 +161,13 @@ body {
 /* ——— The pane: the one light-glass recipe. ——— */
 .sai-pane {
   background: var(--sai-glass);
-  backdrop-filter: blur(30px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.35);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-pane);
 }
 .sai-pane-strong {
   background: var(--sai-glass-strong);
-  backdrop-filter: blur(30px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.35);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-float);
 }
@@ -188,25 +195,7 @@ body {
   to { opacity: 1; transform: none; }
 }
 
-/* ——— Blur budget.
-   The scene is a fixed layer of drifting lenses and 100px tint pools. Every
-   pane that samples it has to re-blur on every frame the scene moves, and a
-   page carries roughly twenty panes. On a phone that is a permanent battery
-   and thermal cost for an effect nobody is looking at, so small screens get a
-   cheaper blur and a still scene. The sheet also hides the scene outright:
-   nothing behind an opaque overlay needs compositing. ——— */
-@media (max-width: 768px) {
-  .sai-pane,
-  .sai-pane-strong {
-    backdrop-filter: blur(12px) saturate(1.2);
-  }
-  .sai-lens { animation: none; }
-  .sai-tint { filter: blur(60px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sai-lens { animation: none; }
-}
-body:has(#mobile-menu) .sai-scene { display: none; }
+
 
 /* One specular streak per major pane, maximum. Apply alongside .sai-pane. */
 .sai-streak { position: relative; overflow: hidden; }
@@ -530,3 +519,26 @@ section.sai-night ul.sai-bullets li::before {
   }
   * { animation: none !important; }
 }
+
+/* ——— Blur budget. MUST STAY AT THE END OF THIS FILE.
+   These rules match .sai-lens / .sai-pane at equal specificity, so they only
+   win by source order. Moved above .sai-lens once and `animation: none`
+   silently did nothing while five infinite animations kept running.
+   The scene is a fixed layer of drifting lenses and 100px tint pools. Every
+   pane that samples it has to re-blur on every frame the scene moves, and a
+   page carries roughly twenty panes. On a phone that is a permanent battery
+   and thermal cost for an effect nobody is looking at, so small screens get a
+   cheaper blur and a still scene. The sheet also hides the scene outright:
+   nothing behind an opaque overlay needs compositing. ——— */
+@media (max-width: 768px) {
+  .sai-pane,
+  .sai-pane-strong {
+    backdrop-filter: blur(10px) saturate(1.15);
+  }
+  .sai-lens { animation: none; }
+  .sai-tint { filter: blur(60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sai-lens { animation: none; }
+}
+body:has(#mobile-menu) .sai-scene { display: none; }
