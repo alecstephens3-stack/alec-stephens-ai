@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
+import { SITE_NAME, CONTACT_EMAIL } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -23,16 +23,16 @@ export function Footer() {
 
           <nav className="flex items-center gap-6" aria-label="Footer navigation">
             <Link
-              href="/#work"
+              href="/#playbook"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              Work
+              The Playbook
             </Link>
             <Link
-              href="/#services"
+              href="/#pricing"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              Services
+              Pricing
             </Link>
             <a
               href="https://www.linkedin.com/in/alec-stephens-55b392213/"

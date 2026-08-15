@@ -1,46 +1,67 @@
-import { Hero } from "@/components/sections/hero";
-import { Solutions } from "@/components/sections/solutions";
-import { Services } from "@/components/sections/services";
-import { CaseStudies } from "@/components/sections/case-studies";
-import { About } from "@/components/sections/about";
-import { ContactCTA } from "@/components/sections/contact-cta";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT_EMAIL } from "@/lib/constants";
+import { Hero } from "@/components/sections/v4/hero";
+import {
+  Problem,
+  Playbook,
+  Proof,
+  Timeline,
+  Ownership,
+  Faq,
+  Founders,
+} from "@/components/sections/v4/body";
+import { Leak } from "@/components/sections/v4/leak";
+import { Pricing } from "@/components/sections/v4/pricing";
+import { Contact } from "@/components/sections/v4/contact";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  CONTACT_EMAIL,
+  FAQ,
+  PRICING_TIERS,
+} from "@/lib/content";
 
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: SITE_NAME,
-    description: SITE_DESCRIPTION,
-    url: SITE_URL,
-    serviceType: [
-      "AI Automation",
-      "Workflow Consulting",
-      "Custom Integration",
-      "AI Application Development",
-    ],
-    email: CONTACT_EMAIL,
-    areaServed: ["United States", "Japan", "Worldwide"],
-    founder: [
+    "@graph": [
       {
-        "@type": "Person",
-        name: "Alec Stephens",
-        jobTitle: "AI Automation Consultant",
+        "@type": "ProfessionalService",
+        "@id": `${SITE_URL}#business`,
+        name: SITE_NAME,
+        description: SITE_DESCRIPTION,
+        url: SITE_URL,
+        email: CONTACT_EMAIL,
+        areaServed: ["United States", "Worldwide"],
+        serviceType: [
+          "Front desk knowledge base for eyecare practices",
+          "Practice operations automation",
+          "Custom internal software",
+        ],
+        founder: [
+          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co founder" },
+          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co founder" },
+        ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Eyecare practice systems",
+          itemListElement: PRICING_TIERS.map((tier) => ({
+            "@type": "Offer",
+            name: tier.name,
+            description: tier.summary,
+            price: tier.setup.replace(/[$,]/g, ""),
+            priceCurrency: "USD",
+          })),
+        },
       },
       {
-        "@type": "Person",
-        name: "Jusheen Kim",
-        jobTitle: "AI Automation Consultant",
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}#faq`,
+        mainEntity: FAQ.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
       },
-    ],
-    knowsAbout: [
-      "n8n",
-      "Make.com",
-      "Claude API",
-      "OpenAI",
-      "Next.js",
-      "PostgreSQL",
-      "Workflow Automation",
     ],
   };
 
@@ -51,11 +72,16 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <Solutions />
-      <Services />
-      <CaseStudies />
-      <About />
-      <ContactCTA />
+      <Problem />
+      <Playbook />
+      <Proof />
+      <Leak />
+      <Pricing />
+      <Timeline />
+      <Ownership />
+      <Faq />
+      <Founders />
+      <Contact />
     </>
   );
 }
