@@ -1,7 +1,7 @@
 import { ButtonLink } from "@/components/ui/button";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { HERO } from "@/lib/content";
-import { PlaybookDepiction } from "./playbook-depiction";
+import { ProductDepiction } from "./product-depiction";
 
 export function Hero() {
   return (
@@ -45,7 +45,7 @@ export function Hero() {
         </div>
 
         <AnimateOnScroll delay={120}>
-          <PlaybookDepiction />
+          <ProductDepiction />
         </AnimateOnScroll>
       </div>
     </section>

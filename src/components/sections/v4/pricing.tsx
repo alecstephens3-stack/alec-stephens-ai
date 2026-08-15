@@ -10,8 +10,8 @@ export function Pricing() {
     <Section
       id="pricing"
       kicker="What it costs"
-      title="Priced in public"
-      lede="Tier one is a fixed price. Tiers two and three are quoted after we count your material, because a blind fixed price on clinic wide content is underwater before it starts. Every tier is a build fee plus a monthly that keeps the content true, cancellable any time."
+      title="Pricing"
+      lede="The first tier is a fixed price. The two larger tiers are a starting point, confirmed once we have seen how much material you have. Every tier is a one-time build plus a monthly fee that keeps the content current, and you can cancel any time."
       center
     >
       <div className="grid items-start gap-4 lg:grid-cols-3">
@@ -26,7 +26,7 @@ export function Pricing() {
               )}
             >
               {tier.badge && (
-                <p className="mb-3 font-label text-[13px] font-semibold uppercase tracking-[0.07em] text-accent-deep">
+                <p className="mb-3 font-label text-[13px] font-semibold tracking-[0.07em] text-accent-deep">
                   {tier.badge}
                 </p>
               )}
@@ -43,7 +43,7 @@ export function Pricing() {
                   {tier.setup}
                 </p>
                 <p className="mt-1.5 font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
-                  one time build
+                  one-time build
                 </p>
                 <p className="mt-3 text-[15px] text-ink">
                   then{" "}

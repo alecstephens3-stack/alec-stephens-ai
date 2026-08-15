@@ -12,12 +12,12 @@ export function Contact() {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
               <div className="lg:self-center">
                 <h2 className="font-heading text-[30px] font-medium leading-[1.12] tracking-[-0.02em] text-cream md:text-[42px]">
-                  Twenty minutes, and you keep whatever we find.
+                  Book a 20-minute call.
                 </h2>
 
                 <p className="mt-4 max-w-[46ch] text-[16px] leading-[1.6] text-cream-2">
-                  Bring one thing your front desk gets wrong. We will tell you
-                  whether it is a playbook problem or something else, and you
+                  Bring one thing your front desk keeps getting wrong. We will tell you
+                  whether this is the right fix for it, and you
                   leave with at least one idea you can act on even if you never
                   hire us.
                 </p>

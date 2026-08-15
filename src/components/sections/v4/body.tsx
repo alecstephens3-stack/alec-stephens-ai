@@ -4,7 +4,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { NightWindow } from "@/components/ui/lens-primitives";
 import {
   PROBLEMS,
-  PLAYBOOK_FEATURES,
+  PRODUCT_FEATURES,
   PROOF,
   TIMELINE,
   OWNERSHIP,
@@ -20,16 +20,13 @@ export function Problem() {
     <Section
       id="problem"
       kicker="The gap"
-      title="Your practice runs on things only three people know"
-      lede="None of this is a technology problem. It is a findability problem, and it shows up on the P&L in ways nobody traces back to the front desk."
+      title="The front desk runs on what a few people remember"
+      lede="When those people are busy or gone, the answers get hard to find, and that gap shows up as uncollected charges and slow onboarding."
     >
       <div className="grid gap-4 md:grid-cols-3">
         {PROBLEMS.map((p, i) => (
-          <AnimateOnScroll key={p.kicker} delay={i * 70}>
+          <AnimateOnScroll key={p.title} delay={i * 70}>
             <Card className="h-full">
-              <p className="font-label text-[13px] font-semibold uppercase tracking-[0.06em] text-accent-deep">
-                {p.kicker}
-              </p>
               <h3 className="mt-2.5 font-heading text-[18px] font-medium leading-[1.25] text-ink">
                 {p.title}
               </h3>
@@ -44,18 +41,18 @@ export function Problem() {
   );
 }
 
-/* -------------------------------------------------------------- playbook */
+/* -------------------------------------------------------------- product */
 
-export function Playbook() {
+export function Product() {
   return (
     <Section
-      id="playbook"
+      id="product"
       kicker="What we build"
-      title="The Front Desk Playbook"
-      lede="One searchable place for every insurance rule, price, and protocol your team keeps in their heads. Your manager keeps it true. It holds no patient data at all."
+      title="A searchable knowledge base for the front desk"
+      lede="The difference from a shared drive is that answers are findable mid-call, and the exceptions that cost money are hard to miss."
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {PLAYBOOK_FEATURES.map((f, i) => (
+        {PRODUCT_FEATURES.map((f, i) => (
           <AnimateOnScroll key={f.title} delay={(i % 3) * 60}>
             <Card className="h-full">
               <h3 className="font-heading text-[17px] font-medium leading-[1.3] text-ink">
@@ -76,7 +73,7 @@ export function Playbook() {
 
 export function Proof() {
   return (
-    <Section id="proof" kicker={PROOF.kicker} title={PROOF.title}>
+    <Section id="proof" title={PROOF.title}>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <AnimateOnScroll>
           <Card className="h-full">
@@ -88,14 +85,6 @@ export function Proof() {
                 {para}
               </p>
             ))}
-            <figure className="mt-5 border-t border-rule pt-4">
-              <blockquote className="font-heading text-[20px] font-medium leading-[1.3] text-ink md:text-[23px]">
-                &ldquo;{PROOF.quote.text}&rdquo;
-              </blockquote>
-              <figcaption className="mt-2.5 font-label text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-2">
-                {PROOF.quote.attribution}
-              </figcaption>
-            </figure>
           </Card>
         </AnimateOnScroll>
 
@@ -165,8 +154,7 @@ export function Ownership() {
                 What you own
               </h2>
               <p className="mt-3 max-w-[42ch] text-[15px] leading-[1.6] text-cream-2">
-                No vendor writes this down. Read it before you sign, not
-                after.
+                Worth reading before you sign.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -195,7 +183,7 @@ export function Faq() {
     <Section
       id="faq"
       kicker="Straight answers"
-      title="The questions you would ask on the call"
+      title="Common questions"
       center
     >
       <div className="mx-auto max-w-[760px]">
