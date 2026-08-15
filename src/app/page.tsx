@@ -31,6 +31,12 @@ export default function Home() {
         description: SITE_DESCRIPTION,
         url: SITE_URL,
         email: CONTACT_EMAIL,
+        logo: `${SITE_URL}/logo-light.svg`,
+        image: `${SITE_URL}/og-image.png`,
+        sameAs: [
+          "https://www.linkedin.com/in/alec-stephens-55b392213/",
+          "https://www.linkedin.com/in/jusheenkim",
+        ],
         areaServed: ["United States", "Worldwide"],
         serviceType: [
           "Front desk knowledge base for eyecare practices",
@@ -69,7 +75,11 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          // Escaping "<" so a future copy string containing </script> cannot
+          // break out of the tag and take the page with it.
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
       />
       <Hero />
       <Problem />

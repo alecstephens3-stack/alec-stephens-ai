@@ -11,7 +11,7 @@ export function Pricing() {
       id="pricing"
       kicker="What it costs"
       title="Priced in public"
-      lede="Published, because a price we will say out loud is a price you do not have to negotiate. Every tier is a fixed build fee plus a monthly that keeps the content true, cancellable any time."
+      lede="Tier one is a fixed price. Tiers two and three are quoted after we count your material, because a blind fixed price on clinic wide content is underwater before it starts. Every tier is a build fee plus a monthly that keeps the content true, cancellable any time."
       center
     >
       <div className="grid items-start gap-4 lg:grid-cols-3">

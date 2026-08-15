@@ -69,7 +69,7 @@ export const PLAYBOOK_FEATURES = [
   },
   {
     title: "Decision tools for the calls that go wrong",
-    body: "The handful of decisions that actually cost money get their own tools instead of a paragraph: urgency triage, which doctor can see this patient, collect or bill the refraction, and the current year price. The tool forces the buried exception open so nobody has to remember it exists.",
+    body: "The handful of decisions that actually cost money get their own tools instead of a paragraph: how urgently this caller needs to be seen, which doctor can see them, collect or bill the refraction, and the current year price. The tool forces the buried exception open so nobody has to remember it exists. On anything clinical it is a lookup aid and never a substitute for judgment: your doctor signs off on every clinical page before it publishes and again when it changes, and on any ambiguity the tool's answer is to put the doctor on the phone.",
   },
   {
     title: "Your office manager edits it",
@@ -81,7 +81,7 @@ export const PLAYBOOK_FEATURES = [
   },
   {
     title: "Installs on the front desk machines",
-    body: "It sits on the taskbar and opens like any other app. It keeps working through a slow connection, which matters more at a front desk than anything else on this list.",
+    body: "It installs straight from the browser with no admin rights and no ticket to your IT vendor. Pages you have already opened keep working if the connection drops, which matters more at a front desk than anything else on this list.",
   },
   {
     title: "Staff report a problem in one tap",
@@ -95,7 +95,7 @@ export const PROOF = {
   kicker: "Wichita, Kansas",
   title: "A 27 person independent practice, three doctors, one location",
   body: [
-    "We spent a year inside this clinic. Not on calls. In the office, at the front desk, watching the work. The playbook came out of a 76 situation map we built by reading their actual corpus and sitting with the people who answer the phone.",
+    "We have worked with this practice since April, including days on site in the office, at the front desk, watching the work rather than taking notes on a call. The playbook came out of a 76 situation map we built by reading their actual corpus and sitting with the people who answer the phone.",
     "Before we touched it there were four price lists stacked in one spreadsheet. Time off ran on green paper slips that got handed across a desk and sometimes lost.",
   ],
   quote: {
@@ -120,7 +120,7 @@ export const LEAK = {
     {
       label: "Uncollected refraction and non covered services",
       amount: 7800,
-      note: "Two a week missed at $75. At 30 refractions a day that is a 0.3% error rate.",
+      note: "Two a week missed at $75. Not every visit carries a refraction, so against roughly 110 in a week that is under a 2% error rate.",
     },
     {
       label: "Mis booked or wasted appointment slots",
@@ -135,17 +135,17 @@ export const LEAK = {
     {
       label: "Onboarding ramp",
       amount: 4800,
-      note: "Two front desk hires a year, three months of ramp removed each.",
+      note: "Two front desk hires a year. We assume two of the six ramp months come back, not all of them: a playbook shortens lookup, it does not teach phone manner.",
     },
     {
       label: "The interruption tax",
       amount: 4400,
-      note: "Six a day, eight minutes of combined time, 250 days. The go ask the manager line.",
+      note: "Modeled at six a day, eight minutes of combined time, 250 days. The go ask the manager line.",
     },
   ],
   total: 30760,
   footnote:
-    "This is the conservative model. At realistic volumes it lands between $50,000 and $65,000. These are modeled figures using your practice's shape, not measured results from your clinic. We will build the real version with your numbers on the call.",
+    "These are modeled figures using your practice's shape, not measured results from your clinic, and every assumption behind them is printed above so you can argue with it. We will build the real version with your numbers on the call.",
 };
 
 /* --------------------------------------------------------------- pricing */
@@ -184,7 +184,7 @@ export const PRICING_TIERS = [
       "Written AI use policy for your staff",
     ],
     highlighted: true,
-    badge: "Most practices land here",
+    badge: "Where we would start you",
   },
   {
     name: "Practice Operating System",
@@ -222,7 +222,7 @@ export const TIMELINE = [
   {
     week: "Week 2",
     title: "We sit with the people who answer the phone",
-    body: "The situation map comes from your front desk, not from a template. This is the step other vendors skip and it is the reason the thing gets used.",
+    body: "The situation map comes from your front desk, not from a template. This is the step other vendors skip and it is the reason the thing gets used. It costs your team about four hours in total, scheduled around your clinic and mostly in fifteen minute pieces at the desk.",
   },
   {
     week: "Weeks 3 and 4",
@@ -232,7 +232,7 @@ export const TIMELINE = [
   {
     week: "Day 30",
     title: "Live at the front desk",
-    body: "Installed on the machines, your manager trained on editing, and the feedback loop open. Our first build took five weeks because we rebuilt it twice after the front desk told us it was wrong. Yours benefits from that.",
+    body: "Installed on the machines, your manager trained on editing, and the feedback loop open. Thirty days assumes we can get an hour of your front desk in weeks one and two. If your schedule slips, so does ours, and we will say so rather than quietly ship something nobody checked.",
   },
 ];
 
@@ -249,11 +249,11 @@ export const OWNERSHIP = [
   },
   {
     q: "What if we cancel",
-    a: "Monthly, cancel any time, no term. You keep the exported content. The hosted app stops.",
+    a: "Monthly, cancel any time, no term. You keep every page. You do not keep the search, and we will tell you the two easiest ways to get that back.",
   },
   {
     q: "What if you two disappear",
-    a: "You have the export and the content is readable without our software. We would rather say this out loud than have you find out it was never true.",
+    a: "You have the export and the content is readable without our software. Better you know that now than discover it at the worst possible moment.",
   },
 ];
 
@@ -277,12 +277,24 @@ export const FAQ = [
     a: "Your office manager, in the app, in about ten seconds. That is what the monthly fee protects. A knowledge base that goes stale becomes the exact problem it was built to solve, so the recurring line pays for keeping it true, not for hosting.",
   },
   {
+    q: "Why is the monthly more than our practice management software?",
+    a: "Fair question, and the honest answer is that you are not paying us for hosting. Hosting this costs almost nothing. The monthly covers the writing: when an insurance rule changes, a doctor's restrictions change, or your prices reset for the year, the pages change with them, and the accuracy review is our job rather than something your office manager does on a weekend. Compare it to the training platforms instead of to your practice management system. As of August 2026 Trainual and Whale run about $249 to $300 a month at your headcount and hand you an empty system you still have to fill in yourself. Ours arrives written. If you would rather not pay it, you can cancel the month after launch, keep the exported content, and maintain it yourself.",
+  },
+  {
     q: "How long until staff are actually using it?",
     a: "Live at day 30. Adoption is a separate question and we treat it that way: the feedback button and the same day fixes in the first two weeks are what turn it from a tool you bought into a tool they open.",
   },
   {
     q: "Who are we actually hiring?",
     a: "Two people. Alec Stephens and Jusheen Kim, and you will work with both of us, not an account manager. We are based in Asia, which means we are not sitting at a desk during your morning rush. Urgent issues get answered by the next business morning your time, and we will tell you the escalation path in writing before you sign anything. We would rather state the limit than imply a promise we cannot keep.",
+  },
+  {
+    q: "What happens if a page is wrong and it costs us money?",
+    a: "You review and approve every page before it goes live, and your doctor signs off on anything clinical. If we wrote it wrong against the source you gave us, we fix it free and we tell you which other pages shared the mistake. If the underlying rule changed and nobody told either of us, that is what the monthly is for. We are not going to pretend a knowledge base removes the need for someone to own the answer. It removes the need for that someone to be interrupted forty times a week.",
+  },
+  {
+    q: "We run more than one location. Does that change things?",
+    a: "It usually makes the problem worse and the case stronger. Three locations means three sets of tribal knowledge that drifted apart years ago, staff who cover across sites and get a different answer at each one, and a single point of failure at every front desk instead of one. We build the shared pages once and let each site override only what genuinely differs. Additional locations are $1,500 setup and $149 a month each.",
   },
   {
     q: "Why not just build this ourselves?",
