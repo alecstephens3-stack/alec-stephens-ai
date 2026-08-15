@@ -2,20 +2,21 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { CONTACT_EMAIL } from "@/lib/constants";
+import { CONTACT_EMAIL } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 
 const LABEL_CLASS =
   "mb-2 block font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2";
 
 const FIELD_CLASS =
-  "w-full rounded-[12px] border border-rule bg-white/70 px-4 py-3 text-base text-ink placeholder:text-ink-2/70 transition-colors duration-[220ms] ease-brand focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
+  "w-full rounded-[12px] border border-rule bg-white/70 px-4 py-3 text-base text-ink placeholder:text-ink-2 transition-colors duration-[220ms] ease-brand focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    website: "", // honeypot: a real person never sees or fills this
   });
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -41,7 +42,7 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "", website: "" });
     } catch (err) {
       setStatus("error");
       setErrorMessage(
@@ -70,7 +71,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="relative space-y-5">
       <div className="grid gap-5">
         <div>
           <label htmlFor="contact-name" className={LABEL_CLASS}>
@@ -120,6 +121,21 @@ export function ContactForm() {
           }
           className={cn(FIELD_CLASS, "resize-none")}
           placeholder="Tell us about your project..."
+        />
+      </div>
+
+      {/* Honeypot. Off-screen, unlabelled to assistive tech, never tabbable. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="contact-website">Do not fill this in</label>
+        <input
+          id="contact-website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formData.website}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, website: e.target.value }))
+          }
         />
       </div>
 
