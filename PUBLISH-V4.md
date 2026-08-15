@@ -78,15 +78,27 @@ git revert -m 1 <merge-sha> && git push origin main
 
 Neither blocks the deploy. Both cost real money if they are forgotten.
 
-1. **Resend sending domain.** The contact form used to send from
-   `onboarding@resend.dev`, Resend's sandbox address, which only delivers to
-   the Resend account owner. Any submission to a different address was being
-   rejected while the visitor was told "Message sent." That silent-success bug
-   is fixed: the route now returns a real error and tells the visitor to email
-   directly. But the form still will not deliver until either
-   `hello@stephensai.co` is a verified sending domain in Resend, or
-   `CONTACT_FROM_EMAIL` is set in Vercel to an address that already is.
-   **Send one test submission after publishing and confirm it arrives.**
+1. **Resend sending domain.** Publishing is safe without this: the sender
+   still defaults to `onboarding@resend.dev`, which works but only delivers to
+   the Resend account owner's own address. The old silent-success bug is fixed
+   either way, so a failed send now shows the visitor a real error instead of
+   "Message sent."
+
+   To take the limit off, in Resend: **Domains → Add Domain → `stephensai.co`**,
+   then add the DNS records at Porkbun.
+
+   > **Merge the SPF record, do not add a second one.** The apex already carries
+   > Brevo (`v=spf1 ... include:spf.brevo.com ...`). A domain may have only one
+   > SPF record and a second breaks both senders. Either fold
+   > `include:_spf.resend.com` into the existing record, or use Resend's
+   > `send.stephensai.co` subdomain flow, which leaves the apex alone.
+
+   Once it shows **Verified**, set `CONTACT_FROM_EMAIL` in Vercel for Production
+   and Preview. If you verified the subdomain rather than the apex, it must be
+   `Stephens AI <hello@send.stephensai.co>`, because `hello@stephensai.co` will
+   403 against a subdomain verification.
+
+   **Then send one real test through the live form and confirm it arrives.**
 
 2. **The named reference.** The strongest single upgrade left is a real
    practice name, a person, and permission to be called. The site currently
