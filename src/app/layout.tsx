@@ -3,7 +3,7 @@ import { Inter_Tight, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Scene } from "@/components/ui/scene";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/content";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -24,32 +24,31 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     template: `%s | ${SITE_NAME}`,
-    default: `${SITE_NAME} | AI Automation Consulting`,
+    default: `${SITE_NAME} | Front desk systems for independent eyecare`,
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    "AI automation",
-    "n8n consultant",
-    "workflow automation",
-    "Claude API",
-    "AI consulting",
-    "business automation",
-    "custom integrations",
-    "AI development",
+    "optometry front desk training",
+    "eyecare practice knowledge base",
+    "optometry practice operations",
+    "front desk SOP software",
+    "independent optometry consulting",
+    "practice management training",
   ],
   authors: [{ name: "Alec Stephens" }, { name: "Jusheen Kim" }],
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | AI Automation Consulting`,
+    title: `${SITE_NAME} | Front desk systems for independent eyecare`,
     description: SITE_DESCRIPTION,
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | AI Automation Consulting`,
+    title: `${SITE_NAME} | Front desk systems for independent eyecare`,
     description: SITE_DESCRIPTION,
     images: ["/og-image.png"],
   },
@@ -71,8 +70,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Scene />
-        <div className="relative z-[1]">
-          <Header />
+        {/* The header sits OUTSIDE the content wrapper on purpose. Inside it,
+            the wrapper's stacking context trapped the header's z-50 below the
+            portaled mobile sheet (z-40 on body), so the hamburger and its
+            close control painted underneath the overlay and could not be
+            tapped. Out here the order is content (0) < sheet (40) < dock (50). */}
+        <Header />
+        <div className="relative isolate">
           <main id="main-content">{children}</main>
           <Footer />
         </div>

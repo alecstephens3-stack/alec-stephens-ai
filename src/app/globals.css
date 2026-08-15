@@ -107,6 +107,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -154,14 +155,12 @@ body {
 .sai-pane {
   background: var(--sai-glass);
   backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-pane);
 }
 .sai-pane-strong {
   background: var(--sai-glass-strong);
   backdrop-filter: blur(30px) saturate(1.5);
-  -webkit-backdrop-filter: blur(30px) saturate(1.5);
   border: 1px solid var(--sai-glass-edge);
   box-shadow: var(--shadow-float);
 }
@@ -173,6 +172,41 @@ body {
 @supports not (backdrop-filter: blur(1px)) {
   .sai-pane, .sai-pane-strong { background: rgba(255, 255, 255, 0.92); }
 }
+
+/* ——— The mobile sheet: opaque on purpose.
+   Deliberately NOT .sai-pane. A full-viewport backdrop-filter has to be
+   rasterized before the first frame can show, which on a phone reads as
+   "I pressed it and nothing happened." Nothing is visible behind a
+   full-screen sheet anyway, so the blur bought nothing and cost the
+   open. Reported by Jusheen 2026-08-14. ——— */
+.sai-sheet {
+  background: var(--sai-sky);
+  animation: sai-sheet-in 190ms var(--sai-ease) both;
+}
+@keyframes sai-sheet-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ——— Blur budget.
+   The scene is a fixed layer of drifting lenses and 100px tint pools. Every
+   pane that samples it has to re-blur on every frame the scene moves, and a
+   page carries roughly twenty panes. On a phone that is a permanent battery
+   and thermal cost for an effect nobody is looking at, so small screens get a
+   cheaper blur and a still scene. The sheet also hides the scene outright:
+   nothing behind an opaque overlay needs compositing. ——— */
+@media (max-width: 768px) {
+  .sai-pane,
+  .sai-pane-strong {
+    backdrop-filter: blur(12px) saturate(1.2);
+  }
+  .sai-lens { animation: none; }
+  .sai-tint { filter: blur(60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sai-lens { animation: none; }
+}
+body:has(#mobile-menu) .sai-scene { display: none; }
 
 /* One specular streak per major pane, maximum. Apply alongside .sai-pane. */
 .sai-streak { position: relative; overflow: hidden; }
@@ -291,7 +325,9 @@ section.sai-night .sai-ember {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  /* accent-deep, not accent: #DC6843 on glass is 3.16:1 and fails AA below
+     18.66px. #C55532 clears 4.5:1. Bright accent stays for display type. */
+  color: var(--color-accent-deep);
 }
 .sai-port.on-night .disc {
   background:
@@ -351,7 +387,6 @@ section.sai-night .sai-ember {
   border-radius: var(--radius-flag);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112, 62, 40, 0.10);
   white-space: nowrap;
@@ -418,7 +453,6 @@ section.sai-night ul.sai-bullets li::before {
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid var(--sai-glass-edge);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 .sai-btn.ghost:hover { background: rgba(255, 255, 255, 0.8); transform: translateY(-2px); }
@@ -429,6 +463,45 @@ section.sai-night ul.sai-bullets li::before {
   to { opacity: 1; transform: none; }
 }
 .sai-rise { animation: sai-rise 700ms var(--sai-ease) both; }
+
+/* ——— Range input: the leak model's controls. Terracotta thumb on a
+   hairline track, sized for a finger on a phone. ——— */
+.sai-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.sai-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(23, 19, 16, 0.14);
+}
+.sai-range::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(23, 19, 16, 0.14);
+}
+.sai-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 3px 9px rgba(112, 62, 40, 0.3);
+}
+.sai-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 3px 9px rgba(112, 62, 40, 0.3);
+}
 
 /* Focus visibility — terracotta ring on glass. */
 :focus-visible {
@@ -454,7 +527,6 @@ section.sai-night ul.sai-bullets li::before {
   .sai-pane, .sai-pane-strong {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
   * { animation: none !important; }
 }

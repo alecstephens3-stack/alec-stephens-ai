@@ -1,32 +1,86 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, CALENDLY } from "@/lib/content";
 
 /**
- * The Dock: the Lens floating pill header. Fixed, centered, top 22px on
- * desktop — logo + Schibsted nav pills on glass. On mobile it stays a compact
- * pill and the menu opens as a full glass sheet.
+ * The Dock: the Lens floating pill header.
+ *
+ * Mobile menu performance (reported 2026-08-14, Jusheen, on device):
+ * "pressing the three lines takes a while for anything to pop up... a tad laggy."
+ *
+ * Root cause was the sheet painting `backdrop-filter: blur(30px) saturate(1.5)`
+ * across the whole viewport. That blur was pure cost: the sheet already paints
+ * an opaque sky gradient underneath itself, so there was never anything behind
+ * it to see through. Mobile Safari had to rasterize a full-screen blur before
+ * the first frame could show, which is exactly the "nothing happens, then it
+ * appears" feel. The sheet is now opaque and animates in over 190ms, so the
+ * response is immediate and legible instead of instant-but-late.
  */
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // Close on route change (browser back included) so the sheet is never
+  // stranded open. Adjusting during render rather than in an effect: this is
+  // the supported pattern and it avoids a wasted commit.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setIsMobileMenuOpen(false);
+  }
+
+  const close = useCallback(() => {
+    setIsMobileMenuOpen(false);
+    triggerRef.current?.focus();
+  }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!isMobileMenuOpen) return;
+
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      // Trap focus inside the sheet.
+      const focusables = sheetRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])'
+      );
+      if (!focusables || focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    // Move focus in on the next frame, after the sheet paints.
+    const raf = requestAnimationFrame(() => {
+      sheetRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    });
+
     return () => {
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+      cancelAnimationFrame(raf);
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, close]);
 
   return (
     <header className="fixed left-0 right-0 top-[14px] z-50 md:top-[22px]">
@@ -66,78 +120,92 @@ export function Header() {
               </Link>
             );
           })}
-          <Link
-            href="/#contact"
+          <a
+            href={CALENDLY}
+            target="_blank"
+            rel="noopener noreferrer"
             className="ml-1.5 rounded-full bg-ink px-4 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-white shadow-[0_8px_20px_rgba(23,19,16,0.2)] transition-all duration-[220ms] hover:-translate-y-px hover:bg-accent"
           >
-            Get in touch &rarr;
-          </Link>
+            Book a call &rarr;
+          </a>
         </nav>
 
         <button
+          ref={triggerRef}
+          type="button"
           className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
           aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
-          <div className="flex flex-col gap-1.5">
+          <span className="flex flex-col gap-1.5" aria-hidden="true">
             <span
               className={cn(
-                "block h-0.5 w-5 bg-ink transition-all duration-300",
+                "block h-0.5 w-5 bg-ink transition-transform duration-200",
                 isMobileMenuOpen && "translate-y-2 rotate-45"
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-5 bg-ink transition-all duration-300",
+                "block h-0.5 w-5 bg-ink transition-opacity duration-200",
                 isMobileMenuOpen && "opacity-0"
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-5 bg-ink transition-all duration-300",
+                "block h-0.5 w-5 bg-ink transition-transform duration-200",
                 isMobileMenuOpen && "-translate-y-2 -rotate-45"
               )}
             />
-          </div>
+          </span>
         </button>
       </div>
 
       {/* Portaled to body: the dock uses backdrop-filter, which would otherwise
           become the containing block for this fixed overlay and clip it. */}
+      {/* The sheet only ever opens from a click, so `document` is guaranteed
+          here and no mount guard is needed. */}
       {isMobileMenuOpen &&
         createPortal(
-          <div className="fixed inset-0 z-40 md:hidden">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, #F3EEE8 0%, #F7E7DA 42%, #F7DCC9 74%, #F2CFB8 100%)",
-              }}
-              aria-hidden="true"
-            />
-            <div className="absolute inset-4 rounded-window sai-pane" aria-hidden="true" />
+          <div
+            id="mobile-menu"
+            ref={sheetRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="sai-sheet fixed inset-0 z-40 md:hidden"
+          >
             <nav
-              className="relative flex h-full flex-col items-center justify-center gap-7"
+              className="relative flex h-full flex-col items-center justify-center gap-6 px-6"
               aria-label="Mobile navigation"
             >
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={close}
                   className="font-heading text-2xl font-medium text-ink transition-colors hover:text-accent"
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-2 rounded-full bg-ink px-7 py-3.5 font-heading text-lg font-medium text-white transition-all hover:bg-accent"
+              <a
+                href={CALENDLY}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={close}
+                className="mt-2 rounded-full bg-ink px-7 py-3.5 font-heading text-lg font-medium text-white transition-colors hover:bg-accent"
               >
-                Get in touch &rarr;
-              </Link>
+                Book a call &rarr;
+              </a>
+              <button
+                type="button"
+                onClick={close}
+                className="mt-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2"
+              >
+                Close
+              </button>
             </nav>
           </div>,
           document.body
