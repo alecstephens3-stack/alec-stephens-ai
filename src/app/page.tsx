@@ -1,14 +1,13 @@
 import { Hero } from "@/components/sections/v4/hero";
 import {
   Problem,
-  Playbook,
+  Product,
   Proof,
   Timeline,
   Ownership,
   Faq,
   Founders,
 } from "@/components/sections/v4/body";
-import { Leak } from "@/components/sections/v4/leak";
 import { Pricing } from "@/components/sections/v4/pricing";
 import { Contact } from "@/components/sections/v4/contact";
 import {
@@ -83,9 +82,8 @@ export default function Home() {
       />
       <Hero />
       <Problem />
-      <Playbook />
+      <Product />
       <Proof />
-      <Leak />
       <Pricing />
       <Timeline />
       <Ownership />

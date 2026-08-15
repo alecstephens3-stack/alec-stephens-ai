@@ -10,7 +10,7 @@ export function Footer() {
           <Link
             href="/"
             className="flex items-center transition-opacity hover:opacity-80"
-            aria-label="Stephens AI — home"
+            aria-label="Stephens AI, home"
           >
             <Image
               src="/logo-light.svg"
@@ -23,10 +23,10 @@ export function Footer() {
 
           <nav className="flex items-center gap-6" aria-label="Footer navigation">
             <Link
-              href="/#playbook"
+              href="/#product"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              The Playbook
+              What we build
             </Link>
             <Link
               href="/#pricing"

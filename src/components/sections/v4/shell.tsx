@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Porthole } from "@/components/ui/lens-primitives";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 /**
@@ -9,7 +8,6 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
  */
 export function Section({
   id,
-  kicker,
   title,
   lede,
   children,
@@ -27,13 +25,8 @@ export function Section({
   return (
     <section id={id} className={cn("scroll-mt-28 py-11 md:py-14", className)}>
       <div className="mx-auto w-full max-w-[1080px] px-5 md:px-8">
-        {(kicker || title) && (
+        {title && (
           <AnimateOnScroll className={cn("mb-7 md:mb-9", center && "text-center")}>
-            {kicker && (
-              <div className={cn("mb-4", center && "flex justify-center")}>
-                <Porthole>{kicker}</Porthole>
-              </div>
-            )}
             {title && (
               <h2
                 className={cn(
