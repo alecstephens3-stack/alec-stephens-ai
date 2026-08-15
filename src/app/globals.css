@@ -36,7 +36,7 @@
      Deep     = accent text below 24px (clears 4.5:1 everywhere, incl. bare sky). */
   --color-accent: #DC6843;
   --color-accent-display: #C55532;
-  --color-accent-deep: #9E3D1B;
+  --color-accent-deep: #8F3616;
   --color-accent-night: #FF8E76;
   --color-accent-soft: rgba(220, 104, 67, 0.08);
   --color-accent-line: rgba(220, 104, 67, 0.18);
@@ -263,6 +263,9 @@ section.sai-night .sai-ember {
   border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow: inset -10px -14px 30px rgba(220, 104, 67, 0.13), inset 8px 12px 26px rgba(255, 255, 255, 0.38), 0 26px 52px rgba(112, 62, 40, 0.14);
   animation: sai-drift var(--drift, 16s) ease-in-out infinite alternate;
+  /* Own compositing layer: without this the drift invalidates the backdrop
+     source for every blurred pane on the page, every frame, forever. */
+  will-change: transform;
 }
 .sai-lens::before {
   content: '';
@@ -314,8 +317,10 @@ section.sai-night .sai-ember {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  /* accent-deep, not accent: #DC6843 on glass is 3.16:1 and fails AA below
-     18.66px. #C55532 clears 4.5:1. Bright accent stays for display type. */
+  /* accent-deep, never accent. #DC6843 is 2.36:1 on the sky and fails AA at
+     any size. accent-deep carries enough margin to stay above 4.5:1 even where
+     a scene tint pool darkens the background under it, which moves with the
+     viewport because .sai-scene is fixed. */
   color: var(--color-accent-deep);
 }
 .sai-port.on-night .disc {
