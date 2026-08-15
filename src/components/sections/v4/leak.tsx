@@ -37,7 +37,11 @@ export function Leak() {
     ];
     const total = lines.reduce((sum, l) => sum + l.amount, 0);
     const yearOne = 4500 + 299 * 12;
-    return { lines, total, yearOne, multiple: total / yearOne };
+    // Deliberately NOT total/yearOne. That headline number only holds if the
+    // playbook closes 100% of all five lines, which nothing does, and it is
+    // the one line every owner actually reads. Half-recovery survives an
+    // argument; the full figure does not.
+    return { lines, total, yearOne, halfMultiple: total / 2 / yearOne };
   }, [perDay, slot, hires]);
 
   const controls = [
@@ -146,12 +150,13 @@ export function Leak() {
               <p className="text-[14.5px] leading-[1.6] text-ink">
                 The Front Desk Playbook costs{" "}
                 <strong className="font-medium">{usd(model.yearOne)}</strong> in
-                year one, setup plus twelve months. Against the figure above
-                that is{" "}
+                year one, setup plus twelve months. It will not close all of
+                that gap. Nothing does. Close half of it and you are still{" "}
                 <strong className="font-medium text-accent">
-                  {model.multiple.toFixed(1)}x
+                  {model.halfMultiple.toFixed(1)}x
                 </strong>{" "}
-                back, and it closes the gap permanently rather than once.
+                ahead in year one, and the gap stays closed instead of
+                reopening next year.
               </p>
             </div>
 

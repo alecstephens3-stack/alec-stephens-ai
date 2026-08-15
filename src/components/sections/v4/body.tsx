@@ -165,8 +165,8 @@ export function Ownership() {
                 What you own
               </h2>
               <p className="mt-3 max-w-[42ch] text-[15px] leading-[1.6] text-cream-2">
-                No vendor writes this down. We would rather you read it here
-                than find out later.
+                No vendor writes this down. Read it before you sign, not
+                after.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
