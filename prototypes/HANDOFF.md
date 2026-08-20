@@ -5,6 +5,50 @@ Written so a fresh session can pick this up cold. Branch:
 
 ---
 
+## 0. Round 5 is the current round. Read this section first.
+
+Settled in a discovery session on 2026-08-20, captured in
+`brainstorms/2026-08-20-round-5-scroll-only-site.md`. These supersede the round 4 brief
+wherever they conflict.
+
+| Decision | Detail |
+| --- | --- |
+| Interaction | **Scroll only.** No switches, toggles, tabs or steppers anywhere. |
+| The one exception | The knowledge base carries a **self-playing looping demo**: a ghost cursor types a query, results filter, it clicks, a situation page opens, it rests and replays. Nothing is asked of the visitor. Desktop may also accept real typing; nothing depends on it. |
+| Everything else | **Still pictures.** ReExam and practice operations do not move. Exactly one moving element on the page. |
+| Device | **Phone first.** Desktop is secondary. |
+| Scope | **Converge, do not explore.** Round 5 is ONE page, iterated, not another spread of ten. |
+| Base | Prototype 21's knowledge base section and its questions/FAQ section. |
+| Height | About **4,500px at phone width**. Shorter is better. |
+| Pricing | **Out of scope this round.** Present and quiet, do not solve it, do not redesign it. |
+| Testimonials | Placeholder. Design the slot, write no quotes. |
+| Video | Leave a deliberate slot after proof. **Build nothing.** |
+
+**Page order**, which follows how the buyer actually prioritises rather than marketing convention:
+
+1. One headline line, then the demo already playing. No sub-paragraph, no buttons above it.
+2. Knowledge base, carried by the demo, including a **flag this page as wrong** affordance.
+   That drew the strongest single reaction in twenty reviews.
+3. ReExam. Still. Six touch sequence as one image.
+4. Practice operations. Still. Smallest of the three.
+5. Proof. 27 person practice, 76 situations, 4 lookups, both founders.
+6. Testimonials, placeholder.
+7. FAQ, collapsed disclosure list. Carries data posture, systems, terms, who you are hiring,
+   and **one sentence on who exports the patient list**.
+8. Pricing, quiet.
+9. Close.
+
+Pre-agreed cuts if it overruns: fold testimonials into proof, shrink operations.
+
+**Do not lead with "live in a 27 person practice."** It is true, and it is the only client,
+so leading with it advertises having exactly one client. Keep it in the proof block.
+
+**On design tooling.** State the design plan before building, work from the Lens v3 kit, never
+hand-write the system. `prototypes/CLAUDE-DESIGN-BRIEF.md` is a self-contained brief written to
+be pasted into Claude Design in one go.
+
+**This repository is public.** Keep client-confidential and personal material out of it.
+
 ## 1. What this project is
 
 The live site (v4) sells ONE thing: the front desk knowledge base. We are redesigning
