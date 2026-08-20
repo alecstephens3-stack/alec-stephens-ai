@@ -1,0 +1,330 @@
+<!-- TITLE: The Console -->
+<!-- Direction 40. The bet: one driveable surface, near zero prose. The three
+     widgets are three bays of a single instrument panel rather than three
+     sections down a catalogue. Everything else on the page is a readout, a
+     spec row, a price row or a control. Structure differs from 31 on purpose:
+     exactly ONE pane on the whole page, the panel itself. Every other section
+     earns its separation from a hairline and a change of measure. -->
+
+<header class="sai-dock" role="banner">
+  <span class="mark"><!-- SAI:LOGO --></span>
+  <nav class="dock-nav" aria-label="Sections">
+    <a href="#ch01">CH 01</a>
+    <a href="#ch02">CH 02</a>
+    <a href="#ch03">CH 03</a>
+    <a href="#pricing">Pricing</a>
+    <a class="sai-btn primary dock-cta" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  </nav>
+</header>
+
+<main class="sai-page">
+
+  <!-- ===================== HERO. bare, nothing contained =============== -->
+  <section class="cns-hero sai-rise">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Independent eyecare practices</span></span>
+    <h1 class="sai-display">Three instruments. <em>All three drive.</em></h1>
+    <p class="cns-line">A front desk knowledge base, patient reactivation, and time off to payroll.</p>
+    <div class="cns-cta">
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </div>
+  </section>
+
+  <!-- ===================== READOUT RAIL. facts as instrument readouts == -->
+  <section class="cns-rail sai-rise" aria-label="Readouts">
+    <div class="cns-cell">
+      <div class="cns-n">27</div>
+      <div class="cns-l">person practice, live today</div>
+    </div>
+    <div class="cns-cell">
+      <div class="cns-n">76</div>
+      <div class="cns-l">situations mapped</div>
+    </div>
+    <div class="cns-cell">
+      <div class="cns-n">4</div>
+      <div class="cns-l">decision lookups</div>
+    </div>
+    <div class="cns-cell">
+      <div class="cns-n sm">60 to 100</div>
+      <div class="cns-l">admin hours a year back</div>
+    </div>
+  </section>
+
+  <!-- ===================== THE PANEL. the page's only pane =============
+       Three bays, one surface. Each bay is a channel head, a one line
+       setup, and the shared widget. No bay is a pane: panes never nest. -->
+  <section class="cns-panel sai-widget sai-pane sai-streak sai-rise" aria-labelledby="panelTitle">
+
+    <div class="cns-panel-head">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Instrument panel</span></span>
+      <h2 class="sai-w-title" id="panelTitle">Drive all three.</h2>
+    </div>
+
+    <div class="cns-bay" id="ch01">
+      <div class="cns-bay-head">
+        <span class="cns-ch">CH 01</span>
+        <h3 class="cns-bay-title">Front desk knowledge base</h3>
+        <span class="cns-state"><span class="sai-status good"><span class="kw">Live</span><span class="detail">Daily use at the front desk</span></span></span>
+      </div>
+      <div class="sai-w-sub">76 situations, 4 decision lookups, one box. Type in it.</div>
+      <!-- SAI5:KB -->
+    </div>
+
+    <div class="cns-bay" id="ch02">
+      <div class="cns-bay-head">
+        <span class="cns-ch">CH 02</span>
+        <h3 class="cns-bay-title">ReExam, patient reactivation</h3>
+        <span class="cns-state"><span class="sai-status good"><span class="kw">Live in</span><span class="detail">10 business days from kickoff</span></span></span>
+      </div>
+      <div class="sai-w-sub">6 touches, about 6 weeks. It stops the moment they book. Step it.</div>
+      <!-- SAI5:REEXAM -->
+    </div>
+
+    <div class="cns-bay" id="ch03">
+      <div class="cns-bay-head">
+        <span class="cns-ch">CH 03</span>
+        <h3 class="cns-bay-title">Time off and payroll</h3>
+        <span class="cns-state"><span class="sai-status good"><span class="kw">Built</span><span class="detail">Running at the practice we built it for</span></span></span>
+      </div>
+      <div class="sai-w-sub">File a request, then watch it reach payroll.</div>
+      <!-- SAI5:TIMEOFF -->
+    </div>
+
+  </section>
+
+  <!-- ===================== PROOF. a spec sheet, not paragraphs ========= -->
+  <section class="cns-row sai-rise" id="proof" aria-labelledby="proofTitle">
+    <div class="cns-side">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Proof</span></span>
+      <h2 class="cns-h" id="proofTitle">Spec sheet.</h2>
+    </div>
+    <div class="cns-body">
+      <div class="cns-scroll">
+        <table class="sai-table">
+          <tr><th>Line</th><th>Reading</th></tr>
+          <tr><td>Built for</td><td>A 27 person practice, 6 to 7 doctors, one location</td></tr>
+          <tr><td>Written up</td><td>76 front desk situations, and 4 decision lookups for the calls that cost money</td></tr>
+          <tr><td>Patient records held</td><td class="num">0</td></tr>
+          <tr><td>Time to live</td><td>30 days from kickoff</td></tr>
+          <tr><td>Alec Stephens</td><td>Spent the last year inside a 27 person eyecare practice</td></tr>
+          <tr><td>Jusheen Kim</td><td>Lead software engineer at J.P. Morgan</td></tr>
+          <tr><td>Where we sit</td><td>Both founders are based in Asia. Urgent issues answered by the next business morning, US time</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ================================ -->
+  <section class="cns-row sai-rise" aria-labelledby="wordsTitle">
+    <div class="cns-side">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">In their words</span></span>
+      <h2 class="cns-h" id="wordsTitle">Two lines from client email.</h2>
+    </div>
+    <div class="cns-body">
+      <div class="sai-claims">
+        <div class="sai-claim">
+          <div class="body">
+            <div class="quote">"I think the biggest issue will be getting in the habit of <em>using the tool</em>."</div>
+            <div class="attrib"><span class="who">Office manager</span> · 2 weeks after go live</div>
+          </div>
+          <div class="verdict">
+            <div class="cap">Our answer</div>
+            <p>Adoption is a separate job. Staff flag a bad page from inside the app, and the first 4 issues were fixed and live the same day.</p>
+          </div>
+        </div>
+        <div class="sai-claim">
+          <div class="body">
+            <div class="quote">"That looks good, exactly what <em>Mary needs to process</em>."</div>
+            <div class="attrib"><span class="who">Practice administrator</span> · On the payroll output</div>
+          </div>
+          <div class="verdict">
+            <div class="cap">Why it counts</div>
+            <p>The test of an admin build is whether the person downstream can just run it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUESTIONS =================================== -->
+  <section class="cns-row sai-rise" aria-labelledby="faqTitle">
+    <div class="cns-side">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Questions</span></span>
+      <h2 class="cns-h" id="faqTitle">Asked first.</h2>
+    </div>
+    <div class="cns-body">
+      <div class="sai-w-sub">Patient data is answered per product, because the answer is different per product.</div>
+      <!-- SAI5:FAQ -->
+    </div>
+  </section>
+
+  <!-- ===================== PRICING. quiet, all in cells ================ -->
+  <section class="cns-row sai-rise" id="pricing" aria-labelledby="priceTitle">
+    <div class="cns-side">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Pricing</span></span>
+      <h2 class="cns-h" id="priceTitle">Month to month. No term.</h2>
+    </div>
+    <div class="cns-body">
+      <div class="cns-scroll">
+        <table class="sai-table">
+          <tr><th>What</th><th>Setup</th><th>Monthly</th></tr>
+          <tr><td>Front desk knowledge base</td><td class="num">$2,500</td><td class="num">$299</td></tr>
+          <tr><td>Whole practice knowledge base <span class="hint">where we would start you</span></td><td class="num">$3,500</td><td class="num">$250</td></tr>
+          <tr><td>Knowledge base plus operations</td><td class="num">$4,500</td><td class="num">$350</td></tr>
+          <tr><td>ReExam <span class="hint">flat, no contract</span></td><td class="num">None</td><td class="num">$600</td></tr>
+          <tr><td>Extra section beyond the tier cap</td><td class="num">$600 each</td><td class="num">None</td></tr>
+          <tr><td>Second location</td><td class="num">$1,500</td><td class="num">$149</td></tr>
+        </table>
+      </div>
+      <div class="cns-scroll">
+        <table class="sai-table">
+          <tr><th>Terms</th><th>Reading</th></tr>
+          <tr><td>Contract</td><td>Month to month. Keep every page if you cancel, and export any time</td></tr>
+          <tr><td>Compare against</td><td>Trainual and Whale, about $249 to $300 a month at this size, and still an empty system</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== the wide calm slot ==========================
+       Deliberately mostly air, before the close. If a short film is ever
+       made, it lands here. No placeholder is drawn. -->
+  <section class="cns-slot sai-rise" aria-label="A quiet band">
+    <p>Built inside one practice, over one year, then packaged.</p>
+  </section>
+
+  <!-- ===================== CLOSE. the one night window ================= -->
+  <section class="sai-night sai-rise" id="book" aria-labelledby="closeTitle">
+    <span class="sai-ember"></span>
+    <span class="sai-stamp corner on-night">20 minutes</span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">Next step</span></span>
+    <h2 class="sai-w-title" id="closeTitle">Bring one thing your front desk keeps asking about.</h2>
+    <div class="sai-w-sub">We will tell you which channel it is, or that it is none of them.</div>
+    <div class="cns-cta">
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </div>
+  </section>
+
+  <footer class="sai-footer">
+    <div class="foot-l">
+      <span class="mark sm"><!-- SAI:LOGO --></span>
+      <div>
+        <div class="foot-name">Stephens AI</div>
+        <div class="foot-sub">Alec Stephens and Jusheen Kim</div>
+      </div>
+    </div>
+    <div class="foot-r">
+      <a href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      <div>Independent eyecare practices, United States</div>
+    </div>
+  </footer>
+
+</main>
+
+<style>
+/* Page level composition only. Every surface, marker and widget is the kit.
+   Prefix cns- so nothing here can collide with another direction. */
+.sai-page { max-width: 1060px; margin: 0 auto; padding: 118px 24px 0; display: flex; flex-direction: column; gap: 38px; }
+
+.sai-dock .mark svg { height: 26px; width: auto; display: block; }
+.dock-nav { display: flex; gap: 2px; align-items: center; flex-wrap: nowrap; }
+.dock-nav a:not(.dock-cta) {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: #5A4F46; text-decoration: none;
+  padding: 8px 11px; border-radius: 999px; white-space: nowrap;
+  transition: background 220ms cubic-bezier(.2,.8,.2,1), color 220ms cubic-bezier(.2,.8,.2,1);
+}
+.dock-nav a:not(.dock-cta):hover, .dock-nav a:not(.dock-cta):focus-visible { background: rgba(220,104,67,.13); color: #8F3616; }
+.dock-cta { margin-left: 8px; font-size: 13.5px; }
+
+/* Hero. Nothing is contained, and the headline sits on the background. */
+.cns-hero { padding: 10px 4px 2px; display: flex; flex-direction: column; gap: 17px; align-items: flex-start; }
+.cns-hero h1 { max-width: 15ch; }
+.cns-hero h1 em { font-style: normal; color: #C55532; }
+.cns-line { margin: 0; max-width: 46ch; font-size: 19px; line-height: 1.55; color: #5A4F46; }
+.cns-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 3px; }
+
+/* Readout rail. Numerals on the background, hairline gutters, no pane. */
+.cns-rail {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(23,19,16,.10); border-bottom: 1px solid rgba(23,19,16,.10);
+}
+.cns-cell { padding: 24px 22px 22px; border-left: 1px solid rgba(23,19,16,.10); }
+.cns-cell:first-child { border-left: 0; padding-left: 4px; }
+.cns-n {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 42px; font-weight: 500;
+  letter-spacing: -.02em; line-height: 1; color: #171310;
+}
+.cns-n.sm { font-size: 31px; padding-top: 8px; }
+.cns-l {
+  margin-top: 10px; font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px;
+  font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #5A4F46; line-height: 1.4;
+}
+
+/* The panel. The only pane on the page, and it holds all three widgets. */
+.cns-panel { display: flex; flex-direction: column; gap: 0; }
+.cns-panel-head { display: flex; flex-direction: column; gap: 11px; padding-bottom: 6px; }
+.cns-bay { padding: 34px 0 6px; border-top: 1px solid rgba(23,19,16,.10); margin-top: 30px; scroll-margin-top: 116px; }
+.cns-bay-head { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; margin-bottom: 9px; }
+.cns-ch {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: #8F3616;
+}
+.cns-bay-title {
+  margin: 0; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 25px; font-weight: 500;
+  letter-spacing: -.025em; line-height: 1.1; color: #171310;
+}
+.cns-state { margin-left: auto; }
+
+/* The unpaned rows. Label column left, readout right, hairline above. */
+.cns-row {
+  display: grid; grid-template-columns: 226px minmax(0, 1fr); gap: 34px; align-items: start;
+  border-top: 1px solid rgba(23,19,16,.10); padding-top: 28px; scroll-margin-top: 116px;
+}
+.cns-side { display: flex; flex-direction: column; gap: 12px; }
+.cns-h {
+  margin: 0; font-family: 'Inter Tight', system-ui, sans-serif; font-size: 26px; font-weight: 500;
+  letter-spacing: -.025em; line-height: 1.1; color: #171310;
+}
+.cns-body { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.cns-scroll { overflow-x: auto; }
+.sai-table .hint { display: block; font-size: 13.5px; font-weight: 400; color: #5A4F46; }
+
+/* The wide calm slot. Air is the content. */
+.cns-slot { padding: 66px 4px 68px; display: flex; justify-content: center; }
+.cns-slot p { margin: 0; max-width: 40ch; text-align: center; font-size: 21px; line-height: 1.5; color: #5A4F46; }
+
+.sai-footer { display: flex; justify-content: space-between; gap: 26px; flex-wrap: wrap; align-items: flex-end; }
+.foot-l { display: flex; gap: 13px; align-items: center; }
+.foot-l .mark.sm svg { height: 30px; width: auto; display: block; }
+.foot-name { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 17px; font-weight: 500; color: #171310; }
+.foot-sub, .foot-r { font-size: 14.5px; color: #5A4F46; }
+.foot-r { text-align: right; line-height: 1.7; }
+.foot-r a { color: #8F3616; }
+
+@media (max-width: 900px) {
+  .cns-row { grid-template-columns: 1fr; gap: 18px; }
+  .cns-state { margin-left: 0; }
+}
+@media (max-width: 760px) {
+  .sai-page { padding: 104px 17px 0; gap: 28px; }
+  .dock-nav a:not(.dock-cta) { display: none; }
+  .cns-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cns-cell { padding: 18px 16px; }
+  .cns-cell:nth-child(odd) { border-left: 0; padding-left: 4px; }
+  .cns-cell:nth-child(n+3) { border-top: 1px solid rgba(23,19,16,.10); }
+  .cns-n { font-size: 32px; }
+  .cns-n.sm { font-size: 24px; padding-top: 6px; }
+  .cns-bay { padding-top: 26px; margin-top: 22px; }
+  .cns-bay-title { font-size: 22px; }
+  .cns-h { font-size: 23px; }
+  .cns-slot { padding: 44px 2px 46px; }
+  .cns-slot p { font-size: 19px; }
+  .sai-footer { flex-direction: column; align-items: flex-start; }
+  .foot-r { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dock-nav a:not(.dock-cta) { transition: none; }
+}
+</style>

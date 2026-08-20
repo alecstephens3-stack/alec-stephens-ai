@@ -1,0 +1,1575 @@
+<title>Day and Night</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* ==========================================================================
+   16. DAY AND NIGHT
+   A structural answer, not a stylistic one. The page alternates grounds:
+
+     LIGHT   hero, no pane at all, a lot of open space
+     NIGHT   one long full bleed band. The three working demos sit inside it
+             as light "day windows". Register says "this is the software".
+     LIGHT   testimonials, pricing, custom builds, objections, the close
+
+   Bubble discipline. Exactly one bubble wrapped region on the whole page:
+   the night band's day windows, which are the product depictions round 2
+   explicitly allows. Every light section carries zero containers and earns
+   its separation from full bleed bands, hairlines, measure changes and space.
+   Nothing is nested inside anything.
+
+   CONTRAST, both grounds gated independently.
+
+   DAY ground, worst case is the gradient's darkest stop #F2CFB8:
+     #171310 ink            13.4:1
+     #5A4F46 ink secondary   5.4:1   <- the floor on light
+     #8F3616 accent text     5.3:1   at every size, display included
+     #DC6843 is MARK ONLY. It never carries text anywhere on this page.
+
+   NIGHT ground, worst case is the radial's lightest stop #241B15:
+     #F5F1E8 cream          15.0:1
+     #B3AB9E cream secondary 7.5:1   <- the floor on dark
+     #FF8E76 accent text     7.6:1
+
+   DAY WINDOW sheet #FAF7F1, a light UI dropped into the dark:
+     #171310 ink            15.0:1
+     #5A4F46 ink secondary   7.4:1
+     #8F3616 accent text     7.3:1
+     #215941 / #71510C status text, both above 5:1
+
+   Text inside the night band never uses a day token, and text inside a day
+   window never uses a night token. They are two separate systems.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;          /* committed. No prefers-color-scheme anywhere. */
+
+  /* ---- day ground ---- */
+  --sky: linear-gradient(180deg,#F3EEE8 0%,#F7E7DA 42%,#F7DCC9 74%,#F2CFB8 100%);
+  --sky-flat:#F5E9DE;
+  --ink:#171310;
+  --ink-2:#5A4F46;              /* lightest secondary allowed on light */
+  --accent:#DC6843;             /* MARK ONLY: dots, rules, bars, ticks */
+  --accent-deep:#8F3616;        /* accent text below 30px on light */
+  --rule:rgba(23,19,16,0.13);
+  --rule-soft:rgba(23,19,16,0.07);
+  --rule-hard:rgba(23,19,16,0.22);
+  --wash:rgba(23,19,16,0.035);  /* a background shift, not a container */
+
+  /* ---- night ground ---- */
+  --night: radial-gradient(128% 122% at 20% -10%,#241B15 0%,#150F0B 58%,#0D0A08 100%);
+  --night-flat:#140E0A;
+  --cream:#F5F1E8;
+  --cream-2:#B3AB9E;            /* the floor on dark */
+  --accent-night:#FF8E76;
+  --nrule:rgba(255,255,255,0.13);
+  --nrule-soft:rgba(255,255,255,0.07);
+  --nwash:rgba(255,255,255,0.045);
+
+  /* ---- the day window sheet ---- */
+  --day:#FAF7F1;
+  --day-2:#FFFFFF;
+  --day-3:#F1EBE1;
+  --good:#2E7A56; --warn:#946A12; --bad:#B23A2F;
+  --good-ink:#215941; --warn-ink:#71510C; --bad-ink:#8E2C23;
+
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --label:"Schibsted Grotesk","Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(0.2,0.8,0.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+[hidden]{display:none !important;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:96px;}
+
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  color:var(--ink);
+  background-color:var(--sky-flat);
+  background-image:var(--sky);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+svg{max-width:100%;}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-0.026em;line-height:1.08;margin:0;}
+p{margin:0;}
+a{color:inherit;}
+button,input,select{font:inherit;}
+
+:focus-visible{outline:2.5px solid var(--accent-deep);outline-offset:3px;border-radius:6px;}
+.night :focus-visible{outline-color:var(--accent-night);}
+.dw :focus-visible{outline-color:var(--accent-deep);}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:0.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+  }
+}
+
+/* ---------- review furniture, deliberately not part of the design -------- */
+.proto-bar{
+  position:sticky;top:0;z-index:90;
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;
+  min-height:44px;padding:10px 18px;
+  background:#1c1c1e;color:#f2f2f2;
+  font-family:var(--sans);font-size:13px;line-height:1.4;
+  border-bottom:1px solid #000;
+}
+.proto-n{font-family:var(--label);font-weight:700;letter-spacing:0.11em;text-transform:uppercase;font-size:13px;}
+.proto-name{font-weight:600;padding-left:16px;border-left:1px solid rgba(255,255,255,0.26);}
+.proto-bet{color:#c2c2c6;flex:1 1 240px;min-width:0;}
+
+/* ---------- rhythm ------------------------------------------------------- */
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 24px;}
+.measure-mid{max-width:760px;}
+.measure-tight{max-width:600px;}
+section{padding:86px 0;}
+
+.eyebrow{
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-2);
+  display:flex;align-items:center;gap:9px;margin:0 0 18px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;}
+.night .eyebrow{color:var(--cream-2);}
+.night .eyebrow::before{background:var(--accent-night);}
+
+h2.sec{font-size:clamp(29px,4.6vw,44px);max-width:17ch;}
+.sec-lede{margin-top:16px;font-size:18px;color:var(--ink-2);max-width:52ch;}
+.night .sec-lede{color:var(--cream-2);}
+
+.hr{height:1px;background:var(--rule);border:0;margin:0;}
+
+/* ---------- buttons ------------------------------------------------------ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:12px 26px;border-radius:999px;
+  font-size:17px;font-weight:500;letter-spacing:-0.01em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;background:none;
+  transition:transform 150ms var(--ease),background 150ms var(--ease),box-shadow 220ms var(--ease);
+}
+.btn-primary{background:#1E1712;color:var(--cream);box-shadow:0 12px 30px rgba(60,32,18,0.22);}
+.btn-primary:hover{background:#0E0A07;transform:translateY(-1px);}
+.btn-line{border-color:var(--rule-hard);color:var(--ink);}
+.btn-line:hover{background:rgba(23,19,16,0.05);transform:translateY(-1px);}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+@media (max-width:460px){.cta-row .btn{width:100%;}}
+
+/* ---------- masthead ----------------------------------------------------- */
+.masthead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:12px 18px;padding:26px 0 0;}
+.brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em;}
+.brand-mark{width:12px;height:12px;border-radius:50%;background:var(--accent);flex:none;}
+.masthead .btn{min-height:44px;padding:10px 20px;font-size:15px;}
+
+/* ==========================================================================
+   HERO. Light, open, and containing nothing. No pane, no card, no tile.
+   ========================================================================== */
+.hero{padding:74px 0 30px;}
+.hero h1{font-size:clamp(36px,7.2vw,66px);letter-spacing:-0.034em;line-height:1.02;max-width:15ch;}
+.hero h1 em{font-style:normal;color:var(--accent-deep);}
+.hero-sub{margin-top:22px;font-size:19px;color:var(--ink-2);max-width:46ch;}
+.hero .cta-row{margin-top:32px;}
+.hero-fine{margin-top:18px;font-size:15px;color:var(--ink-2);}
+
+/* the fact rail: hairlines only, no box */
+.rail{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  margin-top:60px;border-top:1px solid var(--rule);
+}
+.rail div{padding:20px 18px 4px 0;border-right:1px solid var(--rule-soft);}
+.rail div + div{padding-left:18px;}
+.rail div:last-child{border-right:0;}
+.rail b{display:block;font-size:clamp(28px,3.4vw,38px);font-weight:500;letter-spacing:-0.035em;
+  color:var(--ink);line-height:1;}
+.rail span{display:block;margin-top:9px;font-size:13.5px;line-height:1.4;color:var(--ink-2);max-width:17ch;}
+@media (max-width:880px){
+  .rail{grid-template-columns:repeat(2,1fr);}
+  .rail div{border-bottom:1px solid var(--rule-soft);padding-bottom:16px;}
+  .rail div + div{padding-left:0;}
+  .rail div:nth-child(odd){padding-right:18px;}
+  .rail div:nth-child(2n){border-right:0;}
+  .rail div:last-child{border-bottom:0;}
+}
+
+/* ==========================================================================
+   THE THRESHOLD. Walking into a different room, and back out again.
+   ========================================================================== */
+.sill{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 0 0;}
+.sill .k{
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-2);text-align:center;
+}
+.sill .thread{width:1px;height:62px;background:linear-gradient(180deg,rgba(23,19,16,0),rgba(23,19,16,0.34));}
+.sill-out{padding:0 0 26px;}
+.sill-out .thread{background:linear-gradient(180deg,rgba(23,19,16,0.34),rgba(23,19,16,0));}
+
+/* the band itself */
+.night{
+  position:relative;isolation:isolate;overflow:hidden;
+  background-color:var(--night-flat);
+  background-image:var(--night);
+  color:var(--cream);
+  /* Full bleed band, not a card. A rounded, lifted surface here made the three day windows
+     containers inside a container, which is the exact thing the round 2 brief bans. The
+     ground change and the edge hairlines do the separating instead. */
+  border-radius:0;
+  padding:100px 0 104px;
+}
+/* light spilling along both edges, the way it does under a door */
+.night::before,.night::after{
+  content:"";position:absolute;left:7%;right:7%;height:1px;z-index:2;
+  background:linear-gradient(90deg,rgba(245,241,232,0),rgba(245,241,232,0.5),rgba(245,241,232,0));
+}
+.night::before{top:0;}
+.night::after{bottom:0;background:linear-gradient(90deg,rgba(245,241,232,0),rgba(245,241,232,0.28),rgba(245,241,232,0));}
+.night .ember{
+  position:absolute;z-index:0;pointer-events:none;border-radius:50%;
+  background:var(--accent);filter:blur(140px);
+}
+.night .ember.hi{top:-300px;right:-160px;width:760px;height:760px;opacity:0.16;}
+.night .ember.lo{bottom:-420px;left:-260px;width:620px;height:620px;opacity:0.055;}
+.night > .wrap{position:relative;z-index:1;}
+
+.band-head{max-width:660px;}
+.band-head h2{font-size:clamp(29px,4.6vw,44px);color:var(--cream);}
+.band-legend{
+  display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;padding-top:18px;
+  border-top:1px solid var(--nrule);
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-2);
+}
+.band-legend span{display:inline-flex;align-items:center;gap:9px;}
+.band-legend i{width:9px;height:9px;border-radius:2px;background:var(--day);flex:none;}
+.band-legend i.mark{background:var(--accent);border-radius:50%;}
+
+/* ---------- a product block on the night ground, no container ------------ */
+.prod{padding-top:64px;margin-top:64px;border-top:1px solid var(--nrule-soft);}
+.prod:first-of-type{border-top:0;margin-top:44px;padding-top:0;}
+.prod-grid{display:grid;grid-template-columns:minmax(0,0.86fr) minmax(0,1.14fr);gap:44px;align-items:start;}
+.prod h3{font-size:clamp(25px,3.3vw,34px);color:var(--cream);}
+.prod .num{
+  font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--accent-night);display:block;margin-bottom:12px;
+}
+.prod .lede{margin-top:14px;font-size:17.5px;color:var(--cream-2);max-width:44ch;}
+.spec{margin:26px 0 0;}
+.spec div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:8px 18px;
+  padding:13px 0;border-top:1px solid var(--nrule-soft);}
+.spec dt{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--cream-2);}
+.spec dd{margin:0;font-size:16px;line-height:1.5;color:var(--cream);}
+.spec dd b{font-weight:500;color:var(--accent-night);}
+@media (max-width:900px){
+  .prod-grid{grid-template-columns:1fr;gap:30px;}
+  .spec div{grid-template-columns:1fr;gap:4px;}
+}
+
+/* ==========================================================================
+   DAY WINDOW. A light sheet dropped into the dark. The only pane on the page.
+   Inside it: hairlines and tinted rows, never another pane.
+   ========================================================================== */
+.dwfig{margin:0;}
+.dw{
+  background:var(--day);color:var(--ink);
+  border:1px solid rgba(255,255,255,0.5);
+  border-radius:22px;overflow:hidden;
+  box-shadow:0 34px 74px rgba(0,0,0,0.5),0 6px 16px rgba(0,0,0,0.3),inset 0 1px 0 #fff;
+  font-size:15.5px;line-height:1.55;
+}
+.dw-chrome{
+  display:flex;align-items:center;gap:7px;padding:12px 16px;
+  background:linear-gradient(180deg,#F2ECE2,#EBE3D7);
+  border-bottom:1px solid var(--rule);
+}
+.dw-chrome i{width:9px;height:9px;border-radius:50%;background:rgba(23,19,16,0.16);flex:none;}
+.dw-chrome i:nth-child(2){background:rgba(23,19,16,0.12);}
+.dw-chrome i:nth-child(3){background:rgba(23,19,16,0.08);}
+.dw-chrome .t{margin-left:8px;flex:1 1 auto;min-width:0;font-size:13.5px;font-weight:500;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dw-chrome .tag{
+  margin-left:auto;flex:none;font-family:var(--label);font-size:13px;font-weight:700;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--warn-ink);
+  background:rgba(148,106,18,0.14);border:1px solid rgba(148,106,18,0.3);
+  border-radius:999px;padding:3px 10px;
+}
+.dw-body{padding:18px;}
+.dwfig figcaption{margin-top:16px;font-size:15px;color:var(--cream-2);max-width:52ch;}
+@media (max-width:460px){.dw-body{padding:14px;}.dw-chrome .t{font-size:13px;}}
+
+.dw-label{
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--ink-2);margin:18px 0 10px;
+}
+.dw-label:first-child{margin-top:0;}
+
+/* window controls, painted explicitly so no OS theme reaches them */
+.wbtn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:44px;padding:9px 16px;border-radius:999px;cursor:pointer;
+  font-size:14.5px;font-weight:500;
+  background:#1E1712;color:var(--day);border:1px solid #1E1712;
+  transition:background 150ms var(--ease),transform 150ms var(--ease);
+}
+.wbtn:hover{background:#0E0A07;transform:translateY(-1px);}
+.wbtn.quiet{background:var(--day-2);color:var(--ink);border-color:var(--rule-hard);}
+.wbtn.quiet:hover{background:#fff;}
+.wbtn[aria-disabled="true"]{background:var(--day-3);color:var(--ink-2);border-color:var(--rule);
+  cursor:not-allowed;box-shadow:none;}
+.wbtn[aria-disabled="true"]:hover{transform:none;background:var(--day-3);}
+.wrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px;}
+
+/* ---------- window 1: the knowledge base search -------------------------- */
+.kb-field{
+  display:flex;align-items:center;gap:11px;
+  background:var(--day-2);border:1px solid var(--rule-hard);border-radius:14px;
+  padding:2px 6px 2px 14px;
+  box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(23,19,16,0.05);
+  transition:box-shadow 200ms var(--ease),border-color 150ms var(--ease);
+}
+.kb-field:focus-within{border-color:var(--accent-deep);box-shadow:0 0 0 3px rgba(143,54,22,0.2);}
+.kb-field input{
+  flex:1 1 auto;min-width:0;border:0;background:transparent;color:var(--ink);
+  font-size:16px;padding:13px 0;-webkit-appearance:none;appearance:none;
+}
+.kb-field input::placeholder{color:#6D6157;opacity:1;}
+.kb-field input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;}
+.kb-clear{
+  flex:none;width:44px;height:44px;border-radius:999px;border:0;background:transparent;
+  color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+}
+.kb-clear:hover{background:rgba(23,19,16,0.06);color:var(--ink);}
+
+.kb-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.kb-chips button{
+  min-height:44px;padding:8px 15px;border-radius:999px;cursor:pointer;font-size:14.5px;
+  background:var(--day-2);color:var(--ink);border:1px solid var(--rule);
+}
+.kb-chips button:hover{background:#fff;border-color:var(--rule-hard);}
+
+#kbIndex{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule);
+  max-height:196px;overflow-y:auto;}
+#kbIndex li{border-bottom:1px solid var(--rule-soft);}
+#kbIndex a{
+  display:flex;align-items:center;gap:12px;min-height:44px;padding:10px 8px;
+  text-decoration:none;color:var(--ink);
+}
+#kbIndex a:hover{background:rgba(23,19,16,0.05);}
+#kbIndex a[data-open="true"]{background:rgba(220,104,67,0.12);
+  box-shadow:inset 3px 0 0 var(--accent-deep);}
+#kbIndex .k{font-size:15px;line-height:1.35;}
+#kbIndex .c{margin-left:auto;flex:none;font-family:var(--label);font-size:13px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-2);}
+.kb-none{padding:14px 8px;font-size:15px;color:var(--ink-2);border-bottom:1px solid var(--rule-soft);}
+@media (max-width:520px){
+  #kbIndex a{flex-wrap:wrap;gap:2px 12px;}
+  #kbIndex .c{order:-1;margin-left:0;flex:1 1 100%;}
+  #kbIndex .k{flex:1 1 100%;}
+}
+
+.kb-page{padding:18px 0 0;margin-top:6px;border-top:1px solid var(--rule);}
+.kb-page + .kb-page{margin-top:20px;}
+.kb-page .cat{
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--accent-deep);
+}
+.kb-page .h{font-size:20px;font-weight:500;letter-spacing:-0.02em;line-height:1.18;margin-top:7px;color:var(--ink);}
+.kb-page .lede{margin-top:8px;font-size:15.5px;color:var(--ink);}
+.kb-page ul{list-style:none;margin:12px 0 0;padding:0;}
+.kb-page ul li{position:relative;padding-left:19px;margin-top:8px;font-size:15px;color:var(--ink-2);line-height:1.5;}
+.kb-page ul li::before{content:"";position:absolute;left:1px;top:8px;width:6px;height:6px;
+  border-radius:50%;background:var(--accent);}
+.exc{margin-top:14px;padding:11px 13px;border-left:3px solid var(--warn);
+  background:rgba(148,106,18,0.11);border-radius:0 10px 10px 0;}
+.exc b{display:block;font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--warn-ink);margin-bottom:3px;}
+.exc p{font-size:15px;color:var(--ink);line-height:1.5;}
+.kb-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;
+  padding-top:11px;border-top:1px solid var(--rule-soft);font-size:13.5px;color:var(--ink-2);}
+.kb-foot .flag{
+  margin-left:auto;display:inline-flex;align-items:center;gap:7px;min-height:44px;
+  padding:8px 14px;border-radius:999px;border:1px solid var(--rule);
+  background:transparent;color:var(--ink-2);font-size:13.5px;cursor:pointer;
+}
+.kb-foot .flag:hover{background:rgba(23,19,16,0.05);color:var(--ink);}
+@media (max-width:520px){.kb-foot .flag{margin-left:0;}}
+
+/* ---------- window 2: the recall run sheet ------------------------------- */
+.run{list-style:none;margin:0;padding:0;}
+.run > li{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;
+  padding:13px 0;border-top:1px solid var(--rule-soft);}
+.run > li:first-child{border-top:0;}
+.tick{
+  flex:none;width:22px;height:22px;border-radius:50%;margin-top:2px;
+  border:1.6px solid rgba(23,19,16,0.42);background:var(--day-2);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background 200ms var(--ease),border-color 200ms var(--ease);
+}
+.tick svg{opacity:0;transition:opacity 150ms var(--ease);}
+li.done > .tick{background:var(--good);border-color:var(--good);}
+li.done > .tick svg{opacity:1;}
+li.locked > .tick{border-style:dashed;border-color:rgba(23,19,16,0.34);}
+.run-b{flex:1 1 190px;min-width:0;}
+.run-t{font-size:15.5px;color:var(--ink);line-height:1.4;}
+.run-s{display:block;font-size:13.5px;color:var(--ink-2);margin-top:3px;line-height:1.45;}
+.run-a{margin-left:auto;flex:none;}
+.run-a .wbtn{min-height:44px;padding:8px 15px;font-size:14px;}
+.state{
+  display:inline-flex;align-items:center;min-height:26px;padding:2px 11px;border-radius:999px;
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  background:var(--day-3);color:var(--ink-2);border:1px solid var(--rule);
+}
+.state.ok{background:rgba(46,122,86,0.13);color:var(--good-ink);border-color:rgba(46,122,86,0.32);}
+.state.hold{background:rgba(148,106,18,0.14);color:var(--warn-ink);border-color:rgba(148,106,18,0.3);}
+
+.docs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.docs button{
+  width:44px;height:44px;border-radius:12px;cursor:pointer;
+  font-family:var(--label);font-size:14px;font-weight:700;
+  background:var(--day-2);color:var(--ink);border:1px solid var(--rule-hard);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background 150ms var(--ease),color 150ms var(--ease),border-color 150ms var(--ease);
+}
+.docs button:hover{background:#fff;border-color:var(--accent-deep);}
+.docs button[data-done="true"]{background:var(--good);border-color:var(--good);color:#fff;}
+.docs button[data-done="true"]:hover{background:var(--good);}
+.run-msg{
+  margin-top:14px;padding:11px 13px;font-size:14.5px;line-height:1.5;
+  background:rgba(148,106,18,0.12);border-left:3px solid var(--warn);
+  border-radius:0 10px 10px 0;color:var(--ink);
+}
+.run-msg.good{background:rgba(46,122,86,0.12);border-left-color:var(--good);}
+.run-meter{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13.5px;color:var(--ink-2);}
+.run-meter .bar{flex:1 1 auto;height:6px;border-radius:999px;background:rgba(23,19,16,0.1);overflow:hidden;}
+.run-meter .bar i{display:block;height:100%;width:0;background:var(--accent);
+  transition:width 260ms var(--ease);}
+
+/* ---------- window 3: time off and payroll ------------------------------- */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:520px){.form-row{grid-template-columns:1fr;}}
+.field{position:relative;}
+.field label{display:block;font-family:var(--label);font-size:13px;font-weight:700;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px;}
+.field select{
+  width:100%;min-height:46px;padding:11px 38px 11px 13px;border-radius:12px;
+  background-color:var(--day-2);background-image:none;color:var(--ink);
+  border:1px solid var(--rule-hard);
+  font-size:15.5px;-webkit-appearance:none;appearance:none;cursor:pointer;
+}
+.field select:focus-visible{border-color:var(--accent-deep);}
+/* the chevron, drawn in CSS so the page pulls nothing from anywhere */
+.field::after{
+  content:"";position:absolute;right:16px;bottom:19px;width:8px;height:8px;
+  border-right:1.6px solid var(--ink-2);border-bottom:1.6px solid var(--ink-2);
+  border-radius:0 0 2px 0;transform:rotate(45deg);pointer-events:none;
+}
+
+.req{padding:14px 0 0;margin-top:16px;border-top:1px solid var(--rule);}
+.req-top{display:flex;flex-wrap:wrap;align-items:center;gap:11px;}
+.ini{
+  width:38px;height:38px;border-radius:50%;flex:none;background:#1E1712;color:var(--day);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.05em;
+}
+.req-who{font-size:15.5px;color:var(--ink);min-width:0;}
+.req-when{display:block;font-size:13.5px;color:var(--ink-2);}
+.req-top .state{margin-left:auto;}
+.flow{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px;}
+.flow li{display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.45;
+  color:var(--ink-2);transition:color 200ms var(--ease);}
+.flow li .tick{width:19px;height:19px;margin-top:1px;}
+.flow li.on{color:var(--ink);}
+.flow li.on .tick{background:var(--good);border-color:var(--good);}
+.flow li.on .tick svg{opacity:1;}
+.flow li.on .tick.warn{background:var(--warn);border-color:var(--warn);}
+.payline{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:16px;padding-top:13px;
+  border-top:1px solid var(--rule);font-size:14.5px;color:var(--ink-2);
+}
+.payline b{font-weight:500;color:var(--ink);}
+
+/* ==========================================================================
+   BACK TO LIGHT
+   ========================================================================== */
+.band-wash{background:var(--wash);border-top:1px solid var(--rule-soft);
+  border-bottom:1px solid var(--rule-soft);}
+
+/* ---------- testimonials ------------------------------------------------- */
+.anchor-q{margin:0;padding:0;}
+.anchor-q blockquote{margin:0;border-left:3px solid var(--accent);padding-left:24px;}
+.anchor-q blockquote p{font-size:clamp(24px,3.6vw,34px);line-height:1.24;letter-spacing:-0.025em;
+  color:var(--ink);font-weight:500;max-width:20ch;}
+.anchor-q figcaption{margin-top:16px;padding-left:27px;font-family:var(--label);font-size:13.5px;
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-2);}
+.anchor-q figcaption .ctx{display:block;margin-top:7px;font-family:var(--sans);font-size:15px;
+  font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-2);}
+.answer{margin-top:38px;padding-top:26px;border-top:1px solid var(--rule);max-width:50ch;}
+.answer .k{font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--accent-deep);display:block;margin-bottom:12px;}
+.answer p{font-size:18px;color:var(--ink);}
+
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:56px;
+  border-top:1px solid var(--rule);}
+.qgrid figure{margin:0;padding:24px 26px 24px 0;border-bottom:1px solid var(--rule-soft);}
+.qgrid figure:nth-child(odd){border-right:1px solid var(--rule-soft);}
+.qgrid figure:nth-child(even){padding-left:26px;}
+.qgrid figure:last-child:nth-child(odd){grid-column:1 / -1;border-right:0;padding-right:0;}
+.qgrid blockquote{margin:0;}
+.qgrid blockquote p{font-size:18px;line-height:1.4;color:var(--ink);letter-spacing:-0.015em;}
+.qgrid figcaption{margin-top:11px;font-family:var(--label);font-size:13px;font-weight:600;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);}
+@media (max-width:760px){
+  .qgrid{grid-template-columns:1fr;}
+  .qgrid figure{padding-right:0;}
+  .qgrid figure:nth-child(even){padding-left:0;}
+  .qgrid figure:nth-child(odd){border-right:0;}
+}
+.docd{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:11px;max-width:62ch;}
+.docd li{position:relative;padding-left:22px;font-size:16px;color:var(--ink-2);line-height:1.5;}
+.docd li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;
+  border-radius:50%;background:var(--accent);}
+.docd-k{font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:44px;}
+
+/* ---------- tables (pricing, posture) ------------------------------------ */
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:34px;}
+.scroll-x:focus-visible{outline:2.5px solid var(--accent-deep);outline-offset:4px;}
+table{border-collapse:collapse;width:100%;min-width:600px;}
+caption{text-align:left;font-family:var(--label);font-size:13.5px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-2);padding-bottom:14px;}
+th,td{text-align:left;padding:16px 18px 16px 0;border-bottom:1px solid var(--rule-soft);
+  vertical-align:top;font-size:16px;line-height:1.5;}
+thead th{font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule-hard);padding-bottom:12px;}
+tbody th{font-weight:500;color:var(--ink);}
+td{color:var(--ink-2);}
+td b,th b{font-weight:500;color:var(--ink);}
+.money{font-size:19px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);white-space:nowrap;}
+tr.start th,tr.start td{background:rgba(220,104,67,0.08);}
+.pill{display:inline-block;margin-left:9px;font-family:var(--label);font-size:13px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);
+  background:rgba(255,255,255,0.62);border:1px solid rgba(220,104,67,0.42);
+  border-radius:999px;padding:2px 10px;white-space:nowrap;}
+.notes{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:11px;max-width:64ch;}
+.notes li{position:relative;padding-left:22px;font-size:16px;color:var(--ink-2);line-height:1.5;}
+.notes li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;
+  border-radius:50%;background:var(--accent);}
+.notes li b{font-weight:500;color:var(--ink);}
+
+/* ---------- custom builds ------------------------------------------------ */
+.builds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:38px;
+  border-top:1px solid var(--rule);}
+.builds article{padding:26px 26px 4px 0;border-right:1px solid var(--rule-soft);}
+.builds article + article{padding-left:26px;}
+.builds article:last-child{border-right:0;}
+.builds .m{font-size:clamp(21px,2.6vw,26px);font-weight:500;letter-spacing:-0.028em;
+  color:var(--accent-deep);line-height:1.15;}
+.builds h3{font-size:17px;margin-top:12px;color:var(--ink);letter-spacing:-0.015em;}
+.builds p{margin-top:9px;font-size:15px;color:var(--ink-2);line-height:1.5;}
+@media (max-width:820px){
+  .builds{grid-template-columns:1fr;}
+  .builds article,.builds article + article{border-right:0;border-bottom:1px solid var(--rule-soft);padding:22px 0;}
+  .builds article:last-child{border-bottom:0;}
+}
+
+/* ---------- objections --------------------------------------------------- */
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:52px;}
+.two>*{min-width:0;}
+@media (max-width:880px){.two{grid-template-columns:minmax(0,1fr);gap:44px;}}
+.two h3{font-size:22px;margin-bottom:12px;}
+.two table{min-width:440px;}
+.qa{font-size:17px;color:var(--ink);}
+
+/* ---------- founders ----------------------------------------------------- */
+.founders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:34px;
+  border-top:1px solid var(--rule);}
+.founders div{display:flex;gap:16px;align-items:flex-start;padding:26px 26px 26px 0;
+  border-right:1px solid var(--rule-soft);}
+.founders div:last-child{border-right:0;}
+.founders div + div{padding-left:26px;}
+.founders .ini{width:50px;height:50px;font-size:15px;}
+.founders h3{font-size:18px;}
+.founders p{margin-top:7px;font-size:15.5px;color:var(--ink-2);line-height:1.5;}
+@media (max-width:760px){
+  .founders{grid-template-columns:1fr;}
+  .founders div,.founders div + div{border-right:0;border-bottom:1px solid var(--rule-soft);padding:22px 0;}
+  .founders div:last-child{border-bottom:0;}
+}
+
+/* ---------- close and footer --------------------------------------------- */
+.close h2{font-size:clamp(30px,5.2vw,50px);letter-spacing:-0.032em;max-width:16ch;}
+.close .cta-row{margin-top:32px;}
+.close .fine{margin-top:20px;font-size:15px;color:var(--ink-2);}
+footer{border-top:1px solid var(--rule);padding:34px 0 64px;}
+.foot{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:baseline;justify-content:space-between;}
+.foot p{font-size:15px;color:var(--ink-2);}
+.foot a{font-size:15px;color:var(--ink-2);display:inline-flex;align-items:center;min-height:44px;
+  text-decoration:underline;text-underline-offset:3px;}
+.foot a:hover{color:var(--ink);}
+
+@media (max-width:620px){
+  section{padding:64px 0;}
+  .wrap{padding:0 18px;}
+  .hero{padding-top:48px;}
+  .night{padding:74px 0 78px;}
+  .prod{padding-top:48px;margin-top:48px;}
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 16 of 17</span>
+  <span class="proto-name">Day and Night</span>
+  <span class="proto-bet">Light and calm where they read, dark and technical where the software lives.</span>
+</div>
+
+<header class="wrap">
+  <div class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span> Stephens AI</div>
+    <a class="btn btn-line" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ====================================================================
+       DAY. The hero. Nothing on this screen is inside anything.
+       ==================================================================== -->
+  <section class="hero" aria-labelledby="heroH">
+    <div class="wrap">
+      <p class="eyebrow">For independent eyecare practices</p>
+      <h1 id="heroH">Your practice runs on answers <em>nobody wrote down.</em></h1>
+      <p class="hero-sub">We write them down, run the monthly recall, and automate the admin. Live in a 27 person practice today.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-line" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      </div>
+      <p class="hero-fine">Two founders. Month to month, no term. Live at the front desk in 30 days.</p>
+
+      <div class="rail">
+        <div><b>27</b><span>People at the practice it runs in</span></div>
+        <div><b>76</b><span>Front desk situations mapped</span></div>
+        <div><b>4</b><span>Decision lookups built</span></div>
+        <div><b>0</b><span>Patient records in the knowledge base</span></div>
+        <div><b>30</b><span>Days from start to live</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- the threshold in -->
+  <div class="wrap">
+    <div class="sill">
+      <span class="k">Now the software</span>
+      <span class="thread" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       NIGHT. One long band. Three day windows. All text here is night palette.
+       ==================================================================== -->
+  <section class="night" aria-labelledby="bandH">
+    <span class="ember hi" aria-hidden="true"></span>
+    <span class="ember lo" aria-hidden="true"></span>
+
+    <div class="wrap">
+      <div class="band-head">
+        <p class="eyebrow">Three products</p>
+        <h2 class="sec" id="bandH">Open them. They work.</h2>
+        <p class="sec-lede">Each window below is running in your browser, loaded with example content instead of a practice's real rules.</p>
+        <p class="band-legend">
+          <span><i aria-hidden="true"></i> Light sheet, the working software</span>
+          <span><i class="mark" aria-hidden="true"></i> Dark ground, what it is and what it costs</span>
+        </p>
+      </div>
+
+      <!-- ---------------- P1 ---------------- -->
+      <article class="prod" aria-labelledby="p1H">
+        <div class="prod-grid">
+          <div>
+            <span class="num">Product one, live today</span>
+            <h3 id="p1H">Front desk knowledge base</h3>
+            <p class="lede">The insurance rules, prices and protocols your front desk keeps in their heads, written down and searchable.</p>
+            <dl class="spec">
+              <div><dt>What it is</dt><dd>Situation pages plus 4 decision lookups: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price.</dd></div>
+              <div><dt>Who for</dt><dd>The people answering the phone, and the office manager interrupted every time nobody can find the answer.</dd></div>
+              <div><dt>Upkeep</dt><dd>Your office manager edits it in the app. Every edit is saved and reversible. Staff flag a wrong page in one click.</dd></div>
+              <div><dt>Access</dt><dd>Google sign in, restricted to your domain. Installs from the browser on the front desk computers, no admin rights. Pages already opened keep working if the internet drops.</dd></div>
+              <div><dt>Patient data</dt><dd><b>0 patient records.</b> It holds your rules, not your charts.</dd></div>
+              <div><dt>Price</dt><dd>$2,500 setup, $299 a month at tier 1.</dd></div>
+            </dl>
+          </div>
+
+          <figure class="dwfig">
+            <div class="dw">
+              <div class="dw-chrome">
+                <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                <span class="t">Front desk knowledge base</span>
+                <span class="tag">Example content</span>
+              </div>
+              <div class="dw-body">
+                <p class="dw-label" id="kbLbl">Search the situation, not the folder</p>
+                <div class="kb-field">
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none">
+                    <circle cx="7" cy="7" r="4.75" stroke="#8F3616" stroke-width="1.6"></circle>
+                    <path d="M10.6 10.6 14 14" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round"></path>
+                  </svg>
+                  <input id="kbInput" type="search" autocomplete="off" spellcheck="false"
+                         aria-labelledby="kbLbl" aria-controls="kbIndex" aria-describedby="kbHint"
+                         placeholder="Try: refraction, flashes, vision plan, price">
+                  <button type="button" class="kb-clear" id="kbClear" aria-label="Clear the search" hidden>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="kb-chips">
+                  <button type="button" data-q="refraction">Refraction</button>
+                  <button type="button" data-q="flashes">Flashes</button>
+                  <button type="button" data-q="vision plan">Vision plan</button>
+                  <button type="button" data-q="price">Price</button>
+                </div>
+                <p class="sr-only" id="kbHint">Type to filter the index. Arrow keys move through the results. Enter opens a page.</p>
+
+                <p class="dw-label">Index</p>
+                <ul id="kbIndex" role="list">
+                  <li data-keys="refraction collect bill vision plan medical routine exam billing charge"><a href="#kb-refraction"><span class="k">Refraction: collect or bill</span><span class="c">Billing</span></a></li>
+                  <li data-keys="flashes floaters urgent same day triage retina emergency"><a href="#kb-flashes"><span class="k">Flashes and floaters on the phone</span><span class="c">Triage</span></a></li>
+                  <li data-keys="vision plan medical complaint which one book insurance routine"><a href="#kb-book"><span class="k">Vision plan or medical, which one do I book</span><span class="c">Insurance</span></a></li>
+                  <li data-keys="doctor restriction which provider can see scheduling pediatric surgical"><a href="#kb-doctor"><span class="k">Which doctor can see this patient</span><span class="c">Scheduling</span></a></li>
+                  <li data-keys="contact lens fitting fee price this year pricing"><a href="#kb-fitting"><span class="k">Contact lens fitting fee, this year</span><span class="c">Pricing</span></a></li>
+                  <li data-keys="same day request how soon seen triage urgency"><a href="#kb-sameday"><span class="k">Same day request: how soon do they need to be seen</span><span class="c">Triage</span></a></li>
+                  <li data-keys="recall postcard already came in patient says seen"><a href="#kb-postcard"><span class="k">The patient says they already came in</span><span class="c">Recall</span></a></li>
+                </ul>
+                <p class="sr-only" role="status" aria-live="polite" id="kbStatus"></p>
+
+                <article class="kb-page" id="kb-refraction" tabindex="-1">
+                  <span class="cat">Billing</span>
+                  <p class="h">Refraction: collect or bill</p>
+                  <p class="lede">The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+                  <ul role="list">
+                    <li>Routine exam on the vision plan: the refraction goes through the plan, nothing to collect at the desk.</li>
+                    <li>Medical visit: the refraction is not a covered service. Say so at check in, not at checkout.</li>
+                    <li>If the doctor changes the visit type after the exam, the answer changes with it.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>If the visit bills medical, collect the refraction at checkout, and tell the patient at check in so it is not a surprise.</p></div>
+                  <div class="kb-foot">
+                    <span>Last updated by your office manager.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-flashes" tabindex="-1">
+                  <span class="cat">Triage</span>
+                  <p class="h">Flashes and floaters on the phone</p>
+                  <p class="lede">New flashes, a shower of floaters, or a curtain in the vision is not a routine booking.</p>
+                  <ul role="list">
+                    <li>Ask when it started and whether anything is blocking part of the vision.</li>
+                    <li>Do not offer the next open routine slot. Take it to the doctor on the floor.</li>
+                    <li>Write down what the caller said in their words, not a summary.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>A single old floater the patient has had for years is not the same call. It still gets asked about, it does not get the same urgency.</p></div>
+                  <div class="kb-foot">
+                    <span>Doctor approved before it went live.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-book" tabindex="-1">
+                  <span class="cat">Insurance</span>
+                  <p class="h">Vision plan or medical, which one do I book</p>
+                  <p class="lede">What the patient is calling about decides it, not which card they hand you.</p>
+                  <ul role="list">
+                    <li>New glasses, contacts, or a yearly check with no complaint: routine, on the vision plan.</li>
+                    <li>Any complaint, or a condition being followed: medical, on the medical plan.</li>
+                    <li>Both in one visit happens. Book the reason for the call and let the doctor sort the rest.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>A patient can carry both plans. Booking it as routine because that card was easier to find is how the visit gets rebilled later.</p></div>
+                  <div class="kb-foot">
+                    <span>Last updated by your office manager.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-doctor" tabindex="-1">
+                  <span class="cat">Scheduling</span>
+                  <p class="h">Which doctor can see this patient</p>
+                  <p class="lede">Not every provider takes every visit, and the exceptions are the part people forget.</p>
+                  <ul role="list">
+                    <li>Check the age and the visit type before you check the open slot.</li>
+                    <li>Each doctor's restrictions are on their own page, kept current by your office manager.</li>
+                    <li>If two doctors could take it, the earlier appointment wins.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>A patient already under one doctor's care for a condition goes back to that doctor, even if someone else is open sooner.</p></div>
+                  <div class="kb-foot">
+                    <span>Doctor approved before it went live.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-fitting" tabindex="-1">
+                  <span class="cat">Pricing</span>
+                  <p class="h">Contact lens fitting fee, this year</p>
+                  <p class="lede">One current price list, so nobody is reading last year's number off an old sheet.</p>
+                  <ul role="list">
+                    <li>The fitting fee is separate from the exam. Quote both when the patient asks.</li>
+                    <li>The fee depends on the lens type, so confirm the lens before you quote.</li>
+                    <li>Your office manager updates the price here and it is live for the whole desk.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>A plan allowance is not the price. Quote the price, then say what the allowance covers.</p></div>
+                  <div class="kb-foot">
+                    <span>Last updated by your office manager.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-sameday" tabindex="-1">
+                  <span class="cat">Triage</span>
+                  <p class="h">Same day request: how soon do they need to be seen</p>
+                  <p class="lede">The caller decides how urgent it sounds. The page decides how urgent it is.</p>
+                  <ul role="list">
+                    <li>Ask the two questions on this page before you offer any slot.</li>
+                    <li>Pain, sudden change, or an injury moves the answer to today.</li>
+                    <li>If the answer is today and nothing is open, it goes to the doctor on the floor, not to a waitlist.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>A patient who says they are fine but describes a sudden change is still a today. Go by what they describe.</p></div>
+                  <div class="kb-foot">
+                    <span>Doctor approved before it went live.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+
+                <article class="kb-page" id="kb-postcard" tabindex="-1">
+                  <span class="cat">Recall</span>
+                  <p class="h">The patient says they already came in</p>
+                  <p class="lede">A recall card landing after the visit is a record problem, not an argument to win.</p>
+                  <ul role="list">
+                    <li>Do not argue and do not rebook them on the spot.</li>
+                    <li>Take the date they say they came in and pass it to your office manager.</li>
+                    <li>The record gets corrected and the cards stop.</li>
+                  </ul>
+                  <div class="exc"><b>Exception</b><p>If they came in for a different reason, the recall may still be due. Check before you cancel it.</p></div>
+                  <div class="kb-foot">
+                    <span>Last updated by your office manager.</span>
+                    <button type="button" class="flag">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      This page is wrong</button>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <figcaption>Example pages, not any practice's real data. The live instance holds one practice's own prices and rules.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ---------------- P2 ---------------- -->
+      <article class="prod" aria-labelledby="p2H">
+        <div class="prod-grid">
+          <div>
+            <span class="num">Product two, the new one</span>
+            <h3 id="p2H">Recall done for you</h3>
+            <p class="lede">We run your monthly recall, using your own recall protocol and your own systems.</p>
+            <dl class="spec">
+              <div><dt>The job</dt><dd>Scleral letters, medical recall letters across about 10 reason codes, then the calls list and routine postcards once per doctor. At 8 providers that is 8 separate runs.</dd></div>
+              <div><dt>The trap</dt><dd>The update step is a checkbox left unchecked on one run and checked on another. Backwards, and you either double contact patients or drop them.</dd></div>
+              <div><dt>What you get</dt><dd>The run on a schedule instead of when someone finds an afternoon. A call list in priority order with the answers patients ask for. A monthly report: who was contacted, by which channel, and who booked.</dd></div>
+              <div><dt>Honest limit</dt><dd>It does not plug into your practice management system. We work from a list your own team runs, or inside your system with a limited login you create and can revoke.</dd></div>
+              <div><dt>Patient data</dt><dd><b>Contact information, never charts.</b> It runs inside your own accounts under a signed BAA.</dd></div>
+              <div><dt>Price</dt><dd>Priced per practice, on the call. We have not set a list price and we will not guess at one here.</dd></div>
+            </dl>
+          </div>
+
+          <figure class="dwfig">
+            <div class="dw">
+              <div class="dw-chrome">
+                <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                <span class="t">This month's recall run</span>
+                <span class="tag">Example content</span>
+              </div>
+              <div class="dw-body">
+                <p class="dw-label">Run sheet, in the order it has to happen</p>
+                <ul class="run" id="runList" role="list">
+                  <li data-run="scleral">
+                    <span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                    <span class="run-b"><span class="run-t">Scleral letters</span><span class="run-s">Own list, own letter.</span></span>
+                    <span class="run-a"><button type="button" class="wbtn quiet" data-do="scleral">Run</button><span class="state" data-state hidden>Waiting</span></span>
+                  </li>
+                  <li data-run="medical">
+                    <span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                    <span class="run-b"><span class="run-t">Medical recall letters</span><span class="run-s">About 10 reason codes, output as postcards.</span></span>
+                    <span class="run-a"><button type="button" class="wbtn quiet" data-do="medical">Run</button><span class="state" data-state hidden>Waiting</span></span>
+                  </li>
+                  <li data-run="doctors">
+                    <span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                    <span class="run-b">
+                      <span class="run-t">Calls list and routine postcards, one run per doctor</span>
+                      <span class="run-s">At an 8 provider practice that is 8 separate runs. Run each one.</span>
+                      <span class="docs" id="docCells">
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 1">1</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 2">2</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 3">3</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 4">4</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 5">5</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 6">6</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 7">7</button>
+                        <button type="button" aria-pressed="false" aria-label="Run the calls list and routine postcards for doctor 8">8</button>
+                      </span>
+                    </span>
+                  </li>
+                  <li data-run="update" class="locked">
+                    <span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                    <span class="run-b"><span class="run-t">The update step</span><span class="run-s">Runs last, so the same patients are not pulled again next month.</span></span>
+                    <span class="run-a"><button type="button" class="wbtn" id="updBtn" aria-disabled="true" data-do="update">Run the update</button></span>
+                  </li>
+                </ul>
+
+                <div class="run-meter"><span id="runCount">Provider runs: 0 of 8</span><span class="bar" aria-hidden="true"><i id="runBar"></i></span></div>
+                <p class="run-msg" id="runMsg">Press run on each line. The update step stays locked until every call and postcard is finished. That order is the whole job.</p>
+                <p class="sr-only" role="status" aria-live="polite" id="runStatus"></p>
+                <div class="wrow"><button type="button" class="wbtn quiet" id="runAll">Run the rest</button><button type="button" class="wbtn quiet" id="runReset">Reset</button></div>
+              </div>
+            </div>
+            <figcaption>The sequence from one practice's written protocol. We run it on a schedule so it is not the thing that slips when the phones are busy.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ---------------- P3 ---------------- -->
+      <article class="prod" aria-labelledby="p3H">
+        <div class="prod-grid">
+          <div>
+            <span class="num">Product three</span>
+            <h3 id="p3H">Practice operations automation</h3>
+            <p class="lede">Time off and payroll, automated and scoped to your practice.</p>
+            <dl class="spec">
+              <div><dt>What it is</dt><dd>One route in for every request, coverage checked against the schedule, and the answer going back to the staff member and to payroll at the same time.</dd></div>
+              <div><dt>Who for</dt><dd>The office manager and the practice administrator who currently carry this on paper and in the hallway.</dd></div>
+              <div><dt>What it returns</dt><dd><b>60 to 100 admin hours a year</b> at the practice we built it for.</dd></div>
+              <div><dt>Also included</dt><dd>A quarterly practice snapshot, and monthly working time with both founders.</dd></div>
+              <div><dt>Patient data</dt><dd><b>None.</b> This is staff time off and payroll, not charts.</dd></div>
+              <div><dt>Price</dt><dd>$4,500 setup, $350 a month at tier 3, with the knowledge base included.</dd></div>
+            </dl>
+          </div>
+
+          <figure class="dwfig">
+            <div class="dw">
+              <div class="dw-chrome">
+                <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                <span class="t">Time off and payroll</span>
+                <span class="tag">Example content</span>
+              </div>
+              <div class="dw-body">
+                <p class="dw-label">New request</p>
+                <div class="form-row">
+                  <div class="field">
+                    <label for="ptoWho">Role</label>
+                    <select id="ptoWho">
+                      <option value="Front desk">Front desk</option>
+                      <option value="Technician">Technician</option>
+                      <option value="Optical">Optical</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="ptoWhen">Time off</label>
+                    <select id="ptoWhen">
+                      <option value="Thursday and Friday">Thursday and Friday</option>
+                      <option value="Wednesday, afternoon">Wednesday, afternoon</option>
+                      <option value="Monday to Friday">Monday to Friday</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="wrow"><button type="button" class="wbtn" id="ptoSubmit">Submit request</button></div>
+
+                <div class="req" id="ptoReq">
+                  <div class="req-top">
+                    <span class="ini" aria-hidden="true">FD</span>
+                    <span class="req-who" id="ptoWhoOut">Front desk<span class="req-when" id="ptoWhenOut">Thursday and Friday</span></span>
+                    <span class="state hold" id="ptoBadge">Pending</span>
+                  </div>
+                  <ul class="flow" id="ptoFlow" role="list">
+                    <li data-step="cover"><span class="tick" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span data-copy>Coverage checked against the schedule</span></li>
+                    <li data-step="staff"><span class="tick" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span>The staff member gets the answer, in writing</span></li>
+                    <li data-step="pay"><span class="tick" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span>Payroll line written, ready to process</span></li>
+                    <li data-step="board"><span class="tick" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span>Schedule board updated for the whole floor</span></li>
+                  </ul>
+                  <div class="wrow"><button type="button" class="wbtn" id="ptoApprove">Approve</button><button type="button" class="wbtn quiet" id="ptoBack">Send back</button></div>
+                  <p class="payline"><span>Payroll output</span> <b id="ptoPay">Waiting on approval</b></p>
+                  <p class="sr-only" role="status" aria-live="polite" id="ptoStatus"></p>
+                </div>
+              </div>
+            </div>
+            <figcaption>A verbal yes in the hallway is not an approval. Try the week long request and watch coverage get flagged instead of waved through.</figcaption>
+          </figure>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- the threshold out -->
+  <div class="wrap">
+    <div class="sill sill-out">
+      <span class="thread" aria-hidden="true"></span>
+      <span class="k">Back to the practice</span>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       DAY. Testimonials.
+       ==================================================================== -->
+  <section aria-labelledby="voiceH">
+    <div class="wrap">
+      <p class="eyebrow">What the practice said</p>
+      <h2 class="sec" id="voiceH">The most useful thing a client told us was not praise.</h2>
+
+      <figure class="anchor-q" style="margin-top:40px">
+        <blockquote><p>&ldquo;I think the biggest issue will be getting in the habit of using the tool.&rdquo;</p></blockquote>
+        <figcaption>Office manager<span class="ctx">Two weeks after the knowledge base went live</span></figcaption>
+      </figure>
+
+      <div class="answer">
+        <span class="k">Our answer</span>
+        <p>They are right. Getting people to use it is a separate job and we treat it that way, which is what the feedback button and the same day fixes in the first two weeks are for.</p>
+      </div>
+
+      <div class="qgrid">
+        <figure>
+          <blockquote><p>&ldquo;You are awesome! Thank you so much for your help!&rdquo;</p></blockquote>
+          <figcaption>Office manager</figcaption>
+        </figure>
+        <figure>
+          <blockquote><p>&ldquo;Thanks for the fixes on the PTO!&rdquo;</p></blockquote>
+          <figcaption>Office manager</figcaption>
+        </figure>
+        <figure>
+          <blockquote><p>&ldquo;Thank you for all of your help on this project.&rdquo;</p></blockquote>
+          <figcaption>Office manager</figcaption>
+        </figure>
+      </div>
+
+      <p class="docd-k">On the record, not as quotes</p>
+      <ul class="docd" role="list">
+        <li>Staff report problems from inside the app rather than by email. The first batch of four issues was fixed and live the same day.</li>
+        <li>The front office manager sends new pages to add. One went live from a screenshot the same week.</li>
+        <li>The practice's own team files the issues. The tool is in daily use at the front desk.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DAY. Pricing, on a background shift rather than in a card.
+       ==================================================================== -->
+  <section class="band-wash" aria-labelledby="priceH">
+    <div class="wrap">
+      <p class="eyebrow">Pricing</p>
+      <h2 class="sec" id="priceH">Printed, not quoted.</h2>
+      <p class="sec-lede">Month to month, no term. Keep every page if you cancel, and export any time.</p>
+
+      <div class="scroll-x" tabindex="0" role="region" aria-label="The three tiers, table scrolls sideways">
+        <table>
+          <caption>The three tiers</caption>
+          <thead>
+            <tr><th scope="col">Tier</th><th scope="col">Setup</th><th scope="col">Monthly</th><th scope="col">What it covers</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Front desk knowledge base</th>
+              <td class="money">$2,500</td><td class="money">$299</td>
+              <td>Situation pages and 4 decision lookups for the front desk, with in app editing and a saved history of every change.</td>
+            </tr>
+            <tr class="start">
+              <th scope="row">Whole practice knowledge base <span class="pill">Where we would start you</span></th>
+              <td class="money">$3,500</td><td class="money">$250</td>
+              <td>The whole floor, not just the front desk: technicians, optical, and each doctor's rules, with views per role.</td>
+            </tr>
+            <tr>
+              <th scope="row">Knowledge base plus operations</th>
+              <td class="money">$4,500</td><td class="money">$350</td>
+              <td>Everything above plus time off and payroll automation, a quarterly practice snapshot, and monthly working time with both founders.</td>
+            </tr>
+            <tr>
+              <th scope="row">Recall done for you</th>
+              <td colspan="2"><b>Priced per practice, on the call</b></td>
+              <td>We have not set a list price for recall yet. We are not going to guess at one on a web page.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="notes" role="list">
+        <li>Extra sections beyond a tier cap are <b>$600 each</b>.</li>
+        <li>A second location is <b>$1,500 to set up and $149 a month</b>.</li>
+        <li>Compare it to a training platform, not to your practice software. <b>Trainual and Whale run about $249 to $300 a month at this size and still hand you an empty system.</b></li>
+        <li>Live at the front desk in <b>30 days</b>, with the pages written for you.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DAY. Custom builds. Compact, capability, no price.
+       ==================================================================== -->
+  <section aria-labelledby="customH">
+    <div class="wrap">
+      <p class="eyebrow">Custom builds</p>
+      <h2 class="sec measure-mid" id="customH">If the thing in your way is not one of the three.</h2>
+      <p class="sec-lede">The products exist because we built them for one practice first. Custom work is scoped on the call.</p>
+
+      <div class="builds">
+        <article>
+          <p class="m">5 agents running daily operations</p>
+          <h3>Business coaching practice</h3>
+          <p>Inbox, scheduling, voice note capture, meeting notes, calendar to invoice.</p>
+        </article>
+        <article>
+          <p class="m">Complete digital rebuild</p>
+          <h3>Construction company, Japan</h3>
+          <p>Six pages, search console set up, business profile corrected. Now on an upkeep retainer.</p>
+        </article>
+        <article>
+          <p class="m">80% of the manual work cut</p>
+          <h3>Language test prep company</h3>
+          <p>AI worked into curriculum drafting, formatting, review cycles, and process automation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DAY. The two objections.
+       ==================================================================== -->
+  <section class="band-wash" aria-labelledby="objH">
+    <div class="wrap">
+      <p class="eyebrow">Straight answers</p>
+      <h2 class="sec" id="objH">The two questions every owner asks.</h2>
+
+      <div class="two" style="margin-top:38px">
+        <div>
+          <h3>Where does patient data sit</h3>
+          <p class="qa">The answer is different for each product, so we print it per product.</p>
+          <div class="scroll-x" tabindex="0" role="region" aria-label="Data posture per product, table scrolls sideways">
+            <table>
+              <caption>Data posture, per product</caption>
+              <thead><tr><th scope="col">Product</th><th scope="col">What it holds</th><th scope="col">Where it runs</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Front desk knowledge base</th><td><b>0 patient records.</b> Your rules, not your charts.</td><td>Google sign in, restricted to your practice domain.</td></tr>
+                <tr><th scope="row">Recall done for you</th><td>Patient contact information. <b>Never charts.</b></td><td>Inside your own accounts, under a signed BAA.</td></tr>
+                <tr><th scope="row">Practice operations</th><td>Staff time off and payroll. No patient charts.</td><td>Scoped to your practice.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h3>Does it connect to our practice management system</h3>
+          <p class="qa">No, and that is on purpose.</p>
+          <ul class="notes" role="list" style="margin-top:22px">
+            <li>Most hosted systems do not give an outside vendor database access.</li>
+            <li>A vendor promising a nightly sync into a hosted system is either overselling or has not checked yet.</li>
+            <li>Because it does not connect, <b>it does not matter which system you run</b>.</li>
+            <li>For recall we work from a list your own team runs, or inside your system with a limited login you create and can revoke.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="docd-k">Who you are hiring</p>
+      <div class="founders" style="margin-top:18px">
+        <div>
+          <span class="ini" aria-hidden="true">AS</span>
+          <div>
+            <h3>Alec Stephens</h3>
+            <p>Spent the last year inside a 27 person eyecare practice, watching the front desk work.</p>
+          </div>
+        </div>
+        <div>
+          <span class="ini" aria-hidden="true">JK</span>
+          <div>
+            <h3>Jusheen Kim</h3>
+            <p>Was a lead software engineer at J.P. Morgan. Builds the parts that have to hold up under real use.</p>
+          </div>
+        </div>
+      </div>
+      <ul class="notes" role="list">
+        <li>The live practice: <b>27 people, 6 to 7 doctors, one location.</b> It has been in daily use at that front desk since launch.</li>
+        <li>Both founders are based in Asia. <b>Urgent issues answered by the next business morning, US time.</b></li>
+        <li>You work with both of us, not an account manager.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       DAY. The close.
+       ==================================================================== -->
+  <section class="close" aria-labelledby="closeH">
+    <div class="wrap">
+      <h2 id="closeH">Twenty minutes tells you which of the three you need.</h2>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-line" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      </div>
+      <p class="fine">No form to fill in first. If none of the three fits, say what is in your way and we will tell you whether we can build it.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p><strong style="color:var(--ink);font-weight:600">Stephens AI</strong> &middot; Alec Stephens and Jusheen Kim</p>
+    <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+    <p>Prototype page. Example content throughout, and no practice named.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try { reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); }
+  catch (e) { reduced = false; }
+
+  function $(id) { return document.getElementById(id); }
+  function on(el, ev, fn) { if (el && el.addEventListener) { el.addEventListener(ev, fn); } }
+
+  /* =========================================================
+     WINDOW 1. Knowledge base search.
+     Every page is already in the markup. Without this script the
+     index links jump to pages that are all visible. With it, the
+     index filters and one page shows at a time.
+     ========================================================= */
+  try {
+    var input = $("kbInput"), index = $("kbIndex"), clearBtn = $("kbClear"), kbStatus = $("kbStatus");
+    if (input && index) {
+      var rows = Array.prototype.slice.call(index.querySelectorAll("li"));
+      var pages = Array.prototype.slice.call(document.querySelectorAll(".kb-page"));
+      var none = document.createElement("p");
+      none.className = "kb-none";
+      none.textContent = "No example page matches that. In a real build, a page nobody can find is a page we still have to write.";
+      none.hidden = true;
+      index.parentNode.insertBefore(none, index.nextSibling);
+
+      function pageOf(row) {
+        var a = row.querySelector("a");
+        if (!a) { return null; }
+        var id = (a.getAttribute("href") || "").replace("#", "");
+        return id ? document.getElementById(id) : null;
+      }
+
+      function show(id) {
+        pages.forEach(function (p) { p.hidden = (p.id !== id); });
+        rows.forEach(function (r) {
+          var a = r.querySelector("a");
+          if (a) { a.setAttribute("data-open", (a.getAttribute("href") === "#" + id) ? "true" : "false"); }
+        });
+      }
+
+      function openRow(row, focusIt) {
+        var p = pageOf(row);
+        if (!p) { return; }
+        show(p.id);
+        if (focusIt) { try { p.focus({ preventScroll: true }); } catch (e2) { p.focus(); } }
+        var t = p.querySelector(".h");
+        if (kbStatus && t) { kbStatus.textContent = "Opened: " + t.textContent; }
+      }
+
+      function visibleRows() {
+        return rows.filter(function (r) { return !r.hidden; });
+      }
+
+      function filter(q, quiet) {
+        var t = String(q || "").trim().toLowerCase();
+        var words = t ? t.split(/\s+/) : [];
+        var shown = 0;
+        rows.forEach(function (r) {
+          var hay = ((r.getAttribute("data-keys") || "") + " " + r.textContent).toLowerCase();
+          var hit = words.every(function (w) { return hay.indexOf(w) !== -1; });
+          r.hidden = !hit;
+          if (hit) { shown++; }
+        });
+        none.hidden = shown !== 0;
+        if (clearBtn) { clearBtn.hidden = !input.value; }
+        if (!quiet && kbStatus) {
+          kbStatus.textContent = shown === 1 ? "1 page found." : shown + " pages found.";
+        }
+        if (shown === 0) {
+          show(null);                                   /* nothing matched, so nothing is open */
+        } else if (shown === 1) {
+          openRow(visibleRows()[0], false);
+        } else if (!document.querySelector(".kb-page:not([hidden])")) {
+          openRow(visibleRows()[0], false);             /* coming back from no match */
+        }
+        return shown;
+      }
+
+      /* enhance: one page open, the rest folded away */
+      show("kb-refraction");
+
+      rows.forEach(function (r) {
+        var a = r.querySelector("a");
+        if (!a) { return; }
+        on(a, "click", function (ev) { ev.preventDefault(); openRow(r, true); });
+        on(a, "keydown", function (ev) {
+          var list = visibleRows(), i = list.indexOf(r), next = null;
+          if (ev.key === "ArrowDown") { next = list[i + 1]; }
+          else if (ev.key === "ArrowUp") { next = list[i - 1] || null; if (!next) { ev.preventDefault(); input.focus(); return; } }
+          else { return; }
+          ev.preventDefault();
+          if (next) { var na = next.querySelector("a"); if (na) { na.focus(); } }
+        });
+      });
+
+      on(input, "input", function () { filter(input.value, false); });
+      on(input, "keydown", function (ev) {
+        if (ev.key === "ArrowDown") {
+          var list = visibleRows();
+          if (list.length) { ev.preventDefault(); var a = list[0].querySelector("a"); if (a) { a.focus(); } }
+        } else if (ev.key === "Escape") {
+          ev.preventDefault(); input.value = ""; filter("", true);
+          if (kbStatus) { kbStatus.textContent = "Search cleared."; }
+        } else if (ev.key === "Enter") {
+          var l = visibleRows();
+          if (l.length) { ev.preventDefault(); openRow(l[0], true); }
+        }
+      });
+
+      on(clearBtn, "click", function () {
+        input.value = ""; filter("", true); input.focus();
+        if (kbStatus) { kbStatus.textContent = "Search cleared."; }
+      });
+
+      Array.prototype.forEach.call(document.querySelectorAll(".kb-chips button"), function (c) {
+        on(c, "click", function () {
+          var q = c.getAttribute("data-q") || "";
+          input.value = q;
+          var n = filter(q, true);
+          var l = visibleRows();
+          if (l.length) { openRow(l[0], false); }
+          if (kbStatus) { kbStatus.textContent = n + " pages found."; }
+        });
+      });
+
+      Array.prototype.forEach.call(document.querySelectorAll(".kb-foot .flag"), function (b) {
+        on(b, "click", function () {
+          b.textContent = "Sent to your office manager";
+          b.disabled = true;
+          b.style.color = "#215941";
+          b.style.borderColor = "rgba(46,122,86,0.4)";
+        });
+      });
+    }
+  } catch (e) { /* the page still reads: every situation page is in the markup */ }
+
+  /* =========================================================
+     WINDOW 2. The recall run sheet.
+     ========================================================= */
+  try {
+    var runList = $("runList");
+    if (runList) {
+      var cells = Array.prototype.slice.call(document.querySelectorAll("#docCells button"));
+      var updBtn = $("updBtn"), runMsg = $("runMsg"), runCount = $("runCount"),
+          runBar = $("runBar"), runAll = $("runAll"), runReset = $("runReset"), runStatus = $("runStatus");
+      var state = { scleral: false, medical: false, docs: 0, update: false };
+
+      function row(name) { return runList.querySelector('li[data-run="' + name + '"]'); }
+
+      function say(msg, good) {
+        if (runMsg) { runMsg.textContent = msg; runMsg.className = "run-msg" + (good ? " good" : ""); }
+        if (runStatus) { runStatus.textContent = msg; }
+      }
+
+      function paint() {
+        [["scleral", state.scleral], ["medical", state.medical]].forEach(function (pair) {
+          var li = row(pair[0]); if (!li) { return; }
+          li.classList.toggle("done", pair[1]);
+          var b = li.querySelector("[data-do]"), s = li.querySelector("[data-state]");
+          if (b) { b.hidden = pair[1]; }
+          if (s) { s.hidden = !pair[1]; s.textContent = "Sent"; s.className = "state ok"; }
+        });
+        var dRow = row("doctors");
+        if (dRow) { dRow.classList.toggle("done", state.docs === cells.length); }
+        if (runCount) { runCount.textContent = "Provider runs: " + state.docs + " of " + cells.length; }
+        if (runBar) { runBar.style.width = Math.round((state.docs / cells.length) * 100) + "%"; }
+
+        var ready = state.scleral && state.medical && state.docs === cells.length;
+        var uRow = row("update");
+        if (uRow) { uRow.classList.toggle("locked", !ready); uRow.classList.toggle("done", state.update); }
+        if (updBtn) {
+          updBtn.setAttribute("aria-disabled", (!ready || state.update) ? "true" : "false");
+          updBtn.textContent = state.update ? "Update run" : "Run the update";
+        }
+        if (runAll) { runAll.hidden = ready; }
+      }
+
+      function doStep(name) {
+        if (name === "scleral") { state.scleral = true; say("Scleral letters sent.", true); }
+        else if (name === "medical") { state.medical = true; say("Medical recall letters sent, about 10 reason codes as postcards.", true); }
+        else if (name === "update") {
+          var ready = state.scleral && state.medical && state.docs === cells.length;
+          if (!ready) {
+            say("Locked. Every call and postcard has to finish first. Run the update early and the same patients get pulled again next month.", false);
+            paint(); return;
+          }
+          if (state.update) { return; }
+          state.update = true;
+          say("Run finished, in order. Report ready: who was contacted, by which channel, and who booked.", true);
+        }
+        paint();
+      }
+
+      Array.prototype.forEach.call(runList.querySelectorAll("[data-do]"), function (b) {
+        on(b, "click", function () { doStep(b.getAttribute("data-do")); });
+      });
+
+      cells.forEach(function (c, i) {
+        on(c, "click", function () {
+          if (c.getAttribute("data-done") === "true") { return; }
+          c.setAttribute("data-done", "true");
+          c.setAttribute("aria-pressed", "true");
+          state.docs++;
+          say("Doctor " + (i + 1) + " done. " + (state.docs === cells.length
+            ? "All 8 provider runs finished, so the update step is open."
+            : "The calls list and routine postcards run once per doctor, individually."), state.docs === cells.length);
+          paint();
+        });
+      });
+
+      on(runAll, "click", function () {
+        state.scleral = true; state.medical = true;
+        cells.forEach(function (c) {
+          c.setAttribute("data-done", "true");
+          c.setAttribute("aria-pressed", "true");
+        });
+        state.docs = cells.length;
+        say("Scleral, medical and all 8 provider runs finished. The update step is open now, and only now.", true);
+        paint();
+        if (updBtn) { updBtn.focus(); }
+      });
+
+      on(runReset, "click", function () {
+        state = { scleral: false, medical: false, docs: 0, update: false };
+        cells.forEach(function (c) {
+          c.removeAttribute("data-done");
+          c.setAttribute("aria-pressed", "false");
+        });
+        say("Press run on each line. The update step stays locked until every call and postcard is finished. That order is the whole job.", false);
+        paint();
+      });
+
+      paint();
+    }
+  } catch (e) { /* the run sheet still reads as a static list of the real steps */ }
+
+  /* =========================================================
+     WINDOW 3. Time off and payroll.
+     ========================================================= */
+  try {
+    var who = $("ptoWho"), when = $("ptoWhen"), submit = $("ptoSubmit"),
+        approve = $("ptoApprove"), sendBack = $("ptoBack"), badge = $("ptoBadge"),
+        flow = $("ptoFlow"), payOut = $("ptoPay"), whoOut = $("ptoWhoOut"),
+        whenOut = $("ptoWhenOut"), ini = document.querySelector("#ptoReq .ini"),
+        ptoStatus = $("ptoStatus");
+
+    if (who && when && submit && flow) {
+      var steps = Array.prototype.slice.call(flow.querySelectorAll("li"));
+      var timers = [];
+      var initials = { "Front desk": "FD", "Technician": "TC", "Optical": "OP" };
+
+      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+      function conflict() {
+        return who.value === "Front desk" && when.value === "Monday to Friday";
+      }
+
+      function reset(msg) {
+        clearTimers();
+        steps.forEach(function (li) {
+          li.classList.remove("on");
+          var t = li.querySelector(".tick"); if (t) { t.classList.remove("warn"); }
+          if (li.getAttribute("data-step") === "cover") {
+            var c = li.querySelector("[data-copy]");
+            if (c) { c.textContent = "Coverage checked against the schedule"; }
+          }
+        });
+        if (badge) { badge.className = "state hold"; badge.textContent = "Pending"; }
+        if (payOut) { payOut.textContent = "Waiting on approval"; }
+        if (approve) { approve.hidden = false; approve.textContent = "Approve"; }
+        if (sendBack) { sendBack.hidden = false; }
+        if (ptoStatus && msg) { ptoStatus.textContent = msg; }
+      }
+
+      function sync() {
+        if (whoOut && whoOut.firstChild && whoOut.firstChild.nodeType === 3) {
+          whoOut.firstChild.nodeValue = who.value;
+        }
+        if (whenOut) { whenOut.textContent = when.value; }
+        if (ini) { ini.textContent = initials[who.value] || "ST"; }
+        if (approve) { approve.textContent = conflict() ? "Approve anyway" : "Approve"; }
+      }
+
+      on(who, "change", function () { sync(); reset("Request updated."); });
+      on(when, "change", function () { sync(); reset("Request updated."); });
+
+      on(submit, "click", function () {
+        sync();
+        reset("Request submitted. It is waiting on the office manager, not on a conversation in the hallway.");
+        if (approve) { approve.focus(); }
+      });
+
+      on(approve, "click", function () {
+        clearTimers();
+        var hasConflict = conflict();
+        if (badge) {
+          badge.className = "state ok";
+          badge.textContent = hasConflict ? "Approved, flagged" : "Approved";
+        }
+        approve.hidden = true;
+        if (sendBack) { sendBack.hidden = true; }
+        steps.forEach(function (li, i) {
+          timers.push(setTimeout(function () {
+            li.classList.add("on");
+            if (hasConflict && li.getAttribute("data-step") === "cover") {
+              var t = li.querySelector(".tick"); if (t) { t.classList.add("warn"); }
+              var c = li.querySelector("[data-copy]");
+              if (c) { c.textContent = "Coverage conflict flagged, not waved through"; }
+            }
+          }, reduced ? 1 : i * 380));
+        });
+        timers.push(setTimeout(function () {
+          if (payOut) { payOut.textContent = "Paid time off line written for " + who.value + ", " + when.value; }
+          if (ptoStatus) {
+            ptoStatus.textContent = hasConflict
+              ? "Approved with a coverage conflict flagged. Payroll line written."
+              : "Approved. Coverage checked, the staff member notified, payroll line written, schedule board updated.";
+          }
+        }, reduced ? 2 : steps.length * 380));
+      });
+
+      on(sendBack, "click", function () { reset("Sent back. Nothing reached payroll, because it was never approved."); });
+
+      sync();
+    }
+  } catch (e) { /* the request, its four steps and the payroll line all read statically */ }
+})();
+</script>

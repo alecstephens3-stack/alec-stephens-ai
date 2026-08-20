@@ -1,0 +1,783 @@
+/* ============================================================================
+   Stephens AI — "Lens" v3 · THE KIT
+   ----------------------------------------------------------------------------
+   The single stylesheet for every branded HTML artifact. One vocabulary
+   (.sai-*), tokens + primitives + explainer widgets, no build step.
+
+   DO NOT hand-copy this into an artifact. Put the SAI:KIT marker comment in
+   the head and run:  python3 scripts/inline_kit.py <file.html>
+   (The marker is never written literally in here — it would nest inside the
+   payload and break the inliner's idempotency fence.)
+
+   Canonical visual reference: explorations/2026-07-20-liquid-glass/final-h-lens.html
+   Live component gallery:     kit/gallery.html
+   Rules of the system:        ../CLAUDE.md
+   ========================================================================== */
+
+:root {
+  /* ——— Ink & cream ——— */
+  --sai-ink:       #171310;   /* primary text on light */
+  --sai-ink-90:    #241E19;   /* headings emphasis */
+  --sai-ink-2:     #6E6258;   /* secondary text — the LIGHTEST allowed for reading */
+  --sai-cream:     #F5F1E8;   /* primary text on night surfaces */
+  --sai-cream-2:   #B3AB9E;   /* secondary text on night — the floor on dark */
+
+  /* ——— Accent ——— */
+  --sai-accent:        #DC6843;
+  --sai-accent-deep:   #C55532;                 /* accent TEXT at 24px+ on light (3.05:1, clears the 3:1 large-text bar) */
+  --sai-accent-text:   #8F3616;                 /* accent TEXT below 24px on light (5.32:1). #DC6843 is 2.36:1 on the
+                                                   sky and fails AA at any size, so it is a MARK colour only. */
+  --sai-accent-night:  #FF8E76;                 /* the accent on night surfaces */
+  --sai-accent-soft:   rgba(220,104,67,0.08);   /* tinted fills, verdict strips */
+  --sai-accent-line:   rgba(220,104,67,0.18);   /* tinted borders */
+  --sai-salmon:        #F47B6B;                 /* SCENE color (tint pools). Not for components. */
+
+  /* ——— The scene ——— */
+  --sai-sky: linear-gradient(180deg, #F3EEE8 0%, #F7E7DA 42%, #F7DCC9 74%, #F2CFB8 100%);
+  --sai-sky-fallback: #F5E9DE;
+  --sai-night: radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%);
+  --sai-night-fallback: #100C0E;
+
+  --sai-tint-1: #DC6843;   /* opacity ~.10 */
+  --sai-tint-2: #F47B6B;   /* opacity ~.12 */
+  --sai-tint-3: #A8988A;   /* opacity ~.12 */
+
+  /* ——— Glass ——— */
+  --sai-glass:        rgba(255,255,255,0.55);  /* structural panes */
+  --sai-glass-strong: rgba(255,255,255,0.78);  /* floating layers that must pop */
+  --sai-glass-tile:   rgba(255,255,255,0.48);  /* nested tiles inside a pane */
+  --sai-glass-edge:   rgba(255,255,255,0.85);  /* 1px borders */
+  --sai-glass-blur:   30px;
+  --sai-glass-saturate: 1.5;
+  --sai-pane-shadow: 0 14px 44px rgba(112,62,40,0.13),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-pane-shadow-hover: 0 22px 56px rgba(112,62,40,0.19),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-float-shadow: 0 24px 54px rgba(112,62,40,0.22), inset 0 1px 0 #fff;
+
+  /* ——— Night glass ——— */
+  --sai-nglass:       rgba(255,255,255,0.065);
+  --sai-nglass-tile:  rgba(255,255,255,0.035);
+  --sai-nglass-edge:  rgba(255,255,255,0.12);
+  --sai-nrule:        rgba(255,255,255,0.11);
+  --sai-nrule-soft:   rgba(255,255,255,0.06);
+  --sai-npane-shadow: 0 24px 60px rgba(40,20,10,0.35), inset 0 1px 0 rgba(255,255,255,0.10);
+  --sai-daysheet:     rgba(250,247,241,0.96);  /* the "day window" inside dark */
+
+  /* ——— Status (ledger chips ONLY — never decorative) ——— */
+  --sai-status-good:        #2E7A56;  --sai-status-good-tint:  rgba(46,122,86,0.12);
+  --sai-status-warn:        #946A12;  --sai-status-warn-tint:  rgba(176,130,40,0.16);
+  --sai-status-bad:         #B23A2F;  --sai-status-bad-tint:   rgba(178,58,47,0.10);
+  --sai-status-good-night:  #7BD8A8;  --sai-status-good-night-tint: rgba(75,214,151,0.13);
+  --sai-status-warn-night:  #E4BC66;  --sai-status-warn-night-tint: rgba(200,155,60,0.15);
+  --sai-status-bad-night:   #F09A8E;  --sai-status-bad-night-tint:  rgba(210,95,80,0.16);
+
+  /* ——— Rules ——— */
+  --sai-rule:        rgba(23,19,16,0.10);
+  --sai-rule-soft:   rgba(23,19,16,0.06);
+  --sai-rule-strong: rgba(23,19,16,0.16);
+  --sai-hollow:      rgba(23,19,16,0.035);   /* the recessed "before" wash */
+
+  /* ——— Type ——— */
+  --sai-font-sans:  'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+  --sai-font-label: 'Schibsted Grotesk', 'Inter Tight', sans-serif;
+
+  --sai-fs-display: clamp(38px, 5vw, 58px);
+  --sai-fs-h1:      clamp(34px, 4.6vw, 48px);
+  --sai-fs-h2:      24px;
+  --sai-fs-h3:      18.5px;
+  --sai-fs-stat:    44px;
+  --sai-fs-body:    17px;
+  --sai-fs-sub:     15.5px;   /* secondary lines under headings */
+  --sai-fs-label:   14.5px;   /* Schibsted caps labels (13.5px absolute label floor) */
+  --sai-fs-small:   15px;
+  --sai-fs-micro:   13px;     /* ABSOLUTE floor for any text */
+
+  --sai-lh-display: 1.02;
+  --sai-lh-heading: 1.05;
+  --sai-lh-body:    1.55;
+
+  --sai-ls-display: -0.032em;
+  --sai-ls-heading: -0.02em;
+  --sai-ls-label:    0.05em;   /* Schibsted caps tracking */
+
+  --sai-fw-regular: 400;
+  --sai-fw-medium:  500;   /* display + headings — never 700 for Inter Tight display */
+  --sai-fw-bold:    600;   /* in-line emphasis, Schibsted labels */
+  --sai-fw-label:   600;   /* Schibsted caps */
+  --sai-fw-numeral: 700;   /* Schibsted numerals (timestamps, rungs, step numbers) */
+
+  /* ——— Radii ——— */
+  --sai-radius-chip:   8px;
+  --sai-radius-flag:   10px;
+  --sai-radius-tile:   18px;
+  --sai-radius-card:   22px;
+  --sai-radius-panel:  26px;
+  --sai-radius-window: 30px;
+  --sai-radius-pill:   999px;
+
+  /* ——— Space ——— */
+  --sai-space-1: 4px;  --sai-space-2: 8px;   --sai-space-3: 12px; --sai-space-4: 16px;
+  --sai-space-5: 24px; --sai-space-6: 32px;  --sai-space-7: 48px; --sai-space-8: 64px;
+
+  /* ——— Motion ——— */
+  --sai-ease:      cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sai-dur-fast:  150ms;
+  --sai-dur-base:  220ms;
+  --sai-dur-slow:  350ms;
+  --sai-drift:     16s;    /* lens drift period; vary per lens (11-24s) */
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--sai-sky-fallback);
+  color: var(--sai-ink);
+  font-family: var(--sai-font-sans);
+  font-size: var(--sai-fs-body);
+  line-height: var(--sai-lh-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================================
+   THE SCENE — fixed sky, tint pools, drifting lenses.
+   Markup is emitted by the SAI:SCENE marker.
+   For scroll-through day-to-night pages swap position to absolute.
+   ========================================================================== */
+
+.sai-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: var(--sai-sky); }
+.sai-tint { position: absolute; border-radius: 50%; filter: blur(100px); }
+.sai-tint.t1 { width: 600px; height: 600px; background: var(--sai-tint-1); opacity: .10; top: -200px; right: -160px; }
+.sai-tint.t2 { width: 520px; height: 520px; background: var(--sai-tint-2); opacity: .12; top: 36%; left: -200px; }
+.sai-tint.t3 { width: 620px; height: 620px; background: var(--sai-tint-3); opacity: .12; bottom: -260px; right: 22%; }
+
+.sai-lens {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.30) 14%, rgba(255,255,255,0.05) 38%, transparent 60%),
+    radial-gradient(circle at 50% 88%, rgba(220,104,67,0.28) 0%, rgba(220,104,67,0.08) 34%, transparent 55%),
+    radial-gradient(circle at 50% 115%, rgba(243,206,184,0.55) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(255,255,255,0.16) 88%, rgba(255,255,255,0.42) 99%);
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow:
+    inset -10px -14px 30px rgba(220,104,67,0.13),
+    inset 8px 12px 26px rgba(255,255,255,0.38),
+    0 26px 52px rgba(112,62,40,0.14);
+  animation: sai-drift var(--sai-drift) ease-in-out infinite alternate;
+}
+.sai-lens::before { content:''; position:absolute; top: 11%; left: 17%; width: 36%; height: 18%;
+  border-radius: 50%; background: rgba(255,255,255,0.9); filter: blur(5px); transform: rotate(-20deg); }
+.sai-lens::after { content:''; position:absolute; bottom: 7%; left: 30%; width: 40%; height: 12%;
+  border-radius: 50%; background: rgba(220,104,67,0.30); filter: blur(9px); }
+.sai-lens.far  { filter: blur(5px);   opacity: .6; }
+.sai-lens.mid  { filter: blur(1.5px); opacity: .85; }
+.sai-lens.near { opacity: 1; }
+@keyframes sai-drift { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+
+/* Placement presets — the balanced 5-lens arrangement. */
+.sai-lens.l1 { width: 150px; height: 150px; top: 9%;  right: 6%;  --sai-drift: 17s; }
+.sai-lens.l2 { width: 64px;  height: 64px;  top: 24%; left: 4%;   --sai-drift: 13s; }
+.sai-lens.l3 { width: 96px;  height: 96px;  top: 47%; right: 12%; --sai-drift: 21s; }
+.sai-lens.l4 { width: 42px;  height: 42px;  top: 66%; left: 9%;   --sai-drift: 11s; }
+.sai-lens.l5 { width: 210px; height: 210px; bottom: -60px; right: 30%; --sai-drift: 24s; }
+
+/* ==========================================================================
+   LAYOUT & SURFACES
+   ========================================================================== */
+
+.sai-page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto;
+  padding: 116px clamp(20px, 4vw, 48px) 88px; }
+.sai-page.no-dock { padding-top: 64px; }
+
+.sai-pane {
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: var(--sai-pane-shadow);
+}
+.sai-streak { position: relative; overflow: hidden; }
+.sai-streak::before { content:''; position:absolute; top:-40%; left:-20%; width: 55%; height: 190%; pointer-events:none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.34) 50%, transparent 70%);
+  transform: rotate(2deg); }
+
+/* A nested tile inside a pane. Never a pane inside a pane. */
+.sai-tile { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85); }
+
+/* The standard section block. */
+.sai-widget { padding: 36px; border-radius: var(--sai-radius-window); margin-bottom: 34px; position: relative; }
+.sai-widget > h3, .sai-w-title { font-size: var(--sai-fs-h2); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-heading); line-height: 1.15; margin-bottom: 4px; }
+.sai-w-sub { color: var(--sai-ink-2); font-size: var(--sai-fs-sub); margin-bottom: 26px; }
+.sai-w-note { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--sai-rule-soft);
+  color: var(--sai-ink-2); font-size: 14.5px; }
+.sai-w-note strong { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* Display type. */
+.sai-display { font-size: var(--sai-fs-display); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-display); line-height: var(--sai-lh-display); max-width: 21ch; }
+.sai-display em, .sai-h1 em { font-style: normal; color: var(--sai-accent-deep); }
+.sai-lede { margin-top: 18px; font-size: 19px; color: var(--sai-ink-2); max-width: 56ch; }
+.sai-lede b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* ==========================================================================
+   MARKERS — porthole, stamp, tick flag, bubble bullets, ledger chip.
+   NO dot-pills. Ever.
+   ========================================================================== */
+
+.sai-port { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+.sai-port .disc { width: 26px; height: 26px; border-radius: 50%; flex: none;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 30%, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(220,104,67,0.5) 0%, transparent 60%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 4px rgba(220,104,67,0.25), 0 4px 10px rgba(112,62,40,0.18); }
+.sai-port .ptext { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent-text); }
+.sai-port.on-night .disc {
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.06) 30%, transparent 55%),
+    radial-gradient(circle at 50% 82%, rgba(255,142,118,0.55) 0%, transparent 62%),
+    linear-gradient(180deg, #322734 0%, #100C0E 100%);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35), 0 0 14px rgba(255,142,118,0.25); }
+.sai-port.on-night .ptext { color: var(--sai-accent-night); }
+
+.sai-stamp { position: relative; display: inline-block; font-family: var(--sai-font-label); font-size: 13.5px;
+  font-weight: var(--sai-fw-label); letter-spacing: .07em; text-transform: uppercase; padding: 8px 14px; color: var(--sai-accent-text); }
+.sai-stamp::before { content:''; position:absolute; top:0; left:0; width: 12px; height: 12px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; }
+.sai-stamp::after  { content:''; position:absolute; bottom:0; right:0; width: 12px; height: 12px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
+.sai-stamp.on-night { color: var(--sai-accent-night); }
+.sai-stamp.corner { position: absolute; top: 26px; right: 28px; }
+
+.sai-flag { display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label); letter-spacing: .01em;
+  color: var(--sai-ink-90); padding: 6px 14px 6px 8px; border-radius: var(--sai-radius-flag);
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112,62,40,0.10); white-space: nowrap; }
+.sai-flag .tick { width: 4px; align-self: stretch; border-radius: 2px; background: var(--sai-accent); }
+
+ul.sai-bullets { list-style: none; }
+ul.sai-bullets li { position: relative; padding: 7px 0 7px 30px; }
+ul.sai-bullets li b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+ul.sai-bullets li::before { content:''; position:absolute; left: 0; top: 10px; width: 15px; height: 15px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+
+.sai-status { display:inline-flex; align-items:stretch; border:1px solid var(--sai-rule);
+  border-radius: var(--sai-radius-chip); overflow:hidden; background: rgba(255,255,255,0.8); }
+.sai-status .kw { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 10px 15px; display:flex; align-items:center; }
+.sai-status .detail { font: 500 15px var(--sai-font-sans); color: var(--sai-ink-90); padding: 10px 16px;
+  border-left: 1px solid var(--sai-rule); display:flex; align-items:center; }
+.sai-status.good .kw { color: var(--sai-status-good); background: var(--sai-status-good-tint); }
+.sai-status.warn .kw { color: var(--sai-status-warn); background: var(--sai-status-warn-tint); }
+.sai-status.bad  .kw { color: var(--sai-status-bad);  background: var(--sai-status-bad-tint); }
+.sai-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ==========================================================================
+   CHROME — dock, buttons, footer
+   ========================================================================== */
+
+.sai-dock { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; align-items: center; gap: 22px; padding: 12px 22px; border-radius: var(--sai-radius-pill);
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 12px 36px rgba(112,62,40,0.16), inset 0 1px 0 #fff; white-space: nowrap; }
+.sai-dock .mark { width: 27px; height: 27px; display: block; }
+.sai-dock .word { font-size: 17.5px; font-weight: var(--sai-fw-medium); letter-spacing: -0.01em; }
+.sai-dock nav { display: flex; gap: 6px; }
+.sai-dock nav a { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--sai-ink-2);
+  padding: 8px 14px; border-radius: var(--sai-radius-pill); transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-dock nav a:hover { color: var(--sai-ink); background: rgba(255,255,255,0.75); }
+.sai-dock nav a.on { color: #fff; background: var(--sai-ink); }
+@media (max-width: 720px) { .sai-dock nav { display: none; } }
+
+.sai-btn { display:inline-block; text-decoration:none; cursor: pointer; border: none;
+  font: 500 14.5px var(--sai-font-sans); border-radius: var(--sai-radius-pill); padding: 14px 26px;
+  transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-btn.primary { background: var(--sai-ink); color: #fff; box-shadow: 0 8px 20px rgba(23,19,16,0.2); }
+.sai-btn.primary:hover { background: var(--sai-accent); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(220,104,67,0.35); }
+.sai-btn.ghost { color: var(--sai-ink); background: rgba(255,255,255,0.62); border: 1px solid var(--sai-glass-edge);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
+.sai-btn.ghost:hover { background: rgba(255,255,255,0.8); transform: translateY(-2px); }
+
+.sai-footer { margin-top: 60px; display:flex; justify-content:space-between; align-items:center; gap: 20px; flex-wrap: wrap; }
+.sai-footer .lockup { display:flex; align-items:center; gap: 12px; }
+.sai-footer .lockup .mark { width: 25px; height: 25px; }
+.sai-footer .lockup .word { font-size: 16.5px; font-weight: var(--sai-fw-medium); }
+.sai-footer .meta { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); }
+
+/* ==========================================================================
+   MODES — night window in a light page, day window in a dark one.
+   `night` is ALWAYS section-scoped. A bare .night once inherited a whole
+   section's padding onto a marker span and drew phantom boxes.
+   ========================================================================== */
+
+section.sai-night {
+  border-radius: var(--sai-radius-window); padding: 36px; margin-bottom: 34px; color: var(--sai-cream);
+  background: var(--sai-night);
+  border: 1px solid var(--sai-nglass-edge);
+  box-shadow: var(--sai-npane-shadow);
+  position: relative; overflow: hidden;
+}
+section.sai-night .sai-ember { position:absolute; width: 380px; height: 380px; border-radius: 50%; filter: blur(90px);
+  background: var(--sai-accent); opacity: .2; top: -120px; right: -80px; pointer-events: none; }
+section.sai-night .sai-ember.left { top: auto; right: auto; bottom: -140px; left: -100px; opacity: .15; }
+section.sai-night > h3, section.sai-night .sai-w-title { color: var(--sai-cream); }
+section.sai-night .sai-w-sub { color: var(--sai-cream-2); }
+section.sai-night .sai-w-note { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-w-note strong { color: var(--sai-cream); }
+section.sai-night .sai-tile { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+/* Bullet lead-ins carry an explicit ink color on light, so they render near-black
+   on night without this. Every other component had its night override; this one
+   was the gap. */
+section.sai-night ul.sai-bullets li b { color: var(--sai-cream); }
+
+.sai-day-window { position: relative; border-radius: 20px; padding: 28px; background: var(--sai-daysheet); color: var(--sai-ink);
+  border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 18px 44px rgba(0,0,0,0.4), inset 0 1px 0 #fff; }
+.sai-day-window .cap { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent-text); margin-bottom: 12px; }
+
+/* The floating stat layer. Parent pane needs >= 72px bottom padding. */
+.sai-float-stat { position: absolute; right: 28px; bottom: -34px; z-index: 3;
+  display: flex; gap: 26px; padding: 22px 30px; border-radius: var(--sai-radius-card);
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95); box-shadow: var(--sai-float-shadow); }
+.sai-float-stat .n { font-size: 34px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.sai-float-stat .n em { font-style: normal; color: var(--sai-accent-deep); }
+.sai-float-stat .l { margin-top: 6px; font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+@media (max-width: 860px) { .sai-float-stat { position: static; margin-top: 18px; flex-wrap: wrap; gap: 18px; } }
+
+/* ==========================================================================
+   ██ WIDGET 1 — BEFORE / AFTER SPLIT  (.sai-split)
+   The argument made before a word is read. The "before" column is deliberately
+   NOT glass: flat, recessed, dashed, dead. The "after" column is lifted glass
+   with the win outline. The asymmetry IS the content.
+   ========================================================================== */
+
+.sai-split { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; position: relative; align-items: start; }
+
+.sai-split .col { border-radius: 20px; padding: 26px; }
+
+/* BEFORE — a hollow in the page. No blur, no lift, no life. */
+.sai-split .col.before {
+  background: var(--sai-hollow);
+  border: 1px dashed var(--sai-rule-strong);
+  box-shadow: inset 0 2px 6px rgba(23,19,16,0.04);
+  color: var(--sai-ink-2);
+}
+/* AFTER — lifted glass, wearing the win outline. */
+.sai-split .col.after {
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: var(--sai-float-shadow);
+  outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+}
+
+.sai-split .col-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.sai-split .col-head h4 { font-size: var(--sai-fs-h3); font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-split .col.before .col-head h4 { color: var(--sai-ink-2); }
+.sai-split .tag { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 5px 12px; border-radius: var(--sai-radius-pill); }
+.sai-split .tag.old { color: var(--sai-ink-2); border: 1px solid var(--sai-rule-strong); }
+.sai-split .tag.new { color: #fff; background: var(--sai-accent); }
+
+.sai-split .row { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0;
+  border-bottom: 1px solid var(--sai-rule-soft); font-size: var(--sai-fs-sub); }
+.sai-split .row:last-child { border-bottom: none; padding-bottom: 0; }
+.sai-split .row .k { color: var(--sai-ink-2); flex: none; }
+.sai-split .col.before .row .k { color: rgba(110,98,88,0.75); }
+.sai-split .row .v { text-align: right; font-weight: var(--sai-fw-bold); }
+.sai-split .col.before .row .v { color: var(--sai-ink-2); font-weight: var(--sai-fw-regular); }
+.sai-split .col.after  .row .v { color: var(--sai-ink-90); }
+
+/* The transition lens: a real lens sitting in the gutter between the columns. */
+.sai-split .sai-turn {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 34%, transparent 58%),
+    radial-gradient(circle at 50% 84%, rgba(220,104,67,0.45) 0%, transparent 62%),
+    linear-gradient(180deg, #F9EFE6 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.9), inset 0 -3px 6px rgba(220,104,67,0.25), 0 8px 20px rgba(112,62,40,0.22); }
+.sai-split .sai-turn svg { width: 17px; height: 17px; display: block; }
+
+@media (max-width: 780px) {
+  .sai-split { grid-template-columns: 1fr; gap: 44px; }
+  .sai-split .sai-turn { top: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+}
+
+/* Night variant. */
+section.sai-night .sai-split .col.before { background: rgba(255,255,255,0.025); border-color: var(--sai-nrule);
+  box-shadow: none; color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after { background: rgba(255,255,255,0.10);
+  border-color: var(--sai-nglass-edge); outline-color: var(--sai-accent-night);
+  box-shadow: 0 20px 44px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.12); }
+section.sai-night .sai-split .col-head h4 { color: var(--sai-cream); }
+section.sai-night .sai-split .col.before .col-head h4 { color: var(--sai-cream-2); }
+section.sai-night .sai-split .tag.old { color: var(--sai-cream-2); border-color: var(--sai-nrule); }
+section.sai-night .sai-split .tag.new { color: #1A120E; background: var(--sai-accent-night); }
+section.sai-night .sai-split .row { border-bottom-color: var(--sai-nrule-soft); }
+section.sai-night .sai-split .row .k,
+section.sai-night .sai-split .col.before .row .k,
+section.sai-night .sai-split .col.before .row .v { color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after .row .v { color: var(--sai-cream); }
+
+/* ==========================================================================
+   ██ WIDGET 2 — LEDGER MATH  (.sai-ledger)
+   The quantified argument, laid out like an accountant's page: dotted leaders,
+   a single rule above the total, a double rule under it. The number lands in
+   terracotta because the number is the pitch.
+   ========================================================================== */
+
+.sai-ledger { font-variant-numeric: tabular-nums; }
+
+.sai-ledger .line { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; }
+.sai-ledger .line .k { color: var(--sai-ink-90); font-size: var(--sai-fs-sub); flex: none; max-width: 62%; }
+.sai-ledger .line .lead { flex: 1 1 auto; border-bottom: 1.5px dotted var(--sai-rule-strong); transform: translateY(-4px); min-width: 18px; }
+.sai-ledger .line .v { flex: none; font-size: 17px; font-weight: var(--sai-fw-bold); color: var(--sai-ink); }
+.sai-ledger .line .v .unit { font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); font-size: 14.5px; margin-left: 3px; }
+
+/* The operator gutter: × + − sitting in the margin like working shown. */
+.sai-ledger .line .op { flex: none; width: 18px; text-align: center; font-family: var(--sai-font-label);
+  font-size: 14px; font-weight: var(--sai-fw-numeral); color: var(--sai-accent-text); }
+.sai-ledger .line .op.blank { color: transparent; }
+
+/* An assumption note hanging under a line. */
+.sai-ledger .basis { margin: -4px 0 8px 28px; font-size: var(--sai-fs-micro); color: var(--sai-ink-2); max-width: 60ch; }
+
+/* Subtotal: single rule. */
+.sai-ledger .line.subtotal { border-top: 1px solid var(--sai-rule); margin-top: 6px; padding-top: 15px; }
+
+/* The total: accounting double-rule, the number in accent at stat size. */
+.sai-ledger .total { position: relative; margin-top: 14px; padding-top: 20px; border-top: 1.5px solid var(--sai-ink);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.sai-ledger .total::before { content:''; position: absolute; top: 3px; left: 0; right: 0; height: 1px; background: var(--sai-ink); }
+.sai-ledger .total .k { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); padding-bottom: 8px; }
+.sai-ledger .total .v { font-size: var(--sai-fs-stat); font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-accent-text); }
+.sai-ledger .total .v .unit { font-size: 19px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 6px; letter-spacing: 0; }
+
+/* Optional second reading under the total ("that's 1.5 weeks of one FTE"). */
+.sai-ledger .restate { margin-top: 20px; font-size: var(--sai-fs-sub); color: var(--sai-ink-2); }
+.sai-ledger .restate b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+@media (max-width: 620px) {
+  .sai-ledger .line { flex-wrap: wrap; }
+  .sai-ledger .line .k { max-width: none; }
+}
+
+section.sai-night .sai-ledger .line .k { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .v { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .lead { border-bottom-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .line .op { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .basis, section.sai-night .sai-ledger .restate { color: var(--sai-cream-2); }
+section.sai-night .sai-ledger .line.subtotal { border-top-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .total { border-top-color: var(--sai-cream); }
+section.sai-night .sai-ledger .total::before { background: var(--sai-cream); }
+section.sai-night .sai-ledger .total .v { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .total .k { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 3 — DECISION PATH  (.sai-path)
+   A rail with lens beads. Linear for "how it runs", forked for "what to do
+   when". This is the front-desk-protocol primitive: condition, route, outcome.
+   ========================================================================== */
+
+.sai-path { position: relative; padding-left: 34px; }
+/* The rail, fading at both ends so it never hard-stops. */
+.sai-path::before { content:''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, transparent 0%, var(--sai-accent-line) 5%, var(--sai-accent-line) 95%, transparent 100%); }
+
+.sai-path .step { position: relative; padding-bottom: 22px; }
+.sai-path .step:last-child { padding-bottom: 0; }
+
+/* The bead: a miniature lens sitting on the rail. */
+.sai-path .step::before { content:''; position: absolute; left: -34px; top: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* A decision point gets a bigger, brighter bead. */
+.sai-path .step.fork::before { width: 22px; height: 22px; left: -36px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+
+.sai-path .step .num { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .06em; color: var(--sai-accent-text); display: block; margin-bottom: 3px; }
+.sai-path .step h4 { font-size: 17.5px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-path .step p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 62ch; }
+
+/* The fork: sibling outcomes side by side. */
+.sai-path .branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(212px, 1fr)); gap: 12px; margin-top: 16px; }
+.sai-path .branch { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 16px 18px 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+/* The condition chip: leads with an accent bar, never a dot. */
+.sai-path .branch .cond { display: inline-flex; align-items: stretch; gap: 8px; margin-bottom: 9px;
+  font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-accent-text); }
+.sai-path .branch .cond::before { content:''; width: 3px; border-radius: 2px; background: var(--sai-accent); flex: none; }
+.sai-path .branch .out { font-size: var(--sai-fs-small); color: var(--sai-ink-90); }
+.sai-path .branch .out b { font-weight: var(--sai-fw-bold); }
+.sai-path .branch .sai-status { margin-top: 12px; }
+/* The recommended branch. */
+.sai-path .branch.win { background: var(--sai-glass-strong); outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+  box-shadow: 0 10px 26px rgba(112,62,40,0.14), inset 0 1px 0 #fff; }
+
+/* A terminal step (the path ends here). */
+.sai-path .step.end::before { background: var(--sai-accent); border-color: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 5px rgba(220,104,67,0.12), 0 3px 8px rgba(112,62,40,0.22); }
+
+section.sai-night .sai-path::before { background: linear-gradient(180deg, transparent 0%, rgba(255,142,118,0.28) 5%, rgba(255,142,118,0.28) 95%, transparent 100%); }
+section.sai-night .sai-path .step h4 { color: var(--sai-cream); }
+section.sai-night .sai-path .step p  { color: var(--sai-cream-2); }
+section.sai-night .sai-path .step .num { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-path .branch .cond { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .cond::before { background: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .out { color: var(--sai-cream); }
+section.sai-night .sai-path .branch.win { background: rgba(255,255,255,0.10); outline-color: var(--sai-accent-night); }
+
+/* ==========================================================================
+   ██ WIDGET 4 — VITALS READOUT  (.sai-vitals)
+   Metrics against a benchmark. The bar shows where you are, the tick shows
+   where you should be, and the gap between them is the sale. Bars are ALWAYS
+   accent — good/warn/bad belong to the verdict chip only.
+   ========================================================================== */
+
+.sai-vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 14px; }
+
+.sai-vital { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 22px 22px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+
+/* min-height reserves two label lines so a wrapping label never knocks its
+   card's value and gauge out of line with its neighbours. */
+.sai-vital .label { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2);
+  line-height: 1.35; min-height: 2.7em; }
+.sai-vital .value { margin-top: 9px; font-size: 38px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.sai-vital .value .unit { font-size: 17px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 3px; letter-spacing: 0; }
+
+/* The gauge. Set --at (current) and --target as percentages. */
+.sai-vital .gauge { position: relative; margin-top: 20px; height: 7px; border-radius: var(--sai-radius-pill);
+  background: rgba(23,19,16,0.07); box-shadow: inset 0 1px 2px rgba(23,19,16,0.06); }
+.sai-vital .gauge .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--at, 50%);
+  border-radius: var(--sai-radius-pill); background: var(--sai-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 1px 4px rgba(220,104,67,0.35); }
+/* The benchmark tick: a hairline gate the fill either reaches or doesn't. */
+.sai-vital .gauge .mark-t { position: absolute; left: var(--target, 75%); top: -6px; bottom: -6px; width: 2px;
+  background: var(--sai-ink); border-radius: 1px; }
+.sai-vital .gauge .mark-t::after { content: attr(data-label); position: absolute; left: 50%; top: -20px;
+  transform: translateX(-50%); white-space: nowrap;
+  font-family: var(--sai-font-label); font-size: var(--sai-fs-micro); font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+.sai-vital .gauge.has-label { margin-top: 36px; }
+
+.sai-vital .verdict { margin-top: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sai-vital .delta { font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-vital .delta b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+.sai-vital .sai-status .kw { padding: 7px 11px; font-size: 13.5px; }
+.sai-vital .sai-status .detail { padding: 7px 12px; font-size: 14px; }
+
+section.sai-night .sai-vital { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-vital .label, section.sai-night .sai-vital .delta { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .value { color: var(--sai-cream); }
+section.sai-night .sai-vital .value .unit { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .gauge { background: rgba(255,255,255,0.09); box-shadow: none; }
+section.sai-night .sai-vital .gauge .fill { background: var(--sai-accent-night); box-shadow: 0 0 10px rgba(255,142,118,0.4); }
+section.sai-night .sai-vital .gauge .mark-t { background: var(--sai-cream); }
+section.sai-night .sai-vital .gauge .mark-t::after { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .delta b { color: var(--sai-cream); }
+section.sai-night .sai-status { background: rgba(255,255,255,0.06); border-color: var(--sai-nrule); }
+section.sai-night .sai-status .detail { color: var(--sai-cream); border-left-color: var(--sai-nrule); }
+section.sai-night .sai-status.good .kw { color: var(--sai-status-good-night); background: var(--sai-status-good-night-tint); }
+section.sai-night .sai-status.warn .kw { color: var(--sai-status-warn-night); background: var(--sai-status-warn-night-tint); }
+section.sai-night .sai-status.bad  .kw { color: var(--sai-status-bad-night);  background: var(--sai-status-bad-night-tint); }
+
+/* ==========================================================================
+   ██ WIDGET 5 — SOURCE TRACK  (.sai-track)
+   A timestamped spine through a video, a call, or a project. Schibsted
+   numerals in the gutter — exactly what the numeral weight exists for.
+   ========================================================================== */
+
+.sai-track { display: grid; grid-template-columns: 74px 1fr; }
+
+.sai-track .when { grid-column: 1; text-align: right; padding: 3px 20px 0 0;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .01em; color: var(--sai-accent-text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.sai-track .entry { grid-column: 2; position: relative; padding: 0 0 24px 26px;
+  border-left: 2px solid var(--sai-accent-line); }
+.sai-track .entry:last-child { border-left-color: transparent; padding-bottom: 0; }
+/* Bead on the spine. */
+.sai-track .entry::before { content:''; position: absolute; left: -8px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* The moment that matters: bigger bead, headline in accent. */
+.sai-track .entry.key::before { width: 19px; height: 19px; left: -10.5px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+.sai-track .entry.key h4 { color: var(--sai-accent-text); }
+
+.sai-track .entry h4 { font-size: 17px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-track .entry p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 64ch; }
+.sai-track .entry .sai-status { margin-top: 12px; }
+
+@media (max-width: 560px) {
+  .sai-track { grid-template-columns: 58px 1fr; }
+  .sai-track .when { padding-right: 14px; font-size: 13.5px; }
+  .sai-track .entry { padding-left: 20px; }
+}
+
+section.sai-night .sai-track .when { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry { border-left-color: rgba(255,142,118,0.26); }
+section.sai-night .sai-track .entry:last-child { border-left-color: transparent; }
+section.sai-night .sai-track .entry h4 { color: var(--sai-cream); }
+section.sai-night .sai-track .entry.key h4 { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry p { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 6 — CLAIM CARD  (.sai-claim)
+   The idea-extraction unit. Somebody's claim, attributed, then the verdict
+   strip: what it actually means for us. The strip is the whole point — a
+   claim without a "so what" is a screenshot.
+   ========================================================================== */
+
+.sai-claim { border-radius: var(--sai-radius-card); overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge); box-shadow: var(--sai-pane-shadow); }
+
+/* flex:1 pushes every verdict strip to the card's bottom edge, so a row of
+   claim cards lines its strips up regardless of quote length. */
+.sai-claim .body { padding: 26px 28px 24px; flex: 1; }
+.sai-claim .quote { font-size: 21px; font-weight: var(--sai-fw-medium); letter-spacing: -0.018em;
+  line-height: 1.34; color: var(--sai-ink-90); max-width: 46ch; }
+.sai-claim .quote em { font-style: normal; color: var(--sai-accent-text); }
+
+.sai-claim .attrib { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--sai-rule-soft);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-claim .attrib .who { font-weight: var(--sai-fw-bold); color: var(--sai-ink-90); }
+.sai-claim .attrib .at { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .02em; color: var(--sai-accent-text); font-variant-numeric: tabular-nums; }
+
+/* The verdict strip — the sanctioned use of accent-soft. */
+.sai-claim .verdict { padding: 18px 28px 20px; background: var(--sai-accent-soft);
+  border-top: 1px solid var(--sai-accent-line); }
+.sai-claim .verdict .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent-text); margin-bottom: 7px; }
+.sai-claim .verdict p { font-size: var(--sai-fs-small); color: var(--sai-ink-90); max-width: 62ch; }
+.sai-claim .verdict p b { font-weight: var(--sai-fw-bold); }
+
+/* Stack claim cards in a grid when there are several. Stretch, not start —
+   equal heights are what let the verdict strips align. */
+.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: stretch; }
+
+section.sai-night .sai-claim { background: var(--sai-nglass); border-color: var(--sai-nglass-edge);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.09); }
+section.sai-night .sai-claim .quote { color: var(--sai-cream); }
+section.sai-night .sai-claim .quote em { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .attrib { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-claim .attrib .who { color: var(--sai-cream); }
+section.sai-night .sai-claim .attrib .at { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict { background: rgba(255,142,118,0.09); border-top-color: rgba(255,142,118,0.2); }
+section.sai-night .sai-claim .verdict .cap { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict p { color: var(--sai-cream); }
+
+/* ==========================================================================
+   CALLOUT — the v2 survivor: registration crop marks on a glass pane.
+   Never a left-border bar.
+   ========================================================================== */
+
+.sai-callout { position: relative; padding: 26px 30px; border-radius: var(--sai-radius-tile);
+  background: var(--sai-glass-strong); border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(112,62,40,0.10); }
+.sai-callout::before, .sai-callout::after { content:''; position: absolute; width: 16px; height: 16px; }
+.sai-callout::before { top: 10px; left: 10px; border-top: 2px solid var(--sai-accent); border-left: 2px solid var(--sai-accent); }
+.sai-callout::after { bottom: 10px; right: 10px; border-bottom: 2px solid var(--sai-accent); border-right: 2px solid var(--sai-accent); }
+.sai-callout .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent-text); margin-bottom: 8px; }
+.sai-callout p { font-size: 17px; color: var(--sai-ink-90); max-width: 62ch; }
+
+/* ==========================================================================
+   TABLE — hairline rows, no zebra striping.
+   ========================================================================== */
+
+.sai-table { width: 100%; border-collapse: collapse; font-size: var(--sai-fs-sub); }
+.sai-table th { text-align: left; font-size: 13.5px; font-weight: var(--sai-fw-bold); text-transform: uppercase;
+  letter-spacing: .05em; color: var(--sai-ink-2); padding: 0 16px 12px 0; border-bottom: 1px solid var(--sai-rule-strong); }
+.sai-table td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--sai-rule-soft); color: var(--sai-ink-90); vertical-align: top; }
+.sai-table tr:last-child td { border-bottom: none; }
+.sai-table td.num { font-family: var(--sai-font-label); font-weight: var(--sai-fw-numeral); color: var(--sai-accent-text);
+  font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ==========================================================================
+   ENTRANCE — one staggered rise, then only the lenses move.
+   ========================================================================== */
+
+@keyframes sai-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.sai-rise { animation: sai-rise 700ms var(--sai-ease) both; }
+.sai-rise:nth-child(1) { animation-delay: 0ms; }
+.sai-rise:nth-child(2) { animation-delay: 60ms; }
+.sai-rise:nth-child(3) { animation-delay: 120ms; }
+.sai-rise:nth-child(4) { animation-delay: 180ms; }
+.sai-rise:nth-child(5) { animation-delay: 240ms; }
+.sai-rise:nth-child(6) { animation-delay: 300ms; }
+.sai-rise:nth-child(7) { animation-delay: 360ms; }
+.sai-rise:nth-child(8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai-rise { animation: none; }
+  .sai-lens { animation: none; }
+}
+
+/* ==========================================================================
+   PRINT / PDF — frost cannot print. Panes go near-solid, motion stops.
+   ========================================================================== */
+
+@media print {
+  .sai-scene { position: absolute; }
+  .sai-dock { display: none; }
+  .sai-pane, .sai-claim { background: rgba(255,255,255,0.92); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-split .col.after, .sai-float-stat { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-widget, section.sai-night, .sai-claim, .sai-vital { break-inside: avoid; }
+  * { animation: none !important; }
+}

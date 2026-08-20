@@ -1,0 +1,237 @@
+<title>Round 4 Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* Dark chrome on purpose: the ten prototypes are warm and light, so a near-black
+   ground reads as a lightbox and keeps the frame from competing with the work. */
+:root{
+  --ground:#131416; --surface:#1C1E21; --surface-2:#25282C;
+  --ink:#F3F1EE; --ink-2:#9DA2A8; --ink-3:#727980;
+  --rule:rgba(255,255,255,.11); --accent:#DC6843; --accent-soft:rgba(220,104,67,.16);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:500;letter-spacing:-.015em;margin:0}
+
+header{position:sticky;top:0;z-index:30;background:rgba(19,20,22,.94);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.bar{max-width:1500px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto;min-width:0}
+.brand b{font-weight:500;font-size:16px;white-space:nowrap}
+.brand span{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
+.seg{display:flex;gap:2px;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:3px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink-2);cursor:pointer;
+  min-height:38px;padding:0 16px;border-radius:999px;font-family:"Schibsted Grotesk",sans-serif;
+  font-weight:600;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;transition:background .15s,color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:#FFB39B}
+.seg button:focus-visible,.card:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main{max-width:1500px;margin:0 auto;padding:22px 20px 70px}
+.intro{color:var(--ink-2);max-width:64ch;margin:4px 0 26px}
+.intro b{color:var(--ink);font-weight:500}
+
+/* ------------------------------------------------------------------- grid */
+.grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1240px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;text-align:left;padding:0;cursor:pointer;
+  font:inherit;color:inherit;transition:border-color .18s,transform .18s}
+.card:hover{border-color:rgba(220,104,67,.5);transform:translateY(-2px)}
+.card img{display:block;width:100%;height:auto;border-bottom:1px solid var(--rule);background:#F5E9DE}
+.meta{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.meta .top{display:flex;align-items:baseline;gap:9px}
+.meta .n{color:var(--accent);font-family:"Schibsted Grotesk",sans-serif;font-weight:700;font-size:12px}
+.meta h3{font-size:16.5px}
+.meta p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.45}
+.meta .go{margin-top:auto;padding-top:10px;color:var(--ink-3);
+  font-family:"Schibsted Grotesk",sans-serif;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ----------------------------------------------------------------- single */
+.single{display:none}
+body[data-view="single"] .grid,body[data-view="single"] .intro{display:none}
+body[data-view="single"] .single{display:block}
+.rail{display:flex;gap:7px;overflow-x:auto;padding:0 0 14px}
+.rail button{appearance:none;cursor:pointer;white-space:nowrap;min-height:40px;padding:0 15px;
+  border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);
+  font-family:"Schibsted Grotesk",sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.05em}
+.rail button:hover{color:var(--ink)}
+.rail button[aria-current="true"]{background:var(--accent-soft);color:#FFB39B;border-color:rgba(220,104,67,.5)}
+.head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:8px 0 14px}
+.head .n{color:var(--accent);font-family:"Schibsted Grotesk",sans-serif;font-weight:700;font-size:13px}
+.head h2{font-size:20px}
+.head .bet{color:var(--ink-2);font-size:14px;margin-right:auto}
+.head button{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:9px;
+  background:var(--surface-2);border:1px solid var(--rule);color:var(--ink);cursor:pointer;
+  font-family:"Schibsted Grotesk",sans-serif;font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.head button:hover{background:#31353A}
+.head a{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 16px;border-radius:9px;
+  background:var(--accent-soft);border:1px solid rgba(220,104,67,.45);color:#FFB39B;text-decoration:none;
+  font-family:"Schibsted Grotesk",sans-serif;font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.head a:hover{background:rgba(220,104,67,.26)}
+.stage{width:100%;border:1px solid var(--rule);border-radius:14px;background:#F5E9DE;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.stage.phone{max-width:412px;margin:0 auto}
+.stage iframe{display:block;border:0;width:100%}
+.stage img{display:block;width:100%;height:auto}
+.hint{margin:12px 0 0;color:var(--ink-3);font-size:12.5px}
+kbd{font-family:"Schibsted Grotesk",sans-serif;background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:5px;padding:1px 6px;font-size:11px;color:var(--ink-2)}
+footer{max-width:1500px;margin:0 auto;padding:0 20px 44px;color:var(--ink-3);font-size:12.5px;max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <div class="bar">
+    <span class="brand"><b>Round 4</b><span>Ten directions</span></span>
+    <div class="seg" role="group" aria-label="View">
+      <button type="button" id="vGrid" aria-pressed="true">All ten</button>
+      <button type="button" id="vOne" aria-pressed="false">One at a time</button>
+    </div>
+    <div class="seg" role="group" aria-label="Width">
+      <button type="button" id="wDesk" aria-pressed="true">Desktop</button>
+      <button type="button" id="wPhone" aria-pressed="false">Phone</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <p class="intro">Ten directions for the site, all on the Lens v3 kit. Click any one to open it
+  <b>live</b>, where the search boxes, sequences and switches actually work.</p>
+  <div class="grid" id="grid"></div>
+
+  <section class="single" aria-label="Single prototype">
+    <div class="rail" id="rail"></div>
+    <div class="head">
+      <span class="n" id="sN"></span><h2 id="sName"></h2><span class="bet" id="sBet"></span>
+      <button type="button" id="sLive">Try live version</button>
+      <a id="sLink" href="#" target="_blank" rel="noopener">Open in own tab</a>
+    </div>
+    <div class="stage" id="stage"></div>
+    <p class="hint">Scroll the panel to read the whole page. Arrow keys move between directions,
+      <kbd>Esc</kbd> goes back to all ten. <b>Try live version</b> makes the widgets work in place;
+      <b>Open in own tab</b> is the guaranteed one.</p>
+  </section>
+</main>
+<footer id="foot"></footer>
+
+<script>
+(function(){
+  "use strict";
+  var SHELL="__SHELL__", ITEMS=__ITEMS__;
+  function dec(b){ try{ return decodeURIComponent(escape(atob(b))); }catch(e){ return atob(b); } }
+  var shell=dec(SHELL);
+  ITEMS.forEach(function(it){ it.html=shell+dec(it.body)+"</body></html>"; });
+
+  var body=document.body, view="grid", width="desk", current=0;
+  body.setAttribute("data-view","grid");
+  var grid=document.getElementById("grid"), rail=document.getElementById("rail"),
+      stage=document.getElementById("stage"), railBtns=[];
+
+  ITEMS.forEach(function(it,i){
+    var c=document.createElement("button");
+    c.className="card"; c.type="button";
+    c.setAttribute("aria-label","Open "+it.name+" live");
+    var img=document.createElement("img");
+    img.src="data:image/jpeg;base64,"+it.thumb;
+    img.alt="Top of the "+it.name+" page";
+    img.loading="lazy"; img.decoding="async";
+    var m=document.createElement("div"); m.className="meta";
+    var top=document.createElement("div"); top.className="top";
+    var n=document.createElement("span"); n.className="n"; n.textContent=it.n;
+    var h=document.createElement("h3"); h.textContent=it.name;
+    top.appendChild(n); top.appendChild(h);
+    var p=document.createElement("p"); p.textContent=it.bet;
+    var go=document.createElement("span"); go.className="go"; go.textContent="Open live";
+    m.appendChild(top); m.appendChild(p); m.appendChild(go);
+    c.appendChild(img); c.appendChild(m);
+    c.addEventListener("click",function(){ show(i); });
+    grid.appendChild(c);
+
+    var b=document.createElement("button");
+    b.type="button"; b.textContent=it.n+" · "+it.name;
+    b.addEventListener("click",function(){ show(i); });
+    rail.appendChild(b); railBtns.push(b);
+  });
+
+  function show(i){
+    current=i; view="single"; body.setAttribute("data-view","single");
+    document.getElementById("vGrid").setAttribute("aria-pressed","false");
+    document.getElementById("vOne").setAttribute("aria-pressed","true");
+    railBtns.forEach(function(b,k){ b.setAttribute("aria-current", k===i?"true":"false"); });
+    document.getElementById("sN").textContent=ITEMS[i].n;
+    document.getElementById("sName").textContent=ITEMS[i].name;
+    document.getElementById("sBet").textContent=ITEMS[i].bet;
+    document.getElementById("sLink").href=ITEMS[i].url;
+    stage.className="stage"+(width==="phone"?" phone":"");
+    stage.style.maxHeight=Math.max(620, window.innerHeight-215)+"px";
+    render(i,false);
+    railBtns[i].scrollIntoView({block:"nearest",inline:"center"});
+    window.scrollTo(0,0);
+  }
+  /* The capture is the default because a full Lens page embedded in a frame
+     composites unreliably: backdrop-filter, which every pane uses, can fail inside
+     an embedded document and take the whole page down to a blank sheet. The capture
+     always draws. Live is one click, and the standalone tab always works. */
+  function render(i,live){
+    stage.textContent="";
+    var live_btn=document.getElementById("sLive");
+    if(live){
+      var f=document.createElement("iframe");
+      f.title=ITEMS[i].name+" prototype, live";
+      f.style.height=Math.max(620, window.innerHeight-235)+"px";
+      stage.appendChild(f); f.srcdoc=ITEMS[i].html;
+      live_btn.textContent="Show capture";
+    } else {
+      var img=document.createElement("img");
+      img.src="data:image/jpeg;base64,"+ITEMS[i].full;
+      img.alt="The full "+ITEMS[i].name+" page";
+      img.decoding="async";
+      stage.appendChild(img);
+      live_btn.textContent="Try live version";
+    }
+    stage.dataset.live=live?"1":"";
+    stage.scrollTop=0;
+  }
+  function toGrid(){
+    view="grid"; body.setAttribute("data-view","grid");
+    document.getElementById("vGrid").setAttribute("aria-pressed","true");
+    document.getElementById("vOne").setAttribute("aria-pressed","false");
+    stage.textContent="";
+  }
+  document.getElementById("sLive").addEventListener("click",function(){
+    render(current, stage.dataset.live!=="1");
+  });
+  document.getElementById("vGrid").addEventListener("click",toGrid);
+  document.getElementById("vOne").addEventListener("click",function(){ show(current); });
+  function setW(w){
+    if(width===w) return;
+    width=w;
+    document.getElementById("wDesk").setAttribute("aria-pressed",String(w==="desk"));
+    document.getElementById("wPhone").setAttribute("aria-pressed",String(w==="phone"));
+    if(view==="single") show(current);
+  }
+  document.getElementById("wDesk").addEventListener("click",function(){ setW("desk"); });
+  document.getElementById("wPhone").addEventListener("click",function(){ setW("phone"); });
+  document.addEventListener("keydown",function(e){
+    if(view!=="single") return;
+    if(e.key==="Escape") toGrid();
+    else if(e.key==="ArrowRight") show((current+1)%ITEMS.length);
+    else if(e.key==="ArrowLeft") show((current-1+ITEMS.length)%ITEMS.length);
+  });
+  var rt;
+  window.addEventListener("resize",function(){
+    clearTimeout(rt); rt=setTimeout(function(){ if(view==="single") show(current); },220);
+  });
+  document.getElementById("foot").textContent=
+    "Grid and panel show rendered captures of each page, so they always draw. Try live version, "+
+    "or the own-tab link, gives you the working widgets. Built on the Lens v3 kit; sources in prototypes/round-4.";
+})();
+</script>

@@ -1,0 +1,53 @@
+/* Shared widget composition for round 5. Spliced into every page by build.py.
+
+   The three shared widgets are all built from kit primitives, so there is very
+   little to add here. Anything that appears in this file must be page-level
+   composition. Never restyle a .sai-* class. */
+
+/* The time off request's control row: a native select needs explicit styling or
+   the viewer's platform paints it, which breaks the one committed look. */
+#opsPick {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 34px; min-height: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, #8F3616 50%),
+                    linear-gradient(135deg, #8F3616 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% + 1px), calc(100% - 13px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+section.sai-night #opsPick {
+  background-image: linear-gradient(45deg, transparent 50%, #FF8E76 50%),
+                    linear-gradient(135deg, #FF8E76 50%, transparent 50%);
+}
+
+/* Buttons on a night surface.
+ *
+ * The kit styles .sai-btn for light surfaces only: primary is ink on ink-dark
+ * (#171310 on the night gradient, which is very nearly invisible) and ghost is
+ * a 62% white pill with ink text, which reads as a muddy grey lozenge. Every
+ * round 5 page puts both CTAs in a night close, so this is not a one page fix.
+ *
+ * Caught by screenshot QA. Structural checks and the linter both passed the
+ * page while its primary call to action was disappearing into the background.
+ *
+ * Inverting is the right answer on night: cream fill, ink text, so the primary
+ * still reads as the loudest thing on the surface and the accent stays the
+ * hover, exactly as it does on light. */
+section.sai-night .sai-btn.primary {
+  background: #F5F1E8; color: #171310;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .38);
+}
+section.sai-night .sai-btn.primary:hover {
+  background: #FF8E76; color: #171310;
+  box-shadow: 0 12px 26px rgba(255, 142, 118, .32);
+}
+section.sai-night .sai-btn.ghost {
+  color: #F5F1E8; background: rgba(245, 241, 232, .09);
+  border-color: rgba(245, 241, 232, .28);
+  box-shadow: inset 0 1px 0 rgba(245, 241, 232, .14);
+}
+section.sai-night .sai-btn.ghost:hover { background: rgba(245, 241, 232, .17); }
+
+/* The select inherits .sai-btn.ghost, so it needs the same night treatment for
+ * its own text rather than only the arrow drawn above. */
+section.sai-night #opsPick { color: #F5F1E8; }

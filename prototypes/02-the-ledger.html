@@ -1,0 +1,968 @@
+<title>The Ledger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+/* ============================================================
+   The Ledger. An operations document that happens to be a page.
+   No glass, no gradients, no shadows, no radii. Typography only.
+   ============================================================ */
+
+:root{
+  color-scheme: light;              /* commit to paper; block OS dark bleed */
+  --paper:      #FBF8F2;
+  --paper-2:    #F5F0E5;            /* specimen ground, one step down */
+  --paper-3:    #FFFDF8;            /* the sheet inside a specimen */
+  --ink:        #171310;
+  --ink-2:      #5A4F46;            /* 7.5:1 on paper */
+  --accent:     #DC6843;            /* MARK ONLY: hairlines and marginal ticks */
+  --accent-ink: #8F3616;            /* 7.3:1 on paper, safe for small text */
+  --rule:       rgba(23,19,16,0.22);
+  --rule-mid:   rgba(23,19,16,0.14);
+  --rule-soft:  rgba(23,19,16,0.08);
+  --serif: "Source Serif 4", Georgia, "Times New Roman", Times, serif;
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --measure: 34em;                  /* ~68 characters at 17px */
+}
+
+*{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-wrap:break-word;
+  /* clip, not hidden: hidden would make body a scroll container and
+     break position:sticky on the review bar in several browsers */
+  overflow-x:clip;
+}
+
+/* ---------- review furniture ---------- */
+.proto-bar{
+  position:sticky; top:0; z-index:50;
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--sans); font-size:13px; line-height:1.4;
+  padding:11px 20px; min-height:44px;
+  border-bottom:1px solid #000;
+}
+.proto-n{ font-variant:small-caps; letter-spacing:.09em; text-transform:lowercase; color:#f2f2f2; }
+.proto-name{ font-weight:600; letter-spacing:.01em; }
+.proto-bet{ color:#b9b9bd; }
+
+/* ---------- page frame ---------- */
+.sheet{
+  max-width:1040px;
+  margin:0 auto;
+  padding:0 28px 96px;
+}
+@media (max-width:640px){ .sheet{ padding:0 18px 72px; } }
+
+/* ---------- masthead ---------- */
+.masthead{ padding:56px 0 0; }
+.rule-heavy{ height:2px; background:var(--ink); margin:0; border:0; }
+.rule-accent{ height:2px; background:var(--accent); margin:0; border:0; }
+.rule-hair{ height:1px; background:var(--rule); margin:0; border:0; }
+.rule-soft{ height:1px; background:var(--rule-soft); margin:0; border:0; }
+
+.mast-top{
+  display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end;
+  gap:14px 28px; padding:0 0 14px;
+}
+.wordmark{
+  font-family:var(--sans);
+  font-size:15px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+  margin:0;
+}
+.mast-meta{
+  font-size:13.5px; line-height:1.5; color:var(--ink-2);
+  text-align:right; letter-spacing:.02em;
+}
+@media (max-width:560px){ .mast-meta{ text-align:left; } }
+
+.doc-title{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(34px,6.4vw,58px);
+  line-height:1.06;
+  letter-spacing:-0.015em;
+  margin:34px 0 0;
+  max-width:16ch;
+  text-wrap:balance;
+}
+.doc-standfirst{
+  font-family:var(--serif);
+  font-size:clamp(19px,2.3vw,22px);
+  line-height:1.52;
+  color:var(--ink);
+  max-width:36em;
+  margin:22px 0 0;
+}
+.doc-standfirst + .doc-standfirst{ margin-top:14px; color:var(--ink-2); }
+
+/* ---------- contents ---------- */
+.contents{ margin:44px 0 0; }
+.contents h2{
+  font-family:var(--sans); font-size:13.5px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2);
+  margin:0 0 10px;
+}
+.toc{ list-style:none; margin:0; padding:0; border-top:1px solid var(--rule-mid); }
+.toc li{ border-bottom:1px solid var(--rule-soft); }
+.toc a{
+  display:flex; align-items:baseline; gap:16px;
+  min-height:44px; padding:11px 2px;
+  color:var(--ink); text-decoration:none;
+}
+.toc a:hover{ color:var(--accent-ink); }
+.toc .n{
+  font-family:var(--serif); font-size:15px; color:var(--ink-2);
+  min-width:2.4em; letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;
+}
+.toc .t{ font-size:16px; }
+.toc .p{ margin-left:auto; font-size:13.5px; color:var(--ink-2); letter-spacing:.02em; }
+.toc a[aria-current="location"] .n{ color:var(--accent-ink); }
+.toc a[aria-current="location"] .t{ font-weight:600; }
+
+/* ---------- sections ---------- */
+.sec{
+  scroll-margin-top:60px;   /* clears the sticky review bar */
+  display:grid;
+  grid-template-columns:84px minmax(0,1fr);
+  gap:0 40px;
+  padding-top:66px;
+}
+.sec-num{
+  font-family:var(--serif);
+  font-size:15px; color:var(--ink-2); letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;
+  padding-top:9px;
+}
+.sec-num::after{
+  content:""; display:block; width:22px; height:2px;
+  background:var(--accent); margin-top:12px;
+}
+@media (max-width:860px){
+  .sec{ grid-template-columns:minmax(0,1fr); gap:0; }
+  .sec-num{ padding-top:0; margin-bottom:10px; }
+  .sec-num::after{ margin-top:8px; }
+}
+.sec-body{ min-width:0; }
+
+h2.sec-title{
+  font-family:var(--serif); font-weight:500;
+  font-size:clamp(26px,3.6vw,34px); line-height:1.15; letter-spacing:-0.012em;
+  margin:0 0 6px; padding-bottom:14px;
+  border-bottom:1px solid var(--rule);
+  max-width:24ch;
+}
+h3{
+  font-family:var(--serif); font-weight:600;
+  font-size:22px; line-height:1.25; letter-spacing:-0.008em;
+  margin:44px 0 10px;
+}
+/* numbered sub-heads inside a section: sans, small, uppercase, but still h3
+   so the heading order never skips a level */
+h3.minor{
+  font-family:var(--sans); font-size:13.5px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2);
+  margin:34px 0 10px;
+}
+p{ margin:0 0 15px; max-width:var(--measure); }
+p.lede{
+  font-family:var(--serif); font-size:20px; line-height:1.55;
+  margin-top:22px; max-width:35em;
+  text-wrap:pretty;
+}
+.dim{ color:var(--ink-2); }
+a{ color:var(--accent-ink); text-underline-offset:3px; text-decoration-thickness:1px; }
+a:focus-visible, button:focus-visible{
+  outline:2px solid var(--accent-ink); outline-offset:3px;
+}
+.scroll:focus-visible{ outline:2px solid var(--accent-ink); outline-offset:2px; }
+
+ul.plain{ list-style:none; margin:0 0 16px; padding:0; max-width:var(--measure); }
+ul.plain li{
+  position:relative; padding:0 0 0 22px; margin:0 0 9px;
+}
+ul.plain li::before{
+  content:""; position:absolute; left:0; top:.72em;
+  width:9px; height:1px; background:var(--accent);
+}
+
+/* marginal note: sits in the number column on wide screens */
+.margin-note{
+  font-size:13.5px; line-height:1.5; color:var(--ink-2);
+  border-left:2px solid var(--accent);
+  padding:2px 0 2px 14px;
+  margin:24px 0; max-width:32em;
+}
+
+/* ---------- tables ---------- */
+.scroll{ overflow-x:auto; margin:0 0 8px; -webkit-overflow-scrolling:touch; }
+table{
+  width:100%; border-collapse:collapse;
+  font-size:16px; line-height:1.5;
+  font-variant-numeric:tabular-nums;
+}
+caption{
+  text-align:left; font-size:13.5px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-2); padding:0 0 10px;
+}
+thead th{
+  font-family:var(--sans); font-size:13.5px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2);
+  text-align:left; vertical-align:bottom;
+  padding:0 16px 8px 0; border-bottom:1px solid var(--rule);
+}
+tbody th, tbody td{
+  text-align:left; vertical-align:top;
+  padding:13px 16px 13px 0;
+  border-bottom:1px solid var(--rule-soft);
+}
+tbody th{ font-weight:600; }
+tbody tr:last-child th, tbody tr:last-child td{ border-bottom:1px solid var(--rule-mid); }
+td:last-child, th:last-child{ padding-right:0; }
+.num{ text-align:right; white-space:nowrap; }
+thead th.num{ text-align:right; }
+
+/* spec table: label column, then prose. Stacks on narrow screens. */
+.spec{ margin:26px 0 6px; }
+.spec th[scope="row"]{
+  width:150px; padding-right:26px;
+  font-family:var(--sans); font-size:13.5px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2);
+  padding-top:15px;
+}
+.spec td{ font-size:16px; }
+.spec td ul.plain{ margin:0; }
+.spec td ul.plain li:last-child{ margin-bottom:0; }
+@media (max-width:620px){
+  .spec th[scope="row"], .spec td{ display:block; width:auto; padding-right:0; }
+  .spec th[scope="row"]{ border-bottom:0; padding:16px 0 4px; }
+  .spec td{ padding-top:0; }
+}
+
+/* figures table numerals get the serif, like a printed report */
+.figures td.num, .prices td.num{ font-family:var(--serif); font-size:17px; }
+
+/* ---------- specimens (hand built depictions) ---------- */
+/* The frame lives on the head and body, not the figure, so the caption sits
+   below the plate like a printed one rather than inside the rule. */
+figure.specimen{ margin:28px 0 10px; }
+.specimen-head{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px;
+  padding:10px 16px;
+  border:1px solid var(--rule); border-bottom-color:var(--rule-mid);
+  background:var(--paper-2);
+  font-size:13.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); font-weight:600;
+}
+.specimen-head .tick{ width:10px; height:2px; background:var(--accent); display:inline-block; }
+.specimen-body{
+  padding:18px 16px 20px;
+  border:1px solid var(--rule); border-top:0;
+  background:var(--paper-3);
+}
+figcaption{
+  font-size:13.5px; line-height:1.5; color:var(--ink-2);
+  margin:10px 0 0; max-width:var(--measure);
+}
+
+/* specimen A: search and the answer it returns */
+.kb-search{
+  display:flex; align-items:center; gap:10px;
+  border:1px solid var(--rule-mid); background:var(--paper);
+  padding:12px 14px;
+}
+.kb-search span{ font-size:16px; }
+.kb-caret{ width:1px; height:18px; background:var(--ink); margin-left:-4px; }
+.kb-result{ margin-top:16px; border-top:1px solid var(--rule-mid); padding-top:16px; }
+.kb-kicker{
+  font-size:13.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); font-weight:600; margin:0 0 6px;
+}
+.kb-title{ font-family:var(--serif); font-size:20px; font-weight:600; margin:0 0 8px; }
+.kb-line{ font-size:15.5px; line-height:1.55; margin:0 0 8px; max-width:44ch; }
+.kb-exception{
+  border-left:2px solid var(--accent);
+  padding-left:12px; margin:12px 0;
+}
+.kb-foot{
+  display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between;
+  border-top:1px solid var(--rule-soft); margin-top:14px; padding-top:10px;
+  font-size:13.5px; color:var(--ink-2);
+}
+
+/* specimen B and C: run sheets */
+table.sheet-table{ font-size:15px; }
+table.sheet-table thead th{ font-size:13.5px; padding-bottom:7px; }
+table.sheet-table tbody th, table.sheet-table tbody td{ padding:9px 14px 9px 0; }
+table.sheet-table tbody th{ font-weight:500; }
+.stat{ white-space:nowrap; font-size:13.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+.stat-done{ color:var(--ink-2); }
+.stat-open{ color:var(--accent-ink); }
+.row-last th, .row-last td{ border-top:1px solid var(--rule-mid); }
+.mark{
+  display:inline-block; width:11px; height:11px; border:1px solid var(--ink-2);
+  position:relative; top:1px;
+}
+.mark-on{ border-color:var(--ink); background:var(--ink); }
+
+/* ---------- price block ---------- */
+.prices tbody th{ font-weight:600; }
+.prices .covers{ font-size:15px; color:var(--ink-2); line-height:1.45; }
+.starred{ position:relative; }
+.starred::after{
+  content:"\2020"; color:var(--accent-ink); font-family:var(--serif);
+  margin-left:6px; font-size:15px;
+}
+
+/* ---------- call to action ---------- */
+.actions{ display:flex; flex-wrap:wrap; gap:12px; margin:26px 0 0; }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:50px; padding:12px 26px;
+  font-family:var(--sans); font-size:16px; font-weight:600; letter-spacing:.01em;
+  text-decoration:none; border:1px solid var(--ink); border-radius:0;
+}
+.btn-solid{ background:var(--ink); color:var(--paper); }
+.btn-solid:hover{ background:#000; }
+.btn-line{ background:transparent; color:var(--ink); }
+.btn-line:hover{ border-color:var(--accent-ink); color:var(--accent-ink); }
+
+/* ---------- colophon ---------- */
+.colophon{ margin-top:80px; border-top:2px solid var(--ink); padding-top:20px; }
+.colophon-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:22px 40px;
+}
+.colophon h2{
+  font-family:var(--sans); font-size:13.5px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); margin:0 0 8px;
+}
+.colophon p{ font-size:15px; margin:0 0 6px; max-width:30em; }
+/* contact links get a real 44px target without breaking the column rhythm */
+.colophon .contact p{ margin:0; }
+.colophon .contact a{ display:inline-flex; align-items:center; min-height:44px; }
+.sign{
+  font-family:var(--serif); font-size:19px; margin-top:26px; padding-top:14px;
+  border-top:1px solid var(--rule-soft); color:var(--ink);
+}
+
+@media (prefers-reduced-motion: no-preference){
+  html{ scroll-behavior:smooth; }
+}
+
+/* it is a document, so let it be one on paper too */
+@media print{
+  .proto-bar{ display:none; }
+  body{ background:#fff; color:#000; }
+  .sheet{ max-width:none; padding:0 0 24px; }
+  a{ color:#000; }
+  figure.specimen{ break-inside:avoid; }
+  .scroll{ overflow:visible; }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 02 of 10</span>
+  <span class="proto-name">The Ledger</span>
+  <span class="proto-bet">A practice owner trusts a well set document more than a well designed advert.</span>
+</div>
+
+<div class="sheet">
+<main>
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead">
+    <hr class="rule-accent">
+    <div class="mast-top" style="padding-top:14px">
+      <p class="wordmark">Stephens AI</p>
+      <div class="mast-meta">
+        Operations note for independent eyecare practices<br>
+        Alec Stephens and Jusheen Kim, August 2026
+      </div>
+    </div>
+    <hr class="rule-heavy">
+
+    <h1 class="doc-title">What we build for an independent eyecare practice, and what it costs.</h1>
+
+    <p class="doc-standfirst">Three products. One is live in a 27 person practice today. One is the monthly recall job, run for you. One is the admin work behind the practice. This document says what each does, what each does not do, what we need from you, and the price.</p>
+    <p class="doc-standfirst">It is written the way we would write it for a partner meeting. No pitch, no stock photography, no promises we cannot keep. If a number is not ours to quote, we say so and leave the line blank.</p>
+
+    <nav class="contents" aria-label="Contents">
+      <h2>Contents</h2>
+      <ol class="toc" id="toc" role="list">
+        <li><a href="#s1"><span class="n">1</span><span class="t">What we found at the front desk</span><span class="p">Findings</span></a></li>
+        <li><a href="#s2"><span class="n">2</span><span class="t">The three products, in specification</span><span class="p">Products</span></a></li>
+        <li><a href="#s3"><span class="n">3</span><span class="t">Prices</span><span class="p">Schedule</span></a></li>
+        <li><a href="#s4"><span class="n">4</span><span class="t">Patient data, per product</span><span class="p">Posture</span></a></li>
+        <li><a href="#s5"><span class="n">5</span><span class="t">Why it does not connect to your practice management system</span><span class="p">Scope</span></a></li>
+        <li><a href="#s6"><span class="n">6</span><span class="t">Who you would be hiring</span><span class="p">Parties</span></a></li>
+        <li><a href="#s7"><span class="n">7</span><span class="t">The next step</span><span class="p">Action</span></a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <!-- ============ 1. FINDINGS ============ -->
+  <section class="sec" id="s1" aria-labelledby="s1h">
+    <div class="sec-num" aria-hidden="true">01</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s1h">What we found at the front desk</h2>
+
+      <p class="lede">Alec spent the last year inside a 27 person eyecare practice, 6 to 7 doctors at one location, in the office, watching people answer the phone. Three things showed up every week.</p>
+
+      <h3 class="minor">1.1 The hard questions go through one or two people</h3>
+      <p>Several times a day someone puts a patient on hold and walks to the office manager's desk. Two people stop working. The answer was written down somewhere. Just not anywhere anyone can find it while a patient waits on the line.</p>
+
+      <h3 class="minor">1.2 Nobody is certain which price is current</h3>
+      <p>At the practice we built this for, more than one price list lived in the same spreadsheet, and it was not obvious which one was current. When the answer is unclear the front desk guesses. The guess turns up later as an uncollected charge, or as a surprise balance at checkout.</p>
+
+      <h3 class="minor">1.3 The monthly jobs slip first</h3>
+      <p>Patient recall sits on the same checklist as the daily work. It runs when someone finds an afternoon, which means some months it does not run. The daily work always wins, because the phone is ringing now.</p>
+
+      <div class="margin-note">These are not our observations about eyecare in general. They are what we saw in one building, over a year, and they are the reason each of the three products exists.</div>
+
+      <h3 class="minor">1.4 Figures of record</h3>
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-1">
+        <table class="figures">
+          <caption id="tcap-1">Everything we will claim in this document</caption>
+          <thead>
+            <tr><th scope="col">Figure</th><th scope="col" class="num">Value</th><th scope="col">Where it comes from</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Live practice</th><td class="num">27 people</td><td class="dim">6 to 7 doctors, one location. In daily use.</td></tr>
+            <tr><th scope="row">Front desk situations mapped</th><td class="num">76</td><td class="dim">Written from the questions staff actually face.</td></tr>
+            <tr><th scope="row">Decision lookups built</th><td class="num">4</td><td class="dim">The calls that cost money when they go wrong.</td></tr>
+            <tr><th scope="row">Patient records held in the knowledge base</th><td class="num">0</td><td class="dim">Rules, prices, protocols. No charts.</td></tr>
+            <tr><th scope="row">Time to live</th><td class="num">30 days</td><td class="dim">From your material to the front desk computers.</td></tr>
+            <tr><th scope="row">Admin hours returned by the time off build</th><td class="num">60 to 100 a year</td><td class="dim">At the practice we built it for.</td></tr>
+            <tr><th scope="row">Recall runs a month, eight provider practice</th><td class="num">8</td><td class="dim">Call and postcard runs, one per provider, plus scleral, plus medical, plus the update run.</td></tr>
+            <tr><th scope="row">Medical recall reason codes in the real protocol</th><td class="num">about 10</td><td class="dim">Each one its own run, output as postcards.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dim" style="font-size:13.5px;margin-top:12px">No other numbers appear in this document. Where we do not have an honest figure, we have left it out rather than estimated one.</p>
+    </div>
+  </section>
+
+  <!-- ============ 2. PRODUCTS ============ -->
+  <section class="sec" id="s2" aria-labelledby="s2h">
+    <div class="sec-num" aria-hidden="true">02</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s2h">The three products, in specification</h2>
+      <p class="lede">Each one is set out the same way: what it does, what it does not do, what it costs, and what we need from you. Read the second row first. It is the row most vendors leave out.</p>
+
+      <!-- ---- 2.1 KNOWLEDGE BASE ---- -->
+      <h3>2.1 Front desk knowledge base</h3>
+      <p><strong>What it is.</strong> A searchable knowledge base holding the insurance rules, prices, and protocols your front desk currently keeps in their heads. Your protocols become short situation pages the team can find mid call, from one search box.</p>
+      <p><strong>Who it is for.</strong> A practice where the same handful of questions interrupt the same one or two people all day, and where a new hire takes months to become useful.</p>
+
+      <figure class="specimen">
+        <div class="specimen-head"><span class="tick" aria-hidden="true"></span> Specimen A. One search, one answer</div>
+        <div class="specimen-body">
+          <div class="kb-search">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style="flex:none">
+              <circle cx="8" cy="8" r="5.2" stroke="#8F3616" stroke-width="1.6"/>
+              <path d="M11.9 11.9 16 16" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span>refraction, medical visit</span><span class="kb-caret" aria-hidden="true"></span>
+          </div>
+
+          <div class="kb-result">
+            <p class="kb-kicker">Situation page</p>
+            <p class="kb-title">Refraction: collect or bill</p>
+            <p class="kb-line">The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+            <div class="kb-exception">
+              <p class="kb-line" style="margin:0"><strong>Exception.</strong> If the visit bills medical, the refraction is not covered. Collect at checkout and say so before the patient sits down.</p>
+            </div>
+            <p class="kb-line dim">Related: which doctor can see this patient. How soon they need to be seen. This year's price.</p>
+            <div class="kb-foot">
+              <span>Last edited by the office manager</span>
+              <span>Every edit saved and reversible</span>
+            </div>
+          </div>
+        </div>
+        <figcaption>Drawn, not photographed. The live instance holds a practice's real prices and rules, so this shows the interaction rather than a client's content.</figcaption>
+      </figure>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-2">
+        <table class="spec">
+          <caption id="tcap-2">Specification 2.1</caption>
+          <tbody>
+            <tr>
+              <th scope="row">What it does</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>Returns a short situation page in a few seconds, from one search box, while the patient is still on the line.</li>
+                  <li>Runs 4 decision lookups for the calls that cost money: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price.</li>
+                  <li>Lets your office manager edit any page in the app. Every edit is saved, so a wrong change is one click back.</li>
+                  <li>Signs staff in with their practice Google account, restricted to your domain, with editors you name.</li>
+                  <li>Installs from the browser on the front desk computers. No admin rights, no ticket to your IT vendor.</li>
+                  <li>Keeps working on pages already opened if the internet drops.</li>
+                  <li>Gives staff one click to flag a page that is wrong.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it does not do</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>It holds no patient records. Zero. Your rules, not your charts.</li>
+                  <li>It does not connect to your practice management system. See section 5.</li>
+                  <li>It does not replace clinical judgment. Clinical pages are a reference, and your doctor signs off before one goes live and again when it changes.</li>
+                  <li>It is not an empty system you fill in yourself. We write the pages from the material you already have.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it costs</th>
+              <td>Tier 1 at $2,500 setup and $299 a month for the front desk. Tier 2 at $3,500 setup and $250 a month for the whole floor, which is where we would start you. Full schedule in section 3.</td>
+            </tr>
+            <tr>
+              <th scope="row">What we need from you</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>The material you already have, unsorted. Protocols, price sheets, insurance notes, the binder.</li>
+                  <li>A few short sessions with the people who answer the phone, scheduled around the practice.</li>
+                  <li>One person who owns the content after launch. Usually the office manager.</li>
+                  <li>A doctor to sign off on anything clinical.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---- 2.2 RECALL ---- -->
+      <h3>2.2 Recall done for you</h3>
+      <p><strong>What it is.</strong> We run your monthly patient recall for you, using your own recall protocol and your own systems. Not a new process. The one you already wrote down, executed on a schedule.</p>
+      <p><strong>Who it is for.</strong> A practice where recall is real work that competes with the phones, and where the month it gets skipped is invisible until the schedule thins out later.</p>
+      <p>Here is what the job actually is, taken from one practice's written protocol. Run the scleral letters. Run the medical recall letters across about 10 separate reason codes, output as postcards. Run the calls list and the routine postcards once per doctor, individually, so an eight provider practice is eight separate runs. Then, only after every call and every postcard is finished, go back and run the update step so the same patients are not pulled again next month.</p>
+      <p>Two things make it fragile. The update step is a checkbox that has to be left unchecked on one run and checked on another, and getting it backwards either contacts patients twice or drops them entirely. And it is a monthly job on the same checklist as the daily work, so it is the first thing to slip.</p>
+
+      <figure class="specimen">
+        <div class="specimen-head" id="spec-b"><span class="tick" aria-hidden="true"></span> Specimen B. The monthly run sheet, eight provider practice</div>
+        <div class="specimen-body">
+          <div class="scroll" tabindex="0" role="region" aria-labelledby="spec-b">
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th scope="col">Run</th>
+                  <th scope="col">Output</th>
+                  <th scope="col">Update step</th>
+                  <th scope="col">State</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Scleral letters</th><td class="dim">Letters</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-done">Complete</span></td></tr>
+                <tr><th scope="row">Medical recall, about 10 reason codes</th><td class="dim">Postcards</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-done">Complete</span></td></tr>
+                <tr><th scope="row">Provider 1, calls and postcards</th><td class="dim">Call list</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-done">Complete</span></td></tr>
+                <tr><th scope="row">Provider 2, calls and postcards</th><td class="dim">Call list</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-done">Complete</span></td></tr>
+                <tr><th scope="row">Providers 3 to 7, calls and postcards</th><td class="dim">Call list</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-done">Complete</span></td></tr>
+                <tr><th scope="row">Provider 8, calls and postcards</th><td class="dim">Call list</td><td><span class="mark" aria-hidden="true"></span> <span class="dim" style="font-size:13.5px">held</span></td><td><span class="stat stat-open">Working</span></td></tr>
+                <tr class="row-last"><th scope="row">The update run</th><td class="dim">No output</td><td><span class="mark mark-on" aria-hidden="true"></span> <span style="font-size:13.5px">applied</span></td><td><span class="stat stat-open">Runs last</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-2);margin:14px 0 0;max-width:none;border-top:1px solid var(--rule-soft);padding-top:10px">
+            The update step is held on every contact run and applied once, at the end, in the right order. That ordering is the whole job.
+          </p>
+        </div>
+        <figcaption>The run sheet is the product. Nobody at your front desk has to hold this order in their head, or remember which month the checkbox went the wrong way.</figcaption>
+      </figure>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-4">
+        <table class="spec">
+          <caption id="tcap-4">Specification 2.2</caption>
+          <tbody>
+            <tr>
+              <th scope="row">What it does</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>Runs on a schedule instead of when someone finds an afternoon.</li>
+                  <li>Delivers the call list ready to work, in priority order, with the answers to the questions patients ask when they call back.</li>
+                  <li>Runs the scleral letters, the medical recall across every reason code, and the calls and postcards once per doctor.</li>
+                  <li>Runs the update step every time, after the contact runs, so the same patients are not pulled again next month.</li>
+                  <li>Sends a monthly report: who was contacted, by which channel, and who booked.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it does not do</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>It does not plug into your practice management system. We work from a list your own team runs, or inside your system with a limited login you create and can revoke.</li>
+                  <li>It does not put an outside voice on the phone with your patients. The call list goes to your own team, who already know them.</li>
+                  <li>We do not quote a recovery rate or a revenue figure. We have not run enough months anywhere to have an honest one, and we would rather sell you the mechanism than a number we made up.</li>
+                  <li>We never touch charts.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it costs</th>
+              <td>Not set. This is the newest of the three, and we price it per practice on the call once we have seen your protocol and how many providers it runs across. It can also be folded into tier 3. We would rather leave this line blank than print a number we would have to walk back.</td>
+            </tr>
+            <tr>
+              <th scope="row">What we need from you</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>Your written recall protocol, including the reason codes you use.</li>
+                  <li>Either a list your team runs each month, or a limited login you create and can revoke at any time.</li>
+                  <li>A signed BAA before we start. Recall involves patient contact information, so it runs inside your own accounts. See section 4.</li>
+                  <li>One person on your side who takes the call list and works it.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---- 2.3 OPERATIONS ---- -->
+      <h3>2.3 Practice operations automation</h3>
+      <p><strong>What it is.</strong> The admin work behind the practice, automated and scoped to how you actually run: time off and payroll first, then a quarterly practice snapshot and monthly working time with both of us.</p>
+      <p><strong>Who it is for.</strong> A practice where the office manager's week is eaten by requests, approvals, and the spreadsheet that has to agree with payroll at the end of the month.</p>
+
+      <figure class="specimen">
+        <div class="specimen-head" id="spec-c"><span class="tick" aria-hidden="true"></span> Specimen C. A time off request, start to finish</div>
+        <div class="specimen-body">
+          <div class="scroll" tabindex="0" role="region" aria-labelledby="spec-c">
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th scope="col">Step</th>
+                  <th scope="col">Who does it now</th>
+                  <th scope="col">Who does it after</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Request comes in</th><td class="dim">Paper slip or a message</td><td>One form, one place</td></tr>
+                <tr><th scope="row">Balance checked</th><td class="dim">Office manager, by hand</td><td>Automatic</td></tr>
+                <tr><th scope="row">Coverage checked against the schedule</th><td class="dim">Office manager, by hand</td><td>Automatic, flagged if thin</td></tr>
+                <tr><th scope="row">Approved and recorded</th><td class="dim">Office manager</td><td>Office manager, one click</td></tr>
+                <tr><th scope="row">Balance updated</th><td class="dim">Spreadsheet, later</td><td>Automatic</td></tr>
+                <tr class="row-last"><th scope="row">Reaches payroll correctly</th><td class="dim">Rekeyed at month end</td><td>Automatic</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-2);margin:14px 0 0;max-width:none;border-top:1px solid var(--rule-soft);padding-top:10px">
+            At the practice we built this for, the time off build returns 60 to 100 admin hours a year.
+          </p>
+        </div>
+        <figcaption>The saving is not in any one step. It is in nobody having to chase the request from one end of the month to the other.</figcaption>
+      </figure>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-6">
+        <table class="spec">
+          <caption id="tcap-6">Specification 2.3</caption>
+          <tbody>
+            <tr>
+              <th scope="row">What it does</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>Automates time off and payroll admin, scoped to your practice rather than to a generic company.</li>
+                  <li>Returns 60 to 100 admin hours a year at the practice we built it for.</li>
+                  <li>Gives you a quarterly practice snapshot, so the operations picture is written down somewhere other than one person's memory.</li>
+                  <li>Includes monthly working time with both founders, on your work, not a status call.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it does not do</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>It does not replace your payroll provider or your accountant.</li>
+                  <li>It does not touch clinical systems or patient charts.</li>
+                  <li>It is not a product you buy off a shelf. It is built against your rules, which means it only makes sense once we know them.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">What it costs</th>
+              <td>Included in tier 3: $4,500 setup and $350 a month, with the whole practice knowledge base underneath it.</td>
+            </tr>
+            <tr>
+              <th scope="row">What we need from you</th>
+              <td>
+                <ul class="plain" role="list">
+                  <li>Your time off policy as it is actually applied, including the exceptions nobody wrote down.</li>
+                  <li>Access to the accounts the work runs in, created by you and revocable by you.</li>
+                  <li>An hour a month from whoever owns the schedule.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. PRICES ============ -->
+  <section class="sec" id="s3" aria-labelledby="s3h">
+    <div class="sec-num" aria-hidden="true">03</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s3h">Prices</h2>
+      <p class="lede">Month to month, no term. Cancel and you keep every page. Export any time, at no charge.</p>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-7">
+        <table class="prices">
+          <caption id="tcap-7">Schedule A. Tiers</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="min-width:190px">Tier</th>
+              <th scope="col" style="min-width:250px">What it covers</th>
+              <th scope="col" class="num">Setup</th>
+              <th scope="col" class="num">Monthly</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1. Front desk knowledge base</th>
+              <td class="covers">The front desk's knowledge, written up, searchable, and kept current by your office manager. Decision lookups included.</td>
+              <td class="num">$2,500</td><td class="num">$299</td>
+            </tr>
+            <tr>
+              <th scope="row" class="starred">2. Whole practice knowledge base</th>
+              <td class="covers">The whole floor, not just the front desk: technicians, optical, and each doctor's rules, with a quarterly content review.</td>
+              <td class="num">$3,500</td><td class="num">$250</td>
+            </tr>
+            <tr>
+              <th scope="row">3. Knowledge base plus operations</th>
+              <td class="covers">Everything above, plus time off and payroll automation, a quarterly practice snapshot, and monthly working time with both of us.</td>
+              <td class="num">$4,500</td><td class="num">$350</td>
+            </tr>
+            <tr>
+              <th scope="row">Recall done for you</th>
+              <td class="covers">Priced per practice, on the call. Can be folded into tier 3. We have not set a list price and will not print one before we have.</td>
+              <td class="num dim">Not set</td><td class="num dim">Not set</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dim" style="font-size:13.5px;margin-top:12px"><span style="color:var(--accent-ink);font-family:var(--serif)">&dagger;</span> Tier 2 is where we would start you. It covers the whole floor rather than one desk, and at $250 it carries the lowest monthly of the three.</p>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-8" style="margin-top:34px">
+        <table class="prices">
+          <caption id="tcap-8">Schedule B. Additions</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="min-width:190px">Item</th>
+              <th scope="col" style="min-width:250px">Note</th>
+              <th scope="col" class="num">Setup</th>
+              <th scope="col" class="num">Monthly</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Extra sections beyond a tier cap</th>
+              <td class="covers">Each additional section, written by us from your material.</td>
+              <td class="num">$600</td><td class="num dim">None</td>
+            </tr>
+            <tr>
+              <th scope="row">Second location</th>
+              <td class="covers">Shared pages built once, with each site overriding only what genuinely differs.</td>
+              <td class="num">$1,500</td><td class="num">$149</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="minor">3.1 What the monthly is actually for</h3>
+      <p>The writing, not the hosting. Hosting this costs almost nothing. When an insurance rule changes, a doctor's restrictions change, or your prices reset for the year, we update the pages and run the accuracy review. That is our job rather than something the office manager does on a weekend. A knowledge base that goes stale becomes the exact problem it was built to solve.</p>
+
+      <h3 class="minor">3.2 The comparison that matters</h3>
+      <p>Compare us to a training platform, not to your practice management software. Trainual and Whale run about $249 to $300 a month at this size and still hand you an empty system. You write every page yourself. We write the pages from what you already have, then hand you the keys.</p>
+
+      <div class="margin-note">If you would rather not pay a monthly at all, cancel after launch, keep the exported content, and maintain it yourself. We will tell you the two easiest ways to get search back.</div>
+    </div>
+  </section>
+
+  <!-- ============ 4. DATA ============ -->
+  <section class="sec" id="s4" aria-labelledby="s4h">
+    <div class="sec-num" aria-hidden="true">04</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s4h">Patient data, per product</h2>
+      <p class="lede">The honest answer is different for each product, so we give it per product rather than making one comfortable claim across the whole page.</p>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-9">
+        <table>
+          <caption id="tcap-9">Data posture</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="min-width:180px">Product</th>
+              <th scope="col" style="min-width:180px">Patient data involved</th>
+              <th scope="col" style="min-width:230px">Where it runs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Front desk knowledge base</th>
+              <td>None. 0 patient records. It holds rules, prices, protocols.</td>
+              <td class="dim">Our system, behind your practice Google sign in. There is nothing patient related in it to breach.</td>
+            </tr>
+            <tr>
+              <th scope="row">Recall done for you</th>
+              <td>Yes. Patient contact information, by necessity. No charts, ever.</td>
+              <td class="dim">Inside your own accounts, under a signed BAA, with a limited login you create and can revoke.</td>
+            </tr>
+            <tr>
+              <th scope="row">Practice operations</th>
+              <td>None. Staff and scheduling data, not patient data.</td>
+              <td class="dim">Inside your own accounts, with access you grant and can withdraw.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:22px">We sign a BAA before we start, whichever product you begin with. If a project ever needs patient data, it runs inside your accounts, never on ours. We would rather write that down here than have you find out later that the "no patient data" line only covered one of the three things we sell.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. INTEGRATION ============ -->
+  <section class="sec" id="s5" aria-labelledby="s5h">
+    <div class="sec-num" aria-hidden="true">05</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s5h">Why it does not connect to your practice management system</h2>
+      <p class="lede">It does not connect. That is on purpose, and it is the part of this document we would most like you to read twice.</p>
+
+      <p>Most hosted practice management systems do not give an outside vendor database access. Any vendor promising you a nightly sync into a hosted system is either overselling or has not checked yet. We checked.</p>
+      <p>So the knowledge base holds your rules, not your records, and it does not care which system you run. Nothing about the build changes if you switch systems next year. Recall works from a list your own team runs, or inside your system with a limited login you create and can revoke in one click if you ever want us out.</p>
+      <p>The trade is real and we will state it plainly. You do not get a live feed. What you get instead is a system with no integration to break, no vendor holding your data hostage, and no dependency on a software company deciding to keep an interface open.</p>
+
+      <div class="margin-note">If a live feed is the thing you actually want, we are not the right vendor and we will say so on the call rather than after the invoice.</div>
+    </div>
+  </section>
+
+  <!-- ============ 6. PARTIES ============ -->
+  <section class="sec" id="s6" aria-labelledby="s6h">
+    <div class="sec-num" aria-hidden="true">06</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s6h">Who you would be hiring</h2>
+      <p class="lede">Two people. You work with both of us, not an account manager.</p>
+
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-10">
+        <table>
+          <caption id="tcap-10">Parties</caption>
+          <thead>
+            <tr><th scope="col" style="min-width:150px">Name</th><th scope="col" style="min-width:120px">Role</th><th scope="col" style="min-width:250px">Background</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Alec Stephens</th>
+              <td>Co-founder</td>
+              <td class="dim">Spent the last year inside a 27 person eyecare practice, in the office, watching the front desk work. Most of what we build came out of that.</td>
+            </tr>
+            <tr>
+              <th scope="row">Jusheen Kim</th>
+              <td>Co-founder</td>
+              <td class="dim">Former lead software engineer at J.P. Morgan. Builds the systems that have to hold up under real use.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="minor">6.1 Support, stated as a limit rather than a promise</h3>
+      <p>Both of us are based in Asia. We are not at a desk during your morning rush. Urgent issues are answered by the next business morning, US time, and the escalation path goes in writing before you sign anything. We would rather state the limit than imply a promise we cannot keep.</p>
+
+      <h3 class="minor">6.2 Terms</h3>
+      <div class="scroll" tabindex="0" role="region" aria-labelledby="tcap-11">
+        <table>
+          <caption id="tcap-11">Terms of engagement</caption>
+          <tbody>
+            <tr><th scope="row" style="min-width:150px">Contract</th><td>Month to month. No term.</td></tr>
+            <tr><th scope="row">On cancellation</th><td>You keep every page. You lose the search, and we will tell you the two easiest ways to get it back.</td></tr>
+            <tr><th scope="row">Export</th><td>Any time, as plain files you can open without us. Ask and we send it, no charge.</td></tr>
+            <tr><th scope="row">Ownership</th><td>The content is yours. They are your practice's rules. We wrote them down. We do not own them.</td></tr>
+            <tr><th scope="row">Time to live</th><td>30 days from your material to the front desk computers.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. ACTION ============ -->
+  <section class="sec" id="s7" aria-labelledby="s7h">
+    <div class="sec-num" aria-hidden="true">07</div>
+    <div class="sec-body">
+      <h2 class="sec-title" id="s7h">The next step</h2>
+      <p class="lede">Twenty minutes. Bring your recall protocol and one question your front desk asks the office manager every week. We will tell you which of the three, if any, is worth doing first.</p>
+      <p>If the answer is none of them, we will say that too. It is a short call and it costs you nothing but the twenty minutes.</p>
+
+      <div class="actions">
+        <a class="btn btn-solid" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-line" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+      </div>
+
+      <p class="dim" style="font-size:13.5px;margin-top:18px">No forms beyond the calendar. No sales sequence. If you would rather send the questions in writing first, the email above reaches both of us.</p>
+    </div>
+  </section>
+
+</main>
+
+  <!-- ============ COLOPHON ============ -->
+  <footer class="colophon">
+    <div class="colophon-grid">
+      <div>
+        <h2>Prepared by</h2>
+        <p>Stephens AI</p>
+        <p class="dim">Alec Stephens and Jusheen Kim</p>
+      </div>
+      <div class="contact">
+        <h2>Contact</h2>
+        <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+        <p><a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a></p>
+      </div>
+      <div>
+        <h2>Scope of this document</h2>
+        <p class="dim">Three products, three tier prices, and one price deliberately left unset. Every figure in it appears in the table in section 1.4.</p>
+      </div>
+    </div>
+    <p class="sign">Written for independent eyecare practices, by two people who have stood at the desk.</p>
+    <hr class="rule-accent" style="margin-top:22px">
+  </footer>
+
+</div>
+
+<script>
+/* Marks the current section in the contents. Purely additive: if it throws,
+   the document is unchanged and still fully readable. */
+(function () {
+  try {
+    var toc = document.getElementById('toc');
+    if (!toc || !('IntersectionObserver' in window)) return;
+    var links = Array.prototype.slice.call(toc.querySelectorAll('a[href^="#"]'));
+    var map = {};
+    var targets = [];
+    links.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) { map[id] = a; targets.push(el); }
+    });
+    if (!targets.length) return;
+
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var a = map[e.target.id];
+        if (!a || a === current) return;
+        if (current) current.removeAttribute('aria-current');
+        a.setAttribute('aria-current', 'location');
+        current = a;
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    targets.forEach(function (t) { io.observe(t); });
+  } catch (err) { /* document stands on its own */ }
+})();
+</script>

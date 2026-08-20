@@ -1,0 +1,1194 @@
+<title>Seventeen Front Doors</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+/* ------------------------------------------------------------------ tokens
+   Deliberately not the Stephens AI palette. This page is the frame around
+   ten designs, six of which are in-brand. A warm terracotta frame would
+   quietly argue for those six. Cool clinical neutrals stay out of the way. */
+:root {
+  --ground:     #F7F8FA;
+  --surface:    #FFFFFF;
+  --surface-2:  #EFF2F4;
+  --ink:        #14181B;
+  --ink-2:      #4C565C;
+  --ink-3:      #6B767C;
+  --rule:       #DCE1E5;
+  --rule-soft:  #E9EDEF;
+  --accent:     #0F5F62;
+  --accent-2:   #0B4A4D;
+  --accent-wash:#E4EFEF;
+  --flag:       #8A5A00;
+  --flag-wash:  #FAF1DE;
+  --shadow:     0 1px 2px rgba(20,24,27,.05), 0 8px 24px rgba(20,24,27,.06);
+  --shadow-lift:0 2px 4px rgba(20,24,27,.06), 0 16px 40px rgba(20,24,27,.10);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:     #101416;
+    --surface:    #171C1F;
+    --surface-2:  #1E2427;
+    --ink:        #ECF1F3;
+    --ink-2:      #A7B3B8;
+    --ink-3:      #8B989E;
+    --rule:       #2A3236;
+    --rule-soft:  #222A2E;
+    --accent:     #6FD3D6;
+    --accent-2:   #96E3E5;
+    --accent-wash:#152A2B;
+    --flag:       #E8BC6A;
+    --flag-wash:  #2A2213;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 16px 40px rgba(0,0,0,.42);
+  }
+}
+:root[data-theme="dark"] {
+  --ground:     #101416;
+  --surface:    #171C1F;
+  --surface-2:  #1E2427;
+  --ink:        #ECF1F3;
+  --ink-2:      #A7B3B8;
+  --ink-3:      #8B989E;
+  --rule:       #2A3236;
+  --rule-soft:  #222A2E;
+  --accent:     #6FD3D6;
+  --accent-2:   #96E3E5;
+  --accent-wash:#152A2B;
+  --flag:       #E8BC6A;
+  --flag-wash:  #2A2213;
+  --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.45), 0 16px 40px rgba(0,0,0,.42);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.mono {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+a { color: var(--accent-2); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+/* ------------------------------------------------------------------ shell */
+.wrap {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media (min-width: 1040px) {
+  .wrap { grid-template-columns: 196px minmax(0, 1fr); gap: 48px; }
+}
+
+/* the jump rail */
+.rail { display: none; }
+@media (min-width: 1040px) {
+  .rail {
+    display: block;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 40px 0 40px;
+  }
+}
+.rail-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 14px;
+}
+.rail ol { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+.rail a {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--ink-2);
+  font-family: Archivo, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  border-left: 2px solid transparent;
+}
+.rail a:hover { background: var(--surface-2); color: var(--ink); border-left-color: var(--accent); }
+.rail a .n {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+main { min-width: 0; padding-top: 40px; }
+section + section { margin-top: 60px; }
+
+/* ------------------------------------------------------------------ header */
+.masthead { padding: 24px 0 0; border-bottom: 1px solid var(--rule); padding-bottom: 34px; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.masthead h1 {
+  font-size: clamp(34px, 6.2vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  font-weight: 700;
+  max-width: 15ch;
+}
+.standfirst {
+  margin: 20px 0 0;
+  font-size: 19px;
+  line-height: 1.58;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+.byline {
+  margin: 26px 0 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+
+/* ------------------------------------------------------- generic sections */
+h2.sec {
+  font-size: 13px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 26px;
+}
+h3.head {
+  font-size: 25px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 26ch;
+}
+p { margin: 0 0 16px; max-width: 68ch; }
+p:last-child { margin-bottom: 0; }
+.lede { font-size: 18.5px; color: var(--ink-2); }
+strong { font-weight: 600; color: var(--ink); }
+
+/* ------------------------------------------------------------ product trio */
+.products { display: grid; gap: 16px; }
+@media (min-width: 760px) { .products { grid-template-columns: repeat(3, 1fr); } }
+.product {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.product .tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+  align-self: flex-start;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.product .tag.new { color: var(--flag); background: var(--flag-wash); }
+.product h4 { font-size: 18px; line-height: 1.22; }
+.product p { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+
+/* ------------------------------------------------------------------ flags */
+.flags { display: flex; flex-direction: column; gap: 14px; }
+.flag {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--flag);
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+.flag h4 { font-size: 17.5px; margin-bottom: 8px; }
+.flag p { font-size: 15.5px; line-height: 1.58; color: var(--ink-2); margin-bottom: 10px; }
+.flag .ask {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--surface-2);
+  border-radius: 5px;
+  padding: 9px 12px;
+  display: block;
+  max-width: none;
+}
+.flag .ask b { color: var(--flag); font-weight: 600; }
+
+/* --------------------------------------------------------- prototype cards */
+.cards { display: flex; flex-direction: column; gap: 18px; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  scroll-margin-top: 20px;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.card:hover { box-shadow: var(--shadow-lift); }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+.card-top {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .card-top { grid-template-columns: 148px minmax(0,1fr); align-items: start; }
+}
+.schematic {
+  width: 148px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  background: var(--surface-2);
+  display: block;
+}
+.card-id {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 7px;
+}
+.card-id .num {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: .06em;
+}
+.posture {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+}
+.posture.off { color: var(--flag); background: var(--flag-wash); }
+.card h3 { font-size: 24px; line-height: 1.14; letter-spacing: -0.022em; }
+.bet {
+  margin: 12px 0 0;
+  font-size: 17.5px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink);
+  border-left: 2px solid var(--accent);
+  padding-left: 14px;
+  max-width: 58ch;
+}
+.reads { margin: 14px 0 0; font-size: 15.5px; line-height: 1.58; color: var(--ink-2); }
+
+.card-grid {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule-soft);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+.cell { padding: 18px 24px 20px; }
+@media (min-width: 720px) { .cell + .cell { border-left: 1px solid var(--rule-soft); } }
+@media (max-width: 719px) { .cell + .cell { border-top: 1px solid var(--rule-soft); } }
+.cell h5 {
+  margin: 0 0 9px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cell ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.cell li {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  padding-left: 16px;
+  position: relative;
+}
+.cell li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.cell.risk li::before { background: var(--flag); border-radius: 1px; }
+
+.card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--rule-soft);
+  background: var(--surface-2);
+}
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--ground);
+  text-decoration: none;
+  font-family: Archivo, sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: background .18s ease;
+}
+.open:hover { background: var(--accent-2); color: #fff; }
+:root[data-theme="dark"] .open:hover, :root:not([data-theme="light"]) .open:hover { color: #08191A; }
+@media (prefers-reduced-motion: reduce) { .open { transition: none; } }
+.filename { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-3); }
+
+/* ------------------------------------------------------------- verdict box */
+.verdict {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.verdict h3 { font-size: 23px; margin-bottom: 14px; }
+.verdict p { font-size: 16.5px; color: var(--ink-2); }
+.verdict ol { margin: 0 0 16px; padding-left: 22px; display: flex; flex-direction: column; gap: 11px; }
+.verdict li { font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
+.verdict li strong { color: var(--ink); }
+
+/* ------------------------------------------------------------ how to review */
+.review-steps { display: grid; gap: 14px; counter-reset: q; }
+@media (min-width: 700px) { .review-steps { grid-template-columns: repeat(3, 1fr); } }
+.q {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  padding: 20px;
+}
+.q .qn {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--accent-2);
+  display: block;
+  margin-bottom: 9px;
+}
+.q p { font-size: 15.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
+.q b { color: var(--ink); font-weight: 600; }
+
+footer {
+  margin-top: 60px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.75;
+}
+footer p { max-width: none; }
+</style>
+<div class="wrap">
+
+<nav class="rail" aria-label="Contents">
+  <p class="rail-title">Round 2 · current</p>
+  <ol>
+    <li><a href="#p11"><span class="n">11</span> The Live Catalogue</a></li>
+    <li><a href="#p12"><span class="n">12</span> The Console</a></li>
+    <li><a href="#p13"><span class="n">13</span> Demo Bands</a></li>
+    <li><a href="#p14"><span class="n">14</span> The Workbench</a></li>
+    <li><a href="#p15"><span class="n">15</span> Show the Math</a></li>
+    <li><a href="#p16"><span class="n">16</span> Day and Night</a></li>
+    <li><a href="#p17"><span class="n">17</span> The Tour</a></li>
+  </ol>
+  <p class="rail-title">Decisions</p>
+  <ol>
+    <li><a href="#products">The three products</a></li>
+    <li><a href="#decisions">Four open questions</a></li>
+    <li><a href="#verdict">Where I would land</a></li>
+  </ol>
+  <p class="rail-title">Round 1 · reference</p>
+  <ol>
+    <li><a href="#p01"><span class="n">01</span> The Product Grid</a></li>
+    <li><a href="#p02"><span class="n">02</span> The Ledger</a></li>
+    <li><a href="#p03"><span class="n">03</span> The Switcher</a></li>
+    <li><a href="#p04"><span class="n">04</span> A Day at the Front Desk</a></li>
+    <li><a href="#p05"><span class="n">05</span> Demo First</a></li>
+    <li><a href="#p06"><span class="n">06</span> The Case File</a></li>
+    <li><a href="#p07"><span class="n">07</span> The Price Card</a></li>
+    <li><a href="#p08"><span class="n">08</span> Dark Operator</a></li>
+    <li><a href="#p09"><span class="n">09</span> The Checklist</a></li>
+    <li><a href="#p10"><span class="n">10</span> Cold Email Landing</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="masthead">
+  <p class="eyebrow"><span>Stephens AI</span><span>Site redesign</span><span>Round 2</span></p>
+  <h1>Seventeen front doors for the same three products</h1>
+  <p class="standfirst">
+    Seventeen prototype landing pages, each betting on a different way to sell a front desk knowledge
+    base, recall done for you, and practice operations automation to an independent eyecare practice
+    that has never heard of us. Round 2, prototypes 11 to 17, follows the direction Alec set. Round 1
+    is kept below as reference.
+  </p>
+  <p class="byline"><span>For Alec</span><span>Every page is clickable and works on a phone</span></p>
+</header>
+
+<section id="round2">
+  <h2 class="sec">Round 2: what changed, and why</h2>
+  <h3 class="head">Alec picked 01, 05 and 08, and gave three notes.</h3>
+  <p>
+    He wanted the dynamic demos and the graphic elements without the wall of text, a testimonials
+    section, a mention that we also do custom builds, and, on the hero, an end to wrapping everything
+    in bubbles. Prototypes 11 to 17 are built to those notes.
+  </p>
+  <div class="review-steps" style="margin-top:24px;">
+    <article class="q">
+      <span class="qn">NOTE 1</span>
+      <p><b>Less text.</b> A hard budget of about sixty words of prose per section. The facts did not go anywhere, they moved into labels, captions and the visuals.</p>
+    </article>
+    <article class="q">
+      <span class="qn">NOTE 2</span>
+      <p><b>Things that move.</b> Every product has something you can actually operate. Search that filters, a recall run that steps, a request that submits and approves. All of it still works with the script turned off.</p>
+    </article>
+    <article class="q">
+      <span class="qn">NOTE 3</span>
+      <p><b>Stop the bubble wrap.</b> The hero gets one contained element at most and the headline is never inside it. Containers never nest. Two per page, maximum. These will feel emptier than round one on purpose.</p>
+    </article>
+  </div>
+</section>
+
+<section id="prototypes-2">
+  <h2 class="sec">Round 2, the seven</h2>
+  <div class="cards">
+
+    <article class="card" id="p11">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="20" width="54" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="26" width="54" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="32" width="54" height="2.5" rx="1" fill="var(--rule)"/><rect x="78" y="18" width="60" height="30" rx="1.5" fill="var(--ink-3)"/><rect x="10" y="56" width="128" height="40" rx="1.5" fill="var(--rule)"/><rect x="10" y="56" width="1.5" height="40" rx="0" fill="var(--accent)"/><rect x="53" y="56" width="1.5" height="40" rx="0" fill="var(--rule)"/><rect x="96" y="56" width="1.5" height="40" rx="0" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 11</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Live Catalogue</h3>
+          <p class="bet">Prototype 01, except every card is a thing you can actually drive.</p>
+          <p class="reads">The three column catalogue rebuilt so every product is operable. Headline, stat row and data posture sit bare on the sky beside a single pane holding a real search over eight situation pages. Below, the three panels close their gaps at desktop into one console with three working bays: a decision lookup, a run sequencer that shows what happens when the update step goes first, and a time off request you can submit and approve.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The closest thing to a finished answer here, and the shortest path from mock up to a real build.</li><li>Keeps 01&#x27;s comparability while fixing its main weakness, which was that nothing moved.</li><li>The run sequencer punishing you for doing the update step early is the best single explanation of recall in the whole set.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Three bays side by side is still the most visually busy of the seven, even after the panels fused.</li><li>The most code of any prototype here, so the most to keep working later.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/0ec5d6ab-59f5-4539-80f4-28954e81649d" target="_blank" rel="noopener">Open prototype 11
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/11-live-catalogue.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p12">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="#1B2124"/><rect x="0" y="0" width="148" height="104" rx="0" fill="#1B2124"/><rect x="12" y="10" width="46" height="3" rx="1" fill="#3A4448"/><rect x="12" y="16" width="46" height="3" rx="1" fill="#3A4448"/><rect x="12" y="24" width="124" height="24" rx="1.5" fill="#EFF2F4"/><rect x="12" y="54" width="124" height="22" rx="1.5" fill="#EFF2F4"/><rect x="12" y="82" width="124" height="14" rx="1.5" fill="#2E383C"/><circle cx="132" cy="12" r="8" fill="var(--accent)" opacity="0.5"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 12</span>
+            <span class="posture off">departure</span>
+          </div>
+          <h3>The Console</h3>
+          <p class="bet">08 and 05 fused: a dark instrument panel with three working windows cut into it.</p>
+          <p class="reads">A dark panel with three daylight windows cut edge to edge through it, each a working panel you can search, step and submit in. Facts ride on tabular readout rails. Every other section is separated by nothing but a hairline, a band edge and open space. Zero bubble wrapped regions on the entire page.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The strongest visual identity in all seventeen. Nothing else in an inbox looks like this.</li><li>The light windows against the dark ground make the software look genuinely real.</li><li>Cleanest execution of the bubble note: literally no cards anywhere.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Still a dark page carrying a conversation about patient data, which is the same register risk as 08.</li><li>Forwards and prints badly, and forwarding to a partner is how these get decided.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/664223ea-9594-4a54-a42d-fa0f6b81600e" target="_blank" rel="noopener">Open prototype 12
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/12-the-console.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p13">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="0" y="10" width="148" height="26" rx="0" fill="var(--surface-2)"/><rect x="78" y="14" width="58" height="18" rx="1.5" fill="var(--ink-3)"/><rect x="10" y="16" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="22" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="28" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="0" y="40" width="148" height="26" rx="0" fill="var(--rule)"/><rect x="12" y="44" width="58" height="18" rx="1.5" fill="var(--ink-3)"/><rect x="80" y="46" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="80" y="52" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="80" y="58" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="0" y="70" width="148" height="26" rx="0" fill="var(--surface-2)"/><rect x="78" y="74" width="58" height="18" rx="1.5" fill="var(--ink-3)"/><rect x="10" y="76" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="82" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="88" width="50" height="2.5" rx="1" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 13</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>Demo Bands</h3>
+          <p class="bet">Three bands, three demos, about forty words each. That is the page.</p>
+          <p class="reads">Three full bleed bands, each handing over half its width to a working demo you can search, step and approve. Everything else is separated by ground shifts and hairlines. A single frosted pricing pane is the only elevated thing on the page.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The most disciplined answer to the two notes at once: least text, most demo, almost no bubbles.</li><li>Reads fast. A visitor gets all three products in one scroll without a paragraph.</li><li>The alternating rhythm makes it feel calm rather than sparse.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Least room for the proof and objection handling that wins a sceptical owner.</li><li>Three bands of similar shape can start to feel repetitive by the third.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/09db2c77-bff2-4302-bfe4-e8a6435a33b9" target="_blank" rel="noopener">Open prototype 13
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/13-demo-bands.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p14">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="14" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="21" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="28" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="35" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="50" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="57" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="64" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="71" width="50" height="2.5" rx="1" fill="var(--rule)"/><rect x="74" y="16" width="64" height="72" rx="1.5" fill="var(--ink-3)"/><rect x="74" y="16" width="64" height="8" rx="1.5" fill="var(--rule)"/><circle cx="79" cy="20" r="1.6" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 14</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Workbench</h3>
+          <p class="bet">One app window that never leaves the screen. Scrolling changes what is inside it.</p>
+          <p class="reads">A single glass app window pins beside the copy and swaps its contents as you scroll, so the knowledge base search, the recall run and the time off approval all play out in the same frame. Everything around it is separated by full bleed bands and hairlines rather than boxes.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The one frame doing all three jobs is the clearest possible argument that this is one system, not three products.</li><li>Technically the most impressive thing here, and it degrades correctly with the script off.</li><li>Only one container on screen at a time, which satisfies the bubble note by construction.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Scroll driven pinning is the most fragile pattern in the set on an old clinic browser.</li><li>A visitor who scrolls fast can blow past a product without registering that the frame changed.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/49d01010-5287-441b-91c4-996baf386413" target="_blank" rel="noopener">Open prototype 14
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/14-the-workbench.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p15">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><circle cx="36" cy="30" r="16" fill="none" stroke="var(--ink-3)" stroke-width="2"/><path d="M52 30 h34" stroke="var(--accent)" stroke-width="2"/><circle cx="102" cy="30" r="9" fill="var(--accent)" opacity="0.35"/><rect x="14" y="58" width="7" height="26" rx="1.5" fill="var(--rule)"/><rect x="27" y="58" width="7" height="24" rx="1.5" fill="var(--rule)"/><rect x="40" y="58" width="7" height="22" rx="1.5" fill="var(--rule)"/><rect x="53" y="58" width="7" height="20" rx="1.5" fill="var(--rule)"/><rect x="66" y="58" width="7" height="18" rx="1.5" fill="var(--rule)"/><rect x="79" y="58" width="7" height="16" rx="1.5" fill="var(--rule)"/><rect x="92" y="58" width="7" height="14" rx="1.5" fill="var(--rule)"/><rect x="105" y="58" width="7" height="12" rx="1.5" fill="var(--rule)"/><rect x="118" y="58" width="7" height="26" rx="1.5" fill="var(--accent)"/><rect x="10" y="92" width="128" height="2" rx="1" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 15</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>Show the Math</h3>
+          <p class="bet">Diagrams do the explaining. If a sentence can be a picture, it is a picture.</p>
+          <p class="reads">Four hand drawn diagrams carry the whole argument on bare background: the front desk interruption loop collapsing to one search, a month of recall snapping from eleven scattered passes onto a single scheduled run with the update step finally last, the 60 to 100 hour return drawn honestly as a range rather than a false precision, and a dashed boundary showing exactly where we stop. Prose is a couple of lines a section.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The recall diagram explains in one picture what took three paragraphs everywhere else.</li><li>Drawing the hour return as a range instead of a single number is a credibility win, not a compromise.</li><li>The dashed boundary showing what we do not do is a genuinely original way to handle the objection.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Diagrams have to be right. A wrong one is worse than a wrong sentence because it looks authoritative.</li><li>Least conventional of the seven, so the hardest to predict how a practice owner reacts.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/eb9d301a-5a35-4bb5-8262-7f3808fb9f9e" target="_blank" rel="noopener">Open prototype 15
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/15-show-the-math.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p16">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="0" y="0" width="148" height="32" rx="0" fill="var(--surface)"/><rect x="10" y="10" width="54" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="17" width="54" height="2.5" rx="1" fill="var(--rule)"/><rect x="0" y="32" width="148" height="44" rx="0" fill="#1B2124"/><rect x="10" y="38" width="60" height="32" rx="1.5" fill="#EFF2F4"/><rect x="80" y="42" width="52" height="3" rx="1" fill="#5A666B"/><rect x="80" y="48" width="52" height="3" rx="1" fill="#5A666B"/><rect x="80" y="54" width="52" height="3" rx="1" fill="#5A666B"/><rect x="0" y="76" width="148" height="28" rx="0" fill="var(--surface)"/><rect x="10" y="84" width="60" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="91" width="60" height="2.5" rx="1" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 16</span>
+            <span class="posture">in-brand with a dark core</span>
+          </div>
+          <h3>Day and Night</h3>
+          <p class="bet">Light and calm where they read, dark and technical where the software lives.</p>
+          <p class="reads">A light containerless hero hands off through a labelled threshold into one full bleed night band where the three products sit as dark spec blocks beside light day windows you can search, run and approve. Then it steps back into daylight for the adoption quote and its answer, printed pricing, custom builds and the close.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>Gets 08&#x27;s visual punch without asking a practice owner to read a whole dark page.</li><li>Register does the work headings usually do: dark means software, light means the practice talking.</li><li>The threshold moment between the two grounds is the best transition in the set.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Two visual systems on one page is twice the surface to keep consistent later.</li><li>The airy hero leaves a lot of empty space on the right at desktop, which reads as unbalanced rather than calm.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/e73f3555-3774-40ca-8e9b-479dd56ff372" target="_blank" rel="noopener">Open prototype 16
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/16-day-and-night.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p17">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="14" y="12" width="2" height="80" rx="0" fill="var(--rule)"/><circle cx="15" cy="18" r="3.5" fill="var(--rule)"/><circle cx="15" cy="36" r="3.5" fill="var(--accent)"/><circle cx="15" cy="54" r="3.5" fill="var(--rule)"/><circle cx="15" cy="72" r="3.5" fill="var(--rule)"/><circle cx="15" cy="90" r="3.5" fill="var(--rule)"/><rect x="28" y="14" width="52" height="12" rx="1.5" fill="var(--rule)"/><rect x="28" y="32" width="52" height="12" rx="1.5" fill="var(--ink-3)"/><rect x="28" y="50" width="52" height="12" rx="1.5" fill="var(--rule)"/><rect x="28" y="68" width="52" height="12" rx="1.5" fill="var(--rule)"/><rect x="28" y="86" width="52" height="12" rx="1.5" fill="var(--rule)"/><rect x="88" y="14" width="48" height="12" rx="1.5" fill="var(--rule)"/><rect x="88" y="32" width="48" height="12" rx="1.5" fill="var(--rule)"/><rect x="88" y="50" width="48" height="12" rx="1.5" fill="var(--rule)"/><rect x="88" y="68" width="48" height="12" rx="1.5" fill="var(--rule)"/><rect x="88" y="86" width="48" height="12" rx="1.5" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 17</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Tour</h3>
+          <p class="bet">A guided walkthrough. One visual, one sentence, next.</p>
+          <p class="reads">Ten stops down a persistent progress rail, each one heading, one sentence and one thing to look at or drive: the interrupted phone call, a working search, a recall run that punishes you for doing the update step early, an approval that carries to payroll, a client saying the hard part is adoption, and the price.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell"><h5>Strong at</h5><ul><li>The one sentence per stop rule enforces the text note harder than any other prototype.</li><li>The progress rail tells a cold visitor how long this will take, which is why they keep going.</li><li>Varying the stop types, panel then diagram then number then quote, stops it feeling like a slideshow.</li></ul></div>
+        <div class="cell risk"><h5>What it risks</h5><ul><li>Ten stops is still ten stops. It is a longer commitment than a cold reader may give.</li><li>Guided tours can feel like being walked rather than allowed to look around.</li></ul></div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/10931467-3357-4c64-8f01-9c19a566d7fe" target="_blank" rel="noopener">Open prototype 17
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/17-the-tour.html</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="products">
+  <h2 class="sec">What is on every page</h2>
+  <div class="products">
+    <article class="product">
+      <span class="tag">Live</span>
+      <h4>Front desk knowledge base</h4>
+      <p>The insurance rules, prices and protocols the front desk keeps in their heads, searchable, kept current by the office manager. Live in a 27 person practice. Holds no patient records.</p>
+    </article>
+    <article class="product">
+      <span class="tag new">New, no price yet</span>
+      <h4>Recall done for you</h4>
+      <p>The monthly recall run. Scleral letters, medical letters across about ten reason codes, calls and postcards once per provider, then the update step that has to go last.</p>
+    </article>
+    <article class="product">
+      <span class="tag">Sold in tier 3</span>
+      <h4>Practice operations automation</h4>
+      <p>Time off and payroll. Returned 60 to 100 admin hours a year at the practice we built it for, plus a quarterly snapshot and monthly working time with both of us.</p>
+    </article>
+  </div>
+  <p style="margin-top:20px;color:var(--ink-3);font-size:15px;">
+    Plus, new in round 2: a testimonials section, and a custom builds section covering the coaching
+    practice, the construction company in Japan and the test prep company. Custom work is scoped on
+    the call, so no page prints a price for it.
+  </p>
+</section>
+
+<section id="decisions">
+  <h2 class="sec">Four things that need answering before any of this ships</h2>
+  <p class="lede" style="margin-bottom:24px;">
+    None of these are design questions. They came out of building the pages.
+  </p>
+  <div class="flags">
+
+    <article class="flag">
+      <h4>The practice has not actually given us a testimonial</h4>
+      <p>
+        Round 2 needed quotes, so I read the real email threads rather than write any. The
+        relationship is plainly good and the tool is in daily use, but the warmest lines on record are
+        thanks for fixes. The most telling one is the office manager two weeks after go live: <strong>"I
+        think the biggest issue will be getting in the habit of using the tool."</strong>
+      </p>
+      <p>
+        Every round 2 page uses only verbatim quotes, attributed by role, with no name, practice or
+        city, because permission has not been asked for. And every page builds that adoption quote as
+        a <strong>quote and answer pair</strong>, because a client saying the hard part is not the
+        software, answered honestly, is worth more than a rave we do not have. Look at how 16 and 17
+        handle it and tell me whether that lands or whether it reads as weak.
+      </p>
+      <span class="ask"><b>Needs:</b> ask Gabe for permission, and ask him what the front desk does differently now than in June. That question gets a usable sentence. "How is the tool" does not.</span>
+    </article>
+
+    <article class="flag">
+      <h4>Recall still has no price, and it probably does not price like software</h4>
+      <p>
+        All seventeen say priced per practice on the call. That is a hole in a page whose main
+        differentiator is that we print our prices. Before setting it: recall is <strong>labour, not
+        software</strong>. Eight provider runs a month plus letters plus postcards plus working a call
+        list is recurring human time that scales with providers, not with pages.
+      </p>
+      <span class="ask"><b>Needs:</b> a number, and a decision on whether it is per provider, per run, or flat.</span>
+    </article>
+
+    <article class="flag">
+      <h4>"It holds no patient data" cannot cover recall</h4>
+      <p>
+        It is a load bearing trust line on the live site. Recall touches patient contact details, so
+        the claim stops being true of the catalogue. Every prototype now states data posture
+        <strong>per product</strong>: the knowledge base holds zero records, recall runs inside the
+        practice's own accounts under the BAA and never touches charts.
+      </p>
+      <span class="ask"><b>Needs:</b> agreement that the site stops making one blanket data claim.</span>
+    </article>
+
+    <article class="flag">
+      <h4>The tier caps went missing, and custom builds needs a framing</h4>
+      <p>
+        Up to 30 pages on tier 1, and up to 70 pages with 6 lookups on tier 2, are on the live site but
+        absent from all seventeen. That is my error: I left them out of the brief's approved facts and
+        the review pass correctly stripped them as unverified. One line of copy to restore.
+      </p>
+      <span class="ask"><b>Needs:</b> confirm the caps, and say whether custom builds should anchor with a "from $X" or stay scoped on the call.</span>
+    </article>
+
+  </div>
+</section>
+
+<section id="how">
+  <h2 class="sec">How to review round 2</h2>
+  <p class="lede" style="margin-bottom:22px;">
+    Open three or four on your phone, drive the demos, and answer these.
+  </p>
+  <div class="review-steps">
+    <article class="q">
+      <span class="qn">01</span>
+      <p>Does the <b>demo actually convince you</b>, or does it just look busy? A demo that does not land is worse than a screenshot.</p>
+    </article>
+    <article class="q">
+      <span class="qn">02</span>
+      <p>With the text cut this far, is anything <b>missing that you would have to say on the call</b> anyway?</p>
+    </article>
+    <article class="q">
+      <span class="qn">03</span>
+      <p>Does printing the adoption quote read as <b>honest or as weak</b>? That is the single biggest open call in round 2.</p>
+    </article>
+  </div>
+</section>
+
+<section id="prototypes-1">
+  <h2 class="sec">Round 1, kept for reference</h2>
+  <p style="margin-bottom:22px;color:var(--ink-2);">
+    The original ten. Alec picked 01, 05 and 08 from these. They do not have the testimonials or
+    custom builds sections, and they are wordier and more heavily boxed than round 2 on purpose,
+    because that is what the notes were about.
+  </p>
+  <div class="cards">
+
+    <article class="card" id="p01">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="7" rx="1.5" fill="var(--rule)"/><rect x="10" y="21" width="62" height="26" rx="1.5" fill="var(--ink-3)"/><rect x="78" y="21" width="60" height="26" rx="1.5" fill="var(--rule)"/><rect x="10" y="53" width="39" height="43" rx="1.5" fill="var(--rule)"/><rect x="53" y="53" width="39" height="43" rx="1.5" fill="var(--rule)"/><rect x="96" y="53" width="39" height="43" rx="1.5" fill="var(--rule)"/><rect x="10" y="53" width="39" height="4" rx="1.5" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 01</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Product Grid</h3>
+          <p class="bet">Clarity beats cleverness. Three products, three cards, prices visible, book a call.</p>
+          <p class="reads">The straight, confident version of the pitch. Three product cards on matched baselines, each with its own working software depiction, its own price and its own data posture, then a single dark panel that answers the HIPAA and practice management questions before the reader has to ask.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>Three products genuinely comparable at a glance, which is the actual job.</li><li>Closest to what is already built, so it is the fastest of the ten to ship.</li><li>Serves warm traffic, referrals and search as well as it serves a cold click.</li><li>Nothing in it can age badly.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>It looks like every other B2B software site, so it differentiates on nothing.</li><li>Does not prove we have been inside a clinic. It only says so.</li><li>A cold reader has no particular reason to scroll past the fold.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/22f723bc-9474-4120-ac95-49ac9b71a507" target="_blank" rel="noopener">Open prototype 01
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/01-product-grid.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p02">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="14" y="8" width="64" height="6" rx="1.5" fill="var(--ink-3)"/><rect x="14" y="20" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="25" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="30" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="35" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="44" width="120" height="1.5" rx="0" fill="var(--ink-3)"/><rect x="14" y="51" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="56" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="61" width="120" height="2.5" rx="1" fill="var(--rule)"/><rect x="14" y="68" width="120" height="5" rx="1.5" fill="var(--rule)"/><rect x="14" y="76" width="120" height="5" rx="1.5" fill="var(--rule)"/><rect x="14" y="84" width="120" height="5" rx="1.5" fill="var(--rule)"/><rect x="14" y="92" width="120" height="5" rx="1.5" fill="var(--rule)"/><rect x="14" y="68" width="3" height="29" rx="1.5" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 02</span>
+            <span class="posture off">departure</span>
+          </div>
+          <h3>The Ledger</h3>
+          <p class="bet">A practice owner trusts a well set document more than a well designed advert.</p>
+          <p class="reads">A typeset operations note on warm paper. It argues in document order, pre-declares every number in a figures of record table, gives each product an identical four row specification including what it does not do, and prints one price as “Not set” on purpose.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>The specification tables, and especially the what it does not do row, are unusually persuasive to an owner who has been oversold before.</li><li>Signals competence in the first three seconds without claiming anything.</li><li>Ages well and prints, which matters when a manager forwards it to a partner.</li><li>Terracotta held back to a marginal tick, so it reads as restraint rather than branding.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Dense. A phone reader between patients may bounce before the argument lands.</li><li>The paper and serif register can read as dry, or as a consultancy rather than a builder.</li><li>Most work to keep current, because the copy is the design.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/ddb88cde-6570-465a-b169-ebed80899453" target="_blank" rel="noopener">Open prototype 02
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/02-the-ledger.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p03">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="7" rx="1.5" fill="var(--rule)"/><rect x="30" y="22" width="88" height="11" rx="1.5" fill="var(--rule)"/><rect x="32" y="24" width="26" height="7" rx="1.5" fill="var(--accent)"/><rect x="10" y="40" width="60" height="32" rx="1.5" fill="var(--ink-3)"/><rect x="76" y="40" width="62" height="32" rx="1.5" fill="var(--rule)"/><rect x="10" y="80" width="128" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="85" width="128" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="90" width="128" height="2.5" rx="1" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 03</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Switcher</h3>
+          <p class="bet">One page, three pitches. Let the visitor self-select the product that matches their pain.</p>
+          <p class="reads">A three way segmented control swaps the entire pitch in place: headline, depiction, stats and call to action. A sticky dock remembers the choice and lights up the matching price card further down. With JavaScript off it degrades to three stacked pitches.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>Solves the multi-product problem elegantly without three separate pages to maintain.</li><li>One URL can serve three different cold email angles, which is directly useful for outreach.</li><li>The sticky dock carrying the selection into pricing is a real conversion mechanic.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Tabs hide two thirds of the content from someone who is scanning, and cold readers scan.</li><li>A visitor may never realise there are three products at all.</li><li>Most moving parts of the in-brand set, so most to break on a clinic&#x27;s old browser.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/d88ffb21-535e-4478-97cc-19c591744060" target="_blank" rel="noopener">Open prototype 03
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/03-product-switcher.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p04">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="72.5" y="8" width="3" height="88" rx="0" fill="var(--ink-3)"/><rect x="14" y="14" width="52" height="20" rx="1.5" fill="var(--rule)"/><rect x="82" y="40" width="52" height="20" rx="1.5" fill="var(--rule)"/><rect x="14" y="66" width="52" height="20" rx="1.5" fill="var(--rule)"/><circle cx="74" cy="20" r="4" fill="var(--accent)"/><circle cx="74" cy="46" r="4" fill="var(--accent)"/><circle cx="74" cy="72" r="4" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 04</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>A Day at the Front Desk</h3>
+          <p class="bet">Show them their own Tuesday. The products arrive as answers to moments they recognise.</p>
+          <p class="reads">One working day as a warm vertical timeline. Each hour names a friction in plain prose before it resolves into a hand built depiction and quietly attaches the product that answers it. The catalogue, tiers and objections are handled compactly at close of day.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>The single best proof in the set that we have actually stood at a front desk.</li><li>An office manager will recognise their own Tuesday, which is worth more than any stat.</li><li>Products land as answers rather than as a pitch, so it never feels like being sold to.</li><li>The moments are quotable straight into the cold email itself.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Long, and the commercial payload is back-loaded behind the story.</li><li>A price shopper has to scroll a long way to find a number.</li><li>Only works if every moment rings true, so it needs a real front desk person to read it before it ships.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/7af4eac6-2cd5-4b68-ad2f-91e8f977d6c1" target="_blank" rel="noopener">Open prototype 04
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/04-a-day-at-the-front-desk.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p05">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="7" rx="1.5" fill="var(--rule)"/><rect x="10" y="20" width="128" height="16" rx="1.5" fill="var(--ink-3)"/><rect x="15" y="25" width="8" height="6" rx="1.5" fill="var(--accent)"/><rect x="10" y="42" width="128" height="34" rx="1.5" fill="var(--rule)"/><rect x="16" y="48" width="80" height="2.5" rx="1" fill="var(--rule)"/><rect x="16" y="53" width="80" height="2.5" rx="1" fill="var(--rule)"/><rect x="16" y="58" width="80" height="2.5" rx="1" fill="var(--rule)"/><rect x="10" y="82" width="128" height="14" rx="1.5" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 05</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>Demo First</h3>
+          <p class="bet">Stop describing it. Let them use it in the first five seconds.</p>
+          <p class="reads">Opens on a live, keyboard driven search box over ten real situation pages, with the refraction answer already rendered underneath. Then it argues the case in the order a busy owner reads it, with two more panels the visitor can actually drive.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>Shortest path from click to belief of anything here. The product sells itself.</li><li>Turns a cold sceptic into someone who has used the thing, which is a different conversation.</li><li>The strongest possible showing for the knowledge base specifically.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>It showcases one product brilliantly and the other two by comparison, which cuts against the whole reason for the redesign.</li><li>A demo anyone can drive invites the reaction “so it is a search box”.</li><li>Most build effort and most ongoing fragility per unit of page.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/1d3cbbf9-0707-4a54-b28a-a4ae0c8aad29" target="_blank" rel="noopener">Open prototype 05
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/05-demo-first.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p06">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="7" width="74" height="6" rx="1.5" fill="var(--ink-3)"/><rect x="10" y="18" width="36" height="78" rx="1.5" fill="var(--rule)"/><rect x="13" y="23" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="13" y="30" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="13" y="37" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="13" y="44" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="13" y="51" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="13" y="58" width="30" height="2" rx="1" fill="var(--rule)"/><rect x="52" y="18" width="86" height="20" rx="1.5" fill="var(--rule)"/><rect x="52" y="44" width="86" height="24" rx="1.5" fill="var(--rule)"/><rect x="52" y="74" width="86" height="22" rx="1.5" fill="var(--rule)"/><rect x="52" y="18" width="2" height="78" rx="0" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 06</span>
+            <span class="posture off">departure</span>
+          </div>
+          <h3>The Case File</h3>
+          <p class="bet">One practice, documented properly. Proof does more work than a pitch ever will.</p>
+          <p class="reads">A near monochrome paper record: masthead, metadata block and exhibit index, then five numbered findings, three dated builds with hand drawn exhibits, the prices, and the two objections answered per product. The proof arrives before any pitch does.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>Proof first is the right order for a sceptical reader who has never heard of us.</li><li>The restraint reads as confidence. Nothing here is trying to impress anyone.</li><li>The exhibits make the work legible in a way a feature list cannot.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>It is a case file on a practice we will not name, which is exactly the credibility gap already flagged as the biggest one left. This design needs that reference more than any other.</li><li>One practice&#x27;s story does not obviously generalise to a practice with different problems.</li><li>The monochrome register can read as austere, or as a report nobody asked for.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/e700dc5b-2d0e-4450-ac05-74afa8f24b93" target="_blank" rel="noopener">Open prototype 06
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/06-case-file.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p07">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="20" width="39" height="24" rx="1.5" fill="var(--rule)"/><rect x="53" y="20" width="39" height="24" rx="1.5" fill="var(--ink-3)"/><rect x="96" y="20" width="39" height="24" rx="1.5" fill="var(--rule)"/><rect x="53" y="20" width="39" height="3" rx="1.5" fill="var(--accent)"/><rect x="10" y="52" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="61" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="70" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="79" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="88" width="128" height="6" rx="1.5" fill="var(--rule)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 07</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Price Card</h3>
+          <p class="bet">Every competitor hides pricing behind a call. Putting it first is the whole differentiator.</p>
+          <p class="reads">Three prices at the fold and then twenty rows of line by line tier comparison earning them, a keyboard operable configurator that ships correct totals before any script runs, and a four way table setting the tiers against doing nothing, hiring, and a training platform. The unpriced recall cell is left honestly hatched.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>The sharpest differentiator we actually have. Competitors gate pricing and we do not.</li><li>Self-qualifies hard, so calls happen with people who have already accepted the number.</li><li>The four way comparison does the objection handling before the objection is raised.</li><li>Fastest page on the list for a reader to get what they came for.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Leading with price attracts price shoppers and anchors the conversation before value is established.</li><li>Publishes the card to competitors as well as to buyers.</li><li>The empty recall cell is honest, but it draws the eye straight to the thing we cannot yet sell.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/80749ffa-dab4-4adb-b311-33e0e4501dd4" target="_blank" rel="noopener">Open prototype 07
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/07-price-card.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p08">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="#1B2124"/><rect x="0" y="0" width="148" height="104" rx="0" fill="#1B2124"/><rect x="10" y="8" width="60" height="6" rx="1.5" fill="#3A4448"/><rect x="10" y="22" width="60" height="26" rx="1.5" fill="#2E383C"/><rect x="78" y="22" width="60" height="26" rx="1.5" fill="#EFF2F4"/><rect x="10" y="56" width="60" height="26" rx="1.5" fill="#EFF2F4"/><rect x="78" y="56" width="60" height="26" rx="1.5" fill="#2E383C"/><circle cx="130" cy="14" r="9" fill="var(--accent)" opacity="0.45"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 08</span>
+            <span class="posture off">departure</span>
+          </div>
+          <h3>Dark Operator</h3>
+          <p class="bet">Look like the engineering firm we are, not the eleventh pastel healthcare vendor in their inbox.</p>
+          <p class="reads">A full bleed night page with a single blurred ember and hairline rules. The three products are alternating bands whose mock ups are light day windows dropped into the dark, so the software reads as software while the page reads as an engineering firm.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>Nothing else in that inbox looks like this, and the click through is the scarce resource.</li><li>Positions us as engineers, which is true and is what justifies a monthly fee.</li><li>The day window depictions make the software look genuinely real.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Healthcare buyers skew conservative. Dark can read as consumer tech, or worse, as crypto.</li><li>Bad mismatch of register when the topic on screen is patient data and a BAA.</li><li>Does not print or forward well, and forwarding to a partner is how these decisions get made.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/f6794347-0707-48ac-ab48-929b899d177a" target="_blank" rel="noopener">Open prototype 08
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/08-dark-operator.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p09">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="10" y="8" width="128" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="20" width="6" height="6" rx="1.5" fill="var(--accent)"/><rect x="20" y="20" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="31" width="6" height="6" rx="1.5" fill="var(--accent)"/><rect x="20" y="31" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="42" width="6" height="6" rx="1.5" fill="var(--rule)"/><rect x="20" y="42" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="53" width="6" height="6" rx="1.5" fill="var(--rule)"/><rect x="20" y="53" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="64" width="6" height="6" rx="1.5" fill="var(--rule)"/><rect x="20" y="64" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="10" y="75" width="6" height="6" rx="1.5" fill="var(--rule)"/><rect x="20" y="75" width="58" height="6" rx="1.5" fill="var(--rule)"/><rect x="86" y="20" width="52" height="60" rx="1.5" fill="var(--ink-3)"/><rect x="91" y="26" width="42" height="3" rx="1" fill="var(--surface)"/><rect x="91" y="32" width="42" height="3" rx="1" fill="var(--surface)"/><rect x="91" y="38" width="42" height="3" rx="1" fill="var(--surface)"/><rect x="91" y="44" width="42" height="3" rx="1" fill="var(--surface)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 09</span>
+            <span class="posture">in-brand</span>
+          </div>
+          <h3>The Checklist</h3>
+          <p class="bet">Make the visitor diagnose themselves, and the recommendation writes itself.</p>
+          <p class="reads">Twelve problems written in front desk language, each naming what it costs, with a sticky panel alongside that names the product, the tier and the price as you tick. It defaults in the markup to the honest tier 2 recommendation before any script runs, and refuses to print a number for recall.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>The strongest qualifying mechanic here. A visitor who ticks six boxes has sold themselves.</li><li>The result is shareable to a partner, and these are usually two owner decisions.</li><li>If instrumented, it tells us which problems actually resonate, which feeds the cold email copy.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>Feels like a lead generation quiz, which is a register we have carefully avoided everywhere else.</li><li>Most likely of the ten to misbehave on a clinic&#x27;s old browser.</li><li>A visitor who ticks nothing needs the default to carry the whole page.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/78464a60-4f8f-44e0-903e-68684ed3ef85" target="_blank" rel="noopener">Open prototype 09
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/09-the-checklist.html</span>
+      </div>
+    </article>
+
+    <article class="card" id="p10">
+      <div class="card-top">
+        <svg class="schematic" viewBox="0 0 148 104" role="img" aria-label="Layout schematic"><rect width="148" height="104" fill="var(--surface)"/><rect x="46" y="8" width="56" height="5" rx="1.5" fill="var(--ink-3)"/><rect x="46" y="20" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="26" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="32" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="38" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="44" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="50" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="56" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="62" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="68" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="74" width="56" height="2.5" rx="1" fill="var(--rule)"/><rect x="46" y="84" width="56" height="9" rx="1.5" fill="var(--accent)"/></svg>
+        <div>
+          <div class="card-id">
+            <span class="num">PROTOTYPE 10</span>
+            <span class="posture off">departure</span>
+          </div>
+          <h3>The Cold Email Landing</h3>
+          <p class="bet">This is not a website. It is the page at the end of one email, and it has one job.</p>
+          <p class="reads">A single 620px column in the native UI stack, no webfont and no navigation. It opens as a signed letter admitting the email was unsolicited, runs one line of argument straight down to the signature, repeats the call to action three times, and uses a sticky bar that steps aside once the last one is on screen.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="cell">
+          <h5>Strong at</h5>
+          <ul><li>The only one purpose built for the job actually described: the click at the end of a cold email.</li><li>Loads instantly on a phone between patients, with no webfont and a third of the weight.</li><li>The signed letter opening is honest about how they got there, which disarms rather than annoys.</li><li>Cheapest to build, cheapest to keep current, easiest to make one per product angle.</li></ul>
+        </div>
+        <div class="cell risk">
+          <h5>What it risks</h5>
+          <ul><li>It is a landing page, not a website. It cannot also serve referrals, search or a returning visitor.</li><li>No room for the proof depth that wins a genuinely sceptical owner.</li><li>Leans entirely on the copy. A weak paragraph has nowhere to hide.</li></ul>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="open" href="https://claude.ai/code/artifact/11353426-7e02-4d28-9913-4be6e5a0029a" target="_blank" rel="noopener">Open prototype 10
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12L12 4M12 4H6M12 4v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="filename">prototypes/10-cold-email-landing.html</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="verdict">
+  <h2 class="sec">Where I would land</h2>
+  <div class="verdict">
+    <h3>13 for the cold email, 11 for the site.</h3>
+    <p style="margin-bottom:18px;">
+      Round 2 sharpened the choice rather than widening it. Two of the seven do the two different jobs
+      better than any compromise between them would.
+    </p>
+    <ol>
+      <li>
+        <strong>The site becomes 11, The Live Catalogue.</strong> It keeps what Alec liked about 01,
+        three products genuinely comparable side by side, and fixes its one real weakness by making
+        every card operable. It is also the shortest path from this mock up to something real.
+      </li>
+      <li>
+        <strong>The cold email links to 13, Demo Bands.</strong> Three bands, three working demos,
+        forty words each. It is the most disciplined answer to both notes at once and it reads fast on
+        a phone between patients, which is the actual condition the reader is in.
+      </li>
+      <li>
+        <strong>Steal the recall diagram from 15 and put it in both.</strong> A month of scattered
+        passes snapping onto one scheduled run, with the update step finally last, explains recall in
+        one picture better than any paragraph in the other sixteen pages.
+      </li>
+    </ol>
+    <p>
+      If you want the visual identity above all else, <strong>12</strong> is the best looking thing
+      here by a distance and has literally zero bubbles. I still would not lead with a dark page for a
+      conversation about patient data, but if Alec disagrees, 16 is the compromise: dark where the
+      software lives, light everywhere a practice owner is reading.
+    </p>
+    <p style="margin-bottom:0;">
+      Nothing ships before recall has a price and we have asked Gabe about the reference. Those two do
+      more for conversion than the choice between any of these seventeen.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>
+    All seventeen prototypes and this index are committed to <span class="mono">prototypes/</span> on
+    branch <span class="mono">claude/optometry-website-prototypes-u3m23p</span>. Each file opens
+    standalone in a browser with no build step. <span class="mono">BRIEF.md</span> and
+    <span class="mono">BRIEF-ROUND-2.md</span> are the sources of truth they were built against.
+  </p>
+  <p>
+    Round 2 was verified in a real browser at 360px and 1280px: no horizontal overflow, no script
+    errors, one h1 each, no nested containers. Every testimonial quote was diffed character for
+    character against the approved list. No page names the practice, its people or its city, and no
+    page prints a price for recall or for custom builds.
+  </p>
+  <p>
+    Prototype links are private artifacts. Use the share menu on each page before sending them on.
+  </p>
+</footer>
+
+</main>
+</div>

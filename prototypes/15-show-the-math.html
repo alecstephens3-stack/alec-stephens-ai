@@ -1,0 +1,1499 @@
+<title>Show the Math</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Prototype 15, "Show the Math". Lens v3, in brand.
+   Diagrams carry the argument. Prose is nearly absent.
+   Light scheme only, committed explicitly.
+   Bubble budget: exactly two .pane regions on the page,
+   the knowledge base panel and the time off panel.
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  --sky: linear-gradient(180deg,#F3EEE8 0%,#F7E7DA 42%,#F7DCC9 74%,#F2CFB8 100%);
+  --sky-fallback:#F5E9DE;
+  --night: radial-gradient(130% 130% at 22% -12%,#241B15 0%,#150F0B 58%,#0D0A08 100%);
+
+  --ink:#171310;
+  --ink-2:#5A4F46;
+  --cream:#F5F1E8;
+  --cream-2:#B3AB9E;
+
+  --accent:#DC6843;
+  --accent-display:#C55532;
+  --accent-deep:#8F3616;
+  --accent-night:#FF8E76;
+
+  --good:#2E7A56;
+  --warn:#946A12;
+  --bad:#B23A2F;
+  --bad-text:#93291F;   /* small red text, clears 4.5:1 on the darkest sky */
+  --good-text:#1F5C3F;
+  --warn-text:#7A5609;   /* 4.55:1 on the darkest sky, 5.7:1 inside a pane */
+
+  --rule:rgba(23,19,16,0.10);
+  --rule-soft:rgba(23,19,16,0.06);
+  --rule-strong:rgba(23,19,16,0.18);
+  --edge:rgba(23,19,16,0.50);   /* interactive component boundary, clears 3:1 everywhere */
+
+  /* diagram ink. structural strokes stay above the 3:1 graphic gate. */
+  --d-line:rgba(23,19,16,0.55);
+  --d-line-soft:rgba(23,19,16,0.50);
+  --d-fill:rgba(23,19,16,0.13);
+  --d-grid:rgba(23,19,16,0.13);
+
+  --glass:rgba(255,255,255,0.58);
+  --glass-edge:rgba(255,255,255,0.85);
+  --shadow-pane:0 14px 44px rgba(112,62,40,0.13), inset 0 1px 0 rgba(255,255,255,0.95);
+
+  --ease:cubic-bezier(0.2,0.8,0.2,1);
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --label:"Schibsted Grotesk","Inter Tight","Helvetica Neue",Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--sky-fallback);
+  background-image:var(--sky);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+svg{max-width:100%;}
+h1,h2,h3{font-weight:500;letter-spacing:-0.025em;line-height:1.08;margin:0;}
+p{margin:0;}
+a{color:inherit;}
+button,input{font:inherit;color:inherit;}
+ul,ol,dl{margin:0;padding:0;}
+li{list-style:none;}
+:focus-visible{outline:2.5px solid var(--accent-deep);outline-offset:2px;border-radius:6px;}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* ---------- review furniture ---------- */
+.proto-bar{
+  position:sticky;top:0;z-index:60;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;
+  min-height:44px;padding:8px 16px;
+  background:#1c1c1e;color:#f2f2f2;
+  font-family:var(--label);font-size:13px;line-height:1.35;
+}
+.proto-n{font-weight:700;letter-spacing:0.10em;text-transform:uppercase;}
+.proto-name{font-weight:600;padding-left:14px;border-left:1px solid rgba(255,255,255,0.28);}
+.proto-bet{color:#c9c9cc;flex:1 1 260px;min-width:0;}
+
+/* ---------- shell ---------- */
+.wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 20px;}
+section{padding:68px 0;}
+.rule-top{border-top:1px solid var(--rule);}
+
+.eyebrow{
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.13em;text-transform:uppercase;color:var(--ink-2);
+  display:flex;align-items:center;gap:9px;margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;}
+.eyebrow.on-night{color:var(--cream-2);}
+.eyebrow.on-night::before{background:var(--accent-night);}
+
+.h-sec{font-size:clamp(27px,4.2vw,38px);max-width:22ch;}
+.lede{margin-top:14px;max-width:56ch;font-size:17px;color:var(--ink-2);}
+
+/* full bleed separation, not bubbles */
+.band-soft{background:rgba(255,255,255,0.40);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.band-night{background-color:#150F0B;background-image:var(--night);color:var(--cream);}
+.band-night h2,.band-night h3{color:var(--cream);}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:12px 26px;border-radius:999px;
+  font-size:17px;font-weight:500;letter-spacing:-0.01em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:transform 150ms var(--ease),background 150ms var(--ease);
+}
+.btn-primary{background:#221A15;color:var(--cream);box-shadow:0 10px 26px rgba(60,32,18,0.22);}
+.btn-primary:hover{background:#120D0A;transform:translateY(-1px);}
+.btn-ghost{background:rgba(255,255,255,0.72);border-color:var(--edge);color:var(--ink);}
+.btn-ghost:hover{background:#fff;transform:translateY(-1px);}
+.band-night .btn-primary{background:var(--cream);color:#171310;}
+.band-night .btn-primary:hover{background:#fff;}
+.band-night .btn-ghost{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.42);color:var(--cream);}
+.band-night .btn-ghost:hover{background:rgba(255,255,255,0.14);}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:22px 0 4px;}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-0.02em;}
+.brand-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);flex:none;}
+.masthead .btn{min-height:44px;padding:10px 20px;font-size:15px;}
+
+/* ---------- hero ---------- */
+.hero{padding-top:34px;padding-bottom:48px;}
+.hero h1{font-size:clamp(32px,6vw,56px);max-width:17ch;}
+.hero h1 em{font-style:normal;color:var(--accent-display);}
+.hero-sub{margin-top:18px;max-width:58ch;font-size:18px;color:var(--ink-2);}
+.hero .cta-row{margin-top:26px;}
+
+/* the fact strip: hairlines only, no container */
+.facts{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:40px;
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+}
+.fact{min-width:0;padding:18px 18px 18px 0;}
+.fact + .fact{padding-left:18px;border-left:1px solid var(--rule);}
+.fact b{display:block;font-size:30px;font-weight:500;letter-spacing:-0.03em;line-height:1.05;}
+.fact span{display:block;margin-top:5px;font-size:13.5px;color:var(--ink-2);line-height:1.42;}
+
+/* ---------- figures ---------- */
+.fig{margin:0;}
+.fig-lead{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;
+  margin-bottom:6px;
+}
+.fig-n{
+  font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--accent-deep);
+}
+.fig-t{font-size:15px;color:var(--ink-2);}
+.fig-scroll{
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  padding:8px 0 4px;
+}
+.fig-scroll:focus-visible{outline:2.5px solid var(--accent-deep);outline-offset:4px;}
+.fig-scroll > svg{display:block;width:100%;min-width:690px;height:auto;}
+.fig-hint{display:none;margin-top:2px;font-size:13.5px;color:var(--ink-2);}
+.fig-key{
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);
+  display:grid;gap:8px 30px;grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.fig-key li{position:relative;padding-left:19px;font-size:15px;color:var(--ink-2);line-height:1.5;}
+.fig-key li::before{content:"";position:absolute;left:1px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.fig-key li b{font-weight:500;color:var(--ink);}
+
+/* diagram type */
+.d-title{font-family:var(--sans);font-size:17px;font-weight:500;fill:var(--ink);letter-spacing:-0.01em;}
+.d-lb{font-family:var(--sans);font-size:15px;fill:var(--ink);}
+.d-sub{font-family:var(--sans);font-size:14px;fill:var(--ink-2);}
+.d-eb{font-family:var(--label);font-size:14px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;fill:var(--ink-2);}
+.d-ac{font-family:var(--sans);font-size:15px;font-weight:500;fill:var(--accent-deep);}
+.d-bad{font-family:var(--sans);font-size:14px;fill:var(--bad-text);}
+.d-num{font-family:var(--sans);font-size:22px;font-weight:500;fill:var(--ink);letter-spacing:-0.02em;}
+.d-axis{fill:none;stroke:var(--d-line);stroke-width:1.5;}
+.d-group{fill:none;stroke:var(--d-line-soft);stroke-width:1.5;stroke-linecap:round;}
+.d-stroke{fill:none;stroke:var(--d-line);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.d-soft{fill:none;stroke:var(--d-grid);stroke-width:1;}
+.d-arrow{fill:var(--d-line);}
+.d-node{fill:var(--accent);stroke:var(--accent-deep);stroke-width:1.5;}
+.d-accent{fill:none;stroke:var(--accent-deep);stroke-width:2.5;stroke-linecap:round;}
+.d-accent-fill{fill:var(--accent-deep);}
+.d-person{fill:none;stroke:var(--d-line);stroke-width:2;stroke-linecap:round;}
+
+/* ---------- the one and only pane style ---------- */
+.pane{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(20px) saturate(1.35);
+  backdrop-filter:blur(20px) saturate(1.35);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--shadow-pane);
+  border-radius:26px;
+  padding:20px;
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .pane{background:rgba(255,255,255,0.90);}
+}
+.pane-head{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;
+  padding-bottom:12px;margin-bottom:2px;border-bottom:1px solid var(--rule);
+}
+.pane-head h3{font-size:17px;}
+.pane-tag{
+  margin-left:auto;font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--warn-text);
+}
+
+/* ---------- product meta rows (hairlines, never boxes) ---------- */
+.meta{margin-top:26px;}
+.meta div{display:grid;grid-template-columns:150px 1fr;gap:8px 18px;padding:13px 0;border-top:1px solid var(--rule);}
+.meta dt{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);}
+.meta dd{margin:0;font-size:16px;line-height:1.55;}
+.two-col{display:grid;gap:34px 44px;grid-template-columns:1.02fr 0.98fr;align-items:start;}
+
+/* ---------- knowledge base search ---------- */
+.kb-label{display:block;font-size:15px;color:var(--ink-2);margin:14px 0 6px;}
+.kb-field{display:flex;align-items:center;gap:11px;border-bottom:1.5px solid var(--edge);padding:0 2px;}
+.kb-field:focus-within{border-bottom-color:var(--accent-deep);}
+.kb-field input{flex:1 1 auto;min-width:0;border:0;background:transparent;font-size:17px;padding:13px 0;}
+.kb-field input:focus-visible{outline:none;}
+.kb-field input::placeholder{color:#655A50;}
+.kb-clear{flex:none;width:44px;height:44px;border-radius:999px;border:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-2);}
+.kb-clear:hover{color:var(--ink);}
+.kb-list{margin-top:6px;}
+.kb-list li + li{border-top:1px solid var(--rule-soft);}
+.kb-item{
+  display:flex;align-items:center;gap:12px;width:100%;min-height:46px;
+  padding:9px 6px;background:transparent;border:0;cursor:pointer;text-align:left;
+}
+.kb-item:hover{background:rgba(23,19,16,0.045);}
+.kb-item[aria-current="true"]{background:rgba(220,104,67,0.15);box-shadow:inset 3px 0 0 var(--accent-deep);}
+.kb-item .t{font-size:16px;line-height:1.35;}
+.kb-item .c{margin-left:auto;font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;}
+.kb-empty{padding:14px 6px;font-size:15px;color:var(--ink-2);}
+.kb-page{margin-top:16px;padding-top:16px;border-top:1px solid var(--rule-strong);}
+.kb-cat{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--accent-deep);display:block;margin-bottom:6px;}
+.kb-page h4{font-size:21px;font-weight:500;letter-spacing:-0.025em;line-height:1.12;margin:0;}
+.kb-lede{margin-top:8px;font-size:16px;}
+.kb-points{margin-top:12px;}
+.kb-points li{position:relative;padding-left:19px;margin-top:8px;font-size:15.5px;color:var(--ink-2);line-height:1.5;}
+.kb-points li::before{content:"";position:absolute;left:1px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.kb-exc{margin-top:14px;padding-left:14px;border-left:3px solid var(--warn);}
+.kb-exc b{display:block;font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--warn-text);}
+.kb-exc p{margin-top:3px;font-size:15.5px;line-height:1.5;}
+.kb-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-2);}
+.flagbtn{
+  margin-left:auto;min-height:44px;display:inline-flex;align-items:center;gap:7px;
+  padding:8px 14px;border-radius:999px;border:1px solid var(--edge);
+  background:transparent;color:var(--ink-2);font-size:13.5px;cursor:pointer;
+}
+.flagbtn:hover{background:rgba(23,19,16,0.05);color:var(--ink);}
+
+/* ---------- segmented control (CSS only, works with no JS) ---------- */
+.switcher{position:relative;border:0;padding:0;margin:0;min-width:0;}
+.switcher > legend{padding:0;}
+.seg-in{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.seg{
+  display:inline-flex;flex-wrap:wrap;gap:6px;padding:5px;
+  border:1px solid var(--edge);border-radius:999px;
+  background:rgba(255,255,255,0.5);margin-bottom:8px;
+}
+.seg-lb{
+  min-height:44px;display:inline-flex;align-items:center;padding:8px 20px;
+  border-radius:999px;cursor:pointer;font-size:15.5px;color:var(--ink);
+}
+.seg-lb:hover{background:rgba(23,19,16,0.05);}
+#rec-a:checked ~ .seg label[for="rec-a"],
+#rec-b:checked ~ .seg label[for="rec-b"]{background:#221A15;color:var(--cream);}
+#rec-a:focus-visible ~ .seg label[for="rec-a"],
+#rec-b:focus-visible ~ .seg label[for="rec-b"]{outline:2.5px solid var(--accent-deep);outline-offset:2px;}
+
+/* state driven diagram parts */
+.pass{transform:translateX(var(--xa));transition:transform 560ms var(--ease);transition-delay:calc(var(--i,0) * 26ms);}
+#rec-b:checked ~ .fig .pass{transform:translateX(var(--xb));}
+.only-b{opacity:0;transition:opacity 300ms var(--ease);}
+#rec-b:checked ~ .fig .only-b{opacity:1;}
+.only-a{opacity:1;transition:opacity 300ms var(--ease);}
+#rec-b:checked ~ .fig .only-a{opacity:0;}
+.cap-b,.outs-b{display:none;}
+#rec-b:checked ~ .cap-a,#rec-b:checked ~ .outs-a{display:none;}
+#rec-b:checked ~ .cap-b{display:block;}
+#rec-b:checked ~ .outs-b{display:grid;}
+
+.cap{margin-top:12px;max-width:60ch;font-size:16px;color:var(--ink-2);}
+.outs{display:grid;gap:10px 30px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px;padding-top:16px;border-top:1px solid var(--rule);}
+.outs li{position:relative;padding-left:19px;font-size:15.5px;color:var(--ink-2);line-height:1.5;}
+.outs li::before{content:"";position:absolute;left:1px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.outs li b{font-weight:500;color:var(--ink);}
+
+/* ---------- time off panel ---------- */
+.req-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 12px;}
+.avatar{
+  width:40px;height:40px;border-radius:50%;flex:none;background:#221A15;color:var(--cream);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.04em;
+}
+.req-name{display:block;font-size:16px;}
+.req-sub{display:block;font-size:13.5px;color:var(--ink-2);}
+.badge{
+  margin-left:auto;font-family:var(--label);font-size:13.5px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;border-radius:999px;padding:5px 12px;
+}
+.badge.pending{color:var(--warn-text);background:rgba(176,130,40,0.15);}
+.badge.approved{color:var(--good-text);background:rgba(46,122,86,0.14);}
+.badge.returned{color:var(--bad-text);background:rgba(178,58,47,0.12);}
+.steps{border-top:1px solid var(--rule);}
+.steps li{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--rule-soft);font-size:15.5px;line-height:1.45;color:var(--ink-2);transition:color 220ms var(--ease);}
+.steps li.on{color:var(--ink);}
+.mark{
+  flex:none;width:20px;height:20px;border-radius:50%;margin-top:2px;
+  border:1.6px solid rgba(23,19,16,0.48);background:rgba(255,255,255,0.7);
+  display:inline-flex;align-items:center;justify-content:center;color:#fff;
+}
+.mark svg{opacity:0;transition:opacity 150ms var(--ease);}
+.steps li.on .mark{background:var(--good);border-color:var(--good);}
+.steps li.on .mark svg{opacity:1;}
+.panel-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+.panel-actions .btn{min-height:44px;padding:10px 20px;font-size:15px;}
+.panel-note{margin-top:12px;font-size:13.5px;color:var(--ink-2);}
+.result{margin-top:12px;font-size:15.5px;line-height:1.5;}
+
+/* ---------- quotes ---------- */
+.qpair{display:grid;gap:30px 48px;grid-template-columns:1.1fr 0.9fr;align-items:start;}
+.bigq{font-size:clamp(23px,3.4vw,32px);font-weight:500;letter-spacing:-0.025em;line-height:1.22;}
+.qwho{margin-top:16px;font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.11em;text-transform:uppercase;color:var(--cream-2);}
+.ans h3{font-size:19px;margin-bottom:10px;}
+.ans p{font-size:17px;color:var(--cream);}
+.ans ul{margin-top:14px;}
+.ans li{position:relative;padding-left:19px;margin-top:9px;font-size:15.5px;color:var(--cream-2);line-height:1.5;}
+.ans li::before{content:"";position:absolute;left:1px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent-night);}
+
+.qgrid{display:grid;gap:26px 40px;grid-template-columns:repeat(3,minmax(0,1fr));}
+.qcell{border-top:2px solid var(--accent);padding-top:18px;}
+.qcell p{font-size:clamp(19px,2.2vw,23px);font-weight:500;letter-spacing:-0.02em;line-height:1.28;}
+.qcell .w{margin-top:14px;font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--ink-2);}
+.qcell .w span{display:block;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0;text-transform:none;margin-top:4px;}
+
+/* ---------- tables ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:16px;}
+.tbl caption{text-align:left;font-size:15px;color:var(--ink-2);padding-bottom:10px;}
+.tbl th,.tbl td{text-align:left;padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5;}
+.tbl thead th{
+  font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule-strong);padding-top:0;
+}
+.tbl tbody th{font-weight:500;font-size:16px;white-space:nowrap;}
+.tbl td b{font-weight:500;}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+.prices{width:100%;border-collapse:collapse;font-size:16px;}
+.prices th,.prices td{text-align:left;padding:16px 18px 16px 0;border-bottom:1px solid var(--rule);vertical-align:top;}
+.prices thead th{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule-strong);padding-top:0;}
+.prices tbody th{font-weight:500;font-size:17px;min-width:210px;}
+.prices .num{font-size:22px;font-weight:500;letter-spacing:-0.02em;white-space:nowrap;}
+.prices .start{display:inline-block;margin-top:6px;font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);}
+.prices .inc{font-size:15px;color:var(--ink-2);line-height:1.5;}
+.notes{margin-top:22px;display:grid;gap:9px;}
+.notes li{position:relative;padding-left:19px;font-size:15.5px;color:var(--ink-2);line-height:1.5;}
+.notes li::before{content:"";position:absolute;left:1px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.notes li b{font-weight:500;color:var(--ink);}
+
+/* ---------- proof / founders / custom ---------- */
+.people{display:grid;gap:26px 44px;grid-template-columns:1fr 1fr;margin-top:8px;}
+.person{display:flex;gap:14px;align-items:flex-start;padding-top:18px;border-top:1px solid var(--rule);}
+.person h3{font-size:18px;}
+.person .role{font-size:13.5px;color:var(--ink-2);margin-top:2px;}
+.person p{margin-top:8px;font-size:15.5px;color:var(--ink-2);line-height:1.55;}
+
+.builds{display:grid;gap:0 40px;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:8px;}
+.build{padding:20px 0;border-top:1px solid var(--rule);}
+.build .m{font-size:21px;font-weight:500;letter-spacing:-0.025em;line-height:1.15;}
+.build h3{font-size:15px;font-weight:500;color:var(--ink-2);margin-top:8px;}
+.build p{margin-top:8px;font-size:15px;color:var(--ink-2);line-height:1.5;}
+
+.close-note{margin-top:18px;font-size:14px;color:var(--cream-2);}
+
+footer{padding:34px 0 60px;border-top:1px solid var(--rule);}
+.foot{display:flex;flex-wrap:wrap;gap:10px 32px;align-items:baseline;justify-content:space-between;}
+footer p,footer a{font-size:15px;color:var(--ink-2);}
+footer a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px;}
+footer a:hover{color:var(--ink);}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .two-col,.qpair,.people{grid-template-columns:1fr;}
+  .qgrid,.builds{grid-template-columns:1fr;}
+  .build{padding:18px 0;}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .fact:nth-child(3n+1){padding-left:0;border-left:0;}
+  .fact:nth-child(n+4){border-top:1px solid var(--rule);}
+}
+@media (max-width:760px){
+  .fig-hint{display:block;}
+  .fig-key,.outs{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  section{padding:52px 0;}
+  .wrap{padding:0 16px;}
+  .hero{padding-top:26px;padding-bottom:36px;}
+  .pane{padding:16px;border-radius:22px;}
+  .meta div{grid-template-columns:1fr;gap:4px;}
+  .facts{grid-template-columns:1fr;border-bottom:0;}
+  .fact,.fact + .fact{padding:14px 0;border-left:0;border-top:0;border-bottom:1px solid var(--rule);}
+  .seg{border-radius:24px;}
+  .seg-lb{flex:1 1 140px;justify-content:center;}
+  .fact b{font-size:26px;}
+  .cta-row .btn{width:100%;}
+  .prices tbody th{min-width:0;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;scroll-behavior:auto !important;
+  }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 15 of 17</span>
+  <span class="proto-name">Show the Math</span>
+  <span class="proto-bet">Diagrams do the explaining. If a sentence can be a picture, it is a picture.</span>
+</div>
+
+<header class="wrap">
+  <div class="masthead">
+    <div class="brand"><span class="brand-dot" aria-hidden="true"></span> Stephens AI</div>
+    <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="wrap">
+      <p class="eyebrow">For independent eyecare practices</p>
+      <h1 id="heroTitle">Three jobs your practice runs by hand. <em>Drawn to scale.</em></h1>
+      <p class="hero-sub">We spent a year inside a 27 person eyecare practice and drew what we found. Three diagrams below, one per product, each one you can drive.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+      </div>
+
+      <ul class="facts">
+        <li class="fact"><b>27</b><span>People at the practice it runs in, 6 to 7 doctors, one location</span></li>
+        <li class="fact"><b>76</b><span>Front desk situations mapped</span></li>
+        <li class="fact"><b>4</b><span>Decision lookups built</span></li>
+        <li class="fact"><b>0</b><span>Patient records in the knowledge base</span></li>
+        <li class="fact"><b>30</b><span>Days from start to live</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= DIAGRAM 1 + PRODUCT 1 ================= -->
+  <section class="band-soft" id="kb" aria-labelledby="kbTitle">
+    <div class="wrap">
+      <p class="eyebrow">Product one, live today</p>
+      <h2 class="h-sec" id="kbTitle">Front desk knowledge base</h2>
+      <p class="lede">A question with no written answer costs two people, not one. Here is the loop, and the same call without it.</p>
+
+      <figure class="fig" id="fig1" style="margin-top:34px">
+        <div class="fig-lead">
+          <span class="fig-n">Diagram one</span>
+          <span class="fig-t">The interruption loop at the front desk, and the same path resolved at the desk.</span>
+        </div>
+        <div class="fig-scroll" tabindex="0" role="group" aria-label="Diagram one, scrollable">
+          <svg viewBox="0 0 720 396" role="img" aria-labelledby="f1t f1d">
+            <title id="f1t">The interruption loop at the front desk</title>
+            <desc id="f1d">A four station cycle: a caller asks something nobody wrote down, the caller goes on hold, someone walks to another desk, the answer comes back and the loop repeats. Two people are stopped inside the loop. Below the cycle, a single straight path: a caller asks, one search at the desk, the answer.</desc>
+
+            <!-- the cycle -->
+            <path class="d-stroke draw" d="M246 55 H514 A56 56 0 0 1 570 111 V169 A56 56 0 0 1 514 225 H246 A56 56 0 0 1 190 169 V111 A56 56 0 0 1 246 55 Z"></path>
+
+            <!-- direction arrows, clockwise -->
+            <g class="d-arrow fade">
+              <path d="M474 48 L490 55 L474 62 Z"></path>
+              <path d="M563 152 L570 168 L577 152 Z"></path>
+              <path d="M294 218 L278 225 L294 232 Z"></path>
+              <path d="M197 168 L190 152 L183 168 Z"></path>
+            </g>
+
+            <!-- stations -->
+            <g class="d-node fade">
+              <circle cx="380" cy="55" r="7"></circle>
+              <circle cx="570" cy="140" r="7"></circle>
+              <circle cx="380" cy="225" r="7"></circle>
+              <circle cx="190" cy="140" r="7"></circle>
+            </g>
+
+            <text class="d-lb fade" x="380" y="36" text-anchor="middle">A caller asks something nobody wrote down</text>
+            <text class="d-lb fade" x="588" y="135" text-anchor="start">The caller goes</text>
+            <text class="d-lb fade" x="588" y="153" text-anchor="start">on hold</text>
+            <text class="d-lb fade" x="380" y="250" text-anchor="middle">Someone walks to another desk</text>
+            <text class="d-lb fade" x="172" y="135" text-anchor="end">Back to the phone,</text>
+            <text class="d-lb fade" x="172" y="153" text-anchor="end">and it repeats</text>
+
+            <!-- two people stopped, inside the loop -->
+            <g class="d-person fade">
+              <circle cx="344" cy="112" r="9"></circle>
+              <path d="M330 140 a14 14 0 0 1 28 0"></path>
+              <circle cx="416" cy="112" r="9"></circle>
+              <path d="M402 140 a14 14 0 0 1 28 0"></path>
+            </g>
+            <g class="fade" fill="var(--bad)">
+              <rect x="356" y="104" width="3.5" height="14" rx="1.75"></rect>
+              <rect x="362" y="104" width="3.5" height="14" rx="1.75"></rect>
+              <rect x="428" y="104" width="3.5" height="14" rx="1.75"></rect>
+              <rect x="434" y="104" width="3.5" height="14" rx="1.75"></rect>
+            </g>
+            <text class="d-title fade" x="380" y="176" text-anchor="middle">Two people stopped</text>
+
+            <!-- divider -->
+            <line class="d-soft" x1="40" y1="288" x2="680" y2="288"></line>
+            <text class="d-eb" x="40" y="316">With the knowledge base</text>
+
+            <!-- the resolved path -->
+            <path class="d-accent draw" d="M200 350 H548"></path>
+            <path class="d-accent-fill fade" d="M548 343 L568 350 L548 357 Z"></path>
+            <g class="d-node fade">
+              <circle cx="200" cy="350" r="7"></circle>
+              <circle cx="380" cy="350" r="7"></circle>
+            </g>
+            <text class="d-lb fade" x="200" y="378" text-anchor="middle">A caller asks</text>
+            <text class="d-lb fade" x="380" y="378" text-anchor="middle">One search at the desk</text>
+            <text class="d-lb fade" x="560" y="378" text-anchor="middle">The answer</text>
+            <text class="d-ac fade" x="680" y="316" text-anchor="end">One step. Nobody else stops.</text>
+          </svg>
+        </div>
+        <p class="fig-hint">Swipe the diagram sideways. It is written out below.</p>
+        <ul class="fig-key">
+          <li><b>The loop.</b> A caller asks, the caller goes on hold, someone walks to another desk, the answer comes back, and the next call starts it again.</li>
+          <li><b>The cost.</b> Two people stop working, the person on the phone and the person they walked to.</li>
+          <li><b>The straight line.</b> One search at the desk returns the answer, so nobody else stops.</li>
+          <li><b>What is in it.</b> 76 front desk situations mapped, and 4 decision lookups for the calls that cost money.</li>
+        </ul>
+      </figure>
+
+      <div class="two-col" style="margin-top:44px">
+        <div>
+          <dl class="meta">
+            <div><dt>What it is</dt><dd>Short situation pages behind one search box, plus 4 decision lookups: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price.</dd></div>
+            <div><dt>Who it is for</dt><dd>The people answering the phone, and the office manager who gets interrupted every time an answer is not written down.</dd></div>
+            <div><dt>Who keeps it true</dt><dd>The office manager edits it in the app. Every edit is saved and reversible. Staff flag a wrong page in one click.</dd></div>
+            <div><dt>Access</dt><dd>Google sign in, restricted to the practice domain. Installs from the browser on the front desk computers, no admin rights. Pages already opened keep working if the internet drops.</dd></div>
+            <div><dt>Patient data</dt><dd><b>Holds no patient records.</b> It holds the practice's rules, not its charts.</dd></div>
+            <div><dt>Price</dt><dd>$2,500 setup and $299 a month at tier one. Live at day 30.</dd></div>
+          </dl>
+        </div>
+
+        <!-- BUBBLE 1 of 2 -->
+        <div class="pane" id="kbPane">
+          <div class="pane-head">
+            <h3>Front desk knowledge base</h3>
+            <span class="pane-tag">Example content</span>
+          </div>
+
+          <label class="kb-label" for="kbInput">Search the situation, not the folder</label>
+          <div class="kb-field">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none">
+              <circle cx="7" cy="7" r="4.75" stroke="#8F3616" stroke-width="1.6"></circle>
+              <path d="M10.6 10.6 14 14" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+            <input id="kbInput" type="text" autocomplete="off" spellcheck="false"
+                   aria-describedby="kbHint"
+                   placeholder="Try: refraction, triage, vision plan, price">
+            <button type="button" class="kb-clear" id="kbClear" aria-label="Clear the search" hidden>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+              </svg>
+            </button>
+          </div>
+          <p class="sr-only" id="kbHint">Type to filter the example pages. Use the buttons in the list to open one.</p>
+          <p class="sr-only" role="status" aria-live="polite" id="kbStatus"></p>
+
+          <ul class="kb-list" id="kbList">
+            <li data-key="refraction collect bill vision plan medical checkout routine exam charge price">
+              <button type="button" class="kb-item" data-target="p-refraction"><span class="t">Refraction: collect or bill</span><span class="c">Billing</span></button>
+            </li>
+            <li data-key="vision plan medical coverage complaint routine eligibility benefit which insurance">
+              <button type="button" class="kb-item" data-target="p-vision"><span class="t">Vision plan or medical: which one bills</span><span class="c">Insurance</span></button>
+            </li>
+            <li data-key="triage urgent same day flashes floaters red eye pain injury how soon">
+              <button type="button" class="kb-item" data-target="p-triage"><span class="t">Same day or next available: phone triage</span><span class="c">Scheduling</span></button>
+            </li>
+            <li data-key="doctor provider restrictions pediatric children specialty schedule book surgery day">
+              <button type="button" class="kb-item" data-target="p-doctor"><span class="t">Which doctor can see this patient</span><span class="c">Scheduling</span></button>
+            </li>
+            <li data-key="contact lens follow up fitting trial recheck lenses charge included optical">
+              <button type="button" class="kb-item" data-target="p-cl"><span class="t">Contact lens follow up: what is included</span><span class="c">Optical</span></button>
+            </li>
+            <li data-key="price lookup this year current cost exam fee spectacle lens optical charge">
+              <button type="button" class="kb-item" data-target="p-price"><span class="t">This year's price, and which list it comes from</span><span class="c">Front desk</span></button>
+            </li>
+          </ul>
+          <p class="kb-empty" id="kbEmpty" hidden>No example page matches that. Try refraction, triage, or price.</p>
+
+          <div id="kbPages">
+            <article class="kb-page" id="p-refraction">
+              <span class="kb-cat">Billing</span>
+              <h4>Refraction: collect or bill</h4>
+              <p class="kb-lede">The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+              <ul class="kb-points">
+                <li>Routine exam on the vision plan: the refraction goes through the plan and there is nothing to collect at the desk.</li>
+                <li>Medical visit: the refraction is not a covered service. Say so at check in, not at checkout.</li>
+                <li>If the doctor changes the visit type after the exam, the answer changes with it. Check the encounter before you take payment.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>If the visit bills medical, the refraction is not covered. Collect it at checkout, and tell the patient at check in so it is not a surprise.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+                <button type="button" class="flagbtn">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  This page is wrong</button>
+              </div>
+            </article>
+
+            <article class="kb-page" id="p-vision">
+              <span class="kb-cat">Insurance</span>
+              <h4>Vision plan or medical: which one bills</h4>
+              <p class="kb-lede">The reason the patient gives on the phone decides which benefit the visit runs on.</p>
+              <ul class="kb-points">
+                <li>Due for glasses or an annual check with no complaint: routine, vision plan.</li>
+                <li>Names a symptom, red eye, pain, flashes, a sudden change: medical, even if they also want glasses.</li>
+                <li>Both in one visit: the doctor decides which one bills. Do not promise the patient it will be the vision plan.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>A patient with a medical diagnosis already on file who calls for a routine check still bills medical if the doctor addresses that diagnosis. Say the plan may not apply before they come in.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+              </div>
+            </article>
+
+            <article class="kb-page" id="p-triage">
+              <span class="kb-cat">Scheduling</span>
+              <h4>Same day or next available: phone triage</h4>
+              <p class="kb-lede">The short list of what cannot wait for the next open routine slot.</p>
+              <ul class="kb-points">
+                <li>Sudden flashes, new floaters, a curtain or a shadow in the vision: same day, and tell the doctor on duty.</li>
+                <li>Chemical splash or something in the eye: same day, and start them rinsing while they are still on the phone.</li>
+                <li>A red, painful eye in a contact lens wearer: same day.</li>
+                <li>Gradual blur with no pain and no redness: routine, next available.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>If nothing is open, do not send them away. Take the message to the doctor on duty and call the patient back with an answer the same day.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+              </div>
+            </article>
+
+            <article class="kb-page" id="p-doctor">
+              <span class="kb-cat">Scheduling</span>
+              <h4>Which doctor can see this patient</h4>
+              <p class="kb-lede">Not every visit type fits every provider's schedule. Check before you book, not after.</p>
+              <ul class="kb-points">
+                <li>Young children and first eye exams go to the providers who take them. The lookup shows who is taking them this week.</li>
+                <li>Specialty fittings and post op follow ups go back to the provider who started the case.</li>
+                <li>Some providers do not take walk in medical visits on their surgery days.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>If the only opening is with a provider who does not take that visit type, book the right provider on a later day instead of filling the wrong slot.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+              </div>
+            </article>
+
+            <article class="kb-page" id="p-cl">
+              <span class="kb-cat">Optical</span>
+              <h4>Contact lens follow up: what is included</h4>
+              <p class="kb-lede">Follow up visits inside the fitting period are part of the fitting fee. After it closes they are a new charge.</p>
+              <ul class="kb-points">
+                <li>A recheck inside the fitting period: no new charge. Book it as a follow up, not as a new exam.</li>
+                <li>A new brand or a power change the patient asks for after the fitting closes: new fitting.</li>
+                <li>Still has trials and wants a different lens: ask the doctor before you order anything.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>A patient who never came back for the recheck is still inside the fitting period until it closes. Do not charge them again to finish what they already paid for.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+              </div>
+            </article>
+
+            <article class="kb-page" id="p-price">
+              <span class="kb-cat">Front desk</span>
+              <h4>This year's price, and which list it comes from</h4>
+              <p class="kb-lede">One current list. The old sheets stay in the drawer and are not the answer.</p>
+              <ul class="kb-points">
+                <li>Quote from the current list only. If the sheet has no year on it, it is not the current list.</li>
+                <li>A plan discount changes the amount collected, not the fee on the list. Say the fee, then say what the plan covers.</li>
+                <li>If a price looks wrong on the page, flag it and quote the page anyway. Guessing is what creates the balance later.</li>
+              </ul>
+              <div class="kb-exc"><b>Exception</b><p>A quoted price that turns out to be from an old list is honoured for that patient, then the page gets fixed the same day.</p></div>
+              <div class="kb-foot">
+                <span>Last updated by the office manager.</span>
+                <span aria-hidden="true">&bull;</span>
+                <span>Example page, not any practice's real data.</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIAL: the adoption pair ================= -->
+  <section class="band-night" aria-labelledby="voiceTitle">
+    <div class="wrap">
+      <p class="eyebrow on-night">What the practice said</p>
+      <h2 class="sr-only" id="voiceTitle">A client quote, and our answer to it</h2>
+      <div class="qpair">
+        <figure style="margin:0">
+          <blockquote class="bigq">
+            <p>&ldquo;I think the biggest issue will be getting in the habit of using the tool.&rdquo;</p>
+          </blockquote>
+          <figcaption class="qwho">Office manager<br><span style="font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:0;text-transform:none">Two weeks after the knowledge base went live</span></figcaption>
+        </figure>
+        <div class="ans">
+          <h3>Our answer</h3>
+          <p>Getting people to use it is a separate job and we treat it that way.</p>
+          <ul>
+            <li>Staff report problems from inside the app rather than by email.</li>
+            <li>The first batch of four issues was fixed and live the same day.</li>
+            <li>The front office manager sends new pages to add. One went live from a screenshot the same week.</li>
+            <li>The practice's own team files the issues. The tool is in daily use at the front desk.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIAGRAM 2 + PRODUCT 2 ================= -->
+  <section id="recall" aria-labelledby="recallTitle">
+    <div class="wrap">
+      <p class="eyebrow">Product two, the new one</p>
+      <h2 class="h-sec" id="recallTitle">Recall done for you</h2>
+      <p class="lede">One month of recall at an eight provider practice, drawn pass by pass. Switch the two states and watch what happens to the last one.</p>
+
+      <fieldset class="switcher" style="margin-top:30px">
+        <legend class="sr-only">How the monthly recall runs</legend>
+        <input class="seg-in" type="radio" name="recall" id="rec-a" checked aria-label="By hand, today">
+        <input class="seg-in" type="radio" name="recall" id="rec-b" aria-label="Done for you">
+        <div class="seg">
+          <label class="seg-lb" for="rec-a">By hand, today</label>
+          <label class="seg-lb" for="rec-b">Done for you</label>
+        </div>
+
+        <figure class="fig" id="fig2">
+          <div class="fig-lead">
+            <span class="fig-n">Diagram two</span>
+            <span class="fig-t">Every pass the monthly recall takes, placed on the month it runs in.</span>
+          </div>
+          <div class="fig-scroll" tabindex="0" role="group" aria-label="Diagram two, scrollable">
+            <svg viewBox="0 0 720 470" role="img" aria-labelledby="f2t f2d">
+              <title id="f2t">One month of recall, pass by pass</title>
+              <desc id="f2d">Eleven rows across a four week month: scleral letters, medical recall letters, then one run per doctor for providers one through eight, then the update step. By hand, the passes are scattered across the four weeks and the update step is not run. Done for you, every pass lines up on one scheduled run and the update step runs last.</desc>
+
+              <!-- month axis -->
+              <text class="d-sub" x="323" y="28" text-anchor="middle">Week 1</text>
+              <text class="d-sub" x="431" y="28" text-anchor="middle">Week 2</text>
+              <text class="d-sub" x="538" y="28" text-anchor="middle">Week 3</text>
+              <text class="d-sub" x="646" y="28" text-anchor="middle">Week 4</text>
+              <line class="d-axis" x1="270" y1="44" x2="700" y2="44"></line>
+              <line class="d-axis" x1="270" y1="44" x2="270" y2="440"></line>
+              <line class="d-soft" x1="377" y1="44" x2="377" y2="440"></line>
+              <line class="d-soft" x1="485" y1="44" x2="485" y2="440"></line>
+              <line class="d-soft" x1="592" y1="44" x2="592" y2="440"></line>
+              <line class="d-soft" x1="700" y1="44" x2="700" y2="440"></line>
+
+              <!-- the scheduled run guide, state B only -->
+              <g class="only-b">
+                <line x1="296" y1="58" x2="296" y2="444" stroke="#8F3616" stroke-width="2.5" stroke-linecap="round"></line>
+                <text class="d-ac" x="296" y="458" text-anchor="middle">One scheduled run</text>
+              </g>
+
+              <!-- row labels -->
+              <text class="d-lb" x="236" y="89" text-anchor="end">Scleral letters</text>
+              <text class="d-lb" x="236" y="123" text-anchor="end">Medical recall letters</text>
+              <text class="d-eb" x="236" y="140" text-anchor="end">One run per doctor</text>
+              <text class="d-lb" x="236" y="157" text-anchor="end">Provider 1</text>
+              <text class="d-lb" x="236" y="191" text-anchor="end">Provider 2</text>
+              <text class="d-lb" x="236" y="225" text-anchor="end">Provider 3</text>
+              <text class="d-lb" x="236" y="259" text-anchor="end">Provider 4</text>
+              <text class="d-lb" x="236" y="293" text-anchor="end">Provider 5</text>
+              <text class="d-lb" x="236" y="327" text-anchor="end">Provider 6</text>
+              <text class="d-lb" x="236" y="361" text-anchor="end">Provider 7</text>
+              <text class="d-lb" x="236" y="395" text-anchor="end">Provider 8</text>
+              <text class="d-lb" x="236" y="429" text-anchor="end">The update step</text>
+
+              <!-- bracket over the eight provider runs -->
+              <path class="d-stroke" d="M240 145 H246 V399 H240" style="stroke-width:1.6"></path>
+
+              <!-- the passes -->
+              <g class="pass fade" style="--xa:284px;--xb:300px;--i:0"><rect x="0" y="73" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:312px;--xb:300px;--i:1"><rect x="0" y="107" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:340px;--xb:300px;--i:2"><rect x="0" y="141" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:366px;--xb:300px;--i:3"><rect x="0" y="175" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:404px;--xb:300px;--i:4"><rect x="0" y="209" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:436px;--xb:300px;--i:5"><rect x="0" y="243" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:472px;--xb:300px;--i:6"><rect x="0" y="277" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:506px;--xb:300px;--i:7"><rect x="0" y="311" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:544px;--xb:300px;--i:8"><rect x="0" y="345" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+              <g class="pass fade" style="--xa:584px;--xb:300px;--i:9"><rect x="0" y="379" width="76" height="22" rx="11" fill="var(--d-fill)" stroke="var(--d-line)" stroke-width="1.5"></rect></g>
+
+              <!-- the update step, last in both states -->
+              <g class="pass fade" style="--xa:614px;--xb:300px;--i:10">
+                <rect class="only-a" x="0" y="413" width="76" height="22" rx="11" fill="none" stroke="var(--bad)" stroke-width="1.6" stroke-dasharray="5 4"></rect>
+                <path class="only-a" d="M22 429 L54 419" stroke="var(--bad)" stroke-width="1.8" stroke-linecap="round"></path>
+                <rect class="only-b" x="0" y="413" width="76" height="22" rx="11" fill="var(--accent)" stroke="var(--accent-deep)" stroke-width="1.5"></rect>
+                <path class="only-b" d="M30 424.5 l5 5 11 -11" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </g>
+
+              <text class="d-sub only-a" x="400" y="123" text-anchor="start">about 10 reason codes</text>
+              <text class="d-bad only-a" x="602" y="429" text-anchor="end">The phones got busy. Not run.</text>
+              <text class="d-ac only-b" x="392" y="429" text-anchor="start">Done, last, every time</text>
+            </svg>
+          </div>
+          <p class="fig-hint">Swipe the diagram sideways. It is written out below.</p>
+          <ul class="fig-key">
+            <li><b>The arithmetic.</b> 8 provider runs, plus scleral, plus medical, plus the update run. Every month.</li>
+            <li><b>The medical pass.</b> About 10 separate medical recall reason codes, output as postcards.</li>
+            <li><b>Why it is fragile.</b> The update step is a checkbox left unchecked on one run and checked on another. Backwards, it either double contacts patients or drops them.</li>
+            <li><b>Why it slips.</b> It is a monthly job on the same checklist as the daily work, so it is the first thing to go when the phones are busy.</li>
+          </ul>
+        </figure>
+
+        <p class="sr-only" role="status" aria-live="polite" id="recStatus"></p>
+
+        <p class="cap cap-a">The passes land wherever someone found an afternoon. The update step is last, so it is the one that gets skipped.</p>
+        <p class="cap cap-b">The same passes, on a schedule, in order. The update step still runs last, and it runs.</p>
+
+        <ul class="outs outs-a">
+          <li><b>Run the scleral letters.</b> Own list, own letter.</li>
+          <li><b>Run the medical recall letters.</b> About 10 reason codes, output as postcards.</li>
+          <li><b>Run the calls list and routine postcards.</b> Once per doctor, individually.</li>
+          <li><b>Then the update step.</b> Only after every call and postcard is finished.</li>
+        </ul>
+        <ul class="outs outs-b">
+          <li><b>On a schedule.</b> Not when someone finds an afternoon.</li>
+          <li><b>The call list arrives ready to work.</b> In priority order, with the answers to the questions patients ask when they call back.</li>
+          <li><b>A monthly report.</b> Who was contacted, by which channel, and who booked.</li>
+          <li><b>The update step gets done.</b> Every time, in the right order.</li>
+        </ul>
+      </fieldset>
+
+      <dl class="meta" style="max-width:70ch">
+        <div><dt>Who it is for</dt><dd>Any practice where recall sits on the same checklist as the daily work, and the person who owns it is also covering the desk.</dd></div>
+        <div><dt>Honest limits</dt><dd>It does not plug into the practice management system. We work from a list the practice's own team runs, or inside their system with a limited login the practice creates and can revoke.</dd></div>
+        <div><dt>Patient data</dt><dd><b>This one does involve patient contact information.</b> It runs inside the practice's own accounts under a signed BAA, and we never touch charts.</dd></div>
+        <div><dt>Price</dt><dd>Priced per practice, on the call. We have not set a list price and we are not going to guess at one here.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= PLAIN QUOTES ================= -->
+  <section class="band-soft" aria-labelledby="qTitle">
+    <div class="wrap">
+      <h2 class="sr-only" id="qTitle">More from the same practice</h2>
+      <div class="qgrid">
+        <figure class="qcell" style="margin:0">
+          <blockquote><p>&ldquo;You are awesome! Thank you so much for your help!&rdquo;</p></blockquote>
+          <figcaption class="w">Office manager<span>After a round of fixes to the time off system</span></figcaption>
+        </figure>
+        <figure class="qcell" style="margin:0">
+          <blockquote><p>&ldquo;Thanks for the fixes on the PTO!&rdquo;</p></blockquote>
+          <figcaption class="w">Office manager<span>Time off system</span></figcaption>
+        </figure>
+        <figure class="qcell" style="margin:0">
+          <blockquote><p>&ldquo;Thank you for all of your help on this project.&rdquo;</p></blockquote>
+          <figcaption class="w">Office manager<span>Time off system, at handover</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIAGRAM 3 + PRODUCT 3 ================= -->
+  <section id="ops" aria-labelledby="opsTitle">
+    <div class="wrap">
+      <p class="eyebrow">Product three</p>
+      <h2 class="h-sec" id="opsTitle">Practice operations automation</h2>
+      <p class="lede">Time off and payroll, automated and scoped to the practice. Here is what it gave back, drawn as a range, because it is a range.</p>
+
+      <figure class="fig" id="fig3" style="margin-top:34px">
+        <div class="fig-lead">
+          <span class="fig-n">Diagram three</span>
+          <span class="fig-t">Admin hours returned in a year at the practice we built it for.</span>
+        </div>
+        <div class="fig-scroll" tabindex="0" role="group" aria-label="Diagram three, scrollable">
+          <svg viewBox="0 0 720 206" role="img" aria-labelledby="f3t f3d">
+            <title id="f3t">Admin hours returned a year, shown as a range</title>
+            <desc id="f3d">A scale of admin hours a year from zero to one hundred and twenty. A band spans sixty to one hundred, the range of admin hours the time off build returned at the practice we built it for. It is drawn as a band rather than a single point because the honest figure is a range.</desc>
+
+            <text class="d-sub" x="460" y="42" text-anchor="middle">Admin hours a year returned by the time off build</text>
+
+            <!-- recessive grid -->
+            <line class="d-soft" x1="60" y1="62" x2="60" y2="140"></line>
+            <line class="d-soft" x1="160" y1="62" x2="160" y2="140"></line>
+            <line class="d-soft" x1="260" y1="62" x2="260" y2="140"></line>
+            <line class="d-soft" x1="360" y1="62" x2="360" y2="140"></line>
+            <line class="d-soft" x1="460" y1="62" x2="460" y2="140"></line>
+            <line class="d-soft" x1="560" y1="62" x2="560" y2="140"></line>
+            <line class="d-soft" x1="660" y1="62" x2="660" y2="140"></line>
+
+            <!-- the range band -->
+            <rect class="grow" x="360" y="92" width="200" height="30" rx="6" fill="var(--accent)" stroke="var(--accent-deep)" stroke-width="1.5"></rect>
+            <g class="fade">
+              <rect x="358.5" y="84" width="3" height="46" rx="1.5" fill="var(--accent-deep)"></rect>
+              <rect x="558.5" y="84" width="3" height="46" rx="1.5" fill="var(--accent-deep)"></rect>
+            </g>
+            <text class="d-num fade" x="460" y="74" text-anchor="middle">60 to 100</text>
+
+            <!-- axis -->
+            <line x1="60" y1="140" x2="660" y2="140" stroke="var(--d-line)" stroke-width="1.5"></line>
+            <g stroke="var(--d-line)" stroke-width="1.5">
+              <line x1="60" y1="140" x2="60" y2="147"></line>
+              <line x1="160" y1="140" x2="160" y2="147"></line>
+              <line x1="260" y1="140" x2="260" y2="147"></line>
+              <line x1="360" y1="140" x2="360" y2="147"></line>
+              <line x1="460" y1="140" x2="460" y2="147"></line>
+              <line x1="560" y1="140" x2="560" y2="147"></line>
+              <line x1="660" y1="140" x2="660" y2="147"></line>
+            </g>
+            <g class="d-sub">
+              <text x="60" y="166" text-anchor="middle">0</text>
+              <text x="160" y="166" text-anchor="middle">20</text>
+              <text x="260" y="166" text-anchor="middle">40</text>
+              <text x="360" y="166" text-anchor="middle">60</text>
+              <text x="460" y="166" text-anchor="middle">80</text>
+              <text x="560" y="166" text-anchor="middle">100</text>
+              <text x="660" y="166" text-anchor="middle">120</text>
+            </g>
+            <text class="d-sub" x="360" y="196" text-anchor="middle">Hours a year</text>
+          </svg>
+        </div>
+        <p class="fig-hint">Swipe the diagram sideways. It is written out below.</p>
+        <ul class="fig-key">
+          <li><b>The band.</b> 60 to 100 admin hours a year, returned by the time off build at the practice we built it for.</li>
+          <li><b>Why a band.</b> A range is what we measured, so a range is what we print. A single number here would be a decoration.</li>
+          <li><b>What else is in it.</b> A quarterly practice snapshot, and monthly working time with both founders.</li>
+          <li><b>Patient data.</b> Staff data, not patient data. Time off and payroll, scoped to the practice.</li>
+        </ul>
+      </figure>
+
+      <div class="two-col" style="margin-top:44px">
+        <div>
+          <dl class="meta">
+            <div><dt>What it is</dt><dd>Time off and payroll, automated and scoped to the practice, plus a quarterly practice snapshot and monthly working time with both founders.</dd></div>
+            <div><dt>Who it is for</dt><dd>The office manager who is currently the routing system, and the owner who finds out about a coverage gap on the morning it happens.</dd></div>
+            <div><dt>What it returned</dt><dd>60 to 100 admin hours a year at the practice we built it for.</dd></div>
+            <div><dt>Price</dt><dd>Included in tier three, knowledge base plus operations. $4,500 setup and $350 a month.</dd></div>
+          </dl>
+        </div>
+
+        <!-- BUBBLE 2 of 2 -->
+        <div class="pane" id="ptoPane">
+          <div class="pane-head">
+            <h3>Time off request</h3>
+            <span class="pane-tag">Example content</span>
+          </div>
+          <div class="req-top">
+            <span class="avatar" aria-hidden="true">FD</span>
+            <span>
+              <span class="req-name">Front desk, Thursday and Friday</span>
+              <span class="req-sub">Requested through the form. Coverage overlaps with an optical shift.</span>
+            </span>
+            <span class="badge pending" id="ptoBadge">Pending</span>
+          </div>
+          <ul class="steps" id="ptoSteps">
+            <li><span class="mark" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span> Coverage checked against the schedule</li>
+            <li><span class="mark" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span> Answer sent back to the person who asked</li>
+            <li><span class="mark" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span> Payroll line updated in the same pass</li>
+            <li><span class="mark" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span> Balance and the schedule board both reflect it</li>
+          </ul>
+          <div class="panel-actions">
+            <button type="button" class="btn btn-primary" id="ptoApprove">Approve</button>
+            <button type="button" class="btn btn-ghost" id="ptoReturn">Send back</button>
+            <button type="button" class="btn btn-ghost" id="ptoReset" hidden>Reset the example</button>
+          </div>
+          <p class="result" id="ptoResult"></p>
+          <p class="sr-only" role="status" aria-live="polite" id="ptoStatus"></p>
+          <p class="panel-note">A verbal yes in the hallway is not an approval. If it did not come back through the system, it did not happen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= THE TWO OBJECTIONS ================= -->
+  <section class="band-soft" id="posture" aria-labelledby="postTitle">
+    <div class="wrap">
+      <p class="eyebrow">The two questions everyone asks</p>
+      <h2 class="h-sec" id="postTitle">Where the line is, and why we drew it there</h2>
+
+      <figure class="fig" style="margin-top:30px">
+        <div class="fig-lead">
+          <span class="fig-n">Diagram four</span>
+          <span class="fig-t">What stays inside the practice, and what we run.</span>
+        </div>
+        <div class="fig-scroll" tabindex="0" role="group" aria-label="Diagram four, scrollable">
+          <svg viewBox="0 0 720 204" role="img" aria-labelledby="f4t f4d">
+            <title id="f4t">What stays inside the practice, and what we run</title>
+            <desc id="f4d">Two groups separated by a dashed boundary marked no database connection. Inside the practice: the practice management system, patient charts, and the practice's own Google accounts. What we run: the knowledge base with no patient records, recall inside the practice's own accounts under a signed BAA, and time off and payroll, which is staff data.</desc>
+
+            <text class="d-eb" x="20" y="24">Inside the practice</text>
+            <line class="d-group" x1="21" y1="46" x2="21" y2="162"></line>
+            <circle class="d-node" cx="44" cy="68" r="5"></circle>
+            <text class="d-lb" x="60" y="73">Practice management system</text>
+            <circle class="d-node" cx="44" cy="102" r="5"></circle>
+            <text class="d-lb" x="60" y="107">Patient charts</text>
+            <circle class="d-node" cx="44" cy="136" r="5"></circle>
+            <text class="d-lb" x="60" y="141">The practice's own Google accounts</text>
+
+            <line x1="360" y1="30" x2="360" y2="84" stroke="var(--accent-deep)" stroke-width="2" stroke-dasharray="6 6"></line>
+            <line x1="360" y1="124" x2="360" y2="178" stroke="var(--accent-deep)" stroke-width="2" stroke-dasharray="6 6"></line>
+            <circle cx="360" cy="104" r="14" fill="none" stroke="var(--accent-deep)" stroke-width="2"></circle>
+            <line x1="352" y1="104" x2="368" y2="104" stroke="var(--accent-deep)" stroke-width="2.2" stroke-linecap="round"></line>
+            <text class="d-ac" x="360" y="194" text-anchor="middle">No database connection. On purpose.</text>
+
+            <text class="d-eb" x="390" y="24">What we run</text>
+            <line class="d-group" x1="391" y1="46" x2="391" y2="162"></line>
+            <circle class="d-node" cx="414" cy="68" r="5"></circle>
+            <text class="d-lb" x="430" y="73">Knowledge base: no patient records</text>
+            <circle class="d-node" cx="414" cy="102" r="5"></circle>
+            <text class="d-lb" x="430" y="107">Recall: your accounts, signed BAA</text>
+            <circle class="d-node" cx="414" cy="136" r="5"></circle>
+            <text class="d-lb" x="430" y="141">Time off and payroll: staff data</text>
+          </svg>
+        </div>
+        <p class="fig-hint">Swipe the diagram sideways. The table below says the same thing.</p>
+      </figure>
+
+      <div class="scroll-x" style="margin-top:30px">
+        <table class="tbl">
+          <caption>Patient data posture, stated per product rather than as one line across the site.</caption>
+          <thead>
+            <tr><th scope="col">Product</th><th scope="col">Patient data</th><th scope="col">Where it runs</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Front desk knowledge base</th>
+              <td><b>Holds no patient records.</b> Rules, not charts, so there is nothing in it to breach.</td>
+              <td>Google sign in, restricted to the practice domain.</td>
+            </tr>
+            <tr>
+              <th scope="row">Recall done for you</th>
+              <td><b>Does involve patient contact information.</b> We never touch charts.</td>
+              <td>Inside the practice's own accounts, under a signed BAA.</td>
+            </tr>
+            <tr>
+              <th scope="row">Practice operations</th>
+              <td><b>Staff data, not patient data.</b> Time off and payroll.</td>
+              <td>Scoped to the practice.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="notes" style="margin-top:24px;max-width:74ch">
+        <li><b>It does not connect to the practice management system.</b> So it does not matter which one you run.</li>
+        <li>Most hosted systems do not give an outside vendor database access. A vendor promising a nightly sync into one is either overselling or has not checked yet.</li>
+        <li>Recall is the one place we work near your system, and even there we work from a list your own team runs, or a limited login you create and can revoke.</li>
+        <li>We sign the BAA before we start, either way.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section id="pricing" aria-labelledby="priceTitle">
+    <div class="wrap">
+      <p class="eyebrow">Pricing</p>
+      <h2 class="h-sec" id="priceTitle">Printed, not quoted</h2>
+
+      <div class="scroll-x" style="margin-top:28px">
+        <table class="prices">
+          <caption class="sr-only">Three tiers, with setup, monthly, and what is included</caption>
+          <thead>
+            <tr>
+              <th scope="col">Tier</th><th scope="col">Setup</th><th scope="col">Monthly</th><th scope="col">What is in it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Front desk knowledge base</th>
+              <td class="num">$2,500</td>
+              <td class="num">$299</td>
+              <td class="inc">Situation pages written by us from your material, 4 decision lookups, search, in app editing with a saved history, Google sign in, one click to flag a page.</td>
+            </tr>
+            <tr>
+              <th scope="row">Whole practice knowledge base<br><span class="start">Where we would start you</span></th>
+              <td class="num">$3,500</td>
+              <td class="num">$250</td>
+              <td class="inc">Everything above, plus technician, optical and doctor restriction pages, views per role, a quarterly content review with the office manager, and a short written AI use policy.</td>
+            </tr>
+            <tr>
+              <th scope="row">Knowledge base plus operations</th>
+              <td class="num">$4,500</td>
+              <td class="num">$350</td>
+              <td class="inc">Everything above, plus time off and payroll automation scoped to the practice, a quarterly practice snapshot, and monthly working time with both founders.</td>
+            </tr>
+            <tr>
+              <th scope="row">Recall done for you</th>
+              <td class="num">On the call</td>
+              <td class="num">On the call</td>
+              <td class="inc">Priced per practice. We have not set a list price, we will not invent one to fill a row, and it can be folded into tier three.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="notes">
+        <li>Extra sections beyond a tier cap are <b>$600 each</b>. A second location is <b>$1,500 to set up and $149 a month</b>.</li>
+        <li>Compare it to a training platform, not to your practice management software. Trainual and Whale run about $249 to $300 a month at this size and still hand you an empty system.</li>
+        <li>Month to month, no term. Keep every page on cancellation, and export any time.</li>
+        <li>Live at day 30.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PROOF AND FOUNDERS ================= -->
+  <section class="band-soft" id="proof" aria-labelledby="proofTitle">
+    <div class="wrap">
+      <p class="eyebrow">Who you are hiring</p>
+      <h2 class="h-sec" id="proofTitle">Two people, and you work with both of us</h2>
+      <p class="lede">Live in a 27 person practice, 6 to 7 doctors, one location. The diagrams came out of that year.</p>
+
+      <div class="people">
+        <article class="person">
+          <span class="avatar" aria-hidden="true">AS</span>
+          <div>
+            <h3>Alec Stephens</h3>
+            <p class="role">Co-founder</p>
+            <p>Spent the last year inside a 27 person eyecare practice, in the office, watching the front desk work.</p>
+          </div>
+        </article>
+        <article class="person">
+          <span class="avatar" aria-hidden="true">JK</span>
+          <div>
+            <h3>Jusheen Kim</h3>
+            <p class="role">Co-founder</p>
+            <p>Lead software engineer at J.P. Morgan before this. Builds the systems that have to hold up under real use.</p>
+          </div>
+        </article>
+      </div>
+
+      <ul class="notes" style="margin-top:26px;max-width:74ch">
+        <li>Both founders are based in Asia. Urgent issues are answered by the next business morning, US time. We put that in writing rather than imply a promise we cannot keep.</li>
+        <li>We do not name the practice. The reference has not signed off, so their name is not going on a website.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOM BUILDS ================= -->
+  <section id="custom" aria-labelledby="customTitle">
+    <div class="wrap">
+      <p class="eyebrow">We also build to order</p>
+      <h2 class="h-sec" id="customTitle">If the thing in your way is not one of the three</h2>
+      <p class="lede">The products exist because we built them for one practice first. Custom is scoped on the call, no price.</p>
+
+      <div class="builds">
+        <article class="build">
+          <p class="m">5 agents running daily operations</p>
+          <h3>Business coaching practice</h3>
+          <p>A full operating system: software agents handling inbox, scheduling, voice note capture, meeting notes, and calendar to invoice.</p>
+        </article>
+        <article class="build">
+          <p class="m">Complete digital rebuild</p>
+          <h3>Construction company, Japan</h3>
+          <p>A full site rebuild across six pages, search console set up, and a corrected business profile, now on an upkeep retainer.</p>
+        </article>
+        <article class="build">
+          <p class="m">80% of the manual work cut</p>
+          <h3>Language test prep company</h3>
+          <p>AI worked into curriculum drafting, formatting, review cycles, and process automation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSE ================= -->
+  <section class="band-night" aria-labelledby="closeTitle">
+    <div class="wrap">
+      <p class="eyebrow on-night">Next step</p>
+      <h2 class="h-sec" id="closeTitle">Twenty minutes, and you will know which of the three fits</h2>
+      <p class="lede" style="color:var(--cream-2)">Bring the questions your front desk asks most. We will tell you which one fits, or that none of them do.</p>
+      <div class="cta-row" style="margin-top:26px">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+      </div>
+      <p class="close-note">Live at day 30. Month to month, no term. Keep every page on cancellation.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p><span class="brand"><span class="brand-dot" aria-hidden="true"></span> Stephens AI</span></p>
+    <p>Alec Stephens and Jusheen Kim</p>
+    <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+    <p><a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try {
+    reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) { reduced = false; }
+
+  function $(id) { return document.getElementById(id); }
+
+  /* ---------------------------------------------------------
+     1. Knowledge base search.
+     The pages and the list are already in the markup, so with
+     no script at all the visitor reads every example page.
+     The script narrows it to one at a time and filters.
+     --------------------------------------------------------- */
+  (function () {
+    var input = $("kbInput"), list = $("kbList"), clear = $("kbClear"),
+        empty = $("kbEmpty"), pages = $("kbPages"), status = $("kbStatus");
+    if (!input || !list || !pages) { return; }
+
+    var rows = Array.prototype.slice.call(list.children);
+    var articles = Array.prototype.slice.call(pages.children);
+    var buttons = Array.prototype.slice.call(list.querySelectorAll(".kb-item"));
+
+    function show(id) {
+      articles.forEach(function (a) { a.hidden = (a.id !== id); });
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-current", b.getAttribute("data-target") === id ? "true" : "false");
+      });
+    }
+
+    function say(msg) { if (status) { status.textContent = msg; } }
+
+    function visibleButtons() {
+      return rows.filter(function (li) { return !li.hidden; })
+                 .map(function (li) { return li.querySelector(".kb-item"); })
+                 .filter(Boolean);
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-target");
+        show(id);
+        var a = document.getElementById(id);
+        var h = a ? a.querySelector("h4") : null;
+        say("Opened the example page: " + (h ? h.textContent : id));
+      });
+      b.addEventListener("keydown", function (ev) {
+        var vis = visibleButtons();
+        var at = vis.indexOf(b);
+        if (at === -1) { return; }
+        if (ev.key === "ArrowDown") {
+          ev.preventDefault();
+          vis[Math.min(at + 1, vis.length - 1)].focus();
+        } else if (ev.key === "ArrowUp") {
+          ev.preventDefault();
+          if (at === 0) { input.focus(); } else { vis[at - 1].focus(); }
+        } else if (ev.key === "Home") {
+          ev.preventDefault(); vis[0].focus();
+        } else if (ev.key === "End") {
+          ev.preventDefault(); vis[vis.length - 1].focus();
+        } else if (ev.key === "Escape") {
+          ev.preventDefault(); input.focus();
+        }
+      });
+    });
+
+    function filter() {
+      var q = input.value.toLowerCase().replace(/\s+/g, " ").trim();
+      var terms = q ? q.split(" ") : [];
+      var hits = 0, firstId = null;
+      rows.forEach(function (li) {
+        var hay = (li.getAttribute("data-key") || "") + " " + li.textContent.toLowerCase();
+        var ok = terms.every(function (t) { return hay.indexOf(t) !== -1; });
+        li.hidden = !ok;
+        if (ok) {
+          hits++;
+          if (!firstId) { firstId = li.querySelector(".kb-item").getAttribute("data-target"); }
+        }
+      });
+      if (empty) { empty.hidden = hits !== 0; }
+      if (clear) { clear.hidden = !input.value; }
+      if (terms.length && firstId) { show(firstId); }
+      say(hits === 1 ? "1 example page found." : hits + " example pages found.");
+    }
+
+    input.addEventListener("input", filter);
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape") {
+        ev.preventDefault();
+        input.value = "";
+        filter();
+      } else if (ev.key === "Enter") {
+        ev.preventDefault();
+        var open = rows.filter(function (li) { return !li.hidden; });
+        if (open.length) { open[0].querySelector(".kb-item").click(); }
+      } else if (ev.key === "ArrowDown") {
+        var vis = visibleButtons();
+        if (vis.length) { ev.preventDefault(); vis[0].focus(); }
+      }
+    });
+    if (clear) {
+      clear.addEventListener("click", function () {
+        input.value = "";
+        filter();
+        input.focus();
+      });
+    }
+
+    show("p-refraction");
+    if (clear) { clear.hidden = true; }
+    if (empty) { empty.hidden = true; }
+  })();
+
+  /* ---------------------------------------------------------
+     2. Recall state announcement. The toggle itself is CSS,
+     so it works with the script switched off. This only tells
+     a screen reader what changed.
+     --------------------------------------------------------- */
+  (function () {
+    var a = $("rec-a"), b = $("rec-b"), status = $("recStatus");
+    if (!a || !b || !status) { return; }
+    function say() {
+      status.textContent = b.checked
+        ? "Done for you. Every pass lines up on one scheduled run, and the update step runs last."
+        : "By hand. The passes are scattered across the month and the update step is not run.";
+    }
+    a.addEventListener("change", say);
+    b.addEventListener("change", say);
+  })();
+
+  /* ---------------------------------------------------------
+     3. Time off request. Approve or send back, then reset.
+     --------------------------------------------------------- */
+  (function () {
+    var approve = $("ptoApprove"), back = $("ptoReturn"), reset = $("ptoReset"),
+        steps = $("ptoSteps"), badge = $("ptoBadge"), result = $("ptoResult"),
+        status = $("ptoStatus");
+    if (!approve || !back || !reset || !steps || !badge) { return; }
+    var rows = Array.prototype.slice.call(steps.children);
+    var timers = [];
+
+    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+    function finish() {
+      approve.hidden = true;
+      back.hidden = true;
+      reset.hidden = false;
+      /* the button that was just pressed is now hidden, so move focus
+         somewhere real rather than dropping it on the document. */
+      reset.focus();
+    }
+
+    approve.addEventListener("click", function () {
+      clearTimers();
+      badge.className = "badge approved";
+      badge.textContent = "Approved";
+      rows.forEach(function (li, i) {
+        timers.push(setTimeout(function () { li.classList.add("on"); }, reduced ? 1 : i * 380));
+      });
+      if (result) { result.textContent = "One route in, one answer out. The answer reaches payroll at the same time it reaches the person who asked."; }
+      if (status) { status.textContent = "Request approved. Coverage, the person who asked, payroll and the schedule board all updated."; }
+      finish();
+    });
+
+    back.addEventListener("click", function () {
+      clearTimers();
+      badge.className = "badge returned";
+      badge.textContent = "Sent back";
+      rows.forEach(function (li, i) { li.classList.toggle("on", i === 0); });
+      if (result) { result.textContent = "Sent back with a reason, and nothing reached payroll. The trail is the same either way."; }
+      if (status) { status.textContent = "Request sent back with a reason. Nothing reached payroll."; }
+      finish();
+    });
+
+    reset.addEventListener("click", function () {
+      clearTimers();
+      rows.forEach(function (li) { li.classList.remove("on"); });
+      badge.className = "badge pending";
+      badge.textContent = "Pending";
+      if (result) { result.textContent = ""; }
+      if (status) { status.textContent = "Example reset. The request is pending again."; }
+      reset.hidden = true;
+      approve.hidden = false;
+      back.hidden = false;
+      approve.focus();
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     4. Scroll animation. Every diagram is drawn complete in the
+     markup, so this only ever hides it for a moment and puts it
+     back. Nothing here runs under reduced motion, and if the
+     observer is missing the diagrams simply stay finished.
+     --------------------------------------------------------- */
+  (function () {
+    if (reduced) { return; }
+    if (!("IntersectionObserver" in window)) { return; }
+
+    var figs = Array.prototype.slice.call(document.querySelectorAll("#fig1, #fig2, #fig3"));
+    if (!figs.length) { return; }
+
+    function each(fig, sel, fn) {
+      Array.prototype.forEach.call(fig.querySelectorAll(sel), fn);
+    }
+
+    function play(fig) {
+      if (fig.getAttribute("data-played") === "1") { return; }
+      fig.setAttribute("data-played", "1");
+      var i = 0;
+      each(fig, ".draw", function (p) {
+        p.style.transition = "stroke-dashoffset 900ms cubic-bezier(0.2,0.8,0.2,1) " + (i * 220) + "ms";
+        p.style.strokeDashoffset = "0";
+        i++;
+      });
+      var base = i * 220 + 200;
+      var j = 0;
+      each(fig, ".fade", function (el) {
+        /* keep the per row stagger the stylesheet puts on .pass, otherwise
+           the inline shorthand would flatten every row onto one delay. */
+        var hold = 0;
+        try {
+          if (el.classList && el.classList.contains("pass")) {
+            hold = (parseInt(el.style.getPropertyValue("--i"), 10) || 0) * 26;
+          }
+        } catch (err) { hold = 0; }
+        el.style.transition = "opacity 420ms cubic-bezier(0.2,0.8,0.2,1) " + (base + j * 50) +
+          "ms, transform 560ms cubic-bezier(0.2,0.8,0.2,1) " + hold + "ms";
+        el.style.opacity = "1";
+        j++;
+      });
+      each(fig, ".grow", function (el) {
+        el.style.transition = "transform 760ms cubic-bezier(0.2,0.8,0.2,1) 120ms";
+        el.style.transform = "scaleX(1)";
+      });
+    }
+
+    var io;
+    try {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { play(en.target); io.unobserve(en.target); }
+        });
+      }, { rootMargin: "0px 0px -12% 0px", threshold: 0.15 });
+    } catch (e) { return; }
+
+    /* Hide only what we are about to put back, and only once the
+       observer that will put it back actually exists. */
+    figs.forEach(function (fig) {
+      each(fig, ".draw", function (p) {
+        var len;
+        try { len = p.getTotalLength(); } catch (err) { return; }
+        if (!len) { return; }
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+      each(fig, ".fade", function (el) { el.style.opacity = "0"; });
+      each(fig, ".grow", function (el) {
+        el.style.transformBox = "fill-box";
+        el.style.transformOrigin = "left center";
+        el.style.transform = "scaleX(0)";
+      });
+      io.observe(fig);
+    });
+
+    /* Belt and braces: nobody is left looking at an empty frame. */
+    setTimeout(function () { figs.forEach(play); }, 5000);
+  })();
+})();
+</script>
