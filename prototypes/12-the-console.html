@@ -1,0 +1,1741 @@
+<title>The Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* ==========================================================================
+   12. The Console
+   One dark ground, one ember, three full bleed day windows cut through it.
+   Each window is a working panel, not a picture of software.
+
+   Bubble discipline: zero bordered regions. The windows are full bleed
+   background shifts, not panes: no border, no radius, no elevation shadow.
+   Everything else separates with hairlines, measure and open space.
+
+   Contrast gate on night (#241B15 lightest to #0D0A08 darkest):
+     #F5F1E8 primary     15.0:1
+     #B3AB9E secondary    7.4:1   <- the floor, never lighter
+     #FF8E76 accent text  7.5:1
+     #DC6843 marks only, never carries text
+   Contrast gate on the day window (#FAF7F1):
+     #171310 ink 15.4:1, #5A4F46 ink-2 7.0:1, #8F3616 accent 6.6:1
+   ========================================================================== */
+
+:root{
+  color-scheme: dark;
+
+  --night:      radial-gradient(125% 125% at 78% -10%, #241B15 0%, #150F0B 56%, #0D0A08 100%);
+  --night-flat: #120D09;
+
+  --cream:      #F5F1E8;
+  --cream-2:    #B3AB9E;
+  --accent:     #DC6843;      /* MARK ONLY */
+  --accent-txt: #FF8E76;      /* accent text on night */
+
+  --nrule:      rgba(255,255,255,0.13);
+  --nrule-soft: rgba(255,255,255,0.07);
+
+  /* day window */
+  --day:        #FAF7F1;
+  --day-2:      #FFFFFF;
+  --day-3:      #F1EBE1;
+  --ink:        #171310;
+  --ink-2:      #5A4F46;
+  --accent-deep:#8F3616;
+  --rule:       rgba(23,19,16,0.10);
+  --rule-2:     rgba(23,19,16,0.18);
+  --good-ink:   #215941;
+  --warn-ink:   #71510C;
+  --bad-ink:    #8E2C22;
+
+  --sans:  "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --label: "Schibsted Grotesk", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --ease:  cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --pad: 32px;
+  --protoH: 44px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; scroll-padding-top:110px; -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--night-flat);
+  color:var(--cream);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+svg{ max-width:100%; }
+a{ color:inherit; }
+
+input,select,button,textarea{
+  font:inherit; color:var(--cream);
+  background-color:rgba(255,255,255,.06);
+  border:1px solid var(--nrule); border-radius:10px;
+}
+::placeholder{ color:var(--cream-2); opacity:1; }
+
+:focus-visible{ outline:2px solid var(--accent-txt); outline-offset:3px; border-radius:3px; }
+
+.vh{
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+/* ---------- review furniture -------------------------------------------- */
+.proto-bar{
+  position:sticky; top:0; z-index:90;
+  display:flex; flex-wrap:wrap; align-items:center; gap:7px 18px;
+  min-height:44px; padding:11px 20px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--sans); font-size:13px; line-height:1.4;
+  border-bottom:1px solid #000;
+}
+.proto-n{ font-variant:small-caps; letter-spacing:.09em; text-transform:lowercase; }
+.proto-name{ font-weight:600; }
+.proto-bet{ color:#b9b9bd; }
+
+/* ---------- the ground: one gradient, one ember -------------------------- */
+.scene{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; background:var(--night); }
+.scene .ember{
+  position:absolute; top:-300px; right:-200px;
+  width:760px; height:760px; border-radius:50%;
+  background:var(--accent); opacity:.16; filter:blur(140px);
+}
+.page{ position:relative; z-index:1; }
+
+/* ---------- rhythm ------------------------------------------------------- */
+.wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 var(--pad); }
+.band{ padding:104px 0; }
+.band.tight{ padding:76px 0; }
+.rule-top{ border-top:1px solid var(--nrule-soft); }
+
+/* ---------- type --------------------------------------------------------- */
+h1,h2,h3,h4{ font-weight:500; letter-spacing:-.026em; line-height:1.08; margin:0; }
+h1{ font-size:clamp(2.3rem, 5.4vw, 3.9rem); letter-spacing:-.033em; line-height:1.03; }
+h2{ font-size:clamp(1.8rem, 3.4vw, 2.6rem); }
+h3{ font-size:clamp(1.5rem, 2.8vw, 2.05rem); }
+h4{ font-size:1.1875rem; letter-spacing:-.018em; line-height:1.26; }
+p{ margin:0; }
+
+.eyebrow{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--accent-txt);
+  display:flex; align-items:center; gap:11px; font-variant-numeric:tabular-nums;
+}
+.eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent); flex:none; }
+.eyebrow.plain{ color:var(--cream-2); }
+.eyebrow.plain::before{ background:var(--nrule); }
+
+.lede{ font-size:clamp(1.1rem, 1.6vw, 1.3rem); line-height:1.5; letter-spacing:-.011em; color:var(--cream); }
+.sub{ color:var(--cream-2); }
+.small{ font-size:15px; line-height:1.55; color:var(--cream-2); }
+
+/* ---------- buttons ------------------------------------------------------ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:52px; padding:14px 26px;
+  border-radius:999px; border:1px solid transparent;
+  font-family:var(--sans); font-size:16.5px; font-weight:500; letter-spacing:-.005em;
+  text-decoration:none; cursor:pointer;
+  transition:transform 150ms var(--ease), background-color 220ms var(--ease), border-color 220ms var(--ease);
+}
+.btn-primary{ background:var(--cream); color:#140F0C; box-shadow:0 12px 34px rgba(0,0,0,.42); }
+.btn-primary:hover{ background:#fff; transform:translateY(-1px); }
+.btn-ghost{ background:transparent; color:var(--cream); border-color:var(--nrule); }
+.btn-ghost:hover{ border-color:rgba(255,255,255,.30); background:rgba(255,255,255,.05); }
+.btn svg{ flex:none; }
+.actions{ display:flex; flex-wrap:wrap; gap:14px; }
+
+/* ---------- top bar ------------------------------------------------------ */
+.topbar{
+  position:sticky; top:var(--protoH); z-index:80;
+  background:rgba(15,11,8,.86);
+  backdrop-filter:blur(18px) saturate(1.2);
+  border-bottom:1px solid var(--nrule-soft);
+}
+@supports not (backdrop-filter: blur(1px)){ .topbar{ background:#0F0B08; } }
+.topbar .inner{ display:flex; align-items:center; gap:20px; min-height:62px; }
+.mark{ display:flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; margin-right:auto; }
+.mark .dot{ width:11px; height:11px; border-radius:50%; background:var(--accent); box-shadow:0 0 16px rgba(220,104,67,.6); flex:none; }
+.mark .name{ font-size:16.5px; font-weight:500; letter-spacing:-.018em; color:var(--cream); }
+.navlinks{ display:flex; align-items:center; gap:2px; }
+.navlinks a{
+  display:inline-flex; align-items:center; min-height:44px; padding:0 12px;
+  font-size:15px; color:var(--cream-2); text-decoration:none; border-radius:8px;
+  transition:color 150ms var(--ease);
+}
+.navlinks a:hover,.navlinks a[aria-current="true"]{ color:var(--cream); }
+.topbar .btn{ min-height:44px; padding:10px 20px; font-size:15px; }
+@media (max-width:920px){ .navlinks{ display:none; } .topbar{ position:static; } }
+
+/* ---------- hero --------------------------------------------------------- */
+.hero{ padding:clamp(68px,9vw,120px) 0 84px; }
+.hero .eyebrow{ margin-bottom:28px; }
+.hero h1{ max-width:17ch; }
+.hero .lede{ margin-top:28px; max-width:56ch; }
+.hero .actions{ margin-top:38px; }
+
+/* ---------- readout rails ------------------------------------------------ */
+.rail{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  border-top:1px solid var(--nrule); margin:0;
+}
+.hero .rail{ margin-top:70px; }
+.rail > div{
+  display:flex; flex-direction:column-reverse;
+  padding:24px 20px 24px 0;
+  border-right:1px solid var(--nrule-soft);
+  min-width:0;
+}
+.rail > div:last-child{ border-right:0; }
+.rail dt{ margin-top:11px; font-size:14px; line-height:1.4; color:var(--cream-2); max-width:19ch; }
+.rail dd{
+  margin:0; font-size:clamp(1.5rem,2.5vw,2.05rem); font-weight:500;
+  letter-spacing:-.03em; line-height:1; color:var(--cream);
+  font-variant-numeric:tabular-nums;
+}
+.rail dd.em{ color:var(--accent-txt); }
+.rail dd.word{ font-size:clamp(1.05rem,1.5vw,1.25rem); letter-spacing:-.018em; line-height:1.2; }
+@media (max-width:700px){
+  .rail{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .rail > div{ border-bottom:1px solid var(--nrule-soft); padding-right:16px; }
+  .rail > div:nth-child(2n){ border-right:0; }
+}
+
+/* ---------- section heads ------------------------------------------------ */
+.sechead{ max-width:70ch; }
+.sechead .eyebrow{ margin-bottom:22px; }
+.sechead h2 + p{ margin-top:20px; }
+
+/* ==========================================================================
+   PRODUCT UNIT: dark head, full bleed day window, dark notes
+   ========================================================================== */
+.unit{ padding:88px 0 0; }
+.unit-head{ padding-bottom:52px; }
+.unit-head .eyebrow{ margin-bottom:20px; }
+.unit-head h3{ max-width:20ch; }
+.forwho{ margin-top:18px; font-size:17.5px; line-height:1.5; color:var(--accent-txt); max-width:48ch; }
+.unit-head .rail{ margin-top:40px; }
+
+/* the window itself: a full bleed daylight slot cut through the ground.
+   No border, no radius, no drop shadow. It is a background shift. */
+.window{
+  color-scheme: light;
+  background:var(--day);
+  color:var(--ink);
+  font-size:15px; line-height:1.55;
+  border-top:1px solid rgba(0,0,0,.45);
+  border-bottom:1px solid rgba(0,0,0,.45);
+}
+.window .wrap{ padding-top:0; padding-bottom:0; }
+.win-head{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
+  justify-content:space-between;
+  padding:16px 0; border-bottom:1px solid var(--rule-2);
+}
+.win-t{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink);
+}
+.win-t span{ color:var(--ink-2); }
+.win-s{
+  font-size:13.5px; color:var(--ink-2); font-variant-numeric:tabular-nums;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.win-s .led{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
+.win-body{ padding:26px 0 34px; }
+.win-cols{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(26px,4vw,56px); }
+@media (max-width:900px){ .win-cols{ grid-template-columns:1fr; gap:32px; } }
+
+.win-label{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-2); margin:0 0 12px;
+}
+.win-label.sp{ margin-top:30px; }
+
+/* light window controls */
+.window input[type="text"],
+.window input[type="search"],
+.window select,
+.window button{
+  color:var(--ink); background-color:var(--day-2);
+  border:1px solid var(--rule-2); border-radius:10px;
+}
+.window ::placeholder{ color:var(--ink-2); opacity:1; }
+.window :focus-visible{ outline:2px solid var(--accent-deep); outline-offset:2px; }
+
+.ctl{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-height:44px; padding:11px 18px; cursor:pointer;
+  font-size:15px; font-weight:500; letter-spacing:-.005em;
+  transition:background-color 150ms var(--ease), border-color 150ms var(--ease);
+}
+.ctl:hover{ background:var(--day-3); }
+.ctl.go{ background:var(--ink); color:var(--day-2); border-color:var(--ink); }
+.ctl.go:hover{ background:#000; }
+.ctl[disabled]{ opacity:.45; cursor:default; }
+.ctlrow{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+
+.chip{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.05em;
+  text-transform:uppercase; padding:5px 10px; border-radius:6px; white-space:nowrap;
+  display:inline-block;
+}
+.chip.good{ color:var(--good-ink); background:rgba(46,122,86,.13); }
+.chip.warn{ color:var(--warn-ink); background:rgba(148,106,18,.14); }
+.chip.bad{ color:var(--bad-ink);  background:rgba(178,58,47,.11); }
+.chip.mute{ color:var(--ink-2);   background:rgba(23,19,16,.07); }
+.chip.live{ color:var(--accent-deep); background:rgba(220,104,67,.11); }
+
+.readline{
+  margin-top:18px; padding-left:13px; border-left:2px solid var(--accent);
+  font-size:14.5px; line-height:1.5; color:var(--ink);
+  min-height:1.5em;
+}
+
+/* ---- window 1: search --------------------------------------------------- */
+.kb-field{
+  display:flex; align-items:center; gap:10px;
+  background:var(--day-2); border:1px solid var(--rule-2); border-radius:12px;
+  padding:0 12px;
+}
+.kb-field svg{ color:var(--accent-deep); flex:none; }
+.kb-field input{
+  flex:1; min-width:0; border:0 !important; background:transparent !important;
+  padding:14px 4px; font-size:16px; min-height:44px;
+}
+.kb-field input:focus{ outline:none; }
+.kb-field .clr{
+  border:0 !important; background:transparent !important; color:var(--ink-2);
+  min-height:44px; min-width:44px; padding:0; cursor:pointer; font-size:20px; line-height:1;
+}
+.kb-quick{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.kb-quick button{
+  min-height:44px; padding:10px 14px; font-size:14px; color:var(--ink-2);
+  background:transparent; cursor:pointer; border-radius:999px;
+}
+.kb-quick button:hover{ background:var(--day-3); color:var(--ink); }
+
+.kb-list{ list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--rule); }
+.kb-list li{ border-bottom:1px solid var(--rule); }
+.kb-hit{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px;
+  min-height:52px; padding:13px 4px; text-align:left; cursor:pointer;
+  background:transparent !important; border:0 !important; border-radius:0 !important;
+}
+.kb-hit:hover{ background:var(--day-3) !important; }
+.kb-hit .hit-t{ font-size:15px; color:var(--ink); }
+.kb-hit[aria-current="true"] .hit-t{ color:var(--accent-deep); font-weight:500; }
+.kb-hit .hit-c{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--ink-2); white-space:nowrap;
+}
+.kb-none{ padding:16px 4px; font-size:14.5px; color:var(--ink-2); }
+
+.kb-page{ padding:0 0 4px; }
+.kb-page + .kb-page{ margin-top:26px; padding-top:26px; border-top:1px solid var(--rule); }
+.kb-page h4{ margin-top:8px; }
+.kb-cat{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent-deep);
+}
+.kb-lede{ margin-top:12px; font-size:15.5px; line-height:1.55; color:var(--ink-2); }
+.kb-points{ list-style:none; margin:16px 0 0; padding:0; }
+.kb-points li{
+  position:relative; padding:9px 0 9px 20px; font-size:14.5px; line-height:1.5; color:var(--ink);
+  border-bottom:1px solid var(--rule);
+}
+.kb-points li::before{
+  content:''; position:absolute; left:0; top:18px; width:7px; height:2px; background:var(--accent);
+}
+.kb-exc{ margin-top:16px; padding:12px 0 12px 14px; border-left:2px solid var(--accent); background:rgba(220,104,67,.06); }
+.kb-exc b{ color:var(--accent-deep); font-weight:600; }
+.kb-exc p{ font-size:14.5px; line-height:1.5; color:var(--ink); }
+.kb-foot{
+  display:flex; flex-wrap:wrap; align-items:center; gap:12px; justify-content:space-between;
+  margin-top:16px; padding-top:14px; border-top:1px solid var(--rule);
+  font-size:13.5px; color:var(--ink-2);
+}
+.flagbtn{
+  display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:10px 14px;
+  font-size:13.5px; color:var(--ink-2); cursor:pointer;
+}
+.flagbtn.on{ color:var(--good-ink); border-color:rgba(46,122,86,.4); }
+
+/* ---- window 2: the run -------------------------------------------------- */
+.runsheet{ list-style:none; margin:0; padding:0; counter-reset:step; }
+.runsheet li{
+  display:grid; grid-template-columns:26px minmax(0,1fr) auto; gap:14px; align-items:start;
+  padding:16px 0; border-bottom:1px solid var(--rule);
+}
+.runsheet .num{
+  counter-increment:step; width:24px; height:24px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  background:rgba(23,19,16,.07); color:var(--ink-2);
+}
+.runsheet .num::before{ content:counter(step); }
+.runsheet li.done .num{ background:var(--accent); color:#171310; }
+.runsheet li.active .num{ background:var(--ink); color:#fff; }
+.runsheet .txt{ min-width:0; font-size:15px; line-height:1.45; color:var(--ink); }
+.runsheet .sub2{ display:block; margin-top:5px; font-size:13.5px; line-height:1.45; color:var(--ink-2); }
+.runsheet li.locked .txt{ color:var(--ink-2); }
+.runsheet li.blocked{ background:rgba(178,58,47,.06); }
+.ticks{ display:flex; gap:4px; margin-top:9px; }
+.ticks i{ width:16px; height:5px; border-radius:2px; background:rgba(23,19,16,.14); }
+.ticks i.f{ background:var(--accent); }
+.runsheet .state{ text-align:right; }
+@media (max-width:560px){
+  .runsheet li{ grid-template-columns:26px minmax(0,1fr); row-gap:8px; }
+  .runsheet .state{ grid-column:2; text-align:left; }
+}
+
+/* ---- window 3: time off ------------------------------------------------- */
+.toform{ display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; }
+.fld{ display:flex; flex-direction:column; gap:7px; min-width:150px; flex:1 1 150px; }
+.fld label{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-2);
+}
+.fld select{ min-height:46px; padding:11px 12px; font-size:15px; }
+.toform .ctl{ flex:0 0 auto; }
+
+.req{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+  padding:16px 0; border-bottom:1px solid var(--rule); border-top:1px solid var(--rule-2);
+  margin-top:26px;
+}
+.req .who{
+  width:34px; height:34px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(23,19,16,.07); color:var(--ink-2);
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+}
+.req .m{ flex:1; min-width:0; font-size:15px; color:var(--ink); }
+.req .m span{ display:block; font-size:13.5px; color:var(--ink-2); margin-top:3px; }
+
+.trail{ list-style:none; margin:0; padding:0; }
+.trail li{
+  display:flex; align-items:center; gap:12px;
+  padding:13px 0; border-bottom:1px solid var(--rule);
+  font-size:14.5px; color:var(--ink-2);
+}
+.trail li .tk{
+  width:18px; height:18px; border-radius:50%; flex:none;
+  border:1px solid var(--rule-2); background:var(--day-2);
+  display:flex; align-items:center; justify-content:center; color:transparent;
+  transition:background-color 220ms var(--ease), border-color 220ms var(--ease), color 220ms var(--ease);
+}
+.trail li.on{ color:var(--ink); }
+.trail li.on .tk{ background:var(--accent); border-color:var(--accent); color:#171310; }
+.trail li.off .tk{ background:var(--day-3); }
+
+/* a small tabular readout inside window 3 */
+.spec{ list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+.spec li{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px;
+  justify-content:space-between; padding:11px 0;
+  border-bottom:1px solid var(--rule); font-size:14.5px; line-height:1.45;
+}
+.spec .k{ color:var(--ink-2); min-width:0; }
+.spec .v{ color:var(--ink); font-weight:500; font-variant-numeric:tabular-nums; text-align:right; }
+.winnote{ margin-top:14px; font-size:14px; line-height:1.5; color:var(--ink-2); }
+
+/* window caption strip, back on the dark ground */
+.win-notes{ padding:34px 0 0; }
+.notelist{ list-style:none; margin:0; padding:0; border-top:1px solid var(--nrule); }
+.notelist li{
+  position:relative; padding:15px 0 15px 26px;
+  border-bottom:1px solid var(--nrule-soft);
+  font-size:16px; line-height:1.5; color:var(--cream);
+}
+.notelist li::before{ content:''; position:absolute; left:0; top:24px; width:9px; height:1px; background:var(--accent); }
+.notelist li b{ font-weight:500; color:var(--accent-txt); }
+.notelist.two{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 44px; }
+@media (max-width:820px){ .notelist.two{ grid-template-columns:1fr; } }
+.cap{ margin-top:22px; font-size:14.5px; line-height:1.5; color:var(--cream-2); max-width:64ch; }
+
+/* ---------- testimonials ------------------------------------------------- */
+.tgrid{ display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:clamp(32px,5vw,72px); }
+@media (max-width:900px){ .tgrid{ grid-template-columns:1fr; gap:44px; } }
+.bigquote{ margin:0; }
+.bigquote p{
+  font-size:clamp(1.5rem,3.2vw,2.35rem); line-height:1.18; letter-spacing:-.026em;
+  font-weight:500; color:var(--cream); max-width:19ch;
+}
+.bigquote footer{ margin-top:26px; }
+.who-role{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent-txt); display:block;
+}
+.who-ctx{ display:block; margin-top:8px; font-size:15px; color:var(--cream-2); }
+.answer{ border-left:1px solid var(--nrule); padding-left:clamp(24px,3vw,44px); }
+@media (max-width:900px){ .answer{ border-left:0; border-top:1px solid var(--nrule); padding-left:0; padding-top:32px; } }
+.answer h3{ font-size:clamp(1.25rem,2vw,1.5rem); margin-bottom:16px; }
+.answer p{ color:var(--cream); max-width:44ch; }
+.answer .notelist{ margin-top:26px; }
+.answer .notelist li{ font-size:15.5px; color:var(--cream-2); }
+
+.quoterow{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  border-top:1px solid var(--nrule); margin-top:72px;
+}
+.quoterow blockquote{ margin:0; padding:28px 24px 28px 0; border-right:1px solid var(--nrule-soft); }
+.quoterow blockquote:last-child{ border-right:0; }
+.quoterow p{ font-size:18px; line-height:1.35; letter-spacing:-.015em; color:var(--cream); }
+.quoterow .who-role{ margin-top:16px; }
+@media (max-width:820px){
+  .quoterow blockquote{ border-right:0; border-bottom:1px solid var(--nrule-soft); padding-right:0; }
+  .quoterow blockquote:last-child{ border-bottom:0; }
+}
+
+/* ---------- custom builds ------------------------------------------------ */
+.threerow{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--nrule); }
+.threerow > div{ padding:32px 26px 32px 0; border-right:1px solid var(--nrule-soft); }
+.threerow > div:last-child{ border-right:0; }
+@media (max-width:860px){
+  .threerow{ grid-template-columns:1fr; }
+  .threerow > div{ border-right:0; border-bottom:1px solid var(--nrule-soft); padding-right:0; }
+  .threerow > div:last-child{ border-bottom:0; }
+}
+.threerow .metric{
+  font-size:clamp(1.2rem,2vw,1.45rem); font-weight:500; letter-spacing:-.025em;
+  line-height:1.15; color:var(--accent-txt); font-variant-numeric:tabular-nums;
+}
+.threerow h3{ margin-top:14px; font-size:1.1875rem; letter-spacing:-.018em; line-height:1.26; }
+.threerow p{ margin-top:12px; font-size:15.5px; line-height:1.5; color:var(--cream-2); }
+
+/* ---------- matrix ------------------------------------------------------- */
+.scrollx{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.matrix{ width:100%; border-collapse:collapse; min-width:640px; }
+.matrix th{
+  text-align:left; font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--cream-2);
+  padding:0 24px 14px 0; border-bottom:1px solid var(--nrule);
+}
+.matrix td{
+  padding:22px 24px 22px 0; border-bottom:1px solid var(--nrule-soft);
+  font-size:16px; line-height:1.5; color:var(--cream-2); vertical-align:top;
+}
+.matrix td:first-child{ color:var(--cream); width:26%; }
+.matrix td b{ color:var(--cream); font-weight:500; }
+.matrix .zero{ color:var(--accent-txt); font-weight:500; }
+
+/* ---------- founders ----------------------------------------------------- */
+.founders{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(26px,4vw,52px); }
+@media (max-width:760px){ .founders{ grid-template-columns:1fr; } }
+.founder{ display:flex; gap:18px; align-items:flex-start; }
+.founder > div{ min-width:0; }
+.avatar{
+  width:54px; height:54px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--label); font-size:16px; font-weight:600; letter-spacing:.04em;
+  color:var(--cream); background:rgba(255,255,255,.07); border:1px solid var(--nrule);
+}
+.founder .role{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-txt); display:block; margin-top:5px;
+}
+.founder p{ margin-top:12px; font-size:15.5px; line-height:1.55; color:var(--cream-2); }
+
+/* ---------- pricing ------------------------------------------------------ */
+.tiers{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--nrule); }
+.tiers > div{ padding:30px 26px 34px 0; border-right:1px solid var(--nrule-soft); display:flex; flex-direction:column; }
+.tiers > div:last-child{ border-right:0; }
+.tiers > div.pick{ border-top:2px solid var(--accent); margin-top:-1px; }
+@media (max-width:900px){
+  .tiers{ grid-template-columns:1fr; }
+  .tiers > div{ border-right:0; border-bottom:1px solid var(--nrule-soft); padding-right:0; }
+  .tiers > div:last-child{ border-bottom:0; }
+}
+.tiers .badge{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent-txt); display:block; margin-bottom:14px;
+}
+.tiers h3{ font-size:1.3rem; letter-spacing:-.02em; line-height:1.25; }
+.tiers .cost{ margin-top:22px; font-variant-numeric:tabular-nums; }
+.tiers .setup{ font-size:2rem; font-weight:500; letter-spacing:-.032em; line-height:1; color:var(--cream); }
+.tiers .setup span{ font-size:15px; font-weight:400; letter-spacing:0; color:var(--cream-2); margin-left:7px; }
+.tiers .mo{ margin-top:10px; font-size:16.5px; color:var(--cream); }
+.tiers .mo span{ color:var(--cream-2); font-size:15px; }
+.tiers ul{ list-style:none; margin:22px 0 0; padding:0; }
+.tiers ul li{
+  position:relative; padding:9px 0 9px 20px; font-size:15px; line-height:1.5; color:var(--cream-2);
+}
+.tiers ul li::before{ content:''; position:absolute; left:0; top:18px; width:7px; height:1px; background:var(--accent); }
+.tiers .fill{ flex:1; }
+.tiers .btn{ margin-top:26px; align-self:flex-start; }
+
+.recallrow{
+  display:flex; flex-wrap:wrap; gap:16px 32px; align-items:baseline; justify-content:space-between;
+  padding:28px 0; border-top:1px solid var(--nrule); border-bottom:1px solid var(--nrule);
+  margin-top:0;
+}
+.recallrow .t{ font-size:19px; font-weight:500; letter-spacing:-.02em; color:var(--cream); }
+.recallrow p{ margin-top:8px; font-size:15.5px; color:var(--cream-2); max-width:56ch; }
+.recallrow .stamp{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent-txt); white-space:nowrap;
+}
+
+/* ---------- close and footer --------------------------------------------- */
+.close h2{ max-width:19ch; }
+.close .lede{ margin-top:22px; max-width:52ch; }
+.close .actions{ margin-top:36px; }
+.close .after{ margin-top:24px; font-size:15px; color:var(--cream-2); }
+
+footer{ border-top:1px solid var(--nrule); padding:56px 0 70px; }
+.footgrid{ display:flex; flex-wrap:wrap; gap:32px 56px; justify-content:space-between; align-items:flex-start; }
+.footgrid .col p{ font-size:15px; color:var(--cream-2); line-height:1.6; }
+.footgrid .col .h{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--cream); margin-bottom:10px;
+}
+.footgrid a{ color:var(--cream-2); text-decoration:none; border-bottom:1px solid var(--nrule); }
+.footgrid a:hover{ color:var(--cream); }
+.footgrid .links a{ display:inline-block; padding:12px 0; }
+.footnote{ margin-top:40px; padding-top:22px; border-top:1px solid var(--nrule-soft); font-size:14px; color:var(--cream-2); max-width:80ch; }
+
+@media (max-width:640px){
+  :root{ --pad:20px; }
+  .band{ padding:72px 0; }
+  .unit{ padding-top:64px; }
+  .unit-head{ padding-bottom:40px; }
+  .hero{ padding:52px 0 64px; }
+  body{ font-size:16.5px; }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 12 of 17</span>
+  <span class="proto-name">The Console</span>
+  <span class="proto-bet">One dark instrument panel with three working windows cut into it. Almost no prose, all readouts.</span>
+</div>
+
+<div class="scene" aria-hidden="true"><span class="ember"></span></div>
+
+<div class="page">
+
+  <header class="topbar">
+    <div class="wrap inner">
+      <a class="mark" href="#top">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="name">Stephens AI</span>
+      </a>
+      <nav class="navlinks" aria-label="Sections">
+        <a href="#panels" data-spy>Panels</a>
+        <a href="#words" data-spy>In their words</a>
+        <a href="#posture" data-spy>Data and systems</a>
+        <a href="#pricing" data-spy>Pricing</a>
+      </nav>
+      <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============================ HERO ============================ -->
+    <section class="band hero" aria-labelledby="hero-h">
+      <div class="wrap">
+        <p class="eyebrow">For independent eyecare practices in the US</p>
+
+        <h1 id="hero-h">Three jobs your practice runs from memory. Three systems that run them instead.</h1>
+
+        <p class="lede sub">
+          We spent the last year inside a 27 person eyecare practice, watching the front desk work.
+          Three systems came out of that year. All three are on this page, working.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+            Book a 20 minute call
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+        </div>
+
+        <dl class="rail">
+          <div><dt>person practice, live at one location</dt><dd>27</dd></div>
+          <div><dt>front desk situations mapped</dt><dd>76</dd></div>
+          <div><dt>decision lookups built</dt><dd>4</dd></div>
+          <div><dt>patient records in the knowledge base</dt><dd class="em">0</dd></div>
+          <div><dt>days from start to live at the desk</dt><dd>30</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================ PANELS ============================ -->
+    <section id="panels" aria-labelledby="panels-h">
+      <div class="wrap band tight" style="padding-bottom:0">
+        <div class="sechead">
+          <p class="eyebrow plain">Three products</p>
+          <h2 id="panels-h">Three windows cut into one console. Type in them, run them, submit in them.</h2>
+        </div>
+      </div>
+
+      <!-- ---------------- PANEL 01: knowledge base ---------------- -->
+      <article class="unit" aria-labelledby="p1-h">
+        <div class="wrap unit-head">
+          <p class="eyebrow">01 / Live today</p>
+          <h3 id="p1-h">Front desk knowledge base</h3>
+          <p class="forwho">For the practice where every hard question ends at the office manager's desk.</p>
+          <dl class="rail">
+            <div><dt>situations mapped</dt><dd>76</dd></div>
+            <div><dt>decision lookups</dt><dd>4</dd></div>
+            <div><dt>patient records held</dt><dd class="em">0</dd></div>
+            <div><dt>days to live at the desk</dt><dd>30</dd></div>
+          </dl>
+        </div>
+
+        <div class="window">
+          <div class="wrap">
+            <div class="win-head">
+              <span class="win-t">Front desk knowledge base <span>/ example pages</span></span>
+              <span class="win-s"><span class="led" aria-hidden="true"></span>Editable by the office manager</span>
+            </div>
+
+            <div class="win-body">
+              <div class="win-cols">
+                <div>
+                  <p class="win-label">Search, the way the desk uses it</p>
+
+                  <form class="kb-form" id="kbForm" hidden autocomplete="off">
+                    <label class="vh" for="kbInput">Search the example situation pages</label>
+                    <div class="kb-field">
+                      <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <circle cx="7" cy="7" r="4.75" stroke="currentColor" stroke-width="1.6"/>
+                        <path d="M10.6 10.6 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      </svg>
+                      <input type="text" id="kbInput" placeholder="Try: refraction, flashes, which doctor">
+                      <button type="button" class="clr" id="kbClear" hidden aria-label="Clear the search">&times;</button>
+                    </div>
+                    <div class="kb-quick">
+                      <button type="button" data-q="refraction">refraction</button>
+                      <button type="button" data-q="flashes">flashes</button>
+                      <button type="button" data-q="which doctor">which doctor</button>
+                    </div>
+                  </form>
+
+                  <p class="readline" id="kbReadout" role="status">Every example page is shown.</p>
+                  <ul class="kb-list" id="kbList" hidden></ul>
+                </div>
+
+                <div id="kbPages">
+                  <article class="kb-page" data-cat="Billing" data-keys="refraction collect bill vision plan medical routine checkout charge price">
+                    <span class="kb-cat">Billing</span>
+                    <h4 tabindex="-1">Refraction: collect or bill</h4>
+                    <p class="kb-lede">The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+                    <ul class="kb-points">
+                      <li>Routine exam on the vision plan: it goes through the plan and there is nothing to collect at the desk.</li>
+                      <li>Medical visit: it is not a covered service. Say so at check in, not at checkout.</li>
+                      <li>If the doctor changes the visit type after the exam, the answer changes with it.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> If the visit bills medical, collect at checkout and tell the patient at check in so it is not a surprise.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+
+                  <article class="kb-page" data-cat="Scheduling" data-keys="flashes floaters triage urgent same day red eye pain injury how soon shadow curtain">
+                    <span class="kb-cat">Scheduling</span>
+                    <h4 tabindex="-1">Same day or next available: phone triage</h4>
+                    <p class="kb-lede">The short list of what cannot wait for the next open routine slot.</p>
+                    <ul class="kb-points">
+                      <li>Sudden flashes, new floaters, a curtain or a shadow in the vision: same day, and tell the doctor on duty.</li>
+                      <li>Chemical splash or something in the eye: same day, and start them rinsing while they are still on the phone.</li>
+                      <li>A red, painful eye in a contact lens wearer: same day.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> If nothing is open, do not send them away. Take the message to the doctor on duty and call back the same day.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+
+                  <article class="kb-page" data-cat="Scheduling" data-keys="which doctor provider restrictions pediatric children specialty surgery day book schedule">
+                    <span class="kb-cat">Scheduling</span>
+                    <h4 tabindex="-1">Which doctor can see this patient</h4>
+                    <p class="kb-lede">Not every visit type fits every provider's schedule. Check before you book, not after.</p>
+                    <ul class="kb-points">
+                      <li>Young children and first eye exams go to the providers who take them.</li>
+                      <li>Specialty fittings and post op follow ups go back to the provider who started the case.</li>
+                      <li>Some providers do not take walk in medical visits on their surgery days.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> Book the right provider on a later day rather than filling the wrong slot. A visit that has to be redone costs more than the wait.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+
+                  <article class="kb-page" data-cat="Insurance" data-keys="vision or medical which one bills complaint eligibility benefit coverage routine">
+                    <span class="kb-cat">Insurance</span>
+                    <h4 tabindex="-1">Vision plan or medical: which one bills</h4>
+                    <p class="kb-lede">The reason the patient gives on the phone decides which benefit the visit runs on.</p>
+                    <ul class="kb-points">
+                      <li>Due for glasses, no complaint: routine, vision plan.</li>
+                      <li>Names a symptom, red eye, pain, flashes, a sudden change: medical, even if they also want glasses.</li>
+                      <li>Both in one visit: the doctor decides which one bills. Do not promise the patient it will be the vision plan.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> A patient with a medical diagnosis on file who calls for a routine check still bills medical if the doctor addresses it.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+
+                  <article class="kb-page" data-cat="Billing" data-keys="price list current cost how much fee self pay quote year">
+                    <span class="kb-cat">Billing</span>
+                    <h4 tabindex="-1">Price lookup: which list is current</h4>
+                    <p class="kb-lede">One current list. The old copies in the shared drive and the printed sheet in the drawer are not it.</p>
+                    <ul class="kb-points">
+                      <li>If a printed sheet disagrees with this page, this page wins.</li>
+                      <li>Self pay and plan prices are different. Ask which one applies before quoting.</li>
+                      <li>If a price is not on the page, say you will confirm and call back. Do not estimate.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> Prices reset at the start of the plan year, so check the page again when the year turns.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+
+                  <article class="kb-page" data-cat="Recall" data-keys="recall reason code postcard letter why did i get this card due scleral">
+                    <span class="kb-cat">Recall</span>
+                    <h4 tabindex="-1">Recall cards: what to say when they call back</h4>
+                    <p class="kb-lede">Patients call and ask why they got a card. Answer from the code, not from a guess.</p>
+                    <ul class="kb-points">
+                      <li>Routine recall: they are due for their annual exam. Book it.</li>
+                      <li>Medical recall: the doctor asked to see them again for something specific. Say the doctor asked, then book it.</li>
+                      <li>Scleral lens wearers get their own letter, and those patients usually already know why.</li>
+                    </ul>
+                    <div class="kb-exc"><p><b>Exception.</b> If the patient says they were already seen, do not argue. Take the note to the office manager so the record gets corrected.</p></div>
+                    <div class="kb-foot">
+                      <span>Last updated by the office manager. Approved by the doctor.</span>
+                      <button type="button" class="flagbtn">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.2-1 4.2 1 6.4 0V9c-2.2 1-4.2-1-6.4 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </button>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap win-notes">
+          <ul class="notelist two">
+            <li><b>Rules, prices, and protocols.</b> Not charts. There is nothing in it to breach.</li>
+            <li>Google sign in, restricted to the practice domain. Editors are chosen by the practice.</li>
+            <li>The office manager edits it in the app. Every edit is saved and reversible.</li>
+            <li>Installs from the browser on the front desk computers, no admin rights. Pages already opened keep working if the internet drops.</li>
+          </ul>
+          <p class="cap">Example pages, written for this panel. The live instance holds one practice's own rules and prices.</p>
+        </div>
+      </article>
+
+      <!-- ---------------- PANEL 02: recall ---------------- -->
+      <article class="unit" aria-labelledby="p2-h">
+        <div class="wrap unit-head">
+          <p class="eyebrow">02 / New</p>
+          <h3 id="p2-h">Recall done for you</h3>
+          <p class="forwho">For the practice where recall slides to next month because the phones were busy.</p>
+          <dl class="rail">
+            <div><dt>call and postcard runs a month, eight provider practice</dt><dd>8</dd></div>
+            <div><dt>medical recall reason codes in the real protocol</dt><dd>about 10</dd></div>
+            <div><dt>the update step</dt><dd class="word">Runs last, every time</dd></div>
+            <div><dt>price</dt><dd class="word em">On the call</dd></div>
+          </dl>
+        </div>
+
+        <div class="window">
+          <div class="wrap">
+            <div class="win-head">
+              <span class="win-t">Monthly recall run <span>/ eight provider practice</span></span>
+              <span class="win-s"><span class="led" aria-hidden="true"></span>Runs on a schedule, not on an afternoon</span>
+            </div>
+
+            <div class="win-body">
+              <ol class="runsheet" id="runList">
+                <li data-step="0">
+                  <span class="num" aria-hidden="true"></span>
+                  <span class="txt">Scleral letters<span class="sub2">Run first, on its own.</span></span>
+                  <span class="state"><span class="chip mute" data-state>Waiting</span></span>
+                </li>
+                <li data-step="1">
+                  <span class="num" aria-hidden="true"></span>
+                  <span class="txt">Medical recall letters, as postcards<span class="sub2">Across about 10 separate medical recall reason codes.</span></span>
+                  <span class="state"><span class="chip mute" data-state>Waiting</span></span>
+                </li>
+                <li data-step="2">
+                  <span class="num" aria-hidden="true"></span>
+                  <span class="txt">Calls list and routine postcards, once per doctor<span class="sub2">8 separate runs here, one provider at a time.</span>
+                    <span class="ticks" id="runTicks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </span>
+                  <span class="state"><span class="chip mute" data-state>Waiting</span></span>
+                </li>
+                <li data-step="3" class="locked">
+                  <span class="num" aria-hidden="true"></span>
+                  <span class="txt">The update step<span class="sub2">So the same patients are not pulled again next month.</span></span>
+                  <span class="state"><span class="chip mute" data-state>Locked</span></span>
+                </li>
+              </ol>
+
+              <div class="ctlrow" id="runCtl" hidden style="margin-top:22px">
+                <button type="button" class="ctl go" id="runNext">Advance the run</button>
+                <button type="button" class="ctl" id="runUpdate">Run the update step</button>
+                <button type="button" class="ctl" id="runReset">Reset</button>
+              </div>
+
+              <p class="readline" id="runReadout" role="status">The update step stays locked until every call and postcard above is finished.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap win-notes">
+          <ul class="notelist two">
+            <li><b>It does not plug into the practice management system.</b> We work from a list the practice's own team runs, or inside their system with a limited login the practice creates and can revoke.</li>
+            <li>Recall does involve patient contact information, so it runs inside the practice's own accounts under a signed BAA. We never touch charts.</li>
+            <li>The call list arrives in priority order, with the answers to the questions patients ask when they call back.</li>
+            <li>A monthly report: who was contacted, by which channel, and who booked. No recovery rate quoted, because we do not have one.</li>
+          </ul>
+          <p class="cap">The sequence above is one practice's written protocol, run in the order the protocol requires.</p>
+        </div>
+      </article>
+
+      <!-- ---------------- PANEL 03: operations ---------------- -->
+      <article class="unit" aria-labelledby="p3-h">
+        <div class="wrap unit-head">
+          <p class="eyebrow">03 / Operations</p>
+          <h3 id="p3-h">Practice operations automation</h3>
+          <p class="forwho">For the owner still approving time off by text and rebuilding payroll by hand.</p>
+          <dl class="rail">
+            <div><dt>admin hours returned a year by the time off build</dt><dd>60 to 100</dd></div>
+            <div><dt>practice snapshot</dt><dd class="word">Quarterly</dd></div>
+            <div><dt>working time with both founders</dt><dd class="word">Monthly</dd></div>
+            <div><dt>what it holds</dt><dd class="word em">Staff records, not charts</dd></div>
+          </dl>
+        </div>
+
+        <div class="window">
+          <div class="wrap">
+            <div class="win-head">
+              <span class="win-t">Practice operations <span>/ time off</span></span>
+              <span class="win-s"><span class="led" aria-hidden="true"></span>One route in, one answer out</span>
+            </div>
+
+            <div class="win-body">
+              <div class="win-cols">
+                <div>
+                  <p class="win-label">Send a request</p>
+                  <form class="toform" id="toForm" hidden>
+                    <div class="fld">
+                      <label for="toRole">Role</label>
+                      <select id="toRole">
+                        <option>Front desk</option>
+                        <option>Optical</option>
+                        <option>Technician</option>
+                      </select>
+                    </div>
+                    <div class="fld">
+                      <label for="toLen">Time off</label>
+                      <select id="toLen">
+                        <option>one afternoon</option>
+                        <option selected>one day</option>
+                        <option>two days</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="ctl go" id="toSend">Send the request</button>
+                    <button type="button" class="ctl" id="toReset" hidden>Reset</button>
+                  </form>
+
+                  <div class="req">
+                    <span class="who" aria-hidden="true">FD</span>
+                    <span class="m" id="toWho">Front desk, one day
+                      <span id="toWhen">Coverage checked against the schedule before it reached the owner.</span>
+                    </span>
+                    <span class="chip good" id="toState">Approved</span>
+                  </div>
+
+                  <p class="readline" id="toReadout" role="status">Requests go in through one form, not to a person in the hallway.</p>
+                </div>
+
+                <div>
+                  <p class="win-label">What the approval touched</p>
+                  <ul class="trail" id="toTrail">
+                    <li class="on"><span class="tk" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>Coverage checked against the schedule</li>
+                    <li class="on"><span class="tk" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>Balance updated, staff member told</li>
+                    <li class="on"><span class="tk" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>Payroll picked it up from the same record</li>
+                  </ul>
+
+                  <p class="win-label sp">Quarterly practice snapshot</p>
+                  <ul class="spec">
+                    <li><span class="k">Admin hours returned a year</span><span class="v">60 to 100</span></li>
+                    <li><span class="k">Practice snapshot</span><span class="v">Quarterly</span></li>
+                    <li><span class="k">Working time with both founders</span><span class="v">Monthly</span></li>
+                    <li><span class="k">A verbal yes in the hallway</span><span class="v">Not an approval</span></li>
+                  </ul>
+                  <p class="winnote">Measured at the practice we built it for.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap win-notes">
+          <ul class="notelist two">
+            <li><b>60 to 100 admin hours a year</b> returned by the time off build at the practice we built it for.</li>
+            <li>Payroll is prepared from the same records, so nobody retypes them.</li>
+            <li>A verbal yes is not an approval. If it did not come back through the system, it did not happen.</li>
+            <li>Time off and payroll are staff information, not patient charts. Scoped to the practice.</li>
+          </ul>
+          <p class="cap">A coverage conflict is flagged and sent to the owner, not silently approved. Try the technician on two days.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================ TESTIMONIALS ============================ -->
+    <section id="words" class="band rule-top" aria-labelledby="words-h">
+      <div class="wrap">
+        <div class="sechead" style="margin-bottom:56px">
+          <p class="eyebrow plain">In their words</p>
+          <h2 id="words-h" class="vh">What the practice said</h2>
+        </div>
+
+        <div class="tgrid">
+          <blockquote class="bigquote">
+            <p>&ldquo;I think the biggest issue will be getting in the habit of using the tool.&rdquo;</p>
+            <footer>
+              <span class="who-role">Office manager</span>
+              <span class="who-ctx">Two weeks after the knowledge base went live.</span>
+            </footer>
+          </blockquote>
+
+          <div class="answer">
+            <h3>They are right, and it is our job.</h3>
+            <p>
+              Getting people to use it is a separate job and we treat it that way. That is what the
+              flag button and the same day fixes in the first two weeks are for.
+            </p>
+            <ul class="notelist">
+              <li>Staff report problems from inside the app rather than by email.</li>
+              <li>The first batch of four issues was fixed and live the same day.</li>
+              <li>One page went live from a screenshot the same week it was sent.</li>
+              <li><b>In daily use at the front desk.</b> The practice's own team files the issues.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quoterow">
+          <blockquote>
+            <p>&ldquo;You are awesome! Thank you so much for your help!&rdquo;</p>
+            <span class="who-role">Office manager</span>
+          </blockquote>
+          <blockquote>
+            <p>&ldquo;Thanks for the fixes on the PTO!&rdquo;</p>
+            <span class="who-role">Office manager</span>
+          </blockquote>
+          <blockquote>
+            <p>&ldquo;Thank you for all of your help on this project.&rdquo;</p>
+            <span class="who-role">Office manager</span>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CUSTOM BUILDS ============================ -->
+    <section id="custom" class="band tight rule-top" aria-labelledby="custom-h">
+      <div class="wrap">
+        <div class="sechead" style="margin-bottom:44px">
+          <p class="eyebrow plain">Custom builds</p>
+          <h2 id="custom-h">We also build to order.</h2>
+          <p class="lede sub">
+            The products exist because we built them for one practice first. If the thing in your way
+            is not one of the three, that is the conversation.
+          </p>
+        </div>
+
+        <div class="threerow">
+          <div>
+            <p class="metric">5 agents running daily operations</p>
+            <h3>Business coaching practice</h3>
+            <p>Inbox, scheduling, voice note capture, meeting notes, calendar to invoice.</p>
+          </div>
+          <div>
+            <p class="metric">Complete digital rebuild</p>
+            <h3>Construction company, Japan</h3>
+            <p>Six page rebuild, search console set up, business profile corrected, upkeep retainer.</p>
+          </div>
+          <div>
+            <p class="metric">80% of the manual work cut</p>
+            <h3>Language test prep company</h3>
+            <p>AI worked into curriculum drafting, formatting, review cycles, process automation.</p>
+          </div>
+        </div>
+
+        <p class="cap" style="margin-top:26px">Scoped on the call. No price to print.</p>
+      </div>
+    </section>
+
+    <!-- ============================ POSTURE ============================ -->
+    <section id="posture" class="band rule-top" aria-labelledby="posture-h">
+      <div class="wrap">
+        <div class="sechead" style="margin-bottom:48px">
+          <p class="eyebrow plain">The two questions every owner asks</p>
+          <h2 id="posture-h">Patient data, stated per product. And no, none of it connects to your system.</h2>
+        </div>
+
+        <div class="scrollx" tabindex="0" role="region" aria-label="Data posture by product, scrolls sideways">
+          <table class="matrix">
+            <caption class="vh">Where each product's data sits and where it runs</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">What it holds</th>
+                <th scope="col">Where it runs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Front desk knowledge base</td>
+                <td><span class="zero">0 patient records.</span> Rules, prices, and protocols. Not charts.</td>
+                <td>Google sign in, restricted to the practice domain. BAA signed before we start.</td>
+              </tr>
+              <tr>
+                <td>Recall done for you</td>
+                <td><b>Patient contact information.</b> There is no way around that, so we say it plainly.</td>
+                <td>Inside the practice's own accounts, under a signed BAA, with a limited login the practice creates and can revoke. We never touch charts.</td>
+              </tr>
+              <tr>
+                <td>Practice operations automation</td>
+                <td><b>Staff information.</b> Time off and payroll, not patient charts.</td>
+                <td>Scoped to the practice, and it stays there.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul class="notelist two" style="margin-top:56px">
+          <li><b>It does not connect to your practice management system.</b> That is a decision, not a gap.</li>
+          <li>Most hosted systems do not give an outside vendor database access. A vendor promising a nightly sync is either overselling or has not checked yet.</li>
+          <li>So it does not matter which system you run. Nothing breaks when your vendor ships an update.</li>
+          <li>No credentials of ours sit inside your clinical system, and there is nothing to unpick if you leave.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ PROOF ============================ -->
+    <section id="proof" class="band rule-top" aria-labelledby="proof-h">
+      <div class="wrap">
+        <div class="sechead" style="margin-bottom:44px">
+          <p class="eyebrow plain">Proof</p>
+          <h2 id="proof-h">Built at a front desk, not in a conference room.</h2>
+        </div>
+
+        <dl class="rail">
+          <div><dt>person practice, live</dt><dd>27</dd></div>
+          <div><dt>doctors, one location</dt><dd>6 to 7</dd></div>
+          <div><dt>situations mapped</dt><dd>76</dd></div>
+          <div><dt>decision lookups built</dt><dd>4</dd></div>
+          <div><dt>days to live at the desk</dt><dd class="em">30</dd></div>
+        </dl>
+
+        <h3 class="eyebrow plain" style="margin:64px 0 30px">Who you are actually hiring</h3>
+        <div class="founders">
+          <div class="founder">
+            <span class="avatar" aria-hidden="true">AS</span>
+            <div>
+              <h4>Alec Stephens</h4>
+              <span class="role">Co-founder</span>
+              <p>Spent the last year inside a 27 person eyecare practice, in the office, watching the front desk work.</p>
+            </div>
+          </div>
+          <div class="founder">
+            <span class="avatar" aria-hidden="true">JK</span>
+            <div>
+              <h4>Jusheen Kim</h4>
+              <span class="role">Co-founder</span>
+              <p>Lead software engineer at J.P. Morgan before this. Builds the systems that have to hold up under real use.</p>
+            </div>
+          </div>
+        </div>
+
+        <ul class="notelist" style="margin-top:48px">
+          <li><b>Both founders are based in Asia.</b> Urgent issues are answered by the next business morning, US time, and the escalation path goes in writing before you sign anything.</li>
+          <li>You work with both of us. There is no account manager.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ PRICING ============================ -->
+    <section id="pricing" class="band rule-top" aria-labelledby="pricing-h">
+      <div class="wrap">
+        <div class="sechead" style="margin-bottom:44px">
+          <p class="eyebrow plain">Pricing</p>
+          <h2 id="pricing-h">Three tiers, printed. One product still priced on the call.</h2>
+        </div>
+
+        <div class="tiers">
+          <div>
+            <h3>Front desk knowledge base</h3>
+            <div class="cost">
+              <div class="setup">$2,500 <span>setup</span></div>
+              <div class="mo">$299 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Situation pages written by us from the material you already have</li>
+              <li>The 4 decision lookups</li>
+              <li>Search, in app editing, and a saved history of every change</li>
+              <li>Google sign in, with the editors you choose</li>
+              <li>One click flagging when a page is wrong</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Talk it through</a>
+          </div>
+
+          <div class="pick">
+            <span class="badge">Where we would start you</span>
+            <h3>Whole practice knowledge base</h3>
+            <div class="cost">
+              <div class="setup">$3,500 <span>setup</span></div>
+              <div class="mo">$250 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Everything in the front desk tier</li>
+              <li>Technician, optical, and doctor restriction pages</li>
+              <li>Views that show each role its own work</li>
+              <li>A content review with your office manager each quarter</li>
+              <li>A short written AI use policy for your staff</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+          </div>
+
+          <div>
+            <h3>Knowledge base plus operations</h3>
+            <div class="cost">
+              <div class="setup">$4,500 <span>setup</span></div>
+              <div class="mo">$350 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Everything in the whole practice tier</li>
+              <li>Time off and payroll automation, scoped to your practice</li>
+              <li>A quarterly practice snapshot</li>
+              <li>Monthly working time with both of us</li>
+              <li>Your builds go to the front of our queue</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Talk it through</a>
+          </div>
+        </div>
+
+        <div class="recallrow">
+          <div>
+            <p class="t">Recall done for you</p>
+            <p>The price is not set, so we are not printing one. It is scoped per practice on the call, and it can fold into the third tier.</p>
+          </div>
+          <span class="stamp">Priced on the call</span>
+        </div>
+
+        <ul class="notelist two" style="border-top:0">
+          <li>Extra sections beyond a tier cap are <b>$600 each</b>.</li>
+          <li>A second location is <b>$1,500</b> to set up and <b>$149 a month</b>.</li>
+          <li>Compare the monthly to a training platform: Trainual and Whale run about <b>$249 to $300 a month</b> at this size and still hand you an empty system.</li>
+          <li><b>Month to month, no term.</b> Keep every page on cancellation, and export any time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ CLOSE ============================ -->
+    <section class="band close rule-top" aria-labelledby="close-h">
+      <div class="wrap">
+        <p class="eyebrow">Next step</p>
+        <h2 id="close-h" style="margin-top:22px">Twenty minutes, and you will know which of the three you need.</h2>
+        <p class="lede sub">
+          Bring one thing that goes wrong at your front desk every week. If none of the three touches
+          it, we will say so on the call.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+            Book a 20 minute call
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+        </div>
+        <p class="after">Or reply to the email that sent you here. It reaches the same two people.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footgrid">
+        <div class="col">
+          <a class="mark" href="#top" style="margin-bottom:12px">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="name">Stephens AI</span>
+          </a>
+          <p>Systems for independent eyecare practices in the US.</p>
+          <p>Alec Stephens and Jusheen Kim.</p>
+        </div>
+        <div class="col links">
+          <p class="h">Panels</p>
+          <p><a href="#panels">Front desk knowledge base</a></p>
+          <p><a href="#panels">Recall done for you</a></p>
+          <p><a href="#panels">Practice operations automation</a></p>
+          <p><a href="#custom">Custom builds</a></p>
+        </div>
+        <div class="col links">
+          <p class="h">Talk to us</p>
+          <p><a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a></p>
+          <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+        </div>
+      </div>
+      <p class="footnote">
+        Stephens AI, systems for independent eyecare practices in the US. The knowledge base holds no
+        patient records, and recall runs inside the practice's own accounts under a signed BAA. Month to
+        month, no term, export any time.
+      </p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* Keep the sticky bar under the review strip, whatever height it wraps to. */
+(function () {
+  try {
+    var bar = document.querySelector('.proto-bar');
+    if (!bar) return;
+    var sync = function () {
+      var h = Math.round(bar.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--protoH', h + 'px');
+    };
+    sync();
+    if ('ResizeObserver' in window) { new ResizeObserver(sync).observe(bar); }
+    else { window.addEventListener('resize', sync); }
+  } catch (err) { /* the 44px default stands */ }
+})();
+
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try { reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+  catch (e) { reduced = false; }
+  var pace = function (ms) { return reduced ? 1 : ms; };
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ====================================================================
+     PANEL 01. Search. Every page is already in the markup, so the panel
+     reads as a complete set of pages if this never runs. Enhancing turns
+     that set into one open page plus a working search.
+     ==================================================================== */
+  (function () {
+    try {
+      var form = $("kbForm"), input = $("kbInput"), list = $("kbList"),
+          out = $("kbReadout"), pages = $("kbPages"), clear = $("kbClear");
+      if (!form || !input || !list || !out || !pages) return;
+
+      var arts = Array.prototype.slice.call(pages.querySelectorAll(".kb-page"));
+      if (!arts.length) return;
+
+      var items = arts.map(function (el, i) {
+        var h = el.querySelector("h4");
+        return {
+          el: el, i: i,
+          title: h ? h.textContent.trim() : "Page",
+          head: h,
+          cat: el.getAttribute("data-cat") || "",
+          hay: ((h ? h.textContent : "") + " " +
+                (el.getAttribute("data-keys") || "") + " " +
+                (el.getAttribute("data-cat") || "") + " " +
+                el.textContent).toLowerCase()
+        };
+      });
+
+      var open = 0;
+
+      function showOnly(n, focusIt) {
+        open = n;
+        items.forEach(function (it, i) { it.el.hidden = (i !== n); });
+        var hits = list.querySelectorAll(".kb-hit");
+        Array.prototype.forEach.call(hits, function (b) {
+          b.setAttribute("aria-current", String(Number(b.getAttribute("data-i")) === n));
+        });
+        if (focusIt && items[n].head) { try { items[n].head.focus(); } catch (e) {} }
+      }
+
+      function matches(q) {
+        var t = q.trim().toLowerCase();
+        if (!t) return items.slice(0);
+        var words = t.split(/\s+/);
+        return items.filter(function (it) {
+          return words.every(function (w) { return it.hay.indexOf(w) !== -1; });
+        });
+      }
+
+      function render(found, q) {
+        list.innerHTML = "";
+        if (!found.length) {
+          var li = document.createElement("li");
+          li.className = "kb-none";
+          li.textContent = "No example page matches that. A page nobody can find is a page we still have to write.";
+          list.appendChild(li);
+          out.textContent = "No match for " + '“' + q.trim() + '”' + ".";
+          return;
+        }
+        found.forEach(function (it) {
+          var li = document.createElement("li");
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "kb-hit";
+          b.setAttribute("data-i", String(it.i));
+          b.setAttribute("aria-current", String(it.i === open));
+          var t = document.createElement("span"); t.className = "hit-t"; t.textContent = it.title;
+          var c = document.createElement("span"); c.className = "hit-c"; c.textContent = it.cat;
+          b.appendChild(t); b.appendChild(c);
+          b.addEventListener("click", function () { showOnly(it.i, true); });
+          li.appendChild(b);
+          list.appendChild(li);
+        });
+        var n = found.length;
+        out.textContent = q.trim()
+          ? n + (n === 1 ? " page matches " : " pages match ") + '“' + q.trim() + '”' + ". Open one."
+          : "All " + n + " example pages. Search, or open one.";
+      }
+
+      function run(q, openTop) {
+        var found = matches(q);
+        render(found, q);
+        if (clear) clear.hidden = !input.value;
+        if (openTop && found.length) showOnly(found[0].i, false);
+      }
+
+      form.hidden = false;
+      list.hidden = false;
+      showOnly(0, false);
+      run("", false);
+
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var found = matches(input.value);
+        if (found.length) showOnly(found[0].i, true);
+      });
+      input.addEventListener("input", function () { run(input.value, false); });
+
+      if (clear) {
+        clear.addEventListener("click", function () {
+          input.value = ""; run("", false); input.focus();
+        });
+      }
+
+      Array.prototype.forEach.call(form.querySelectorAll(".kb-quick button"), function (b) {
+        b.addEventListener("click", function () {
+          input.value = b.getAttribute("data-q") || "";
+          run(input.value, true);
+        });
+      });
+
+      pages.addEventListener("click", function (ev) {
+        var b = ev.target && ev.target.closest ? ev.target.closest(".flagbtn") : null;
+        if (!b || b.classList.contains("on")) return;
+        b.classList.add("on");
+        /* keep the icon, swap only the label text node */
+        var last = b.lastChild;
+        if (last && last.nodeType === 3) { last.nodeValue = " Flagged. The office manager sees it."; }
+        else { b.appendChild(document.createTextNode(" Flagged. The office manager sees it.")); }
+        b.setAttribute("aria-disabled", "true");
+        out.textContent = "Flagged. One click is the whole report, and the office manager sees it.";
+      });
+    } catch (err) { /* the pages stay on screen, stacked and readable */ }
+  })();
+
+  /* ====================================================================
+     PANEL 02. The run. Four steps, and an update step that refuses to
+     run early. The refusal is the product.
+     ==================================================================== */
+  (function () {
+    try {
+      var listEl = $("runList"), ctl = $("runCtl"), next = $("runNext"),
+          upd = $("runUpdate"), reset = $("runReset"), out = $("runReadout"),
+          ticks = $("runTicks");
+      if (!listEl || !ctl || !next || !upd || !reset || !out) return;
+
+      var rows = Array.prototype.slice.call(listEl.querySelectorAll("li"));
+      if (rows.length < 4) return;
+      var tickEls = ticks ? Array.prototype.slice.call(ticks.querySelectorAll("i")) : [];
+      var done = 0, timers = [], busy = false;
+      var labels = ["Sent", "Sent", "8 of 8 sent", "Done"];
+
+      function chip(i, cls, text) {
+        var c = rows[i].querySelector("[data-state]");
+        if (!c) return;
+        c.className = "chip " + cls;
+        c.textContent = text;
+      }
+
+      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+      function stepName(i) {
+        var t = rows[i].querySelector(".txt");
+        var n = t && t.firstChild ? t.firstChild.nodeValue : "";
+        return (n || "Step").trim();
+      }
+
+      function paint() {
+        rows.forEach(function (li, i) {
+          li.classList.toggle("done", i < done);
+          li.classList.remove("active", "blocked");
+        });
+        rows[3].classList.toggle("locked", done < 3);
+        for (var i = 0; i < 3; i++) {
+          if (i < done) chip(i, "good", labels[i]);
+          else chip(i, "mute", "Waiting");
+        }
+        if (done >= 4) chip(3, "good", "Done");
+        else if (done === 3) chip(3, "live", "Ready");
+        else chip(3, "mute", "Locked");
+        if (!busy) { tickEls.forEach(function (t) { t.classList.toggle("f", done > 2); }); }
+        next.disabled = done >= 3;
+        upd.disabled = done >= 4;
+        next.textContent = done >= 3 ? "Calls and postcards finished" : "Advance the run";
+      }
+
+      function stepOne() {
+        if (busy || done >= 3) return;
+        var hadFocus = (document.activeElement === next);
+        busy = true;
+        var i = done;
+        rows[i].classList.add("active");
+        chip(i, "warn", "Running");
+        paint();
+        var finish = function () {
+          done = i + 1;
+          busy = false;
+          paint();
+          if (i === 2) {
+            out.textContent = "Every call and postcard is finished. The update step is ready now, and not before.";
+            if (hadFocus) { try { upd.focus(); } catch (e) {} }
+          } else {
+            out.textContent = stepName(i) + ": finished.";
+          }
+        };
+        if (i === 2 && tickEls.length) {
+          tickEls.forEach(function (t, n) {
+            timers.push(setTimeout(function () { t.classList.add("f"); }, pace(120 + n * 130)));
+          });
+          timers.push(setTimeout(finish, pace(120 + tickEls.length * 130 + 160)));
+        } else {
+          timers.push(setTimeout(finish, pace(760)));
+        }
+      }
+
+      next.addEventListener("click", stepOne);
+
+      upd.addEventListener("click", function () {
+        if (busy) return;
+        var hadFocusU = (document.activeElement === upd);
+        if (done < 3) {
+          rows[3].classList.add("blocked");
+          chip(3, "bad", "Blocked");
+          out.textContent = "Blocked. The update step cannot run before every call and postcard is finished. Run it early and the same patients get pulled again next month, or dropped.";
+          timers.push(setTimeout(function () { paint(); }, pace(2400)));
+          return;
+        }
+        if (done >= 4) return;
+        busy = true;
+        chip(3, "warn", "Running");
+        timers.push(setTimeout(function () {
+          done = 4; busy = false; paint();
+          out.textContent = "Update run finished, in the right order. Nobody had to remember the checkbox.";
+          if (hadFocusU) { try { reset.focus(); } catch (e) {} }
+        }, pace(760)));
+      });
+
+      reset.addEventListener("click", function () {
+        clearTimers();
+        done = 0; busy = false;
+        tickEls.forEach(function (t) { t.classList.remove("f"); });
+        paint();
+        out.textContent = "Reset. The update step is locked again.";
+        next.focus();
+      });
+
+      ctl.hidden = false;
+      done = 0;
+      paint();
+      out.textContent = "Advance the run, or try the update step early and watch it refuse.";
+    } catch (err) { /* the run sheet stays on screen as a static sequence */ }
+  })();
+
+  /* ====================================================================
+     PANEL 03. A time off request that submits and approves, and holds
+     itself when coverage will not work.
+     ==================================================================== */
+  (function () {
+    try {
+      var form = $("toForm"), role = $("toRole"), len = $("toLen"),
+          send = $("toSend"), reset = $("toReset"), who = $("toWho"),
+          when = $("toWhen"), state = $("toState"), out = $("toReadout"),
+          trail = $("toTrail");
+      if (!form || !role || !len || !send || !who || !when || !state || !out || !trail) return;
+
+      var rows = Array.prototype.slice.call(trail.querySelectorAll("li"));
+      var timers = [];
+      var initials = { "Front desk": "FD", "Optical": "OP", "Technician": "TC" };
+      var avatar = form.parentNode.querySelector(".req .who");
+
+      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+      function setTrail(n, held) {
+        rows.forEach(function (li, i) {
+          li.classList.toggle("on", i < n);
+          li.classList.toggle("off", held && i >= n);
+        });
+      }
+
+      function blank() {
+        clearTimers();
+        setTrail(0, false);
+        state.className = "chip mute";
+        state.textContent = "Draft";
+        who.firstChild.nodeValue = role.value + ", " + len.value + " ";
+        when.textContent = "Nothing sent yet.";
+        out.textContent = "Requests go in through one form, not to a person in the hallway.";
+        if (avatar) avatar.textContent = initials[role.value] || "ST";
+        if (reset) reset.hidden = true;
+      }
+
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        clearTimers();
+        var conflict = (role.value === "Technician" && len.value === "two days");
+        who.firstChild.nodeValue = role.value + ", " + len.value + " ";
+        if (avatar) avatar.textContent = initials[role.value] || "ST";
+        state.className = "chip warn";
+        state.textContent = "Submitted";
+        when.textContent = "Checking coverage against the schedule.";
+        setTrail(0, false);
+        out.textContent = "Request sent. Coverage is checked before anyone approves anything.";
+
+        timers.push(setTimeout(function () {
+          setTrail(1, false);
+          if (conflict) {
+            state.className = "chip bad";
+            state.textContent = "Held";
+            when.textContent = "Coverage conflict on the second day.";
+            setTrail(1, true);
+            out.textContent = "Held, not silently approved. The conflict goes to the owner with the days that clash.";
+            if (reset) { reset.hidden = false; }
+            return;
+          }
+          timers.push(setTimeout(function () {
+            setTrail(2, false);
+            timers.push(setTimeout(function () {
+              setTrail(3, false);
+              state.className = "chip good";
+              state.textContent = "Approved";
+              when.textContent = "Coverage checked before it reached the owner.";
+              out.textContent = "Approved. Coverage, the staff member, and payroll all moved from the same record.";
+              if (reset) { reset.hidden = false; }
+            }, pace(520)));
+          }, pace(520)));
+        }, pace(700)));
+      });
+
+      if (reset) { reset.addEventListener("click", function () { blank(); try { send.focus(); } catch (e) {} }); }
+      role.addEventListener("change", blank);
+      len.addEventListener("change", blank);
+
+      form.hidden = false;
+      blank();
+    } catch (err) { /* the request row stays on screen in its approved state */ }
+  })();
+
+  /* Scroll spy. Decorative. */
+  (function () {
+    try {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a[data-spy]'));
+      if (!links.length || !('IntersectionObserver' in window)) return;
+      var map = {}, targets = [];
+      links.forEach(function (a) {
+        var id = (a.getAttribute('href') || '').replace('#', '');
+        var el = id && document.getElementById(id);
+        if (el) { map[id] = a; targets.push(el); }
+      });
+      if (!targets.length) return;
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var a = map[e.target.id];
+          if (!a || a === current) return;
+          if (current) current.removeAttribute('aria-current');
+          a.setAttribute('aria-current', 'true');
+          current = a;
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      targets.forEach(function (t) { io.observe(t); });
+    } catch (err) { /* leave the bar as rendered */ }
+  })();
+})();
+</script>

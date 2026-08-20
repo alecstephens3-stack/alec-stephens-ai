@@ -1,0 +1,86 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "The Catalogue",
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 8040,
+      "expand": "fill"
+    },
+    {
+      "file": "Window.dc.html",
+      "title": "The Window",
+      "x": 1480,
+      "y": 0,
+      "w": 1280,
+      "h": 7200,
+      "expand": "fill"
+    },
+    {
+      "file": "Bands.dc.html",
+      "title": "Three Bands",
+      "x": 2960,
+      "y": 0,
+      "w": 1280,
+      "h": 8560,
+      "expand": "fill"
+    },
+    {
+      "file": "Run.dc.html",
+      "title": "The Run",
+      "x": 4440,
+      "y": 0,
+      "w": 1280,
+      "h": 8520,
+      "expand": "fill"
+    },
+    {
+      "file": "Math.dc.html",
+      "title": "The Math",
+      "x": 5920,
+      "y": 0,
+      "w": 1280,
+      "h": 9650,
+      "expand": "fill"
+    },
+    {
+      "file": "DayNight.dc.html",
+      "title": "Day and Night",
+      "x": 7400,
+      "y": 0,
+      "w": 1280,
+      "h": 7260,
+      "expand": "fill"
+    },
+    {
+      "file": "Path.dc.html",
+      "title": "The Path",
+      "x": 8880,
+      "y": 0,
+      "w": 1280,
+      "h": 9250,
+      "expand": "fill"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "how-to-read",
+      "x": 0,
+      "y": -260,
+      "w": 760,
+      "text": "Seven directions, all rebuilt on the canonical Lens v3 kit.\n\nEvery page uses the real kit classes, the six explainer widgets, and the canonical logo. Recall is now ReExam: $600 a month flat, no contract, guarantee quoted exactly.\n\nStart with The Catalogue. It is the direction you picked first, rebuilt."
+    },
+    {
+      "id": "open-question",
+      "x": 820,
+      "y": -260,
+      "w": 620,
+      "text": "Two things still need you:\n\n1. Whether to name incumbent vendors on a public page. Prototypes use one quote, by role and date, no vendor in a headline.\n\n2. Gabe: permission to name the practice, and an actual endorsement. The quotes here are real but they are thanks for fixes, not testimonials."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

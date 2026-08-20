@@ -1,0 +1,1319 @@
+<title>Dark Operator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* ==========================================================================
+   08. Dark Operator
+   The design system's night surface, taken all the way. Whole page dark.
+   One ember. Hairlines at 11% white. Product mock ups are "day windows":
+   light sheets embedded in the dark surface, so software still reads as
+   software.
+
+   Contrast discipline (the gate):
+     ground runs #241B15 (lightest) to #0D0A08 (darkest)
+     #F5F1E8 primary      15.0:1 at the lightest point
+     #B3AB9E secondary     7.4:1 at the lightest point   <- absolute floor
+     #FF8E76 accent text   7.5:1 at the lightest point
+     #DC6843 is a MARK ONLY colour. It never carries text on this page.
+   ========================================================================== */
+
+:root{
+  color-scheme: dark;                 /* commit; block OS light/dark bleed */
+
+  --night:      radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%);
+  --night-flat: #120D09;
+
+  --cream:      #F5F1E8;
+  --cream-2:    #B3AB9E;              /* the floor on dark. Never lighter ground, never darker ink. */
+  --accent:     #DC6843;              /* MARK ONLY: rules, bars, dots, ticks */
+  --accent-txt: #FF8E76;              /* accent-coloured TEXT on night */
+
+  --nrule:      rgba(255,255,255,0.11);
+  --nrule-soft: rgba(255,255,255,0.06);
+  --nedge:      rgba(255,255,255,0.12);
+  --raise:      rgba(255,255,255,0.040);
+  --raise-2:    rgba(255,255,255,0.065);
+
+  /* day window: a light sheet dropped into the dark surface */
+  --day:        #FAF7F1;
+  --day-2:      #FFFFFF;
+  --day-3:      #F2ECE2;
+  --ink:        #171310;
+  --ink-2:      #5A4F46;              /* 7.0:1 on the day sheet */
+  --accent-deep:#8F3616;              /* accent text/icons below 24px on light */
+  --rule:       rgba(23,19,16,0.10);
+  --rule-2:     rgba(23,19,16,0.16);
+  --good:       #2E7A56;              /* MARK: the tint behind a status chip */
+  --warn:       #946A12;
+  --good-ink:   #215941;              /* status TEXT below 24px on the day sheet */
+  --warn-ink:   #71510C;
+
+  --sans:  "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --label: "Schibsted Grotesk", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --ease:  cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --pad: 30px;
+  --protoH: 44px;   /* height of the review strip; JS keeps it honest if it wraps */
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; scroll-padding-top:104px; -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--night-flat);        /* painted explicitly, see color-scheme note */
+  color:var(--cream);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+img,svg{ max-width:100%; }
+a{ color:inherit; }
+
+/* no form controls ship on this page, but if one is ever added it must not
+   inherit the viewer's OS colours on top of a committed dark surface */
+input,select,textarea,button{
+  font:inherit; color:var(--cream);
+  background-color:rgba(255,255,255,.05);
+  border:1px solid var(--nedge); border-radius:10px;
+}
+::placeholder{ color:var(--cream-2); opacity:1; }
+
+:focus-visible{
+  outline:2px solid var(--accent-txt);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+/* ---------- review furniture: the prototype strip ------------------------ */
+.proto-bar{
+  position:sticky; top:0; z-index:80;
+  display:flex; flex-wrap:wrap; align-items:center; gap:7px 18px;
+  min-height:44px; padding:11px 20px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--sans); font-size:13px; line-height:1.4;
+  border-bottom:1px solid #000;
+}
+.proto-n{ font-variant:small-caps; letter-spacing:.09em; text-transform:lowercase; }
+.proto-name{ font-weight:600; }
+.proto-bet{ color:#b9b9bd; }
+
+/* ---------- the scene: one gradient, one ember --------------------------- */
+.scene{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; background:var(--night); }
+.scene .ember{
+  position:absolute; top:-260px; right:-180px;
+  width:720px; height:720px; border-radius:50%;
+  background:var(--accent); opacity:.155; filter:blur(130px);
+}
+.scene .ember.low{
+  top:auto; bottom:-420px; right:auto; left:-260px;
+  width:640px; height:640px; opacity:.055;
+}
+
+.page{ position:relative; z-index:1; }
+
+/* ---------- rhythm ------------------------------------------------------- */
+.wrap{ width:100%; max-width:1160px; margin:0 auto; padding:0 var(--pad); }
+section{ padding:110px 0; position:relative; }
+section + section{ border-top:1px solid var(--nrule-soft); }
+
+/* ---------- type -------------------------------------------------------- */
+h1,h2,h3,h4{ font-weight:500; letter-spacing:-.026em; line-height:1.08; margin:0; }
+h1{ font-size:clamp(2.35rem, 5.6vw, 4rem); letter-spacing:-.032em; line-height:1.04; }
+h2{ font-size:clamp(1.85rem, 3.6vw, 2.75rem); }
+h3{ font-size:clamp(1.5rem, 2.9vw, 2.1rem); }
+h4{ font-size:1.1875rem; letter-spacing:-.018em; line-height:1.25; }
+p{ margin:0; }
+
+.eyebrow{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent-txt);
+  display:flex; align-items:center; gap:11px;
+}
+.eyebrow::before{
+  content:''; width:22px; height:1px; background:var(--accent); flex:none;
+}
+.eyebrow.plain{ color:var(--cream-2); }
+.eyebrow.plain::before{ background:var(--nrule); }
+
+.lede{ font-size:clamp(1.125rem, 1.7vw, 1.3125rem); line-height:1.55; color:var(--cream); letter-spacing:-.011em; }
+.sub{ color:var(--cream-2); }
+.small{ font-size:15px; line-height:1.6; color:var(--cream-2); }
+
+.hr{ height:1px; background:var(--nrule); border:0; margin:0; }
+
+/* ---------- buttons ------------------------------------------------------ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:52px; padding:14px 28px;
+  border-radius:999px; border:1px solid transparent;
+  font-family:var(--sans); font-size:16.5px; font-weight:500; letter-spacing:-.005em;
+  text-decoration:none; cursor:pointer;
+  transition:transform 150ms var(--ease), background-color 220ms var(--ease), border-color 220ms var(--ease);
+}
+.btn-primary{
+  background:var(--cream); color:#140F0C;
+  box-shadow:0 12px 34px rgba(0,0,0,.42);
+}
+.btn-primary:hover{ background:#fff; transform:translateY(-1px); }
+.btn-ghost{
+  background:transparent; color:var(--cream); border-color:var(--nedge);
+}
+.btn-ghost:hover{ border-color:rgba(255,255,255,.28); background:rgba(255,255,255,.045); }
+.btn svg{ flex:none; }
+
+.link-accent{
+  color:var(--accent-txt); text-decoration:none;
+  border-bottom:1px solid rgba(255,142,118,.4);
+  padding-bottom:1px;
+}
+.link-accent:hover{ border-bottom-color:var(--accent-txt); }
+
+/* ---------- top bar ------------------------------------------------------ */
+.topbar{
+  position:sticky; top:var(--protoH); z-index:70;
+  background:rgba(16,11,8,.82);
+  backdrop-filter:blur(18px) saturate(1.2);
+  border-bottom:1px solid var(--nrule-soft);
+}
+@supports not (backdrop-filter: blur(1px)){ .topbar{ background:#100B08; } }
+.topbar .inner{ display:flex; align-items:center; gap:22px; min-height:60px; }
+.mark{ display:flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; margin-right:auto; }
+.mark .dot{
+  width:11px; height:11px; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 16px rgba(220,104,67,.55); flex:none;
+}
+.mark .name{ font-size:16.5px; font-weight:500; letter-spacing:-.018em; color:var(--cream); }
+.navlinks{ display:flex; align-items:center; gap:4px; }
+.navlinks a{
+  display:inline-flex; align-items:center; min-height:44px; padding:0 13px;
+  font-size:15px; color:var(--cream-2); text-decoration:none; border-radius:8px;
+  transition:color 150ms var(--ease);
+}
+.navlinks a:hover,.navlinks a[aria-current="true"]{ color:var(--cream); }
+.topbar .btn{ min-height:44px; padding:10px 20px; font-size:15px; }
+@media (max-width:900px){
+  .navlinks{ display:none; }
+  /* the review strip wraps to several lines on a phone, so a sticky offset
+     below it cannot be trusted. Let the bar scroll away instead. */
+  .topbar{ position:static; }
+}
+
+/* ---------- hero --------------------------------------------------------- */
+.hero{ padding:clamp(74px, 10vw, 130px) 0 100px; }
+.hero .eyebrow{ margin-bottom:30px; }
+.hero h1{ max-width:16ch; }
+.hero .lede{ margin-top:30px; max-width:60ch; }
+.hero .actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:40px; }
+
+.rail{
+  margin-top:74px; border-top:1px solid var(--nrule);
+  display:grid; grid-template-columns:repeat(5,1fr);
+}
+.rail div{ padding:26px 22px 4px 0; border-right:1px solid var(--nrule-soft); }
+.rail div:last-child{ border-right:0; }
+.rail .n{
+  font-size:clamp(1.5rem,2.4vw,2rem); font-weight:500; letter-spacing:-.03em;
+  line-height:1; color:var(--cream); display:block;
+}
+.rail .n.em{ color:var(--accent-txt); }
+.rail .l{ display:block; margin-top:11px; font-size:14px; line-height:1.45; color:var(--cream-2); max-width:20ch; }
+@media (max-width:900px){
+  .rail{ grid-template-columns:repeat(2,1fr); }
+  .rail div{ padding:22px 18px 22px 0; border-bottom:1px solid var(--nrule-soft); }
+  .rail div:nth-child(2n){ border-right:0; }
+  .rail div:last-child{ border-right:0; border-bottom:0; }
+}
+@media (max-width:400px){ .rail{ grid-template-columns:1fr; } .rail div{ border-right:0; } }
+
+/* ---------- section head ------------------------------------------------- */
+.sechead{ max-width:74ch; margin-bottom:64px; }
+.sechead .eyebrow{ margin-bottom:24px; }
+.sechead h2 + p{ margin-top:22px; }
+
+/* ---------- the three bands ---------------------------------------------- */
+.band{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);
+  gap:clamp(40px,5vw,76px); align-items:center;
+  padding:96px 0;
+}
+.band + .band{ border-top:1px solid var(--nrule-soft); }
+.band:first-of-type{ padding-top:0; }
+.band.flip .col-text{ order:2; }
+.band.flip .col-art{ order:1; }
+@media (max-width:940px){
+  .band{ grid-template-columns:1fr; gap:44px; padding:72px 0; }
+  .band.flip .col-text{ order:1; }
+  .band.flip .col-art{ order:2; }
+}
+
+.band .eyebrow{ margin-bottom:24px; }
+.band h3 + .forwho{ margin-top:20px; }
+.forwho{
+  font-size:17px; line-height:1.5; color:var(--accent-txt); letter-spacing:-.008em;
+  max-width:44ch;
+}
+.band .body{ margin-top:22px; color:var(--cream-2); max-width:50ch; }
+.band .body + .body{ margin-top:16px; }
+
+.feat{ list-style:none; margin:32px 0 0; padding:0; border-top:1px solid var(--nrule-soft); max-width:52ch; }
+.feat li{
+  position:relative; padding:15px 0 15px 26px;
+  border-bottom:1px solid var(--nrule-soft);
+  font-size:16px; line-height:1.55; color:var(--cream);
+}
+.feat li::before{
+  content:''; position:absolute; left:0; top:24px;
+  width:7px; height:7px; border-radius:50%; background:var(--accent);
+}
+.feat li b{ font-weight:500; color:var(--cream); }
+
+/* the honest-limit and data-posture note inside a band */
+.note{
+  margin-top:30px; max-width:52ch;
+  border:1px solid var(--nrule); border-left:2px solid var(--accent);
+  border-radius:0 12px 12px 0;
+  background:var(--raise);
+  padding:20px 22px;
+}
+.note .t{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--accent-txt);
+  display:block; margin-bottom:10px;
+}
+.note p{ font-size:15.5px; line-height:1.58; color:var(--cream-2); }
+.note p + p{ margin-top:10px; }
+.note strong{ color:var(--cream); font-weight:500; }
+
+.pricetag{
+  display:inline-flex; align-items:center; gap:10px; margin-top:26px;
+  padding:10px 18px; min-height:44px;
+  border:1px solid var(--nrule); border-radius:999px;
+  background:var(--raise);
+  font-size:15px; color:var(--cream);
+}
+.pricetag .k{ color:var(--cream-2); }
+
+/* ==========================================================================
+   DAY WINDOW: a light sheet embedded in the dark surface.
+   Everything inside is a normal light UI, so the mock ups read as software.
+   ========================================================================== */
+.dwfig{ margin:0; }
+.dwfig figcaption{ margin-top:16px; }
+.dw{
+  border-radius:20px;
+  background:var(--day);
+  color:var(--ink);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 30px 70px rgba(0,0,0,.52), 0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 #fff;
+  overflow:hidden;
+  font-size:15px; line-height:1.55;
+}
+.dw-chrome{
+  display:flex; align-items:center; gap:7px;
+  padding:12px 16px;
+  background:linear-gradient(180deg,#F2ECE2,#EDE6DA);
+  border-bottom:1px solid var(--rule);
+}
+.dw-chrome i{ width:9px; height:9px; border-radius:50%; background:rgba(23,19,16,.15); }
+.dw-chrome i:nth-child(2){ background:rgba(23,19,16,.11); }
+.dw-chrome i:nth-child(3){ background:rgba(23,19,16,.08); }
+.dw-chrome .t{
+  margin-left:9px; font-size:13.5px; font-weight:500; color:var(--ink-2);
+  letter-spacing:-.005em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.dw-chrome .t b{ color:var(--ink); font-weight:500; }
+.dw-body{ padding:18px; }
+@media (max-width:420px){ .dw-body{ padding:14px; } }
+
+.dw-search{
+  display:flex; align-items:center; gap:11px;
+  padding:13px 15px; border-radius:12px;
+  background:#fff; border:1px solid var(--rule-2);
+  box-shadow:inset 0 1px 0 #fff, 0 1px 2px rgba(23,19,16,.05);
+}
+.dw-search .q{ font-size:15.5px; color:var(--ink); }
+.dw-search .caret{
+  width:1.5px; height:17px; background:var(--accent-deep); margin-left:-6px;
+  animation:blink 1.15s steps(1,end) infinite;
+}
+@keyframes blink{ 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+.dw-card{
+  margin-top:14px; padding:16px; border-radius:14px;
+  background:#fff; border:1px solid var(--rule);
+  box-shadow:0 2px 10px rgba(23,19,16,.05);
+}
+.dw-card .head{ display:flex; align-items:flex-start; gap:12px; justify-content:space-between; }
+.dw-card .dw-h{
+  margin:0; font-size:17px; font-weight:500; letter-spacing:-.018em;
+  line-height:1.25; color:var(--ink);
+}
+.chip{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.045em;
+  text-transform:uppercase; padding:4px 9px; border-radius:7px; white-space:nowrap;
+}
+.chip.lookup{ color:var(--accent-deep); background:rgba(220,104,67,.10); }
+.chip.good{ color:var(--good-ink); background:rgba(46,122,86,.12); }
+.chip.warn{ color:var(--warn-ink); background:rgba(148,106,18,.12); }
+.chip.mute{ color:var(--ink-2); background:rgba(23,19,16,.06); }
+
+.dw-card p{ font-size:14.5px; line-height:1.55; color:var(--ink-2); margin:11px 0 0; }
+.dw-exception{
+  margin-top:12px; padding:11px 13px; border-radius:9px;
+  background:rgba(220,104,67,.07); border-left:2px solid var(--accent);
+}
+.dw-exception p{ margin:0; color:var(--ink); font-size:14.5px; }
+.dw-exception b{ color:var(--accent-deep); font-weight:600; }
+.dw-foot{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px; justify-content:space-between;
+  margin-top:14px; padding-top:12px; border-top:1px solid var(--rule);
+  font-size:13.5px; color:var(--ink-2);
+}
+.dw-flag{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:8px 12px; min-height:36px; border-radius:8px;
+  border:1px solid var(--rule-2); background:#fff;
+  font-family:var(--sans); font-size:13.5px; color:var(--ink-2);
+}
+
+.dw-list{ list-style:none; margin:14px 0 0; padding:0; border-top:1px solid var(--rule); }
+.dw-list li{
+  display:flex; align-items:center; gap:11px;
+  padding:12px 2px; border-bottom:1px solid var(--rule);
+  font-size:14.5px; color:var(--ink-2);
+}
+.dw-list li:last-child{ border-bottom:0; }
+.dw-list .k{ color:var(--ink); }
+.dw-label{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-2); margin:18px 0 0;
+}
+
+/* run sheet (recall) */
+.runsheet{ list-style:none; margin:14px 0 0; padding:0; counter-reset:step; }
+.runsheet li{
+  position:relative; display:grid; grid-template-columns:26px 1fr auto;
+  gap:12px; align-items:start;
+  padding:13px 0; border-bottom:1px solid var(--rule);
+}
+.runsheet li:last-child{ border-bottom:0; }
+.runsheet .chip{ flex:none; }
+.runsheet .num{
+  counter-increment:step;
+  width:22px; height:22px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  background:rgba(23,19,16,.07); color:var(--ink-2);
+}
+.runsheet .num::before{ content:counter(step); }
+.runsheet li.on .num{ background:var(--accent-deep); color:#fff; }
+.runsheet .txt{ min-width:0; font-size:14.5px; line-height:1.45; color:var(--ink); }
+.runsheet .sub2{ display:block; margin-top:4px; font-size:13.5px; color:var(--ink-2); }
+.ticks{ display:flex; gap:4px; margin-top:7px; }
+.ticks i{ width:14px; height:4px; border-radius:2px; background:rgba(23,19,16,.13); }
+.ticks i.f{ background:var(--accent); }
+.locknote{
+  display:flex; align-items:flex-start; gap:9px; margin-top:14px;
+  padding:11px 13px; border-radius:10px;
+  background:rgba(23,19,16,.045); border:1px solid var(--rule);
+  font-size:13.5px; line-height:1.5; color:var(--ink-2);
+}
+.locknote svg{ margin-top:2px; color:var(--accent-deep); flex:none; }
+
+/* call list */
+.calls{ width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
+.calls th{
+  text-align:left; font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--ink-2);
+  padding:0 10px 8px 0; border-bottom:1px solid var(--rule-2); white-space:nowrap;
+}
+.calls td{ padding:11px 10px 11px 0; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-2); }
+.calls td:first-child{ color:var(--ink); white-space:nowrap; }
+.calls tr:last-child td{ border-bottom:0; }
+.scrollx{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+/* ops window */
+.opsrow{
+  display:flex; align-items:center; gap:12px; padding:13px 0;
+  border-bottom:1px solid var(--rule); font-size:14.5px;
+}
+.opsrow:last-of-type{ border-bottom:0; }
+.opsrow .who{
+  width:30px; height:30px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(23,19,16,.07); color:var(--ink-2);
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+}
+.opsrow .m{ flex:1; min-width:0; color:var(--ink); }
+.opsrow .chip{ flex:none; }
+.opsrow .m span{ display:block; font-size:13.5px; color:var(--ink-2); margin-top:2px; }
+.bars{ display:flex; align-items:flex-end; gap:6px; height:52px; margin-top:12px; }
+.bars i{ flex:1; background:rgba(23,19,16,.11); border-radius:3px 3px 0 0; }
+.bars i.a{ background:var(--accent); opacity:.75; }
+
+/* ---------- objections --------------------------------------------------- */
+.two{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(30px,4vw,60px); }
+@media (max-width:900px){ .two{ grid-template-columns:1fr; } }
+
+.panel{
+  border:1px solid var(--nrule); border-radius:18px;
+  background:var(--raise);
+  padding:clamp(24px,3vw,36px);
+}
+.panel h3{ font-size:clamp(1.35rem,2.2vw,1.7rem); }
+.panel > p{ margin-top:18px; color:var(--cream-2); font-size:16.5px; }
+
+.posture{ list-style:none; margin:26px 0 0; padding:0; }
+.posture li{ padding:18px 0; border-top:1px solid var(--nrule-soft); }
+.posture li:first-child{ border-top:1px solid var(--nrule); }
+.posture .p-name{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--cream); display:block; margin-bottom:8px;
+}
+.posture .p-body{ font-size:15.5px; line-height:1.55; color:var(--cream-2); }
+.posture .p-body b{ color:var(--cream); font-weight:500; }
+.zero{
+  display:inline-flex; align-items:baseline; gap:8px;
+  color:var(--accent-txt); font-weight:500;
+}
+
+/* ---------- proof -------------------------------------------------------- */
+.founders{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(24px,3vw,44px); margin-top:12px; }
+@media (max-width:760px){ .founders{ grid-template-columns:1fr; } }
+.founder{ display:flex; gap:18px; align-items:flex-start; }
+.founder > div{ min-width:0; }
+.avatar{
+  width:56px; height:56px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--label); font-size:16px; font-weight:600; letter-spacing:.04em;
+  color:var(--cream);
+  background:linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
+  border:1px solid var(--nedge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.founder h4{ margin-bottom:3px; }
+.founder .role{ font-size:14px; color:var(--accent-txt); font-family:var(--label); letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+.founder p{ margin-top:12px; font-size:15.5px; line-height:1.58; color:var(--cream-2); }
+
+/* ---------- pricing ------------------------------------------------------ */
+.tiers{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; align-items:stretch; }
+@media (max-width:980px){ .tiers{ grid-template-columns:1fr; max-width:600px; margin-inline:auto; } }
+
+/* raised surface, not a bright card: the dark stays dark */
+.tier{
+  display:flex; flex-direction:column;
+  border-radius:20px; padding:30px 26px 28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.058), rgba(255,255,255,.022));
+  border:1px solid var(--nrule);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09), 0 26px 60px rgba(0,0,0,.34);
+  position:relative; overflow:hidden;
+}
+.tier.pick{
+  background:linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.03));
+  border-color:rgba(255,255,255,.17);
+}
+.tier.pick::before{
+  content:''; position:absolute; inset:0 0 auto 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.tier .badge{
+  display:inline-block; margin-bottom:16px;
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-txt);
+}
+.tier h3{ font-size:1.3125rem; letter-spacing:-.02em; line-height:1.22; }
+.tier .sum{ margin-top:12px; font-size:15.5px; line-height:1.55; color:var(--cream-2); }
+.tier .cost{ margin-top:24px; padding-top:20px; border-top:1px solid var(--nrule); }
+.tier .setup{ font-size:2rem; font-weight:500; letter-spacing:-.032em; line-height:1; color:var(--cream); }
+.tier .setup span{ font-size:15px; font-weight:400; letter-spacing:0; color:var(--cream-2); margin-left:7px; }
+.tier .mo{ margin-top:9px; font-size:16px; color:var(--cream); }
+.tier .mo span{ color:var(--cream-2); font-size:15px; }
+.tier ul{ list-style:none; margin:22px 0 0; padding:0; }
+.tier ul li{
+  position:relative; padding:8px 0 8px 24px;
+  font-size:15px; line-height:1.5; color:var(--cream-2);
+}
+.tier ul li::before{
+  content:''; position:absolute; left:2px; top:16px;
+  width:6px; height:6px; border-radius:50%; background:var(--accent); opacity:.85;
+}
+.tier .fill{ flex:1; }
+.tier .btn{ margin-top:26px; width:100%; }
+@media (min-width:981px){
+  /* line the three price rows up with each other */
+  .tier:not(.pick)::after{ content:''; display:block; order:-1; height:38px; }
+  .tier h3{ min-height:2.44em; }
+  .tier .sum{ min-height:4.65em; }
+}
+
+
+.recall-row{
+  margin-top:20px; border-radius:20px; padding:26px;
+  border:1px dashed var(--nrule); background:rgba(255,255,255,.022);
+  display:flex; flex-wrap:wrap; gap:18px 30px; align-items:center; justify-content:space-between;
+}
+.recall-row .t{ font-size:19px; font-weight:500; letter-spacing:-.02em; color:var(--cream); }
+.recall-row p{ margin-top:8px; font-size:15.5px; color:var(--cream-2); max-width:62ch; }
+.recall-row .stamp{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-txt);
+  border:1px solid rgba(255,142,118,.35); border-radius:999px; padding:11px 18px; min-height:44px;
+  display:inline-flex; align-items:center; white-space:nowrap;
+}
+
+.finenotes{ list-style:none; margin:34px 0 0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 40px; }
+@media (max-width:760px){ .finenotes{ grid-template-columns:1fr; } }
+.finenotes li{
+  padding:14px 0 14px 24px; position:relative;
+  border-bottom:1px solid var(--nrule-soft);
+  font-size:15.5px; line-height:1.5; color:var(--cream-2);
+}
+.finenotes li::before{
+  content:''; position:absolute; left:0; top:23px; width:9px; height:1px; background:var(--accent);
+}
+.finenotes li b{ color:var(--cream); font-weight:500; }
+
+/* ---------- closing ------------------------------------------------------ */
+.close{ text-align:left; }
+.close h2{ max-width:20ch; }
+.close .lede{ margin-top:24px; max-width:56ch; }
+.close .actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:38px; }
+.close .after{ margin-top:26px; font-size:15px; color:var(--cream-2); }
+
+/* ---------- footer ------------------------------------------------------- */
+footer{ border-top:1px solid var(--nrule); padding:58px 0 72px; }
+.footgrid{ display:flex; flex-wrap:wrap; gap:32px 56px; justify-content:space-between; align-items:flex-start; }
+.footgrid .col p{ font-size:15px; color:var(--cream-2); line-height:1.6; }
+.footgrid .col p + p{ margin-top:8px; }
+.footgrid .col .h{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--cream); margin-bottom:12px;
+}
+.footgrid .links p + p{ margin-top:0; }
+.footgrid .links a{ display:inline-block; padding:10px 0; }
+.footgrid a{ color:var(--cream-2); text-decoration:none; border-bottom:1px solid var(--nrule); }
+.footgrid a:hover{ color:var(--cream); border-bottom-color:rgba(255,255,255,.3); }
+.footnote{ margin-top:42px; padding-top:24px; border-top:1px solid var(--nrule-soft); font-size:14px; color:var(--cream-2); }
+
+@media (max-width:640px){
+  :root{ --pad:20px; }
+  section{ padding:78px 0; }
+  .hero{ padding:56px 0 68px; }
+  body{ font-size:16.5px; }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 08 of 10</span>
+  <span class="proto-name">Dark Operator</span>
+  <span class="proto-bet">Look like the engineering firm we are, not the eleventh pastel healthcare vendor in their inbox.</span>
+</div>
+
+<div class="scene" aria-hidden="true">
+  <span class="ember"></span>
+  <span class="ember low"></span>
+</div>
+
+<div class="page">
+
+  <!-- ================= TOP BAR ================= -->
+  <header class="topbar">
+    <div class="wrap inner">
+      <a class="mark" href="#top">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="name">Stephens AI</span>
+      </a>
+      <nav class="navlinks" aria-label="Sections">
+        <a href="#products" data-spy>Products</a>
+        <a href="#questions" data-spy>The two questions</a>
+        <a href="#proof" data-spy>Proof</a>
+        <a href="#pricing" data-spy>Pricing</a>
+      </nav>
+      <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="wrap">
+        <p class="eyebrow">For independent eyecare practices</p>
+
+        <h1 id="hero-h">A patient is on hold while someone walks to the office manager's desk.</h1>
+
+        <p class="lede sub">
+          That happens several times a day at an independent eyecare practice, and it is the
+          cheapest problem on this page to fix. We spent the last year inside a 27 person
+          practice, in the office, watching the front desk work. Then we built three systems
+          for it. One of them is live at that front desk today.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+            Book a 20 minute call
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+        </div>
+
+        <div class="rail">
+          <div><span class="n">27</span><span class="l">person practice, live at one location</span></div>
+          <div><span class="n">76</span><span class="l">front desk situations mapped</span></div>
+          <div><span class="n">4</span><span class="l">decision lookups built</span></div>
+          <div><span class="n em">0</span><span class="l">patient records in the knowledge base</span></div>
+          <div><span class="n">30</span><span class="l">days from start to live at the desk</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRODUCTS ================= -->
+    <section id="products" aria-labelledby="prod-h">
+      <div class="wrap">
+
+        <div class="sechead">
+          <p class="eyebrow plain">Three products</p>
+          <h2 id="prod-h">Different practices bite on different problems. Here are all three, with what each one does not do.</h2>
+          <p class="lede sub">
+            One is live and priced. One is new and priced on the call. One is the admin work
+            behind the practice. Nothing here is a platform you have to fill in yourself.
+          </p>
+        </div>
+
+        <!-- ---------- P1 ---------- -->
+        <article class="band" aria-labelledby="p1-h">
+          <div class="col-text">
+            <p class="eyebrow">Product one, live today</p>
+            <h3 id="p1-h">Front desk knowledge base</h3>
+            <p class="forwho">For the practice where every hard question ends up at the office manager's desk.</p>
+
+            <p class="body">
+              A searchable knowledge base holding the insurance rules, prices, and protocols
+              the front desk currently keeps in their heads. Short situation pages the team can
+              find mid call, from one search box, instead of a folder to dig through while a
+              patient waits on the line.
+            </p>
+            <p class="body">
+              Your office manager edits it in the app. A price changes, the page changes, and it
+              is live. Every edit is saved, so a wrong change is one click back.
+            </p>
+
+            <ul class="feat">
+              <li><b>76 situations</b> mapped from the questions staff actually face, already built into the product.</li>
+              <li><b>4 decision lookups</b> for the calls that cost money: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price.</li>
+              <li>Google sign in, restricted to your practice domain. Only the people you approve can edit.</li>
+              <li>Installs from the browser on the front desk computers, no admin rights and no ticket to your IT vendor. Pages already opened keep working if the internet drops.</li>
+              <li>One click for staff to flag a page that is wrong.</li>
+            </ul>
+
+            <div class="note">
+              <span class="t">Patient data, this product</span>
+              <p><strong>It holds no patient records.</strong> It holds your rules, not your charts:
+              insurance policies, pricing, scheduling protocols, procedures. There is nothing in
+              it to breach. We sign a BAA before we start either way.</p>
+            </div>
+          </div>
+
+          <div class="col-art">
+            <!-- day window 1: the search and the answer it returns -->
+            <figure class="dwfig">
+              <div class="dw">
+                <div class="dw-chrome">
+                  <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                  <span class="t"><b>Front desk knowledge base</b></span>
+                </div>
+                <div class="dw-body">
+                  <div class="dw-search">
+                    <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <circle cx="7" cy="7" r="4.75" stroke="#8F3616" stroke-width="1.6"/>
+                      <path d="M10.6 10.6 14 14" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                    <span class="q">vision plan, medical complaint</span>
+                    <span class="caret" aria-hidden="true"></span>
+                  </div>
+
+                  <div class="dw-card">
+                    <div class="head">
+                      <p class="dw-h">Refraction: collect or bill</p>
+                      <span class="chip lookup">Lookup</span>
+                    </div>
+                    <p>The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+                    <div class="dw-exception">
+                      <p><b>Exception.</b> If the visit bills medical, the refraction is not covered. Collect at checkout.</p>
+                    </div>
+                    <div class="dw-foot">
+                      <span>Last updated by your office manager. Approved by the doctor.</span>
+                      <span class="dw-flag">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M4 14V3.2c2.4-1.1 4.8 1.1 7.2 0V9.6c-2.4 1.1-4.8-1.1-7.2 0" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                        This page is wrong
+                      </span>
+                    </div>
+                  </div>
+
+                  <p class="dw-label">Also matched</p>
+                  <ul class="dw-list">
+                    <li><span class="k">Medical or routine, which one do I book</span></li>
+                    <li><span class="k">Same day request: who can see them today</span></li>
+                    <li><span class="k">Contact lens fitting fee, this year</span></li>
+                  </ul>
+                </div>
+              </div>
+              <figcaption class="small">A depiction of the interaction. The live instance holds a practice's real prices and rules.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- ---------- P2 ---------- -->
+        <article class="band flip" aria-labelledby="p2-h">
+          <div class="col-text">
+            <p class="eyebrow">Product two, new</p>
+            <h3 id="p2-h">Recall done for you</h3>
+            <p class="forwho">For the practice where recall keeps sliding to next month because the phones were busy.</p>
+
+            <p class="body">
+              We run your monthly patient recall for you, using your own recall protocol and
+              your own systems. Not a new process. The one you already wrote down.
+            </p>
+            <p class="body">
+              Two things make that job fragile. The update step is a checkbox that has to be left
+              unchecked on one run and checked on another, and getting it backwards either double
+              contacts patients or drops them entirely. And it is a monthly job sitting on the same
+              checklist as the daily work, so it is the first thing to slip.
+            </p>
+
+            <ul class="feat">
+              <li>The run happens on a schedule instead of when someone finds an afternoon.</li>
+              <li>The call list arrives ready to work, in priority order, with the answers to the questions patients ask when they call back.</li>
+              <li>A monthly report: who was contacted, by which channel, and who booked.</li>
+              <li><b>The update step gets done, every time, in the right order.</b></li>
+            </ul>
+
+            <div class="note">
+              <span class="t">What it does not do</span>
+              <p><strong>It does not plug into your practice management system.</strong> We work from a
+              list your own team runs, or inside your system with a limited login you create and
+              can revoke at any time.</p>
+              <p>Unlike the knowledge base, recall does involve patient contact information. So it
+              runs inside your own accounts under a signed BAA, and <strong>we never touch charts</strong>.
+              We will not quote you a recovery rate, because we do not have one to quote. We sell
+              the run and the reliability.</p>
+            </div>
+
+            <p class="pricetag"><span class="k">Price</span> Per practice, on the call</p>
+          </div>
+
+          <div class="col-art">
+            <!-- day window 2: the monthly run sheet -->
+            <figure class="dwfig">
+              <div class="dw">
+                <div class="dw-chrome">
+                  <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                  <span class="t"><b>Monthly recall run</b> &nbsp;/&nbsp; eight provider practice</span>
+                </div>
+                <div class="dw-body">
+                  <ol class="runsheet">
+                    <li class="on">
+                      <span class="num" aria-hidden="true"></span>
+                      <span class="txt">Scleral letters
+                        <span class="sub2">Run first, on its own.</span>
+                      </span>
+                      <span class="chip good">Sent</span>
+                    </li>
+                    <li class="on">
+                      <span class="num" aria-hidden="true"></span>
+                      <span class="txt">Medical recall letters, as postcards
+                        <span class="sub2">Across about 10 separate medical recall reason codes.</span>
+                      </span>
+                      <span class="chip good">Sent</span>
+                    </li>
+                    <li class="on">
+                      <span class="num" aria-hidden="true"></span>
+                      <span class="txt">Calls list and routine postcards, once per doctor
+                        <span class="sub2">8 separate runs at this practice, one provider at a time.</span>
+                        <span class="ticks" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span>
+                      </span>
+                      <span class="chip warn">Running</span>
+                    </li>
+                    <li>
+                      <span class="num" aria-hidden="true"></span>
+                      <span class="txt">The update step
+                        <span class="sub2">Runs only after every call and postcard above is finished.</span>
+                      </span>
+                      <span class="chip mute">Locked</span>
+                    </li>
+                  </ol>
+
+                  <p class="locknote">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <rect x="3.2" y="7" width="9.6" height="6.3" rx="1.6" stroke="currentColor" stroke-width="1.6"/>
+                      <path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                    The update step cannot run early. That is the whole point of running it here
+                    instead of on a checklist.
+                  </p>
+
+                  <p class="dw-label">Call list, ready to work</p>
+                  <div class="scrollx" tabindex="0" role="region" aria-label="Call list, scrolls sideways">
+                    <table class="calls">
+                      <thead>
+                        <tr><th scope="col">Patient</th><th scope="col">Reason</th><th scope="col">Answer ready</th><th scope="col">Channel</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>R. M.</td><td>Scleral follow up</td><td>Fitting fee, this year</td><td>Call</td></tr>
+                        <tr><td>T. A.</td><td>Medical recall</td><td>Medical visit, not routine</td><td>Call</td></tr>
+                        <tr><td>D. K.</td><td>Routine, due</td><td>Which doctor can see them</td><td>Postcard</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <figcaption class="small">Initials stand in for patient names. Nothing on this page is a real patient.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- ---------- P3 ---------- -->
+        <article class="band" aria-labelledby="p3-h">
+          <div class="col-text">
+            <p class="eyebrow">Product three</p>
+            <h3 id="p3-h">Practice operations automation</h3>
+            <p class="forwho">For the owner still approving time off by text message and rebuilding payroll by hand.</p>
+
+            <p class="body">
+              Time off and payroll, automated and scoped to your practice. At the practice we
+              built it for, the time off build returns 60 to 100 admin hours a year. That is
+              time an office manager gets back, not a headcount you cut.
+            </p>
+            <p class="body">
+              It comes with a quarterly practice snapshot and monthly working time with both
+              founders. You work with both of us, not an account manager.
+            </p>
+
+            <ul class="feat">
+              <li>Time off requests, balances, and coverage handled in one place.</li>
+              <li>Payroll prepared from the same records, so nobody retypes them.</li>
+              <li>A quarterly practice snapshot of how the operation is actually running.</li>
+              <li><b>60 to 100 admin hours a year</b> returned by the time off build at the practice we built it for.</li>
+            </ul>
+
+            <div class="note">
+              <span class="t">Patient data, this product</span>
+              <p>Time off and payroll are <strong>staff information, not patient charts</strong>. It is scoped to
+              your practice and it stays there.</p>
+            </div>
+          </div>
+
+          <div class="col-art">
+            <!-- day window 3: operations -->
+            <figure class="dwfig">
+              <div class="dw">
+                <div class="dw-chrome">
+                  <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                  <span class="t"><b>Practice operations</b> &nbsp;/&nbsp; time off</span>
+                </div>
+                <div class="dw-body">
+                  <div class="dw-card">
+                    <div class="head">
+                      <p class="dw-h">Time off request, front desk</p>
+                      <span class="chip good">Approved</span>
+                    </div>
+                    <p>Coverage checked against the schedule before the request reached the owner. Balance updated. Payroll picked it up on the same record.</p>
+                  </div>
+
+                  <p class="dw-label">This pay period</p>
+                  <div class="opsrow">
+                    <span class="who" aria-hidden="true">FD</span>
+                    <span class="m">Front desk, two days<span>Coverage confirmed, balance updated</span></span>
+                    <span class="chip good">Done</span>
+                  </div>
+                  <div class="opsrow">
+                    <span class="who" aria-hidden="true">OP</span>
+                    <span class="m">Optical, one afternoon<span>Waiting on the owner</span></span>
+                    <span class="chip warn">Pending</span>
+                  </div>
+                  <div class="opsrow">
+                    <span class="who" aria-hidden="true">TC</span>
+                    <span class="m">Technician, half day<span>Coverage conflict flagged, not silently approved</span></span>
+                    <span class="chip mute">Held</span>
+                  </div>
+
+                  <p class="dw-label">Quarterly practice snapshot</p>
+                  <div class="bars" aria-hidden="true">
+                    <i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i>
+                    <i style="height:66%"></i><i class="a" style="height:78%"></i><i class="a" style="height:58%"></i>
+                    <i style="height:47%"></i><i style="height:70%"></i><i class="a" style="height:86%"></i>
+                    <i style="height:62%"></i><i style="height:50%"></i><i style="height:74%"></i>
+                  </div>
+                  <p style="margin-top:11px;font-size:13.5px;color:#5A4F46">
+                    Admin hours by month, and where the automation took them back.
+                  </p>
+                </div>
+              </div>
+              <figcaption class="small">A depiction. The snapshot is drawn from your own records, not ours.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= THE TWO QUESTIONS ================= -->
+    <section id="questions" aria-labelledby="q-h">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="eyebrow plain">Objections, answered before you have to ask</p>
+          <h2 id="q-h">Every owner asks the same two questions. Here they are, answered straight.</h2>
+        </div>
+
+        <div class="two">
+
+          <div class="panel">
+            <h3>Where does patient data sit</h3>
+            <p>There is no single answer across three products, so we state it per product rather
+            than printing one comfortable line across the whole site.</p>
+
+            <ul class="posture">
+              <li>
+                <span class="p-name">Front desk knowledge base</span>
+                <p class="p-body">
+                  <span class="zero">0 patient records.</span> It holds rules, prices, and protocols.
+                  Not charts. There is nothing in it to breach. Google sign in, restricted to your domain.
+                </p>
+              </li>
+              <li>
+                <span class="p-name">Recall done for you</span>
+                <p class="p-body">
+                  Recall <b>does</b> involve patient contact information. There is no way around that,
+                  so it runs inside <b>your own accounts</b> under a signed BAA, with a limited login
+                  you create and can revoke. We never touch charts.
+                </p>
+              </li>
+              <li>
+                <span class="p-name">Practice operations automation</span>
+                <p class="p-body">
+                  Time off and payroll are <b>staff information</b>, not patient charts. Scoped to
+                  your practice.
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Does this connect to our practice management system</h3>
+            <p>No. And that is a decision, not a gap we are hoping you will not notice.</p>
+
+            <ul class="posture">
+              <li>
+                <span class="p-name">Why it does not connect</span>
+                <p class="p-body">
+                  Most hosted practice management systems do not give an outside vendor database
+                  access. Any vendor promising you a nightly sync into a hosted system is either
+                  overselling or has not checked yet. We would rather tell you that now than partway
+                  into an integration that was never going to land.
+                </p>
+              </li>
+              <li>
+                <span class="p-name">What that buys you</span>
+                <p class="p-body">
+                  It does not matter which system you run. There is no integration to break when
+                  your vendor ships an update, no credentials of ours sitting inside your clinical
+                  system, and nothing to unpick if you leave.
+                </p>
+              </li>
+              <li>
+                <span class="p-name">How recall works without it</span>
+                <p class="p-body">
+                  We work from a list <b>your own team runs</b>, or inside your system with a limited
+                  login you create and can revoke. You keep the keys. That is the trade, and it is
+                  the honest version.
+                </p>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROOF ================= -->
+    <section id="proof" aria-labelledby="proof-h">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="eyebrow plain">Proof</p>
+          <h2 id="proof-h">This was built at a front desk, not in a conference room.</h2>
+          <p class="lede sub">
+            The knowledge base is live in a 27 person practice, 6 to 7 doctors at one location.
+            It was shaped by real practice documents, days spent watching the front desk, and 76
+            situations mapped from the questions staff actually face. That work is already in the
+            product, so your team does not start from an empty template.
+          </p>
+        </div>
+
+        <div class="rail" style="margin-top:0">
+          <div><span class="n">27</span><span class="l">person practice, live</span></div>
+          <div><span class="n">6 to 7</span><span class="l">doctors, one location</span></div>
+          <div><span class="n">76</span><span class="l">situations mapped</span></div>
+          <div><span class="n">4</span><span class="l">decision lookups built</span></div>
+          <div><span class="n em">30</span><span class="l">days to live at the desk</span></div>
+        </div>
+
+        <hr class="hr" style="margin:64px 0 44px">
+
+        <h3 class="eyebrow plain" style="margin-bottom:34px">Who you are actually hiring</h3>
+        <div class="founders">
+          <div class="founder">
+            <span class="avatar" aria-hidden="true">AS</span>
+            <div>
+              <h4>Alec Stephens</h4>
+              <span class="role">Co-founder</span>
+              <p>Spent the last year inside a 27 person eyecare practice, in the office, watching
+              the front desk work. Most of what we build came out of that year.</p>
+            </div>
+          </div>
+          <div class="founder">
+            <span class="avatar" aria-hidden="true">JK</span>
+            <div>
+              <h4>Jusheen Kim</h4>
+              <span class="role">Co-founder</span>
+              <p>Lead software engineer at J.P. Morgan before this. Builds the systems that have
+              to hold up under real use, on a real schedule, with real people depending on them.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note" style="max-width:74ch;margin-top:44px">
+          <span class="t">The limit, stated up front</span>
+          <p>Both of us are based in Asia, so we are not at a desk during your morning rush.
+          <strong>Urgent issues are answered by the next business morning, US time</strong>, and the
+          escalation path goes in writing before you sign anything. We would rather state the
+          limit than imply a promise we cannot keep.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING ================= -->
+    <section id="pricing" aria-labelledby="price-h">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="eyebrow plain">Pricing</p>
+          <h2 id="price-h">Three tiers, printed. One product still priced on the call.</h2>
+          <p class="lede sub">
+            Month to month, no term. Cancel and you keep every page, and you can export any time.
+            Compare the monthly to a training platform, not to your practice management software:
+            Trainual and Whale run about $249 to $300 a month at this size and still hand you an
+            empty system to fill in yourself.
+          </p>
+        </div>
+
+        <div class="tiers">
+
+          <div class="tier">
+            <h3>Front desk knowledge base</h3>
+            <p class="sum">The front desk's knowledge, written up and searchable, kept current by your office manager.</p>
+            <div class="cost">
+              <div class="setup">$2,500 <span>setup</span></div>
+              <div class="mo">$299 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Situation pages written by us from the material you already have</li>
+              <li>The 4 decision lookups</li>
+              <li>Search, in app editing, and a saved history of every change</li>
+              <li>Google sign in, with the editors you choose</li>
+              <li>One click flagging when a page is wrong</li>
+              <li>Installs on the front desk computers</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Talk it through</a>
+          </div>
+
+          <div class="tier pick">
+            <span class="badge">Where we would start you</span>
+            <h3>Whole practice knowledge base</h3>
+            <p class="sum">The whole floor, not just the front desk: technicians, optical, and each doctor's rules.</p>
+            <div class="cost">
+              <div class="setup">$3,500 <span>setup</span></div>
+              <div class="mo">$250 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Everything in the front desk tier</li>
+              <li>Technician, optical, and doctor restriction pages</li>
+              <li>Views that show each role its own work</li>
+              <li>A content review with your office manager each quarter</li>
+              <li>A short written AI use policy for your staff</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+          </div>
+
+          <div class="tier">
+            <h3>Knowledge base plus operations</h3>
+            <p class="sum">The knowledge base plus the operations work, with both of us on call every month.</p>
+            <div class="cost">
+              <div class="setup">$4,500 <span>setup</span></div>
+              <div class="mo">$350 <span>a month</span></div>
+            </div>
+            <ul>
+              <li>Everything in the whole practice tier</li>
+              <li>Time off and payroll automation, scoped to your practice</li>
+              <li>A quarterly practice snapshot</li>
+              <li>Monthly working time with both of us</li>
+              <li>Your builds go to the front of our queue</li>
+            </ul>
+            <div class="fill"></div>
+            <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Talk it through</a>
+          </div>
+
+        </div>
+
+        <div class="recall-row">
+          <div>
+            <p class="t">Recall done for you</p>
+            <p>The price is not set yet, so we are not going to print one. It is scoped per practice
+            on the call, based on how many providers you run and how your protocol is written. It
+            can also fold into the third tier.</p>
+          </div>
+          <span class="stamp">Priced on the call</span>
+        </div>
+
+        <ul class="finenotes">
+          <li>Extra sections beyond a tier's cap are <b>$600 each</b>.</li>
+          <li>A second location is <b>$1,500</b> to set up and <b>$149 a month</b>.</li>
+          <li>Live at the front desk in <b>30 days</b> from the day we start.</li>
+          <li>Clinical pages go live only after your doctor signs off.</li>
+          <li><b>Month to month, no term.</b> Keep every page on cancellation.</li>
+          <li>Export any time, as plain files you can open without us.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= CLOSE ================= -->
+    <section class="close" aria-labelledby="close-h">
+      <div class="wrap">
+        <p class="eyebrow">Next step</p>
+        <h2 id="close-h">Twenty minutes, and you will know whether this is worth your time.</h2>
+        <p class="lede sub">
+          Bring one thing that goes wrong at your front desk every week. We will tell you which of
+          the three products touches it, what it would cost, and where it would not help. If it is
+          not a fit, we will say so on the call.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+            Book a 20 minute call
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h9.5M9 4.5 12.5 8 9 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+        </div>
+        <p class="after">Or reply to the email that sent you here. It reaches the same two people.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap">
+      <div class="footgrid">
+        <div class="col">
+          <a class="mark" href="#top" style="margin-bottom:14px">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="name">Stephens AI</span>
+          </a>
+          <p>Systems for independent eyecare practices in the US.</p>
+          <p>Alec Stephens and Jusheen Kim.</p>
+        </div>
+        <div class="col links">
+          <p class="h">Products</p>
+          <p><a href="#products">Front desk knowledge base</a></p>
+          <p><a href="#products">Recall done for you</a></p>
+          <p><a href="#products">Practice operations automation</a></p>
+        </div>
+        <div class="col links">
+          <p class="h">Talk to us</p>
+          <p><a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a></p>
+          <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+        </div>
+      </div>
+      <p class="footnote">
+        Stephens AI. The knowledge base holds no patient records. Recall runs inside your own
+        accounts under a signed BAA. Month to month, no term, export any time.
+      </p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* Keep the sticky top bar sitting exactly under the review strip, whatever
+   height that strip wraps to. CSS already carries a sane 44px default. */
+(function () {
+  try {
+    var bar = document.querySelector('.proto-bar');
+    if (!bar) return;
+    var sync = function () {
+      var h = Math.round(bar.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--protoH', h + 'px');
+    };
+    sync();
+    if ('ResizeObserver' in window) { new ResizeObserver(sync).observe(bar); }
+    else { window.addEventListener('resize', sync); }
+  } catch (err) { /* 44px default stands */ }
+})();
+
+/* Scroll spy for the top bar. Purely decorative: if anything here throws, the
+   page is still a complete, readable document with working links. */
+(function () {
+  try {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a[data-spy]'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var map = {};
+    var targets = [];
+    links.forEach(function (a) {
+      var id = (a.getAttribute('href') || '').replace('#', '');
+      var el = id && document.getElementById(id);
+      if (el) { map[id] = a; targets.push(el); }
+    });
+    if (!targets.length) return;
+
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var a = map[e.target.id];
+        if (!a || a === current) return;
+        if (current) current.removeAttribute('aria-current');
+        a.setAttribute('aria-current', 'true');
+        current = a;
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    targets.forEach(function (t) { io.observe(t); });
+  } catch (err) { /* leave the page exactly as rendered */ }
+})();
+</script>

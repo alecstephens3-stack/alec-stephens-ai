@@ -1,0 +1,757 @@
+<!-- TITLE: The Desk -->
+
+<header class="sai-dock">
+  <!-- SAI:LOGO -->
+  <nav aria-label="Page sections">
+    <a href="#desk">The desk</a>
+    <a href="#proof">Proof</a>
+    <a href="#faq">Questions</a>
+    <a href="#pricing">Pricing</a>
+  </nav>
+  <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+</header>
+
+<div class="sai-page">
+
+  <!-- ================= HERO. Bare section, one contained element. ================= -->
+  <section class="sai-rise" aria-labelledby="heroTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">For independent eyecare practices</span></span>
+    <h1 class="sai-display" id="heroTitle">One screen. <em>Three tabs.</em> This is what your front desk actually sees.</h1>
+    <p class="sai-lede">Open a tab and use it. Example content, not any practice's real data.</p>
+
+    <div class="sai-widget sai-pane sai-streak" id="desk">
+      <span class="sai-port"><span class="disc"></span><span class="ptext">01 · The desk</span></span>
+      <h2 class="sai-w-title">One system, not three purchases.</h2>
+
+      <div id="deskTabs" role="tablist" aria-label="Front desk screen" hidden>
+        <button type="button" class="sai-btn primary" role="tab" id="tab-kb" aria-controls="panel-kb" aria-selected="true">Knowledge base</button>
+        <button type="button" class="sai-btn ghost" role="tab" id="tab-re" aria-controls="panel-re" aria-selected="false" tabindex="-1">ReExam</button>
+        <button type="button" class="sai-btn ghost" role="tab" id="tab-ops" aria-controls="panel-ops" aria-selected="false" tabindex="-1">Practice operations</button>
+      </div>
+
+      <!-- ---------- TAB 1: knowledge base ---------- -->
+      <div id="panel-kb" class="desk-panel">
+        <h3 class="sai-w-title">Front desk knowledge base</h3>
+        <div class="sai-w-sub">Search the situation, not the folder. Live today.</div>
+
+        <p>
+          <span class="sai-status good"><span class="kw">Patient data</span><span class="detail">0 patient records. Your rules, not your charts</span></span>
+        </p>
+
+        <p>
+          <label for="kbQ">Search the front desk situations</label><br>
+          <input type="search" id="kbQ" name="kbQ" size="34" autocomplete="off" spellcheck="false" placeholder="refraction, triage, doctor, price"
+                 aria-describedby="kbHint">
+          <span id="kbClearWrap" hidden><button type="button" class="sai-btn ghost" id="kbClear">Clear</button></span>
+        </p>
+        <p class="sai-w-note" id="kbHint">Type to filter. Enter opens the top match. Down arrow steps through results.</p>
+
+        <div class="sai-chips" role="group" aria-label="The 4 decision lookups">
+          <button type="button" class="sai-btn ghost" data-q="triage">How soon do they need to be seen</button>
+          <button type="button" class="sai-btn ghost" data-q="doctor">Which doctor can see them</button>
+          <button type="button" class="sai-btn ghost" data-q="refraction">Collect or bill the refraction</button>
+          <button type="button" class="sai-btn ghost" data-q="price">This year's price</button>
+        </div>
+
+        <p class="sai-w-note" id="kbCount" role="status" aria-live="polite">6 example situations. 76 were mapped at the practice we built this for.</p>
+
+        <div id="kbResults">
+          <details class="kb-item" data-keys="triage urgent same day flashes floaters red eye pain injury emergency how soon seen">
+            <summary>Scheduling · Same day or next available: phone triage</summary>
+            <p>The short list of what cannot wait for the next open routine slot.</p>
+            <ul class="sai-bullets">
+              <li><b>Same day.</b> Sudden flashes, new floaters, a curtain or a shadow in the vision. Tell the doctor on duty.</li>
+              <li><b>Same day.</b> Chemical splash, or something in the eye. Start them rinsing while they are still on the phone.</li>
+              <li><b>Routine.</b> Gradual blur with no pain and no redness.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> if nothing is open, do not send them away. Take the message to the doctor on duty and call back the same day.</div>
+          </details>
+
+          <details class="kb-item" data-keys="doctor provider restrictions pediatric children specialty schedule book surgery day which">
+            <summary>Scheduling · Which doctor can see this patient</summary>
+            <p>Not every visit type fits every provider's schedule. Check before you book, not after.</p>
+            <ul class="sai-bullets">
+              <li><b>Children and first exams.</b> The lookup shows who is taking them this week.</li>
+              <li><b>Specialty fittings and post op.</b> Back to the provider who started the case.</li>
+              <li><b>Surgery days.</b> Some providers do not take walk in medical visits on them.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> book the right provider on a later day rather than filling the wrong slot. A visit that has to be redone costs more than the wait.</div>
+          </details>
+
+          <details class="kb-item" data-keys="refraction collect bill vision plan medical checkout routine exam charge">
+            <summary>Billing · Refraction: collect or bill</summary>
+            <p>The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+            <ul class="sai-bullets">
+              <li><b>Routine on the vision plan.</b> It goes through the plan. Nothing to collect at the desk.</li>
+              <li><b>Medical visit.</b> Not a covered service. Say so at check in, not at checkout.</li>
+              <li><b>Visit type changed after the exam.</b> The answer changes with it. Check the encounter before you take payment.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> if the visit bills medical, collect the refraction at checkout, and tell the patient at check in so it is not a surprise.</div>
+          </details>
+
+          <details class="kb-item" data-keys="price cost how much fee self pay price list quote year current">
+            <summary>Billing · Price lookup: which list is current</summary>
+            <p>One current list. The old copies in the shared drive and the printed sheet in the drawer are not it.</p>
+            <ul class="sai-bullets">
+              <li><b>This page wins.</b> If a printed sheet disagrees with it, the sheet is out of date.</li>
+              <li><b>Self pay and plan prices differ.</b> Ask which one applies before you quote.</li>
+              <li><b>Not listed?</b> Say you will confirm and call back. Do not estimate.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> prices reset at the start of the plan year. A quote given before the reset is not honoured after it.</div>
+          </details>
+
+          <details class="kb-item" data-keys="vision plan medical coverage complaint routine eligibility benefit which insurance bills">
+            <summary>Insurance · Vision plan or medical: which one bills</summary>
+            <p>The reason the patient gives on the phone decides which benefit the visit runs on.</p>
+            <ul class="sai-bullets">
+              <li><b>Routine, vision plan.</b> Due for glasses or an annual check, no complaint.</li>
+              <li><b>Medical.</b> Names a symptom: red eye, pain, flashes, a sudden change. Even if they also want glasses.</li>
+              <li><b>Both in one visit.</b> The doctor decides which one bills. Do not promise the patient it will be the plan.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> a patient with a medical diagnosis on file who calls for a routine check still bills medical if the doctor addresses it. Say the plan may not apply before they come in.</div>
+          </details>
+
+          <details class="kb-item" data-keys="new patient paperwork forms intake insurance card consent check in">
+            <summary>Front desk · New patient paperwork</summary>
+            <p>What has to be in hand before the patient goes back.</p>
+            <ul class="sai-bullets">
+              <li><b>Three things.</b> Intake form, signed consent, and a photo of both sides of the card.</li>
+              <li><b>Send at booking</b>, not on the morning of the visit.</li>
+              <li><b>Arrived with nothing?</b> They still get seen. Short form now, the rest at checkout.</li>
+            </ul>
+            <div class="sai-w-note"><strong>Exception:</strong> if the name on the card does not match the name on the form, fix it before the visit. Fixing it afterwards is a rebill.</div>
+          </details>
+        </div>
+
+        <p class="sai-w-note" id="kbEmpty" hidden>No example situation matches that. In a real build, a page nobody can find is a page we still have to write.</p>
+
+        <div class="sai-w-note"><strong>Live at day 30.</strong> What keeps it true after that:</div>
+
+        <table class="sai-table">
+          <tr><th scope="col">Upkeep</th><th scope="col">How it works</th></tr>
+          <tr><td>Editing</td><td>Your office manager, in the app. Every edit saved and reversible. Staff flag a wrong page in one click.</td></tr>
+          <tr><td>Sign in</td><td>Google, restricted to your domain.</td></tr>
+          <tr><td>Install</td><td>From the browser on the front desk computers, no admin rights. Pages already opened keep working if the internet drops.</td></tr>
+        </table>
+      </div>
+
+      <!-- ---------- TAB 2: ReExam ---------- -->
+      <div id="panel-re" class="desk-panel">
+        <h3 class="sai-w-title">ReExam</h3>
+        <div class="sai-w-sub">We work your overdue patient list every month. 6 touches over about 6 weeks, and it stops the moment they book, reply, or opt out.</div>
+
+        <p>
+          <span class="sai-status warn"><span class="kw">Patient data</span><span class="detail">Contact details only, under a signed BAA. Never charts</span></span>
+        </p>
+
+        <div class="sai-chips" role="group" aria-label="Drive the sequence">
+          <button type="button" class="sai-btn primary" id="reNext">Send the next touch</button>
+          <button type="button" class="sai-btn ghost" id="reBook">Patient books</button>
+          <button type="button" class="sai-btn ghost" id="reOut">Patient opts out</button>
+          <span id="reResetWrap" hidden><button type="button" class="sai-btn ghost" id="reReset">Reset</button></span>
+        </div>
+        <p class="sai-w-note" role="status" aria-live="polite" id="reStatus">Nothing sent yet. Step through the sequence and watch what stops it.</p>
+
+        <div class="sai-track" id="reTrack">
+          <div class="when">Day 0</div>
+          <div class="entry" data-touch="0">
+            <h4>SMS</h4>
+            <p>You are due for your eye exam. Book, or reply YES for a call.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+
+          <div class="when">Day 3</div>
+          <div class="entry" data-touch="1">
+            <h4>Email</h4>
+            <p>Short personal note from the doctor, same ask.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+
+          <div class="when">Day 10</div>
+          <div class="entry key" data-touch="2">
+            <h4>Email only</h4>
+            <p>The benefits angle. Most vision plans cover an exam every 12 months. Benefits framing never goes by SMS, and that is a compliance rule, not a preference.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+
+          <div class="when">Day 17</div>
+          <div class="entry" data-touch="3">
+            <h4>SMS</h4>
+            <p>Care framed nudge.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+
+          <div class="when">Day 28</div>
+          <div class="entry" data-touch="4">
+            <h4>SMS</h4>
+            <p>Last text, and it says so.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+
+          <div class="when">Day 42</div>
+          <div class="entry" data-touch="5">
+            <h4>Email</h4>
+            <p>Final note, easy opt out.</p>
+            <span class="sai-status warn" data-state><span class="kw">Queued</span><span class="detail">Not sent</span></span>
+          </div>
+        </div>
+
+        <div class="sai-w-note"><strong>Guarantee:</strong> "5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free."</div>
+
+        <table class="sai-table">
+          <tr><th scope="col">The rules are the product</th><th scope="col">What that means</th></tr>
+          <tr><td>Tuned per practice</td><td>Exam type intervals, contact lens supply runout, January benefits resets, family batching so one text books three children.</td></tr>
+          <tr><td>Exclusions the tools get wrong</td><td>Deceased, moved, already collected glasses, do not contact.</td></tr>
+          <tr><td>Send window</td><td>10am to 7pm in the patient's local time, weekdays.</td></tr>
+          <tr><td>Guarantee gate</td><td>1,000 or more contactable lapsed patients. 500 to 1,000 gets list price and no guarantee. The clock starts at first send, not at signing.</td></tr>
+          <tr><td>Live in</td><td>10 business days from kickoff, alongside whatever you already have. Never a rip out.</td></tr>
+        </table>
+      </div>
+
+      <!-- ---------- TAB 3: practice operations ---------- -->
+      <div id="panel-ops" class="desk-panel">
+        <h3 class="sai-w-title">Practice operations</h3>
+        <div class="sai-w-sub">One route in, one answer out. Time off and payroll, scoped to your practice.</div>
+
+        <p>
+          <span class="sai-status good"><span class="kw">Patient data</span><span class="detail">None. Staff data only</span></span>
+        </p>
+
+        <div class="sai-chips" role="group" aria-label="Dates requested">
+          <button type="button" class="sai-btn primary" id="opsTue" aria-pressed="true">Tuesday</button>
+          <button type="button" class="sai-btn ghost" id="opsThu" aria-pressed="false">Thursday and Friday</button>
+        </div>
+        <div class="sai-chips" role="group" aria-label="File the request">
+          <button type="button" class="sai-btn primary" id="opsSend">Send the request</button>
+          <span id="opsResetWrap" hidden><button type="button" class="sai-btn ghost" id="opsReset">Reset</button></span>
+        </div>
+        <p class="sai-w-note" role="status" aria-live="polite" id="opsStatus">Pick the dates, then send. Thursday and Friday overlaps an optical shift.</p>
+
+        <div class="sai-path" id="opsPath">
+          <div class="step" data-i="0">
+            <span class="num">STEP 01</span>
+            <h4>Request filed</h4>
+            <p>Through the form, not to a person in the hallway.</p>
+            <span class="sai-status warn" data-state><span class="kw">Waiting</span><span class="detail">Nothing sent yet</span></span>
+          </div>
+          <div class="step fork" data-i="1">
+            <span class="num">STEP 02 · DECISION</span>
+            <h4>Coverage checked against the schedule</h4>
+            <p>This is the check that a verbal yes in the hallway skips.</p>
+            <div class="branches">
+              <div class="branch">
+                <span class="cond">Desk covered</span>
+                <div class="out">Approved <b>the same day</b>.</div>
+              </div>
+              <div class="branch win">
+                <span class="cond">Overlaps an optical shift</span>
+                <div class="out">Held for the <b>office manager</b> to decide.</div>
+              </div>
+            </div>
+            <span class="sai-status warn" data-state><span class="kw">Waiting</span><span class="detail">Coverage not checked yet</span></span>
+          </div>
+          <div class="step" data-i="2">
+            <span class="num">STEP 03</span>
+            <h4>Answer sent back to the person who asked</h4>
+            <span class="sai-status warn" data-state><span class="kw">Waiting</span><span class="detail">No answer yet</span></span>
+          </div>
+          <div class="step end" data-i="3">
+            <span class="num">STEP 04 · DONE</span>
+            <h4>Payroll updated in the same pass</h4>
+            <p>Balance and the schedule board both reflect it.</p>
+            <span class="sai-status warn" data-state><span class="kw">Waiting</span><span class="detail">Payroll untouched</span></span>
+          </div>
+        </div>
+
+        <div class="sai-w-note"><strong>A verbal yes is not an approval.</strong> If it did not come back through the system, it did not happen.</div>
+
+        <table class="sai-table">
+          <tr><th scope="col">What it returns</th><th scope="col">At the practice we built it for</th></tr>
+          <tr><td>Admin hours</td><td>60 to 100 back a year.</td></tr>
+          <tr><td>Also included</td><td>A quarterly practice snapshot, and monthly working time with both founders.</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROOF ================= -->
+  <section class="sai-rise" id="proof" aria-labelledby="proofTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">02 · Proof</span></span>
+    <h2 id="proofTitle">Built at a front desk, not in a workshop.</h2>
+
+    <table class="sai-table">
+      <tr><th scope="col">Count</th><th scope="col">What it counts</th></tr>
+      <tr><td>27</td><td>People at the practice it runs in. 6 to 7 doctors, one location.</td></tr>
+      <tr><td>76</td><td>Front desk situations mapped.</td></tr>
+      <tr><td>4</td><td>Decision lookups built.</td></tr>
+      <tr><td>0</td><td>Patient records in the knowledge base.</td></tr>
+    </table>
+
+    <p>Who you work with. Not an account manager, and not a support queue.</p>
+
+    <table class="sai-table">
+      <tr><th scope="col">Founder</th><th scope="col">Background</th></tr>
+      <tr><td>Alec Stephens</td><td>Spent the last year inside a 27 person eyecare practice.</td></tr>
+      <tr><td>Jusheen Kim</td><td>Lead software engineer at J.P. Morgan.</td></tr>
+    </table>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="sai-rise" id="clients" aria-labelledby="voiceTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">03 · From the practice</span></span>
+    <h2 id="voiceTitle">Their words, including the hard one.</h2>
+
+    <div class="sai-claims">
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"I think the biggest issue will be <em>getting in the habit of using the tool</em>."</div>
+          <div class="attrib"><span class="who">Office manager</span> · Two weeks after the knowledge base went live</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">Our answer</div>
+          <p>Adoption is a separate job and we treat it as one. Staff report problems from inside the app. The first batch of 4 issues was fixed and live the same day. One page went live from a screenshot the same week.</p>
+        </div>
+      </div>
+
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"That looks good, exactly what <em>Mary needs to process</em>."</div>
+          <div class="attrib"><span class="who">Practice administrator</span> · On the payroll output</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">What it means</div>
+          <p>The payroll line landed usable on the first pass, which is the whole point of routing time off through one system.</p>
+        </div>
+      </div>
+
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"Thank you for all of your help on <em>this project</em>."</div>
+          <div class="attrib"><span class="who">Office manager</span> · Time off system, at handover</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">What it means</div>
+          <p>Handover is where we leave. The practice's own team now files the issues, and the tool is in daily use at the front desk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sai-widget sai-pane sai-streak sai-rise" id="faq" aria-labelledby="faqTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">04 · Questions</span></span>
+    <h2 class="sai-w-title" id="faqTitle">The ones every owner asks.</h2>
+
+    <details>
+      <summary>Is patient data involved?</summary>
+      <table class="sai-table">
+        <tr><th scope="col">Product</th><th scope="col">Posture</th></tr>
+        <tr><td>Knowledge base</td><td>No patient records. It holds your rules, not your charts.</td></tr>
+        <tr><td>ReExam</td><td>Patient contact details, under a BAA signed before any data moves. You are the Covered Entity, we are the Business Associate. Patient data stays in your systems. Never charts.</td></tr>
+        <tr><td>Practice operations</td><td>Staff data only. Time off and payroll.</td></tr>
+      </table>
+    </details>
+
+    <details>
+      <summary>Does it connect to our practice management system?</summary>
+      <p>No, and that is on purpose, so it does not matter which one you run. ReExam works from a monthly export your own team runs, or inside your system with a limited login you create and can revoke.</p>
+    </details>
+
+    <details>
+      <summary>We already pay for engagement software.</summary>
+      <p>Keep it. We run alongside it and work the list it ignores. Never a rip out.</p>
+    </details>
+
+    <details>
+      <summary>How fast is this live?</summary>
+      <p>Knowledge base at day 30. ReExam in 10 business days from kickoff, and the guarantee clock starts at the first send, not at signing.</p>
+    </details>
+
+    <details>
+      <summary>Where are you, and when do we hear back?</summary>
+      <p>Both founders are based in Asia, and one operator works from South Korea. Urgent issues are answered by the next business morning, US time. We put that in writing before you sign anything.</p>
+    </details>
+
+    <details>
+      <summary>What happens if we cancel?</summary>
+      <p>Month to month, no term. Keep every page, export any time. ReExam cancels monthly with no setup fee.</p>
+    </details>
+  </section>
+
+  <!-- ================= PRICING, QUIET ================= -->
+  <section class="sai-rise" id="pricing" aria-labelledby="priceTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">05 · Pricing</span></span>
+    <h2 id="priceTitle">Printed here so you do not have to ask.</h2>
+
+    <p>Setup once, then a monthly that pays for keeping the content true.</p>
+
+    <table class="sai-table">
+      <tr><th scope="col">Line</th><th scope="col">Setup</th><th scope="col">Monthly</th></tr>
+      <tr><td>Front desk knowledge base</td><td>$2,500</td><td>$299</td></tr>
+      <tr><td>Whole practice knowledge base, where we would start you</td><td>$3,500</td><td>$250</td></tr>
+      <tr><td>Knowledge base plus operations</td><td>$4,500</td><td>$350</td></tr>
+      <tr><td>ReExam, flat, no contract</td><td>None</td><td>$600</td></tr>
+    </table>
+
+    <ul class="sai-bullets">
+      <li><b>Beta.</b> First 3 practices get ReExam at $300 a month locked for 6 months, for a testimonial and case study rights.</li>
+      <li><b>Add ons.</b> Extra sections beyond a tier cap are $600 each. A second location is $1,500 setup and $149 a month. An owner KPI dashboard is $250 a month, offered only after recall is delivering.</li>
+      <li><b>Terms.</b> Month to month, no term. Keep every page on cancellation, and export any time.</li>
+    </ul>
+  </section>
+
+  <!-- ================= CLOSE. The one night window. ================= -->
+  <section class="sai-night sai-rise" id="close" aria-labelledby="closeTitle">
+    <span class="sai-ember"></span>
+    <span class="sai-stamp corner on-night">Next</span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">06 · Call</span></span>
+    <h2 class="sai-w-title" id="closeTitle">You have already used it. The call is about your rules.</h2>
+    <div class="sai-w-sub">20 minutes. Bring the questions your front desk asks most, and we will tell you which tab fits, or that none of them do.</div>
+    <p>
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </p>
+  </section>
+
+  <footer class="sai-footer">
+    <span class="lockup">
+      <!-- SAI:LOGO -->
+      <span class="word">Stephens AI</span>
+    </span>
+    <p>Alec Stephens and Jusheen Kim.</p>
+    <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try {
+    reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  } catch (e) { reduced = false; }
+
+  function id(s) { return document.getElementById(s); }
+  function on(el, ev, fn) { if (el) { el.addEventListener(ev, fn); } }
+
+  /* The kit gives .sai-btn an explicit display, which beats the browser's
+     [hidden] rule. Optional controls therefore ship inside a plain wrapper
+     that carries the attribute, and this toggles the wrapper. */
+  function reveal(wrap, show) {
+    if (!wrap) { return; }
+    if (show) { wrap.removeAttribute("hidden"); } else { wrap.setAttribute("hidden", ""); }
+  }
+
+  /* ------------------------------------------------------------------
+     1 · THE DESK: one window, three tabs.
+     Panels ship visible so the page reads with the script removed.
+     The tablist ships hidden and this turns it on.
+  ------------------------------------------------------------------ */
+  (function tabs() {
+    var bar = id("deskTabs");
+    if (!bar) { return; }
+    var tabList = [].slice.call(bar.querySelectorAll('[role="tab"]'));
+    var panels = tabList.map(function (t) { return id(t.getAttribute("aria-controls")); });
+    if (!tabList.length || panels.indexOf(null) !== -1) { return; }
+
+    /* Panels ship as plain sections so the no-script page is not a tab
+       interface with no tabs. The roles arrive with the tablist. */
+    panels.forEach(function (p, n) {
+      p.setAttribute("role", "tabpanel");
+      p.setAttribute("aria-labelledby", tabList[n].id);
+    });
+
+    function select(i, focus) {
+      tabList.forEach(function (t, n) {
+        var isOn = n === i;
+        t.setAttribute("aria-selected", isOn ? "true" : "false");
+        t.className = isOn ? "sai-btn primary" : "sai-btn ghost";
+        if (isOn) { t.removeAttribute("tabindex"); } else { t.setAttribute("tabindex", "-1"); }
+        panels[n].hidden = !isOn;
+      });
+      if (focus) { tabList[i].focus(); }
+    }
+
+    tabList.forEach(function (t, i) {
+      on(t, "click", function () { select(i, false); });
+      on(t, "keydown", function (ev) {
+        var k = ev.key, next = -1;
+        if (k === "ArrowRight" || k === "ArrowDown") { next = (i + 1) % tabList.length; }
+        else if (k === "ArrowLeft" || k === "ArrowUp") { next = (i - 1 + tabList.length) % tabList.length; }
+        else if (k === "Home") { next = 0; }
+        else if (k === "End") { next = tabList.length - 1; }
+        if (next !== -1) { ev.preventDefault(); select(next, true); }
+      });
+    });
+
+    bar.hidden = false;
+    select(0, false);
+  }());
+
+  /* ------------------------------------------------------------------
+     2 · KNOWLEDGE BASE SEARCH.
+     Every situation page is already in the markup. This filters them
+     and opens one. Nothing is generated.
+  ------------------------------------------------------------------ */
+  (function kb() {
+    var q = id("kbQ"), wrap = id("kbResults"), count = id("kbCount"),
+        empty = id("kbEmpty"), clear = id("kbClear"), clearWrap = id("kbClearWrap");
+    if (!q || !wrap || !count) { return; }
+
+    var items = [].slice.call(wrap.querySelectorAll(".kb-item"));
+    if (!items.length) { return; }
+    var total = items.length;
+
+    items.forEach(function (d) {
+      d.dataset.hay = ((d.dataset.keys || "") + " " +
+        (d.querySelector("summary") ? d.querySelector("summary").textContent : "")).toLowerCase();
+    });
+
+    function visible() {
+      return items.filter(function (d) { return !d.hidden; });
+    }
+
+    function apply(text) {
+      var t = String(text || "").trim().toLowerCase();
+      var words = t ? t.split(/\s+/) : [];
+      items.forEach(function (d) {
+        var hay = d.dataset.hay;
+        var hit = words.every(function (w) { return hay.indexOf(w) !== -1; });
+        d.hidden = !hit;
+        if (!hit) { d.open = false; }
+      });
+      var shown = visible().length;
+      if (!t && clear && document.activeElement === clear) { q.focus(); }
+      reveal(clearWrap, !!t);
+      if (empty) { empty.hidden = shown !== 0; }
+      count.textContent = !t
+        ? total + " example situations. 76 were mapped at the practice we built this for."
+        : shown + " of " + total + " example situations match: " + t + ".";
+    }
+
+    function openFirst(focus) {
+      var v = visible();
+      if (!v.length) { return; }
+      items.forEach(function (d) { d.open = false; });
+      v[0].open = true;
+      if (focus) { v[0].querySelector("summary").focus(); }
+    }
+
+    on(q, "input", function () { apply(q.value); });
+    on(q, "keydown", function (ev) {
+      if (ev.key === "Enter") { ev.preventDefault(); openFirst(true); }
+      else if (ev.key === "ArrowDown") {
+        var v = visible();
+        if (v.length) { ev.preventDefault(); v[0].querySelector("summary").focus(); }
+      } else if (ev.key === "Escape" && q.value) {
+        ev.preventDefault(); q.value = ""; apply("");
+      }
+    });
+
+    /* Down and Up arrows walk the visible results once you are in them. */
+    items.forEach(function (d) {
+      var s = d.querySelector("summary");
+      on(s, "keydown", function (ev) {
+        var v = visible(), i = v.indexOf(d), next = -1;
+        if (ev.key === "ArrowDown") { next = i + 1; }
+        else if (ev.key === "ArrowUp") { next = i - 1; }
+        else { return; }
+        ev.preventDefault();
+        if (next < 0) { q.focus(); return; }
+        if (next < v.length) { v[next].querySelector("summary").focus(); }
+      });
+    });
+
+    if (clear) {
+      on(clear, "click", function () { q.value = ""; apply(""); q.focus(); });
+    }
+
+    [].slice.call(document.querySelectorAll(".sai-chips [data-q]")).forEach(function (b) {
+      on(b, "click", function () {
+        q.value = b.getAttribute("data-q");
+        apply(q.value);
+        openFirst(false);
+        q.focus();
+      });
+    });
+
+    apply("");
+  }());
+
+  /* ------------------------------------------------------------------
+     3 · REEXAM: drive the 6 touch sequence and watch what stops it.
+  ------------------------------------------------------------------ */
+  (function reexam() {
+    var track = id("reTrack"), status = id("reStatus"), resetWrap = id("reResetWrap"),
+        next = id("reNext"), book = id("reBook"), out = id("reOut"), reset = id("reReset");
+    if (!track || !status || !next || !book || !out || !reset) { return; }
+
+    var entries = [].slice.call(track.querySelectorAll(".entry"));
+    if (!entries.length) { return; }
+    var sent = 0, stopped = "";
+
+    function chip(entry, cls, kw, detail) {
+      var c = entry.querySelector("[data-state]");
+      if (!c) { return; }
+      c.className = "sai-status " + cls;
+      c.innerHTML = '<span class="kw"></span><span class="detail"></span>';
+      c.querySelector(".kw").textContent = kw;
+      c.querySelector(".detail").textContent = detail;
+    }
+
+    function paint() {
+      entries.forEach(function (e, i) {
+        if (i < sent) {
+          chip(e, "good", "Sent", i === 2 ? "Email only, benefits framing" : "Delivered");
+        } else if (stopped) {
+          chip(e, "warn", "Stopped", stopped === "book" ? "Never sent, they booked" : "Never sent, opted out");
+        } else {
+          chip(e, "warn", "Queued", "Not sent");
+        }
+      });
+      reveal(resetWrap, !(sent === 0 && !stopped));
+    }
+
+    function finished() {
+      return !!stopped || sent >= entries.length;
+    }
+
+    on(next, "click", function () {
+      if (finished()) {
+        status.textContent = stopped
+          ? "The sequence already stopped. Reset to run it again."
+          : "All 6 touches sent. Reset to run it again.";
+        return;
+      }
+      sent += 1;
+      paint();
+      var day = ["0", "3", "10", "17", "28", "42"][sent - 1];
+      status.textContent = sent === 3
+        ? "Day 10 sent by email. Anything benefits flavoured goes by email, so this touch is never an SMS."
+        : sent === entries.length
+          ? "Day 42 sent. That was the last touch in the sequence."
+          : "Day " + day + " sent. " + (entries.length - sent) + " touches left in the sequence.";
+    });
+
+    on(book, "click", function () {
+      if (stopped) {
+        status.textContent = "The sequence already stopped. Reset to run it again.";
+        return;
+      }
+      stopped = "book";
+      paint();
+      status.textContent = "Booked. The sequence stops here and the exam lands on the schedule.";
+    });
+
+    on(out, "click", function () {
+      if (stopped) {
+        status.textContent = "The sequence already stopped. Reset to run it again.";
+        return;
+      }
+      stopped = "out";
+      paint();
+      status.textContent = "Opted out. Honoured within 10 business days, kills every message type, and propagates both ways with your existing tool.";
+    });
+
+    on(reset, "click", function () {
+      sent = 0; stopped = "";
+      next.focus();
+      paint();
+      status.textContent = "Reset. Nothing sent yet.";
+    });
+
+    paint();
+  }());
+
+  /* ------------------------------------------------------------------
+     4 · PRACTICE OPERATIONS: file a request, check coverage, approve,
+         land it in payroll.
+  ------------------------------------------------------------------ */
+  (function ops() {
+    var path = id("opsPath"), status = id("opsStatus"), send = id("opsSend"),
+        reset = id("opsReset"), resetWrap = id("opsResetWrap"), tue = id("opsTue"), thu = id("opsThu");
+    if (!path || !status || !send || !reset || !tue || !thu) { return; }
+
+    var steps = [].slice.call(path.querySelectorAll(".step"));
+    if (steps.length < 4) { return; }
+    var choice = "tue", timers = [];
+
+    function chip(step, cls, kw, detail) {
+      var c = step.querySelector("[data-state]");
+      if (!c) { return; }
+      c.className = "sai-status " + cls;
+      c.innerHTML = '<span class="kw"></span><span class="detail"></span>';
+      c.querySelector(".kw").textContent = kw;
+      c.querySelector(".detail").textContent = detail;
+    }
+
+    function idle() {
+      chip(steps[0], "warn", "Waiting", "Nothing sent yet");
+      chip(steps[1], "warn", "Waiting", "Coverage not checked yet");
+      chip(steps[2], "warn", "Waiting", "No answer yet");
+      chip(steps[3], "warn", "Waiting", "Payroll untouched");
+    }
+
+    function setChoice(which) {
+      choice = which;
+      [[tue, "tue"], [thu, "thu"]].forEach(function (pair) {
+        var isOn = pair[1] === which;
+        pair[0].setAttribute("aria-pressed", isOn ? "true" : "false");
+        pair[0].className = isOn ? "sai-btn primary" : "sai-btn ghost";
+      });
+      status.textContent = which === "tue"
+        ? "Tuesday. The desk is covered, so this one clears."
+        : "Thursday and Friday. It overlaps an optical shift, so it goes to the office manager.";
+    }
+
+    var stages = [
+      function () { chip(steps[0], "good", "Filed", "Timestamped, one route in"); },
+      function () {
+        if (choice === "tue") { chip(steps[1], "good", "Clear", "Desk covered both days"); }
+        else { chip(steps[1], "warn", "Held", "Overlaps an optical shift"); }
+      },
+      function () {
+        if (choice === "tue") { chip(steps[2], "good", "Approved", "Answer back the same day"); }
+        else { chip(steps[2], "good", "Approved", "Office manager moved the optical shift"); }
+      },
+      function () {
+        chip(steps[3], "good", "Posted", "Payroll, balance, and the board");
+        status.textContent = choice === "tue"
+          ? "Approved and posted. Payroll, the balance, and the schedule board all reflect it."
+          : "Held, decided, then posted. The conflict surfaced before the day, not on the morning of it.";
+        reveal(resetWrap, true);
+      }
+    ];
+
+    /* No control is ever disabled: a second send just restarts the run. */
+    function run() {
+      timers.forEach(clearTimeout);
+      timers = [];
+      reveal(resetWrap, false);
+      idle();
+      status.textContent = "Filed. Checking coverage against the schedule.";
+      stages.forEach(function (fn, i) {
+        if (reduced) { fn(); }
+        else { timers.push(setTimeout(fn, 420 * (i + 1))); }
+      });
+    }
+
+    on(tue, "click", function () { setChoice("tue"); });
+    on(thu, "click", function () { setChoice("thu"); });
+    on(send, "click", run);
+    on(reset, "click", function () {
+      timers.forEach(clearTimeout);
+      timers = [];
+      send.focus();
+      reveal(resetWrap, false);
+      idle();
+      setChoice(choice);
+    });
+
+    setChoice("tue");
+    status.textContent = "Pick the dates, then send. Thursday and Friday overlaps an optical shift.";
+  }());
+}());
+</script>

@@ -1,0 +1,1314 @@
+<title>A Day at the Front Desk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================================
+   Stephens AI, prototype 04, "A Day at the Front Desk".
+   Lens v3 tokens, in brand. One committed light scheme: color-scheme is
+   pinned and body paints its own background and colour so a viewer sitting
+   in OS dark mode still gets the warm sky. No prefers-color-scheme anywhere.
+   ========================================================================= */
+
+:root{
+  color-scheme: light;
+
+  --sky: linear-gradient(180deg,#F3EEE8 0%,#F7E7DA 42%,#F7DCC9 74%,#F2CFB8 100%);
+  --sky-flat:#F5E9DE;
+  --night: radial-gradient(130% 130% at 22% -12%,#241B15 0%,#150F0B 58%,#0D0A08 100%);
+
+  --ink:#171310;
+  --ink-2:#5A4F46;           /* lightest secondary permitted on light */
+  --cream:#F5F1E8;
+  --cream-2:#B3AB9E;
+
+  --accent:#DC6843;          /* mark only: dots, rules, bars. Never text. */
+  --accent-display:#B84A28;  /* accent text at 24px and up. Darkened from the
+                                Lens swatch: #C55532 measures 2.81:1 against the
+                                darkest stop of the sky gradient, under the 3:1
+                                large-text gate. This clears it everywhere. */
+  --accent-deep:#8F3616;     /* accent text below 24px on light */
+  --accent-night:#FF8E76;
+
+  --good:#2E7A56;            /* status marks */
+  --warn:#946A12;
+  --bad:#B23A2F;
+  --good-ink:#215B40;        /* the same statuses when they carry small text */
+  --warn-ink:#7A560B;
+  --bad-ink:#A33227;
+
+  --rule: rgba(23,19,16,0.10);
+  --rule-soft: rgba(23,19,16,0.06);
+  --glass: rgba(255,255,255,0.55);
+  --glass-strong: rgba(255,255,255,0.80);
+  --glass-tile: rgba(255,255,255,0.72);
+  --glass-edge: rgba(255,255,255,0.85);
+
+  --pane-shadow: 0 14px 44px rgba(112,62,40,0.13), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(23,19,16,0.04);
+  --float-shadow: 0 24px 54px rgba(112,62,40,0.22), inset 0 1px 0 #fff;
+  --tile-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(112,62,40,0.07);
+
+  --ease: cubic-bezier(0.2,0.8,0.2,1);
+
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --label:"Schibsted Grotesk","Inter Tight","Helvetica Neue",Arial,sans-serif;
+
+  --gutter:16px;
+  --maxw:1140px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--sky-flat);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  /* clip, not hidden: overflow-x:hidden on body turns body into a scroll
+     container and kills the sticky prototype bar in Chrome and Safari. */
+  overflow-x:clip;
+}
+svg{ max-width:100%; }
+h1,h2,h3,h4{ margin:0; font-weight:500; letter-spacing:-0.025em; line-height:1.08; }
+p{ margin:0; }
+ul,ol{ margin:0; padding:0; list-style:none; }
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--accent-deep); outline-offset:3px; border-radius:8px; }
+
+/* ---------- review furniture: the prototype banner ---------------------- */
+.proto-bar{
+  position:sticky; top:0; z-index:90;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  min-height:44px; padding:8px 16px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--label); font-size:13px; line-height:1.35;
+  border-bottom:1px solid #000;
+}
+.proto-n{
+  font-weight:700; letter-spacing:0.10em; text-transform:uppercase;
+  font-variant-caps:all-small-caps; white-space:nowrap;
+}
+.proto-name{ font-weight:600; color:#fff; }
+.proto-bet{ color:#b9b9be; }
+@media (max-width:640px){ .proto-bet{ flex-basis:100%; } }
+
+/* ---------- the scene ---------------------------------------------------- */
+.scene{
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  background:var(--sky);
+}
+.tint{ position:absolute; border-radius:50%; filter:blur(100px); }
+.tint.t1{ width:520px; height:520px; background:#DC6843; opacity:0.10; top:-190px; right:-150px; }
+.tint.t2{ width:460px; height:460px; background:#F47B6B; opacity:0.11; top:44%; left:-200px; }
+.tint.t3{ width:560px; height:560px; background:#A8988A; opacity:0.12; bottom:-240px; right:18%; }
+
+.page{ position:relative; z-index:1; }
+.wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter); }
+.wrap-narrow{ max-width:820px; }
+
+/* ---------- shared atoms ------------------------------------------------- */
+.pane{
+  background:var(--glass);
+  backdrop-filter:blur(20px) saturate(1.35);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--pane-shadow);
+  border-radius:26px;
+}
+@supports not (backdrop-filter: blur(1px)){
+  .pane{ background:rgba(255,255,255,0.92); }
+}
+.eyebrow{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:0.09em; text-transform:uppercase; color:var(--accent-deep);
+}
+.port{ display:inline-flex; align-items:center; gap:11px; }
+.port .disc{
+  width:26px; height:26px; border-radius:50%; flex:none;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 30%, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(220,104,67,0.5) 0%, transparent 60%),
+    linear-gradient(180deg,#F7E7DA 0%,#F2CFB8 100%);
+  border:1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 4px rgba(220,104,67,0.25), 0 4px 10px rgba(112,62,40,0.18);
+}
+.lede{ font-size:19px; line-height:1.6; color:var(--ink-2); }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.sec{ padding:72px 0; }
+@media (max-width:760px){ .sec{ padding:52px 0; } }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  min-height:48px; padding:0 24px; border-radius:999px;
+  font-family:var(--sans); font-size:16px; font-weight:600; letter-spacing:-0.01em;
+  text-decoration:none; border:1px solid transparent;
+  transition:transform var(--ease) 150ms, box-shadow var(--ease) 220ms, background var(--ease) 150ms;
+}
+.btn-primary{ background:#1F1712; color:#F7EFE7; box-shadow:0 10px 26px rgba(60,32,18,0.26); }
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:0 16px 34px rgba(60,32,18,0.30); }
+.btn-ghost{ background:rgba(255,255,255,0.72); color:var(--ink); border-color:var(--glass-edge); box-shadow:var(--tile-shadow); }
+.btn-ghost:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.88); }
+.btn-night{ background:#F5F1E8; color:#1A130E; }
+.btn-night-ghost{ background:rgba(255,255,255,0.07); color:var(--cream); border-color:rgba(255,255,255,0.22); }
+
+/* ---------- hero --------------------------------------------------------- */
+.hero{ padding:60px 0 20px; }
+.hero-kicker{ display:flex; align-items:center; gap:10px; margin-bottom:22px; }
+.hero h1{
+  font-size:clamp(38px,7.2vw,62px);
+  letter-spacing:-0.03em; line-height:1.04; max-width:16ch;
+}
+.hero h1 em{ font-style:normal; color:var(--accent-display); }
+.hero-sub{ margin-top:22px; max-width:60ch; font-size:19px; line-height:1.6; color:var(--ink-2); }
+.hero-sub strong{ color:var(--ink); font-weight:500; }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+.hero-trust{
+  margin-top:20px; font-size:15px; color:var(--ink-2);
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+}
+.dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
+
+/* the day at a glance: jump chips, also the table of contents for the scroll */
+.glance{
+  margin-top:44px; padding:18px; border-radius:22px;
+}
+.glance-label{ font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--ink-2); padding:0 4px 12px; }
+.glance-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.glance-row a{
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:44px; padding:0 15px; border-radius:999px;
+  background:rgba(255,255,255,0.72); border:1px solid var(--glass-edge);
+  box-shadow:var(--tile-shadow);
+  font-size:15px; font-weight:500; color:var(--ink); text-decoration:none;
+  transition:background var(--ease) 150ms, transform var(--ease) 150ms;
+}
+.glance-row a:hover{ background:#fff; transform:translateY(-1px); }
+.glance-row .t{ font-family:var(--label); font-weight:600; font-size:13.5px; color:var(--accent-deep); letter-spacing:0.03em; }
+
+/* ---------- the day: timeline spine -------------------------------------- */
+.day{ position:relative; padding:20px 0 8px; }
+.spine{
+  position:absolute; top:14px; bottom:110px; left:19px; width:2px; border-radius:2px;
+  /* morning to evening, top to bottom */
+  background:linear-gradient(180deg,
+    rgba(220,104,67,0.16) 0%,
+    rgba(220,104,67,0.44) 26%,
+    rgba(220,104,67,0.44) 62%,
+    rgba(112,62,40,0.30) 88%,
+    rgba(112,62,40,0.06) 100%);
+}
+.moment{ position:relative; display:grid; grid-template-columns:40px minmax(0,1fr); gap:0 14px; margin-bottom:34px; }
+.marker{ grid-column:1; grid-row:1; display:flex; flex-direction:column; align-items:center; padding-top:6px; }
+.marker .disc{
+  width:28px; height:28px; border-radius:50%; flex:none;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.22) 30%, transparent 56%),
+    radial-gradient(circle at 50% 80%, var(--tone,rgba(220,104,67,0.5)) 0%, transparent 62%),
+    linear-gradient(180deg,#F9EFE6 0%,#F2CFB8 100%);
+  border:1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 5px rgba(220,104,67,0.24), 0 5px 12px rgba(112,62,40,0.20);
+}
+.t-side{ display:none; }
+.m-card{ grid-column:2; grid-row:1; padding:18px; border-radius:24px; }
+.m-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.t-inline{
+  font-family:var(--label); font-size:15px; font-weight:700; letter-spacing:0.02em;
+  color:var(--accent-deep); white-space:nowrap;
+}
+.m-card h3{ font-size:clamp(21px,3.6vw,26px); letter-spacing:-0.028em; margin-top:10px; }
+.m-friction{ margin-top:12px; font-size:17px; line-height:1.62; color:var(--ink-2); }
+.m-friction strong{ color:var(--ink); font-weight:500; }
+.m-answer{ margin-top:14px; font-size:16px; line-height:1.6; color:var(--ink-2); }
+.m-answer strong{ color:var(--ink); font-weight:500; }
+.m-limit{
+  margin-top:12px; font-size:15px; line-height:1.55; color:var(--ink-2);
+  padding-left:13px; border-left:2px solid rgba(220,104,67,0.42);
+}
+
+/* the product chip: the product attaches to the moment, it is not announced */
+.chip{
+  display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+  min-height:34px; padding:0 13px 0 11px; border-radius:999px;
+  background:rgba(255,255,255,0.80); border:1px solid var(--glass-edge);
+  box-shadow:var(--tile-shadow);
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.02em; color:var(--ink);
+}
+.chip .dot{ width:8px; height:8px; }
+
+/* the quoted panel: the depiction the moment resolves into */
+.quoted{
+  margin-top:16px; padding:12px; border-radius:20px;
+  background:rgba(255,255,255,0.42); border:1px solid rgba(255,255,255,0.78);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.quoted-label{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--ink-2); padding:0 4px 10px; display:block;
+}
+
+/* ---------- hand built depictions ---------------------------------------- */
+.dep{
+  background:var(--glass-tile); border:1px solid rgba(255,255,255,0.92);
+  border-radius:18px; padding:11px; box-shadow:var(--tile-shadow);
+}
+.dep-bar{ display:flex; align-items:center; gap:6px; padding:0 3px 11px; }
+.dep-bar i{ width:9px; height:9px; border-radius:50%; background:rgba(23,19,16,0.13); }
+.dep-bar i:nth-child(2){ background:rgba(23,19,16,0.10); }
+.dep-bar i:nth-child(3){ background:rgba(23,19,16,0.07); }
+.dep-bar span{ margin-left:6px; font-size:13.5px; font-weight:500; color:var(--ink-2); }
+.dep-search{
+  display:flex; align-items:center; gap:10px;
+  padding:11px 13px; border-radius:14px;
+  background:rgba(255,255,255,0.90); border:1px solid rgba(255,255,255,0.95);
+  box-shadow:inset 0 1px 0 #fff;
+  font-size:15px; color:var(--ink);
+}
+.caret{ width:1.5px; height:16px; background:var(--accent); display:inline-block; animation:blink 1.15s steps(1,end) infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+.dep-card{
+  margin-top:11px; padding:13px; border-radius:14px;
+  background:rgba(255,255,255,0.86); border:1px solid rgba(255,255,255,0.95);
+  box-shadow:inset 0 1px 0 #fff, 0 6px 16px rgba(112,62,40,0.06);
+}
+.dep-card h4{ font-size:16.5px; letter-spacing:-0.02em; line-height:1.2; }
+.dep-p{ margin-top:9px; font-size:14.5px; line-height:1.55; color:var(--ink-2); }
+.dep-p.ink{ color:var(--ink); }
+.dep-foot{ margin-top:12px; padding-top:11px; border-top:1px solid var(--rule-soft); font-size:13.5px; color:var(--ink-2); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.mini-btn{
+  display:inline-flex; align-items:center; gap:6px; min-height:30px; padding:0 10px;
+  border-radius:999px; background:rgba(23,19,16,0.05); border:1px solid var(--rule);
+  font-size:13.5px; font-weight:500; color:var(--ink);
+}
+.stat-chip{
+  display:inline-flex; align-items:center; gap:7px; min-height:28px; padding:0 11px;
+  border-radius:999px; font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.02em;
+}
+.stat-good{ background:rgba(46,122,86,0.10); color:var(--good-ink); }
+.stat-warn{ background:rgba(148,106,18,0.14); color:var(--warn-ink); }
+.stat-bad{ background:rgba(178,58,47,0.10); color:var(--bad-ink); }
+.stat-idle{ background:rgba(23,19,16,0.06); color:var(--ink-2); }
+
+/* the decision lookup: a short guided answer, not a form */
+.step{ display:flex; gap:11px; padding:10px 0; border-bottom:1px solid var(--rule-soft); }
+.step:last-of-type{ border-bottom:0; }
+.step-n{
+  flex:none; width:22px; height:22px; border-radius:50%; margin-top:2px;
+  background:rgba(220,104,67,0.14); border:1px solid rgba(220,104,67,0.34);
+  font-family:var(--label); font-size:13.5px; font-weight:700; color:var(--accent-deep);
+  display:flex; align-items:center; justify-content:center;
+}
+.step-q{ font-size:14.5px; color:var(--ink-2); line-height:1.5; }
+.step-a{ font-size:15px; font-weight:500; color:var(--ink); margin-top:3px; }
+.verdict{
+  margin-top:12px; padding:13px 14px; border-radius:14px;
+  background:rgba(220,104,67,0.09); border:1px solid rgba(220,104,67,0.24);
+}
+.verdict .vh{ font-family:var(--label); font-size:13.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-deep); }
+.verdict p{ margin-top:6px; font-size:15px; line-height:1.55; color:var(--ink); }
+
+/* the recall run sheet */
+.runs{ margin-top:2px; }
+.run{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  padding:10px 0; border-bottom:1px solid var(--rule-soft);
+}
+.run:last-child{ border-bottom:0; }
+.run-name{ font-size:14.5px; color:var(--ink); line-height:1.4; }
+.run-name small{ display:block; font-size:13.5px; color:var(--ink-2); }
+.run-sub{ padding-left:14px; border-left:2px solid rgba(220,104,67,0.28); margin:4px 0 4px 2px; }
+
+/* the time off card */
+.req-grid{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:8px 14px; margin-top:10px; }
+.req-grid dt{ font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-2); }
+.req-grid dd{ margin:0; font-size:14.5px; color:var(--ink); }
+.flowline{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px; font-size:13.5px; color:var(--ink-2); }
+.flowline svg{ flex:none; color:var(--accent); }
+
+/* ---------- desktop: centre spine, moments alternate --------------------- */
+@media (min-width:560px){
+  .m-card{ padding:22px; }
+  .quoted{ padding:14px; }
+  .dep{ padding:13px; }
+}
+@media (min-width:980px){
+  .spine{ left:50%; margin-left:-1px; top:20px; bottom:120px; }
+  .moment{ grid-template-columns:minmax(0,1fr) 132px minmax(0,1fr); gap:0; margin-bottom:56px; }
+  .marker{ grid-column:2; grid-row:1; padding-top:20px; }
+  .marker .disc{ width:32px; height:32px; }
+  .t-side{
+    display:block; margin-top:10px; text-align:center;
+    font-family:var(--label); font-size:15px; font-weight:700; letter-spacing:0.02em; color:var(--accent-deep);
+    white-space:nowrap;
+  }
+  .t-inline{ display:none; }
+  .m-card{ grid-row:1; padding:26px; }
+  .moment:nth-of-type(odd) .m-card{ grid-column:1; }
+  .moment:nth-of-type(even) .m-card{ grid-column:3; }
+  /* hairline from the spine disc to the card it belongs to */
+  .marker::before{
+    content:""; position:absolute; top:36px; width:38px; height:1px; background:var(--rule);
+  }
+  .moment:nth-of-type(odd) .marker::before{ right:calc(50% + 16px); }
+  .moment:nth-of-type(even) .marker::before{ left:calc(50% + 16px); }
+  .moment:nth-of-type(even){ margin-top:-40px; }
+  .moment:first-of-type{ margin-top:0; }
+}
+
+/* ---------- close of day / catalogue ------------------------------------- */
+.close-note{
+  max-width:70ch; margin:0 auto; text-align:center;
+}
+.cat-grid{ display:grid; gap:16px; margin-top:36px; }
+@media (min-width:900px){ .cat-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.cat{ padding:24px; border-radius:24px; display:flex; flex-direction:column; }
+.cat h3{ font-size:22px; letter-spacing:-0.026em; margin-top:12px; }
+.cat .role{ margin-top:10px; font-size:15px; color:var(--ink-2); }
+.cat .what{ margin-top:12px; font-size:16px; line-height:1.55; color:var(--ink-2); }
+.cat .what strong{ color:var(--ink); font-weight:500; }
+.cat-meta{ margin-top:auto; padding-top:16px; }
+.cat-line{ display:flex; gap:9px; align-items:flex-start; padding-top:12px; margin-top:12px; border-top:1px solid var(--rule-soft); font-size:14.5px; line-height:1.5; color:var(--ink-2); }
+.cat-line svg{ flex:none; margin-top:3px; color:var(--accent); }
+.cat-line b{ color:var(--ink); font-weight:600; font-family:var(--label); font-size:13.5px; letter-spacing:0.05em; text-transform:uppercase; display:block; }
+.badge-live{
+  display:inline-flex; align-items:center; gap:7px; min-height:28px; padding:0 11px; border-radius:999px;
+  background:rgba(46,122,86,0.10); color:var(--good-ink);
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.04em;
+}
+.badge-new{ background:rgba(220,104,67,0.12); color:var(--accent-deep); }
+
+/* ---------- pricing ------------------------------------------------------ */
+.tier-grid{ display:grid; gap:16px; margin-top:34px; }
+@media (min-width:900px){ .tier-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; } }
+.tier{ padding:24px; border-radius:24px; }
+.tier.hi{ background:var(--glass-strong); box-shadow:var(--float-shadow); }
+.tier-badge{
+  display:inline-flex; align-items:center; min-height:28px; padding:0 11px; border-radius:999px;
+  background:rgba(220,104,67,0.13); color:var(--accent-deep);
+  font-family:var(--label); font-size:13.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+  margin-bottom:12px;
+}
+.tier h3{ font-size:21px; letter-spacing:-0.026em; }
+.tier .price{ margin-top:14px; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+.tier .setup{ font-size:30px; font-weight:500; letter-spacing:-0.03em; color:var(--ink); }
+.tier .mo{ font-size:16px; color:var(--ink-2); }
+.tier .sum{ margin-top:12px; font-size:15px; line-height:1.55; color:var(--ink-2); }
+.tier ul{ margin-top:16px; padding-top:16px; border-top:1px solid var(--rule-soft); display:grid; gap:10px; }
+.tier li{ display:flex; gap:10px; font-size:15px; line-height:1.5; color:var(--ink-2); }
+.tier li::before{ content:""; flex:none; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:8px; }
+.notes{ margin-top:26px; padding:22px; border-radius:22px; display:grid; gap:12px; }
+.notes li{ display:flex; gap:11px; font-size:15.5px; line-height:1.55; color:var(--ink-2); }
+.notes li strong{ color:var(--ink); font-weight:500; }
+.notes li svg{ flex:none; margin-top:4px; color:var(--accent); }
+
+/* ---------- the night section: the two objections ------------------------ */
+.night{
+  border-radius:30px; color:var(--cream); background:var(--night);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 24px 60px rgba(40,20,10,0.35);
+  position:relative; overflow:hidden;
+  padding:40px 22px;
+}
+@media (min-width:860px){ .night{ padding:56px 48px; } }
+.ember{
+  position:absolute; width:360px; height:360px; border-radius:50%; filter:blur(90px);
+  background:var(--accent); opacity:0.16; top:-130px; right:-90px; pointer-events:none;
+}
+.night .eyebrow{ color:var(--accent-night); }
+.night h2{ color:var(--cream); }
+.obj-grid{ display:grid; gap:16px; margin-top:32px; position:relative; }
+@media (min-width:860px){ .obj-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.obj{
+  padding:24px; border-radius:22px;
+  background:rgba(255,255,255,0.065); border:1px solid rgba(255,255,255,0.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.obj h3{ font-size:21px; color:var(--cream); letter-spacing:-0.026em; }
+.obj p{ margin-top:12px; font-size:16px; line-height:1.6; color:var(--cream-2); }
+.obj p strong{ color:var(--cream); font-weight:500; }
+.posture{ margin-top:16px; display:grid; gap:10px; }
+.posture div{
+  padding:12px 14px; border-radius:14px;
+  /* darkened rather than lightened, so cream secondary keeps 4.5:1 even where
+     the ember bloom sits behind the panel */
+  background:rgba(13,10,8,0.22); border:1px solid rgba(255,255,255,0.12);
+  font-size:15px; line-height:1.5; color:var(--cream-2);
+}
+.posture b{ display:block; font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream); margin-bottom:5px; }
+
+/* ---------- proof -------------------------------------------------------- */
+.stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin-top:32px; border-radius:22px; overflow:hidden; background:var(--rule); }
+@media (min-width:820px){ .stats{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
+.stat{ background:rgba(255,255,255,0.66); padding:20px 18px; }
+.stat .v{ font-size:34px; font-weight:500; letter-spacing:-0.03em; line-height:1; color:var(--accent-display); }
+.stat .l{ margin-top:9px; font-size:14.5px; line-height:1.45; color:var(--ink-2); }
+.founders{ display:grid; gap:16px; margin-top:20px; }
+@media (min-width:820px){ .founders{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.founder{ padding:22px; border-radius:22px; display:flex; gap:16px; }
+.avatar{
+  flex:none; width:54px; height:54px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--label); font-size:18px; font-weight:700; letter-spacing:0.02em; color:#F7EFE7;
+  background:linear-gradient(160deg,#8F3616 0%,#3A2318 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.28), 0 6px 16px rgba(112,62,40,0.22);
+}
+.founder h3{ font-size:18px; letter-spacing:-0.02em; }
+.founder .r{ font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-2); margin-top:5px; }
+.founder p{ margin-top:10px; font-size:15px; line-height:1.55; color:var(--ink-2); }
+
+/* ---------- close CTA + footer ------------------------------------------- */
+.cta{ padding:40px 22px; border-radius:30px; text-align:center; }
+@media (min-width:860px){ .cta{ padding:56px 48px; } }
+.cta h2{ font-size:clamp(28px,5vw,42px); letter-spacing:-0.03em; }
+.cta p{ margin:16px auto 0; max-width:56ch; font-size:17px; line-height:1.6; color:var(--ink-2); }
+.cta-row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+footer{ padding:40px 0 56px; }
+.foot{ display:flex; flex-wrap:wrap; gap:16px 28px; align-items:baseline; justify-content:space-between; padding-top:26px; border-top:1px solid var(--rule); }
+.foot .n{ font-size:17px; font-weight:500; }
+.foot .m{ font-size:15px; color:var(--ink-2); }
+.foot a{
+  display:inline-flex; align-items:center; min-height:44px;
+  text-decoration:none; border-bottom:1px solid rgba(143,54,22,0.35); color:var(--accent-deep);
+}
+
+/* ---------- section headers ---------------------------------------------- */
+.sec-head{ max-width:64ch; }
+.sec-head h2{ font-size:clamp(28px,5vw,42px); letter-spacing:-0.03em; margin-top:16px; }
+.sec-head p{ margin-top:16px; font-size:17px; line-height:1.6; color:var(--ink-2); }
+.night .sec-head p{ color:var(--cream-2); }
+
+/* ---------- reveal: opt in from JS only ---------------------------------- */
+/* Nothing is hidden unless the script has proved it can un-hide it. */
+.js-reveal .rv{ opacity:0; transform:translateY(14px); }
+.js-reveal .rv.is-in{ opacity:1; transform:none; transition:opacity 350ms var(--ease), transform 350ms var(--ease); }
+@media (prefers-reduced-motion: reduce){
+  .js-reveal .rv,
+  .js-reveal .rv.is-in{ opacity:1; transform:none; transition:none; }
+  .caret{ animation:none; }
+  *{ scroll-behavior:auto !important; }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 04 of 10</span>
+  <span class="proto-name">A Day at the Front Desk</span>
+  <span class="proto-bet">Show them their own Tuesday. The products arrive as answers to moments they recognise.</span>
+</div>
+
+<div class="scene" aria-hidden="true">
+  <span class="tint t1"></span><span class="tint t2"></span><span class="tint t3"></span>
+</div>
+
+<div class="page">
+
+  <!-- ============================ HERO ============================ -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-kicker port">
+        <span class="disc" aria-hidden="true"></span>
+        <span class="eyebrow">Stephens AI, for independent eyecare practices</span>
+      </div>
+
+      <h1>One day at your front desk, <em>hour by hour</em>.</h1>
+
+      <p class="hero-sub">
+        We spent the last year inside a 27 person practice with 6 to 7 doctors at one location,
+        in the office, watching the phones. <strong>This is the day we kept seeing.</strong>
+        Six moments, all of them ordinary, all of them expensive. Three products came out of them.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+          Book a 20 minute call
+          <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+      </div>
+
+      <p class="hero-trust">
+        <span class="dot" aria-hidden="true"></span>
+        Live today at that practice. Live at yours in 30 days. Month to month, no term.
+      </p>
+
+      <nav class="glance pane" aria-label="The day at a glance">
+        <p class="glance-label">The day at a glance</p>
+        <div class="glance-row">
+          <a href="#m1"><span class="t">8:10</span> The phones open</a>
+          <a href="#m2"><span class="t">10:30</span> The walk across the office</a>
+          <a href="#m3"><span class="t">12:00</span> Checkout</a>
+          <a href="#m4"><span class="t">2:15</span> A call that cannot wait</a>
+          <a href="#m5"><span class="t">4:00</span> Recall, still on the checklist</a>
+          <a href="#m6"><span class="t">5:30</span> A sticky note</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================ THE DAY ============================ -->
+  <main>
+  <section class="sec" aria-labelledby="day-h">
+    <div class="wrap">
+      <h2 id="day-h" class="sr-only">The day, from the phones opening to the lights going off</h2>
+
+      <div class="day">
+        <span class="spine" aria-hidden="true"></span>
+
+        <!-- ---------------- 8:10 ---------------- -->
+        <article class="moment rv" id="m1">
+          <div class="marker" style="--tone:rgba(220,104,67,0.28)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">8:10 a.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">8:10 a.m.</span>
+              <span class="eyebrow">The phones open</span>
+            </div>
+            <h3>The first caller is reading a card they do not understand</h3>
+            <p class="m-friction">
+              They have their insurance card in front of them and one question: is the visit covered.
+              Whoever picked up is new. The honest answer depends on whether the visit
+              ends up billing routine or medical, and on the exception nobody wrote down.
+              <strong>So the caller gets a maybe, and a maybe is how a balance shows up later.</strong>
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">What the desk does instead</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>Knowledge base</span></div>
+                <div class="dep-search">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <circle cx="7" cy="7" r="4.75" stroke="#DC6843" stroke-width="1.6"/>
+                    <path d="M10.6 10.6 14 14" stroke="#DC6843" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                  <span>is the visit covered<span class="caret" aria-hidden="true"></span></span>
+                </div>
+                <div class="dep-card">
+                  <h4>Caller asks whether their plan covers the visit</h4>
+                  <p class="dep-p">
+                    Ask what brings them in before you answer. A routine exam bills to the vision plan.
+                    A complaint about the eye bills medical, and the copay is different.
+                  </p>
+                  <p class="dep-p ink">
+                    Say this: “Your plan covers a routine exam. If the doctor finds something medical,
+                    that part bills to your medical insurance, and I can tell you what that looks like now.”
+                  </p>
+                  <div class="dep-foot">
+                    <span>Last updated by your office manager.</span>
+                    <span class="mini-btn">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                      This page is wrong
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              <strong>76 situations like this one are already written.</strong> One search box, an answer in
+              a few seconds, in the words a person can say out loud while the caller is still on the line.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Front desk knowledge base</span>
+          </div>
+        </article>
+
+        <!-- ---------------- 10:30 ---------------- -->
+        <article class="moment rv" id="m2">
+          <div class="marker" style="--tone:rgba(220,104,67,0.38)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">10:30 a.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">10:30 a.m.</span>
+              <span class="eyebrow">The walk across the office</span>
+            </div>
+            <h3>Someone puts a patient on hold and walks to the office manager’s desk</h3>
+            <p class="m-friction">
+              It happens several times a day. Two people stop working, one of them mid task, and the
+              patient listens to hold music while the practice looks something up in a person’s memory.
+              The answer was written down somewhere. It is just not anywhere you can reach while a
+              patient waits on the line. <strong>The hard questions all route through one or two people,
+              and those two people are the bottleneck by accident.</strong>
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">The same answer, findable</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>Situation page</span></div>
+                <div class="dep-card" style="margin-top:0">
+                  <h4>Contact lens follow up inside the exam window</h4>
+                  <p class="dep-p">
+                    The follow up is included when it falls inside the fitting window and the patient is
+                    still in the same trial. Book it with the same doctor.
+                  </p>
+                  <p class="dep-p ink">
+                    Exception: if the trial changed brand or power at the last visit, the fitting window
+                    restarts. That is a new fee, and you tell the patient before they come in.
+                  </p>
+                  <div class="dep-foot">
+                    <span class="stat-chip stat-good">
+                      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Edited in the app
+                    </span>
+                    <span>Every edit is saved. A wrong change is one click back.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              Your office manager edits the page and it is live. <strong>No ticket, no waiting on us.</strong>
+              A knowledge base does not remove the need for someone to own the answer. It removes the need
+              for that person to be interrupted every time the phone rings.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Front desk knowledge base</span>
+          </div>
+        </article>
+
+        <!-- ---------------- 12:00 ---------------- -->
+        <article class="moment rv" id="m3">
+          <div class="marker" style="--tone:rgba(220,104,67,0.46)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">12:00 p.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">12:00 p.m.</span>
+              <span class="eyebrow">Checkout</span>
+            </div>
+            <h3>The refraction question, with the patient standing there</h3>
+            <p class="m-friction">
+              The patient booked a routine exam and is leaving with a medical diagnosis. This morning the
+              vision plan covered the refraction. Now it does not. Collect it at the desk or bill it, and
+              the person deciding has seconds, and a line behind them.
+              <strong>Guess low and it becomes an uncollected charge. Guess high and it becomes a phone
+              call you do not want next week.</strong>
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">One of the four decision lookups</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>Refraction: collect or bill</span></div>
+                <div class="dep-card" style="margin-top:0">
+                  <div class="step">
+                    <span class="step-n" aria-hidden="true">1</span>
+                    <div>
+                      <p class="step-q">How is the visit billing?</p>
+                      <p class="step-a">Medical</p>
+                    </div>
+                  </div>
+                  <div class="step">
+                    <span class="step-n" aria-hidden="true">2</span>
+                    <div>
+                      <p class="step-q">Does the patient have a vision plan on file?</p>
+                      <p class="step-a">Yes, used for the exam this morning</p>
+                    </div>
+                  </div>
+                  <div class="verdict">
+                    <span class="vh">Collect at checkout</span>
+                    <p>
+                      The vision plan covers the refraction only when the visit bills as a routine exam.
+                      This visit bills medical, so the refraction is not covered. Take it now and use this
+                      year’s price from the page.
+                    </p>
+                  </div>
+                  <div class="dep-foot">
+                    <span>Reviewed and approved by your practice before it went live.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              <strong>Four lookups cover the decisions that cost money.</strong> How soon a caller needs to
+              be seen, which doctor can see them, whether to collect or bill the refraction, and this
+              year’s price. Each one shows the buried exception instead of relying on somebody to remember it.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Front desk knowledge base, decision lookups</span>
+          </div>
+        </article>
+
+        <!-- ---------------- 2:15 ---------------- -->
+        <article class="moment rv" id="m4">
+          <div class="marker" style="--tone:rgba(220,104,67,0.52)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">2:15 p.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">2:15 p.m.</span>
+              <span class="eyebrow">A call that cannot wait</span>
+            </div>
+            <h3>Flashes since last night, and the next routine slot is weeks out</h3>
+            <p class="m-friction">
+              The caller describes flashes and a sudden crowd of new floaters. The schedule says the next
+              opening is weeks away. Whoever answered has to work out how soon this person is seen and
+              which doctor can see them, right now, without a clinician standing next to them.
+              <strong>This is the call where a front desk most needs a written rule and is least likely
+              to have one within reach.</strong>
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">The triage lookup</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>How soon, and with whom</span></div>
+                <div class="dep-card" style="margin-top:0">
+                  <div class="step">
+                    <span class="step-n" aria-hidden="true">1</span>
+                    <div>
+                      <p class="step-q">What is the caller describing?</p>
+                      <p class="step-a">New flashes and floaters, started last night</p>
+                    </div>
+                  </div>
+                  <div class="verdict">
+                    <span class="vh">Work them in today</span>
+                    <p>
+                      Do not offer the next routine opening. Say: “That is something we want to look at
+                      today. Let me find you a time.” Then book into an urgent slot and tell the doctor
+                      it is on the schedule.
+                    </p>
+                  </div>
+                  <div style="margin-top:12px">
+                    <div class="run">
+                      <span class="run-name">Provider A <small>Takes same day urgent, in office today</small></span>
+                      <span class="stat-chip stat-good">Book here</span>
+                    </div>
+                    <div class="run">
+                      <span class="run-name">Provider B <small>In office today, urgent visits by exception</small></span>
+                      <span class="stat-chip stat-warn">Ask first</span>
+                    </div>
+                    <div class="run">
+                      <span class="run-name">Provider C <small>Not in office today</small></span>
+                      <span class="stat-chip stat-idle">No</span>
+                    </div>
+                  </div>
+                  <div class="dep-foot">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2 13.6 5v4c0 3-2.4 4.5-5.6 5.6C4.8 13.5 2.4 12 2.4 9V5L8 2.2Z" stroke="#8F3616" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                    <span>A reference, never a substitute for judgment.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              <strong>Your doctor signs off on every clinical page before it goes live, and again when it
+              changes.</strong> The page does not diagnose anything. It tells the person on the phone what
+              your practice has already decided to do about this call.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Front desk knowledge base, decision lookups</span>
+          </div>
+        </article>
+
+        <!-- ---------------- 4:00 ---------------- -->
+        <article class="moment rv" id="m5">
+          <div class="marker" style="--tone:rgba(196,84,50,0.58)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">4:00 p.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">4:00 p.m.</span>
+              <span class="eyebrow">Recall, still on the checklist</span>
+            </div>
+            <h3>The monthly run that has been on the checklist since the first</h3>
+            <p class="m-friction">
+              It is not one job. It is the scleral letters. Then the medical recall letters, across about
+              10 separate reason codes, output as postcards. Then the call list and the routine postcards,
+              once per doctor, individually, which at eight providers is 8 separate runs. Then, only after
+              every call and every postcard is finished, the update run so the same patients are not
+              pulled again next month.
+            </p>
+            <p class="m-friction">
+              <strong>Two things make it fragile.</strong> The update step is a checkbox that has to be left
+              unchecked on one run and checked on another, and getting it backwards either double contacts
+              patients or drops them. And it sits on the same checklist as the daily work, so it is the
+              first thing to slip when the phones are busy.
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">This month’s run, done for you</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>Recall run sheet</span></div>
+                <div class="dep-card" style="margin-top:0">
+                  <div class="runs">
+                    <div class="run">
+                      <span class="run-name">Scleral letters</span>
+                      <span class="stat-chip stat-good">Sent</span>
+                    </div>
+                    <div class="run">
+                      <span class="run-name">Medical recall letters <small>About 10 reason codes, output as postcards</small></span>
+                      <span class="stat-chip stat-good">Sent</span>
+                    </div>
+                    <div class="run">
+                      <span class="run-name">Calls and routine postcards <small>Once per doctor, individually. 8 runs.</small></span>
+                      <span class="stat-chip stat-warn">Running</span>
+                    </div>
+                    <div class="run-sub">
+                      <div class="run"><span class="run-name">Provider A</span><span class="stat-chip stat-good">Done</span></div>
+                      <div class="run"><span class="run-name">Provider B</span><span class="stat-chip stat-good">Done</span></div>
+                      <div class="run"><span class="run-name">Provider C</span><span class="stat-chip stat-warn">Working</span></div>
+                      <div class="run"><span class="run-name">The rest of the provider runs</span><span class="stat-chip stat-idle">Queued</span></div>
+                    </div>
+                    <div class="run">
+                      <span class="run-name">The update run <small>Held until every call and postcard is finished</small></span>
+                      <span class="stat-chip stat-idle">Locked, runs last</span>
+                    </div>
+                  </div>
+                  <div class="dep-foot">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 4.4V8l2.4 1.6" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="5.8" stroke="#8F3616" stroke-width="1.5"/></svg>
+                    <span>Runs on a schedule, in your protocol’s order, not when someone finds an afternoon.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              <strong>The call list arrives ready to work, in priority order</strong>, with the answers to
+              the questions patients ask when they call back. At the end of the month you get a report of
+              who was contacted, by which channel, and who booked. The update step gets done, every time,
+              in the right order.
+            </p>
+            <p class="m-limit">
+              Two honest limits. It does not plug into your practice management system, and because recall
+              involves patient contact information, it runs inside your own accounts under a signed BAA.
+              We never touch charts. Both are explained below.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Recall done for you</span>
+          </div>
+        </article>
+
+        <!-- ---------------- 5:30 ---------------- -->
+        <article class="moment rv" id="m6">
+          <div class="marker" style="--tone:rgba(143,54,22,0.55)">
+            <span class="disc" aria-hidden="true"></span>
+            <span class="t-side">5:30 p.m.</span>
+          </div>
+          <div class="m-card pane">
+            <div class="m-head">
+              <span class="t-inline">5:30 p.m.</span>
+              <span class="eyebrow">A sticky note</span>
+            </div>
+            <h3>A time off request, handed over on the way out</h3>
+            <p class="m-friction">
+              It goes on the pile. Later it gets copied into the schedule, and later still into payroll,
+              by the same person who has been answering the phone all day. Nobody is doing anything wrong.
+              <strong>It just costs a little time here and a little more there, every week, all year.</strong>
+            </p>
+
+            <div class="quoted">
+              <span class="quoted-label">The same request, handled</span>
+              <div class="dep">
+                <div class="dep-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>Time off</span></div>
+                <div class="dep-card" style="margin-top:0">
+                  <dl class="req-grid">
+                    <dt>Requested</dt><dd>Thursday and Friday, week after next</dd>
+                    <dt>Role</dt><dd>Front desk</dd>
+                    <dt>Coverage</dt><dd>Checked against the schedule, no gap</dd>
+                    <dt>Status</dt><dd><span class="stat-chip stat-good">Approved</span></dd>
+                  </dl>
+                  <div class="flowline">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Written to the schedule</span>
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Carried into payroll</span>
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Logged where the owner can see it</span>
+                  </div>
+                  <div class="dep-foot">
+                    <span>No sticky note, no second entry, no reconciliation at month end.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="m-answer">
+              At the practice we built this for, the time off build returns
+              <strong>60 to 100 admin hours a year</strong>. That is the part of this work that never shows
+              up in a report, because it was never measured in the first place.
+            </p>
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Practice operations automation</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CLOSE OF DAY ============================ -->
+  <section class="sec" aria-labelledby="cat-h" id="products">
+    <div class="wrap">
+      <div class="close-note">
+        <div class="port" style="justify-content:center">
+          <span class="disc" aria-hidden="true"></span>
+          <span class="eyebrow">Close of day</span>
+        </div>
+        <h2 id="cat-h" style="font-size:clamp(28px,5vw,42px);letter-spacing:-0.03em;margin-top:18px">
+          Three products, and every one of them started as a moment on that clock
+        </h2>
+        <p class="lede" style="margin-top:16px">
+          None of this came out of a whiteboard. It came out of a year of standing behind that desk,
+          a written recall protocol, and a pile of sticky notes.
+        </p>
+      </div>
+
+      <div class="cat-grid">
+
+        <article class="cat pane">
+          <span class="badge-live">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="4" fill="currentColor"/></svg>
+            Live today
+          </span>
+          <h3>Front desk knowledge base</h3>
+          <p class="role">For the practice where the hard questions all go through one or two people.</p>
+          <p class="what">
+            <strong>The insurance rules, prices, and protocols your front desk keeps in their heads,
+            written down and searchable.</strong> Short situation pages the team finds mid call, plus 4
+            decision lookups for the calls that cost money. Your office manager edits it in the app.
+            Google sign in, restricted to your practice domain. Installs on the front desk computers
+            with no admin rights, and pages already opened keep working if the internet drops.
+          </p>
+          <div class="cat-meta">
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2 13.6 5v4c0 3-2.4 4.5-5.6 5.6C4.8 13.5 2.4 12 2.4 9V5L8 2.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <span><b>Data posture</b>Holds your rules, not your charts. Patient records in it: 0.</span>
+            </div>
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 12.5h10.8M4.4 12.5V6.8M8 12.5V4.2M11.6 12.5V8.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <span><b>Price</b>From $2,500 to set up and $299 a month.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="cat pane">
+          <span class="badge-live badge-new">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="4" fill="currentColor"/></svg>
+            New
+          </span>
+          <h3>Recall done for you</h3>
+          <p class="role">For the practice whose recall is a monthly job on a daily checklist.</p>
+          <p class="what">
+            <strong>We run your monthly patient recall for you, using your own recall protocol and your
+            own systems.</strong> The scleral letters, the medical letters across about 10 reason codes,
+            the calls and routine postcards once per doctor, and then the update run last, so nobody is
+            pulled twice next month. You get a call list in priority order and a monthly report of who
+            was contacted, by which channel, and who booked.
+          </p>
+          <div class="cat-meta">
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2 13.6 5v4c0 3-2.4 4.5-5.6 5.6C4.8 13.5 2.4 12 2.4 9V5L8 2.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <span><b>Data posture</b>This one does involve patient contact information. It runs inside your accounts, under a signed BAA, and we never touch charts.</span>
+            </div>
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 12.5h10.8M4.4 12.5V6.8M8 12.5V4.2M11.6 12.5V8.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <span><b>Price</b>Priced per practice, on the call, or folded into the third tier. We have not set a list price and we are not going to guess at one in front of you.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="cat pane">
+          <span class="badge-live">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="4" fill="currentColor"/></svg>
+            Live today
+          </span>
+          <h3>Practice operations automation</h3>
+          <p class="role">For the owner who is still the last stop for every admin task.</p>
+          <p class="what">
+            <strong>Time off and payroll, automated and scoped to your practice.</strong> It returns 60 to
+            100 admin hours a year at the practice we built it for. It comes with a quarterly practice
+            snapshot and monthly working time with both founders, so the next thing we automate is the
+            thing that is actually costing you the most.
+          </p>
+          <div class="cat-meta">
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2 13.6 5v4c0 3-2.4 4.5-5.6 5.6C4.8 13.5 2.4 12 2.4 9V5L8 2.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <span><b>Data posture</b>Staff and scheduling information, inside your own accounts. No charts, no patient records.</span>
+            </div>
+            <div class="cat-line">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.6 12.5h10.8M4.4 12.5V6.8M8 12.5V4.2M11.6 12.5V8.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <span><b>Price</b>Included in the third tier: $4,500 to set up and $350 a month.</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PRICING ============================ -->
+  <section class="sec" aria-labelledby="price-h" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="port">
+          <span class="disc" aria-hidden="true"></span>
+          <span class="eyebrow">Pricing</span>
+        </div>
+        <h2 id="price-h">What the day above costs to fix</h2>
+        <p>
+          One setup fee and one monthly. The monthly pays for the writing, not the hosting. When an
+          insurance rule changes or your prices reset for the year, updating the pages is our job.
+        </p>
+      </div>
+
+      <div class="tier-grid">
+        <article class="tier pane">
+          <h3>Front desk knowledge base</h3>
+          <div class="price"><span class="setup">$2,500</span><span class="mo">to set up, then $299 a month</span></div>
+          <p class="sum">The front desk’s knowledge, written up and searchable, kept current by your office manager.</p>
+          <ul>
+            <li>Situation pages written by us from the material you already have</li>
+            <li>4 decision lookups for the calls that cost money</li>
+            <li>Search, in app editing, and a saved history of every change</li>
+            <li>Google sign in, restricted to your practice domain</li>
+            <li>One click for staff to flag a page that is wrong</li>
+            <li>Installs on the front desk computers, no admin rights</li>
+          </ul>
+        </article>
+
+        <article class="tier pane hi">
+          <span class="tier-badge">Where we would start you</span>
+          <h3>Whole practice knowledge base</h3>
+          <div class="price"><span class="setup">$3,500</span><span class="mo">to set up, then $250 a month</span></div>
+          <p class="sum">The whole floor, not just the front desk: technicians, optical, and each doctor’s rules.</p>
+          <ul>
+            <li>Everything in the front desk tier</li>
+            <li>Technician, optical, and doctor restriction pages</li>
+            <li>Views that show each role its own work</li>
+            <li>A content review with your office manager each quarter</li>
+            <li>A short written AI use policy for your staff</li>
+          </ul>
+        </article>
+
+        <article class="tier pane">
+          <h3>Knowledge base plus operations</h3>
+          <div class="price"><span class="setup">$4,500</span><span class="mo">to set up, then $350 a month</span></div>
+          <p class="sum">The knowledge base plus the operations work, with both of us on call every month.</p>
+          <ul>
+            <li>Everything in the whole practice tier</li>
+            <li>Time off and payroll automation, scoped to your practice</li>
+            <li>A quarterly practice snapshot</li>
+            <li>Monthly working time with both of us</li>
+            <li>Your builds go to the front of our queue</li>
+            <li>Recall done for you can be folded in here, priced on the call</li>
+          </ul>
+        </article>
+      </div>
+
+      <ul class="notes pane">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span><strong>Recall done for you is priced per practice, on the call.</strong> The work is different at every practice size, and we would rather scope it than post a number we have to walk back.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>Extra sections beyond a tier cap are <strong>$600 each</strong>. A second location is <strong>$1,500 to set up and $149 a month</strong>.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>Compare it to a training platform, not to your practice management software. <strong>Trainual and Whale run about $249 to $300 a month</strong> at this size and still hand you an empty system to fill in yourself.</span>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span><strong>Month to month, no term.</strong> Cancel and you keep every page. Export any time, as plain files you can open without us.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================ OBJECTIONS ============================ -->
+  <section class="sec" aria-labelledby="obj-h" id="objections">
+    <div class="wrap">
+      <div class="night">
+        <span class="ember" aria-hidden="true"></span>
+        <div class="sec-head" style="position:relative">
+          <span class="eyebrow">The two questions we get on every call</span>
+          <h2 id="obj-h">Asked before the second cup of coffee, so here they are up front</h2>
+        </div>
+
+        <div class="obj-grid">
+          <article class="obj">
+            <h3>Where does our patient data sit?</h3>
+            <p>
+              The honest answer is different per product, so we say it per product rather than making one
+              comfortable claim across the whole company.
+            </p>
+            <div class="posture">
+              <div>
+                <b>Knowledge base</b>
+                It holds your rules, not your charts: insurance policies, pricing, scheduling protocols,
+                procedures. There are 0 patient records in it, so there is nothing in it to breach.
+              </div>
+              <div>
+                <b>Recall done for you</b>
+                This one does involve patient contact information. It runs inside your own accounts, under
+                a signed BAA, on lists your team controls. We never touch charts, and access can be
+                revoked by you at any moment.
+              </div>
+              <div>
+                <b>Operations automation</b>
+                Staff schedules and time off, inside your own accounts. No patient data of any kind.
+              </div>
+            </div>
+          </article>
+
+          <article class="obj">
+            <h3>Does this connect to our practice management system?</h3>
+            <p>
+              <strong>No, and that is on purpose.</strong> Most hosted practice management systems do not
+              give an outside vendor database access. Any vendor promising you a nightly sync into a
+              hosted system is either overselling or has not checked yet.
+            </p>
+            <p>
+              So it does not matter which system you run. The knowledge base sits alongside it and answers
+              the questions the software was never going to answer anyway.
+            </p>
+            <p>
+              For recall, we work from a list your own team runs, or inside your system with a
+              <strong>limited login your practice creates and can revoke</strong>. No integration to break,
+              nothing to renegotiate when your vendor changes their terms.
+            </p>
+            <div class="posture">
+              <div>
+                <b>What this costs you</b>
+                Someone on your team runs the list, the same way they do today. That is the trade, and we
+                would rather name it now than have you find it out after we start.
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROOF ============================ -->
+  <section class="sec" aria-labelledby="proof-h" id="proof">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="port">
+          <span class="disc" aria-hidden="true"></span>
+          <span class="eyebrow">Proof</span>
+        </div>
+        <h2 id="proof-h">Everything above is already running somewhere</h2>
+        <p>
+          The knowledge base is live in a 27 person practice with 6 to 7 doctors at one location. It was
+          built from real practice documents, days spent watching the front desk, and the questions staff
+          actually get asked. Your team does not start from an empty template.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><p class="v">76</p><p class="l">Front desk situations mapped</p></div>
+        <div class="stat"><p class="v">4</p><p class="l">Decision lookups built</p></div>
+        <div class="stat"><p class="v">27</p><p class="l">People at the live practice</p></div>
+        <div class="stat"><p class="v">30</p><p class="l">Days from start to live at the desk</p></div>
+      </div>
+
+      <div class="founders">
+        <article class="founder pane">
+          <span class="avatar" aria-hidden="true">AS</span>
+          <div>
+            <h3>Alec Stephens</h3>
+            <p class="r">Co-founder</p>
+            <p>
+              Spent the last year inside a 27 person eyecare practice, in the office, watching the front
+              desk work. The day above came straight out of those notes.
+            </p>
+          </div>
+        </article>
+        <article class="founder pane">
+          <span class="avatar" aria-hidden="true">JK</span>
+          <div>
+            <h3>Jusheen Kim</h3>
+            <p class="r">Co-founder</p>
+            <p>
+              Lead software engineer at J.P. Morgan before this. Builds the systems that have to hold up
+              under real use, which is what a front desk is.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <p style="margin-top:18px;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:72ch">
+        You work with both of us, not an account manager. Both of us are based in Asia, so we are not at a
+        desk during your morning rush. Urgent issues are answered by the next business morning, US time,
+        and the escalation path goes in writing before you sign anything. We would rather state the limit
+        than imply a promise we cannot keep.
+      </p>
+    </div>
+  </section>
+  <!-- ============================ CTA + FOOTER ============================ -->
+  <section class="sec" aria-labelledby="cta-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta pane">
+        <h2 id="cta-h">Tell us about your day</h2>
+        <p>
+          Twenty minutes. Bring the moment that annoys you most, and we will tell you plainly whether it
+          is one of the three things we build or something you should not pay us for.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">
+            Book a 20 minute call
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <p class="n">Stephens AI</p>
+          <p class="m">Alec Stephens and Jusheen Kim</p>
+        </div>
+        <p class="m"><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+        <p class="m">Knowledge base, recall, and operations for independent eyecare practices.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* Scroll reveals. The page is fully readable with this script deleted, broken,
+   or blocked: the hidden state is only applied after we have confirmed we can
+   observe and un-hide it, and reduced motion opts out entirely. No network. */
+(function () {
+  var root = document.documentElement;
+  try {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.rv');
+    if (reduce || !items.length || !('IntersectionObserver' in window)) return;
+
+    var fired = false;
+
+    var io = new IntersectionObserver(function (entries) {
+      fired = true;
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('is-in');
+          io.unobserve(entries[i].target);
+        }
+      }
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    root.classList.add('js-reveal');
+    for (var j = 0; j < items.length; j++) { io.observe(items[j]); }
+
+    /* Safety net: if the observer never reports anything at all, drop the
+       hidden state entirely rather than leaving copy invisible. */
+    window.setTimeout(function () {
+      if (!fired) root.classList.remove('js-reveal');
+    }, 1200);
+  } catch (err) {
+    root.classList.remove('js-reveal');
+  }
+})();
+</script>

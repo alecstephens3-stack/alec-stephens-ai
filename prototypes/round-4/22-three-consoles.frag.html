@@ -1,0 +1,643 @@
+<!-- TITLE: Three Consoles -->
+
+<header class="sai-dock">
+  <a class="brand" href="#top" aria-label="Stephens AI, home"><!-- SAI:LOGO --></a>
+  <nav aria-label="Sections">
+    <a href="#kb">Knowledge base</a>
+    <a href="#reexam">ReExam</a>
+    <a href="#ops">Operations</a>
+    <a href="#pricing">Pricing</a>
+    <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  </nav>
+</header>
+
+<div class="sai-page" id="top">
+
+  <section class="sai-widget sai-rise">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Stephens AI</span></span>
+    <h1 class="sai-display">Three consoles for an <em>independent eyecare practice</em>.</h1>
+    <p class="sai-lede">Built inside a 27 person optometry practice, at the front desk, over the last year. All three run on this page. Use them.</p>
+    <p>
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </p>
+  </section>
+
+
+  <!-- ============ CONSOLE 1 ============ -->
+  <section id="kb" class="sai-widget sai-pane sai-streak sai-rise" aria-labelledby="kbTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">01 · Front desk knowledge base</span></span>
+    <h2 class="sai-w-title" id="kbTitle">Find it mid call</h2>
+
+    <form role="search" id="kbForm" autocomplete="off">
+      <label for="kbInput">Search the situation, not the folder</label>
+      <input type="search" id="kbInput" name="q" class="sai-btn ghost" size="18" spellcheck="false" placeholder="flashes, refraction, price" aria-describedby="kbStatus" aria-controls="kbResults">
+      <button type="button" class="sai-btn ghost" data-q="flashes">flashes</button>
+      <button type="button" class="sai-btn ghost" data-q="refraction">refraction</button>
+      <button type="button" class="sai-btn ghost" data-q="price">price</button>
+      <button type="reset" class="sai-btn ghost" id="kbClear">Clear</button>
+    </form>
+
+    <div class="sai-w-sub" id="kbStatus" role="status">6 example situation pages. Type to filter them.</div>
+
+    <div id="kbResults">
+
+      <div class="kbrow" data-keys="triage urgent same day flashes floaters curtain red eye pain injury chemical splash emergency how soon seen">
+        <details open>
+          <summary>How soon does this caller need to be seen <span class="sai-stamp">Lookup · Scheduling</span></summary>
+          <p>Sudden flashes, new floaters, a curtain across the vision, a chemical splash, or a red painful eye in a contact lens wearer: same day, and tell the doctor on duty. Gradual blur with no pain and no redness: next available.</p>
+          <p><strong>Exception.</strong> If nothing is open, do not send them away. Take it to the doctor on duty and call the patient back the same day.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <div class="kbrow" data-keys="doctor provider who can see pediatric children first exam specialty fitting post op follow up surgery day book schedule">
+        <details>
+          <summary>Which doctor can see this patient <span class="sai-stamp">Lookup · Scheduling</span></summary>
+          <p>Young children and first exams go to the providers taking them this week. Specialty fittings and post op follow ups go back to the provider who started the case.</p>
+          <p><strong>Exception.</strong> If the only opening is with a provider who does not take that visit type, book the right provider on a later day. A visit that has to be redone costs more than the wait.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <div class="kbrow" data-keys="refraction collect bill charge vision plan medical checkout routine exam encounter payment">
+        <details>
+          <summary>Refraction: collect it or bill it <span class="sai-stamp">Lookup · Billing</span></summary>
+          <p>Routine exam on the vision plan: the refraction goes through the plan and there is nothing to collect at the desk. Medical visit: it is not a covered service, so say so at check in and collect at checkout.</p>
+          <p><strong>Exception.</strong> If the doctor changes the visit type after the exam, the answer changes with it. Check the encounter before you take payment.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <div class="kbrow" data-keys="price cost how much fee self pay quote year price list current sheet">
+        <details>
+          <summary>What is this year's price <span class="sai-stamp">Lookup · Billing</span></summary>
+          <p>One current list, the one your office manager last approved. If a printed sheet in a drawer disagrees with this page, this page wins. Self pay and plan prices are different, so ask which one applies before you quote.</p>
+          <p><strong>Exception.</strong> Prices reset at the start of the plan year. A quote given before the reset is not honoured after it.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <div class="kbrow" data-keys="vision plan medical insurance which one bills coverage complaint routine eligibility benefit symptom">
+        <details>
+          <summary>Vision plan or medical: which one bills <span class="sai-stamp">Insurance</span></summary>
+          <p>Due for glasses or an annual check with no complaint: routine, vision plan. Names a symptom, red eye, pain, flashes, a sudden change: medical, even if they also want glasses.</p>
+          <p><strong>Exception.</strong> Both in one visit and the doctor decides which one bills. Do not promise the patient it will be the vision plan.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <div class="kbrow" data-keys="charity care hardship cannot pay discount payment plan financial help office manager">
+        <details>
+          <summary>Charity care and hardship requests <span class="sai-stamp">Front desk</span></summary>
+          <p>Take the request in private, away from the waiting room. Write down what was asked for and pass it to the office manager the same day. Do not quote a discount and do not say it is approved.</p>
+          <p><strong>Exception.</strong> Never turn a patient away for asking. Book the visit, note the request, and let the office manager give the answer before the visit.</p>
+          <p><button type="button" class="sai-btn ghost" data-flag data-done="Flagged. Your office manager sees it today.">Flag this page as wrong</button></p>
+        </details>
+      </div>
+
+      <p id="kbEmpty" class="sai-w-sub" hidden>Nothing matches that yet. In a real build, a page nobody can find is a page we still have to write.</p>
+    </div>
+
+    <p>
+      <span class="sai-status good"><span class="kw">Records</span><span class="detail">0 patient records held</span></span>
+      <span class="sai-status good"><span class="kw">Sign in</span><span class="detail">Google, your practice domain only</span></span>
+      <span class="sai-status good"><span class="kw">Mapped</span><span class="detail">76 situations, 4 decision lookups</span></span>
+    </p>
+
+    <div class="sai-w-note"><strong>$2,500 setup, $299 a month</strong> for the front desk. Live in 30 days. Your office manager edits it in the app and every edit is reversible.</div>
+  </section>
+
+
+  <!-- ============ CONSOLE 2 ============ -->
+  <section id="reexam" class="sai-widget sai-pane sai-streak sai-rise" aria-labelledby="reTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">02 · ReExam, patient reactivation</span></span>
+    <h2 class="sai-w-title" id="reTitle">Six touches, then stop</h2>
+
+    <div id="reCtl">
+      <div role="group" aria-label="Step the sequence">
+        <button type="button" class="sai-btn ghost" data-day="0" aria-pressed="false">Day 0</button>
+        <button type="button" class="sai-btn ghost" data-day="3" aria-pressed="false">Day 3</button>
+        <button type="button" class="sai-btn primary" data-day="10" aria-pressed="true">Day 10</button>
+        <button type="button" class="sai-btn ghost" data-day="17" aria-pressed="false">Day 17</button>
+        <button type="button" class="sai-btn ghost" data-day="28" aria-pressed="false">Day 28</button>
+        <button type="button" class="sai-btn ghost" data-day="42" aria-pressed="false">Day 42</button>
+      </div>
+      <div role="group" aria-label="Stop the sequence">
+        <button type="button" class="sai-btn ghost" data-stop data-out="Booked. Every later touch is cancelled, on SMS and on email.">Patient books</button>
+        <button type="button" class="sai-btn ghost" data-stop data-out="Replied. The sequence stops and a person calls them back.">Patient replies YES</button>
+        <button type="button" class="sai-btn ghost" data-stop data-out="Opted out. Every message type stops, and it propagates to the tool you already run.">Patient opts out</button>
+        <button type="button" class="sai-btn ghost" id="reReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="sai-w-sub" id="reOut" role="status">Day 10 is email only, and that is a compliance rule, not a preference.</div>
+
+    <div class="sai-track" id="reTrack">
+
+      <div class="when" data-touch="0">Day 0</div>
+      <div class="entry" data-touch="0" data-say="Day 0. SMS. You are due for your eye exam.">
+        <h4 role="heading" aria-level="3">You are due for your eye exam <span class="sai-stamp">SMS</span></h4>
+        <p>Book, or reply YES for a call.</p>
+      </div>
+
+      <div class="when" data-touch="3">Day 3</div>
+      <div class="entry" data-touch="3" data-say="Day 3. Email. A short personal note from the doctor, same ask.">
+        <h4 role="heading" aria-level="3">A short note from the doctor <span class="sai-stamp">Email</span></h4>
+        <p>Same ask, in the practice's own voice, approved by the owner.</p>
+      </div>
+
+      <div class="when" data-touch="10">Day 10</div>
+      <div class="entry key" data-touch="10" data-say="Day 10. Email only. Anything benefits flavoured cannot go by SMS.">
+        <h4 role="heading" aria-level="3">Most vision plans cover an exam every 12 months <span class="sai-stamp">Email only</span></h4>
+        <p>The benefits angle.</p>
+        <span class="sai-status warn"><span class="kw">TCPA</span><span class="detail">Benefits messages cannot go by SMS</span></span>
+      </div>
+
+      <div class="when" data-touch="17">Day 17</div>
+      <div class="entry" data-touch="17" data-say="Day 17. SMS. A care framed nudge.">
+        <h4 role="heading" aria-level="3">A care framed nudge <span class="sai-stamp">SMS</span></h4>
+        <p>Care language only, because it is a text.</p>
+      </div>
+
+      <div class="when" data-touch="28">Day 28</div>
+      <div class="entry" data-touch="28" data-say="Day 28. SMS. The last text, and it says so.">
+        <h4 role="heading" aria-level="3">The last text, and it says so <span class="sai-stamp">SMS</span></h4>
+        <p>No surprise fourth text after this one.</p>
+      </div>
+
+      <div class="when" data-touch="42">Day 42</div>
+      <div class="entry" data-touch="42" data-say="Day 42. Email. Final note, easy opt out.">
+        <h4 role="heading" aria-level="3">Final note, easy opt out <span class="sai-stamp">Email</span></h4>
+        <p>Then the patient goes back on the list for next cycle.</p>
+      </div>
+    </div>
+
+    <p>
+      <span class="sai-status good"><span class="kw">Under BAA</span><span class="detail">Signed before any patient data moves</span></span>
+      <span class="sai-status good"><span class="kw">Send window</span><span class="detail">10am to 7pm patient local, weekdays</span></span>
+      <span class="sai-status good"><span class="kw">Opt out</span><span class="detail">Honoured within 10 business days, both directions</span></span>
+    </p>
+
+    <div class="sai-w-note"><strong>$600 a month, flat.</strong> No contract, no setup fee, cancel monthly. Guarantee: "5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free." Offered at 1,000+ contactable lapsed patients, list price below that, and we decline under 500.</div>
+  </section>
+
+
+  <!-- ============ CONSOLE 3 ============ -->
+  <section id="ops" class="sai-widget sai-pane sai-streak sai-rise" aria-labelledby="opsTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">03 · Practice operations</span></span>
+    <h2 class="sai-w-title" id="opsTitle">Filed, checked, approved, paid</h2>
+
+    <form id="opsForm">
+      <label for="opsRole">Who is asking</label>
+      <select id="opsRole" name="role" class="sai-btn ghost">
+        <option value="Front desk">Front desk</option>
+        <option value="Optician">Optician</option>
+        <option value="Technician">Technician</option>
+        <option value="Billing">Billing</option>
+      </select>
+      <label for="opsDay">Which day off</label>
+      <select id="opsDay" name="day" class="sai-btn ghost">
+        <option value="Tuesday" data-thin="Front desk">Tuesday</option>
+        <option value="Wednesday" data-thin="">Wednesday</option>
+        <option value="Thursday" data-thin="Optician,Technician">Thursday</option>
+        <option value="Friday" data-thin="Billing">Friday</option>
+      </select>
+      <button type="submit" class="sai-btn primary">File the request</button>
+      <button type="reset" class="sai-btn ghost" id="opsReset">Reset</button>
+    </form>
+
+    <div class="sai-w-sub" id="opsOut" role="status">One route in, one answer out, so nothing gets approved twice.</div>
+
+    <div class="sai-path" id="opsPath">
+      <div class="step" data-step="1">
+        <span class="num">STEP 01 · FILED</span>
+        <h4 role="heading" aria-level="3">The request lands in one place</h4>
+        <p>Not a hallway yes, not a text to somebody's phone.</p>
+      </div>
+      <div class="step fork" data-step="2">
+        <span class="num">STEP 02 · DECISION</span>
+        <h4 role="heading" aria-level="3">Is that role covered on the day?</h4>
+        <p>Checked against the schedule before anyone answers.</p>
+        <div class="branches">
+          <div class="branch win" data-branch="ok">
+            <span class="cond">Covered</span>
+            <div class="out"><b>Approved</b>, and the requester is told.</div>
+            <span class="sai-status good"><span class="kw">Approved</span><span class="detail">Coverage holds that day</span></span>
+          </div>
+          <div class="branch" data-branch="thin">
+            <span class="cond">Short that day</span>
+            <div class="out">Sent back with the clash <b>named</b>.</div>
+            <span class="sai-status warn"><span class="kw">Sent back</span><span class="detail">Someone in that role is already off</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="step end" data-step="3">
+        <span class="num">STEP 03 · PAYROLL</span>
+        <h4 role="heading" aria-level="3">Payroll gets the same answer</h4>
+        <p>The staff member and payroll are told at the same moment, so nothing is rekeyed.</p>
+      </div>
+    </div>
+
+    <p>
+      <span class="sai-status good"><span class="kw">Coverage</span><span class="detail">Checked against the schedule, not a memory</span></span>
+      <span class="sai-status good"><span class="kw">Payroll</span><span class="detail">Same answer, same moment</span></span>
+      <span class="sai-status good"><span class="kw">Hours back</span><span class="detail">60 to 100 a year at the practice we built it for</span></span>
+    </p>
+
+    <div class="sai-w-note"><strong>$4,500 setup, $350 a month</strong> for the knowledge base plus operations. Includes a quarterly practice snapshot and monthly working time with both founders.</div>
+  </section>
+
+
+  <!-- ============ PROOF ============ -->
+  <section class="sai-widget sai-rise" aria-labelledby="proofTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">04 · Proof</span></span>
+    <h2 class="sai-w-title" id="proofTitle">Built inside one practice</h2>
+    <table class="sai-table">
+      <tr><th>Proof</th><th>Detail</th></tr>
+      <tr><td class="num">01</td><td>Live in a 27 person practice, 6 to 7 doctors, one location</td></tr>
+      <tr><td class="num">02</td><td>76 front desk situations mapped, 4 decision lookups built</td></tr>
+      <tr><td class="num">03</td><td>60 to 100 admin hours a year returned by the time off build</td></tr>
+      <tr><td class="num">04</td><td>Live in 30 days for the knowledge base, 10 business days for ReExam</td></tr>
+      <tr><td class="num">05</td><td>Alec Stephens spent the last year inside that practice. Jusheen Kim was a lead software engineer at J.P. Morgan</td></tr>
+      <tr><td class="num">06</td><td>Both founders are based in Asia. Urgent issues answered by the next business morning, US time</td></tr>
+    </table>
+  </section>
+
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="sai-widget sai-rise" aria-labelledby="quoteTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">05 · From the practice</span></span>
+    <h2 class="sai-w-title" id="quoteTitle">Their words, our answer</h2>
+    <div class="sai-claims">
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"I think the biggest issue will be <em>getting in the habit</em> of using the tool."</div>
+          <div class="attrib"><span class="who">Office manager</span> · Two weeks after the knowledge base went live</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">Our answer</div>
+          <p>Correct, and adoption is a separate job we treat as one. Staff flag a wrong page from inside the app instead of emailing. The first batch of 4 issues was fixed and live the same day.</p>
+        </div>
+      </div>
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"That looks good, <em>exactly what Mary needs</em> to process."</div>
+          <div class="attrib"><span class="who">Practice administrator</span> · On the payroll output</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">What it means</div>
+          <p>The payroll output lands in the shape payroll already works in. Nobody retypes it.</p>
+        </div>
+      </div>
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"Thanks for <em>the fixes</em> on the PTO!"</div>
+          <div class="attrib"><span class="who">Office manager</span> · Time off system</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">What it means</div>
+          <p>The practice's own team files the issues. That build returns 60 to 100 admin hours a year.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="sai-widget sai-pane sai-rise" aria-labelledby="faqTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">06 · Questions</span></span>
+    <h2 class="sai-w-title" id="faqTitle">Questions owners actually ask</h2>
+
+    <details>
+      <summary>Does the knowledge base hold patient data? <span class="sai-stamp">Data · Knowledge base</span></summary>
+      <p>No. 0 patient records. It holds insurance rules, prices and protocols, never charts.</p>
+    </details>
+    <details>
+      <summary>Does ReExam touch patient data? <span class="sai-stamp">Data · ReExam</span></summary>
+      <p>Yes, contact details, so it runs under a signed BAA. Patient data stays in your own systems. Our inboxes hold counts and a link, never patient names.</p>
+    </details>
+    <details>
+      <summary>Does the time off and payroll build touch patient data? <span class="sai-stamp">Data · Operations</span></summary>
+      <p>No. It works on staff requests, coverage and payroll lines.</p>
+    </details>
+    <details>
+      <summary>Does any of it connect to my practice management system? <span class="sai-stamp">Systems</span></summary>
+      <p>No, on purpose. We work from a list your team exports, or from a limited login you create and can revoke, and we never touch charts.</p>
+    </details>
+    <details>
+      <summary>What if we already pay for engagement software? <span class="sai-stamp">Overlap</span></summary>
+      <p>Keep it. We run alongside it and work the list it ignores. Practices already pay $249 to $407 a month on one to two year terms, and recall still misfires.</p>
+    </details>
+    <details>
+      <summary>Who is actually doing this, and from where? <span class="sai-stamp">Who</span></summary>
+      <p>Alec Stephens and Jusheen Kim. Both founders are based in Asia, urgent issues are answered by the next business morning US time, and one operator works from South Korea. HIPAA permits it and we say so rather than waiting to be asked.</p>
+    </details>
+  </section>
+
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="sai-widget sai-rise" aria-labelledby="priceTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">07 · Pricing</span></span>
+    <h2 class="sai-w-title" id="priceTitle">Stated plainly, stated once</h2>
+    <table class="sai-table">
+      <tr><th>What</th><th>Price</th></tr>
+      <tr><td>Front desk knowledge base</td><td>$2,500 setup, $299 a month</td></tr>
+      <tr><td>Whole practice knowledge base</td><td>$3,500 setup, $250 a month</td></tr>
+      <tr><td>Knowledge base plus operations</td><td>$4,500 setup, $350 a month</td></tr>
+      <tr><td>ReExam</td><td>$600 a month, flat</td></tr>
+      <tr><td>ReExam beta, first 3 practices only</td><td>$300 a month, locked for 6 months</td></tr>
+      <tr><td>Extra section beyond a tier cap</td><td>$600 each</td></tr>
+      <tr><td>Second location</td><td>$1,500 setup, $149 a month</td></tr>
+      <tr><td>Owner KPI dashboard, after recall delivers</td><td>$250 a month</td></tr>
+    </table>
+    <div class="sai-w-note">The whole practice tier is where we would start you. Month to month, no term, keep every page on cancellation, export any time. The beta price buys a testimonial and case study rights.</div>
+  </section>
+
+
+  <!-- ============ CLOSE ============ -->
+  <section class="sai-widget sai-rise" aria-labelledby="closeTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">08 · Next</span></span>
+    <h2 class="sai-display" id="closeTitle">Drive it, then talk.</h2>
+    <p>20 minutes. We build the numbers from your practice, not from ours.</p>
+    <p>
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </p>
+  </section>
+
+  <footer class="sai-footer">
+    <span class="lockup">
+      <!-- SAI:LOGO -->
+      <span class="word">Stephens AI</span>
+    </span>
+    <p>Alec Stephens and Jusheen Kim.</p>
+    <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try {
+    reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  } catch (e) { reduced = false; }
+
+  function stage(fn, ms) {
+    if (reduced) { fn(); return; }
+    window.setTimeout(fn, ms);
+  }
+  function press(btn, on) {
+    if (!btn) { return; }
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.classList.toggle("primary", !!on);
+    btn.classList.toggle("ghost", !on);
+  }
+
+  /* ---------------------------------------------------------------
+     CONSOLE 1 - knowledge base search.
+     The situation pages live in the markup. This only filters them.
+     --------------------------------------------------------------- */
+  (function () {
+    var form = document.getElementById("kbForm");
+    var input = document.getElementById("kbInput");
+    var wrap = document.getElementById("kbResults");
+    var status = document.getElementById("kbStatus");
+    var empty = document.getElementById("kbEmpty");
+    var clear = document.getElementById("kbClear");
+    if (!form || !input || !wrap || !status || !empty) { return; }
+
+    var rows = [].slice.call(wrap.querySelectorAll(".kbrow"));
+    if (!rows.length) { return; }
+
+    var total = rows.length;
+    empty.hidden = true;
+
+    function hay(row) {
+      var d = row.getAttribute("data-keys") || "";
+      var s = row.querySelector("summary");
+      return (d + " " + (s ? s.textContent : "") + " " + row.textContent).toLowerCase();
+    }
+
+    function filter(announce) {
+      var q = input.value.trim().toLowerCase();
+      var words = q ? q.split(/\s+/) : [];
+      var shown = [];
+      rows.forEach(function (row) {
+        var text = hay(row);
+        var hit = words.every(function (w) { return text.indexOf(w) !== -1; });
+        row.hidden = !hit;
+        if (hit) { shown.push(row); }
+      });
+      empty.hidden = shown.length !== 0 || !q;
+
+      if (shown.length === 1 && q) {
+        var d = shown[0].querySelector("details");
+        if (d) { d.open = true; }
+      }
+      if (announce) {
+        status.textContent = !q
+          ? total + " example situation pages. Type to filter them."
+          : (shown.length === 1
+              ? "1 page matches. It is open below."
+              : shown.length + " of " + total + " pages match.");
+      }
+    }
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      filter(true);
+      var first = rows.filter(function (r) { return !r.hidden; })[0];
+      if (first) {
+        var d = first.querySelector("details");
+        if (d) { d.open = true; d.querySelector("summary").focus(); }
+      }
+    });
+
+    input.addEventListener("input", function () { filter(true); });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape") { input.value = ""; filter(true); }
+    });
+
+    [].slice.call(form.querySelectorAll("[data-q]")).forEach(function (b) {
+      b.addEventListener("click", function () {
+        input.value = b.getAttribute("data-q") || "";
+        filter(true);
+        input.focus();
+      });
+    });
+
+    if (clear) {
+      clear.addEventListener("click", function () {
+        input.value = "";
+        filter(true);
+        input.focus();
+      });
+    }
+
+    /* One click to flag a page that is wrong. The button is replaced by a
+       chip rather than disabled, so focus is never left on a dead control. */
+    wrap.addEventListener("click", function (ev) {
+      var b = ev.target && ev.target.closest ? ev.target.closest("[data-flag]") : null;
+      if (!b) { return; }
+      var row = b.closest(".kbrow");
+      var chip = document.createElement("span");
+      chip.className = "sai-status good";
+      var kw = document.createElement("span");
+      kw.className = "kw";
+      kw.textContent = "Flagged";
+      var detail = document.createElement("span");
+      detail.className = "detail";
+      detail.textContent = b.getAttribute("data-done") || "Flagged.";
+      chip.appendChild(kw);
+      chip.appendChild(detail);
+      b.parentNode.replaceChild(chip, b);
+      status.textContent = "Page flagged. Your office manager sees it today.";
+      var s = row && row.querySelector("summary");
+      if (s) { s.focus(); }
+    });
+
+    filter(false);
+  }());
+
+  /* ---------------------------------------------------------------
+     CONSOLE 2 - ReExam, the six touch sequence.
+     Every touch is in the markup. Stepping moves the marker,
+     stopping hides the touches that would never send.
+     --------------------------------------------------------------- */
+  (function () {
+    var ctl = document.getElementById("reCtl");
+    var track = document.getElementById("reTrack");
+    var out = document.getElementById("reOut");
+    var reset = document.getElementById("reReset");
+    if (!ctl || !track || !out) { return; }
+
+    var DAYS = [0, 3, 10, 17, 28, 42];
+    var buttons = [].slice.call(ctl.querySelectorAll("[data-day]"));
+    var entries = [].slice.call(track.querySelectorAll(".entry"));
+    var whens = [].slice.call(track.querySelectorAll(".when"));
+    if (!entries.length) { return; }
+
+    var baseline = out.textContent;
+    var current = 10;
+
+    function cellsFor(day) {
+      return [].slice.call(track.querySelectorAll('[data-touch="' + day + '"]'));
+    }
+
+    function showAll() {
+      entries.concat(whens).forEach(function (el) { el.hidden = false; });
+    }
+
+    function step(day, announce) {
+      current = day;
+      buttons.forEach(function (b) { press(b, Number(b.getAttribute("data-day")) === day); });
+      entries.forEach(function (e) {
+        e.classList.toggle("key", Number(e.getAttribute("data-touch")) === day);
+      });
+      var live = cellsFor(day).filter(function (el) { return el.classList.contains("entry"); })[0];
+      if (announce) {
+        out.textContent = live ? (live.getAttribute("data-say") || baseline) : baseline;
+      }
+    }
+
+    function stop(message) {
+      var after = DAYS.filter(function (d) { return d > current; });
+      out.textContent = message;
+      after.forEach(function (d, i) {
+        stage(function () {
+          cellsFor(d).forEach(function (el) { el.hidden = true; });
+        }, 140 * (i + 1));
+      });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        showAll();
+        step(Number(b.getAttribute("data-day")), true);
+      });
+    });
+
+    [].slice.call(ctl.querySelectorAll("[data-stop]")).forEach(function (b) {
+      b.addEventListener("click", function () {
+        stop(b.getAttribute("data-out") || baseline);
+      });
+    });
+
+    if (reset) {
+      reset.addEventListener("click", function () {
+        showAll();
+        step(10, false);
+        out.textContent = baseline;
+      });
+    }
+  }());
+
+  /* ---------------------------------------------------------------
+     CONSOLE 3 - a time off request, filed and resolved.
+     The path and both outcomes are in the markup. This picks one.
+     --------------------------------------------------------------- */
+  (function () {
+    var form = document.getElementById("opsForm");
+    var path = document.getElementById("opsPath");
+    var out = document.getElementById("opsOut");
+    var reset = document.getElementById("opsReset");
+    if (!form || !path || !out) { return; }
+
+    var roleSel = document.getElementById("opsRole");
+    var daySel = document.getElementById("opsDay");
+    var branches = [].slice.call(path.querySelectorAll(".branch"));
+    var steps = [].slice.call(path.querySelectorAll(".step"));
+    var baseline = out.textContent;
+    if (!roleSel || !daySel || !branches.length || steps.length < 3) { return; }
+
+    function clearWin() {
+      branches.forEach(function (b) { b.classList.remove("win"); });
+      steps.forEach(function (s) { s.removeAttribute("aria-current"); });
+    }
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var role = roleSel.value;
+      var day = daySel.value;
+      var opt = daySel.options[daySel.selectedIndex];
+      var thin = ((opt && opt.getAttribute("data-thin")) || "").split(",");
+      var isShort = thin.indexOf(role) !== -1;
+
+      clearWin();
+      out.textContent = role + ", " + day + ". Filed.";
+      steps[0].setAttribute("aria-current", "step");
+
+      stage(function () {
+        steps[0].removeAttribute("aria-current");
+        steps[1].setAttribute("aria-current", "step");
+        out.textContent = role + ", " + day + ". Checking coverage.";
+      }, 320);
+
+      stage(function () {
+        var pick = branches.filter(function (b) {
+          return b.getAttribute("data-branch") === (isShort ? "thin" : "ok");
+        })[0];
+        if (pick) { pick.classList.add("win"); }
+        steps[1].removeAttribute("aria-current");
+        steps[2].setAttribute("aria-current", "step");
+        out.textContent = isShort
+          ? role + ", " + day + ". Sent back, because that role is already short that day."
+          : role + ", " + day + ". Approved, and posted to payroll.";
+      }, 680);
+    });
+
+    if (reset) {
+      reset.addEventListener("click", function () {
+        clearWin();
+        branches[0].classList.add("win");
+        form.reset();
+        out.textContent = baseline;
+      });
+    }
+  }());
+}());
+</script>

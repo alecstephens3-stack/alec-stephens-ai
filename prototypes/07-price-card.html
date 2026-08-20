@@ -1,0 +1,1207 @@
+<title>The Price Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* ==========================================================================
+   Prototype 07, "The Price Card". In-brand: Lens v3.
+   The argument is the table. Everything else supports it.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;                 /* commit to light; block OS dark bleed */
+  --sky-fallback:#F5E9DE;
+  --ink:#171310;
+  --ink-2:#5A4F46;                     /* lightest secondary allowed on light */
+  --cream:#F5F1E8;
+  --cream-2:#B3AB9E;
+  --accent:#DC6843;                    /* MARK ONLY: rules, dots, bars */
+  --accent-display:#C55532;            /* accent text at 24px and up */
+  --accent-deep:#8F3616;               /* accent text below 24px */
+  --good:#2E7A56;                      /* mark colour, strokes only */
+  --good-deep:#256546;                 /* status text below 24px, clears 4.5:1 on glass */
+  --warn:#946A12;
+  --warn-deep:#7A5610;
+  --rule:rgba(23,19,16,0.10);
+  --rule-strong:rgba(23,19,16,0.16);
+  --glass:rgba(255,255,255,0.55);
+  --glass-strong:rgba(255,255,255,0.80);
+  --glass-edge:rgba(255,255,255,0.85);
+  --pane-shadow:0 14px 44px rgba(112,62,40,0.13), inset 0 1px 0 rgba(255,255,255,0.95);
+  --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --label:"Schibsted Grotesk","Inter Tight",Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(0.2,0.8,0.2,1);
+}
+
+*{box-sizing:border-box;}
+[hidden]{display:none !important;}   /* beats the .rec-line display:flex below */
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:64px;}
+
+body{
+  margin:0;
+  background-color:var(--sky-fallback);
+  background-image:linear-gradient(180deg,#F3EEE8 0%,#F7E7DA 42%,#F7DCC9 74%,#F2CFB8 100%);
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,h4{font-weight:500; letter-spacing:-0.025em; line-height:1.08; margin:0;}
+p{margin:0;}
+a{color:inherit;}
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0;
+}
+
+:focus-visible{outline:2px solid var(--accent-deep); outline-offset:3px; border-radius:6px;}
+
+/* ---------- review furniture ---------- */
+.proto-bar{
+  position:sticky; top:0; z-index:80;
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px 18px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--label); font-size:13px; line-height:1.4;
+  padding:11px 18px; min-height:44px;
+  border-bottom:1px solid #000;
+}
+.proto-n{font-variant:small-caps; letter-spacing:.09em; text-transform:lowercase;}
+.proto-name{font-weight:700;}
+.proto-bet{color:#b9b9bd;}
+
+/* ---------- frame ---------- */
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+@media (max-width:640px){ .wrap{padding:0 16px;} }
+
+section{padding:64px 0;}
+@media (max-width:640px){ section{padding:48px 0;} }
+
+.eyebrow{
+  font-family:var(--label); font-size:13.5px; font-weight:600;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--ink-2);
+  display:flex; align-items:center; gap:9px; margin:0 0 14px;
+}
+.eyebrow::before{content:""; width:22px; height:2px; background:var(--accent); border-radius:2px; flex:none;}
+
+.lede{font-size:19px; line-height:1.6; color:var(--ink-2); max-width:60ch;}
+.sec-head{max-width:66ch; margin-bottom:28px;}
+.sec-head h2{font-size:clamp(28px,4.4vw,40px);}
+.sec-head p{margin-top:14px;}
+
+/* ---------- site header ---------- */
+.site-head{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:18px 0 6px; flex-wrap:wrap;
+}
+.wordmark{
+  display:flex; align-items:center; gap:9px;
+  font-family:var(--label); font-weight:700; font-size:15px;
+  letter-spacing:.14em; text-transform:uppercase;
+}
+a.wordmark{min-height:44px; text-decoration:none;}   /* tap target */
+.wordmark .dot{width:10px; height:10px; border-radius:50%; background:var(--accent);}
+.head-links{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-height:44px; padding:11px 22px; border-radius:999px;
+  font-family:var(--sans); font-size:16px; font-weight:500; text-decoration:none;
+  border:1px solid transparent; cursor:pointer;
+  transition:transform 150ms var(--ease), box-shadow 220ms var(--ease), background 150ms var(--ease);
+}
+.btn-primary{background:var(--ink); color:var(--cream); box-shadow:0 8px 22px rgba(23,19,16,0.20);}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:0 12px 28px rgba(23,19,16,0.26);}
+.btn-ghost{background:var(--glass-strong); color:var(--ink); border-color:var(--glass-edge); box-shadow:var(--pane-shadow);}
+.btn-ghost:hover{transform:translateY(-1px); background:#fff;}
+.btn-sm{min-height:44px; padding:10px 18px; font-size:15px;}
+
+/* ---------- panes ---------- */
+.pane{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(20px) saturate(1.35);
+  backdrop-filter:blur(20px) saturate(1.35);
+  border:1px solid var(--glass-edge);
+  border-radius:26px;
+  box-shadow:var(--pane-shadow);
+}
+
+/* ---------- hero ---------- */
+.hero{padding:34px 0 40px;}
+.hero h1{font-size:clamp(34px,6.2vw,58px); max-width:16ch;}
+.hero h1 .hl{color:var(--accent-display);}
+.hero .lede{margin-top:20px;}
+.hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px;}
+
+/* the price card at the fold: three prices, no call required */
+.price-strip{
+  margin-top:34px; padding:8px;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+}
+@media (max-width:720px){ .price-strip{grid-template-columns:1fr;} }
+.ps-item{
+  padding:18px 20px; border-radius:20px; background:rgba(255,255,255,0.62);
+  border:1px solid rgba(255,255,255,0.9);
+}
+.ps-item.is-start{background:var(--ink); border-color:var(--ink);}
+.ps-item.is-start .ps-name,.ps-item.is-start .ps-sub{color:var(--cream-2);}
+.ps-item.is-start .ps-fig{color:var(--cream);}
+.ps-name{font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-2);}
+.ps-fig{font-size:26px; font-weight:500; letter-spacing:-0.025em; margin-top:9px;}
+.ps-fig span{font-size:16px; color:inherit; opacity:.72;}
+.ps-sub{font-size:15px; color:var(--ink-2); margin-top:5px;}
+.ps-badge{
+  display:inline-block; margin-top:10px; font-family:var(--label); font-size:13.5px;
+  font-weight:600; letter-spacing:.06em; color:#FF8E76;
+}
+.price-note{margin-top:16px; font-size:15px; color:var(--ink-2);}
+
+/* ==========================================================================
+   The comparison grid.
+   Columns are options, rows are line items. Markup is column major so it can
+   stack into one card per option on a phone; on wide screens grid-auto-flow
+   column drops each column into place, so the rows still line up.
+   ========================================================================== */
+.ct{
+  display:grid;
+  grid-auto-flow:column;
+  grid-template-columns:minmax(160px,1.15fr) repeat(3,minmax(0,1fr));
+  grid-template-rows:repeat(21,auto);
+  border-radius:26px;
+  overflow:hidden;
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--pane-shadow);
+  background:rgba(255,255,255,0.40);
+  -webkit-backdrop-filter:blur(20px) saturate(1.35);
+  backdrop-filter:blur(20px) saturate(1.35);
+}
+.ct--alt{grid-template-columns:minmax(150px,1fr) repeat(4,minmax(0,1fr)); grid-template-rows:repeat(8,auto);}
+/* .ct-col is a <section>, so it would otherwise inherit the 64px section
+   padding once it becomes display:block on phones. Zero it here. */
+.ct-col,.ct-body{display:contents; padding:0;}
+
+.ct-head,.ct-lab,.ct dd{padding:14px 16px; border-bottom:1px solid var(--rule); min-height:52px;}
+.ct-lab{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.03em;
+  color:var(--ink-2); background:rgba(255,255,255,0.30); display:flex; align-items:center;
+}
+.ct dd{margin:0; font-size:15.5px; line-height:1.5; color:var(--ink); display:flex; align-items:center;}
+.ct dt{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap;}
+
+/* the tier we would start you on gets a solid column, not a louder one */
+.ct .is-start .ct-head,.ct .is-start dd{background:rgba(255,255,255,0.62);}
+.ct .is-start .ct-head{border-top:3px solid var(--accent);}
+
+.ct-head{
+  display:block; padding:22px 16px 20px; background:rgba(255,255,255,0.34);
+  border-bottom:1px solid var(--rule-strong);
+}
+.ct-head.ct-head--spacer{background:transparent; border-bottom:1px solid var(--rule-strong);}
+.ct-tname{font-size:20px; font-weight:500; letter-spacing:-0.02em;}
+.ct-tprice{margin-top:10px; font-size:15px; color:var(--ink-2);}
+.ct-tprice b{display:block; font-size:24px; font-weight:500; color:var(--ink); letter-spacing:-0.025em;}
+.ct-tbadge{
+  display:inline-block; margin-bottom:9px; padding:4px 10px; border-radius:999px;
+  background:rgba(220,104,67,0.14); color:var(--accent-deep);
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.03em;
+}
+.ct-head .btn{margin-top:14px; width:100%;}
+
+.ct dd.yes{color:var(--good-deep); font-weight:500;}
+.ct dd.no{color:var(--ink-2);}
+.ct dd.money{font-weight:500;}
+.ct dd.tbd{
+  color:var(--warn-deep); font-weight:500;
+  background-image:repeating-linear-gradient(135deg,rgba(148,106,18,0.07) 0 8px,transparent 8px 16px);
+}
+/* included / not included get a mark, so the column scans without reading */
+.ct dd.yes::before,.ct dd.no::before{content:""; flex:none; margin-right:10px;}
+.ct dd.yes::before{width:8px; height:8px; border-radius:50%; background:var(--good);}
+.ct dd.no::before{width:9px; height:2px; border-radius:2px; background:rgba(23,19,16,0.28);}
+
+/* stacked cards on narrow screens, never a sideways scroll */
+@media (max-width:900px){
+  .ct,.ct--alt{
+    display:block; border:0; background:transparent; box-shadow:none;
+    overflow:visible; border-radius:0;
+  }
+  .ct-col{
+    display:block; margin-bottom:16px; border-radius:22px; overflow:hidden;
+    border:1px solid var(--glass-edge); background:rgba(255,255,255,0.55);
+    -webkit-backdrop-filter:blur(20px) saturate(1.35);
+    backdrop-filter:blur(20px) saturate(1.35);
+    box-shadow:var(--pane-shadow);
+  }
+  .ct-labels{display:none;}
+  .ct-body{display:block;}
+  .ct dt{
+    position:static; width:auto; height:auto; clip-path:none; white-space:normal;
+    font-family:var(--label); font-size:13.5px; font-weight:600; color:var(--ink-2);
+    padding:12px 16px 0;
+  }
+  .ct dd{padding:2px 16px 12px; min-height:0; border-bottom:1px solid var(--rule);}
+  .ct dd:last-of-type{border-bottom:0;}
+  .ct .is-start .ct-head,.ct .is-start dd{background:transparent;}
+  .ct .is-start{border-color:rgba(220,104,67,0.45);}
+}
+
+/* ---------- configurator ---------- */
+.cfg{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;}
+@media (max-width:860px){ .cfg{grid-template-columns:1fr;} }
+.cfg-panel{padding:26px;}
+@media (max-width:640px){ .cfg-panel{padding:20px;} }
+.cfg-group{border:0; padding:0; margin:0 0 26px;}
+.cfg-group:last-child{margin-bottom:0;}
+.seg span b{font-weight:500;}
+.cfg-legend{
+  font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-2); margin-bottom:12px; padding:0;
+}
+.seg{display:grid; gap:8px;}
+.seg--row{grid-template-columns:repeat(4,1fr);}
+.seg label{position:relative; display:block; cursor:pointer;}
+.seg input{position:absolute; opacity:0; width:1px; height:1px;}
+.seg span{
+  display:flex; align-items:center; justify-content:flex-start; gap:10px;
+  min-height:52px; padding:11px 16px; border-radius:16px;
+  background:rgba(255,255,255,0.68); border:1px solid var(--glass-edge);
+  font-size:16px; color:var(--ink); transition:background 150ms var(--ease), border-color 150ms var(--ease);
+}
+.seg--row span{justify-content:center; min-height:48px; padding:11px 8px;}
+.seg span small{display:block; font-size:14px; color:var(--ink-2); margin-top:2px;}
+.seg label:hover span{background:#fff;}
+.seg input:checked + span{background:var(--ink); border-color:var(--ink); color:var(--cream);}
+.seg input:checked + span small{color:var(--cream-2);}
+.seg input:focus-visible + span{outline:2px solid var(--accent-deep); outline-offset:3px;}
+
+.receipt{padding:26px; background:rgba(255,255,255,0.72);}
+@media (max-width:640px){ .receipt{padding:20px;} }
+.receipt h3{font-size:20px; margin-bottom:4px;}
+.receipt .rec-sub{font-size:15px; color:var(--ink-2); margin-bottom:20px;}
+.rec-line{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  padding:12px 0; border-bottom:1px solid var(--rule); font-size:16px;
+}
+.rec-line .rl-label{color:var(--ink);}
+.rec-line .rl-label small{display:block; font-size:14px; color:var(--ink-2);}
+.rec-line .rl-figs{display:flex; gap:18px; flex:none; font-variant-numeric:tabular-nums;}
+.rec-line .rl-figs span{min-width:74px; text-align:right;}
+.rec-col-head{
+  display:flex; justify-content:flex-end; gap:18px; font-family:var(--label);
+  font-size:13.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-2); padding-bottom:8px; border-bottom:1px solid var(--rule-strong);
+}
+.rec-col-head span{min-width:74px; text-align:right;}
+@media (max-width:400px){
+  .rec-line .rl-figs span,.rec-col-head span{min-width:62px;}
+  .rec-line{font-size:15.5px;}
+  .rt-key{letter-spacing:.05em;}
+  .rt-fig{font-size:27px;}
+}
+.rec-total{
+  display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
+  padding-top:18px; margin-top:6px;
+}
+.rec-total .rt-block{flex:1;}
+.rec-total .rt-block--right{text-align:right;}
+.rt-key{font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2);}
+.rt-fig{font-size:30px; font-weight:500; letter-spacing:-0.03em; margin-top:4px; font-variant-numeric:tabular-nums;}
+.rec-say{
+  margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);
+  font-size:15px; line-height:1.55; color:var(--ink-2);
+}
+.rec-say b{color:var(--ink); font-weight:500;}
+.rec-foot{margin-top:14px; font-size:14.5px; line-height:1.55; color:var(--ink-2);}
+
+/* ---------- product catalogue ---------- */
+.prod{display:grid; grid-template-columns:1fr 1fr; gap:34px; align-items:start; padding:34px 0;}
+.prod + .prod{border-top:1px solid var(--rule);}
+@media (max-width:900px){ .prod{grid-template-columns:1fr; gap:24px;} }
+.prod-tag{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--label);
+  font-size:13.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-2); margin-bottom:12px;
+}
+.prod-tag .num{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:24px; height:24px; border-radius:8px; background:var(--accent); color:var(--ink);
+  font-size:13.5px; letter-spacing:0;    /* ink on terracotta 5.37:1; white was 3.44:1 */
+}
+.prod h3{font-size:clamp(23px,3.2vw,30px);}
+.prod p{margin-top:14px; color:var(--ink-2); font-size:17px;}
+.prod p.who{color:var(--ink);}
+.prod ul{margin:16px 0 0; padding:0; list-style:none;}
+.prod li{position:relative; padding-left:22px; margin-top:10px; font-size:17px; line-height:1.55; color:var(--ink-2);}
+.prod li::before{content:""; position:absolute; left:2px; top:10px; width:7px; height:7px; border-radius:50%; background:var(--accent);}
+.prod .pricetag{
+  margin-top:18px; display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap;
+  padding:10px 16px; border-radius:999px; background:rgba(255,255,255,0.7);
+  border:1px solid var(--glass-edge); font-size:15.5px;
+}
+.prod .pricetag b{font-weight:500;}
+.posture{
+  margin-top:16px; padding:14px 16px; border-radius:16px;
+  background:rgba(255,255,255,0.5); border:1px solid var(--rule);
+  font-size:15.5px; line-height:1.55; color:var(--ink-2);
+}
+.posture b{color:var(--ink); font-weight:500;}
+
+/* ---------- depictions (hand built, no images) ---------- */
+.dep{padding:14px; border-radius:24px; margin:0;}
+.dep-bar{display:flex; align-items:center; gap:7px; padding:2px 4px 12px;}
+.dep-bar i{width:10px; height:10px; border-radius:50%; background:rgba(23,19,16,0.14); display:block;}
+.dep-bar i:nth-child(2){background:rgba(23,19,16,0.10);}
+.dep-bar i:nth-child(3){background:rgba(23,19,16,0.07);}
+.dep-bar span{margin-left:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);}
+.dep-search{
+  display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:16px;
+  background:rgba(255,255,255,0.88); border:1px solid rgba(255,255,255,0.9);
+  box-shadow:inset 0 1px 0 #fff; font-size:15.5px;
+}
+.dep-card{
+  margin-top:12px; padding:16px; border-radius:16px;
+  background:rgba(255,255,255,0.78); border:1px solid rgba(255,255,255,0.9);
+  box-shadow:inset 0 1px 0 #fff, 0 6px 18px rgba(112,62,40,0.07);
+}
+.dep-card h4{font-size:17px; font-weight:500;}
+.dep-card p{margin-top:8px; font-size:14.5px; line-height:1.55; color:var(--ink-2);}
+.dep-card p.strong{color:var(--ink);}
+.dep-meta{margin-top:12px; font-size:13.5px; color:var(--ink-2);}
+.dep-row{
+  display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:14px;
+  background:rgba(255,255,255,0.72); border:1px solid rgba(255,255,255,0.9); margin-top:8px;
+  font-size:15px;
+}
+.dep-row .rt{margin-left:auto; font-size:13.5px; font-weight:500; flex:none;}
+.dep-row .rt.done{color:var(--good-deep);}
+.dep-row .rt.now{color:var(--warn-deep);}
+.dep-row .rt.wait{color:var(--ink-2);}
+.dep-row small{display:block; font-size:13.5px; color:var(--ink-2); margin-top:1px;}
+.dep-row.locked{background:rgba(255,255,255,0.42); border-style:dashed; border-color:rgba(23,19,16,0.16);}
+.dep-note{
+  margin-top:12px; padding:12px 14px; border-radius:14px; font-size:14px; line-height:1.5;
+  background:rgba(220,104,67,0.10); border:1px solid rgba(220,104,67,0.22); color:var(--ink);
+}
+.dep-split{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;}
+.dep-stat{
+  padding:14px; border-radius:14px; background:rgba(255,255,255,0.72);
+  border:1px solid rgba(255,255,255,0.9);
+}
+.dep-stat b{display:block; font-size:22px; font-weight:500; letter-spacing:-0.025em;}
+.dep-stat b.dep-stat-word{font-size:19px;}
+.dep-stat span{display:block; font-size:13.5px; color:var(--ink-2); margin-top:3px; line-height:1.4;}
+
+/* ---------- proof ---------- */
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:26px;}
+@media (max-width:820px){ .stats{grid-template-columns:repeat(2,1fr);} }
+.stat{padding:20px; border-radius:20px; background:rgba(255,255,255,0.58); border:1px solid var(--glass-edge);}
+.stat b{display:block; font-size:32px; font-weight:500; letter-spacing:-0.03em; color:var(--accent-display);}
+.stat span{display:block; margin-top:6px; font-size:15px; color:var(--ink-2); line-height:1.45;}
+
+/* ---------- objections ---------- */
+.obj{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media (max-width:820px){ .obj{grid-template-columns:1fr;} }
+.obj-card{padding:26px;}
+.obj-card h3{font-size:21px;}
+.obj-card p{margin-top:12px; color:var(--ink-2); font-size:17px;}
+.obj-card p.lead{color:var(--ink);}
+
+/* ---------- founders ---------- */
+.founders{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media (max-width:820px){ .founders{grid-template-columns:1fr;} }
+.founder{display:flex; gap:16px; padding:24px;}
+.avatar{
+  width:56px; height:56px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--ink); color:var(--cream);
+  font-family:var(--label); font-weight:600; font-size:17px; letter-spacing:.04em;
+}
+.founder h3{font-size:19px;}
+.founder .role{font-family:var(--label); font-size:13.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); margin-top:4px;}
+.founder p{margin-top:10px; font-size:15.5px; color:var(--ink-2);}
+
+/* ---------- close ---------- */
+.close{
+  padding:40px; border-radius:30px; color:var(--cream);
+  background:radial-gradient(130% 130% at 22% -12%,#241B15 0%,#150F0B 58%,#0D0A08 100%);
+  box-shadow:0 24px 60px rgba(40,20,10,0.35);
+}
+@media (max-width:640px){ .close{padding:28px 22px;} }
+.close h2{font-size:clamp(26px,4.2vw,36px); color:var(--cream);}
+.close p{margin-top:16px; color:var(--cream-2); font-size:17px; max-width:56ch;}
+.close .btn-primary{background:var(--cream); color:var(--ink);}
+.close .btn-ghost{background:rgba(255,255,255,0.07); color:var(--cream); border-color:rgba(255,255,255,0.20); box-shadow:none;}
+.close .btn-ghost:hover{background:rgba(255,255,255,0.14);}
+.close-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px;}
+
+/* ---------- footer ---------- */
+.site-foot{border-top:1px solid var(--rule); margin-top:24px; padding:28px 0 56px;}
+.foot-grid{display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+.site-foot p{font-size:15px; color:var(--ink-2); margin-top:8px;}
+.site-foot a{color:var(--accent-deep);}
+/* footer links are the second copy of both CTAs, so give them a real tap target */
+.foot-links a{display:inline-flex; align-items:center; min-height:44px;}
+.foot-links p{margin-top:0;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  .btn:hover{transform:none;}
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 07 of 10</span>
+  <span class="proto-name">The Price Card</span>
+  <span class="proto-bet">Every competitor hides pricing behind a call. Putting it first is the whole differentiator.</span>
+</div>
+
+<header class="wrap site-head">
+  <a class="wordmark" href="#top"><span class="dot" aria-hidden="true"></span> Stephens AI</a>
+  <nav class="head-links" aria-label="Primary">
+    <a class="btn btn-ghost btn-sm" href="#compare">Compare tiers</a>
+    <a class="btn btn-primary btn-sm" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============================= HERO ============================= -->
+  <section class="wrap hero" aria-labelledby="hero-h">
+    <p class="eyebrow">For independent eyecare practices</p>
+    <h1 id="hero-h">The prices are <span class="hl">on this page</span>, not on the call.</h1>
+    <p class="lede">
+      We build the knowledge base your front desk needs, and we run the monthly patient recall.
+      Here is what each tier costs, what is included, what is capped, and what costs extra.
+      Read it before you decide whether to talk to us.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#compare">See the full comparison</a>
+      <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+    </div>
+
+    <div class="pane price-strip">
+      <div class="ps-item">
+        <p class="ps-name">Front desk</p>
+        <p class="ps-fig">$2,500 <span>setup</span></p>
+        <p class="ps-sub">then $299 a month</p>
+      </div>
+      <div class="ps-item is-start">
+        <p class="ps-name">Whole practice</p>
+        <p class="ps-fig">$3,500 <span>setup</span></p>
+        <p class="ps-sub">then $250 a month</p>
+        <p class="ps-badge">Where we would start you</p>
+      </div>
+      <div class="ps-item">
+        <p class="ps-name">Plus operations</p>
+        <p class="ps-fig">$4,500 <span>setup</span></p>
+        <p class="ps-sub">then $350 a month</p>
+      </div>
+    </div>
+    <p class="price-note">
+      Second location: $1,500 to set up, $149 a month. Extra sections past your cap: $600 each.
+      Recall done for you does not have a price yet, so we price it per practice on the call. We are not hiding it.
+      Month to month, no term, live at day 30.
+    </p>
+  </section>
+
+  <!-- ========================= TIER COMPARISON ========================= -->
+  <section class="wrap" id="compare" aria-labelledby="compare-h">
+    <div class="sec-head">
+      <p class="eyebrow">Line by line</p>
+      <h2 id="compare-h">Every line item in all three tiers</h2>
+      <p class="lede">
+        Nothing here changes on the call. If a row says not included, it is not included, and we will
+        tell you what it would take to add it.
+      </p>
+    </div>
+
+    <div class="ct">
+      <!-- Row labels. Hidden on phones, where each tier becomes its own card. -->
+      <div class="ct-col ct-labels c1" aria-hidden="true">
+        <div class="ct-head ct-head--spacer"></div>
+        <div class="ct-lab">Setup, one time</div>
+        <div class="ct-lab">Monthly</div>
+        <div class="ct-lab">Who it covers</div>
+        <div class="ct-lab">Situation pages, written by us</div>
+        <div class="ct-lab">Decision lookups</div>
+        <div class="ct-lab">Search, in app editing, saved history</div>
+        <div class="ct-lab">Google sign in, your domain only</div>
+        <div class="ct-lab">Installs on the front desk computers</div>
+        <div class="ct-lab">One click for staff to flag a page</div>
+        <div class="ct-lab">Views that show each role its own work</div>
+        <div class="ct-lab">Quarterly content review with your office manager</div>
+        <div class="ct-lab">Written AI use policy for your staff</div>
+        <div class="ct-lab">Time off and payroll automation</div>
+        <div class="ct-lab">Quarterly snapshot, monthly working time with both of us</div>
+        <div class="ct-lab">Your builds go first in our queue</div>
+        <div class="ct-lab">Recall done for you</div>
+        <div class="ct-lab">Extra sections past your cap</div>
+        <div class="ct-lab">Second location</div>
+        <div class="ct-lab">Time to live</div>
+        <div class="ct-lab">Contract</div>
+      </div>
+
+      <section class="ct-col c2" aria-labelledby="t1-name">
+        <div class="ct-head">
+          <h3 class="ct-tname" id="t1-name">Front desk knowledge base</h3>
+          <p class="ct-tprice"><b>$2,500</b> setup, then $299 a month</p>
+          <a class="btn btn-ghost btn-sm" href="https://calendly.com/alecpstephens/30min">Talk about this tier</a>
+        </div>
+        <dl class="ct-body">
+          <dt>Setup, one time</dt><dd class="money">$2,500</dd>
+          <dt>Monthly</dt><dd class="money">$299 a month</dd>
+          <dt>Who it covers</dt><dd>The front desk</dd>
+          <dt>Situation pages, written by us</dt><dd>From your front desk material, to the cap we agree at scoping</dd>
+          <dt>Decision lookups</dt><dd>4, the calls that cost money</dd>
+          <dt>Search, in app editing, saved history</dt><dd class="yes">Included</dd>
+          <dt>Google sign in, your domain only</dt><dd class="yes">Included</dd>
+          <dt>Installs on the front desk computers</dt><dd class="yes">Included</dd>
+          <dt>One click for staff to flag a page</dt><dd class="yes">Included</dd>
+          <dt>Views that show each role its own work</dt><dd class="no">Not included</dd>
+          <dt>Quarterly content review with your office manager</dt><dd class="no">Not included</dd>
+          <dt>Written AI use policy for your staff</dt><dd class="no">Not included</dd>
+          <dt>Time off and payroll automation</dt><dd class="no">Not included</dd>
+          <dt>Quarterly snapshot, monthly working time with both of us</dt><dd class="no">Not included</dd>
+          <dt>Your builds go first in our queue</dt><dd class="no">Not included</dd>
+          <dt>Recall done for you</dt><dd class="tbd">Priced per practice, on the call</dd>
+          <dt>Extra sections past your cap</dt><dd>$600 each</dd>
+          <dt>Second location</dt><dd>$1,500 setup, $149 a month</dd>
+          <dt>Time to live</dt><dd>30 days</dd>
+          <dt>Contract</dt><dd>Month to month, no term</dd>
+        </dl>
+      </section>
+
+      <section class="ct-col c3 is-start" aria-labelledby="t2-name">
+        <div class="ct-head">
+          <span class="ct-tbadge">Where we would start you</span>
+          <h3 class="ct-tname" id="t2-name">Whole practice knowledge base</h3>
+          <p class="ct-tprice"><b>$3,500</b> setup, then $250 a month</p>
+          <a class="btn btn-primary btn-sm" href="https://calendly.com/alecpstephens/30min">Talk about this tier</a>
+        </div>
+        <dl class="ct-body">
+          <dt>Setup, one time</dt><dd class="money">$3,500</dd>
+          <dt>Monthly</dt><dd class="money">$250 a month</dd>
+          <dt>Who it covers</dt><dd>The whole floor: front desk, technicians, optical, and each doctor's rules</dd>
+          <dt>Situation pages, written by us</dt><dd>From the whole floor's material, to the cap we agree at scoping</dd>
+          <dt>Decision lookups</dt><dd>4, plus the lookups the rest of the floor needs</dd>
+          <dt>Search, in app editing, saved history</dt><dd class="yes">Included</dd>
+          <dt>Google sign in, your domain only</dt><dd class="yes">Included</dd>
+          <dt>Installs on the front desk computers</dt><dd class="yes">Included</dd>
+          <dt>One click for staff to flag a page</dt><dd class="yes">Included</dd>
+          <dt>Views that show each role its own work</dt><dd class="yes">Included</dd>
+          <dt>Quarterly content review with your office manager</dt><dd class="yes">Included</dd>
+          <dt>Written AI use policy for your staff</dt><dd class="yes">Included</dd>
+          <dt>Time off and payroll automation</dt><dd class="no">Not included</dd>
+          <dt>Quarterly snapshot, monthly working time with both of us</dt><dd class="no">Not included</dd>
+          <dt>Your builds go first in our queue</dt><dd class="no">Not included</dd>
+          <dt>Recall done for you</dt><dd class="tbd">Priced per practice, on the call</dd>
+          <dt>Extra sections past your cap</dt><dd>$600 each</dd>
+          <dt>Second location</dt><dd>$1,500 setup, $149 a month</dd>
+          <dt>Time to live</dt><dd>30 days</dd>
+          <dt>Contract</dt><dd>Month to month, no term</dd>
+        </dl>
+      </section>
+
+      <section class="ct-col c4" aria-labelledby="t3-name">
+        <div class="ct-head">
+          <h3 class="ct-tname" id="t3-name">Knowledge base plus operations</h3>
+          <p class="ct-tprice"><b>$4,500</b> setup, then $350 a month</p>
+          <a class="btn btn-ghost btn-sm" href="https://calendly.com/alecpstephens/30min">Talk about this tier</a>
+        </div>
+        <dl class="ct-body">
+          <dt>Setup, one time</dt><dd class="money">$4,500</dd>
+          <dt>Monthly</dt><dd class="money">$350 a month</dd>
+          <dt>Who it covers</dt><dd>The whole floor, plus the operations work behind it</dd>
+          <dt>Situation pages, written by us</dt><dd>From the whole floor's material, to the cap we agree at scoping</dd>
+          <dt>Decision lookups</dt><dd>4, plus the lookups the rest of the floor needs</dd>
+          <dt>Search, in app editing, saved history</dt><dd class="yes">Included</dd>
+          <dt>Google sign in, your domain only</dt><dd class="yes">Included</dd>
+          <dt>Installs on the front desk computers</dt><dd class="yes">Included</dd>
+          <dt>One click for staff to flag a page</dt><dd class="yes">Included</dd>
+          <dt>Views that show each role its own work</dt><dd class="yes">Included</dd>
+          <dt>Quarterly content review with your office manager</dt><dd class="yes">Included</dd>
+          <dt>Written AI use policy for your staff</dt><dd class="yes">Included</dd>
+          <dt>Time off and payroll automation</dt><dd class="yes">Included</dd>
+          <dt>Quarterly snapshot, monthly working time with both of us</dt><dd class="yes">Included</dd>
+          <dt>Your builds go first in our queue</dt><dd class="yes">Included</dd>
+          <dt>Recall done for you</dt><dd class="tbd">Priced per practice, on the call. This is the tier it sits in</dd>
+          <dt>Extra sections past your cap</dt><dd>$600 each</dd>
+          <dt>Second location</dt><dd>$1,500 setup, $149 a month</dd>
+          <dt>Time to live</dt><dd>30 days</dd>
+          <dt>Contract</dt><dd>Month to month, no term</dd>
+        </dl>
+      </section>
+    </div>
+
+    <p class="price-note">
+      The one honest gap: recall done for you is new and we have not set a price for it. We are not
+      going to invent one to fill a cell. It gets priced against your protocol, your provider count,
+      and your volume, on the call, in writing.
+    </p>
+  </section>
+
+  <!-- =========================== CONFIGURATOR =========================== -->
+  <section class="wrap" id="configure" aria-labelledby="cfg-h">
+    <div class="sec-head">
+      <p class="eyebrow">Your number</p>
+      <h2 id="cfg-h">Work out your total in two clicks</h2>
+      <p class="lede">
+        Pick a tier and your number of locations. The breakdown updates line by line. Nothing here is
+        a quote generator trick: every figure comes off the price list above.
+      </p>
+    </div>
+
+    <form class="cfg" id="cfg-form" novalidate>
+      <div class="pane cfg-panel">
+        <fieldset class="cfg-group">
+          <legend class="cfg-legend">Tier</legend>
+          <div class="seg">
+            <label>
+              <input type="radio" name="tier" value="t1">
+              <span><b>Front desk knowledge base</b><small>$2,500 setup, $299 a month</small></span>
+            </label>
+            <label>
+              <input type="radio" name="tier" value="t2" checked>
+              <span><b>Whole practice knowledge base</b><small>$3,500 setup, $250 a month</small></span>
+            </label>
+            <label>
+              <input type="radio" name="tier" value="t3">
+              <span><b>Knowledge base plus operations</b><small>$4,500 setup, $350 a month</small></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="cfg-group">
+          <legend class="cfg-legend">Locations</legend>
+          <div class="seg seg--row">
+            <label><input type="radio" name="loc" value="1" checked><span>1</span></label>
+            <label><input type="radio" name="loc" value="2"><span>2</span></label>
+            <label><input type="radio" name="loc" value="3"><span>3</span></label>
+            <label><input type="radio" name="loc" value="4"><span>4</span></label>
+          </div>
+          <p class="rec-foot">
+            Each location past the first is $1,500 to set up and $149 a month. Shared pages are built
+            once, and each site overrides only what genuinely differs.
+          </p>
+        </fieldset>
+      </div>
+
+      <div class="pane receipt">
+        <h3>What that costs</h3>
+        <p class="rec-sub">Line by line, before tax, no bundling.</p>
+
+        <div class="rec-col-head" aria-hidden="true"><span>Setup</span><span>Monthly</span></div>
+
+        <div class="rec-line">
+          <span class="rl-label" id="cfg-tier-name">Whole practice knowledge base</span>
+          <span class="rl-figs"><span id="cfg-tier-setup">$3,500</span><span id="cfg-tier-monthly">$250</span></span>
+        </div>
+
+        <div class="rec-line" id="cfg-loc-row" hidden>
+          <span class="rl-label" id="cfg-loc-label">Extra locations</span>
+          <span class="rl-figs"><span id="cfg-loc-setup">$0</span><span id="cfg-loc-monthly">$0</span></span>
+        </div>
+
+        <div class="rec-total">
+          <div class="rt-block">
+            <p class="rt-key">Setup, one time</p>
+            <p class="rt-fig" id="cfg-setup-total">$3,500</p>
+          </div>
+          <div class="rt-block rt-block--right">
+            <p class="rt-key">Then, each month</p>
+            <p class="rt-fig" id="cfg-monthly-total">$250</p>
+          </div>
+        </div>
+
+        <p class="rec-say" id="cfg-say" role="status" aria-live="polite">
+          <b>Whole practice knowledge base, 1 location.</b>
+          $3,500 to set up, then $250 a month.
+        </p>
+
+        <p class="rec-foot">
+          Not in this total: extra sections past your cap at $600 each, and recall done for you, which
+          is priced per practice on the call. Month to month. Cancel and you keep every page.
+        </p>
+      </div>
+    </form>
+  </section>
+
+  <!-- ======================== THE ALTERNATIVES ======================== -->
+  <section class="wrap" id="alternatives" aria-labelledby="alt-h">
+    <div class="sec-head">
+      <p class="eyebrow">The other options</p>
+      <h2 id="alt-h">Us against doing nothing, hiring, and a training platform</h2>
+      <p class="lede">
+        Three of these are reasonable choices. Doing nothing is free and works until someone leaves.
+        Hiring works if you can find the person. Here are the four side by side with no thumb on the scale.
+      </p>
+    </div>
+
+    <div class="ct ct--alt">
+      <div class="ct-col ct-labels c1" aria-hidden="true">
+        <div class="ct-head ct-head--spacer"></div>
+        <div class="ct-lab">Up front</div>
+        <div class="ct-lab">Each month</div>
+        <div class="ct-lab">Who writes the pages</div>
+        <div class="ct-lab">Who keeps them current</div>
+        <div class="ct-lab">Time to something the front desk can use</div>
+        <div class="ct-lab">When someone leaves</div>
+        <div class="ct-lab">What you keep if you stop</div>
+      </div>
+
+      <section class="ct-col c2" aria-labelledby="alt1">
+        <div class="ct-head"><h3 class="ct-tname" id="alt1">Doing nothing</h3><p class="ct-tprice">The current arrangement</p></div>
+        <dl class="ct-body">
+          <dt>Up front</dt><dd class="money">$0</dd>
+          <dt>Each month</dt><dd class="money">$0</dd>
+          <dt>Who writes the pages</dt><dd>Nobody. The rules stay in a few people's heads and a binder</dd>
+          <dt>Who keeps them current</dt><dd>Whoever happens to remember</dd>
+          <dt>Time to something the front desk can use</dt><dd>Already there, if you interrupt the right person</dd>
+          <dt>When someone leaves</dt><dd>What they knew leaves with them</dd>
+          <dt>What you keep if you stop</dt><dd>Nothing changes</dd>
+        </dl>
+      </section>
+
+      <section class="ct-col c3" aria-labelledby="alt2">
+        <div class="ct-head"><h3 class="ct-tname" id="alt2">Hiring for it</h3><p class="ct-tprice">An operations hire, in house</p></div>
+        <dl class="ct-body">
+          <dt>Up front</dt><dd>The search, plus the time it takes to run it</dd>
+          <dt>Each month</dt><dd>A salary and benefits. We are not going to quote a figure for your market</dd>
+          <dt>Who writes the pages</dt><dd>The person you hire, once they have learned the practice</dd>
+          <dt>Who keeps them current</dt><dd>The same person, if the daily work leaves them room</dd>
+          <dt>Time to something the front desk can use</dt><dd>Hiring, then ramp, then the writing</dd>
+          <dt>When someone leaves</dt><dd>You start again, unless it was written down</dd>
+          <dt>What you keep if you stop</dt><dd>Whatever they wrote, in whatever form they left it</dd>
+        </dl>
+      </section>
+
+      <section class="ct-col c4" aria-labelledby="alt3">
+        <div class="ct-head"><h3 class="ct-tname" id="alt3">A training platform</h3><p class="ct-tprice">Trainual, Whale, and the like</p></div>
+        <dl class="ct-body">
+          <dt>Up front</dt><dd>None. You start on an empty system</dd>
+          <dt>Each month</dt><dd class="money">$249 to $300 at this size</dd>
+          <dt>Who writes the pages</dt><dd>Your team, every page</dd>
+          <dt>Who keeps them current</dt><dd>Your team</dd>
+          <dt>Time to something the front desk can use</dt><dd>However long your team takes to write it, between patients</dd>
+          <dt>When someone leaves</dt><dd>The pages stay, if they were written</dd>
+          <dt>What you keep if you stop</dt><dd>Your pages, inside their system. Check the export terms</dd>
+        </dl>
+      </section>
+
+      <section class="ct-col c5 is-start" aria-labelledby="alt4">
+        <div class="ct-head"><h3 class="ct-tname" id="alt4">Stephens AI</h3><p class="ct-tprice">Written for you, then kept true</p></div>
+        <dl class="ct-body">
+          <dt>Up front</dt><dd class="money">$2,500 to $4,500, by tier</dd>
+          <dt>Each month</dt><dd class="money">$250 to $350, by tier</dd>
+          <dt>Who writes the pages</dt><dd>We do, from the material you already have</dd>
+          <dt>Who keeps them current</dt><dd>Your office manager, in the app. We rewrite when the rules change</dd>
+          <dt>Time to something the front desk can use</dt><dd>Live at day 30</dd>
+          <dt>When someone leaves</dt><dd>The pages stay. The next hire reads them</dd>
+          <dt>What you keep if you stop</dt><dd>Every page, exported, any time. Month to month, no term</dd>
+        </dl>
+      </section>
+    </div>
+  </section>
+
+  <!-- ========================= PRODUCT CATALOGUE ========================= -->
+  <section class="wrap" id="products" aria-labelledby="prod-h">
+    <div class="sec-head">
+      <p class="eyebrow">What the money buys</p>
+      <h2 id="prod-h">Three products, and what each one actually does</h2>
+      <p class="lede">
+        Different practices bite on different problems. Two of these are on the price list above.
+        The third is new, and its price is the one thing we cannot print yet.
+      </p>
+    </div>
+
+    <!-- P1 -->
+    <article class="prod">
+      <div>
+        <p class="prod-tag"><span class="num" aria-hidden="true">1</span> Live today</p>
+        <h3>Front desk knowledge base</h3>
+        <p class="who">
+          For the practice where the hard questions all walk to one desk. Several times a day someone
+          puts a patient on hold and goes to ask. Two people stop working.
+        </p>
+        <p>
+          We write your insurance rules, prices, and protocols into short situation pages your team can
+          find mid call, in one search box. Your office manager edits them in the app, and every edit is
+          saved and reversible.
+        </p>
+        <ul>
+          <li>Decision lookups for the calls that cost money: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price.</li>
+          <li>Google sign in, restricted to your practice domain. Installs from the browser on the front desk computers, no admin rights.</li>
+          <li>Pages already opened keep working if the internet drops.</li>
+          <li>One click for staff to flag a page that is wrong.</li>
+        </ul>
+        <p class="pricetag"><b>$2,500 setup, $299 a month</b> for the front desk tier</p>
+        <div class="posture">
+          <b>Patient data: none.</b> It holds your rules, not your charts. Zero patient records live in it,
+          so there is nothing in it to breach. Recall is the product where patient contact details are
+          involved, and that one has its own posture below.
+        </div>
+      </div>
+      <figure class="pane dep">
+        <div class="dep-bar" aria-hidden="true"><i></i><i></i><i></i><span>Front desk knowledge base</span></div>
+        <div class="dep-search">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.75" stroke="#DC6843" stroke-width="1.6"></circle>
+            <path d="M10.6 10.6 14 14" stroke="#DC6843" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+          <span>vision plan, medical complaint</span>
+        </div>
+        <div class="dep-card">
+          <h4>Refraction: collect or bill</h4>
+          <p>The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+          <p class="strong">Exception: if the visit bills medical, the refraction is not covered. Collect at checkout.</p>
+          <p class="dep-meta">Last updated by your office manager. Every edit is saved.</p>
+        </div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M9 3.2 3.4 6.1v3.4c0 2.9 2.3 5 5.6 5.9 3.3-.9 5.6-3 5.6-5.9V6.1Z" stroke="#5A4F46" stroke-width="1.6" stroke-linejoin="round"></path>
+          </svg>
+          <span>Holds no patient records<small>Rules, prices, protocols. Not charts.</small></span>
+          <span class="rt done">0</span>
+        </div>
+        <figcaption class="sr-only">A depiction of the knowledge base: a search box reading "vision plan, medical complaint" and the answer page it returns about billing the refraction.</figcaption>
+      </figure>
+    </article>
+
+    <!-- P2 -->
+    <article class="prod">
+      <div>
+        <p class="prod-tag"><span class="num" aria-hidden="true">2</span> New</p>
+        <h3>Recall done for you</h3>
+        <p class="who">
+          For the practice where recall is a monthly job sitting on the same checklist as the daily work,
+          so it is the first thing to slip when the phones are busy.
+        </p>
+        <p>
+          We run your monthly recall for you, using your own recall protocol and your own systems. At an
+          eight provider practice that is 8 separate call and postcard runs, plus the scleral letters,
+          plus the medical letters across about 10 reason codes, plus the update run that has to come last.
+        </p>
+        <ul>
+          <li>The run happens on a schedule instead of when someone finds an afternoon.</li>
+          <li>The call list arrives ready to work, in priority order, with the answers to the questions patients ask when they call back.</li>
+          <li>A monthly report: who was contacted, by which channel, and who booked.</li>
+          <li>The update step gets done, every time, in the right order, so the same patients are not pulled again next month.</li>
+        </ul>
+        <p class="pricetag"><b>Priced per practice, on the call.</b> We have not set a price yet, and we will not print a guess</p>
+        <div class="posture">
+          <b>Patient data: yes, contact information.</b> Recall involves patient contact details, so it runs
+          inside your own accounts under a signed BAA. We never touch charts. Different product, different
+          posture, and we say it per product rather than once for the whole site.
+        </div>
+      </div>
+      <figure class="pane dep">
+        <div class="dep-bar" aria-hidden="true"><i></i><i></i><i></i><span>Monthly recall run</span></div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 9.4 7 12.8l7.5-7.6" stroke="#2E7A56" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>Scleral letters<small>Run and mailed</small></span><span class="rt done">Done</span>
+        </div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 9.4 7 12.8l7.5-7.6" stroke="#2E7A56" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>Medical letters, about 10 reason codes<small>Output as postcards</small></span><span class="rt done">Done</span>
+        </div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6.2" stroke="#946A12" stroke-width="1.6"></circle><path d="M9 5.6V9l2.4 1.6" stroke="#946A12" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <span>Calls list and routine postcards<small>Run once per doctor, individually</small></span><span class="rt now">6 of 8</span>
+        </div>
+        <div class="dep-row locked">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="3.8" y="8" width="10.4" height="6.4" rx="1.8" stroke="#5A4F46" stroke-width="1.6"></rect><path d="M6.4 8V6.2a2.6 2.6 0 0 1 5.2 0V8" stroke="#5A4F46" stroke-width="1.6"></path></svg>
+          <span>The update run<small>Held until every call and postcard is finished</small></span><span class="rt wait">Waiting</span>
+        </div>
+        <div class="dep-note">
+          The update box stays unchecked on the pull and checked on the update run. Backwards either way
+          double contacts patients or drops them. That order is the job.
+        </div>
+        <div class="dep-split">
+          <div class="dep-stat"><b>8</b><span>Call and postcard runs at an eight provider practice</span></div>
+          <div class="dep-stat"><b>10</b><span>Medical recall reason codes in the real protocol, about</span></div>
+        </div>
+        <figcaption class="sr-only">A depiction of a monthly recall run sheet: scleral letters done, medical letters done, six of eight per doctor runs complete, and the update run held until the rest finish.</figcaption>
+      </figure>
+    </article>
+
+    <!-- P3 -->
+    <article class="prod">
+      <div>
+        <p class="prod-tag"><span class="num" aria-hidden="true">3</span> Included in tier 3</p>
+        <h3>Practice operations automation</h3>
+        <p class="who">
+          For the owner or office manager whose week is eaten by time off requests, payroll prep, and
+          pulling numbers nobody has time to pull.
+        </p>
+        <p>
+          Time off and payroll, automated and scoped to your practice. At the practice we built it for it
+          returns 60 to 100 admin hours a year. It comes with a quarterly practice snapshot and monthly
+          working time with both of us.
+        </p>
+        <ul>
+          <li>Requests, approvals, and balances stop living in text messages and a spreadsheet.</li>
+          <li>Payroll prep comes out of the same records, so the numbers agree.</li>
+          <li>A quarterly snapshot of the practice, written for the owner, not exported from a dashboard.</li>
+        </ul>
+        <p class="pricetag"><b>$4,500 setup, $350 a month</b> as part of knowledge base plus operations</p>
+        <div class="posture">
+          <b>Patient data: none.</b> This one is staff records and practice operations. It never touches
+          patient information at all.
+        </div>
+      </div>
+      <figure class="pane dep">
+        <div class="dep-bar" aria-hidden="true"><i></i><i></i><i></i><span>Time off and payroll</span></div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="3.2" y="4.4" width="11.6" height="10" rx="2" stroke="#5A4F46" stroke-width="1.6"></rect><path d="M3.2 7.6h11.6M6.6 3v2.6M11.4 3v2.6" stroke="#5A4F46" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <span>Optical, time off next month<small>Balance checked, no coverage conflict</small></span><span class="rt done">Approved</span>
+        </div>
+        <div class="dep-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="3.2" y="4.4" width="11.6" height="10" rx="2" stroke="#946A12" stroke-width="1.6"></rect><path d="M3.2 7.6h11.6" stroke="#946A12" stroke-width="1.6"></path></svg>
+          <span>Front desk, time off this Friday<small>Overlaps with an approved day already on the schedule</small></span><span class="rt now">Needs you</span>
+        </div>
+        <div class="dep-card">
+          <h4>Payroll prep, this period</h4>
+          <p>Hours, approved time off, and adjustments pulled into one sheet and reconciled against the schedule.</p>
+          <p class="dep-meta">Ready to review. Nothing gets sent without an approval.</p>
+        </div>
+        <div class="dep-split">
+          <div class="dep-stat"><b>60 to 100</b><span>Admin hours a year returned at the practice we built it for</span></div>
+          <div class="dep-stat"><b class="dep-stat-word">Staff only</b><span>Time off and payroll records. No patient information</span></div>
+        </div>
+        <figcaption class="sr-only">A depiction of the operations tool: two time off requests, one approved and one needing the owner, and a payroll preparation sheet ready to review.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <!-- =============================== PROOF =============================== -->
+  <section class="wrap" id="proof" aria-labelledby="proof-h">
+    <div class="sec-head">
+      <p class="eyebrow">Where this came from</p>
+      <h2 id="proof-h">Built inside a working practice, not in a conference room</h2>
+      <p class="lede">
+        The knowledge base is live in a 27 person practice with 6 to 7 doctors at one location. The
+        pages came out of their documents, days spent watching the front desk, and the questions staff
+        actually get asked.
+      </p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>27</b><span>People at the practice it is live in, 6 to 7 doctors, one location</span></div>
+      <div class="stat"><b>76</b><span>Front desk situations mapped</span></div>
+      <div class="stat"><b>4</b><span>Decision lookups built</span></div>
+      <div class="stat"><b>30</b><span>Days from start to live at the front desk</span></div>
+    </div>
+    <p class="price-note">
+      We do not name the practice here. They have not signed off on being a reference, and we are not
+      going to use their name before they do.
+    </p>
+  </section>
+
+  <!-- ============================ OBJECTIONS ============================ -->
+  <section class="wrap" id="objections" aria-labelledby="obj-h">
+    <div class="sec-head">
+      <p class="eyebrow">The two questions everyone asks</p>
+      <h2 id="obj-h">Patient data, and your practice management system</h2>
+    </div>
+    <div class="obj">
+      <article class="pane obj-card">
+        <h3>Is this HIPAA trouble</h3>
+        <p class="lead">
+          The answer is per product, because the products are different. Anyone giving you one answer for
+          a whole catalogue has not thought about it.
+        </p>
+        <p>
+          <b>Knowledge base:</b> it holds rules, prices, and protocols. Zero patient records. There is
+          nothing in it to breach.
+        </p>
+        <p>
+          <b>Recall done for you:</b> this one does involve patient contact information. It runs inside
+          your own accounts, under a signed BAA, with a limited login you create and can revoke. We never
+          touch charts.
+        </p>
+        <p>
+          <b>Operations:</b> staff records and practice operations only. No patient information at all.
+        </p>
+      </article>
+      <article class="pane obj-card">
+        <h3>Does it connect to our practice management system</h3>
+        <p class="lead">
+          No, and that is on purpose. It does not matter which system you run.
+        </p>
+        <p>
+          Hosted practice management systems rarely hand an outside vendor direct database access, so a
+          promised sync is the kind of thing that falls over in week three. We would rather build on
+          something that does not depend on it.
+        </p>
+        <p>
+          For the knowledge base there is nothing to connect: it holds your rules, not your records. For
+          recall, we work from a list your own team runs, or inside your system with a limited login you
+          create and can revoke on any day you like.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================= FOUNDERS ============================= -->
+  <section class="wrap" id="founders" aria-labelledby="who-h">
+    <div class="sec-head">
+      <p class="eyebrow">Who you are hiring</p>
+      <h2 id="who-h">Two people, and you work with both of us</h2>
+    </div>
+    <div class="founders">
+      <article class="pane founder">
+        <div class="avatar" aria-hidden="true">AS</div>
+        <div>
+          <h3>Alec Stephens</h3>
+          <p class="role">Co-founder</p>
+          <p>
+            Spent the last year inside a 27 person eyecare practice, in the office, watching the front
+            desk work. Most of what we build came out of that year.
+          </p>
+        </div>
+      </article>
+      <article class="pane founder">
+        <div class="avatar" aria-hidden="true">JK</div>
+        <div>
+          <h3>Jusheen Kim</h3>
+          <p class="role">Co-founder</p>
+          <p>
+            Former lead software engineer at J.P. Morgan. Builds the systems that have to hold up under
+            real use at a front desk that cannot stop taking calls.
+          </p>
+        </div>
+      </article>
+    </div>
+    <p class="price-note">
+      Both of us are based in Asia, so we are not at a desk during your morning rush. Urgent issues are
+      answered by the next business morning, US time. We would rather state the limit than imply a
+      promise we cannot keep.
+    </p>
+  </section>
+
+  <!-- =============================== CLOSE =============================== -->
+  <section class="wrap" aria-labelledby="close-h">
+    <div class="close">
+      <h2 id="close-h">You have the prices. The call is for the parts a page cannot answer.</h2>
+      <p>
+        Twenty minutes. Bring your recall protocol and your price sheet, or bring nothing. We will tell
+        you which tier fits, what recall would cost against your protocol, and whether you should just
+        build it yourself.
+      </p>
+      <div class="close-cta">
+        <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <a class="btn btn-ghost" href="mailto:alec@stephensai.co">Email alec@stephensai.co</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-foot">
+  <div class="foot-grid">
+    <div>
+      <p class="wordmark"><span class="dot" aria-hidden="true"></span> Stephens AI</p>
+      <p>Alec Stephens and Jusheen Kim. Knowledge bases and recall for independent eyecare practices.</p>
+    </div>
+    <div class="foot-links">
+      <p><a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+      <p><a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Configurator. Vanilla, defensive, and only ever multiplies numbers that are
+   printed on the page above. If anything throws, the page keeps the correct
+   pre-rendered default: whole practice tier, one location. */
+(function () {
+  "use strict";
+  try {
+    var form = document.getElementById("cfg-form");
+    if (!form) return;
+
+    var TIERS = {
+      t1: { name: "Front desk knowledge base", setup: 2500, monthly: 299 },
+      t2: { name: "Whole practice knowledge base", setup: 3500, monthly: 250 },
+      t3: { name: "Knowledge base plus operations", setup: 4500, monthly: 350 }
+    };
+    var LOC_SETUP = 1500;
+    var LOC_MONTHLY = 149;
+
+    var el = {
+      tierName: document.getElementById("cfg-tier-name"),
+      tierSetup: document.getElementById("cfg-tier-setup"),
+      tierMonthly: document.getElementById("cfg-tier-monthly"),
+      locRow: document.getElementById("cfg-loc-row"),
+      locLabel: document.getElementById("cfg-loc-label"),
+      locSetup: document.getElementById("cfg-loc-setup"),
+      locMonthly: document.getElementById("cfg-loc-monthly"),
+      setupTotal: document.getElementById("cfg-setup-total"),
+      monthlyTotal: document.getElementById("cfg-monthly-total"),
+      say: document.getElementById("cfg-say")
+    };
+    for (var k in el) { if (!el[k]) return; }
+
+    function money(n) { return "$" + Number(n).toLocaleString("en-US"); }
+
+    function checkedValue(name, fallback) {
+      var node = form.querySelector('input[name="' + name + '"]:checked');
+      return node && node.value ? node.value : fallback;
+    }
+
+    function render() {
+      var tier = TIERS[checkedValue("tier", "t2")] || TIERS.t2;
+      var locations = parseInt(checkedValue("loc", "1"), 10);
+      if (!(locations >= 1 && locations <= 4)) locations = 1;
+      var extra = locations - 1;
+
+      var setupTotal = tier.setup + extra * LOC_SETUP;
+      var monthlyTotal = tier.monthly + extra * LOC_MONTHLY;
+
+      el.tierName.textContent = tier.name;
+      el.tierSetup.textContent = money(tier.setup);
+      el.tierMonthly.textContent = money(tier.monthly);
+
+      if (extra > 0) {
+        el.locRow.hidden = false;
+        el.locLabel.innerHTML = "";
+        el.locLabel.appendChild(document.createTextNode(
+          extra + (extra === 1 ? " extra location" : " extra locations")
+        ));
+        var small = document.createElement("small");
+        small.textContent = "$1,500 setup and $149 a month, each";
+        el.locLabel.appendChild(small);
+        el.locSetup.textContent = money(extra * LOC_SETUP);
+        el.locMonthly.textContent = money(extra * LOC_MONTHLY);
+      } else {
+        el.locRow.hidden = true;
+      }
+
+      el.setupTotal.textContent = money(setupTotal);
+      el.monthlyTotal.textContent = money(monthlyTotal);
+
+      el.say.innerHTML = "";
+      var b = document.createElement("b");
+      b.textContent = tier.name + ", " + locations + (locations === 1 ? " location." : " locations.");
+      el.say.appendChild(b);
+      el.say.appendChild(document.createTextNode(
+        " " + money(setupTotal) + " to set up, then " + money(monthlyTotal) + " a month."
+      ));
+    }
+
+    /* Enter inside a radio group would otherwise try to submit and reload. */
+    form.addEventListener("submit", function (ev) { ev.preventDefault(); });
+    form.addEventListener("change", render);
+    render();
+  } catch (e) {
+    /* Leave the pre-rendered totals in place. They are correct on their own. */
+  }
+})();
+</script>

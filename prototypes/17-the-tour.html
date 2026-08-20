@@ -1,0 +1,1607 @@
+<title>The Tour</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Prototype 17, "The Tour". Lens v3, in brand, light scheme committed.
+
+   Structure: the page is a document first. Ten stops in order, every one
+   readable with the script switched off. The script promotes the stop index
+   into a persistent rail, adds scroll tracking, keyboard movement and the
+   three working panels.
+
+   Bubble discipline: exactly TWO contained regions on the whole page, both
+   product depictions (the knowledge base search, the recall run). Nothing is
+   nested inside either. Every other separation is a full bleed band, a wash,
+   a hairline, a change of measure, or open space.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;
+
+  --sky: linear-gradient(180deg,#F3EEE8 0%,#F7E7DA 42%,#F7DCC9 74%,#F2CFB8 100%);
+  --sky-fallback:#F5E9DE;
+  --night: radial-gradient(130% 130% at 22% -12%,#241B15 0%,#150F0B 58%,#0D0A08 100%);
+  --night-flat:#120D09;
+
+  --ink:#171310;
+  --ink-2:#5A4F46;            /* lightest secondary allowed on light */
+  --cream:#F5F1E8;
+  --cream-2:#B3AB9E;          /* floor on night */
+
+  --accent:#DC6843;           /* MARK ONLY: dots, rules, bars, ticks */
+  --accent-display:#BE4E2C;   /* accent text at 24px and up, darkened from #C55532 for the 3:1 gate */
+  --accent-deep:#8F3616;      /* accent text below 24px on light */
+  --accent-night:#FF8E76;
+
+  --good:#2E7A56;
+  --warn:#946A12;
+  --bad:#B23A2F;
+  --good-text:#1F5C3F;
+  --warn-text:#6E4D09;
+  --bad-text:#8E2C23;
+
+  --rule:rgba(23,19,16,0.10);
+  --rule-soft:rgba(23,19,16,0.06);
+  --rule-strong:rgba(23,19,16,0.18);
+  --mark-edge:rgba(23,19,16,0.56);
+
+  --glass:rgba(255,255,255,0.55);
+  --glass-edge:rgba(255,255,255,0.85);
+  --shadow-pane:0 14px 44px rgba(112,62,40,0.13), inset 0 1px 0 rgba(255,255,255,0.95);
+
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --label:"Schibsted Grotesk","Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(0.2,0.8,0.2,1);
+
+  --protoH:44px;
+  --barH:0px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-padding-top:calc(var(--protoH) + var(--barH) + 18px);
+}
+
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--sky-fallback);
+  background-image:var(--sky);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+svg{max-width:100%;}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-0.025em;line-height:1.08;margin:0;}
+p,blockquote,figure{margin:0;}
+ul,ol{margin:0;padding:0;list-style:none;}
+a{color:inherit;}
+button,input{font:inherit;color:inherit;}
+input,button{background:transparent;border:0;border-radius:0;}
+:focus-visible{outline:2.5px solid var(--accent-deep);outline-offset:3px;border-radius:6px;}
+.band-night :focus-visible,
+html.js .rail.is-night :focus-visible{outline-color:var(--accent-night);}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.js-only{display:none !important;}
+html.js .js-only{display:inline-block !important;}
+html.js #kbStatic{display:none !important;}
+html.js .js-only.jsflex{display:flex !important;}
+html.js .js-only.jsblock{display:block !important;}
+
+/* ---------- review furniture ---------- */
+.proto-bar{
+  position:sticky;top:0;z-index:80;
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;
+  min-height:44px;padding:8px 16px;
+  background:#1c1c1e;color:#f2f2f2;
+  font-family:var(--label);font-size:13px;line-height:1.35;
+}
+.proto-n{font-weight:700;letter-spacing:0.10em;text-transform:uppercase;}
+.proto-name{font-weight:600;padding-left:14px;border-left:1px solid rgba(255,255,255,0.28);}
+.proto-bet{color:#c9c9cc;flex:1 1 240px;min-width:0;}
+
+/* ---------- shell ---------- */
+.wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 22px;}
+.measure{max-width:60ch;}
+.eyebrow{
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.13em;text-transform:uppercase;color:var(--ink-2);
+  display:flex;align-items:center;gap:9px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;}
+.label{
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:12px 26px;border-radius:999px;
+  font-size:17px;font-weight:500;letter-spacing:-0.01em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:transform 150ms var(--ease),background 150ms var(--ease),box-shadow 220ms var(--ease);
+}
+.btn-primary{background:#221A15;color:var(--cream);box-shadow:0 10px 26px rgba(60,32,18,0.22);}
+.btn-primary:hover{background:#120D0A;transform:translateY(-1px);}
+.btn-ghost{background:rgba(255,255,255,0.62);border-color:rgba(23,19,16,0.16);color:var(--ink);}
+.btn-ghost:hover{background:#fff;transform:translateY(-1px);}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+
+/* ---------- masthead and hero, bare ground ---------- */
+.mast{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:10px 16px;padding:20px 0 4px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-0.02em;}
+.brand-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);flex:none;}
+.mast a.btn{min-height:44px;padding:10px 20px;font-size:15px;}
+
+.hero{padding:34px 0 40px;}
+.hero h1{font-size:clamp(32px,5.8vw,54px);max-width:17ch;margin-top:16px;}
+.hero h1 .hl{color:var(--accent-display);}
+.hero-sub{margin-top:16px;max-width:52ch;font-size:18px;color:var(--ink-2);}
+.hero .cta-row{margin-top:26px;}
+.hero-start{
+  display:inline-flex;align-items:center;gap:10px;min-height:44px;
+  margin-top:24px;text-decoration:none;color:var(--accent-deep);
+  font-family:var(--label);font-size:13.5px;font-weight:600;
+  letter-spacing:0.09em;text-transform:uppercase;
+}
+.hero-start svg{flex:none;}
+
+/* ---------- the rail ----------
+   Document mode: a plain index of stops under the hero.
+   Script mode at wide sizes: fixed, vertical, persistent.            */
+.rail{padding:14px 0 30px;border-top:1px solid var(--rule);}
+.rail-h{margin-bottom:10px;}
+.rail-list{display:flex;flex-wrap:wrap;gap:2px 20px;}
+.rail-link{
+  display:inline-flex;align-items:center;gap:9px;min-height:44px;
+  text-decoration:none;color:var(--ink-2);font-size:15.5px;
+}
+.rail-link:hover{color:var(--ink);}
+.rail-n{
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.06em;
+  color:var(--ink-2);min-width:1.4em;
+}
+.rail-item.is-active .rail-link{color:var(--ink);font-weight:600;}
+.rail-item.is-active .rail-n{color:var(--accent-deep);}
+.rail-move{display:none;}
+
+/* ---------- sticky compact rail, script mode, narrow ---------- */
+.tourbar{
+  position:sticky;top:var(--protoH);z-index:60;display:none;
+  background:rgba(247,232,220,0.94);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom:1px solid var(--rule);
+}
+html.tour .tourbar{display:block;}
+.tb-track{height:3px;background:rgba(23,19,16,0.10);}
+.tb-fill{height:100%;width:10%;background:var(--accent);transition:width 350ms var(--ease);}
+.tb-row{display:flex;align-items:center;gap:10px;padding:4px 22px;max-width:1060px;margin:0 auto;}
+.tb-text{min-width:0;flex:1 1 auto;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
+.tb-num{font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--accent-deep);white-space:nowrap;}
+.tb-name{flex:1 1 auto;min-width:0;font-size:15.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tb-btn{
+  width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  border-radius:999px;cursor:pointer;color:var(--ink);
+  border:1px solid rgba(23,19,16,0.16);background:rgba(255,255,255,0.6);
+}
+.tb-btn:hover{background:#fff;}
+.tb-btn[disabled]{cursor:default;color:var(--ink-2);border-color:var(--rule);background:transparent;}
+
+/* ---------- stops ---------- */
+.stop{padding:56px 0;scroll-margin-top:calc(var(--protoH) + var(--barH) + 14px);}
+.stop-head{display:flex;flex-direction:column;gap:14px;margin-bottom:26px;}
+.stop-head h2{font-size:clamp(27px,4.3vw,40px);max-width:19ch;}
+.stop-say{font-size:18px;color:var(--ink-2);max-width:56ch;}
+.stop-num{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink-2);}
+
+/* band treatments, the separation that replaces bubbles */
+.band-wash{
+  background:linear-gradient(180deg,rgba(255,255,255,0.58),rgba(255,255,255,0.30));
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+}
+.band-night{
+  background-color:var(--night-flat);background-image:var(--night);
+  color:var(--cream);
+}
+.band-night h2,.band-night h3{color:var(--cream);}
+.band-night .stop-say,.band-night .stop-num,.band-night .label{color:var(--cream-2);}
+.band-night .eyebrow{color:var(--cream-2);}
+.band-night .eyebrow::before{background:var(--accent);}
+
+/* ---------- stop 1, the chain ---------- */
+.chain{position:relative;margin-left:6px;padding-left:30px;max-width:52ch;}
+.chain::before{
+  content:"";position:absolute;left:5px;top:10px;bottom:24px;width:2px;
+  background:linear-gradient(180deg,var(--accent),rgba(220,104,67,0.25));
+}
+.chain li{position:relative;padding:0 0 26px;}
+.chain li::before{
+  content:"";position:absolute;left:-30px;top:7px;width:12px;height:12px;border-radius:50%;
+  background:var(--sky-fallback);border:2px solid var(--accent);
+}
+.chain-k{display:block;font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--ink-2);}
+.chain-v{display:block;font-size:18px;margin-top:3px;}
+.chain li.chain-end::before{background:var(--accent);}
+.chain li.chain-end .chain-v{font-weight:500;}
+.chain-cost{
+  margin-top:2px;padding-top:16px;border-top:1px solid var(--rule);
+  font-size:19px;font-weight:500;max-width:44ch;
+}
+
+/* ---------- stop 2, the figures ---------- */
+.fig-big{
+  font-size:clamp(96px,20vw,190px);line-height:0.84;font-weight:500;
+  letter-spacing:-0.05em;color:var(--accent-display);
+}
+.fig-big-l{margin-top:10px;font-size:19px;max-width:22ch;}
+.fig-row{display:flex;flex-wrap:wrap;gap:0;margin-top:36px;border-top:1px solid var(--rule);}
+.fig-row > div{
+  flex:1 1 150px;padding:20px 20px 20px 0;border-bottom:1px solid var(--rule);
+}
+.fig-row dt{font-size:30px;font-weight:500;letter-spacing:-0.03em;line-height:1.05;}
+.fig-row dd{margin:6px 0 0;font-size:15.5px;color:var(--ink-2);max-width:20ch;}
+
+/* ---------- the two panes. The only contained regions on this page ---------- */
+.pane{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(20px) saturate(1.35);
+  backdrop-filter:blur(20px) saturate(1.35);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--shadow-pane);
+  border-radius:26px;
+  padding:18px;
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .pane{background:rgba(255,255,255,0.90);}
+}
+.pane-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:2px 6px 14px;}
+.pane-dots{display:flex;gap:6px;}
+.pane-dots i{width:9px;height:9px;border-radius:50%;background:rgba(23,19,16,0.13);}
+.pane-title{font-size:13.5px;font-weight:600;color:var(--ink-2);}
+.pane-live{
+  margin-left:auto;font-family:var(--label);font-size:13px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--good-text);
+  display:inline-flex;align-items:center;gap:7px;
+}
+.pane-live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--good);}
+
+/* ---------- knowledge base search ---------- */
+.kb-field{
+  display:flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid rgba(23,19,16,0.30);border-radius:999px;
+  padding:6px 8px 6px 18px;
+  transition:box-shadow 220ms var(--ease),border-color 150ms var(--ease);
+}
+.kb-field:focus-within{border-color:var(--accent-deep);box-shadow:0 0 0 3px rgba(143,54,22,0.20);}
+.kb-field input{flex:1 1 auto;min-width:0;min-height:44px;font-size:16.5px;padding:0;}
+.kb-field input::placeholder{color:#6C6157;opacity:1;}
+.kb-clear{
+  width:44px;height:44px;flex:none;border-radius:999px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;color:var(--ink-2);
+}
+.kb-clear:hover{background:rgba(23,19,16,0.06);color:var(--ink);}
+.kb-tries{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 4px 0;}
+.kb-try{
+  min-height:44px;padding:8px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(23,19,16,0.16);background:rgba(255,255,255,0.55);
+  font-size:15px;color:var(--ink);
+}
+.kb-try:hover{background:#fff;}
+.kb-count{padding:14px 4px 6px;font-size:13.5px;color:var(--ink-2);font-family:var(--label);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;}
+.kb-list{border-top:1px solid var(--rule);}
+.kb-item{border-bottom:1px solid var(--rule);}
+.kb-item[hidden]{display:none;}
+.kb-item summary{
+  display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 6px;
+  cursor:pointer;list-style:none;
+}
+.kb-item summary::-webkit-details-marker{display:none;}
+.kb-item summary::marker{content:"";}
+.kb-item summary:hover .kb-t{color:var(--accent-deep);}
+.kb-cat{
+  font-family:var(--label);font-size:13px;font-weight:600;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--ink-2);flex:none;
+  display:inline-flex;align-items:center;gap:7px;min-width:9.5em;
+}
+.kb-cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;}
+.kb-t{font-size:16.5px;flex:1 1 auto;min-width:0;}
+.kb-caret{flex:none;color:var(--mark-edge);transition:transform 220ms var(--ease);}
+.kb-item[open] .kb-caret{transform:rotate(90deg);color:var(--accent-deep);}
+.kb-body{padding:2px 6px 20px;max-width:62ch;}
+.kb-lede{font-size:16.5px;}
+.kb-points{margin-top:12px;}
+.kb-points li{position:relative;padding:0 0 8px 20px;font-size:15.5px;color:var(--ink-2);}
+.kb-points li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.kb-exc{
+  margin-top:12px;padding:2px 0 2px 15px;border-left:3px solid var(--accent);
+  font-size:15.5px;
+}
+.kb-exc b{display:block;font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:4px;}
+.kb-empty{padding:18px 6px 22px;font-size:16px;color:var(--ink-2);}
+
+/* ---------- feature label rows, hairline, no boxes ---------- */
+.facts{display:flex;flex-wrap:wrap;gap:0;margin-top:32px;border-top:1px solid var(--rule);}
+.facts li{
+  flex:1 1 210px;padding:16px 22px 16px 0;border-bottom:1px solid var(--rule);
+  font-size:15.5px;color:var(--ink-2);
+}
+.facts li b{display:block;color:var(--ink);font-weight:500;font-size:16px;margin-bottom:2px;}
+.band-night .facts{border-color:rgba(255,255,255,0.14);}
+.band-night .facts li{border-color:rgba(255,255,255,0.14);color:var(--cream-2);}
+.band-night .facts li b{color:var(--cream);}
+
+/* ---------- stop 4, in and out ---------- */
+.split{display:flex;flex-wrap:wrap;gap:0;}
+.split-col{flex:1 1 300px;padding:0 26px 8px 0;}
+.split-col + .split-col{border-left:1px solid var(--rule);padding-left:26px;}
+.col-h{font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;margin-bottom:16px;}
+.col-in .col-h{color:var(--accent-deep);}
+.col-out .col-h{color:var(--ink-2);}
+.split li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:16.5px;border-bottom:1px solid var(--rule-soft);}
+.split li svg{flex:none;margin-top:3px;}
+.col-in li svg{color:var(--accent-deep);}
+.col-out li svg{color:var(--mark-edge);}
+.col-out li{color:var(--ink-2);}
+.zero{font-size:22px;font-weight:500;color:var(--ink);letter-spacing:-0.02em;}
+.split-note{margin-top:20px;padding-top:18px;border-top:1px solid var(--rule);font-size:16.5px;max-width:56ch;}
+
+/* ---------- recall run ---------- */
+.run-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;padding:0 4px 12px;}
+.run-count{font-family:var(--label);font-size:13.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-2);}
+.run-count b{color:var(--accent-deep);}
+.run-list{border-top:1px solid var(--rule);}
+.run{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:9px 6px;border-bottom:1px solid var(--rule);
+}
+.run-n{
+  font-family:var(--label);font-size:13px;font-weight:700;color:var(--ink-2);
+  width:1.6em;flex:none;
+}
+.run-body{flex:1 1 190px;min-width:0;}
+.run-name{font-size:16px;display:block;}
+.run-meta{font-size:13.5px;color:var(--ink-2);display:block;}
+.run-state{
+  font-family:var(--label);font-size:13px;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink-2);flex:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.run-state::before{content:"";width:9px;height:9px;border-radius:50%;border:1.6px solid var(--mark-edge);}
+.run.is-done .run-state{color:var(--good-text);}
+.run.is-done .run-state::before{background:var(--good);border-color:var(--good);}
+.run.is-locked .run-state{color:var(--warn-text);}
+.run.is-locked .run-state::before{border-color:var(--warn);border-style:dashed;}
+.run-go{
+  min-height:44px;padding:8px 18px;border-radius:999px;cursor:pointer;flex:none;
+  border:1px solid rgba(23,19,16,0.18);background:rgba(255,255,255,0.62);font-size:15px;
+}
+.run-go:hover{background:#fff;}
+.run-go[disabled]{cursor:default;color:var(--ink-2);border-color:var(--rule);background:transparent;}
+.run.is-done .run-go{visibility:hidden;}
+.run.is-next{background:rgba(255,255,255,0.42);}
+.run-update{border-bottom:0;}
+.run-update .run-name{font-weight:500;}
+.run-msg{
+  padding:14px 6px 4px;font-size:15.5px;min-height:1.5em;
+}
+.run-msg[data-tone="warn"]{color:var(--bad-text);}
+.run-msg[data-tone="good"]{color:var(--good-text);}
+.run-ctl{display:flex;flex-wrap:wrap;gap:10px;padding:12px 4px 2px;}
+.run-ctl .btn{min-height:44px;padding:10px 22px;font-size:15.5px;}
+
+/* ---------- practice operations, hairlines on bare ground ---------- */
+.ops{border-top:1px solid var(--rule);}
+.ops-row{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 0;border-bottom:1px solid var(--rule);
+}
+.ops-who{flex:1 1 230px;min-width:0;}
+.ops-role{display:block;font-size:16.5px;}
+.ops-what{display:block;font-size:14px;color:var(--ink-2);}
+.ops-state{
+  font-family:var(--label);font-size:13px;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--warn-text);flex:none;
+}
+.ops-row.is-ok .ops-state{color:var(--good-text);}
+.ops-go{
+  min-height:44px;padding:8px 20px;border-radius:999px;cursor:pointer;flex:none;
+  border:1px solid rgba(23,19,16,0.18);background:rgba(255,255,255,0.62);font-size:15px;
+}
+.ops-go:hover{background:#fff;}
+.ops-go[disabled]{cursor:default;color:var(--good-text);border-color:rgba(46,122,86,0.35);background:transparent;}
+.ops-out{margin-top:26px;padding-top:20px;border-top:2px solid var(--ink);}
+.ops-out-h{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin-bottom:12px;}
+.ops-line{
+  display:flex;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--rule-soft);
+  font-size:15.5px;color:var(--ink-2);
+}
+.ops-line .ops-tag{
+  font-family:var(--label);font-size:13px;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink-2);margin-left:auto;flex:none;
+}
+.ops-line.is-carried{color:var(--ink);}
+.ops-line.is-carried .ops-tag{color:var(--good-text);}
+.ops-hours{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-top:30px;}
+.ops-hours .n{font-size:clamp(44px,9vw,72px);line-height:0.9;font-weight:500;letter-spacing:-0.04em;color:var(--accent-display);}
+.ops-hours .l{font-size:16.5px;max-width:24ch;}
+
+/* ---------- quote stops ---------- */
+.quote-big{
+  font-size:clamp(27px,5vw,46px);line-height:1.12;letter-spacing:-0.025em;
+  font-weight:500;max-width:19ch;
+}
+.quote-by{margin-top:22px;display:flex;flex-direction:column;gap:4px;}
+.quote-role{font-size:17px;color:var(--cream);}
+.quote-ctx{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--cream-2);}
+.quote-rule{width:64px;height:3px;background:var(--accent);margin-bottom:26px;}
+.qlist{margin-top:34px;border-top:1px solid rgba(255,255,255,0.14);}
+.qlist li{padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.14);display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;}
+.qlist q{font-size:17px;color:var(--cream);flex:1 1 260px;}
+.qlist .r{font-family:var(--label);font-size:13.5px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--cream-2);}
+
+/* ---------- custom builds ---------- */
+.builds{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--rule);}
+.builds > li{flex:1 1 250px;padding:22px 24px 24px 0;border-bottom:1px solid var(--rule);}
+.builds > li + li{padding-left:24px;border-left:1px solid var(--rule);}
+.build-n{font-size:20px;font-weight:500;letter-spacing:-0.02em;color:var(--accent-deep);}
+.build-h{margin-top:8px;font-size:16.5px;font-weight:500;}
+.build-b{margin-top:6px;font-size:15.5px;color:var(--ink-2);}
+.builds-note{margin-top:22px;font-size:15.5px;color:var(--ink-2);}
+
+/* ---------- price ---------- */
+.tiers{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--ink);}
+.tier{flex:1 1 260px;padding:24px 24px 26px 0;border-top:3px solid transparent;border-bottom:1px solid var(--rule);}
+.tier + .tier{padding-left:24px;border-left:1px solid var(--rule);}
+.tier-flag{
+  font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--ink-2);min-height:1.4em;display:block;
+}
+.tier.is-start .tier-flag{color:var(--accent-deep);}
+.tier.is-start{border-top-color:var(--accent);}
+.tier h3{margin-top:12px;font-size:21px;}
+.tier-price{margin-top:14px;font-size:16.5px;color:var(--ink-2);}
+.tier-price b{font-size:27px;font-weight:500;color:var(--ink);letter-spacing:-0.03em;}
+.tier ul{margin-top:16px;}
+.tier li{position:relative;padding:0 0 9px 19px;font-size:15.5px;color:var(--ink-2);}
+.tier li::before{content:"";position:absolute;left:1px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.notes{margin-top:30px;display:flex;flex-wrap:wrap;gap:0;}
+.notes li{flex:1 1 260px;padding:14px 22px 14px 0;border-top:1px solid var(--rule);font-size:15.5px;color:var(--ink-2);}
+.notes li b{color:var(--ink);font-weight:500;}
+
+/* ---------- close ---------- */
+.close{padding:64px 0 28px;}
+.close h2{font-size:clamp(28px,4.6vw,42px);max-width:16ch;}
+.founders{display:flex;flex-wrap:wrap;gap:0;margin-top:38px;border-top:1px solid var(--rule);}
+.founders li{flex:1 1 280px;display:flex;gap:14px;padding:22px 24px 22px 0;border-bottom:1px solid var(--rule);}
+.founders li + li{padding-left:24px;border-left:1px solid var(--rule);}
+.init{
+  width:48px;height:48px;flex:none;border-radius:50%;
+  border:1.5px solid var(--accent);color:var(--accent-deep);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--label);font-size:15px;font-weight:700;letter-spacing:0.04em;
+}
+.f-n{font-size:17px;font-weight:500;}
+.f-b{font-size:15.5px;color:var(--ink-2);margin-top:2px;}
+.support{margin-top:22px;font-size:15.5px;color:var(--ink-2);max-width:56ch;}
+
+.foot{padding:34px 0 60px;border-top:1px solid var(--rule);margin-top:34px;}
+.foot-row{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:baseline;font-size:15.5px;color:var(--ink-2);}
+.foot-row a{color:var(--accent-deep);display:inline-flex;align-items:center;min-height:44px;}
+.foot-b{font-weight:600;color:var(--ink);font-size:16.5px;}
+
+/* ---------- wide: the rail goes persistent ---------- */
+@media (min-width:1180px){
+  html.js .wrap{max-width:1200px;padding-left:250px;padding-right:26px;}
+  html.tour .tourbar{display:none;}
+  html.js .rail{
+    position:fixed;top:50%;left:26px;transform:translateY(-50%);
+    width:206px;max-width:none;margin:0;padding:0;border-top:0;z-index:50;
+  }
+  html.js .rail .rail-h{margin-bottom:14px;padding-left:26px;}
+  html.js .rail-list{display:block;}
+  html.js .rail-item{position:relative;}
+  html.js .rail-item::before{
+    content:"";position:absolute;left:5px;top:0;bottom:0;width:2px;
+    background:rgba(23,19,16,0.12);
+  }
+  html.js .rail-item:first-child::before{top:22px;}
+  html.js .rail-item:last-child::before{bottom:22px;}
+  html.js .rail-item.is-done::before,
+  html.js .rail-item.is-active::before{background:var(--accent);}
+  html.js .rail-item.is-active:last-child::before{background:linear-gradient(180deg,var(--accent),transparent);}
+  html.js .rail-link{
+    display:flex;align-items:center;gap:14px;min-height:44px;padding-left:26px;
+    position:relative;font-size:15px;line-height:1.2;
+  }
+  html.js .rail-link::before{
+    content:"";position:absolute;left:0;top:50%;margin-top:-6px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--sky-fallback);border:2px solid rgba(23,19,16,0.22);
+    transition:background 220ms var(--ease),border-color 220ms var(--ease),transform 220ms var(--ease);
+  }
+  html.js .rail-item.is-done .rail-link::before{background:var(--accent);border-color:var(--accent);}
+  html.js .rail-item.is-active .rail-link::before{
+    background:var(--accent);border-color:var(--accent);transform:scale(1.25);
+    box-shadow:0 0 0 4px rgba(220,104,67,0.20);
+  }
+  html.js .rail-n{display:none;}
+  html.js .rail-move{
+    display:flex;gap:8px;margin-top:16px;padding-left:26px;
+  }
+  html.js .rail-move button{
+    width:44px;height:44px;border-radius:999px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1px solid rgba(23,19,16,0.18);background:rgba(255,255,255,0.5);color:var(--ink);
+  }
+  html.js .rail-move button:hover{background:#fff;}
+  html.js .rail-move button[disabled]{cursor:default;color:var(--ink-2);border-color:var(--rule);background:transparent;}
+  /* over the night band the rail repaints */
+  html.js .rail.is-night .rail-h,
+  html.js .rail.is-night .rail-link{color:var(--cream-2);}
+  html.js .rail.is-night .rail-item.is-active .rail-link{color:var(--cream);}
+  html.js .rail.is-night .rail-item::before{background:rgba(255,255,255,0.18);}
+  html.js .rail.is-night .rail-item.is-done::before,
+  html.js .rail.is-night .rail-item.is-active::before{background:var(--accent);}
+  html.js .rail.is-night .rail-link::before{background:#150F0B;border-color:rgba(255,255,255,0.32);}
+  html.js .rail.is-night .rail-item.is-done .rail-link::before,
+  html.js .rail.is-night .rail-item.is-active .rail-link::before{background:var(--accent);border-color:var(--accent);}
+  html.js .rail.is-night .rail-move button{border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.08);color:var(--cream);}
+  html.js .rail.is-night .rail-move button[disabled]{color:var(--cream-2);border-color:rgba(255,255,255,0.18);background:transparent;}
+}
+
+@media (max-width:720px){
+  .stop{padding:44px 0;}
+  .split-col + .split-col{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:22px;margin-top:6px;}
+  .builds > li + li,.tier + .tier,.founders li + li{border-left:0;padding-left:0;}
+  .kb-cat{min-width:0;}
+  .kb-item summary{flex-wrap:wrap;gap:4px 10px;}
+  .kb-t{flex:1 1 100%;order:3;}
+  .kb-caret{order:2;margin-left:auto;}
+  .run{
+    display:grid;grid-template-columns:auto 1fr auto;
+    grid-template-areas:"n body body" "state state go";
+    gap:6px 10px;align-items:center;
+  }
+  .run-n{grid-area:n;}
+  .run-body{grid-area:body;}
+  .run-state{grid-area:state;justify-self:start;}
+  .run-go{grid-area:go;justify-self:end;}
+  .ops-go{margin-left:auto;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+}
+</style>
+
+<script>try{document.documentElement.className+=" js";}catch(e){}</script>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 17 of 17</span>
+  <span class="proto-name">The Tour</span>
+  <span class="proto-bet">A guided walkthrough. One visual, one sentence, next. Like being shown around.</span>
+</div>
+
+<div class="tourbar" id="tourbar" aria-hidden="true">
+  <div class="tb-track"><div class="tb-fill" id="tbFill"></div></div>
+  <div class="tb-row">
+    <div class="tb-text">
+      <span class="tb-num" id="tbNum">Stop 1 of 10</span>
+      <span class="tb-name" id="tbName">The interruption</span>
+    </div>
+    <button type="button" class="tb-btn" id="tbPrev" aria-label="Previous stop">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button type="button" class="tb-btn" id="tbNext" aria-label="Next stop">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<header class="wrap mast">
+  <div class="brand"><span class="brand-dot" aria-hidden="true"></span> Stephens AI</div>
+  <a class="btn btn-ghost" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+</header>
+
+<main>
+
+<section class="wrap hero" aria-labelledby="heroH">
+  <p class="eyebrow">For independent eyecare practices</p>
+  <h1 id="heroH">A tour of what we build for <span class="hl">independent eyecare practices</span>.</h1>
+  <p class="hero-sub">Ten stops: the problem, the three products, what a client said, and the price.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+    <a class="btn btn-ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+  </div>
+  <a class="hero-start" href="#stop-1">
+    Start the tour
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<nav class="wrap rail" id="rail" aria-label="Tour stops">
+  <p class="label rail-h">The ten stops</p>
+  <ol class="rail-list">
+    <li class="rail-item"><a class="rail-link" href="#stop-1"><span class="rail-n">01</span> The interruption</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-2"><span class="rail-n">02</span> Where this comes from</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-3"><span class="rail-n">03</span> The knowledge base</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-4"><span class="rail-n">04</span> What is in it</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-5"><span class="rail-n">05</span> Recall, done for you</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-6"><span class="rail-n">06</span> Practice operations</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-7"><span class="rail-n">07</span> What a client said</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-8"><span class="rail-n">08</span> Our answer to it</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-9"><span class="rail-n">09</span> Custom builds</a></li>
+    <li class="rail-item"><a class="rail-link" href="#stop-10"><span class="rail-n">10</span> The price</a></li>
+  </ol>
+  <div class="rail-move">
+    <button type="button" id="railPrev" aria-label="Previous stop">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <button type="button" id="railNext" aria-label="Next stop">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ stop 1 ============ -->
+<section class="stop" id="stop-1" data-name="The interruption" aria-labelledby="s1h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 1 of 10</p>
+      <h2 id="s1h">The answer is in somebody's head.</h2>
+      <p class="stop-say">Several times a day a patient goes on hold while someone walks to the office manager's desk.</p>
+    </div>
+    <ol class="chain">
+      <li><span class="chain-k">The caller asks</span><span class="chain-v">Is the refraction covered this year, or do I pay for it</span></li>
+      <li><span class="chain-k">The front desk</span><span class="chain-v">Puts the call on hold</span></li>
+      <li><span class="chain-k">The office manager</span><span class="chain-v">Stops the work they were doing</span></li>
+      <li class="chain-end"><span class="chain-k">The answer</span><span class="chain-v">Exists, in a binder, a spreadsheet, and one person's memory</span></li>
+    </ol>
+    <p class="chain-cost">Two people stop working, and the caller waits for something that was written down years ago.</p>
+  </div>
+</section>
+
+<!-- ============ stop 2 ============ -->
+<section class="stop band-wash" id="stop-2" data-name="Where this comes from" aria-labelledby="s2h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 2 of 10</p>
+      <h2 id="s2h">Where this comes from.</h2>
+      <p class="stop-say">Alec spent the last year inside one 27 person practice, writing down what the front desk is actually asked.</p>
+    </div>
+    <p class="fig-big">76</p>
+    <p class="fig-big-l">front desk situations mapped, from the questions staff actually face</p>
+    <dl class="fig-row">
+      <div><dt>27</dt><dd>people at the practice, live today</dd></div>
+      <div><dt>6 to 7</dt><dd>doctors, one location</dd></div>
+      <div><dt>4</dt><dd>decision lookups built</dd></div>
+      <div><dt>30</dt><dd>days from start to live</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ stop 3, BUBBLE 1 ============ -->
+<section class="stop" id="stop-3" data-name="The knowledge base" aria-labelledby="s3h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 3 of 10 &middot; Product one</p>
+      <h2 id="s3h">The front desk knowledge base.</h2>
+      <p class="stop-say">Type what the patient just asked, and the page opens with the exception nobody remembers.</p>
+    </div>
+
+    <div class="pane" data-demo="kb">
+      <div class="pane-top">
+        <span class="pane-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="pane-title">Front desk knowledge base</span>
+        <span class="pane-live">Live at a 27 person practice</span>
+      </div>
+
+      <div class="js-only jsblock">
+        <label class="sr-only" for="kbq">Search the situation pages</label>
+        <div class="kb-field" role="search">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="kbq" type="text" autocomplete="off" placeholder="refraction, flashes, price, recall card">
+          <button type="button" class="kb-clear" id="kbClear" aria-label="Clear the search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <div class="kb-tries">
+          <span class="label">Try</span>
+          <button type="button" class="kb-try" data-q="refraction">refraction</button>
+          <button type="button" class="kb-try" data-q="flashes">flashes</button>
+          <button type="button" class="kb-try" data-q="price">price</button>
+          <button type="button" class="kb-try" data-q="recall card">recall card</button>
+        </div>
+      </div>
+
+      <p class="kb-count js-only jsblock" id="kbCount" role="status" aria-live="polite">8 example pages, of 76 mapped</p>
+      <p class="kb-count" id="kbStatic">8 example pages, of 76 mapped</p>
+
+      <ul class="kb-list" id="kbList">
+        <li class="kb-item" data-keys="refraction collect bill vision plan medical checkout charge routine">
+          <details>
+            <summary>
+              <span class="kb-cat">Billing</span>
+              <span class="kb-t">Refraction: collect or bill</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">The vision plan covers the refraction only when the visit bills as a routine exam.</p>
+              <ul class="kb-points">
+                <li>Routine exam on the vision plan: it goes through the plan, nothing to collect at the desk.</li>
+                <li>Medical visit: it is not a covered service. Say so at check in, not at checkout.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>If the doctor changes the visit type after the exam, the answer changes with it. Check the encounter before you take payment.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="vision plan medical coverage complaint routine eligibility which insurance bills">
+          <details>
+            <summary>
+              <span class="kb-cat">Insurance</span>
+              <span class="kb-t">Vision plan or medical: which one bills</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">The reason the patient gives on the phone decides which benefit the visit runs on.</p>
+              <ul class="kb-points">
+                <li>Due for glasses, no complaint: routine, vision plan.</li>
+                <li>Names a symptom, red eye, pain, flashes, a sudden change: medical, even if they also want glasses.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>A patient with a medical diagnosis on file who calls for a routine check still bills medical if the doctor addresses it. Say the plan may not apply before they come in.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="triage urgent same day flashes floaters red eye pain injury how soon emergency">
+          <details>
+            <summary>
+              <span class="kb-cat">Scheduling</span>
+              <span class="kb-t">Same day or next available: phone triage</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">The short list of what cannot wait for the next open routine slot.</p>
+              <ul class="kb-points">
+                <li>Sudden flashes, new floaters, a curtain in the vision: same day, and tell the doctor on duty.</li>
+                <li>Chemical splash: same day, and start them rinsing while they are still on the phone.</li>
+                <li>Gradual blur, no pain, no redness: routine, next available.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>If nothing is open, do not send them away. Take the message to the doctor on duty and call the patient back the same day.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="doctor provider restrictions pediatric children specialty book schedule surgery day">
+          <details>
+            <summary>
+              <span class="kb-cat">Scheduling</span>
+              <span class="kb-t">Which doctor can see this patient</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">Not every visit type fits every provider's schedule, so check before you book.</p>
+              <ul class="kb-points">
+                <li>Young children and first eye exams go to the providers who take them.</li>
+                <li>Specialty fittings and post op follow ups go back to the provider who started the case.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>If the only opening is with a provider who does not take that visit type, book the right provider later instead of filling the wrong slot.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="price cost how much fee self pay price list quote year current">
+          <details>
+            <summary>
+              <span class="kb-cat">Billing</span>
+              <span class="kb-t">Price lookup: which list is current</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">One current list. The old copies in the shared drive and the printed sheet in the drawer are not it.</p>
+              <ul class="kb-points">
+                <li>If a printed sheet disagrees with this page, this page wins.</li>
+                <li>If a price is not on the page, say you will confirm and call back. Do not estimate.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>Prices reset at the start of the plan year, so a quote given before the reset is not honored after it.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="contact lens follow up fitting trial recheck charge included optical">
+          <details>
+            <summary>
+              <span class="kb-cat">Optical</span>
+              <span class="kb-t">Contact lens follow up: what is included</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">Follow ups inside the fitting period are part of the fitting fee. After it closes they are a new charge.</p>
+              <ul class="kb-points">
+                <li>A recheck inside the fitting period: no new charge, book it as a follow up.</li>
+                <li>A new brand or a power change after the fitting closes: new fitting.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>A patient who never came back is still inside the fitting period until it closes. Do not charge them again to finish what they paid for.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="recall card postcard letter why did i get this reason code due scleral medical">
+          <details>
+            <summary>
+              <span class="kb-cat">Recall</span>
+              <span class="kb-t">Recall card: what to say when they call back</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">Patients call and ask why they got a card, so answer from the reason code and not from a guess.</p>
+              <ul class="kb-points">
+                <li>Routine recall: they are due for their annual exam. Book it.</li>
+                <li>Medical recall: the doctor asked to see them again for something specific. Say that, then book it.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>If the patient says they were already seen, do not argue and do not rebook. Take it to the office manager so the cards stop.</p>
+            </div>
+          </details>
+        </li>
+        <li class="kb-item" data-keys="new patient paperwork forms intake insurance card consent check in front desk">
+          <details>
+            <summary>
+              <span class="kb-cat">Front desk</span>
+              <span class="kb-t">New patient paperwork</span>
+              <svg class="kb-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="kb-body">
+              <p class="kb-lede">What has to be in hand before the patient goes back.</p>
+              <ul class="kb-points">
+                <li>Intake form, signed consent, and a photo of both sides of the card.</li>
+                <li>A patient who arrives with nothing still gets seen. Short form now, the rest at checkout.</li>
+              </ul>
+              <p class="kb-exc"><b>The exception</b>If the name on the card does not match the name on the form, fix it before the visit. Fixing it afterwards is a rebill.</p>
+            </div>
+          </details>
+        </li>
+      </ul>
+      <p class="kb-empty" id="kbEmpty" hidden>No example page matches that. In a real build, a page nobody can find is a page we still have to write.</p>
+    </div>
+
+    <ul class="facts">
+      <li><b>Your office manager edits it</b>In the app, and every edit is saved and reversible.</li>
+      <li><b>Google sign in</b>Restricted to your practice domain, editors you choose.</li>
+      <li><b>Installs from the browser</b>On the front desk computers, no admin rights.</li>
+      <li><b>Keeps working offline</b>Pages already opened stay open if the internet drops.</li>
+      <li><b>One click to flag a page</b>Staff say a page is wrong from inside the app.</li>
+      <li><b>Live at day 30</b>We write the pages from your material, not you.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ stop 4 ============ -->
+<section class="stop band-wash" id="stop-4" data-name="What is in it" aria-labelledby="s4h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 4 of 10 &middot; The first objection</p>
+      <h2 id="s4h">What is in the knowledge base, and what is not.</h2>
+      <p class="stop-say">It holds your rules, not your charts, and it does not connect to your practice management system.</p>
+    </div>
+    <div class="split">
+      <div class="split-col col-in">
+        <p class="col-h">In the knowledge base</p>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Insurance rules and what each plan covers</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> This year's prices, one current list</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Scheduling and triage protocols</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Doctor restrictions and who takes what</li>
+        </ul>
+      </div>
+      <div class="split-col col-out">
+        <p class="col-h">Not in it, and not connected</p>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg> Patient charts</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg> <span><span class="zero">0</span> patient records in it</span></li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg> Your practice management system</li>
+        </ul>
+      </div>
+    </div>
+    <p class="split-note">That last one is on purpose: hosted systems do not give an outside vendor database access, so any vendor promising you a nightly sync has not checked yet.</p>
+  </div>
+</section>
+
+<!-- ============ stop 5, BUBBLE 2 ============ -->
+<section class="stop" id="stop-5" data-name="Recall, done for you" aria-labelledby="s5h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 5 of 10 &middot; Product two</p>
+      <h2 id="s5h">Recall, done for you.</h2>
+      <p class="stop-say">One month of recall at an eight provider practice, in the order it has to run.</p>
+    </div>
+
+    <div class="pane" data-demo="run">
+      <div class="pane-top">
+        <span class="pane-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="pane-title">Monthly recall run</span>
+      </div>
+      <div class="run-top">
+        <span class="run-count js-only" id="runCount">Runs finished <b>0</b> of 11</span>
+        <span class="label">8 provider runs, plus scleral, plus medical, plus the update run</span>
+      </div>
+
+      <ol class="run-list" id="runList">
+        <li class="run" data-run>
+          <span class="run-n">01</span>
+          <span class="run-body"><span class="run-name">Scleral letters</span><span class="run-meta">Letters, scleral lens wearers</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">02</span>
+          <span class="run-body"><span class="run-name">Medical recall letters</span><span class="run-meta">About 10 reason codes, output as postcards</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">03</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 1</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">04</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 2</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">05</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 3</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">06</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 4</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">07</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 5</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">08</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 6</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">09</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 7</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run" data-run>
+          <span class="run-n">10</span>
+          <span class="run-body"><span class="run-name">Calls list and routine postcards, provider 8</span><span class="run-meta">One run per doctor, individually</span></span>
+          <span class="run-state">To run</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+        <li class="run run-update" data-run data-last>
+          <span class="run-n">11</span>
+          <span class="run-body"><span class="run-name">The update run, last</span><span class="run-meta">Marks everyone contacted, so next month pulls a clean list</span></span>
+          <span class="run-state">Goes last</span>
+          <button type="button" class="run-go js-only">Run</button>
+        </li>
+      </ol>
+
+      <p class="run-msg js-only jsblock" id="runMsg" role="status" aria-live="polite">Run them in order, or try the update run early and see what happens.</p>
+      <div class="run-ctl js-only jsflex">
+        <button type="button" class="btn btn-primary" id="runNext">Run the next one</button>
+        <button type="button" class="btn btn-ghost" id="runReset">Start the month over</button>
+      </div>
+    </div>
+
+    <ul class="facts">
+      <li><b>On a schedule</b>Not when somebody finds an afternoon.</li>
+      <li><b>The call list arrives ready</b>In priority order, with the answers to what patients ask when they call back.</li>
+      <li><b>A monthly report</b>Who was contacted, by which channel, and who booked.</li>
+      <li><b>We work from your list</b>One your own team runs, or a limited login you create and can revoke.</li>
+      <li><b>Under a signed BAA</b>Recall touches patient contact details, so it runs inside your own accounts. We never touch charts.</li>
+      <li><b>Priced per practice</b>On the call. We have not set a list price for this one.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ stop 6 ============ -->
+<section class="stop band-wash" id="stop-6" data-name="Practice operations" aria-labelledby="s6h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 6 of 10 &middot; Product three</p>
+      <h2 id="s6h">Practice operations automation.</h2>
+      <p class="stop-say">Approve a time off request and watch it reach payroll without anyone retyping it.</p>
+    </div>
+
+    <div data-demo="ops">
+      <p class="label">Time off requests, waiting on the office manager</p>
+      <div class="ops" id="opsList">
+        <div class="ops-row" data-req="a">
+          <span class="ops-who"><span class="ops-role">Front desk associate</span><span class="ops-what">Time off, Thursday and Friday. Coverage checked against the schedule.</span></span>
+          <span class="ops-state">Waiting</span>
+          <button type="button" class="ops-go js-only">Approve</button>
+        </div>
+        <div class="ops-row" data-req="b">
+          <span class="ops-who"><span class="ops-role">Optician</span><span class="ops-what">Time off, Monday. Coverage checked against the schedule.</span></span>
+          <span class="ops-state">Waiting</span>
+          <button type="button" class="ops-go js-only">Approve</button>
+        </div>
+        <div class="ops-row" data-req="c">
+          <span class="ops-who"><span class="ops-role">Technician</span><span class="ops-what">Shift swap, Wednesday. Both sides of the swap confirmed.</span></span>
+          <span class="ops-state">Waiting</span>
+          <button type="button" class="ops-go js-only">Approve</button>
+        </div>
+      </div>
+
+      <div class="ops-out">
+        <div class="ops-out-h">
+          <p class="label">What payroll receives</p>
+          <p class="label js-only" id="opsCount" role="status" aria-live="polite">Carried <b>0</b> of 3</p>
+        </div>
+        <div class="ops-line" data-line="a"><span>Front desk associate, Thursday and Friday</span><span class="ops-tag">Pending</span></div>
+        <div class="ops-line" data-line="b"><span>Optician, Monday</span><span class="ops-tag">Pending</span></div>
+        <div class="ops-line" data-line="c"><span>Technician, shift swap, Wednesday</span><span class="ops-tag">Pending</span></div>
+        <div class="run-ctl js-only jsflex" style="padding-top:16px;">
+          <button type="button" class="btn btn-ghost" id="opsReset">Reset the queue</button>
+        </div>
+      </div>
+
+      <div class="ops-hours">
+        <span class="n">60 to 100</span>
+        <span class="l">admin hours a year returned by the time off build at the practice we built it for</span>
+      </div>
+
+      <ul class="facts">
+        <li><b>Payroll, automated</b>Scoped to your practice, not a generic template.</li>
+        <li><b>A quarterly practice snapshot</b>Where the time and the money actually went.</li>
+        <li><b>Monthly working time</b>With both founders, on your queue.</li>
+        <li><b>Staff records, not patient records</b>This one runs on time off and payroll data. No charts, no patient contact details.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ stops 7 and 8, one night band ============ -->
+<div class="band-night">
+<section class="stop" id="stop-7" data-name="What a client said" data-theme="night" aria-labelledby="s7h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 7 of 10</p>
+      <h2 id="s7h" class="sr-only">What a client said</h2>
+    </div>
+    <div class="quote-rule" aria-hidden="true"></div>
+    <blockquote class="quote-big">&ldquo;I think the biggest issue will be getting in the habit of using the tool.&rdquo;</blockquote>
+    <div class="quote-by">
+      <span class="quote-role">Office manager</span>
+      <span class="quote-ctx">Two weeks after the knowledge base went live</span>
+    </div>
+  </div>
+</section>
+
+<section class="stop" id="stop-8" data-name="Our answer to it" data-theme="night" aria-labelledby="s8h" style="padding-top:0;">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 8 of 10 &middot; The answer</p>
+      <h2 id="s8h">Getting people to use it is a separate job.</h2>
+      <p class="stop-say">We treat it as one, which is what the feedback button and the same day fixes in the first two weeks are for.</p>
+    </div>
+    <ul class="facts">
+      <li><b>They report from inside the app</b>Not by email. The practice's own team files the issues.</li>
+      <li><b>The first batch of four</b>Fixed and live the same day.</li>
+      <li><b>New pages come from them</b>One went live from a screenshot the same week.</li>
+      <li><b>Daily use at the front desk</b>That is the measure we hold ourselves to.</li>
+    </ul>
+    <ul class="qlist">
+      <li><q>You are awesome! Thank you so much for your help!</q><span class="r">Office manager</span></li>
+      <li><q>Thanks for the fixes on the PTO!</q><span class="r">Office manager</span></li>
+      <li><q>Thank you for all of your help on this project.</q><span class="r">Office manager</span></li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<!-- ============ stop 9 ============ -->
+<section class="stop" id="stop-9" data-name="Custom builds" aria-labelledby="s9h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 9 of 10</p>
+      <h2 id="s9h">We also build to order.</h2>
+      <p class="stop-say">The three products exist because we built them for one practice first, so if the thing in your way is not one of the three, that is the conversation.</p>
+    </div>
+    <ul class="builds">
+      <li>
+        <p class="build-n">5 agents running daily operations</p>
+        <p class="build-h">Business coaching practice</p>
+        <p class="build-b">A full operating system: software agents handling inbox, scheduling, voice note capture, meeting notes, and calendar to invoice.</p>
+      </li>
+      <li>
+        <p class="build-n">Complete digital rebuild</p>
+        <p class="build-h">Construction company, Japan</p>
+        <p class="build-b">A full site rebuild across six pages, search console set up, and a corrected business profile, now on an upkeep retainer.</p>
+      </li>
+      <li>
+        <p class="build-n">80% of the manual work cut</p>
+        <p class="build-h">Language test prep company</p>
+        <p class="build-b">AI worked into curriculum drafting, formatting, review cycles, and process automation.</p>
+      </li>
+    </ul>
+    <p class="builds-note">Custom work is scoped on the call, so there is no price on this page for it.</p>
+  </div>
+</section>
+
+<!-- ============ stop 10 ============ -->
+<section class="stop band-wash" id="stop-10" data-name="The price" aria-labelledby="s10h">
+  <div class="wrap">
+    <div class="stop-head">
+      <p class="stop-num">Stop 10 of 10 &middot; Last stop</p>
+      <h2 id="s10h">The price.</h2>
+      <p class="stop-say">Month to month, no term, and we would start you in the middle tier.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <span class="tier-flag">Tier 1</span>
+        <h3>Front desk knowledge base</h3>
+        <p class="tier-price"><b>$2,500</b> setup, then <b>$299</b> a month</p>
+        <ul>
+          <li>Situation pages written by us from your material</li>
+          <li>4 decision lookups, search, and in app editing</li>
+          <li>Google sign in and a saved history of every change</li>
+        </ul>
+      </div>
+      <div class="tier is-start">
+        <span class="tier-flag">Tier 2 &middot; Where we would start you</span>
+        <h3>Whole practice knowledge base</h3>
+        <p class="tier-price"><b>$3,500</b> setup, then <b>$250</b> a month</p>
+        <ul>
+          <li>Everything in tier 1</li>
+          <li>The whole floor: technicians, optical, and each doctor's rules</li>
+          <li>A content review with your office manager each quarter</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <span class="tier-flag">Tier 3</span>
+        <h3>Knowledge base plus operations</h3>
+        <p class="tier-price"><b>$4,500</b> setup, then <b>$350</b> a month</p>
+        <ul>
+          <li>Everything in tier 2</li>
+          <li>Time off and payroll automation, scoped to your practice</li>
+          <li>A quarterly snapshot and monthly working time with both founders</li>
+        </ul>
+      </div>
+    </div>
+    <ul class="notes">
+      <li><b>Recall, done for you.</b> Priced per practice, on the call, or folded into tier 3.</li>
+      <li><b>Extra sections</b> beyond a tier cap are $600 each.</li>
+      <li><b>A second location</b> is $1,500 to set up and $149 a month.</li>
+      <li><b>Month to month.</b> No term, keep every page on cancellation, export any time.</li>
+      <li><b>Compare it to a training platform.</b> Trainual and Whale run about $249 to $300 a month at this size and still hand you an empty system.</li>
+      <li><b>Live at day 30.</b> We write the pages, run the training, and open the feedback channel.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ close ============ -->
+<section class="wrap close" aria-labelledby="closeH">
+  <p class="eyebrow">End of the tour</p>
+  <h2 id="closeH">Twenty minutes, and you get both of us.</h2>
+  <div class="cta-row" style="margin-top:26px;">
+    <a class="btn btn-primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+    <a class="btn btn-ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+  </div>
+  <ul class="founders">
+    <li>
+      <span class="init" aria-hidden="true">AS</span>
+      <span><span class="f-n">Alec Stephens</span><span class="f-b">Spent the last year inside a 27 person eyecare practice, watching the front desk work.</span></span>
+    </li>
+    <li>
+      <span class="init" aria-hidden="true">JK</span>
+      <span><span class="f-n">Jusheen Kim</span><span class="f-b">Lead software engineer at J.P. Morgan before this.</span></span>
+    </li>
+  </ul>
+  <p class="support">Both founders are based in Asia. Urgent issues are answered by the next business morning, US time.</p>
+</section>
+
+</main>
+
+<footer class="wrap foot">
+  <div class="foot-row">
+    <span class="foot-b">Stephens AI</span>
+    <span>Alec Stephens and Jusheen Kim</span>
+    <a href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    <a href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var d = document;
+  function one(sel, ctx) { return (ctx || d).querySelector(sel); }
+  function all(sel, ctx) { return Array.prototype.slice.call((ctx || d).querySelectorAll(sel)); }
+
+  var reduced = false;
+  try {
+    reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  } catch (e) { reduced = false; }
+
+  /* ---------- measure the review strip and the sticky bar ---------- */
+  var proto = one(".proto-bar"), tourbar = one("#tourbar");
+  function measure() {
+    try {
+      var root = d.documentElement;
+      if (proto) { root.style.setProperty("--protoH", proto.offsetHeight + "px"); }
+      var visible = tourbar && tourbar.offsetParent !== null;
+      root.style.setProperty("--barH", visible ? (tourbar.offsetHeight + "px") : "0px");
+    } catch (e) {}
+  }
+  measure();
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
+
+  function guard(fn) { try { fn(); } catch (e) {} }
+
+  /* ================= the tour ================= */
+  guard(function () {
+  var stops = all(".stop");
+  var links = all(".rail-link");
+  var rail = one("#rail");
+  var tbNum = one("#tbNum"), tbName = one("#tbName"), tbFill = one("#tbFill");
+  var tbPrev = one("#tbPrev"), tbNext = one("#tbNext");
+  var railPrev = one("#railPrev"), railNext = one("#railNext");
+  var current = -1;
+
+  if (stops.length) {
+    if (tourbar) { tourbar.removeAttribute("aria-hidden"); }
+    d.documentElement.className += " tour";
+    measure();
+
+    var setActive = function (i) {
+      if (i < 0) { i = 0; }
+      if (i > stops.length - 1) { i = stops.length - 1; }
+      if (i === current) { return; }
+      current = i;
+      for (var n = 0; n < links.length; n++) {
+        var item = links[n].parentNode;
+        if (!item || !item.classList) { continue; }
+        item.classList.toggle("is-active", n === i);
+        item.classList.toggle("is-done", n < i);
+        if (n === i) { links[n].setAttribute("aria-current", "step"); }
+        else { links[n].removeAttribute("aria-current"); }
+      }
+      var night = stops[i].getAttribute("data-theme") === "night";
+      if (rail) { rail.classList.toggle("is-night", night); }
+      var name = stops[i].getAttribute("data-name") || "";
+      if (tbName) { tbName.textContent = name; }
+      if (tbNum) { tbNum.textContent = "Stop " + (i + 1) + " of " + stops.length; }
+      if (tbFill) { tbFill.style.width = (((i + 1) / stops.length) * 100) + "%"; }
+      var atStart = i === 0, atEnd = i === stops.length - 1;
+      [tbPrev, railPrev].forEach(function (b) { if (b) { b.disabled = atStart; } });
+      [tbNext, railNext].forEach(function (b) { if (b) { b.disabled = atEnd; } });
+    };
+
+    var sync = function () {
+      var mark = (window.innerHeight || 600) * 0.34;
+      var best = 0, bestDist = Infinity;
+      for (var i = 0; i < stops.length; i++) {
+        var r = stops[i].getBoundingClientRect();
+        if (r.top <= mark && r.bottom > mark) { best = i; bestDist = -1; break; }
+        var dist = Math.abs(r.top - mark);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      }
+      setActive(best);
+    };
+
+    var pending = false;
+    var onScroll = function () {
+      if (pending) { return; }
+      pending = true;
+      var run = function () { pending = false; sync(); };
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(run); } else { setTimeout(run, 60); }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    sync();
+
+    var goTo = function (i, focusIt) {
+      if (i < 0) { i = 0; }
+      if (i > stops.length - 1) { i = stops.length - 1; }
+      var el = stops[i];
+      try { el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }
+      catch (e) { el.scrollIntoView(); }
+      setActive(i);
+      if (focusIt) {
+        var h = el.querySelector("h2");
+        if (h) {
+          h.setAttribute("tabindex", "-1");
+          try { h.focus({ preventScroll: true }); } catch (e2) { try { h.focus(); } catch (e3) {} }
+        }
+      }
+    };
+
+    links.forEach(function (a, i) {
+      a.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        goTo(i, true);
+      });
+      a.addEventListener("keydown", function (ev) {
+        var k = ev.key, next = -1;
+        if (k === "ArrowDown" || k === "ArrowRight") { next = i + 1; }
+        else if (k === "ArrowUp" || k === "ArrowLeft") { next = i - 1; }
+        else if (k === "Home") { next = 0; }
+        else if (k === "End") { next = links.length - 1; }
+        else { return; }
+        ev.preventDefault();
+        if (next < 0) { next = 0; }
+        if (next > links.length - 1) { next = links.length - 1; }
+        links[next].focus();
+        goTo(next, false);
+      });
+    });
+
+    [[tbPrev, -1], [tbNext, 1], [railPrev, -1], [railNext, 1]].forEach(function (pair) {
+      if (!pair[0]) { return; }
+      pair[0].addEventListener("click", function () { goTo(current + pair[1], true); });
+    });
+
+    d.addEventListener("keydown", function (ev) {
+      if (ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.altKey || ev.shiftKey) { return; }
+      var t = ev.target;
+      if (t && t.closest && t.closest("input, textarea, select, [contenteditable], .rail, [data-demo]")) { return; }
+      if (ev.key === "ArrowRight") { ev.preventDefault(); goTo(current + 1, true); }
+      else if (ev.key === "ArrowLeft") { ev.preventDefault(); goTo(current - 1, true); }
+    });
+  }
+  });
+
+  /* ================= demo 1: the knowledge base search ================= */
+  guard(function () {
+    var input = one("#kbq"), listEl = one("#kbList"), count = one("#kbCount"),
+        empty = one("#kbEmpty"), clear = one("#kbClear"), staticLabel = one("#kbStatic");
+    if (!input || !listEl) { return; }
+    var items = all(".kb-item", listEl);
+    if (staticLabel) { staticLabel.hidden = true; staticLabel.style.display = "none"; }
+
+    function filter(q) {
+      var term = String(q || "").trim().toLowerCase();
+      var words = term ? term.split(/\s+/) : [];
+      var shown = 0, first = null;
+      items.forEach(function (li) {
+        var hay = ((li.getAttribute("data-keys") || "") + " " + (li.textContent || "")).toLowerCase();
+        var hit = words.every(function (w) { return hay.indexOf(w) !== -1; });
+        li.hidden = !hit;
+        if (hit) {
+          shown++;
+          if (!first) { first = li; }
+        } else {
+          var det = li.querySelector("details");
+          if (det) { det.open = false; }
+        }
+      });
+      if (empty) { empty.hidden = shown !== 0; }
+      if (count) {
+        count.textContent = shown === 0
+          ? "No example page found"
+          : (shown === 1 ? "1 example page" : shown + " example pages")
+            + (term ? " for “" + term + "”" : ", of 76 mapped");
+      }
+      return first;
+    }
+
+    var openFirst = function (first) {
+      if (!first) { return; }
+      var det = first.querySelector("details");
+      if (det) { det.open = true; }
+    };
+
+    input.addEventListener("input", function () { filter(input.value); });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        openFirst(filter(input.value));
+      } else if (ev.key === "Escape" || ev.key === "Esc") {
+        if (!input.value) { return; }
+        ev.preventDefault();
+        ev.stopPropagation();
+        input.value = "";
+        filter("");
+      }
+    });
+    if (clear) {
+      clear.addEventListener("click", function () {
+        input.value = "";
+        filter("");
+        input.focus();
+      });
+    }
+    all(".kb-try").forEach(function (b) {
+      b.addEventListener("click", function () {
+        input.value = b.getAttribute("data-q") || "";
+        openFirst(filter(input.value));
+      });
+    });
+    filter("");
+  });
+
+  /* ================= demo 2: the recall run ================= */
+  guard(function () {
+    var listEl = one("#runList"), msg = one("#runMsg"), countEl = one("#runCount"),
+        nextBtn = one("#runNext"), resetBtn = one("#runReset");
+    if (!listEl) { return; }
+    var rows = all(".run", listEl);
+    if (!rows.length) { return; }
+    var last = rows[rows.length - 1];
+
+    function say(text, tone) {
+      if (!msg) { return; }
+      msg.textContent = text;
+      msg.setAttribute("data-tone", tone || "");
+    }
+
+    function pending() {
+      return rows.filter(function (r) {
+        return !r.classList.contains("is-done") && r !== last;
+      });
+    }
+
+    function paint() {
+      var done = rows.filter(function (r) { return r.classList.contains("is-done"); }).length;
+      if (countEl) {
+        var b = countEl.querySelector("b");
+        if (b) { b.textContent = String(done); }
+      }
+      var ready = pending().length === 0;
+      rows.forEach(function (r) { r.classList.remove("is-next"); });
+      var queue = pending();
+      if (queue.length) { queue[0].classList.add("is-next"); }
+      else if (!last.classList.contains("is-done")) { last.classList.add("is-next"); }
+
+      last.classList.toggle("is-locked", !ready && !last.classList.contains("is-done"));
+      var lastState = last.querySelector(".run-state");
+      if (lastState && !last.classList.contains("is-done")) {
+        lastState.textContent = ready ? "Ready, and last" : "Waits for the rest";
+      }
+      if (nextBtn) {
+        var allDone = done === rows.length;
+        nextBtn.disabled = allDone;
+        nextBtn.textContent = allDone ? "Month finished" : (ready ? "Run the update step" : "Run the next one");
+      }
+    }
+
+    function markDone(row) {
+      row.classList.add("is-done");
+      row.classList.remove("is-locked");
+      var st = row.querySelector(".run-state");
+      if (st) { st.textContent = "Done"; }
+      var btn = row.querySelector(".run-go");
+      if (btn) { btn.disabled = true; }
+    }
+
+    function runRow(row) {
+      if (row.classList.contains("is-done")) { return; }
+      if (row === last && pending().length) {
+        say("Not yet. Run the update step before the calls and postcards finish and the same patients get pulled again next month.", "warn");
+        paint();
+        return;
+      }
+      markDone(row);
+      if (row === last) {
+        say("Month closed in the right order. Nobody was contacted twice, and nobody was dropped.", "good");
+      } else if (pending().length === 0) {
+        say("Every call list and postcard run is finished, so the update step can go.", "good");
+      } else {
+        say(pending().length + " runs left before the update step can go.", "");
+      }
+      paint();
+    }
+
+    rows.forEach(function (row) {
+      var btn = row.querySelector(".run-go");
+      if (btn) { btn.addEventListener("click", function () { runRow(row); }); }
+    });
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        var queue = pending();
+        runRow(queue.length ? queue[0] : last);
+      });
+    }
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        rows.forEach(function (r) {
+          r.classList.remove("is-done");
+          var st = r.querySelector(".run-state");
+          if (st) { st.textContent = r === last ? "Goes last" : "To run"; }
+          var b = r.querySelector(".run-go");
+          if (b) { b.disabled = false; }
+        });
+        say("Fresh month. Run them in order, or try the update run early and see what happens.", "");
+        paint();
+      });
+    }
+    paint();
+  });
+
+  /* ================= demo 3: practice operations ================= */
+  guard(function () {
+    var listEl = one("#opsList"), countEl = one("#opsCount"), resetBtn = one("#opsReset");
+    if (!listEl) { return; }
+    var rows = all(".ops-row", listEl);
+    if (!rows.length) { return; }
+
+    function paint() {
+      var done = rows.filter(function (r) { return r.classList.contains("is-ok"); }).length;
+      if (countEl) {
+        var b = countEl.querySelector("b");
+        if (b) { b.textContent = String(done); }
+      }
+    }
+
+    function approve(row) {
+      if (row.classList.contains("is-ok")) { return; }
+      row.classList.add("is-ok");
+      var st = row.querySelector(".ops-state");
+      if (st) { st.textContent = "Approved"; }
+      var btn = row.querySelector(".ops-go");
+      if (btn) { btn.disabled = true; btn.textContent = "Approved"; }
+      var key = row.getAttribute("data-req");
+      var line = one('.ops-line[data-line="' + key + '"]');
+      if (line) {
+        line.classList.add("is-carried");
+        var tag = line.querySelector(".ops-tag");
+        if (tag) { tag.textContent = "Carried to payroll"; }
+      }
+      paint();
+    }
+
+    rows.forEach(function (row) {
+      var btn = row.querySelector(".ops-go");
+      if (btn) { btn.addEventListener("click", function () { approve(row); }); }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        rows.forEach(function (r) {
+          r.classList.remove("is-ok");
+          var st = r.querySelector(".ops-state");
+          if (st) { st.textContent = "Waiting"; }
+          var b = r.querySelector(".ops-go");
+          if (b) { b.disabled = false; b.textContent = "Approve"; }
+        });
+        all(".ops-line").forEach(function (line) {
+          line.classList.remove("is-carried");
+          var tag = line.querySelector(".ops-tag");
+          if (tag) { tag.textContent = "Pending"; }
+        });
+        paint();
+      });
+    }
+    paint();
+  });
+
+}());
+</script>

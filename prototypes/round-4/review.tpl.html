@@ -1,0 +1,231 @@
+<title>The Review Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
+
+<style>
+/* Same dark chrome as the gallery: the ten pages are warm and light, so a near-black
+   ground reads as a lightbox and keeps the frame out of the way. Two reviewers need to
+   be told apart at a glance, so each gets its own accent and rail. */
+:root{
+  --ground:#131416; --surface:#1C1E21; --surface-2:#25282C;
+  --ink:#F3F1EE; --ink-2:#9DA2A8; --ink-3:#727980;
+  --rule:rgba(255,255,255,.11);
+  --owner:#E8845F; --owner-soft:rgba(220,104,67,.14);
+  --design:#84B6D6; --design-soft:rgba(110,165,200,.14);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-size:15.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:500;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lbl{font-family:"Schibsted Grotesk","Inter Tight",sans-serif;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;font-size:11px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------------------------------------------------------------- masthead */
+header{border-bottom:1px solid var(--rule);padding:52px 0 34px;margin-bottom:34px}
+header .kick{color:var(--owner);margin-bottom:16px}
+header h1{font-size:clamp(31px,5vw,46px);line-height:1.04;max-width:17ch}
+header p{color:var(--ink-2);max-width:60ch;margin:18px 0 0;font-size:17px}
+.caveat{margin-top:22px;padding:13px 16px;border-radius:9px;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid #C9A227;color:var(--ink-2);font-size:14px;max-width:72ch}
+.caveat b{color:var(--ink);font-weight:500}
+
+/* -------------------------------------------------------- shared findings */
+.themes{display:flex;flex-direction:column;gap:14px;margin:0 0 46px}
+.theme{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:19px 21px}
+.theme.hot{border-left:3px solid var(--owner)}
+.theme .cnt{font-family:"Schibsted Grotesk",sans-serif;font-weight:700;font-size:12px;
+  color:var(--owner);letter-spacing:.04em}
+.theme h3{font-size:18px;margin:7px 0 8px}
+.theme p{margin:0;color:var(--ink-2);font-size:15px;max-width:76ch}
+.theme p + p{margin-top:9px}
+.theme b{color:var(--ink);font-weight:500}
+
+/* ------------------------------------------------------------ scoreboard */
+.board-scroll{overflow-x:auto;margin:0 0 46px;-webkit-overflow-scrolling:touch}
+.board{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+.board th{text-align:left;padding:0 12px 9px 0;border-bottom:1px solid var(--rule);
+  font-family:"Schibsted Grotesk",sans-serif;font-weight:600;font-size:10.5px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.board td{padding:11px 12px 11px 0;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top;color:var(--ink-2)}
+.board td:first-child{white-space:nowrap}
+.board a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.board a:hover{border-bottom-color:var(--owner)}
+.board .num{font-family:"Schibsted Grotesk",sans-serif;font-weight:700;color:var(--ink-3);font-size:12px;margin-right:8px}
+.act{display:inline-block;padding:2px 9px;border-radius:5px;font-family:"Schibsted Grotesk",sans-serif;
+  font-weight:600;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.act.book{background:rgba(76,175,120,.16);color:#8FD8AC}
+.act.reply{background:var(--owner-soft);color:var(--owner)}
+.act.read{background:rgba(255,255,255,.08);color:var(--ink-2)}
+.act.close{background:rgba(200,80,70,.16);color:#F09A8E}
+
+/* ------------------------------------------------------------------ entry */
+.entry{padding:34px 0 6px;border-top:1px solid var(--rule)}
+.entry-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.entry-head .n{font-family:"Schibsted Grotesk",sans-serif;font-weight:700;color:var(--owner);font-size:14px}
+.entry-head h2{font-size:26px}
+.entry-head .bet{color:var(--ink-2);font-size:15px;margin-right:auto}
+.entry-head a{display:inline-flex;align-items:center;min-height:38px;padding:0 15px;border-radius:8px;
+  background:var(--surface-2);border:1px solid var(--rule);color:var(--ink);text-decoration:none;
+  font-family:"Schibsted Grotesk",sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase}
+.entry-head a:hover{background:#31353A}
+
+.body{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:940px){.body{grid-template-columns:minmax(0,420px) minmax(0,1fr)}}
+/* The reviews run long, so the page it is about should stay on screen beside them. */
+.shot{margin:0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#F5E9DE;align-self:start}
+@media(min-width:940px){.shot{position:sticky;top:22px}}
+.shot img{display:block;width:100%;height:auto}
+.notes{display:flex;flex-direction:column;gap:20px;min-width:0}
+
+.voice{border-left:2px solid var(--rule);padding-left:18px}
+.voice.owner{border-left-color:var(--owner)}
+.voice.design{border-left-color:var(--design)}
+.who{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.who .lbl{color:var(--ink-3)}
+.voice.owner .who .lbl{color:var(--owner)}
+.voice.design .who .lbl{color:var(--design)}
+.who svg{flex:none}
+.voice ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+.voice li{position:relative;padding-left:17px;color:var(--ink-2);font-size:15px;line-height:1.58}
+.voice li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--rule)}
+.voice.owner li::before{background:var(--owner)}
+.voice.design li::before{background:var(--design)}
+.tail{margin:13px 0 0;font-size:13.5px;color:var(--ink-3);font-style:italic}
+.tail b{font-style:normal;color:var(--ink-2);font-weight:500}
+
+footer{border-top:1px solid var(--rule);margin-top:44px;padding:24px 0 60px;color:var(--ink-3);font-size:13px;max-width:78ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="kick lbl">Round 4 · Ten directions · Two reviewers</p>
+  <h1>What a practice owner and a designer each said about the ten</h1>
+  <p>Every one of the ten round 4 pages, read twice. Once by someone who would be buying it, and
+  once by someone judging whether it is well made.</p>
+  <div class="caveat"><b>These reviewers are simulated, not real.</b> Two AI agents were briefed to
+  play the roles and each read the actual rendered pages. Treat this as a structured pass for
+  catching problems, not as customer research. The five discovery calls still need to happen.</div>
+</header>
+
+<h2 style="font-size:13px" class="lbl">What they agreed on</h2>
+<div class="themes" id="themes"></div>
+
+<h2 style="font-size:13px" class="lbl">The scoreboard</h2>
+<div class="board-scroll" tabindex="0" role="region" aria-label="Scoreboard, scrolls sideways">
+  <table class="board">
+    <thead><tr><th>Direction</th><th>Owner would</th><th>Designer's read</th></tr></thead>
+    <tbody id="board"></tbody>
+  </table>
+</div>
+
+<div id="entries"></div>
+
+<footer id="foot"></footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var D = __DATA__;
+  function el(t, c, txt){ var e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; }
+  function icon(kind){
+    var s=document.createElementNS("http://www.w3.org/2000/svg","svg");
+    s.setAttribute("width","15"); s.setAttribute("height","15"); s.setAttribute("viewBox","0 0 24 24");
+    s.setAttribute("fill","none"); s.setAttribute("stroke","currentColor"); s.setAttribute("stroke-width","1.7");
+    s.setAttribute("stroke-linecap","round"); s.setAttribute("stroke-linejoin","round");
+    s.setAttribute("aria-hidden","true");
+    var d=document.createElementNS("http://www.w3.org/2000/svg","path");
+    d.setAttribute("d", kind==="owner"
+      ? "M3 21V9l9-6 9 6v12M9 21v-6h6v6"          /* a practice */
+      : "M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586");
+    s.appendChild(d); return s;
+  }
+  function actClass(a){
+    var t=(a||"").toLowerCase();
+    if(t.indexOf("book")===0||t.indexOf("book a call")>-1) return "book";
+    if(t.indexOf("repl")>-1||t.indexOf("email")>-1) return "reply";
+    if(t.indexOf("close")>-1||t.indexOf("leave")>-1) return "close";
+    return "read";
+  }
+  function actShort(a){
+    var t=(a||"").toLowerCase();
+    if(t.indexOf("book")>-1) return "Book a call";
+    if(t.indexOf("repl")>-1) return "Reply";
+    if(t.indexOf("bookmark")>-1) return "Bookmark";
+    if(t.indexOf("keep reading")>-1) return "Keep reading";
+    if(t.indexOf("close")>-1) return "Close the tab";
+    return "Keep reading";
+  }
+
+  var themes=document.getElementById("themes");
+  __THEMES__.forEach(function(t){
+    var d=el("div","theme"+(t.hot?" hot":""));
+    d.appendChild(el("div","cnt",t.count));
+    d.appendChild(el("h3",null,t.title));
+    t.body.forEach(function(par){
+      var p=el("p");
+      par.forEach(function(seg){ p.appendChild(typeof seg==="string"?document.createTextNode(seg):el("b",null,seg.b)); });
+      d.appendChild(p);
+    });
+    themes.appendChild(d);
+  });
+
+  var board=document.getElementById("board"), entries=document.getElementById("entries");
+
+  D.forEach(function(p){
+    var tr=el("tr");
+    var td1=el("td");
+    var a=el("a", null, p.name); a.href="#p"+p.n;
+    td1.appendChild(el("span","num",p.n)); td1.appendChild(a); tr.appendChild(td1);
+    var td2=el("td");
+    td2.appendChild(el("span","act "+actClass(p.action), actShort(p.action)));
+    tr.appendChild(td2);
+    tr.appendChild(el("td", null, p.verdict));
+    board.appendChild(tr);
+  });
+
+  D.forEach(function(p){
+    var s=el("section","entry"); s.id="p"+p.n;
+    var h=el("div","entry-head");
+    h.appendChild(el("span","n",p.n));
+    h.appendChild(el("h2",null,p.name));
+    h.appendChild(el("span","bet",p.bet));
+    var link=el("a",null,"Open it"); link.href=p.url; link.target="_blank"; link.rel="noopener";
+    h.appendChild(link); s.appendChild(h);
+
+    var body=el("div","body");
+    var fig=el("figure","shot");
+    var img=el("img"); img.src="data:image/jpeg;base64,"+p.thumb;
+    img.alt="Top of the "+p.name+" page"; img.loading="lazy"; img.decoding="async";
+    fig.appendChild(img); body.appendChild(fig);
+
+    var notes=el("div","notes");
+    [["owner","The practice owner",p.owner,"After 90 seconds I would ",p.action],
+     ["design","The designer",p.designer,"Where it sits: ",p.verdict]].forEach(function(v){
+      var box=el("div","voice "+v[0]);
+      var who=el("div","who"); who.appendChild(icon(v[0]));
+      who.appendChild(el("span","lbl",v[1])); box.appendChild(who);
+      var ul=el("ul");
+      v[2].forEach(function(b){ ul.appendChild(el("li",null,b)); });
+      box.appendChild(ul);
+      var tail=el("p","tail");
+      tail.appendChild(el("b",null,v[3]));
+      tail.appendChild(document.createTextNode(v[4]));
+      box.appendChild(tail);
+      notes.appendChild(box);
+    });
+    body.appendChild(notes); s.appendChild(body); entries.appendChild(s);
+  });
+
+  document.getElementById("foot").textContent =
+    "Ten directions, twenty reviews. Both reviewers read the rendered pages, not the descriptions. "+
+    "Sources in prototypes/round-4; the live pages are linked from each entry.";
+})();
+</script>

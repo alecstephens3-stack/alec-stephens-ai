@@ -1,0 +1,135 @@
+<!-- SHARED PART. Carried forward from prototype 21 as the reference implementation.
+     Edit here once and rebuild all ten. Do not copy this into a fragment.
+
+     Round 5 additions, per research/insurance-verification-viability.md:
+       - "Patient arrives with no card" situation page. A per payer LOOKUP PATH.
+         We write down which portal takes a name and a date of birth and what to
+         collect at booking. We do NOT check eligibility and we do not say we do.
+       - "Vision plan or medical" stays a SITUATION page, not a decision lookup.
+         The facts table says 4 decision lookups are built. It is still 4. -->
+
+<div class="sai-chips" role="search">
+  <input id="kbq" class="sai-btn ghost" type="search" size="24" autocomplete="off"
+         placeholder="Search the front desk" aria-label="Search the knowledge base">
+  <button type="button" class="sai-btn primary" id="kbGo">Search</button>
+</div>
+
+<p class="sai-w-sub" id="kbCount" role="status" aria-live="polite">8 example pages of the 76 we mapped. Pick one, or type.</p>
+
+<div class="sai-chips" id="kbList">
+  <span data-kb-chip data-terms="how soon seen triage urgent same day flashes floaters red eye pain injury emergency curtain shadow">
+    <button type="button" class="sai-btn ghost" data-target="kb-triage" aria-expanded="false" aria-controls="kb-triage">How soon do they need to be seen</button>
+  </span>
+  <span data-kb-chip data-terms="which doctor provider restrictions children first exam surgery day post op specialty fitting schedule book">
+    <button type="button" class="sai-btn ghost" data-target="kb-doctor" aria-expanded="false" aria-controls="kb-doctor">Which doctor can see this patient</button>
+  </span>
+  <span data-kb-chip data-terms="refraction collect bill vision plan medical checkout charge routine exam">
+    <button type="button" class="sai-btn ghost" data-target="kb-refraction" aria-expanded="true" aria-controls="kb-refraction">Refraction: collect or bill</button>
+  </span>
+  <span data-kb-chip data-terms="price cost this year quote fee what it costs">
+    <button type="button" class="sai-btn ghost" data-target="kb-price" aria-expanded="false" aria-controls="kb-price">What it costs this year</button>
+  </span>
+  <span data-kb-chip data-terms="vision plan or medical which one bills insurance benefit eligibility symptom glasses routing">
+    <button type="button" class="sai-btn ghost" data-target="kb-benefit" aria-expanded="false" aria-controls="kb-benefit">Vision plan or medical</button>
+  </span>
+  <span data-kb-chip data-terms="no card patient does not know plan member id subscriber group number birthday lookup portal insurance find">
+    <button type="button" class="sai-btn ghost" data-target="kb-nocard" aria-expanded="false" aria-controls="kb-nocard">Patient arrives with no card</button>
+  </span>
+  <span data-kb-chip data-terms="authorization vsp pull expired benefit ahead schedule dispensing insurance">
+    <button type="button" class="sai-btn ghost" data-target="kb-auth" aria-expanded="false" aria-controls="kb-auth">The authorization has expired</button>
+  </span>
+  <span data-kb-chip data-terms="contact lens follow up fitting period recheck trial power change optical">
+    <button type="button" class="sai-btn ghost" data-target="kb-cl" aria-expanded="false" aria-controls="kb-cl">Contact lens follow up</button>
+  </span>
+</div>
+
+<div id="kbAnswer">
+  <div class="sai-callout" id="kb-refraction" data-kb-page data-title="Refraction: collect or bill">
+    <div class="cap">Billing · Decision lookup</div>
+    <h3 class="sai-w-title">Refraction: collect or bill</h3>
+    <p>Routine exam on the vision plan: the refraction goes through the plan and there is nothing to collect at the desk. Medical visit: it is not a covered service, so say so at check in, not at checkout.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Visit type decides it</span>
+      <span class="sai-flag"><span class="tick"></span>This year's price is here</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-triage" data-kb-page data-title="How soon do they need to be seen" hidden>
+    <div class="cap">Scheduling · Decision lookup</div>
+    <h3 class="sai-w-title">How soon do they need to be seen</h3>
+    <p>Sudden flashes, new floaters, a curtain or a shadow in the vision: same day, and tell the doctor on duty. Gradual blur with no pain and no redness: next available.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Chemical splash: rinse now</span>
+      <span class="sai-flag"><span class="tick"></span>Nothing open? Call them back</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-doctor" data-kb-page data-title="Which doctor can see this patient" hidden>
+    <div class="cap">Scheduling · Decision lookup</div>
+    <h3 class="sai-w-title">Which doctor can see this patient</h3>
+    <p>Not every visit type fits every provider's schedule. The page says who is taking young children and first exams this week, and which providers do not take walk in medical visits on surgery days.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Post op returns to that doctor</span>
+      <span class="sai-flag"><span class="tick"></span>Redoing a visit costs more</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-price" data-kb-page data-title="What it costs this year" hidden>
+    <div class="cap">Front desk · Decision lookup</div>
+    <h3 class="sai-w-title">What it costs this year</h3>
+    <p>This year's prices sit next to what each plan covers, so nobody quotes last year's number from memory while a patient is on hold.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Your office manager edits it</span>
+      <span class="sai-flag"><span class="tick"></span>Every edit is reversible</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-benefit" data-kb-page data-title="Vision plan or medical" hidden>
+    <div class="cap">Insurance · Situation page</div>
+    <h3 class="sai-w-title">Vision plan or medical</h3>
+    <p>The reason the patient gives on the phone decides which benefit the visit runs on. A symptom makes it medical, even when they also want glasses. Get it wrong and the claim comes back, so the rule is written down instead of relearned.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>The doctor decides which bills</span>
+      <span class="sai-flag"><span class="tick"></span>Do not promise the plan</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-nocard" data-kb-page data-title="Patient arrives with no card" hidden>
+    <div class="cap">Insurance · Situation page</div>
+    <h3 class="sai-w-title">Patient arrives with no card</h3>
+    <p>Fewer patients carry one, and most do not know their member ID. The page says, per plan, which lookup actually works: name and date of birth, the subscriber rather than the dependent, or the employer name. And what to ask for at booking so the lookup does not fail at the desk.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Ask at booking, not at check in</span>
+      <span class="sai-flag"><span class="tick"></span>Last resort is the phone, and it is on the page</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-auth" data-kb-page data-title="The authorization has expired" hidden>
+    <div class="cap">Insurance · Situation page</div>
+    <h3 class="sai-w-title">The authorization has expired</h3>
+    <p>An authorization pulled too early can lapse before the patient is dispensed, and plans do not generally issue them after the fact. The page says how far ahead to pull, how long it runs, and what to do when it has already gone.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>Pull it close to the visit</span>
+      <span class="sai-flag"><span class="tick"></span>Do not dispense on a lapsed one</span>
+    </div>
+  </div>
+
+  <div class="sai-callout" id="kb-cl" data-kb-page data-title="Contact lens follow up" hidden>
+    <div class="cap">Optical · Situation page</div>
+    <h3 class="sai-w-title">Contact lens follow up</h3>
+    <p>Rechecks inside the fitting period are part of the fitting fee. Once it closes, a new brand or a power change is a new fitting.</p>
+    <div class="sai-chips">
+      <span class="sai-flag"><span class="tick"></span>The fitting period still runs</span>
+      <span class="sai-flag"><span class="tick"></span>Ask the doctor before ordering</span>
+    </div>
+  </div>
+</div>
+
+<div class="sai-w-note">
+  <div class="sai-chips">
+    <span class="sai-flag"><span class="tick"></span>Google sign in, your domain</span>
+    <span class="sai-flag"><span class="tick"></span>Installs, no admin rights</span>
+    <span class="sai-flag"><span class="tick"></span>Open pages survive an outage</span>
+  </div>
+  <p><strong>Example pages, written for this demo.</strong> Yours get written from your own material before launch. 0 patient records, and one click for staff to flag a page that is wrong. The insurance pages hold the lookup path your team follows, not a patient's benefits.</p>
+</div>

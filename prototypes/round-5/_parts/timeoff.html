@@ -1,0 +1,58 @@
+<!-- SHARED PART. Carried forward from prototype 21. Edit here once, rebuild all ten.
+     Product 3 is time off and payroll. It is the only product with a live build and a
+     real number behind it, so the widget shows that build and nothing else. -->
+
+<div class="sai-chips">
+  <select id="opsPick" class="sai-btn ghost" aria-label="Choose a time off request">
+    <option value="covered">Technician, Tuesday afternoon</option>
+    <option value="gap">Front desk, Thursday and Friday</option>
+  </select>
+  <button type="button" class="sai-btn primary" id="opsFile">File it</button>
+</div>
+
+<div class="sai-path" id="opsPath">
+  <div class="step">
+    <span class="num">STEP 01</span>
+    <h4>Filed in one place</h4>
+    <p>One route in, instead of a hallway yes and a note on a desk.</p>
+    <span data-ops-chip hidden><span class="sai-status good"><span class="kw">Filed</span><span class="detail">Timestamped, with the dates</span></span></span>
+  </div>
+  <div class="step fork">
+    <span class="num">STEP 02 · DECISION</span>
+    <h4>Does coverage hold?</h4>
+    <p>Checked against the schedule before anyone answers.</p>
+    <div class="branches">
+      <div class="branch" data-ops-branch="covered">
+        <span class="cond">Coverage holds</span>
+        <div class="out">Approved, and <b>payroll updates in the same pass</b>.</div>
+      </div>
+      <div class="branch" data-ops-branch="gap">
+        <span class="cond">A shift is uncovered</span>
+        <div class="out">Back to the office manager <b>with the gap named</b>.</div>
+      </div>
+    </div>
+  </div>
+  <div class="step">
+    <span class="num">STEP 03</span>
+    <h4>Answered, and the balance moves</h4>
+    <p>The person who asked hears back in the same place they asked.</p>
+    <span data-ops-mid="covered" hidden><span class="sai-status good"><span class="kw">Approved</span><span class="detail">Balance redrawn</span></span></span>
+    <span data-ops-mid="gap" hidden><span class="sai-status warn"><span class="kw">Returned</span><span class="detail">With the gap named</span></span></span>
+  </div>
+  <div class="step end">
+    <span class="num">STEP 04 · DONE</span>
+    <h4>Balance, schedule board and payroll all say the same thing</h4>
+    <span data-ops-end="covered" hidden><span class="sai-status good"><span class="kw">Payroll</span><span class="detail">Updated, same pass</span></span></span>
+    <span data-ops-end="gap" hidden><span class="sai-status warn"><span class="kw">Held</span><span class="detail">Thursday is short one person</span></span></span>
+  </div>
+</div>
+
+<div class="sai-w-note">
+  <p id="opsRead" role="status" aria-live="polite">Nothing filed yet.</p>
+  <div class="sai-chips">
+    <span class="sai-flag"><span class="tick"></span>Staff data, not patient data</span>
+    <span class="sai-flag"><span class="tick"></span>Quarterly practice snapshot</span>
+    <span class="sai-flag"><span class="tick"></span>Monthly working time with both founders</span>
+  </div>
+  <p><strong>60 to 100 admin hours a year</strong> back at the practice we built it for.</p>
+</div>

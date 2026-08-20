@@ -1,0 +1,826 @@
+<title>The Cold Email Landing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+/* ==========================================================================
+   Prototype 10, "The Cold Email Landing". Deliberate departure from Lens v3.
+
+   This is not a website. It is the page at the end of one cold email.
+   One column, 620px, no navigation, no footer sitemap, one accent, no images,
+   and deliberately NO webfont: the native UI stack loads in zero requests and
+   is already the typeface the reader trusts on their phone. Everything the
+   other nine prototypes spend on atmosphere, this one spends on being read.
+
+   Restraint is the design. There is nowhere to hide, so the rhythm is carried
+   by three things only: the measure, the vertical scale, and one hairline.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;                /* commit to light, block OS dark bleed */
+
+  --paper:#FCFBF9;                    /* near white, a half degree warm */
+  --paper-2:#FFFFFF;
+  --wash:#F4F1EC;                     /* chips and quiet blocks */
+  --ink:#16130F;                      /* body, 15.9:1 on paper */
+  --ink-2:#574D45;                    /* secondary, 7.3:1 on paper. Never lighter. */
+  --accent:#DC6843;                   /* MARK ONLY: dots, rules, bars */
+  --accent-deep:#8F3616;              /* the only accent that ever carries text */
+  --ink-3:#6E6259;                    /* chip text on wash */
+  --rule:rgba(22,19,15,0.11);
+  --rule-soft:rgba(22,19,15,0.07);
+
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --col:620px;
+  --ease:cubic-bezier(0.2,0.8,0.2,1);
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:60px;}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:18px;
+  line-height:1.62;
+  letter-spacing:-0.004em;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+h1,h2,h3{margin:0; font-weight:600; letter-spacing:-0.022em; line-height:1.14;}
+p{margin:0;}
+ul,ol{margin:0; padding:0; list-style:none;}
+a{color:inherit;}
+strong{font-weight:600;}
+
+a:focus-visible,button:focus-visible{
+  outline:2px solid var(--accent-deep);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+/* ---------- review furniture, not part of the design ---------------------- */
+.proto-bar{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  min-height:44px; padding:7px 16px;
+  background:#1c1c1e; color:#f2f2f2;
+  font-family:var(--sans);
+  font-size:13px; line-height:1.35; letter-spacing:0;
+}
+.proto-n{
+  font-variant:all-small-caps; letter-spacing:0.09em; font-weight:600;
+  color:#f2f2f2; white-space:nowrap;
+}
+.proto-name{font-weight:600; color:#f2f2f2; white-space:nowrap;}
+.proto-bet{color:#b8b8bd;}
+@media (max-width:560px){
+  .proto-bar{gap:4px 12px; padding:8px 14px;}
+  .proto-bet{flex-basis:100%;}
+}
+
+/* ---------- the column ---------------------------------------------------- */
+.wrap{
+  width:100%; max-width:var(--col);
+  margin:0 auto;
+  padding:0 22px;
+}
+@media (max-width:400px){ .wrap{padding:0 18px;} }
+
+main{display:block;}
+
+.sect{padding:46px 0 0;}
+.sect + .sect{margin-top:0;}
+.hr{height:1px; background:var(--rule); border:0; margin:46px 0 0;}
+
+/* eyebrow labels: the only uppercase on the page */
+.eyebrow{
+  font-size:13.5px; font-weight:600; line-height:1.4;
+  text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--ink-2);
+  display:flex; align-items:center; gap:9px;
+}
+.eyebrow::before{
+  content:""; width:7px; height:7px; border-radius:50%;
+  background:var(--accent); flex:none;
+}
+
+/* ---------- letterhead ---------------------------------------------------- */
+.head{padding-top:38px;}
+.mark{
+  display:flex; align-items:baseline; gap:9px;
+  font-size:15px; font-weight:600; letter-spacing:-0.01em;
+}
+.mark .dot{
+  width:9px; height:9px; border-radius:50%;
+  background:var(--accent); display:inline-block; flex:none;
+  transform:translateY(-1px);
+}
+.mark .from{color:var(--ink-2); font-weight:400;}
+
+h1{
+  margin-top:26px;
+  font-size:clamp(29px,7.4vw,39px);
+  line-height:1.1;
+  letter-spacing:-0.03em;
+}
+h1 .soft{color:var(--ink-2); font-weight:500;}
+
+.letter{margin-top:24px; display:flex; flex-direction:column; gap:20px;}
+.letter p{font-size:18px;}
+.letter .lede{font-size:19px; line-height:1.58;}
+
+.pull{
+  border-left:2px solid var(--accent);
+  padding:2px 0 2px 18px;
+  color:var(--ink);
+}
+
+/* ---------- calls to action ---------------------------------------------- */
+.cta{
+  margin-top:28px;
+  display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:52px; padding:0 26px;
+  background:var(--accent-deep); color:#FFF7F3;
+  font-size:17px; font-weight:600; letter-spacing:-0.01em;
+  text-decoration:none; border-radius:8px; border:0;
+  transition:background 180ms var(--ease), transform 180ms var(--ease);
+}
+.btn:hover{background:#7A2C10;}
+.btn:active{transform:translateY(1px);}
+.cta-alt{
+  font-size:16.5px; color:var(--ink-2);
+  display:flex; flex-wrap:wrap; align-items:center;
+  gap:0 6px; min-width:0;
+}
+.cta-alt a{
+  color:var(--accent-deep); text-decoration:underline; text-underline-offset:3px;
+  display:inline-flex; align-items:center; min-height:44px;
+  word-break:break-word;
+}
+.cta-note{margin-top:12px; font-size:15px; color:var(--ink-2);}
+
+/* ---------- product blocks ------------------------------------------------ */
+.prod{margin-top:34px;}
+.prod h3{
+  font-size:23px; letter-spacing:-0.028em; line-height:1.18;
+  display:flex; gap:12px; align-items:baseline;
+}
+.prod h3 .num{
+  font-family:var(--mono); font-size:15px; font-weight:600;
+  color:var(--accent-deep); flex:none; transform:translateY(-1px);
+}
+.prod .who{margin-top:10px; font-size:16.5px; color:var(--ink-2);}
+.prod .body{margin-top:14px; display:flex; flex-direction:column; gap:12px;}
+.prod .body p{font-size:17.5px; line-height:1.6;}
+
+.price{
+  margin-top:16px;
+  font-size:17px;
+  padding-top:14px;
+  border-top:1px solid var(--rule-soft);
+}
+.price b{font-weight:600;}
+.price .caveat{display:block; margin-top:6px; font-size:15.5px; color:var(--ink-2);}
+
+/* ---------- hand built depictions ---------------------------------------- */
+.dep{margin:20px 0 0; padding:0;}
+.dep-box{
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  padding:14px;
+  box-shadow:0 1px 2px rgba(22,19,15,0.04);
+}
+.dep-cap{
+  margin-top:10px;
+  font-size:14px; line-height:1.5; color:var(--ink-2);
+}
+.dep-bar{
+  display:flex; align-items:center; gap:8px;
+  padding-bottom:11px; margin-bottom:12px;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:13.5px; font-weight:600; color:var(--ink-2);
+  letter-spacing:-0.005em;
+}
+.dep-bar .pip{
+  width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none;
+}
+
+/* depiction 1: the search and the answer */
+.kb-search{
+  display:flex; align-items:center; gap:10px;
+  border:1px solid var(--rule); border-radius:8px;
+  background:var(--paper);
+  padding:11px 12px;
+}
+.kb-search span{font-size:15.5px; color:var(--ink);}
+.kb-search .caret{
+  width:1px; height:17px; background:var(--accent); flex:none;
+  animation:blink 1.15s steps(1,end) infinite;
+}
+@keyframes blink{50%{opacity:0;}}
+.kb-ans{
+  margin-top:12px;
+  border:1px solid var(--rule-soft); border-radius:8px;
+  background:var(--wash);
+  padding:14px;
+}
+.kb-ans .t{font-size:16.5px; font-weight:600; letter-spacing:-0.015em;}
+.kb-ans .b{margin-top:8px; font-size:15.5px; line-height:1.55; color:var(--ink-2);}
+.kb-ans .b.hard{color:var(--ink);}
+.kb-ans .b.hard .flag{
+  font-family:var(--mono); font-size:13px; text-transform:uppercase;
+  letter-spacing:0.06em; color:var(--accent-deep); display:block; margin-bottom:3px;
+}
+.kb-foot{
+  margin-top:12px; padding-top:11px; border-top:1px solid var(--rule-soft);
+  display:flex; flex-wrap:wrap; gap:6px 14px;
+  font-size:13.5px; color:var(--ink-2);
+}
+.kb-foot .flagbtn{
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--ink-2);
+}
+
+/* depiction 2: the monthly recall run sheet */
+.run{display:flex; flex-direction:column;}
+.run li{
+  display:flex; align-items:flex-start; gap:11px;
+  padding:10px 0;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:15.5px; line-height:1.45;
+}
+.run li:last-child{border-bottom:0; padding-bottom:2px;}
+.run .n{flex:1 1 auto; min-width:0;}
+.run .n small{display:block; font-size:13.5px; color:var(--ink-2); margin-top:2px;}
+.tick{flex:none; margin-top:2px;}
+.chip{
+  flex:none;
+  font-size:13px; font-weight:600; letter-spacing:0.01em;
+  padding:3px 9px; border-radius:999px;
+  background:var(--wash); color:var(--ink-3);
+  white-space:nowrap;
+}
+.chip.hold{
+  background:rgba(220,104,67,0.12); color:var(--accent-deep);
+}
+.run li.gate{
+  margin-top:6px; padding:12px;
+  background:var(--wash); border-radius:8px; border-bottom:0;
+  align-items:center;
+}
+
+/* depiction 3: the operations month */
+.ops{display:flex; flex-direction:column;}
+.ops li{
+  display:flex; align-items:center; gap:6px 11px; flex-wrap:wrap;
+  padding:9px 0; border-bottom:1px solid var(--rule-soft);
+  font-size:15.5px;
+}
+.ops li:last-child{border-bottom:0;}
+.ops .n{flex:1 1 auto; min-width:0;}
+.ops .state{font-size:13.5px; color:var(--ink-2);}
+/* below this width the label and the state stack rather than fight */
+@media (max-width:430px){
+  .ops li{flex-direction:column; align-items:flex-start; gap:2px;}
+}
+.ops-foot{
+  margin-top:12px; padding-top:12px; border-top:1px solid var(--rule);
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+}
+.ops-foot .big{
+  font-size:22px; font-weight:600; letter-spacing:-0.02em; color:var(--accent-deep);
+}
+.ops-foot .lab{font-size:14.5px; color:var(--ink-2);}
+
+/* ---------- proof --------------------------------------------------------- */
+.facts{
+  margin-top:20px;
+  border-top:1px solid var(--rule);
+}
+.facts li{
+  display:flex; align-items:baseline; gap:14px;
+  padding:12px 0; border-bottom:1px solid var(--rule-soft);
+}
+.facts .v{
+  font-size:20px; font-weight:600; letter-spacing:-0.02em;
+  flex:none; min-width:96px;
+}
+.facts .l{font-size:16px; color:var(--ink-2); line-height:1.45;}
+
+@media (max-width:380px){ .facts .v{min-width:84px;} .facts li{gap:11px;} }
+
+/* ---------- objections ---------------------------------------------------- */
+.qa{margin-top:26px;}
+.qa h3{font-size:19px; letter-spacing:-0.02em; line-height:1.3;}
+.qa .a{margin-top:10px; display:flex; flex-direction:column; gap:11px;}
+.qa .a p{font-size:17px; color:var(--ink-2);}
+.qa .a p strong{color:var(--ink);}
+.posture{
+  margin-top:14px; padding:14px;
+  background:var(--wash); border-radius:8px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.posture div{font-size:15.5px; line-height:1.5; color:var(--ink-2);}
+.posture b{color:var(--ink); font-weight:600;}
+
+/* ---------- prices, plain text ------------------------------------------- */
+.rate{margin-top:22px; border-top:1px solid var(--rule);}
+.rate li{
+  padding:14px 0; border-bottom:1px solid var(--rule-soft);
+}
+.rate .n{font-size:17.5px; font-weight:600; letter-spacing:-0.015em;}
+.rate .p{margin-top:4px; font-size:17px;}
+.rate .note{margin-top:4px; font-size:15px; color:var(--ink-2);}
+.rate li.start{border-left:2px solid var(--accent); padding-left:14px;}
+.smalls{margin-top:18px; display:flex; flex-direction:column; gap:9px;}
+.smalls li{font-size:15.5px; color:var(--ink-2); padding-left:18px; position:relative;}
+.smalls li::before{
+  content:""; position:absolute; left:0; top:10px;
+  width:6px; height:6px; border-radius:50%; background:var(--accent);
+}
+
+/* ---------- signature ----------------------------------------------------- */
+.sign{margin-top:30px; display:flex; gap:14px; align-items:flex-start;}
+.inits{display:flex; flex:none;}
+.init{
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:600; letter-spacing:0.02em;
+  background:var(--wash); color:var(--ink-2);
+  border:1px solid var(--rule);
+}
+.init + .init{margin-left:-10px; background:#EFE9E1;}
+.sign .names{font-size:17px; font-weight:600; letter-spacing:-0.015em;}
+.sign .roles{margin-top:3px; font-size:15.5px; color:var(--ink-2); line-height:1.5;}
+
+/* ---------- close and footer ---------------------------------------------- */
+.close{
+  margin-top:46px; padding:26px 0 0; border-top:1px solid var(--rule);
+}
+.close h2{font-size:25px; letter-spacing:-0.028em;}
+.close p{margin-top:12px; font-size:17px; color:var(--ink-2);}
+
+footer{
+  margin-top:44px; padding-bottom:96px;
+  font-size:15px; color:var(--ink-2); line-height:1.6;
+}
+footer .wrap{padding-top:22px; border-top:1px solid var(--rule);}
+footer .co{color:var(--ink); font-weight:600;}
+footer a{color:var(--accent-deep); text-decoration:underline; text-underline-offset:3px;}
+footer .fine{margin-top:10px; font-size:14px;}
+
+/* ---------- sticky bar, phones only --------------------------------------- */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:50;
+  display:none;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  background:var(--paper);
+  border-top:1px solid var(--rule);
+  transition:transform 220ms var(--ease), opacity 220ms var(--ease), visibility 0s;
+}
+.dock .row{display:flex; align-items:center; gap:12px; max-width:var(--col); margin:0 auto;}
+.dock .line{flex:1 1 auto; font-size:14px; line-height:1.35; color:var(--ink-2); min-width:0;}
+.dock .btn{min-height:48px; padding:0 18px; font-size:16px; flex:none;}
+.dock.is-away{
+  transform:translateY(120%); opacity:0; visibility:hidden; pointer-events:none;
+  transition:transform 220ms var(--ease), opacity 220ms var(--ease), visibility 0s linear 220ms;
+}
+@media (max-width:700px){
+  .dock{display:block;}
+  footer{padding-bottom:150px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:0.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+  }
+}
+</style>
+
+<div class="proto-bar">
+  <span class="proto-n">Prototype 10 of 10</span>
+  <span class="proto-name">The Cold Email Landing</span>
+  <span class="proto-bet">This is not a website. It is the page at the end of one email, and it has one job.</span>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <!-- ============================ the letter ========================== -->
+    <header class="head">
+      <div class="mark">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Stephens AI</span>
+        <span class="from">Alec Stephens and Jusheen Kim</span>
+      </div>
+
+      <h1>
+        For independent eyecare practices.<br>
+        <span class="soft">Written by two people who have stood at the front desk.</span>
+      </h1>
+
+      <div class="letter">
+        <p class="lede">You did not ask for our email. We know exactly how that reads on a
+        Tuesday between patients, so here is the whole thing, and you can decide before
+        your next appointment walks in.</p>
+
+        <p>Alec spent the last year inside a 27 person eyecare practice, 6 to 7 doctors,
+        one location. Not on a call about it. In the office, next to the front desk,
+        listening to what happens when a patient asks a question that nobody ever wrote
+        down. Jusheen was a lead software engineer at J.P. Morgan and builds the parts
+        that have to hold up when the phones are busy.</p>
+
+        <p class="pull">Three things came up in that year, at that practice and at every
+        practice we have talked to since. The hard questions all funnel through one or
+        two people. Nobody is certain which price list is the current one. And the
+        monthly recall run sits on the same checklist as the daily work, so it is the
+        first thing to slip.</p>
+
+        <p>We build one thing for each of those. Below is what they are, what they cost,
+        and the two things we cannot do. Read it, then book twenty minutes or close the
+        tab. Both are a fine outcome for us.</p>
+      </div>
+
+      <div class="cta">
+        <a class="btn" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <span class="cta-alt">or reply to<a href="mailto:alec@stephensai.co">alec@stephensai.co</a></span>
+      </div>
+      <p class="cta-note">Twenty minutes, one of us on the call, no deck. If it is not a
+      fit we will say so on the call rather than follow up for a month.</p>
+    </header>
+
+    <hr class="hr">
+
+    <!-- ============================ products ============================ -->
+    <section class="sect" aria-labelledby="build">
+      <h2 class="eyebrow" id="build">What we build</h2>
+
+      <!-- P1 -->
+      <article class="prod">
+        <h3><span class="num" aria-hidden="true">01</span> The front desk knowledge base</h3>
+        <p class="who">For the practice where the answer exists, but only inside two
+        people, and both of them are already on the phone.</p>
+
+        <div class="body">
+          <p>Every insurance rule, price, and protocol your front desk currently keeps in
+          their heads, written up as short situation pages they can find mid call. One
+          search box. We wrote 76 of those pages at the practice this is live in, plus 4
+          decision lookups for the calls that cost money: how soon a caller needs to be
+          seen, which doctor can see them, whether to collect or bill the refraction, and
+          this year's price.</p>
+          <p>Your office manager edits it in the app, so a price change is live the moment
+          they save it, and every edit is saved and reversible. Staff sign in with the
+          practice Google account. It installs on the front desk computers from the
+          browser, with no admin rights, and pages already opened keep working if the
+          internet drops. It holds 0 patient records.</p>
+        </div>
+
+        <figure class="dep">
+          <div class="dep-box">
+            <div class="dep-bar"><span class="pip" aria-hidden="true"></span> Front desk knowledge base</div>
+            <div class="kb-search">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="4.75" stroke="#DC6843" stroke-width="1.6"/>
+                <path d="M10.6 10.6 14 14" stroke="#DC6843" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span>vision plan, medical complaint</span>
+              <span class="caret" aria-hidden="true"></span>
+            </div>
+            <div class="kb-ans">
+              <p class="t">Refraction: collect or bill</p>
+              <p class="b">The vision plan covers the refraction only when the visit bills
+              as a routine exam.</p>
+              <p class="b hard"><span class="flag">The exception</span>If the visit bills
+              medical, the refraction is not covered. Collect at checkout and say so before
+              the exam, not after.</p>
+              <div class="kb-foot">
+                <span>Edited by the office manager</span>
+                <span class="flagbtn">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 14V3.2h8l-1.7 2.6L12 8.4H4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                  </svg>
+                  Flag this page
+                </span>
+              </div>
+            </div>
+          </div>
+          <figcaption class="dep-cap">What the front desk sees mid call. The live instance
+          holds a practice's real prices, so this shows the interaction, not their data.</figcaption>
+        </figure>
+
+        <p class="price"><b>$2,500 to set up, $299 a month.</b> Live today in a 27 person
+        practice. <span class="caveat">Most practices should start one tier up. See the
+        prices below.</span></p>
+      </article>
+
+      <!-- P2 -->
+      <article class="prod">
+        <h3><span class="num" aria-hidden="true">02</span> Recall done for you</h3>
+        <p class="who">For the practice where the monthly recall run keeps sliding into
+        next month, because the phones do not stop.</p>
+
+        <div class="body">
+          <p>We run your monthly recall for you, using your recall protocol and your
+          systems. That means the scleral letters, the medical recall letters across about
+          10 separate reason codes as postcards, and then the calls list and the routine
+          postcards run once per doctor, individually. At an eight provider practice that
+          is 8 separate runs before anyone picks up a phone.</p>
+          <p>The part that actually breaks is the update step at the end. It is a checkbox
+          that has to be left unchecked on one run and checked on another. Backwards one
+          way and patients get contacted twice. Backwards the other way and they get
+          dropped for the year. It has to run last, after the final call, and it is the
+          step that gets skipped when the day gets away from everyone.</p>
+          <p>You get the run on a schedule instead of when someone finds a free afternoon,
+          a call list in priority order with the answers to the questions patients ask when
+          they call back, a monthly report of who was contacted, by which channel, and who
+          booked, and the update step done every time, in the right order.</p>
+        </div>
+
+        <figure class="dep">
+          <div class="dep-box">
+            <div class="dep-bar"><span class="pip" aria-hidden="true"></span> Monthly recall run, in order</div>
+            <ul class="run">
+              <li>
+                <svg class="tick" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8.4 6.4 12 13 4.6" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="n">Scleral letters</span>
+                <span class="chip">Sent</span>
+              </li>
+              <li>
+                <svg class="tick" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8.4 6.4 12 13 4.6" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="n">Medical recall letters, as postcards
+                  <small>Run separately for about 10 reason codes</small>
+                </span>
+                <span class="chip">Sent</span>
+              </li>
+              <li>
+                <svg class="tick" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8.4 6.4 12 13 4.6" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="n">Calls list and routine postcards
+                  <small>One run per doctor, individually</small>
+                </span>
+                <span class="chip">8 of 8</span>
+              </li>
+              <li class="gate">
+                <svg class="tick" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="3.2" y="7.2" width="9.6" height="6.4" rx="1.4" stroke="#8F3616" stroke-width="1.6"/>
+                  <path d="M5.6 7.2V5.4a2.4 2.4 0 0 1 4.8 0v1.8" stroke="#8F3616" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <span class="n">The update step
+                  <small>Held until the last call is logged, then run once</small>
+                </span>
+                <span class="chip hold">Runs last</span>
+              </li>
+            </ul>
+          </div>
+          <figcaption class="dep-cap">The order is the product. Get the last line wrong and
+          you either contact the same patients twice or drop them until next year.</figcaption>
+        </figure>
+
+        <p class="price"><b>Priced per practice, on the call.</b>
+        <span class="caveat">We have not set a list price for recall yet, and we are not
+        going to invent one on a landing page. It also folds into the third tier below.</span></p>
+      </article>
+
+      <!-- P3 -->
+      <article class="prod">
+        <h3><span class="num" aria-hidden="true">03</span> Practice operations automation</h3>
+        <p class="who">For the practice owner who is still approving time off by text
+        message and rebuilding payroll hours by hand every period.</p>
+
+        <div class="body">
+          <p>Time off and payroll, automated and scoped to your practice, not a generic
+          product you configure for a month. At the practice we built it for, it returns 60
+          to 100 admin hours a year. It comes with a quarterly practice snapshot and monthly
+          working time with both of us, which is where most of the next build comes from.</p>
+        </div>
+
+        <figure class="dep">
+          <div class="dep-box">
+            <div class="dep-bar"><span class="pip" aria-hidden="true"></span> This month, running without anyone chasing it</div>
+            <ul class="ops">
+              <li><span class="n">Time off requests</span><span class="state">Routed, approved, on the schedule</span></li>
+              <li><span class="n">Payroll hours</span><span class="state">Assembled and checked</span></li>
+              <li><span class="n">Practice snapshot</span><span class="state">Sent this quarter</span></li>
+              <li><span class="n">Working time with both of us</span><span class="state">Booked</span></li>
+            </ul>
+            <div class="ops-foot">
+              <span class="big">60 to 100</span>
+              <span class="lab">admin hours a year returned by the time off build, at the
+              practice we built it for</span>
+            </div>
+          </div>
+          <figcaption class="dep-cap">Built against one practice's real approval rules, then
+          scoped to yours.</figcaption>
+        </figure>
+
+        <p class="price"><b>Included in the third tier: $4,500 to set up, $350 a month.</b>
+        <span class="caveat">That tier is the knowledge base plus this.</span></p>
+      </article>
+    </section>
+
+    <div class="cta">
+      <a class="btn" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <span class="cta-alt">or reply to<a href="mailto:alec@stephensai.co">alec@stephensai.co</a></span>
+    </div>
+
+    <hr class="hr">
+
+    <!-- ============================ proof =============================== -->
+    <section class="sect" aria-labelledby="proof">
+      <h2 class="eyebrow" id="proof">What is actually built</h2>
+      <ul class="facts">
+        <li><span class="v">27 people</span><span class="l">The practice the knowledge base
+        is live in. 6 to 7 doctors, one location. We will not name them here because they
+        have not signed off on being a reference yet.</span></li>
+        <li><span class="v">76</span><span class="l">Front desk situations written up from
+        the questions staff actually get asked</span></li>
+        <li><span class="v">4</span><span class="l">Decision lookups built for the calls
+        that cost money</span></li>
+        <li><span class="v">0</span><span class="l">Patient records inside the knowledge base</span></li>
+        <li><span class="v">30 days</span><span class="l">From the material you already have
+        to live on the front desk computers</span></li>
+        <li><span class="v">2</span><span class="l">People. Alec Stephens and Jusheen Kim.
+        You work with both of us, not an account manager.</span></li>
+      </ul>
+    </section>
+
+    <hr class="hr">
+
+    <!-- ============================ objections ========================== -->
+    <section class="sect" aria-labelledby="honest">
+      <h2 class="eyebrow" id="honest">The two things you are about to ask</h2>
+
+      <div class="qa">
+        <h3>Where does our patient data sit?</h3>
+        <div class="a">
+          <p>It depends on the product, so here it is per product rather than as one
+          comfortable line across the whole page.</p>
+          <div class="posture">
+            <div><b>Knowledge base.</b> It holds your rules, not your charts. Insurance
+            policies, prices, scheduling protocols, procedures. There are 0 patient records
+            in it, so there is nothing in it to breach.</div>
+            <div><b>Recall done for you.</b> This one does involve patient contact
+            information, so we will not pretend otherwise. It runs inside your own accounts,
+            under a signed BAA, and we never touch charts.</div>
+            <div><b>Operations automation.</b> Staff schedules and payroll, in your
+            accounts. No patient information passes through it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa">
+        <h3>Does it connect to our practice management system?</h3>
+        <div class="a">
+          <p><strong>No, and that is on purpose.</strong> Most hosted systems do not give an
+          outside vendor database access. A vendor promising you a nightly sync into one has
+          either not checked or is overselling, and you will find out during implementation
+          rather than on the sales call.</p>
+          <p>So the knowledge base does not need it. It holds the rules, and the rules do not
+          live in your system anyway. They live in your staff's heads.</p>
+          <p>For recall, where the work genuinely happens inside your system, we work from a
+          list your own team runs, or inside your system with a limited login your practice
+          creates and can revoke. That is the honest version. It also means it
+          does not matter which system you run.</p>
+        </div>
+      </div>
+
+      <div class="qa">
+        <h3>And one you did not ask</h3>
+        <div class="a">
+          <p>Both of us are based in Asia. We are not at a desk during your morning rush.
+          Urgent issues get answered by the next business morning, US time, and we put the
+          escalation path in writing before you sign anything. We would rather state the
+          limit now than imply a promise we cannot keep.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hr">
+
+    <!-- ============================ prices ============================== -->
+    <section class="sect" aria-labelledby="prices">
+      <h2 class="eyebrow" id="prices">What it costs</h2>
+
+      <ul class="rate">
+        <li>
+          <p class="n">Front desk knowledge base</p>
+          <p class="p">$2,500 to set up, then $299 a month</p>
+          <p class="note">The front desk only: situation pages, the 4 decision lookups,
+          search, in app editing, and the flag button.</p>
+        </li>
+        <li class="start">
+          <p class="n">Whole practice knowledge base</p>
+          <p class="p">$3,500 to set up, then $250 a month</p>
+          <p class="note">Technicians, optical, and each doctor's rules as well as the front
+          desk. This is where we would start you.</p>
+        </li>
+        <li>
+          <p class="n">Knowledge base plus operations</p>
+          <p class="p">$4,500 to set up, then $350 a month</p>
+          <p class="note">Everything above, plus the time off and payroll automation, the
+          quarterly snapshot, and monthly working time with both of us.</p>
+        </li>
+        <li>
+          <p class="n">Recall done for you</p>
+          <p class="p">Priced per practice, on the call</p>
+          <p class="note">No list price yet. We would rather leave this blank than guess at
+          a number you would hold us to.</p>
+        </li>
+      </ul>
+
+      <ul class="smalls">
+        <li>Extra sections beyond a tier's cap are $600 each.</li>
+        <li>A second location is $1,500 to set up and $149 a month.</li>
+        <li>Month to month, no term. Cancel and you keep every page, and you can export any
+        time.</li>
+        <li>Compare it to a training platform rather than to your practice software.
+        Trainual and Whale run about $249 to $300 a month at this size and still hand you an
+        empty system to write yourself. We write the pages.</li>
+      </ul>
+    </section>
+
+    <div class="cta">
+      <a class="btn" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <span class="cta-alt">or reply to<a href="mailto:alec@stephensai.co">alec@stephensai.co</a></span>
+    </div>
+
+    <!-- ============================ sign off ============================ -->
+    <section class="close" aria-labelledby="close">
+      <h2 id="close">That is the whole pitch.</h2>
+      <p>If any of the three sounded like your Tuesday, twenty minutes is enough to find
+      out whether we can help. If none of it did, thank you for reading a cold email all
+      the way to the bottom. That is rarer than it should be.</p>
+
+      <div class="sign">
+        <div class="inits" aria-hidden="true">
+          <span class="init">AS</span>
+          <span class="init">JK</span>
+        </div>
+        <div>
+          <p class="names">Alec Stephens and Jusheen Kim</p>
+          <p class="roles">Co-founders, Stephens AI. Alec spent the last year inside a 27
+          person eyecare practice. Jusheen was a lead software engineer at J.P. Morgan.</p>
+        </div>
+      </div>
+
+      <div class="cta" id="last-cta">
+        <a class="btn" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+        <span class="cta-alt">or reply to<a href="mailto:alec@stephensai.co">alec@stephensai.co</a></span>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><span class="co">Stephens AI</span>. Alec Stephens and Jusheen Kim.
+    <a href="mailto:alec@stephensai.co">alec@stephensai.co</a></p>
+    <p class="fine">We build knowledge bases, recall, and operations automation for
+    independent eyecare practices. Month to month, no term, export any time.</p>
+  </div>
+</footer>
+
+<!-- sticky bar: phones only, because that is what converts cold traffic -->
+<div class="dock" id="dock">
+  <div class="row">
+    <span class="line">Twenty minutes, no deck.</span>
+    <a class="btn" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  </div>
+</div>
+
+<script>
+/* The dock is styled visible by default, so if any of this throws or the
+   browser lacks IntersectionObserver, the page and the bar still work. It only
+   steps out of the way once the last call to action is on screen. */
+(function () {
+  try {
+    var dock = document.getElementById('dock');
+    var last = document.getElementById('last-cta');
+    if (!dock || !last || !('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        dock.classList.toggle('is-away', entries[i].isIntersecting);
+      }
+    }, { rootMargin: '0px 0px -80px 0px', threshold: 0.4 });
+
+    io.observe(last);
+  } catch (e) { /* leave the bar where it is */ }
+})();
+</script>

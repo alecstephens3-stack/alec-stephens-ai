@@ -1,0 +1,71 @@
+<!-- SHARED PART. Carried forward from prototype 21. Edit here once, rebuild all ten.
+     The guarantee wording is contractual and is quoted character for character.
+     Do not reword it, do not soften it, do not split it across two lines. -->
+
+<div class="sai-track" id="rxTrack">
+  <div class="when">DAY 0</div>
+  <div class="entry" data-rx-step>
+    <h4>SMS</h4>
+    <p>You are due for your eye exam. Book, or reply YES for a call.</p>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">10am to 7pm, patient local time</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+
+  <div class="when">DAY 3</div>
+  <div class="entry" data-rx-step>
+    <h4>Email</h4>
+    <p>A short personal note from the doctor, same ask.</p>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">Approved template</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+
+  <div class="when">DAY 10</div>
+  <div class="entry key" data-rx-step>
+    <h4>Email only</h4>
+    <p>The benefits angle. Most vision plans cover an exam every 12 months.</p>
+    <span class="sai-status warn"><span class="kw">Rule</span><span class="detail">Benefits talk never goes by SMS</span></span>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">Email only</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+
+  <div class="when">DAY 17</div>
+  <div class="entry" data-rx-step>
+    <h4>SMS</h4>
+    <p>Care framed nudge.</p>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">Weekdays by default</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+
+  <div class="when">DAY 28</div>
+  <div class="entry" data-rx-step>
+    <h4>SMS</h4>
+    <p>Last text, and it says so.</p>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">Opt out honoured both ways</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+
+  <div class="when">DAY 42</div>
+  <div class="entry" data-rx-step>
+    <h4>Email</h4>
+    <p>Final note, easy opt out.</p>
+    <span data-rx-chip="sent" hidden><span class="sai-status good"><span class="kw">Sent</span><span class="detail">Sequence complete</span></span></span>
+    <span data-rx-chip="stopped" hidden><span class="sai-status good"><span class="kw">Stopped</span><span class="detail">Nothing further sends</span></span></span>
+  </div>
+</div>
+
+<div class="sai-w-note">
+  <div class="sai-chips">
+    <button type="button" class="sai-btn primary" id="rxNext">Send next touch</button>
+    <button type="button" class="sai-btn ghost" id="rxBooks">Patient books</button>
+    <button type="button" class="sai-btn ghost" id="rxReset">Start over</button>
+  </div>
+  <p id="rxRead" role="status" aria-live="polite">Nothing sent yet. It also stops on a reply or an opt out.</p>
+</div>
+
+<div class="sai-w-note">
+  <div class="sai-callout">
+    <div class="cap">Guarantee</div>
+    <p>5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free.</p>
+  </div>
+  <p><strong>The gate.</strong> Offered at 1,000 or more contactable lapsed patients. The clock starts at the first send, not at signing. Live in 10 business days from kickoff.</p>
+</div>

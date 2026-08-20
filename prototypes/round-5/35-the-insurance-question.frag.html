@@ -1,0 +1,377 @@
+<!-- TITLE: The Insurance Question -->
+<!-- Direction 35. The bet: the insurance content is the sharpest thing in the
+     catalogue, so the page opens on the moment it is needed and organises the
+     whole catalogue as three questions a practice currently answers from memory.
+     The load bearing constraint: we write down the LOOKUP PATH. We do not check
+     eligibility, pull authorizations or touch a payer, and the page says so in
+     product 1's own section rather than leaving it to the accordion. -->
+
+<header class="sai-dock" role="banner">
+  <span class="mark"><!-- SAI:LOGO --></span>
+  <nav class="dock-nav" aria-label="Sections">
+    <a href="#kb">Insurance</a>
+    <a href="#reexam">ReExam</a>
+    <a href="#ops">Admin</a>
+    <a href="#pricing">Pricing</a>
+    <a class="sai-btn primary dock-cta" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  </nav>
+</header>
+
+<main class="sai-page">
+
+  <!-- ===================== HERO. bare, no pane ========================= -->
+  <section class="hero sai-rise">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Independent eyecare practices</span></span>
+    <h1 class="sai-display">A patient is at the desk with <em>no card</em>, and the rule is in one person's head.</h1>
+    <p class="sai-lede">
+      The front desk does not need another tool that talks to the plan. It needs the lookup
+      path written down, per plan, somewhere anyone can search it while the patient waits.
+    </p>
+    <div class="hero-cta">
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </div>
+  </section>
+
+  <!-- ===================== THE INDEX. the page's spine ================= -->
+  <section class="sai-widget q35-index sai-rise" aria-labelledby="idxTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">The three questions</span></span>
+    <h2 class="sai-w-title" id="idxTitle">Three questions a practice answers from memory.</h2>
+    <ol class="q35-list">
+      <li>
+        <a href="#kb">
+          <span class="n">01</span>
+          <span class="q">What is their plan, and what does this visit run on?</span>
+          <span class="a">Front desk knowledge base</span>
+        </a>
+      </li>
+      <li>
+        <a href="#reexam">
+          <span class="n">02</span>
+          <span class="q">Why did they not come back?</span>
+          <span class="a">ReExam</span>
+        </a>
+      </li>
+      <li>
+        <a href="#ops">
+          <span class="n">03</span>
+          <span class="q">Is Thursday covered, and did payroll hear about it?</span>
+          <span class="a">Time off and payroll</span>
+        </a>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== 01 · THE INSURANCE QUESTION ================= -->
+  <section class="sai-widget sai-pane sai-streak sai-rise" id="kb" aria-labelledby="kbTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Question 01 · Front desk knowledge base</span></span>
+    <h2 class="sai-w-title" id="kbTitle">What is their plan, and what does this visit run on?</h2>
+    <div class="sai-w-sub">
+      76 situations and 4 decision lookups, live today in a 27 person practice with 6 to 7
+      doctors. The insurance pages are the ones the team opens first.
+    </div>
+
+    <!-- The line, stated in the section itself. This is the research finding and it
+         is the easiest thing on the page to oversell. -->
+    <div class="q35-line">
+      <div class="col do">
+        <div class="cap">What the insurance pages hold</div>
+        <ul>
+          <li>Which lookup actually works for that plan: name and date of birth, the subscriber rather than the dependent, or the employer name.</li>
+          <li>What to ask for at booking, so the lookup does not fail while the patient is standing there.</li>
+          <li>Vision plan or medical, and who decides which one the visit bills.</li>
+          <li>How far ahead to pull an authorization, how long it runs, and what to do once it has lapsed.</li>
+        </ul>
+      </div>
+      <div class="col dont">
+        <div class="cap">What we never do</div>
+        <ul>
+          <li>No eligibility check. We do not touch a payer, ever.</li>
+          <li>No authorization pulled on your behalf, and none stored.</li>
+          <li>Nothing quoted or promised to a patient about their plan.</li>
+          <li>0 patient records. The pages hold your rules, not your people.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sai-w-note">
+      <p>
+        <strong>That line is the point.</strong> Tools that talk to plans already exist and
+        some of them are sitting inside the software you already pay for. This is the part
+        none of them cover: what the desk does when the card is not there.
+      </p>
+    </div>
+
+    <div class="sai-w-sub">Type <em>no card</em> into the box, or pick one of the chips.</div>
+    <!-- SAI5:KB -->
+  </section>
+
+  <!-- ===================== 02 · REEXAM ================================= -->
+  <section class="sai-widget sai-pane sai-rise" id="reexam" aria-labelledby="rxTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Question 02 · ReExam</span></span>
+    <h2 class="sai-w-title" id="rxTitle">Why did they not come back?</h2>
+    <div class="sai-w-sub">
+      Nobody writes that one down either. We work the overdue list every month on rules tuned
+      to your practice, and the sequence stops the moment they book. Step it.
+    </div>
+    <!-- SAI5:REEXAM -->
+  </section>
+
+  <!-- ===================== 03 · TIME OFF AND PAYROLL =================== -->
+  <section class="sai-widget sai-pane sai-rise" id="ops" aria-labelledby="opsTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Question 03 · Time off and payroll</span></span>
+    <h2 class="sai-w-title" id="opsTitle">Is Thursday covered, and did payroll hear about it?</h2>
+    <div class="sai-w-sub">Built and live at the practice we built it for. Pick a request, then file it.</div>
+    <!-- SAI5:TIMEOFF -->
+  </section>
+
+  <!-- ===================== PROOF ======================================= -->
+  <section class="sai-widget sai-rise" id="proof" aria-labelledby="proofTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Proof</span></span>
+    <h2 class="sai-w-title" id="proofTitle">One practice, a year inside it.</h2>
+
+    <div class="q35-proof">
+      <table class="sai-table">
+        <tr><th>What</th><th>Where it stands</th></tr>
+        <tr><td class="num">27</td><td>People at the practice we built all of this for. 6 to 7 doctors, one location</td></tr>
+        <tr><td class="num">76</td><td>Front desk situations mapped and written up</td></tr>
+        <tr><td class="num">4</td><td>Decision lookups for the calls that cost money</td></tr>
+        <tr><td class="num">60 to 100</td><td>Admin hours a year returned by the time off build</td></tr>
+        <tr><td class="num">0</td><td>Patient records in the knowledge base</td></tr>
+        <tr><td class="num">30</td><td>Days from kickoff to live</td></tr>
+      </table>
+
+      <div class="q35-who">
+        <div class="cap">Who builds it</div>
+        <p>
+          <strong>Alec Stephens and Jusheen Kim.</strong> Jusheen was a lead software engineer
+          at J.P. Morgan. Alec spent the last year inside a 27 person eyecare practice, which is
+          where every insurance page on this site came from.
+        </p>
+        <p>
+          Both founders are based in Asia. Urgent issues are answered by the next business
+          morning, US time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ================================ -->
+  <section class="sai-widget sai-pane sai-rise" aria-labelledby="wordsTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">In their words</span></span>
+    <h2 class="sai-w-title" id="wordsTitle">The hardest question came from the client.</h2>
+
+    <div class="sai-claims">
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"I think the biggest issue will be getting in the habit of <em>using the tool</em>."</div>
+          <div class="attrib"><span class="who">Office manager</span> · 2 weeks after go live</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">Our answer</div>
+          <p>
+            Getting people to use it is a separate job and we treat it that way. Staff report
+            problems from inside the app rather than by email. The first batch of 4 issues was
+            fixed and live the same day, and a page went live from a screenshot the same week.
+          </p>
+        </div>
+      </div>
+
+      <div class="sai-claim">
+        <div class="body">
+          <div class="quote">"That looks good, exactly what <em>Mary needs to process</em>."</div>
+          <div class="attrib"><span class="who">Practice administrator</span> · On the payroll output</div>
+        </div>
+        <div class="verdict">
+          <div class="cap">Why it counts</div>
+          <p>
+            The test of an admin build is whether the person downstream can just run it. The
+            practice's own team files the issues now, and the tool is in daily use at the front desk.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUESTIONS =================================== -->
+  <section class="sai-widget sai-pane sai-rise" aria-labelledby="faqTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">The rest of the questions</span></span>
+    <h2 class="sai-w-title" id="faqTitle">Including the one this page is about.</h2>
+    <div class="sai-w-sub">Patient data is answered per product, because the answer really is different per product.</div>
+    <!-- SAI5:FAQ -->
+  </section>
+
+  <!-- ===================== PRICING · quiet ============================= -->
+  <section class="sai-widget sai-rise" id="pricing" aria-labelledby="priceTitle">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Pricing</span></span>
+    <h2 class="sai-w-title" id="priceTitle">Month to month. No term.</h2>
+
+    <table class="sai-table">
+      <tr><th>What</th><th>Setup</th><th>Monthly</th></tr>
+      <tr><td>Front desk knowledge base <span class="hint">the insurance pages live here</span></td><td>$2,500</td><td>$299</td></tr>
+      <tr><td>Whole practice knowledge base <span class="hint">where we would start you</span></td><td>$3,500</td><td>$250</td></tr>
+      <tr><td>Knowledge base plus operations</td><td>$4,500</td><td>$350</td></tr>
+      <tr><td>ReExam <span class="hint">flat, no contract</span></td><td>None</td><td>$600</td></tr>
+    </table>
+
+    <div class="sai-w-note">
+      <p>
+        Extra sections beyond a tier cap are $600 each. A second location is $1,500 setup and
+        $149 a month. Keep every page if you cancel, and export any time. Compare the monthly to
+        a training platform rather than to your practice management software: Trainual and Whale
+        run about $249 to $300 a month at this size and still hand you an empty system.
+      </p>
+    </div>
+  </section>
+
+  <!-- A wide calm slot. Left deliberately open, for a short film later. No
+       placeholder, no frame, no play button: whitespace holds the position. -->
+  <section class="q35-slot sai-rise" aria-hidden="false">
+    <p>One practice. Three questions. A written answer for each of them.</p>
+  </section>
+
+  <!-- ===================== CLOSE · the one night window ================ -->
+  <section class="sai-night sai-rise" id="book" aria-labelledby="closeTitle">
+    <span class="sai-ember"></span>
+    <span class="sai-stamp corner on-night">20 minutes</span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">Next step</span></span>
+    <h2 class="sai-w-title" id="closeTitle">Bring the last insurance question that stopped your front desk.</h2>
+    <div class="sai-w-sub">
+      We will tell you whether it belongs on a page, in the sequence, or nowhere near us. That
+      answer is free and it is usually the useful part.
+    </div>
+    <div class="close-cta">
+      <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a 20 minute call</a>
+      <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+    </div>
+  </section>
+
+  <footer class="sai-footer">
+    <div class="foot-l">
+      <span class="mark sm"><!-- SAI:LOGO --></span>
+      <div>
+        <div class="foot-name">Stephens AI</div>
+        <div class="foot-sub">Alec Stephens and Jusheen Kim</div>
+      </div>
+    </div>
+    <div class="foot-r">
+      <a href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      <div>Independent eyecare practices, United States</div>
+    </div>
+  </footer>
+
+</main>
+
+<style>
+/* Page level composition only. Every surface, marker and widget is the kit.
+   Direction 35 prefix: q35-. */
+.sai-page { max-width: 1060px; margin: 0 auto; padding: 118px 24px 0; display: flex; flex-direction: column; gap: 30px; }
+
+.sai-dock .mark svg { height: 26px; width: auto; display: block; }
+.dock-nav { display: flex; gap: 2px; align-items: center; flex-wrap: nowrap; }
+.dock-nav a:not(.dock-cta) {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase; color: #5A4F46; text-decoration: none;
+  padding: 8px 11px; border-radius: 999px; white-space: nowrap;
+  transition: background 220ms cubic-bezier(.2,.8,.2,1), color 220ms cubic-bezier(.2,.8,.2,1);
+}
+.dock-nav a:not(.dock-cta):hover, .dock-nav a:not(.dock-cta):focus-visible { background: rgba(220,104,67,.13); color: #8F3616; }
+.dock-cta { margin-left: 8px; font-size: 13.5px; }
+
+.hero { padding: 8px 4px 12px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.hero h1 { max-width: 19ch; }
+.hero h1 em { font-style: normal; color: #C55532; }
+.hero .sai-lede { max-width: 58ch; }
+.hero-cta, .close-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+
+/* The index. Plain rows on the page ground, no pane. Whitespace separates it. */
+.q35-list { list-style: none; margin: 6px 0 0; padding: 0; border-top: 1px solid rgba(23,19,16,.10); }
+.q35-list li { border-bottom: 1px solid rgba(23,19,16,.10); }
+.q35-list a {
+  display: grid; grid-template-columns: 62px 1fr auto; align-items: baseline;
+  gap: 8px 18px; padding: 17px 4px; min-height: 44px; text-decoration: none; color: #171310;
+  transition: background 220ms cubic-bezier(.2,.8,.2,1);
+}
+.q35-list a:hover, .q35-list a:focus-visible { background: rgba(220,104,67,.08); }
+.q35-list .n {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 26px; font-weight: 500;
+  letter-spacing: -.01em; color: #C55532;
+}
+.q35-list .q { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 19px; font-weight: 500; letter-spacing: -.015em; }
+.q35-list .a {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase; color: #5A4F46; white-space: nowrap;
+}
+
+/* The line: what the pages hold, and what we never do. The asymmetry is the
+   argument, so only the left column carries the terracotta mark. */
+.q35-line { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 6px 0 2px; }
+.q35-line .col { padding-top: 14px; }
+.q35-line .col.do { border-top: 2px solid #DC6843; }
+.q35-line .col.dont { border-top: 1px solid rgba(23,19,16,.18); }
+.q35-line .cap {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px;
+}
+.q35-line .col.do .cap { color: #8F3616; }
+.q35-line .col.dont .cap { color: #5A4F46; }
+.q35-line ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.q35-line li { position: relative; padding-left: 22px; font-size: 17px; line-height: 1.55; color: #171310; }
+.q35-line li::before {
+  content: ""; position: absolute; left: 0; top: 11px; width: 12px; height: 2px; border-radius: 1px;
+}
+.q35-line .col.do li::before { background: #DC6843; }
+.q35-line .col.dont li::before { background: rgba(23,19,16,.28); }
+.q35-line .col.dont li { color: #5A4F46; }
+
+/* Proof: the count on the left, the people on the right. */
+.q35-proof { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: 34px; align-items: start; }
+.q35-proof .sai-table { min-width: 0; }
+.q35-who { padding-top: 14px; border-top: 2px solid #DC6843; }
+.q35-who .cap {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif; font-size: 13.5px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: #8F3616; margin-bottom: 12px;
+}
+.q35-who p { font-size: 17px; line-height: 1.6; margin: 0 0 12px; }
+.q35-who p:last-child { margin-bottom: 0; color: #5A4F46; }
+
+/* The calm slot. Air, and one line. Nothing is drawn here on purpose. */
+.q35-slot { padding: 76px 4px; display: flex; justify-content: center; }
+.q35-slot p {
+  margin: 0; max-width: 34ch; text-align: center; font-family: 'Inter Tight', system-ui, sans-serif;
+  font-size: 21px; font-weight: 500; line-height: 1.45; letter-spacing: -.015em; color: #5A4F46;
+}
+
+.sai-table .hint { display: block; font-size: 13.5px; color: #5A4F46; }
+.sai-table .num { white-space: nowrap; }
+
+.sai-footer { display: flex; justify-content: space-between; gap: 26px; flex-wrap: wrap; align-items: flex-end; }
+.foot-l { display: flex; gap: 13px; align-items: center; }
+.foot-l .mark.sm svg { height: 30px; width: auto; display: block; }
+.foot-name { font-family: 'Inter Tight', system-ui, sans-serif; font-size: 17px; font-weight: 500; color: #171310; }
+.foot-sub, .foot-r { font-size: 14.5px; color: #5A4F46; }
+.foot-r { text-align: right; line-height: 1.7; }
+.foot-r a { color: #8F3616; }
+
+@media (max-width: 860px) {
+  .q35-line { grid-template-columns: 1fr; gap: 24px; }
+  .q35-proof { grid-template-columns: 1fr; gap: 26px; }
+}
+
+@media (max-width: 760px) {
+  .sai-page { padding: 104px 17px 0; gap: 24px; }
+  .dock-nav a:not(.dock-cta) { display: none; }
+  .q35-list a { grid-template-columns: 46px 1fr; padding: 15px 2px; }
+  .q35-list .n { font-size: 24px; }
+  .q35-list .q { font-size: 18px; }
+  .q35-list .a { grid-column: 2; white-space: normal; }
+  .q35-slot { padding: 52px 4px; }
+  .q35-slot p { font-size: 19px; }
+  .sai-footer { flex-direction: column; align-items: flex-start; }
+  .foot-r { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-nav a:not(.dock-cta), .q35-list a { transition: none; }
+}
+</style>
