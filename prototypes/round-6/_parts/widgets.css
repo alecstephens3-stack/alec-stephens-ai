@@ -68,12 +68,20 @@
 }
 
 .kbdemo-page{
+  /* Always in flow. Toggling [hidden] changed the document height by ~390px on
+     every loop, so the whole page below the demo shifted up and down while the
+     visitor was reading it. Reserve the space and fade instead. */
+  opacity:0; visibility:hidden;
+  transition:opacity var(--sai-dur-base) var(--sai-ease), visibility 0s linear var(--sai-dur-base);
   margin-top:var(--sai-space-3);
   padding:var(--sai-space-4);
   border-radius:var(--sai-radius-card);
   background:#fff;
   border:1px solid var(--sai-rule-soft);
-  animation:kbopen var(--sai-dur-base) var(--sai-ease) both;
+}
+.kbdemo-page.is-open{
+  opacity:1; visibility:visible;
+  transition:opacity var(--sai-dur-base) var(--sai-ease), visibility 0s;
 }
 @keyframes kbopen{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
 .kbdemo-title{
@@ -181,7 +189,9 @@
 }
 .oploop-stat{ display:grid; gap:2px; }
 .oploop-num{
-  font:var(--sai-fw-numeral) var(--sai-fs-stat)/1 var(--sai-font-sans);
+  /* fs-sub, not fs-stat. Operations is the smallest of the three products and
+     this stat was rendering larger than the h1. */
+  font:var(--sai-fw-numeral) var(--sai-fs-sub)/1 var(--sai-font-sans);
   color:var(--sai-accent-deep);
 }
 .oploop-lab{ font-size:var(--sai-fs-micro); color:var(--sai-ink-2); }
