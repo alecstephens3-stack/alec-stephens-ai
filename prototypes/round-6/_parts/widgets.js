@@ -22,10 +22,8 @@
     if (reduce) {
       typed.textContent = QUERY;
       field.classList.add("done");
-      each(results, function (li) {
-        if (KEEP.indexOf(li.getAttribute("data-kb-r")) === -1) li.setAttribute("data-out", "");
-      });
-      page.hidden = false;
+      each(results, function (li) { li.removeAttribute("data-out"); });
+      page.classList.add('is-open');
       return;
     }
 
@@ -37,7 +35,7 @@
       clear();
       typed.textContent = "";
       field.classList.remove("typing", "done");
-      page.hidden = true;
+      page.classList.remove('is-open');
       each(results, function (li) { li.removeAttribute("data-out"); li.removeAttribute("data-hot"); });
       if (cursor) { cursor.classList.remove("on", "tap"); cursor.style.transform = ""; }
     }
@@ -74,7 +72,7 @@
       }
 
       function open() {
-        page.hidden = false;
+        page.classList.add('is-open');
         at(5200, run);            // rest on the answer, then replay
       }
     }
@@ -82,7 +80,10 @@
     function filter(q) {
       q = q.trim().toLowerCase();
       each(results, function (li) {
-        if (!q) { li.removeAttribute("data-out"); return; }
+        // Nothing typed means no results yet, the way a real search box behaves.
+        // With only the three sourced rows there is nothing to narrow FROM, so the
+        // filter has to read as empty -> matches rather than many -> few.
+        if (!q) { li.setAttribute("data-out", ""); return; }
         var hay = (li.getAttribute("data-terms") || "") + " " + li.textContent.toLowerCase();
         var hit = q.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
         if (hit) li.removeAttribute("data-out"); else li.setAttribute("data-out", "");

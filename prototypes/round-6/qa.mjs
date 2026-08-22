@@ -59,8 +59,9 @@ for (const f of files) {
   await p.waitForTimeout(4200);
   const demoState = await p.evaluate(() => {
     const pg = document.querySelector('.kbdemo-page');
+    const rows = document.querySelectorAll('.kbdemo-results li:not([data-out])');
     const typed = document.querySelector('.kbdemo-typed');
-    return { answerOpen: pg ? !pg.hidden : null, typed: typed ? typed.textContent : null };
+    return { answerOpen: pg ? pg.classList.contains('is-open') : null, visibleRows: rows.length, typed: typed ? typed.textContent : null };
   });
 
   await p.screenshot({ path: `shots/${name}-390.png`, fullPage: true });
@@ -75,6 +76,7 @@ for (const f of files) {
   if (m.openFaq > 0) problems.push(`FAQ not drawn closed (${m.openFaq} open)`);
   if (m.seq !== 6) problems.push(`sequence items=${m.seq}`);
   if (demoState.answerOpen !== true) problems.push('demo never opened its answer');
+  if (demoState.visibleRows !== 3) problems.push(`results visible=${demoState.visibleRows}, expected 3`);
   if (demoState.typed !== 'no insurance card') problems.push(`typed="${demoState.typed}"`);
   if (errs.length) problems.push('JS: ' + errs.slice(0, 2).join(' | '));
 
