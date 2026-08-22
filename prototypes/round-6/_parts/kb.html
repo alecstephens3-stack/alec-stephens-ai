@@ -1,0 +1,37 @@
+<!-- SHARED PART, round 6. The one moving element on the page.
+     Self playing: a ghost cursor types a real front desk question, the results
+     filter as it types, the cursor clicks one, a situation page opens. It rests,
+     then replays. Nothing is asked of the visitor.
+
+     Every string here is verbatim from 06-FINAL-COPY.md. The frame carries
+     exactly ONE badge ("Lookup"). Never add a second, and never add a "Verified"
+     or "Eligibility" chip: this product does not check eligibility. -->
+
+<div class="kbdemo" id="kbDemo" data-kb-demo>
+  <div class="kbdemo-field">
+    <span class="kbdemo-typed" id="kbTyped"></span><span class="kbdemo-caret" id="kbCaret"></span>
+    <span class="kbdemo-ph" id="kbPh">Search the knowledge base</span>
+  </div>
+
+  <ul class="kbdemo-results" id="kbResults">
+    <li data-kb-r="1" data-terms="no insurance card patient arrives without">Patient arrives with no insurance card</li>
+    <li data-kb-r="2" data-terms="no insurance changed since last visit their">Their insurance changed since the last visit</li>
+    <li data-kb-r="3" data-terms="insurance vision plan medical which one to bill">Vision plan or medical, which one to bill<span class="kbdemo-badge">Lookup</span></li>
+    <li data-kb-r="4" data-terms="contact lens follow up fitting period">Contact lens follow up</li>
+    <li data-kb-r="5" data-terms="price cost this year what it costs">What it costs this year</li>
+    <li data-kb-r="6" data-terms="how soon seen triage urgent same day">How soon do they need to be seen</li>
+  </ul>
+
+  <div class="kbdemo-page" id="kbPage" hidden>
+    <h3 class="kbdemo-title">Patient arrives with no insurance card</h3>
+    <p>Ask for their name, date of birth, and employer. That is usually enough to find the plan.</p>
+    <p>Nothing found: book as self pay and say the price before the exam, not at checkout.</p>
+    <p>Do not tell a patient they are covered until you have confirmed it.</p>
+    <div class="kbdemo-foot">
+      <span class="kbdemo-meta">Last updated by your office manager</span>
+      <span class="kbdemo-flag">This page is wrong</span>
+    </div>
+  </div>
+
+  <span class="kbdemo-cursor" id="kbCursor" aria-hidden="true"></span>
+</div>
