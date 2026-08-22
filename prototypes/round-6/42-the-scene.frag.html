@@ -30,7 +30,10 @@
     </div>
   </section>
 
-  <!-- ============ 3 · REEXAM. One large picture, almost no prose. ======= -->
+  <!-- ============ 3 · REEXAM. Two bands, read as one section. The first
+       is the picture. The second is the money and the limits on it, which
+       are the selling point and so run at full volume, not in a footnote
+       hanging off the diagram. The one stamp on the page is here. ======= -->
   <section class="band sai-rise" aria-labelledby="rx">
     <span class="sai-stamp">ReExam</span>
     <h2 class="sai-w-title" id="rx">Recall is the job that slips first.</h2>
@@ -38,21 +41,22 @@
 
     <div class="sai-w-sub">6 touches, about 6 weeks</div>
     <!-- SAI6:REEXAM -->
+  </section>
 
+  <section class="band sai-rise" aria-label="ReExam price and guarantee">
     <p class="sai-lede">$600 a month, flat. No contract, no setup fee. Live in 10 business days.</p>
 
-    <div class="beat">
-      <div class="sai-callout">
-        <div class="cap">The guarantee</div>
-        <p>5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free.</p>
-      </div>
-      <p>We offer that guarantee at 1,000 or more contactable lapsed patients. At 500 to 1,000 it is the same $600 a month and no guarantee. Below 500 we decline the work. The clock starts at your first send, not at signing. We would rather state the limit than imply a promise we cannot keep.</p>
+    <div class="sai-callout">
+      <div class="cap">The guarantee</div>
+      <p>5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free.</p>
     </div>
+    <p>We offer that guarantee at 1,000 or more contactable lapsed patients. At 500 to 1,000 it is the same $600 a month and no guarantee. Below 500 we decline the work. The clock starts at your first send, not at signing. We would rather state the limit than imply a promise we cannot keep.</p>
+    <p>A BAA is signed before any patient data moves, and we never touch charts.</p>
   </section>
 
   <!-- ============ 4 · OPERATIONS. The smallest of the three. =========== -->
   <section class="band sai-rise" aria-labelledby="ops">
-    <span class="sai-stamp">Practice operations</span>
+    <span class="label">Practice operations</span>
     <h2 class="sai-w-title" id="ops">Time off and payroll, still done by hand.</h2>
     <!-- SAI6:TIMEOFF -->
     <p>A staff member files a request, it is checked against coverage, and it reaches payroll. That loop is the whole product. It does not schedule shifts and it does not connect to your practice management system. It comes with the knowledge base plus operations tier, $4,500 to set up and $350 a month.</p>
@@ -60,7 +64,7 @@
 
   <!-- ============ 5 · PROOF. Small, wide, candid. ====================== -->
   <section class="band sai-rise" aria-labelledby="proof">
-    <span class="sai-stamp">Proof</span>
+    <span class="label">Proof</span>
     <h2 class="sai-w-title" id="proof">One practice, live today.</h2>
     <p class="sai-lede">A 27 person practice, 6 to 7 doctors, one location. That is the whole list.</p>
 
@@ -72,7 +76,7 @@
   </section>
 
   <section class="band sai-rise" aria-labelledby="who">
-    <span class="sai-stamp">Who you are hiring</span>
+    <span class="label">Who you are hiring</span>
     <h2 class="sai-w-title" id="who">Two people.</h2>
     <p class="sai-lede">Alec Stephens and Jusheen Kim, and you work with both of us, not an account manager.</p>
     <p><b>Alec Stephens</b>, Co-founder. Spent the last year inside that 27 person practice, watching the front desk work.</p>
@@ -82,22 +86,22 @@
   <!-- ============ 6 · TESTIMONIALS. The slot only. =====================
        Permission to quote has not been granted and no approved verbatim quote
        exists. The space is laid out for 2 short quotes attributed by role only.
-       Do not write anything into these two slots, including a placeholder. -->
+       Do not write anything into these two slots, including a placeholder.
+       Unlabelled as well as unwritten: 06-FINAL-COPY supplies no label string
+       for this section, so the space is reserved and nothing names it. -->
   <section class="band sai-rise" aria-label="Testimonials">
-    <span class="sai-stamp">Testimonials</span>
     <div class="slot"></div>
     <div class="slot"></div>
   </section>
 
   <!-- ============ 7 · FAQ. Drawn closed. The only click on the page. === -->
   <section class="band sai-rise" aria-label="FAQ">
-    <span class="sai-stamp">FAQ</span>
     <!-- SAI6:FAQ -->
   </section>
 
   <!-- ============ 8 · PRICING. Quiet. A bare table, no pane, no CTA. === -->
   <section class="band sai-rise" aria-label="Pricing">
-    <span class="sai-stamp">Pricing</span>
+    <span class="label">Pricing</span>
 
     <table class="sai-table">
       <tr><td>Front desk knowledge base</td><td>$2,500 setup, $299 a month</td></tr>
@@ -106,13 +110,15 @@
     </table>
 
     <p>A second location is $1,500 to set up and $149 a month. Month to month, no term. Cancel any time and keep every page.</p>
+  </section>
 
-    <div class="beat">
-      <span class="sai-stamp">ReExam</span>
-      <p class="sai-lede">$600 a month, flat</p>
-      <p>No contract. Cancel monthly. No setup fee.</p>
-      <p>The first 3 ReExam practices pay $300 a month, locked for 6 months, for a testimonial and case study rights.</p>
-    </div>
+  <!-- Its own band, never sharing one with the table above: $300 must not be
+       read as a continuation of the $299 tier or of FAQ row 6. -->
+  <section class="band sai-rise" aria-label="ReExam pricing">
+    <span class="label">ReExam</span>
+    <p class="sai-lede">$600 a month, flat</p>
+    <p>No contract. Cancel monthly. No setup fee.</p>
+    <p>The first 3 ReExam practices pay $300 a month, locked for 6 months, for a testimonial and case study rights.</p>
   </section>
 
 </main>
@@ -120,7 +126,7 @@
 <!-- ============ 9 · CLOSE. The page ends on the email address. ========= -->
 <footer class="sai-page scene close sai-rise">
   <section class="band" aria-labelledby="close">
-    <span class="sai-stamp">Two ways to reach us</span>
+    <span class="label">Two ways to reach us</span>
     <h2 class="sai-w-title" id="close">A short call, and we will tell you if you do not need us.</h2>
     <div class="actions">
       <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
@@ -134,27 +140,36 @@
    radius, shadow and glass surface on this page comes from the kit. */
 .masthead{
   position:relative; z-index:1; max-width:760px; margin:0 auto;
-  padding:var(--sai-space-6) var(--sai-space-5) 0;
+  padding:var(--sai-space-5) var(--sai-space-5) 0;
   display:flex; align-items:center; gap:var(--sai-space-3);
 }
 .masthead svg.mark{ width:26px; height:26px; flex:none; display:block; }
 
+/* Phone first: the air lives BETWEEN bands, so the band rhythm is tight and
+   the gaps that separate one thought from the next are the generous ones. */
 .sai-page.scene{
   max-width:760px;
-  padding:var(--sai-space-7) var(--sai-space-5) 0;
-  display:grid; gap:var(--sai-space-6);
+  padding:var(--sai-space-5) var(--sai-space-5) 0;
+  display:grid; gap:var(--sai-space-5);
 }
-.sai-page.scene.close{ padding-bottom:var(--sai-space-8); }
+.sai-page.scene.close{ padding-bottom:var(--sai-space-6); }
 
-.band{ display:grid; gap:var(--sai-space-4); }
+.band{ display:grid; gap:var(--sai-space-3); }
 .band > *{ margin:0; }
-.beat{ display:grid; gap:var(--sai-space-4); margin-top:var(--sai-space-6); }
+.beat{ display:grid; gap:var(--sai-space-3); margin-top:var(--sai-space-5); }
 .beat > *{ margin:0; }
-.band .sai-stamp, .beat .sai-stamp{ justify-self:start; }
+.band .sai-stamp, .band .label{ justify-self:start; }
 .band b{ font-weight:var(--sai-fw-bold); }
 
+/* Accent is punctuation: one stamp on the page. Every other label is quiet. */
+.label{
+  font-family:var(--sai-font-label); font-size:var(--sai-fs-label);
+  font-weight:var(--sai-fw-label); letter-spacing:var(--sai-ls-label);
+  text-transform:uppercase; color:var(--sai-ink-2);
+}
+
 /* The scene band: one sentence, nothing else, air on both sides of it. */
-.breathe{ padding-block:var(--sai-space-6); }
+.breathe{ padding-block:var(--sai-space-4); }
 
 /* Inset, so the demo reads as composed rather than app-like. */
 .demo{ margin:var(--sai-space-2) var(--sai-space-2) 0; }
@@ -162,12 +177,21 @@
 /* Testimonials: the space is laid out, the words are not written. */
 .slot{ min-height:var(--sai-space-8); border-top:1px solid var(--sai-rule-soft); }
 
-.proof td.num{ width:var(--sai-space-8); }
+.proof td.num{
+  width:var(--sai-space-8);
+  /* Ink, not the kit's accent numeral. Three terracotta stats plus the two
+     stamps put this page at 9 marks against a ceiling of about 6, and the
+     credibility numbers do not need colour to land. */
+  color:var(--sai-ink);
+}
 .tier{ display:block; margin-top:var(--sai-space-1); }
 .actions{ display:flex; flex-wrap:wrap; gap:var(--sai-space-3); }
 
 @media (min-width:720px){
-  .sai-page.scene{ gap:var(--sai-space-7); }
+  .sai-page.scene{ padding-top:var(--sai-space-7); gap:var(--sai-space-7); }
+  .sai-page.scene.close{ padding-bottom:var(--sai-space-8); }
+  .band, .beat{ gap:var(--sai-space-4); }
+  .breathe{ padding-block:var(--sai-space-6); }
   .demo{ margin-inline:var(--sai-space-6); }
   .slot{ min-height:calc(var(--sai-space-8) + var(--sai-space-5)); }
 }
