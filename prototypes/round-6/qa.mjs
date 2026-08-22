@@ -14,7 +14,14 @@ for (const f of files) {
   const p = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
   const errs = [];
   p.on('pageerror', e => errs.push(String(e).slice(0, 120)));
-  p.on('console', m => { if (m.type() === 'error') errs.push('console: ' + m.text().slice(0, 120)); });
+  // Google Fonts is unreachable from this container but IS allowed in published
+  // artifacts, so a font CDN failure here is not a page defect.
+  p.on('console', m => {
+    if (m.type() !== 'error') return;
+    const t = m.text();
+    if (/fonts\.(googleapis|gstatic)\.com/.test(t) || /ERR_CONNECTION_RESET/.test(t)) return;
+    errs.push('console: ' + t.slice(0, 120));
+  });
 
   await p.goto('file://' + path.resolve(f), { waitUntil: 'networkidle' });
   await p.waitForTimeout(1200);
@@ -25,7 +32,13 @@ for (const f of files) {
     const over = [];
     for (const el of document.querySelectorAll('*')) {
       const r = el.getBoundingClientRect();
-      if (r.width > 392 && r.right > 392) {
+      // Only count it if nothing above it clips: decorative scene blobs are
+      // deliberately oversized and live inside overflow:hidden.
+      let clipped = false;
+      for (let n = el.parentElement; n; n = n.parentElement) {
+        if (getComputedStyle(n).overflow !== 'visible') { clipped = true; break; }
+      }
+      if (!clipped && r.width > 392 && r.right > 392) {
         over.push((el.tagName.toLowerCase() + (el.className && typeof el.className === 'string'
           ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '')) + ' w=' + Math.round(r.width));
       }
@@ -55,6 +68,7 @@ for (const f of files) {
 
   const problems = [];
   if (m.scrollW > 392) problems.push(`H-OVERFLOW scrollWidth=${m.scrollW}`);
+  if (m.scrollH > 5200) problems.push(`TALL ${m.scrollH}px, target ~4500`);
   if (m.over.length) problems.push('wide: ' + m.over.join(', '));
   if (m.h1 !== 1) problems.push(`h1 count=${m.h1}`);
   if (!m.demo) problems.push('no KB demo');
