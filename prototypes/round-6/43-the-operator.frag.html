@@ -1,233 +1,430 @@
 <!-- TITLE: The Operator -->
-<!-- Direction 43. The bet: the buyer is an owner who thinks in systems and
-     money, and respects a vendor who shows the machinery rather than the mood.
-     Dense and confident. The three products are three pictures with real
-     structure. Two surfaces on the whole page and no more: the demo frame,
-     which the shared widget brings with it, and one night band holding the
-     ReExam terms. Everything else sits on the bare ground.
+<!-- Direction 43, rebuilt on the live site's portioning (_parts/site.css, lifted
+     from src/components/sections/v4/shell.tsx and hero.tsx).
 
-     Why the night band is the terms and not the sequence: the shared .rxseq
-     widget is authored in light tokens only and has no night variant, so on a
-     night ground its day labels and captions render near black on near black.
-     Adding colour CSS here was not an option, so the contrast moment moved one
-     block down to the price, the guarantee and its limits, which is the most
-     operator-shaped content on the page anyway. -->
+     The bet is unchanged: the buyer is an owner who thinks in systems and money,
+     and respects a vendor who shows the machinery rather than the mood.
+
+     CHANGE 1, PORTIONING. The first cut was authored phone first with no desktop
+     treatment, so on a laptop it ran as a ribbon down the middle with a dead zone
+     beside it. Every band's content now sits in a .wrap (1080px), the hero is a
+     two column .hero-grid with the demo in the RIGHT column, and the material
+     runs in .g3 / .g4 / .split-a / .split-b / .narrow. This direction gains the
+     most from the extra width, so the grids are used at full strength: the six
+     capabilities are one 3 up read twice over, and the build is a 4 up strip.
+
+     CHANGE 2, DEPTH. 07-EXPANDED-SECTIONS.md is placed in full. The knowledge
+     base is now the largest section on the page, which is right, since it is the
+     product the demo argues for. Operations uses 07's four blocks INSTEAD of 06
+     section 4's Body paragraph, never both: they carry the same facts and running
+     both would print the loop, both limits and the tier price twice.
+
+     THE INSTRUMENT PANEL. The house look here is a hairline above every grid
+     cell (.ruled), so a 3 up and a 4 up read as a read-out strip rather than a
+     float of paragraphs. Rules, never bubbles. Two surfaces on the whole page and
+     no more: the demo frame, which the shared widget brings with it, and the one
+     night band.
+
+     Why the night band is the ReExam TERMS and not the sequence picture: the
+     shared sequence widget is authored in light tokens only and has no night
+     variant, so on a night ground its day labels and captions render near black
+     on near black. The contrast moment therefore sits one block down, on the
+     price, the guarantee and its limits, which is the most operator shaped
+     content on the page anyway.
+
+     ACCENT BUDGET. Four page level marks: the ember behind the terms band, and
+     the three proof numerals. Every section label is .lab, which is ink. Widget
+     internals are not counted. -->
 
 <header class="masthead">
-  <span class="mark"><!-- SAI:LOGO --></span>
-  <span class="word">Stephens AI</span>
+  <div class="wrap lockup">
+    <!-- SAI:LOGO -->
+    <span>Stephens AI</span>
+  </div>
 </header>
 
-<main class="sai-page no-dock">
+<main class="sai-page rig">
 
-  <!-- 1 · FIRST SCREEN. One line of headline, then the machine. Nothing else. -->
-  <section class="band hero sai-rise">
-    <h1 class="sai-display">One search box instead of the office manager's desk.</h1>
-    <div class="pic demo">
-      <!-- SAI6:KB -->
-    </div>
-  </section>
-
-  <!-- 2 · FRONT DESK KNOWLEDGE BASE. Bare ground. The demo above is the proof. -->
-  <section class="band sai-rise" aria-labelledby="kbTitle">
-    <h2 class="sai-w-title" id="kbTitle">Several times a day someone puts a patient on hold and walks to the office manager's desk. Two people stop working.</h2>
-    <p class="sai-lede">Your protocols become short situation pages your team can find mid-call.</p>
-    <p>When a page is wrong or missing, whoever found it says so from inside the app and you see it.</p>
-  </section>
-
-  <!-- 3 · REEXAM, BAND 1. The mechanism, drawn once, and the band ends on it. -->
-  <section class="band sai-rise" aria-labelledby="rxTitle">
-    <span class="label">ReExam</span>
-    <h2 class="sai-w-title" id="rxTitle">Recall is the job that slips first.</h2>
-    <p class="sai-lede">It sits on the same list as the daily work. You already pay software to send reminders. Its rules were set once and nobody in your building tunes them. When they misfire, nobody there is accountable.</p>
-    <p>You send us the overdue list each month. We clean it, run the sequence, watch the replies, and tell you what came back. Keep your phone system. We will work the list it ignores.</p>
-
-    <div class="pic seq">
-      <p class="sai-w-sub">6 touches, about 6 weeks</p>
-      <!-- SAI6:REEXAM -->
-    </div>
-  </section>
-
-  <!-- 3b · REEXAM, BAND 2. The same section, second band, and the ONE night
-       surface on the page: price, guarantee, the limits on the guarantee, and
-       the data posture. Every line here is body size in the primary night ink.
-       The limits are the selling point, so nothing in this band is a caption. -->
-  <section class="sai-night terms sai-rise">
-    <span class="sai-ember left"></span>
-    <p>$600 a month, flat. No contract, no setup fee. Live in 10 business days.</p>
-    <h3 class="label">The guarantee</h3>
-    <p>5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free.</p>
-    <p>We offer that guarantee at 1,000 or more contactable lapsed patients. At 500 to 1,000 it is the same $600 a month and no guarantee. Below 500 we decline the work. The clock starts at your first send, not at signing. We would rather state the limit than imply a promise we cannot keep.</p>
-    <p>A BAA is signed before any patient data moves, and we never touch charts.</p>
-  </section>
-
-  <!-- 4 · PRACTICE OPERATIONS. Three things. Deliberately the smallest. -->
-  <section class="band sai-rise" aria-labelledby="opsTitle">
-    <span class="label">Practice operations</span>
-    <h2 class="sai-w-title" id="opsTitle">Time off and payroll, still done by hand.</h2>
-    <p>A staff member files a request, it is checked against coverage, and it reaches payroll. That loop is the whole product. It does not schedule shifts and it does not connect to your practice management system. It comes with the knowledge base plus operations tier, $4,500 to set up and $350 a month.</p>
-    <div class="pic ops">
-      <!-- SAI6:TIMEOFF -->
-    </div>
-  </section>
-
-  <!-- 5 · PROOF. Three numbers with real weight, on the ground, no cards. -->
-  <section class="band sai-rise" aria-labelledby="proofTitle">
-    <span class="label">Proof</span>
-    <h2 class="sai-w-title" id="proofTitle">One practice, live today.</h2>
-    <p class="sai-lede">A 27 person practice, 6 to 7 doctors, one location. That is the whole list.</p>
-    <div class="stats">
-      <div>
-        <span class="sai-display">76</span>
-        <span class="sai-w-sub">Front desk situations mapped</span>
-      </div>
-      <div>
-        <span class="sai-display">4</span>
-        <span class="sai-w-sub">Decision lookups built</span>
-      </div>
-      <div>
-        <span class="sai-display">0</span>
-        <span class="sai-w-sub">Patient records in the knowledge base</span>
+  <!-- ========== 1 = FIRST SCREEN. One line of headline, then the machine.
+       Two columns from 1024px: headline left, demo right. That split is the
+       single most visible difference from the phone only cut. ========== -->
+  <section class="band hero sai-rise" aria-labelledby="lede">
+    <div class="wrap">
+      <div class="hero-grid">
+        <h1 id="lede">One search box instead of the office manager's desk.</h1>
+        <div class="demo"><!-- SAI6:KB --></div>
       </div>
     </div>
   </section>
 
-  <!-- 5b · WHO YOU ARE HIRING. Two columns on the phone, then the thesis. -->
-  <section class="band sai-rise" aria-labelledby="hireTitle">
-    <span class="label">Who you are hiring</span>
-    <h2 class="sai-w-title" id="hireTitle">Two people.</h2>
-    <p class="sai-lede">Alec Stephens and Jusheen Kim, and you work with both of us, not an account manager.</p>
-    <div class="people">
-      <div>
-        <p><b>Alec Stephens</b></p>
-        <p class="sai-w-sub">Co-founder</p>
-        <p class="sai-w-sub">Spent the last year inside that 27 person practice, watching the front desk work.</p>
-      </div>
-      <div>
-        <p><b>Jusheen Kim</b></p>
-        <p class="sai-w-sub">Co-founder</p>
-        <p class="sai-w-sub">Former lead software engineer at J.P. Morgan. Builds the systems that have to hold up under real use.</p>
+  <!-- ========== 2 = FRONT DESK KNOWLEDGE BASE. The biggest section on the
+       page: the scene, the second scene, six capabilities, the four stage
+       build, and what you own. Five joined bands under one heading. ==== -->
+  <section class="sai-rise" aria-labelledby="kb">
+
+    <div class="band">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="lab">Front desk knowledge base</p>
+          <h2 class="sec wide" id="kb">Several times a day someone puts a patient on hold and walks to the office manager's desk. Two people stop working.</h2>
+          <p class="lede">Your protocols become short situation pages your team can find mid-call.</p>
+          <p class="lede">When a page is wrong or missing, whoever found it says so from inside the app and you see it.</p>
+        </div>
+
+        <!-- The two scenes. The first has no title in the source, so it takes
+             the wider column and the titled one takes the narrower. -->
+        <div class="split-a">
+          <p class="lede">Nobody is sure which price is current. This is what we found at the practice we built this for: 4 price lists stacked in 1 spreadsheet. When the answer is unclear the front desk guesses, and the guess turns up later as an uncollected charge or a surprise balance at checkout.</p>
+          <div class="blk">
+            <h3>New hires take months to get up to speed</h3>
+            <p>Turnover at the front desk is normal. Losing months of training every time is not. The knowledge exists. It just lives in a few people's heads and a binder nobody has updated since the last insurance change.</p>
+          </div>
+        </div>
       </div>
     </div>
-    <p>We are based in Asia, so we are not at a desk during your morning rush. Urgent issues get answered by the next business morning your time. We would rather state the limit than imply a promise we cannot keep.</p>
+
+    <!-- Six capabilities. One .g3 holding six blocks, so it reads as a 3 up
+         twice at 1080px and a 2 up at tablet. Ruled, not panelled. -->
+    <div class="band join">
+      <div class="wrap">
+        <div class="g3 ruled">
+          <div class="blk">
+            <h3>Every situation written down and searchable</h3>
+            <p>There is 1 search box. It returns an answer in a few seconds, instead of a folder to dig through. The insurance rules sit here too. We write down the rules your front desk follows, and we do not check eligibility or reach a payer.</p>
+          </div>
+          <div class="blk">
+            <h3>Decision lookups for the calls that cost money</h3>
+            <p>A few decisions do most of the damage when they go wrong: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price. Each one gets a short guided lookup that shows the buried exception instead of relying on someone to remember it. On anything clinical it is a reference, never a substitute for judgment. Your doctor signs off on every clinical page before it goes live and again when it changes.</p>
+          </div>
+          <div class="blk">
+            <h3>Your office manager keeps it current</h3>
+            <p>A price changes, your office manager updates the page, and it is live. There is no ticket and no waiting on us. Every edit is saved, so a wrong change is 1 click back. A knowledge base that goes stale becomes the exact problem it was built to solve.</p>
+          </div>
+          <div class="blk">
+            <h3>Access stays inside your practice</h3>
+            <p>Staff sign in with their practice Google account. Nobody outside the domain can open it, and only the people your practice approves can edit. The knowledge base holds no patient records.</p>
+          </div>
+          <div class="blk">
+            <h3>Installs on the front desk computers</h3>
+            <p>It installs from the browser with no admin rights and no ticket to your IT vendor. Pages your team has already opened keep working if the internet drops, which matters at a front desk that cannot stop taking calls.</p>
+          </div>
+          <div class="blk">
+            <h3>Staff flag a problem in 1 click</h3>
+            <p>Staff report problems from inside the app rather than by email. At the practice we built this for, the first batch of 4 issues was fixed and live the same day. The front office manager sends new pages to add. One went live from a screenshot the same week.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The build, four stages across one strip. Stage labels are .lab, ink. -->
+    <div class="band join">
+      <div class="wrap">
+        <div class="g4 ruled">
+          <div class="blk">
+            <span class="lab">Week 1</span>
+            <h3>Send us what you already have</h3>
+            <p>You do not need to organize or rewrite anything first. We sort the protocols, price sheets, insurance notes, and the binder, resolve duplicates, and scope the build before you commit.</p>
+          </div>
+          <div class="blk">
+            <span class="lab">Week 2</span>
+            <h3>We learn how your front desk actually works</h3>
+            <p>We meet with the people who answer the phone in a few short sessions scheduled around the clinic. Their input shapes the pages and decision lookups, so the system fits the work instead of forcing a new process on the team.</p>
+          </div>
+          <div class="blk">
+            <span class="lab">Weeks 3 and 4</span>
+            <h3>We write, secure, and test it</h3>
+            <p>We write every page, build the decision lookups, and configure Google sign-in for approved staff. Your team reviews a working version, and we fix anything that is unclear before launch.</p>
+          </div>
+          <div class="blk">
+            <span class="lab">Day 30</span>
+            <h3>Live at the front desk</h3>
+            <p>We install it on the front desk computers, train the office manager to make updates, and open the feedback channel. Staff get a finished system, not an empty system they still have to build.</p>
+          </div>
+        </div>
+        <p class="lede">Live at day 30. Getting people to use it is a separate job and we treat it that way.</p>
+      </div>
+    </div>
+
+    <!-- What you own. Three blocks, and the last one is last on purpose. -->
+    <div class="band join">
+      <div class="wrap">
+        <div class="g3 ruled">
+          <div class="blk">
+            <h3>Who owns the content</h3>
+            <p>You do. They are your practice's rules. We wrote them down. We do not own them.</p>
+          </div>
+          <div class="blk">
+            <h3>Can you export it</h3>
+            <p>Yes, any time, as plain files you can open without us. Ask and we send it, no charge.</p>
+          </div>
+          <div class="blk">
+            <h3>What if you two disappear</h3>
+            <p>You have the export, and the content reads fine without our software. Better you know that now than find out at a bad moment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- 6 · TESTIMONIALS. The slot only. Permission to quote has not been asked
-       for and no approved verbatim quote exists, so nothing is written here and
-       no placeholder string is printed. Space for 2 short quotes, by role only. -->
-  <section class="slot sai-rise">
-    <div></div>
-    <div></div>
+  <!-- ========== 3 = REEXAM. Two joined bands. The mechanism runs beside the
+       argument rather than under it, because the sequence is a tall picture
+       and a full width head above it leaves a dead column at 1080px. ==== -->
+  <section class="sai-rise" aria-labelledby="rx">
+
+    <div class="band">
+      <div class="wrap">
+        <div class="split-a">
+          <div class="col">
+            <div class="sechead">
+              <p class="lab">ReExam</p>
+              <h2 class="sec" id="rx">Recall is the job that slips first.</h2>
+              <p class="lede">It sits on the same list as the daily work. You already pay software to send reminders. Its rules were set once and nobody in your building tunes them. When they misfire, nobody there is accountable.</p>
+            </div>
+            <p class="lede">You send us the overdue list each month. We clean it, run the sequence, watch the replies, and tell you what came back. Keep your phone system. We will work the list it ignores.</p>
+          </div>
+          <div class="col">
+            <p class="sai-w-sub">6 touches, about 6 weeks</p>
+            <!-- SAI6:REEXAM -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The ONE night surface on the page: price, guarantee, the limits on the
+         guarantee, and the data posture. The limits are the selling point, so
+         nothing in this band is set as a caption. -->
+    <div class="band join">
+      <div class="wrap">
+        <section class="sai-night terms" aria-label="ReExam terms">
+          <span class="sai-ember left"></span>
+          <div class="split-b">
+            <div class="col">
+              <p>$600 a month, flat. No contract, no setup fee. Live in 10 business days.</p>
+              <p class="lab">The guarantee</p>
+              <p>5+ exams booked from patients we contacted, within 30 days of the first message sent, or that month is free.</p>
+            </div>
+            <div class="col">
+              <p>We offer that guarantee at 1,000 or more contactable lapsed patients. At 500 to 1,000 it is the same $600 a month and no guarantee. Below 500 we decline the work. The clock starts at your first send, not at signing. We would rather state the limit than imply a promise we cannot keep.</p>
+              <p>A BAA is signed before any patient data moves, and we never touch charts.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
   </section>
 
-  <!-- 7 · FAQ. Drawn closed. The only thing anyone clicks. -->
-  <section class="band sai-rise">
-    <!-- SAI6:FAQ -->
+  <!-- ========== 4 = PRACTICE OPERATIONS. No opener, by design: there is no
+       scene on record and the right answer to no opener material is no opener.
+       The loop picture carries the scoped stat and sits in the narrow column;
+       the four blocks run ruled beside it, two up. =================== -->
+  <section class="band sai-rise" aria-labelledby="ops">
+    <div class="wrap">
+      <div class="sechead">
+        <p class="lab">Practice operations</p>
+        <h2 class="sec" id="ops">Time off and payroll, still done by hand.</h2>
+      </div>
+
+      <div class="split-b">
+        <div class="col"><!-- SAI6:TIMEOFF --></div>
+        <div class="rows">
+          <div class="blk">
+            <h3>The loop is the whole product</h3>
+            <p>A staff member files a time off request. It is checked against coverage. It reaches payroll. That loop is the whole product.</p>
+          </div>
+          <div class="blk">
+            <h3>What it does not do</h3>
+            <p>It does not schedule shifts. That is a behavior problem. It does not connect to your practice management system, and nothing syncs live into payroll. Any vendor promising a nightly sync into a hosted system is either overselling or has not checked yet.</p>
+          </div>
+          <div class="blk">
+            <h3>Staff data, not patient data</h3>
+            <p>This is the one build of ours that touches your staff's own data: time off requests and payroll. No charts, no patient records.</p>
+          </div>
+          <div class="blk">
+            <h3>What comes with the tier</h3>
+            <p>It comes with the knowledge base plus operations tier, $4,500 to set up and $350 a month. The same tier carries a quarterly practice snapshot and monthly working time with both of us. Your builds go to the front of our queue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- 8 · PRICING. Quiet. A bare table and one caption, and nothing else in
-       this band: the ReExam price is its own section below so that $300 can
-       never read as a continuation of the $299 tier. -->
-  <section class="band sai-rise" aria-labelledby="priceTitle">
-    <h2 class="label" id="priceTitle">Pricing</h2>
-    <table class="sai-table ptable">
-      <tr>
-        <td>Front desk knowledge base</td>
-        <td>$2,500 setup, $299 a month</td>
-      </tr>
-      <tr>
-        <td>Whole practice knowledge base<span class="sai-w-sub note">Where we would start you</span></td>
-        <td>$3,500 setup, $250 a month</td>
-      </tr>
-      <tr>
-        <td>Knowledge base plus operations</td>
-        <td>$4,500 setup, $350 a month</td>
-      </tr>
-    </table>
-    <p class="sai-w-sub">A second location is $1,500 to set up and $149 a month. Month to month, no term. Cancel any time and keep every page.</p>
+  <!-- ========== 5 = PROOF. The read-out. Three numerals, ruled, on bare
+       ground. They are deliberately modest and are printed at full size so
+       the section reads as candour rather than as a thin result. ======= -->
+  <section class="sai-rise" aria-labelledby="proof">
+
+    <div class="band">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="lab">Proof</p>
+          <h2 class="sec" id="proof">One practice, live today.</h2>
+          <p class="lede">A 27 person practice, 6 to 7 doctors, one location. That is the whole list.</p>
+        </div>
+        <div class="g3 ruled">
+          <div class="stat"><span class="n">76</span><span class="l">Front desk situations mapped</span></div>
+          <div class="stat"><span class="n">4</span><span class="l">Decision lookups built</span></div>
+          <div class="stat"><span class="n">0</span><span class="l">Patient records in the knowledge base</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="band join">
+      <div class="wrap">
+        <div class="sechead">
+          <p class="lab">Who you are hiring</p>
+          <h2 class="sec" id="who">Two people.</h2>
+          <p class="lede">Alec Stephens and Jusheen Kim, and you work with both of us, not an account manager.</p>
+        </div>
+        <div class="g2">
+          <div class="blk">
+            <h3>Alec Stephens</h3>
+            <span class="lab">Co-founder</span>
+            <p>Spent the last year inside that 27 person practice, watching the front desk work.</p>
+          </div>
+          <div class="blk">
+            <h3>Jusheen Kim</h3>
+            <span class="lab">Co-founder</span>
+            <p>Former lead software engineer at J.P. Morgan. Builds the systems that have to hold up under real use.</p>
+          </div>
+        </div>
+        <!-- The house thesis. No panel, no rule, no icon around it. -->
+        <p class="lede">We are based in Asia, so we are not at a desk during your morning rush. Urgent issues get answered by the next business morning your time. We would rather state the limit than imply a promise we cannot keep.</p>
+      </div>
+    </div>
+
   </section>
 
-  <!-- 8b · THE REEXAM PRICE. Its own band, named in its own first line. -->
-  <section class="band rx sai-rise">
-    <p><b>ReExam</b> $600 a month, flat</p>
-    <p class="sai-w-sub">No contract. Cancel monthly. No setup fee.</p>
-    <p class="sai-w-sub">The first 3 ReExam practices pay $300 a month, locked for 6 months, for a testimonial and case study rights.</p>
+  <!-- ========== 6 = TESTIMONIALS. The slot only. Permission to quote has not
+       been asked for and no approved verbatim quote exists, so nothing is
+       written here, including a placeholder. The space is laid out for 2 short
+       quotes attributed by role only. It is unlabelled as well as unwritten:
+       neither copy file supplies a label string for this section. ====== -->
+  <section class="band sai-rise" aria-label="Testimonials">
+    <div class="wrap">
+      <div class="g2">
+        <div class="slot"></div>
+        <div class="slot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7 = FAQ. Drawn closed, and narrow even on a wide page: a
+       stack of questions reads worse at 1080px than at 760. =========== -->
+  <section class="band sai-rise" aria-label="Questions">
+    <div class="wrap">
+      <div class="narrow"><!-- SAI6:FAQ --></div>
+    </div>
+  </section>
+
+  <!-- ========== 8 = PRICING. Quiet. A bare table, no pane, no call to
+       action hanging off it. ========================================== -->
+  <section class="band sai-rise" aria-label="Pricing">
+    <div class="wrap">
+      <div class="sechead"><p class="lab">Pricing</p></div>
+      <div class="split-a">
+        <table class="sai-table">
+          <tr><td>Front desk knowledge base</td><td>$2,500 setup, $299 a month</td></tr>
+          <tr><td>Whole practice knowledge base<span class="lab tier">Where we would start you</span></td><td>$3,500 setup, $250 a month</td></tr>
+          <tr><td>Knowledge base plus operations</td><td>$4,500 setup, $350 a month</td></tr>
+        </table>
+        <p class="lede">A second location is $1,500 to set up and $149 a month. Month to month, no term. Cancel any time and keep every page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Joined, but its own band and named in its own label: $300 must never
+       read as a continuation of the $299 tier or of the training platform
+       figure in the questions. -->
+  <section class="band join sai-rise" aria-label="ReExam pricing">
+    <div class="wrap">
+      <div class="sechead"><p class="lab">ReExam</p></div>
+      <div class="g2">
+        <div class="col">
+          <p>$600 a month, flat</p>
+          <p>No contract. Cancel monthly. No setup fee.</p>
+        </div>
+        <p>The first 3 ReExam practices pay $300 a month, locked for 6 months, for a testimonial and case study rights.</p>
+      </div>
+    </div>
   </section>
 
 </main>
 
-<!-- 9 · CLOSE. Ends on the email address. Nothing after it. -->
-<footer class="sai-page no-dock band close sai-rise" aria-labelledby="closeTitle">
-  <h2 class="label" id="closeTitle">Two ways to reach us</h2>
-  <p class="sai-lede">A short call, and we will tell you if you do not need us.</p>
-  <div class="links">
-    <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
-    <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
-  </div>
+<!-- ========== 9 = CLOSE. The page ends on the email address. ========== -->
+<footer class="sai-page rig close sai-rise">
+  <section class="band" aria-labelledby="close">
+    <div class="wrap">
+      <div class="sechead">
+        <p class="lab">Two ways to reach us</p>
+        <h2 class="sec" id="close">A short call, and we will tell you if you do not need us.</h2>
+      </div>
+      <div class="actions">
+        <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+        <a class="sai-btn ghost" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      </div>
+    </div>
+  </section>
 </footer>
 
 <style>
-/* Layout only: grid, spacing, measure. Every colour, type size, radius, shadow
-   and surface comes from the kit or the shared widget sheet. */
-.masthead { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto;
-  padding: var(--sai-space-4) clamp(20px, 4vw, 48px) 0;
-  display: flex; align-items: center; gap: var(--sai-space-3); }
-.masthead .mark svg { height: 24px; width: auto; display: block; }
+/* Layout only. The portioning lives in _parts/site.css; this block is the
+   handful of joins that file does not cover. Every value is a kit token. */
 
-main.sai-page.no-dock { padding-top: var(--sai-space-4); padding-bottom: 0; }
-footer.sai-page.no-dock { padding-top: 0; padding-bottom: var(--sai-space-6); }
+/* .wrap owns the 1080px measure now, so the shell stops containing. */
+.sai-page.rig{ max-width:none; padding:0; }
+.sai-page.rig.close{ padding-bottom:var(--sai-space-8); }
 
-.band { display: grid; gap: var(--sai-space-2); margin-bottom: var(--sai-space-4); }
-.band > * { margin: 0; }
-.band > p, .band > h1, .band > h2, .band > h3 { max-width: 60ch; }
+.masthead{ position:relative; z-index:1; padding-top:var(--sai-space-5); }
+.masthead .lockup{ display:flex; align-items:center; gap:var(--sai-space-3); }
+.masthead svg.mark{ width:26px; height:26px; flex:none; display:block; }
 
-/* The section label. A plain uppercase line, not a kit eyebrow: the accent on
-   this page is punctuation and it is spent inside the demo and the night band. */
-.label { justify-self: start; font-family: var(--sai-font-label); font-size: var(--sai-fs-label);
-  font-weight: var(--sai-fw-label); letter-spacing: var(--sai-ls-label);
-  text-transform: uppercase; color: var(--sai-ink-2); }
-section.sai-night .label { color: var(--sai-cream-2); }
+/* .band carries the vertical rhythm, so the only spacing left to decide is
+   between the major groups inside one band, and inside a column. */
+.wrap > * + *{ margin-top:var(--sai-space-5); }
+@media (min-width:768px){ .wrap > * + *{ margin-top:var(--sai-space-6); } }
+.col > * + *{ margin-top:var(--sai-space-4); }
+.split-a > .lede, .split-b > .lede, .g2 > .lede, .g2 > p{ margin-top:0; }
 
-.hero { gap: var(--sai-space-4); }
-.hero h1 { max-width: 18ch; }
+/* The section opener is verbatim and runs long, so it gets a wider measure
+   than the 24ch default rather than a smaller size. */
+.sec.wide{ max-width:32ch; }
 
-.pic { display: grid; gap: var(--sai-space-2); }
-.pic > * { margin: 0; }
-.pic.demo { max-width: 720px; }
-.pic.seq { max-width: 420px; margin-top: var(--sai-space-2); }
-.pic.ops { max-width: 380px; margin-top: var(--sai-space-2); }
+/* THE INSTRUMENT PANEL. A hairline above every cell turns a .g3 or a .g4 into
+   a read-out strip instead of a float of paragraphs. Rules, never bubbles. */
+.ruled > *{ border-top:1px solid var(--sai-rule-soft); padding-top:var(--sai-space-3); }
 
-section.terms { display: grid; gap: var(--sai-space-3);
-  padding: var(--sai-space-4); margin-bottom: var(--sai-space-4); }
-section.terms > * { margin: 0; max-width: 60ch; }
+/* The demo leads on a phone and sits against the headline from 1024px, which
+   .hero-grid already handles; this is only the phone seam. */
+.demo{ margin-top:var(--sai-space-2); }
 
-.stats { display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: var(--sai-space-3) var(--sai-space-2); }
-.stats > div { display: grid; gap: var(--sai-space-1); align-content: start; }
-.stats > div > * { margin: 0; max-width: none; }
+/* The one night band. .lab and .lede both carry an explicit light ground ink,
+   so the label is repointed at the night pair and the body runs unclassed. */
+section.terms{ margin:0; padding:var(--sai-space-5); }
+section.terms p{ margin:0 0 var(--sai-space-4); max-width:62ch; }
+section.terms p:last-child{ margin-bottom:0; }
+section.terms .lab{ color:var(--sai-cream-2); margin:var(--sai-space-5) 0 var(--sai-space-2); }
 
-.people { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sai-space-3); }
-.people > div { display: grid; gap: var(--sai-space-1); align-content: start; }
-.people > div > * { margin: 0; }
+/* The proof read-out. These numerals are the page's second accent gesture;
+   the first is the ember behind the terms. */
+.stat .n{
+  display:block; font:var(--sai-fw-medium) var(--sai-fs-stat)/1 var(--sai-font-sans);
+  letter-spacing:var(--sai-ls-display); color:var(--sai-accent-deep);
+}
+.stat .l{ display:block; margin-top:var(--sai-space-2); font-size:var(--sai-fs-micro); color:var(--sai-ink-2); }
 
-.slot { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sai-space-3);
-  margin-bottom: var(--sai-space-4); }
-.slot > div { min-height: 88px; }
+/* Testimonials: the space is laid out, the words are not written. */
+.slot{ min-height:var(--sai-space-7); border-top:1px solid var(--sai-rule-soft); }
 
-.ptable td:first-child { width: 54%; }
-.ptable .note { display: block; margin: var(--sai-space-1) 0 0; }
-/* Joined to the table above, but never inside its band: the seam is wider than
-   any gap in the pricing band so $300 cannot read as a continuation of $299. */
-.band.rx { gap: var(--sai-space-2); padding-top: var(--sai-space-4); }
-.band.rx > * { max-width: 60ch; }
+.tier{ margin:var(--sai-space-1) 0 0; }
+.actions{ display:flex; flex-wrap:wrap; gap:var(--sai-space-3); }
 
-.band.close { margin-bottom: 0; }
-.links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sai-space-3); }
-
-@media (min-width: 760px) {
-  .band, .slot, section.terms { margin-bottom: var(--sai-space-7); gap: var(--sai-space-4); }
-  section.terms { padding: var(--sai-space-6); }
-  .people { gap: var(--sai-space-6); }
-  .stats { gap: var(--sai-space-5); }
+@media (min-width:768px){
+  .masthead{ padding-top:var(--sai-space-6); }
+  .demo{ margin-top:0; }
+  .ruled > *{ padding-top:var(--sai-space-4); }
+  section.terms{ padding:var(--sai-space-6); }
+  .slot{ min-height:calc(var(--sai-space-8) + var(--sai-space-5)); }
 }
 </style>
