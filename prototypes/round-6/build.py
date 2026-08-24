@@ -73,6 +73,21 @@ body {{ background: #F5E9DE; color: #171310; }}
 """
 
 
+def _css(src: str) -> str:
+    """site.css is OPT IN, keyed on the fragment actually using its container.
+
+    It defines .band with padding-block, and the round 6 fragments define their
+    own .band with margin-bottom. Inlining it unconditionally stacked the two and
+    added about 600px to pages that never asked for the 1080px layout. A fragment
+    opts in by using .wrap; anything else gets the widget styles only.
+    """
+    parts = []
+    if 'class="wrap"' in src:
+        parts.append((PARTS / "site.css").read_text().strip())
+    parts.append((PARTS / "widgets.css").read_text().strip())
+    return "\n".join(parts)
+
+
 def main(argv):
     if len(argv) < 3:
         print(__doc__.strip())
@@ -96,8 +111,7 @@ def main(argv):
 
     page = (
         HEAD.format(title=title, fonts=P("FONTS"), kit=P("KIT"),
-                    shared_css=((PARTS / "site.css").read_text().strip() + "\n"
-                                + (PARTS / "widgets.css").read_text().strip()))
+                    shared_css=_css(src))
         + P("SCENE") + "\n" + src
         + "\n<script>\n" + (PARTS / "widgets.js").read_text().strip() + "\n</script>\n"
     )
