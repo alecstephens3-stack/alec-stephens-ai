@@ -3,6 +3,7 @@ import {
   Problem,
   Product,
   Proof,
+  Systems,
   Timeline,
   Ownership,
   Faq,
@@ -39,6 +40,7 @@ export default function Home() {
         areaServed: ["United States", "Worldwide"],
         serviceType: [
           "Front desk knowledge base for eyecare practices",
+          "Patient reactivation for eyecare practices",
           "Practice operations automation",
           "Custom internal software",
         ],
@@ -84,6 +86,7 @@ export default function Home() {
       <Problem />
       <Product />
       <Proof />
+      <Systems />
       <Pricing />
       <Timeline />
       <Ownership />
