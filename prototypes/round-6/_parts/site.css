@@ -1,0 +1,99 @@
+/* Page portioning, taken from the live site (src/components/sections/v4/shell.tsx
+   and hero.tsx) so the prototypes read as the same document as stephensai.co.
+
+   The round 6 pages were authored phone first with a narrow measure and no
+   desktop treatment, so on a laptop they sat in a ribbon down the middle. The
+   live site solves this with a 1080px container, a two column hero, and real
+   multi column section grids. Those are reproduced here. */
+
+/* ---------- container and rhythm ---------- */
+.wrap{
+  width:100%;
+  max-width:1080px;          /* shell.tsx: max-w-[1080px] */
+  margin-inline:auto;
+  padding-inline:20px;       /* px-5 */
+}
+@media (min-width:768px){ .wrap{ padding-inline:32px; } }   /* md:px-8 */
+
+.band{ padding-block:44px; }                                 /* py-11 */
+@media (min-width:768px){ .band{ padding-block:56px; } }     /* md:py-14 */
+.band.join{ padding-top:0; }
+
+/* ---------- section heads ---------- */
+.band > .wrap > h2, .band h2.sec{
+  font:var(--sai-fw-medium) 30px/1.12 var(--sai-font-sans);
+  letter-spacing:-0.02em; color:var(--sai-ink);
+  max-width:24ch; margin:0;
+}
+@media (min-width:768px){ .band > .wrap > h2, .band h2.sec{ font-size:42px; } }
+
+.lede{
+  margin:16px 0 0;
+  font-size:17px; line-height:1.6; color:var(--sai-ink-2);
+  max-width:68ch;
+}
+@media (min-width:768px){ .lede{ font-size:18px; } }
+
+.sechead{ margin-bottom:28px; }
+@media (min-width:768px){ .sechead{ margin-bottom:36px; } }
+
+/* label above a section head, ink not accent, so terracotta stays punctuation */
+.lab{
+  display:block; margin:0 0 10px;
+  font:var(--sai-fw-label) var(--sai-fs-micro)/1 var(--sai-font-label);
+  letter-spacing:var(--sai-ls-label); text-transform:uppercase;
+  color:var(--sai-ink-2);
+}
+
+/* ---------- the hero, two columns on desktop ---------- */
+/* hero.tsx: lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] with gap-14 */
+.hero-grid{ display:grid; gap:40px; align-items:center; }
+@media (min-width:1024px){
+  .hero-grid{ grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:56px; }
+}
+.hero-grid h1{
+  font:var(--sai-fw-medium) 34px/1.08 var(--sai-font-sans);
+  letter-spacing:-0.025em; color:var(--sai-ink); margin:0;
+}
+@media (min-width:640px){ .hero-grid h1{ font-size:42px; } }
+@media (min-width:768px){ .hero-grid h1{ font-size:52px; } }
+
+/* ---------- section grids, the live site's vocabulary ---------- */
+.g2{ display:grid; gap:16px; }
+@media (min-width:768px){ .g2{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+.g3{ display:grid; gap:16px; }
+@media (min-width:640px){ .g3{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (min-width:1024px){ .g3{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.g4{ display:grid; gap:16px; }
+@media (min-width:640px){ .g4{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (min-width:1024px){ .g4{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
+
+/* asymmetric splits, body.tsx lines 77 and 151 */
+.split-a{ display:grid; gap:16px; }
+@media (min-width:1024px){ .split-a{ grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr); } }
+.split-b{ display:grid; gap:32px; align-items:center; }
+@media (min-width:1024px){ .split-b{ grid-template-columns:minmax(0,0.72fr) minmax(0,1.28fr); } }
+
+/* the FAQ reads better narrow even on a wide page. body.tsx line 189 */
+.narrow{ max-width:760px; margin-inline:auto; }
+
+/* ---------- a titled block inside a grid ---------- */
+.blk{ min-width:0; }
+.blk h3{
+  margin:0 0 6px;
+  font:var(--sai-fw-medium) 17px/1.3 var(--sai-font-sans);
+  letter-spacing:var(--sai-ls-heading); color:var(--sai-ink);
+}
+.blk p{ margin:0; font-size:15px; line-height:1.6; color:var(--sai-ink-2); }
+.blk + .blk{ margin-top:0; }
+
+/* a rule-separated list of blocks, no bubbles */
+.rows{ display:grid; gap:0; }
+.rows > .blk{ padding-block:18px; border-top:1px solid var(--sai-rule-soft); }
+.rows > .blk:first-child{ border-top:0; }
+@media (min-width:768px){
+  .rows{ grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:40px; }
+  .rows > .blk:nth-child(2){ border-top:0; }
+}
