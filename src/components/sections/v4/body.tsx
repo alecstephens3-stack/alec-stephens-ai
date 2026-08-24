@@ -11,6 +11,7 @@ import {
   FAQ,
   FOUNDERS,
   OTHER_WORK,
+  SYSTEMS,
 } from "@/lib/content";
 
 /* --------------------------------------------------------------- problem */
@@ -102,6 +103,81 @@ export function Proof() {
             ))}
           </div>
         </AnimateOnScroll>
+      </div>
+    </Section>
+  );
+}
+
+
+/* --------------------------------------------------------------- systems */
+
+/**
+ * ReExam and the time-off build, in one section rather than two.
+ *
+ * The page tells the knowledge base story properly and then earns the right to
+ * widen, so this sits after Proof: prove one thing, then show range. Two peers
+ * side by side, each with a name, the mechanism as a picture, the price and the
+ * limit. An owner scanning between patients gets the shape of both in about ten
+ * seconds without either one competing with the product the page leads on.
+ */
+export function Systems() {
+  return (
+    <Section
+      id="systems"
+      kicker={SYSTEMS.kicker}
+      title={SYSTEMS.title}
+      lede={SYSTEMS.lede}
+    >
+      <div className="grid gap-4 lg:grid-cols-2">
+        {SYSTEMS.items.map((s, i) => (
+          <AnimateOnScroll key={s.name} delay={i * 80}>
+            <Card className="flex h-full flex-col">
+              <h3 className="font-heading text-[19px] font-medium leading-[1.25] text-ink">
+                {s.name}
+              </h3>
+              <p className="mt-1 text-[14.5px] font-medium leading-[1.45] text-accent-deep">
+                {s.summary}
+              </p>
+              <p className="mt-3 text-[14.5px] leading-[1.55] text-ink-2">
+                {s.body}
+              </p>
+
+              <div className="mt-5 rounded-tile border border-rule-soft p-4">
+                <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
+                  {s.mechanism.label}
+                </p>
+                <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-2">
+                  {s.mechanism.steps.map((step) => (
+                    <li
+                      key={step.day}
+                      className={
+                        "rounded-chip border px-2.5 py-1.5 text-[12.5px] leading-tight " +
+                        ("key" in step && step.key
+                          ? "border-accent-line bg-accent-soft text-accent-text"
+                          : "border-rule-soft text-ink-2")
+                      }
+                    >
+                      <span className="font-medium">{step.day}</span>
+                      {"key" in step && step.key && "channel" in step && step.channel ? (
+                        <span className="ml-1.5 opacity-80">{step.channel}</span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-[13px] leading-[1.5] text-ink-2">
+                  {s.mechanism.note}
+                </p>
+              </div>
+
+              <p className="mt-auto pt-5 text-[14.5px] leading-[1.55] text-ink">
+                {s.price}
+              </p>
+              <p className="mt-2 text-[13.5px] leading-[1.5] text-ink-2">
+                {s.limit}
+              </p>
+            </Card>
+          </AnimateOnScroll>
+        ))}
       </div>
     </Section>
   );

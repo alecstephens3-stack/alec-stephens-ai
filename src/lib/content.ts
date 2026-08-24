@@ -12,7 +12,7 @@ export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
 
-export const SITE_DESCRIPTION = "We build independent eyecare practices a searchable knowledge base that holds the insurance rules, prices, and protocols the front desk keeps in their heads. It is live in a 27-person clinic and holds no patient data.";
+export const SITE_DESCRIPTION = "We build independent eyecare practices a searchable knowledge base that holds the insurance rules, prices, and protocols the front desk keeps in their heads. It is live in a 27-person clinic. We also run patient reactivation and time-off automation.";
 
 export const NAV_LINKS = [
   {
@@ -26,6 +26,10 @@ export const NAV_LINKS = [
   {
     "label": "Proof",
     "href": "/#proof"
+  },
+  {
+    "label": "Systems",
+    "href": "/#systems"
   },
   {
     "label": "Pricing",
@@ -52,7 +56,7 @@ export const HERO = {
     "label": "Book a 20-minute call",
     "href": "https://calendly.com/alecpstephens/30min"
   },
-  "trustLine": "It holds no patient data, and we sign a BAA before we start."
+  "trustLine": "The knowledge base holds no patient records, and we sign a BAA before we start."
 };
 
 export const PROBLEMS = [
@@ -85,7 +89,7 @@ export const PRODUCT_FEATURES = [
   },
   {
     "title": "Access stays inside your practice",
-    "body": "Staff sign in with their practice Google account. Nobody outside the domain can open it, and only the people your practice approves can edit. The system holds no patient records."
+    "body": "Staff sign in with their practice Google account. Nobody outside the domain can open it, and only the people your practice approves can edit. The knowledge base holds no patient records."
   },
   {
     "title": "Installs on the front desk computers",
@@ -118,7 +122,58 @@ export const PROOF = {
     },
     {
       "value": "0",
-      "label": "Patient records in the system"
+      "label": "Patient records in the knowledge base"
+    }
+  ]
+};
+
+/**
+ * The two systems beyond the knowledge base. Kept deliberately short: the page
+ * already tells one product story well, and a skeptical owner reading between
+ * patients will not sit through three full pitches. Each of these gets a name,
+ * the mechanism, the price, and the limit that matters. Nothing else.
+ *
+ * ReExam is a working name. No layout should break if it changes.
+ */
+export const SYSTEMS = {
+  "kicker": "Two more systems",
+  "title": "The other two jobs that slip",
+  "lede": "Both run alongside whatever you already pay for. Neither needs a rip-out, and neither connects to your practice management system.",
+  "items": [
+    {
+      "name": "ReExam",
+      "summary": "Patient reactivation, run for you every month.",
+      "body": "Recall sits on the same list as the daily work, so it slips first. You already pay software to send reminders. Its rules were set once and nobody in your building tunes them. You send us the overdue list, we run the sequence and watch the replies, and we tell you what came back.",
+      "mechanism": {
+        "label": "6 touches, about 6 weeks",
+        "steps": [
+          { "day": "Day 0", "channel": "SMS or email" },
+          { "day": "Day 3", "channel": "SMS or email" },
+          { "day": "Day 10", "channel": "Email only", "key": true },
+          { "day": "Day 17", "channel": "SMS or email" },
+          { "day": "Day 28", "channel": "SMS or email" },
+          { "day": "Day 42", "channel": "SMS or email" }
+        ],
+        "note": "Day 10 is email only. That is a compliance rule, not a preference. The sequence stops the moment a patient books, replies, or opts out."
+      },
+      "price": "$600 a month, flat. No contract, no setup fee. Live in 10 business days.",
+      "limit": "It works from your patients' contact details, so a BAA is signed before any data moves. Contact details only, never charts."
+    },
+    {
+      "name": "Time off and payroll",
+      "summary": "The request loop, automated end to end.",
+      "body": "A staff member files a time off request. It is checked against coverage. It reaches payroll. That loop is the whole product, and it returned 60 to 100 admin hours a year at the practice we built it for.",
+      "mechanism": {
+        "label": "The loop",
+        "steps": [
+          { "day": "Request filed" },
+          { "day": "Checked against coverage" },
+          { "day": "Reaches payroll" }
+        ],
+        "note": "It does not schedule shifts, and it does not connect to your practice management system."
+      },
+      "price": "Included in the knowledge base plus operations tier, $4,500 to set up and $350 a month.",
+      "limit": "Staff data, not patient data. Time off requests and payroll. No charts, no patient records."
     }
   ]
 };
@@ -178,7 +233,8 @@ export const PRICING_NOTES = [
   "Extra sections beyond a tier's cap are $600 each.",
   "A second location is $1,500 to set up and $149 per month.",
   "Clinical pages go live only after your doctor signs off.",
-  "No long-term contract. Cancel any time and keep every page."
+  "No long-term contract. Cancel any time and keep every page.",
+  "ReExam is priced on its own: $600 a month, flat, no contract and no setup fee."
 ];
 
 export const TIMELINE = [
@@ -227,6 +283,14 @@ export const FAQ = [
   {
     "q": "Does any patient data go into this?",
     "a": "No. It holds your rules, not your charts: insurance policies, pricing, scheduling protocols, procedures. There are no patient records in it, so there is nothing in it to breach. If a later project ever needs patient data, it runs inside your own accounts under a signed BAA, never on our systems. We sign the BAA before we start either way."
+  },
+  {
+    "q": "Does ReExam touch patient data?",
+    "a": "Yes. It works from your patients' contact details, so a BAA is signed before any data moves. Contact details only, never charts. That is the one product of ours that touches anything about a patient, which is why the data posture is stated per product rather than once for the whole site."
+  },
+  {
+    "q": "Who pulls the patient list for ReExam?",
+    "a": "You do. Your own team produces the export, because most hosted systems do not give an outside vendor database access. We tell you exactly which fields we need, and we run a list hygiene pass before anything sends."
   },
   {
     "q": "Do we have to write all the content ourselves?",
