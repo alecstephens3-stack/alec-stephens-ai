@@ -96,7 +96,8 @@ def main(argv):
 
     page = (
         HEAD.format(title=title, fonts=P("FONTS"), kit=P("KIT"),
-                    shared_css=(PARTS / "widgets.css").read_text().strip())
+                    shared_css=((PARTS / "site.css").read_text().strip() + "\n"
+                                + (PARTS / "widgets.css").read_text().strip()))
         + P("SCENE") + "\n" + src
         + "\n<script>\n" + (PARTS / "widgets.js").read_text().strip() + "\n</script>\n"
     )
