@@ -53,7 +53,7 @@ export const HERO = {
     "href": "/#pricing"
   },
   "secondaryCta": {
-    "label": "Book a 20-minute call",
+    "label": "Book a call",
     "href": "https://calendly.com/alecpstephens/30min"
   },
   "trustLine": "The knowledge base holds no patient records, and we sign a BAA before we start."

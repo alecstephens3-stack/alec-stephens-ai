@@ -12,7 +12,7 @@ export function Contact() {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
               <div className="lg:self-center">
                 <h2 className="font-heading text-[30px] font-medium leading-[1.12] tracking-[-0.02em] text-cream md:text-[42px]">
-                  Book a 20-minute call.
+                  Book a call.
                 </h2>
 
                 <p className="mt-4 max-w-[46ch] text-[16px] leading-[1.6] text-cream-2">

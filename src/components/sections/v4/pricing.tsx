@@ -66,7 +66,7 @@ export function Pricing() {
                   variant={tier.highlighted ? "primary" : "ghost"}
                   className="w-full justify-center"
                 >
-                  Book a 20 minute call
+                  Book a call
                 </ButtonLink>
               </div>
             </div>
