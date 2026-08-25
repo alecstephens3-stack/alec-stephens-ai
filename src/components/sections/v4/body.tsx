@@ -90,7 +90,7 @@ export function Proof() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={80}>
-          <div className="grid h-full grid-cols-2 gap-4">
+          <div className="grid h-full grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {PROOF.stats.map((s) => (
               <Card key={s.label} className="flex flex-col justify-center !p-5">
                 <p className="font-heading text-[28px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[32px]">
@@ -126,7 +126,18 @@ export function Proof() {
  * carries cards, so the change of texture is doing work too.
  */
 
-/** The six touch sequence, drawn as a rail rather than a row of chips. */
+/**
+ * The two mechanisms are drawn in deliberately different languages. They were
+ * both vertical dotted rails, which made two unrelated products look like the
+ * same diagram twice.
+ *
+ * ReExam is a schedule, so it keeps the rail: a thing that happens over time,
+ * read top to bottom, with one marked exception.
+ * Time off is a state machine, so it becomes a horizontal track: one request
+ * moving left to right through three states, ending in a number.
+ */
+
+/** ReExam: six touches over six weeks, read down. */
 function SequencePicture({
   steps,
 }: {
@@ -143,10 +154,10 @@ function SequencePicture({
           <span
             aria-hidden="true"
             className={
-              "absolute left-0 top-[10px] rounded-full " +
+              "absolute rounded-full " +
               (s.key
-                ? "h-4 w-4 bg-accent shadow-[0_0_0_5px_var(--color-accent-soft)]"
-                : "left-[3px] h-2.5 w-2.5 bg-white ring-1 ring-rule")
+                ? "left-0 top-[9px] h-4 w-4 bg-accent shadow-[0_0_0_5px_var(--color-accent-soft)]"
+                : "left-[3px] top-[11px] h-2.5 w-2.5 bg-white ring-1 ring-rule")
             }
           />
           <span
@@ -171,25 +182,58 @@ function SequencePicture({
   );
 }
 
-/** The request loop, drawn as the three states a request passes through. */
-function FlowPicture({ steps }: { steps: readonly { day: string }[] }) {
+/**
+ * Time off: one request crossing three states, read left to right, then the
+ * number it bought back. A track rather than a timeline, so it cannot be
+ * mistaken for the ReExam schedule above it.
+ */
+function FlowPicture({
+  steps,
+  stat,
+}: {
+  steps: readonly { day: string }[];
+  stat?: { value: string; label: string };
+}) {
   return (
-    <ol className="grid gap-0" role="list">
-      {steps.map((s, i) => (
-        <li key={s.day}>
-          {i > 0 && (
-            <span aria-hidden="true" className="ml-[7px] block h-6 w-[2px] rounded bg-rule" />
-          )}
-          <span className="flex items-center gap-4">
+    <div>
+      <ol className="grid grid-cols-3 gap-0" role="list">
+        {steps.map((s, i) => (
+          <li key={s.day} className="relative">
+            {/* the track: a rule through the middle of the row of stations */}
             <span
               aria-hidden="true"
-              className="h-4 w-4 shrink-0 rounded-full border-2 border-accent-line bg-white"
+              className={
+                "absolute top-[9px] h-[2px] bg-rule " +
+                (i === 0 ? "left-1/2 right-0 " : i === steps.length - 1 ? "left-0 right-1/2 " : "left-0 right-0 ")
+              }
             />
-            <span className="text-[15.5px] leading-[1.5] text-ink">{s.day}</span>
-          </span>
-        </li>
-      ))}
-    </ol>
+            <span
+              aria-hidden="true"
+              className={
+                "relative z-1 mx-auto block h-5 w-5 rounded-full border-2 " +
+                (i === steps.length - 1
+                  ? "border-accent bg-accent"
+                  : "border-rule-strong bg-white")
+              }
+            />
+            <span className="mt-3 block px-1 text-center text-[13.5px] leading-[1.35] text-ink">
+              {s.day}
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      {stat ? (
+        <div className="mt-8 border-t border-rule-soft pt-5">
+          <p className="font-heading text-[34px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[40px]">
+            {stat.value}
+          </p>
+          <p className="mt-2 max-w-[26ch] text-[13px] leading-[1.5] text-ink-2">
+            {stat.label}
+          </p>
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -208,17 +252,15 @@ export function Systems() {
             <AnimateOnScroll key={s.name} delay={i * 80}>
               <div
                 className={
-                  "grid items-start gap-8 py-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 " +
+                  // centred, not top aligned: the two columns are never the same
+                  // height, and top aligning dumped all the slack at the bottom
+                  // of the shorter one as a void
+                  "grid items-center gap-10 py-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 " +
                   (i > 0 ? "border-t border-rule-soft" : "pt-2")
                 }
               >
                 <div className={flip ? "lg:order-2" : ""}>
-                  {/* a short accent rule instead of a box, so the product still
-                      gets a visual anchor without being enclosed */}
-                  <span
-                    aria-hidden="true"
-                    className="block h-[3px] w-9 rounded bg-accent"
-                  />
+                  <span aria-hidden="true" className="block h-[3px] w-9 rounded bg-accent" />
                   <h3 className="mt-4 font-heading text-[25px] font-medium leading-[1.15] tracking-[-0.01em] text-ink md:text-[28px]">
                     {s.name}
                   </h3>
@@ -238,15 +280,15 @@ export function Systems() {
                   ) : null}
                 </div>
 
-                <div className={flip ? "lg:order-1 lg:pt-2" : "lg:pt-2"}>
+                <div className={flip ? "lg:order-1" : ""}>
                   <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
                     {s.mechanism.label}
                   </p>
-                  <div className="mt-4">
+                  <div className="mt-5">
                     {s.mechanism.kind === "sequence" ? (
                       <SequencePicture steps={s.mechanism.steps} />
                     ) : (
-                      <FlowPicture steps={s.mechanism.steps} />
+                      <FlowPicture steps={s.mechanism.steps} stat={s.mechanism.stat} />
                     )}
                   </div>
                   <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
@@ -312,13 +354,10 @@ export function Ownership() {
           ariaLabel="What you own"
           className="px-6 py-9 md:px-10 md:py-11"
         >
-          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-nglass-edge pb-7">
+          <div className="border-b border-nglass-edge pb-7">
             <h2 className="font-heading text-[27px] font-medium leading-[1.12] tracking-[-0.02em] text-cream md:text-[32px]">
               What you own
             </h2>
-            <p className="text-[15px] leading-[1.6] text-cream-2">
-              Worth reading before you sign.
-            </p>
           </div>
 
           <dl className="grid gap-x-10 gap-y-7 pt-7 sm:grid-cols-2 lg:grid-cols-4">
