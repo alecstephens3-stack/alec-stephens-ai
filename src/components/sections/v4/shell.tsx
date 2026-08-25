@@ -8,6 +8,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
  */
 export function Section({
   id,
+  kicker,
   title,
   lede,
   children,
@@ -27,6 +28,14 @@ export function Section({
       <div className="mx-auto w-full max-w-[1080px] px-5 md:px-8">
         {title && (
           <AnimateOnScroll className={cn("mb-7 md:mb-9", center && "text-center")}>
+            {/* The eyebrow. This prop was declared and passed at seven call
+                sites but never destructured, so six of the seven section
+                kickers rendered as nothing. */}
+            {kicker && (
+              <p className="mb-3 font-label text-[12px] font-semibold uppercase tracking-[0.08em] text-accent-deep">
+                {kicker}
+              </p>
+            )}
             {title && (
               <h2
                 className={cn(

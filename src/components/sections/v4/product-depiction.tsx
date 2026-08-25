@@ -51,7 +51,12 @@ export function ProductDepiction() {
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const [typed, setTyped] = useState("");
-  const [phase, setPhase] = useState<Phase>("typing");
+  // First frame is the finished state, the same one prefers-reduced-motion
+  // gets. A reader who lands on the demo mid-type sees a half typed query
+  // and an empty answer card, which reads as broken rather than as a demo.
+  const [phase, setPhase] = useState<Phase>("resting");
+  const primedRef = useRef(false);
+  const [primed, setPrimed] = useState(false);
   const [cursorOn, setCursorOn] = useState(false);
   const [tapping, setTapping] = useState(false);
   const still = usePrefersReducedMotion();
@@ -110,7 +115,17 @@ export function ProductDepiction() {
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) run();
+          if (e.isIntersecting) {
+            if (!primedRef.current) {
+              primedRef.current = true;
+              at(1400, () => {
+                setPrimed(true);
+                run();
+              });
+            } else {
+              run();
+            }
+          }
           else {
             clear();
             setTyped("");
@@ -141,7 +156,7 @@ export function ProductDepiction() {
     cursor.style.transform = `translate(${t.left - r.left + 30}px, ${t.top - r.top + 14}px)`;
   }, [cursorOn, still]);
 
-  const shownQuery = still ? query : typed;
+  const shownQuery = still || !primed ? query : typed;
   const answerOpen = still || phase === "opening" || phase === "resting";
   const filtered = still || phase !== "typing";
 
