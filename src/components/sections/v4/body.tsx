@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Section, Card } from "./shell";
-import { ButtonLink } from "@/components/ui/button";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { NightWindow } from "@/components/ui/lens-primitives";
 import {
@@ -13,7 +12,6 @@ import {
   FOUNDERS,
   OTHER_WORK,
   SYSTEMS,
-  CALENDLY,
 } from "@/lib/content";
 
 /* --------------------------------------------------------------- problem */
@@ -115,36 +113,6 @@ export function Proof() {
 }
 
 
-/* ------------------------------------------------------------- mid page ask */
-
-/**
- * One ask, placed straight after Proof.
- *
- * Until now the only way to act was the header pill, which is hidden below the
- * md breakpoint, or the contact form at the very bottom. So a reader on a phone
- * who was convinced by the evidence had to scroll past two more products before
- * anything invited them to do something. Conviction does not survive that.
- *
- * Deliberately one button and no new copy: this is a door, not another pitch.
- * The page already argues its case above and below this line.
- */
-export function MidPageAsk() {
-  return (
-    <Section id="ask" className="!py-0">
-      <AnimateOnScroll>
-        <div className="flex flex-col items-center gap-4 border-y border-rule-soft py-8 sm:flex-row sm:justify-between sm:py-7">
-          <p className="max-w-[46ch] text-center text-[16px] leading-[1.55] text-ink-2 sm:text-left">
-            Bring one thing your front desk keeps getting wrong.
-          </p>
-          <ButtonLink href={CALENDLY} external className="shrink-0">
-            Book a call &rarr;
-          </ButtonLink>
-        </div>
-      </AnimateOnScroll>
-    </Section>
-  );
-}
-
 /* --------------------------------------------------------------- systems */
 
 /**
@@ -219,42 +187,71 @@ function SequencePicture({
 }
 
 /**
- * Time off. Third attempt at making this NOT look like the ReExam schedule.
+ * Time off, drawn as a week.
  *
- * Both earlier versions used dots on a line, vertical then horizontal, which is
- * the same idea rotated. This drops the dots entirely and goes typographic: the
- * three states are a numbered procedure, set as large ordinals with the label
- * beside them, and the number the loop bought back closes the block.
+ * Three earlier attempts all drew a sequence: a vertical dotted rail, then a
+ * horizontal dotted track, then numbered steps. All three said "there are three
+ * stages", which is the least interesting thing about the product and which
+ * made it rhyme with the ReExam schedule beside it.
  *
- * A schedule and a procedure are different kinds of thing, so they should not
- * be drawn with the same vocabulary. ReExam is when things happen. This is what
- * happens.
+ * What the product actually does that is worth showing is the check: it knows
+ * who is already off and tells you when a request would leave a day short. So
+ * this is a week, with the days that are covered and the one that is not. That
+ * cannot be confused with a six touch sequence, and it needs no caption to be
+ * understood.
+ *
+ * Roles, never names: the client has not agreed to be identified.
  */
-function FlowPicture({
-  steps,
+function CalendarPicture({
+  week,
+  shortLabel,
   stat,
 }: {
-  steps: readonly { day: string }[];
+  week: readonly { day: string; off: readonly string[]; short?: boolean }[];
+  shortLabel?: string;
   stat?: { value: string; label: string };
 }) {
   return (
     <div>
-      <ol className="grid gap-0" role="list">
-        {steps.map((s, i) => (
-          <li
-            key={s.day}
-            className="flex items-baseline gap-5 border-t border-rule-soft py-4 first:border-t-0 first:pt-0"
-          >
-            <span
-              aria-hidden="true"
-              className="font-heading text-[30px] font-medium leading-none tracking-[-0.02em] text-accent opacity-30"
+      <div className="grid grid-cols-5 gap-1.5" role="table" aria-label="A week of time off requests, checked against coverage">
+        {week.map((d) => (
+          <div key={d.day} role="row" className="min-w-0">
+            <p
+              className={
+                "mb-1.5 text-center font-label text-[11px] uppercase tracking-[0.06em] " +
+                (d.short ? "text-accent-deep" : "text-ink-2")
+              }
             >
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span className="text-[16px] leading-[1.45] text-ink">{s.day}</span>
-          </li>
+              {d.day}
+            </p>
+            <div
+              className={
+                "flex min-h-[104px] flex-col gap-1 rounded-tile border p-1.5 " +
+                (d.short
+                  ? "border-accent-line bg-accent-soft"
+                  : "border-rule-soft bg-white/45")
+              }
+            >
+              {d.off.map((role) => (
+                <span
+                  key={role}
+                  className={
+                    "rounded-chip px-1.5 py-1 text-center text-[11px] leading-[1.25] " +
+                    (d.short ? "bg-white/70 text-ink" : "bg-white/70 text-ink-2")
+                  }
+                >
+                  {role}
+                </span>
+              ))}
+              {d.short && shortLabel ? (
+                <span className="mt-auto text-center text-[10.5px] font-medium leading-[1.2] text-accent-deep">
+                  {shortLabel}
+                </span>
+              ) : null}
+            </div>
+          </div>
         ))}
-      </ol>
+      </div>
 
       {stat ? (
         <div className="mt-8 border-t border-rule pt-6">
@@ -319,9 +316,13 @@ export function Systems() {
                   </p>
                   <div className="mt-5">
                     {s.mechanism.kind === "sequence" ? (
-                      <SequencePicture steps={s.mechanism.steps} />
+                      <SequencePicture steps={s.mechanism.steps ?? []} />
                     ) : (
-                      <FlowPicture steps={s.mechanism.steps} stat={s.mechanism.stat} />
+                      <CalendarPicture
+                        week={s.mechanism.week ?? []}
+                        shortLabel={s.mechanism.shortLabel}
+                        stat={s.mechanism.stat}
+                      />
                     )}
                   </div>
                   <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
@@ -417,7 +418,6 @@ export function Faq() {
   return (
     <Section
       id="faq"
-      kicker="Straight answers"
       title="Common questions"
       center
     >

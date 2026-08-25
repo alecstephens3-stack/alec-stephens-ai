@@ -9,7 +9,6 @@ export function Pricing() {
   return (
     <Section
       id="pricing"
-      kicker="What it costs"
       title="Pricing"
       lede="The first tier is a fixed price. The two larger tiers are a starting point, confirmed once we have seen how much material you have. Every tier is a one-time build plus a monthly fee that keeps the content current, and you can cancel any time."
       center
