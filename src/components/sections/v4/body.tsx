@@ -134,29 +134,33 @@ function SequencePicture({
 }) {
   return (
     <ol className="relative grid gap-0" role="list">
-      {/* the rail the touches sit on */}
       <span
         aria-hidden="true"
-        className="absolute left-[5px] top-2 bottom-2 w-px bg-rule"
+        className="absolute left-[7px] top-3 bottom-3 w-[2px] rounded bg-rule"
       />
       {steps.map((s) => (
-        <li key={s.day} className="relative flex items-baseline gap-3 py-2 pl-6">
+        <li key={s.day} className="relative flex items-baseline gap-4 py-2.5 pl-8">
           <span
             aria-hidden="true"
             className={
-              "absolute left-0 top-[11px] h-2.5 w-2.5 rounded-full " +
+              "absolute left-0 top-[10px] rounded-full " +
               (s.key
-                ? "bg-accent ring-4 ring-accent-soft"
-                : "bg-white ring-1 ring-rule")
+                ? "h-4 w-4 bg-accent shadow-[0_0_0_5px_var(--color-accent-soft)]"
+                : "left-[3px] h-2.5 w-2.5 bg-white ring-1 ring-rule")
             }
           />
-          <span className="w-[52px] shrink-0 font-label text-[12px] tracking-[0.06em] text-ink-2 uppercase">
+          <span
+            className={
+              "w-[54px] shrink-0 font-label text-[12px] tracking-[0.06em] uppercase " +
+              (s.key ? "text-accent-deep" : "text-ink-2")
+            }
+          >
             {s.day}
           </span>
           <span
             className={
-              "text-[14px] leading-[1.5] " +
-              (s.key ? "font-medium text-accent-deep" : "text-ink-2")
+              "text-[14.5px] leading-[1.5] " +
+              (s.key ? "font-medium text-ink" : "text-ink-2")
             }
           >
             {s.channel}
@@ -167,24 +171,21 @@ function SequencePicture({
   );
 }
 
-/** The request loop, drawn as three steps a request passes through. */
+/** The request loop, drawn as the three states a request passes through. */
 function FlowPicture({ steps }: { steps: readonly { day: string }[] }) {
   return (
     <ol className="grid gap-0" role="list">
       {steps.map((s, i) => (
-        <li key={s.day} className="grid gap-0">
+        <li key={s.day}>
           {i > 0 && (
-            <span
-              aria-hidden="true"
-              className="ml-[5px] h-5 w-px bg-rule"
-            />
+            <span aria-hidden="true" className="ml-[7px] block h-6 w-[2px] rounded bg-rule" />
           )}
-          <span className="flex items-center gap-3">
+          <span className="flex items-center gap-4">
             <span
               aria-hidden="true"
-              className="h-2.5 w-2.5 shrink-0 rounded-full bg-white ring-1 ring-rule"
+              className="h-4 w-4 shrink-0 rounded-full border-2 border-accent-line bg-white"
             />
-            <span className="text-[15px] leading-[1.5] text-ink">{s.day}</span>
+            <span className="text-[15.5px] leading-[1.5] text-ink">{s.day}</span>
           </span>
         </li>
       ))}
@@ -201,50 +202,61 @@ export function Systems() {
       lede={SYSTEMS.lede}
     >
       <div className="grid gap-0">
-        {SYSTEMS.items.map((s, i) => (
-          <AnimateOnScroll key={s.name} delay={i * 80}>
-            <div
-              className={
-                "grid gap-6 py-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-12 " +
-                (i > 0 ? "border-t border-rule-soft" : "pt-0")
-              }
-            >
-              <div>
-                <h3 className="font-heading text-[21px] font-medium leading-[1.2] text-ink">
-                  {s.name}
-                </h3>
-                <p className="mt-1 text-[15px] font-medium leading-[1.45] text-accent-deep">
-                  {s.summary}
-                </p>
-                <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.6] text-ink-2">
-                  {s.body}
-                </p>
-                <p className="mt-5 text-[15px] leading-[1.55] text-ink">
-                  {s.price}
-                </p>
-                <p className="mt-2 max-w-[54ch] text-[14px] leading-[1.55] text-ink-2">
-                  {s.limit}
-                </p>
-              </div>
-
-              <div className="lg:pt-1">
-                <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
-                  {s.mechanism.label}
-                </p>
-                <div className="mt-3">
-                  {s.mechanism.kind === "sequence" ? (
-                    <SequencePicture steps={s.mechanism.steps} />
-                  ) : (
-                    <FlowPicture steps={s.mechanism.steps} />
-                  )}
+        {SYSTEMS.items.map((s, i) => {
+          const flip = i % 2 === 1;
+          return (
+            <AnimateOnScroll key={s.name} delay={i * 80}>
+              <div
+                className={
+                  "grid items-start gap-8 py-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 " +
+                  (i > 0 ? "border-t border-rule-soft" : "pt-2")
+                }
+              >
+                <div className={flip ? "lg:order-2" : ""}>
+                  {/* a short accent rule instead of a box, so the product still
+                      gets a visual anchor without being enclosed */}
+                  <span
+                    aria-hidden="true"
+                    className="block h-[3px] w-9 rounded bg-accent"
+                  />
+                  <h3 className="mt-4 font-heading text-[25px] font-medium leading-[1.15] tracking-[-0.01em] text-ink md:text-[28px]">
+                    {s.name}
+                  </h3>
+                  <p className="mt-1.5 text-[16px] font-medium leading-[1.4] text-accent-deep">
+                    {s.summary}
+                  </p>
+                  <p className="mt-5 max-w-[52ch] text-[15.5px] leading-[1.62] text-ink-2">
+                    {s.body}
+                  </p>
+                  <p className="mt-6 border-t border-rule-soft pt-4 text-[15.5px] leading-[1.55] text-ink">
+                    {s.price}
+                  </p>
+                  {s.limit ? (
+                    <p className="mt-2 max-w-[52ch] text-[14px] leading-[1.55] text-ink-2">
+                      {s.limit}
+                    </p>
+                  ) : null}
                 </div>
-                <p className="mt-4 max-w-[40ch] text-[13.5px] leading-[1.55] text-ink-2">
-                  {s.mechanism.note}
-                </p>
+
+                <div className={flip ? "lg:order-1 lg:pt-2" : "lg:pt-2"}>
+                  <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
+                    {s.mechanism.label}
+                  </p>
+                  <div className="mt-4">
+                    {s.mechanism.kind === "sequence" ? (
+                      <SequencePicture steps={s.mechanism.steps} />
+                    ) : (
+                      <FlowPicture steps={s.mechanism.steps} />
+                    )}
+                  </div>
+                  <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
+                    {s.mechanism.note}
+                  </p>
+                </div>
               </div>
-            </div>
-          </AnimateOnScroll>
-        ))}
+            </AnimateOnScroll>
+          );
+        })}
       </div>
     </Section>
   );
@@ -258,7 +270,6 @@ export function Timeline() {
       id="timeline"
       kicker="How it goes"
       title="Live at your front desk in 30 days"
-      lede="Four steps, and you can stop us at the end of the first one."
     >
       <AnimateOnScroll>
         <div className="sai-pane grid gap-0 divide-y divide-rule-soft rounded-card p-1 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4">
@@ -283,36 +294,45 @@ export function Timeline() {
 
 /* ------------------------------------------------------------- ownership */
 
+/**
+ * The dark band. It previously ran a title in a 0.72fr column against four
+ * tiles in a 1.28fr column, which left the left third of a very wide dark
+ * rectangle empty and made the whole thing read as a tube dropped onto the
+ * page, with the tiles floating in the remaining space.
+ *
+ * Now the heading sits across the top and the four answers run as a single
+ * four column band beneath it, divided by hairlines rather than boxed. The
+ * band fills its own width, which is what stops it looking arbitrary.
+ */
 export function Ownership() {
   return (
     <Section id="ownership" className="!pt-1 md:!pt-2">
       <AnimateOnScroll>
         <NightWindow
           ariaLabel="What you own"
-          className="px-6 py-9 md:px-11 md:py-11"
+          className="px-6 py-9 md:px-10 md:py-11"
         >
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-center">
-            <div>
-              <h2 className="font-heading text-[27px] font-medium leading-[1.12] tracking-[-0.02em] text-cream md:text-[34px]">
-                What you own
-              </h2>
-              <p className="mt-3 max-w-[42ch] text-[15px] leading-[1.6] text-cream-2">
-                Worth reading before you sign.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {OWNERSHIP.map((o) => (
-                <div key={o.q} className="sai-nglass-tile rounded-tile p-4">
-                  <h3 className="font-heading text-[15.5px] font-medium leading-tight text-cream">
-                    {o.q}
-                  </h3>
-                  <p className="mt-1.5 text-[13.5px] leading-[1.55] text-cream-2">
-                    {o.a}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-nglass-edge pb-7">
+            <h2 className="font-heading text-[27px] font-medium leading-[1.12] tracking-[-0.02em] text-cream md:text-[32px]">
+              What you own
+            </h2>
+            <p className="text-[15px] leading-[1.6] text-cream-2">
+              Worth reading before you sign.
+            </p>
           </div>
+
+          <dl className="grid gap-x-10 gap-y-7 pt-7 sm:grid-cols-2 lg:grid-cols-4">
+            {OWNERSHIP.map((o) => (
+              <div key={o.q} className="min-w-0">
+                <dt className="font-heading text-[15.5px] font-medium leading-tight text-cream">
+                  {o.q}
+                </dt>
+                <dd className="mt-2 text-[13.5px] leading-[1.6] text-cream-2">
+                  {o.a}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </NightWindow>
       </AnimateOnScroll>
     </Section>

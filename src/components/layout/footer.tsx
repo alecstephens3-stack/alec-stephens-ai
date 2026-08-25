@@ -5,8 +5,8 @@ import { SITE_NAME, CONTACT_EMAIL } from "@/lib/content";
 export function Footer() {
   return (
     <footer className="px-4 pb-8 pt-6 md:px-6" aria-label="Site footer">
-      <div className="mx-auto max-w-5xl rounded-panel sai-pane px-8 py-8">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+      <div className="mx-auto max-w-5xl rounded-panel sai-pane px-7 py-5 md:px-8 md:py-6">
+        <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
           <Link
             href="/"
             className="flex items-center transition-opacity hover:opacity-80"
@@ -21,7 +21,7 @@ export function Footer() {
             />
           </Link>
 
-          <nav className="flex items-center gap-6" aria-label="Footer navigation">
+          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2" aria-label="Footer navigation">
             <Link
               href="/#product"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
@@ -49,10 +49,10 @@ export function Footer() {
               Email
             </a>
           </nav>
-        </div>
 
-        <div className="mt-7 border-t border-rule-soft pt-5 text-center sm:text-left">
-          <p className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
+          {/* Sits in the same row as the nav. As its own band under a full
+              width rule it was one short line of text in a lot of air. */}
+          <p className="font-label text-[12.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
             &copy; {new Date().getFullYear()} {SITE_NAME}
           </p>
         </div>
