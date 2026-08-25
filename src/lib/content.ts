@@ -176,13 +176,14 @@ export const PROOF = {
 export const SYSTEMS = {
   "kicker": "Two more systems",
   "title": "The other two jobs that slip",
-  "lede": "Both run alongside whatever you already pay for. Neither needs a rip-out, and neither connects to your practice management system.",
+  "lede": "Both run alongside whatever you already pay for. Neither needs a rip-out.",
   "items": [
     {
       "name": "ReExam",
       "summary": "Patient reactivation, run for you every month.",
       "body": "Recall sits on the same list as the daily work, so it slips first. You already pay software to send reminders. Its rules were set once and nobody in your building tunes them. You send us the overdue list, we run the sequence and watch the replies, and we tell you what came back.",
       "mechanism": {
+        "kind": "sequence",
         "label": "6 touches, about 6 weeks",
         "steps": [
           { "day": "Day 0", "channel": "SMS or email" },
@@ -202,6 +203,7 @@ export const SYSTEMS = {
       "summary": "The request loop, automated end to end.",
       "body": "A staff member files a time off request. It is checked against coverage. It reaches payroll. That loop is the whole product, and it returned 60 to 100 admin hours a year at the practice we built it for.",
       "mechanism": {
+        "kind": "flow",
         "label": "The loop",
         "steps": [
           { "day": "Request filed" },

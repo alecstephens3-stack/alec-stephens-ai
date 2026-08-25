@@ -112,14 +112,86 @@ export function Proof() {
 /* --------------------------------------------------------------- systems */
 
 /**
- * ReExam and the time-off build, in one section rather than two.
+ * ReExam and the time-off build.
  *
- * The page tells the knowledge base story properly and then earns the right to
- * widen, so this sits after Proof: prove one thing, then show range. Two peers
- * side by side, each with a name, the mechanism as a picture, the price and the
- * limit. An owner scanning between patients gets the shape of both in about ten
- * seconds without either one competing with the product the page leads on.
+ * The first version put each product in a Card, each Card containing a bordered
+ * panel, each panel containing chips: three levels of box, which reads as fussy
+ * before anyone has read a word. Two equal cards side by side also read as a
+ * comparison, which invites the reader to choose one, and these are not
+ * alternatives.
+ *
+ * So: one product per row, separated by a rule rather than boxed, with the
+ * words on one side and the mechanism drawn as an actual picture on the other.
+ * No surface anywhere in the section. The section it follows, Proof, already
+ * carries cards, so the change of texture is doing work too.
  */
+
+/** The six touch sequence, drawn as a rail rather than a row of chips. */
+function SequencePicture({
+  steps,
+}: {
+  steps: readonly { day: string; channel?: string; key?: boolean }[];
+}) {
+  return (
+    <ol className="relative grid gap-0" role="list">
+      {/* the rail the touches sit on */}
+      <span
+        aria-hidden="true"
+        className="absolute left-[5px] top-2 bottom-2 w-px bg-rule"
+      />
+      {steps.map((s) => (
+        <li key={s.day} className="relative flex items-baseline gap-3 py-2 pl-6">
+          <span
+            aria-hidden="true"
+            className={
+              "absolute left-0 top-[11px] h-2.5 w-2.5 rounded-full " +
+              (s.key
+                ? "bg-accent ring-4 ring-accent-soft"
+                : "bg-white ring-1 ring-rule")
+            }
+          />
+          <span className="w-[52px] shrink-0 font-label text-[12px] tracking-[0.06em] text-ink-2 uppercase">
+            {s.day}
+          </span>
+          <span
+            className={
+              "text-[14px] leading-[1.5] " +
+              (s.key ? "font-medium text-accent-deep" : "text-ink-2")
+            }
+          >
+            {s.channel}
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** The request loop, drawn as three steps a request passes through. */
+function FlowPicture({ steps }: { steps: readonly { day: string }[] }) {
+  return (
+    <ol className="grid gap-0" role="list">
+      {steps.map((s, i) => (
+        <li key={s.day} className="grid gap-0">
+          {i > 0 && (
+            <span
+              aria-hidden="true"
+              className="ml-[5px] h-5 w-px bg-rule"
+            />
+          )}
+          <span className="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="h-2.5 w-2.5 shrink-0 rounded-full bg-white ring-1 ring-rule"
+            />
+            <span className="text-[15px] leading-[1.5] text-ink">{s.day}</span>
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function Systems() {
   return (
     <Section
@@ -128,54 +200,49 @@ export function Systems() {
       title={SYSTEMS.title}
       lede={SYSTEMS.lede}
     >
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-0">
         {SYSTEMS.items.map((s, i) => (
           <AnimateOnScroll key={s.name} delay={i * 80}>
-            <Card className="flex h-full flex-col">
-              <h3 className="font-heading text-[19px] font-medium leading-[1.25] text-ink">
-                {s.name}
-              </h3>
-              <p className="mt-1 text-[14.5px] font-medium leading-[1.45] text-accent-deep">
-                {s.summary}
-              </p>
-              <p className="mt-3 text-[14.5px] leading-[1.55] text-ink-2">
-                {s.body}
-              </p>
-
-              <div className="mt-5 rounded-tile border border-rule-soft p-4">
-                <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
-                  {s.mechanism.label}
+            <div
+              className={
+                "grid gap-6 py-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-12 " +
+                (i > 0 ? "border-t border-rule-soft" : "pt-0")
+              }
+            >
+              <div>
+                <h3 className="font-heading text-[21px] font-medium leading-[1.2] text-ink">
+                  {s.name}
+                </h3>
+                <p className="mt-1 text-[15px] font-medium leading-[1.45] text-accent-deep">
+                  {s.summary}
                 </p>
-                <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-2">
-                  {s.mechanism.steps.map((step) => (
-                    <li
-                      key={step.day}
-                      className={
-                        "rounded-chip border px-2.5 py-1.5 text-[12.5px] leading-tight " +
-                        ("key" in step && step.key
-                          ? "border-accent-line bg-accent-soft text-accent-text"
-                          : "border-rule-soft text-ink-2")
-                      }
-                    >
-                      <span className="font-medium">{step.day}</span>
-                      {"key" in step && step.key && "channel" in step && step.channel ? (
-                        <span className="ml-1.5 opacity-80">{step.channel}</span>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-3 text-[13px] leading-[1.5] text-ink-2">
-                  {s.mechanism.note}
+                <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.6] text-ink-2">
+                  {s.body}
+                </p>
+                <p className="mt-5 text-[15px] leading-[1.55] text-ink">
+                  {s.price}
+                </p>
+                <p className="mt-2 max-w-[54ch] text-[14px] leading-[1.55] text-ink-2">
+                  {s.limit}
                 </p>
               </div>
 
-              <p className="mt-auto pt-5 text-[14.5px] leading-[1.55] text-ink">
-                {s.price}
-              </p>
-              <p className="mt-2 text-[13.5px] leading-[1.5] text-ink-2">
-                {s.limit}
-              </p>
-            </Card>
+              <div className="lg:pt-1">
+                <p className="font-label text-[11.5px] uppercase tracking-[0.08em] text-ink-2">
+                  {s.mechanism.label}
+                </p>
+                <div className="mt-3">
+                  {s.mechanism.kind === "sequence" ? (
+                    <SequencePicture steps={s.mechanism.steps} />
+                  ) : (
+                    <FlowPicture steps={s.mechanism.steps} />
+                  )}
+                </div>
+                <p className="mt-4 max-w-[40ch] text-[13.5px] leading-[1.55] text-ink-2">
+                  {s.mechanism.note}
+                </p>
+              </div>
+            </div>
           </AnimateOnScroll>
         ))}
       </div>
