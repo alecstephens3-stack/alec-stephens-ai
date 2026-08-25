@@ -5,7 +5,6 @@ import { NightWindow } from "@/components/ui/lens-primitives";
 import {
   PROBLEMS,
   PRODUCT_FEATURES,
-  PROOF,
   TIMELINE,
   OWNERSHIP,
   FAQ,
@@ -73,45 +72,6 @@ export function Product() {
     </Section>
   );
 }
-
-/* ----------------------------------------------------------------- proof */
-
-export function Proof() {
-  return (
-    <Section id="proof" title={PROOF.title}>
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-        <AnimateOnScroll>
-          <Card className="h-full">
-            {PROOF.body.map((para, i) => (
-              <p
-                key={i}
-                className="text-[15px] leading-[1.6] text-ink-2 [&:not(:first-child)]:mt-3"
-              >
-                {para}
-              </p>
-            ))}
-          </Card>
-        </AnimateOnScroll>
-
-        <AnimateOnScroll delay={80}>
-          <div className="grid h-full grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {PROOF.stats.map((s) => (
-              <Card key={s.label} className="flex flex-col justify-center !p-5">
-                <p className="font-heading text-[28px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[32px]">
-                  {s.value}
-                </p>
-                <p className="mt-2 text-[13px] leading-[1.4] text-ink-2">
-                  {s.label}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </AnimateOnScroll>
-      </div>
-    </Section>
-  );
-}
-
 
 /* --------------------------------------------------------------- systems */
 

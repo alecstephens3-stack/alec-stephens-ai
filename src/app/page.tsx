@@ -2,7 +2,6 @@ import { Hero } from "@/components/sections/v4/hero";
 import {
   Problem,
   Product,
-  Proof,
   Systems,
   Timeline,
   Ownership,
@@ -85,7 +84,6 @@ export default function Home() {
       <Hero />
       <Problem />
       <Product />
-      <Proof />
       {/* the 30 day build is the knowledge base's own path, so it belongs with
           the knowledge base rather than after the two systems that follow it */}
       <Timeline />
