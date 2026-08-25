@@ -212,8 +212,7 @@ export const SYSTEMS = {
         ],
         "shortLabel": "Coverage short",
         "fullLabel": "All covered",
-        "caption": "Each tag is one person off that day, and the department they cover. Thursday would leave the floor short.",
-        "note": "It does not schedule shifts, and it does not connect to your practice management system."
+        "note": ""
       },
       "price": "Included in the knowledge base plus operations tier, $4,500 to set up and $350 a month.",
       "limit": ""

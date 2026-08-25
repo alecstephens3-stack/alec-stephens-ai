@@ -227,13 +227,11 @@ function CalendarPicture({
   weekLabel,
   shortLabel,
   fullLabel,
-  caption,
 }: {
   week: readonly { day: string; date?: string; off: readonly string[]; short?: boolean }[];
   weekLabel?: string;
   shortLabel?: string;
   fullLabel?: string;
-  caption?: string;
 }) {
   const spoken =
     "A week of time off requests, checked against coverage. " +
@@ -339,12 +337,6 @@ function CalendarPicture({
         </div>
       </div>
 
-      {caption ? (
-        <p className="mt-3.5 max-w-[46ch] text-[13.5px] leading-[1.6] text-ink-2">
-          {caption}
-        </p>
-      ) : null}
-
     </div>
   );
 }
@@ -382,16 +374,6 @@ export function Systems() {
                   <p className="mt-5 max-w-[52ch] text-[15.5px] leading-[1.62] text-ink-2">
                     {s.body}
                   </p>
-                  {s.mechanism.stat ? (
-                    <div className="mt-6 flex items-baseline gap-4 border-t border-rule-soft pt-5">
-                      <p className="shrink-0 font-heading text-[38px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[42px]">
-                        {s.mechanism.stat.value}
-                      </p>
-                      <p className="max-w-[24ch] text-[13.5px] leading-[1.5] text-ink-2">
-                        {s.mechanism.stat.label}
-                      </p>
-                    </div>
-                  ) : null}
                   <p className="mt-6 border-t border-rule-soft pt-4 text-[15.5px] leading-[1.55] text-ink">
                     {s.price}
                   </p>
@@ -415,13 +397,24 @@ export function Systems() {
                         weekLabel={s.mechanism.weekLabel}
                         shortLabel={s.mechanism.shortLabel}
                         fullLabel={s.mechanism.fullLabel}
-                        caption={s.mechanism.caption}
                       />
                     )}
                   </div>
-                  <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
-                    {s.mechanism.note}
-                  </p>
+                  {s.mechanism.stat ? (
+                    <div className="mt-7 border-t border-rule pt-6">
+                      <p className="font-heading text-[40px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[48px]">
+                        {s.mechanism.stat.value}
+                      </p>
+                      <p className="mt-2.5 max-w-[28ch] text-[13.5px] leading-[1.5] text-ink-2">
+                        {s.mechanism.stat.label}
+                      </p>
+                    </div>
+                  ) : null}
+                  {s.mechanism.note ? (
+                    <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
+                      {s.mechanism.note}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </AnimateOnScroll>
