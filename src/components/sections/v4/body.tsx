@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Section, Card } from "./shell";
+import { ButtonLink } from "@/components/ui/button";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { NightWindow } from "@/components/ui/lens-primitives";
 import {
@@ -12,6 +13,7 @@ import {
   FOUNDERS,
   OTHER_WORK,
   SYSTEMS,
+  CALENDLY,
 } from "@/lib/content";
 
 /* --------------------------------------------------------------- problem */
@@ -112,6 +114,36 @@ export function Proof() {
   );
 }
 
+
+/* ------------------------------------------------------------- mid page ask */
+
+/**
+ * One ask, placed straight after Proof.
+ *
+ * Until now the only way to act was the header pill, which is hidden below the
+ * md breakpoint, or the contact form at the very bottom. So a reader on a phone
+ * who was convinced by the evidence had to scroll past two more products before
+ * anything invited them to do something. Conviction does not survive that.
+ *
+ * Deliberately one button and no new copy: this is a door, not another pitch.
+ * The page already argues its case above and below this line.
+ */
+export function MidPageAsk() {
+  return (
+    <Section id="ask" className="!py-0">
+      <AnimateOnScroll>
+        <div className="flex flex-col items-center gap-4 border-y border-rule-soft py-8 sm:flex-row sm:justify-between sm:py-7">
+          <p className="max-w-[46ch] text-center text-[16px] leading-[1.55] text-ink-2 sm:text-left">
+            Bring one thing your front desk keeps getting wrong.
+          </p>
+          <ButtonLink href={CALENDLY} external className="shrink-0">
+            Book a call &rarr;
+          </ButtonLink>
+        </div>
+      </AnimateOnScroll>
+    </Section>
+  );
+}
 
 /* --------------------------------------------------------------- systems */
 
