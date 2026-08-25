@@ -26,7 +26,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   {
     heading: "Before you ask",
     links: [
-      { label: "Proof", href: "/#proof" },
+      { label: "How it goes", href: "/#timeline" },
       { label: "What you own", href: "/#ownership" },
       { label: "Common questions", href: "/#faq" },
     ],

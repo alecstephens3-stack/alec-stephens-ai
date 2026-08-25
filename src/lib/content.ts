@@ -24,10 +24,6 @@ export const NAV_LINKS = [
     "href": "/#product"
   },
   {
-    "label": "Proof",
-    "href": "/#proof"
-  },
-  {
     "label": "Systems",
     "href": "/#systems"
   },
@@ -139,27 +135,6 @@ export const PRODUCT_FEATURES = [
   }
 ];
 
-export const PROOF = {
-  "title": "Hundreds of hours spent getting the details right",
-  "body": [
-    "We built and refined this system with direct input from clinic owners, doctors, office managers, and front-desk staff. At the live 27-person practice, where 6 to 7 doctors work from one location, the product was shaped by real clinic documents, days spent watching the front desk, and 76 situations mapped from the questions staff actually face.",
-    "That work is already built into the product. Your team does not start from an empty template or spend months writing pages. We handle the document review, interviews, writing, access setup, testing, training, and rollout."
-  ],
-  "stats": [
-    {
-      "value": "76",
-      "label": "Front desk situations mapped"
-    },
-    {
-      "value": "4",
-      "label": "Decision lookups built"
-    },
-    {
-      "value": "0",
-      "label": "Patient records in the knowledge base"
-    }
-  ]
-};
 
 /**
  * The two systems beyond the knowledge base. Kept deliberately short: the page
@@ -201,7 +176,7 @@ export const SYSTEMS = {
       "mechanism": {
         "kind": "calendar",
         "label": "Checked against coverage",
-        "stat": { "value": "60 to 100", "label": "Admin hours a year, at the practice we built it for." },
+        "stat": { "value": "Up to 100", "label": "Admin hours saved a year." },
         "weekLabel": "This week",
         "week": [
           { "day": "Mon", "date": "14", "off": [] },
@@ -318,11 +293,15 @@ export const OWNERSHIP = [
   },
   {
     "q": "What if you two disappear",
-    "a": "You have the export, and the content reads fine without our software. Better you know that now than find out at a bad moment."
+    "a": "You have the export, and the content reads fine without our software."
   }
 ];
 
 export const FAQ = [
+  {
+    "q": "Has this actually run at a front desk?",
+    "a": "Yes, and it is in daily use. It was built at a 27-person practice where 6 to 7 doctors work from one location, from their own documents and days spent sitting with the front desk. 76 situations were mapped from the questions staff actually face, and 4 decision lookups were built. That work is in the product now, so your team does not start from an empty template or spend months writing pages. We handle the document review, interviews, writing, access setup, testing, training, and rollout."
+  },
   {
     "q": "Does any patient data go into this?",
     "a": "No. It holds your rules, not your charts: insurance policies, pricing, scheduling protocols, procedures. There are no patient records in it, so there is nothing in it to breach. If a later project ever needs patient data, it runs inside your own accounts under a signed BAA, never on our systems. We sign the BAA before we start either way."
