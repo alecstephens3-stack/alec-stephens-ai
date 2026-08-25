@@ -361,14 +361,14 @@ export function Systems() {
                     )}
                   </div>
                   {s.mechanism.stat ? (
-                    <div className="mt-7 border-t border-rule pt-6">
-                      <p className="font-heading text-[40px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[48px]">
-                        {s.mechanism.stat.value}
-                      </p>
-                      <p className="mt-2.5 max-w-[28ch] text-[13.5px] leading-[1.5] text-ink-2">
-                        {s.mechanism.stat.label}
-                      </p>
-                    </div>
+                    // one sentence, not a display number over a caption. the
+                    // number alone did not say what it was counting, and the
+                    // size gap made the two halves read as separate claims.
+                    <p className="mt-7 border-t border-rule pt-6 font-heading text-[21px] font-medium leading-[1.35] tracking-[-0.01em] text-balance text-ink md:text-[23px]">
+                      {s.mechanism.stat.lead}
+                      <span className="text-accent-deep">{s.mechanism.stat.accent}</span>
+                      {s.mechanism.stat.tail}
+                    </p>
                   ) : null}
                   {s.mechanism.note ? (
                     <p className="mt-5 max-w-[38ch] text-[13.5px] leading-[1.6] text-ink-2">
