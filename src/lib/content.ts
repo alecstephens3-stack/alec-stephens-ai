@@ -155,10 +155,6 @@ export const PROOF = {
       "label": "Decision lookups built"
     },
     {
-      "value": "60 to 100",
-      "label": "Admin hours a year returned by the time-off build"
-    },
-    {
       "value": "0",
       "label": "Patient records in the knowledge base"
     }
@@ -201,10 +197,11 @@ export const SYSTEMS = {
     {
       "name": "Time off and payroll",
       "summary": "The request loop, automated end to end.",
-      "body": "Scoped to your practice, so it follows the rules you already run on instead of making your team learn someone else's. A staff member files a request, it is checked against coverage, and it reaches payroll. Your office manager can keep it current the same way they keep the knowledge base current. It returned 60 to 100 admin hours a year at the practice we built it for.",
+      "body": "Scoped to your practice, so it follows the rules you already run on instead of making your team learn someone else's. A staff member files a request, it is checked against coverage, and it reaches payroll. Your office manager can keep it current the same way they keep the knowledge base current.",
       "mechanism": {
         "kind": "flow",
         "label": "The loop",
+        "stat": { "value": "60 to 100", "label": "Admin hours a year, at the practice we built it for." },
         "steps": [
           { "day": "Request filed" },
           { "day": "Checked against coverage" },
