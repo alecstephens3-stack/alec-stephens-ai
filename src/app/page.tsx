@@ -86,9 +86,11 @@ export default function Home() {
       <Problem />
       <Product />
       <Proof />
+      {/* the 30 day build is the knowledge base's own path, so it belongs with
+          the knowledge base rather than after the two systems that follow it */}
+      <Timeline />
       <Systems />
       <Pricing />
-      <Timeline />
       <Ownership />
       <Faq />
       <Founders />
