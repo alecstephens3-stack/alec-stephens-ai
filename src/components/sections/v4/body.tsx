@@ -24,10 +24,10 @@ export function Problem() {
       title="The front desk runs on what a few people remember"
       lede="When those people are busy or gone, the answers get hard to find, and that gap shows up as uncollected charges and slow onboarding."
     >
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="gap-4 md:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
         {PROBLEMS.map((p, i) => (
           <AnimateOnScroll key={p.title} delay={i * 70}>
-            <Card className="h-full">
+            <Card>
               <h3 className="mt-2.5 font-heading text-[18px] font-medium leading-[1.25] text-ink">
                 {p.title}
               </h3>
@@ -52,10 +52,14 @@ export function Product() {
       title="A searchable knowledge base for the front desk"
       lede="The difference from a shared drive is that answers are findable mid-call, and the exceptions that cost money are hard to miss."
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Columns, not a grid. A grid stretches every card to the tallest in its
+          row, and these six vary by a factor of four in length, so half of them
+          carried a large empty area. In columns each card hugs its own content
+          and the copy is what sets the rhythm. */}
+      <div className="gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
         {PRODUCT_FEATURES.map((f, i) => (
           <AnimateOnScroll key={f.title} delay={(i % 3) * 60}>
-            <Card className="h-full">
+            <Card>
               <h3 className="font-heading text-[17px] font-medium leading-[1.3] text-ink">
                 {f.title}
               </h3>
@@ -183,9 +187,16 @@ function SequencePicture({
 }
 
 /**
- * Time off: one request crossing three states, read left to right, then the
- * number it bought back. A track rather than a timeline, so it cannot be
- * mistaken for the ReExam schedule above it.
+ * Time off. Third attempt at making this NOT look like the ReExam schedule.
+ *
+ * Both earlier versions used dots on a line, vertical then horizontal, which is
+ * the same idea rotated. This drops the dots entirely and goes typographic: the
+ * three states are a numbered procedure, set as large ordinals with the label
+ * beside them, and the number the loop bought back closes the block.
+ *
+ * A schedule and a procedure are different kinds of thing, so they should not
+ * be drawn with the same vocabulary. ReExam is when things happen. This is what
+ * happens.
  */
 function FlowPicture({
   steps,
@@ -196,39 +207,29 @@ function FlowPicture({
 }) {
   return (
     <div>
-      <ol className="grid grid-cols-3 gap-0" role="list">
+      <ol className="grid gap-0" role="list">
         {steps.map((s, i) => (
-          <li key={s.day} className="relative">
-            {/* the track: a rule through the middle of the row of stations */}
+          <li
+            key={s.day}
+            className="flex items-baseline gap-5 border-t border-rule-soft py-4 first:border-t-0 first:pt-0"
+          >
             <span
               aria-hidden="true"
-              className={
-                "absolute top-[9px] h-[2px] bg-rule " +
-                (i === 0 ? "left-1/2 right-0 " : i === steps.length - 1 ? "left-0 right-1/2 " : "left-0 right-0 ")
-              }
-            />
-            <span
-              aria-hidden="true"
-              className={
-                "relative z-1 mx-auto block h-5 w-5 rounded-full border-2 " +
-                (i === steps.length - 1
-                  ? "border-accent bg-accent"
-                  : "border-rule-strong bg-white")
-              }
-            />
-            <span className="mt-3 block px-1 text-center text-[13.5px] leading-[1.35] text-ink">
-              {s.day}
+              className="font-heading text-[30px] font-medium leading-none tracking-[-0.02em] text-accent opacity-30"
+            >
+              {String(i + 1).padStart(2, "0")}
             </span>
+            <span className="text-[16px] leading-[1.45] text-ink">{s.day}</span>
           </li>
         ))}
       </ol>
 
       {stat ? (
-        <div className="mt-8 border-t border-rule-soft pt-5">
-          <p className="font-heading text-[34px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[40px]">
+        <div className="mt-8 border-t border-rule pt-6">
+          <p className="font-heading text-[40px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[48px]">
             {stat.value}
           </p>
-          <p className="mt-2 max-w-[26ch] text-[13px] leading-[1.5] text-ink-2">
+          <p className="mt-2.5 max-w-[28ch] text-[13.5px] leading-[1.5] text-ink-2">
             {stat.label}
           </p>
         </div>
