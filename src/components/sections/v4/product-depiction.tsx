@@ -179,11 +179,12 @@ export function ProductDepiction() {
               strokeLinecap="round"
             />
           </svg>
-          <span className="text-[15px] text-ink">
+          <span className="text-[15px] text-ink" data-kb="query" data-kb-full={query}>
             {shownQuery}
             {!still && (
               <span
                 aria-hidden="true"
+                data-kb="caret"
                 className="ml-px inline-block h-[1.05em] w-[1.5px] translate-y-[0.15em] bg-ink motion-safe:animate-[sai-caret_1s_steps(1)_infinite]"
               />
             )}
@@ -198,6 +199,8 @@ export function ProductDepiction() {
             return (
               <li
                 key={r.id}
+                data-kb="row"
+                data-kb-match={isMatch ? "1" : undefined}
                 ref={isMatch ? targetRef : undefined}
                 className={
                   // Non matches dim rather than collapse. Collapsing them changed
@@ -218,6 +221,7 @@ export function ProductDepiction() {
 
         {/* Always in flow, so opening it never reflows the hero. */}
         <div
+          data-kb="answer"
           className={
             "mt-3 rounded-tile border border-[rgba(255,255,255,0.9)] bg-white/72 p-4 shadow-[inset_0_1px_0_#fff,0_6px_18px_rgba(112,62,40,0.07)] transition-opacity duration-[220ms] ease-brand " +
             (answerOpen ? "opacity-100" : "opacity-0")
