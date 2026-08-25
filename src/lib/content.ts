@@ -202,14 +202,17 @@ export const SYSTEMS = {
         "kind": "calendar",
         "label": "Checked against coverage",
         "stat": { "value": "60 to 100", "label": "Admin hours a year, at the practice we built it for." },
+        "weekLabel": "This week",
         "week": [
-          { "day": "Mon", "off": [] },
-          { "day": "Tue", "off": ["Optical"] },
-          { "day": "Wed", "off": [] },
-          { "day": "Thu", "off": ["Optical", "Front desk"], "short": true },
-          { "day": "Fri", "off": ["Tech"] }
+          { "day": "Mon", "date": "14", "off": [] },
+          { "day": "Tue", "date": "15", "off": ["Optical"] },
+          { "day": "Wed", "date": "16", "off": [] },
+          { "day": "Thu", "date": "17", "off": ["Optical", "Front desk"], "short": true },
+          { "day": "Fri", "date": "18", "off": ["Tech"] }
         ],
         "shortLabel": "Coverage short",
+        "fullLabel": "All covered",
+        "caption": "Each tag is one person off that day, and the department they cover. Thursday would leave the floor short.",
         "note": "It does not schedule shifts, and it does not connect to your practice management system."
       },
       "price": "Included in the knowledge base plus operations tier, $4,500 to set up and $350 a month.",
