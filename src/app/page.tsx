@@ -3,7 +3,6 @@ import {
   Problem,
   Product,
   Proof,
-  MidPageAsk,
   Systems,
   Timeline,
   Ownership,
@@ -87,7 +86,6 @@ export default function Home() {
       <Problem />
       <Product />
       <Proof />
-      <MidPageAsk />
       <Systems />
       <Pricing />
       <Timeline />

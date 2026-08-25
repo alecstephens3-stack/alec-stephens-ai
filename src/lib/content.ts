@@ -199,14 +199,17 @@ export const SYSTEMS = {
       "summary": "The request loop, automated end to end.",
       "body": "Scoped to your practice, so it follows the rules you already run on instead of making your team learn someone else's. A staff member files a request, it is checked against coverage, and it reaches payroll. Your office manager can keep it current the same way they keep the knowledge base current.",
       "mechanism": {
-        "kind": "flow",
-        "label": "The loop",
+        "kind": "calendar",
+        "label": "Checked against coverage",
         "stat": { "value": "60 to 100", "label": "Admin hours a year, at the practice we built it for." },
-        "steps": [
-          { "day": "Request filed" },
-          { "day": "Checked against coverage" },
-          { "day": "Reaches payroll" }
+        "week": [
+          { "day": "Mon", "off": [] },
+          { "day": "Tue", "off": ["Optical"] },
+          { "day": "Wed", "off": [] },
+          { "day": "Thu", "off": ["Optical", "Front desk"], "short": true },
+          { "day": "Fri", "off": ["Tech"] }
         ],
+        "shortLabel": "Coverage short",
         "note": "It does not schedule shifts, and it does not connect to your practice management system."
       },
       "price": "Included in the knowledge base plus operations tier, $4,500 to set up and $350 a month.",
