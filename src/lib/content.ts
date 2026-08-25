@@ -59,6 +59,44 @@ export const HERO = {
   "trustLine": "The knowledge base holds no patient records, and we sign a BAA before we start."
 };
 
+/**
+ * The hero depiction, which plays itself: a query is typed, the list narrows to
+ * the page that answers it, and that page opens. Nothing is asked of the visitor.
+ *
+ * The result labels are the decision lookups named in PRODUCT_FEATURES, so this
+ * shows real product surface rather than invented pages. The live instance holds
+ * a client's own prices and rules, so the answer here is illustrative.
+ */
+export const DEPICTION = {
+  "title": "Front desk knowledge base",
+  "query": "vision plan, medical complaint",
+  "results": [
+    {
+      "id": "refraction",
+      "label": "Refraction: collect or bill",
+      "terms": "vision plan medical complaint refraction collect bill"
+    },
+    {
+      "id": "triage",
+      "label": "How soon do they need to be seen",
+      "terms": "triage urgent same day flashes floaters"
+    },
+    {
+      "id": "price",
+      "label": "What it costs this year",
+      "terms": "price cost fee quote this year"
+    }
+  ],
+  "answer": {
+    "title": "Refraction: collect or bill",
+    "lines": [
+      "The vision plan covers the refraction only when the visit bills as a routine exam.",
+      "Exception: if the visit bills medical, the refraction is not covered. Collect at checkout."
+    ],
+    "meta": "Last updated by your office manager."
+  }
+};
+
 export const PROBLEMS = [
   {
     "title": "The hard questions all go through one or two people",

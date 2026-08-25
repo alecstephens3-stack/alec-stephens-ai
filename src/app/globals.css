@@ -547,3 +547,9 @@ section.sai-night ul.sai-bullets li::before {
   .sai-lens { animation: none; }
 }
 body:has(#mobile-menu) .sai-scene { display: none; }
+
+/* Caret for the self-playing hero depiction. steps(1) so it blinks rather than
+   fades, which is what a real text cursor does. */
+@keyframes sai-caret {
+  50% { opacity: 0; }
+}
