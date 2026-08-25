@@ -187,7 +187,7 @@ function SequencePicture({
 }
 
 /**
- * Time off, drawn as a week.
+ * Time off, drawn as a week view.
  *
  * Three earlier attempts all drew a sequence: a vertical dotted rail, then a
  * horizontal dotted track, then numbered steps. All three said "there are three
@@ -195,74 +195,156 @@ function SequencePicture({
  * made it rhyme with the ReExam schedule beside it.
  *
  * What the product actually does that is worth showing is the check: it knows
- * who is already off and tells you when a request would leave a day short. So
- * this is a week, with the days that are covered and the one that is not. That
- * cannot be confused with a six touch sequence, and it needs no caption to be
- * understood.
+ * who is already off and tells you when a request would leave a day short.
+ *
+ * So it is built like a calendar rather than like five boxes: weekday and date
+ * sit together in a header strip, the column rules run the full height, and no
+ * cell is left blank. A day with nobody off says so, because an empty cell in a
+ * grid reads as a missing value rather than as a quiet day.
  *
  * Roles, never names: the client has not agreed to be identified.
  */
+
+/** One person. Small enough to sit inside a chip in a 70px column. */
+function PersonGlyph() {
+  return (
+    <svg
+      width="9"
+      height="9"
+      viewBox="0 0 10 10"
+      fill="none"
+      aria-hidden="true"
+      className="mt-[1px] shrink-0 text-ink-2 opacity-70"
+    >
+      <circle cx="5" cy="3" r="1.95" fill="currentColor" />
+      <path d="M1.5 9.4c0-1.95 1.6-3.05 3.5-3.05s3.5 1.1 3.5 3.05z" fill="currentColor" />
+    </svg>
+  );
+}
+
 function CalendarPicture({
   week,
+  weekLabel,
   shortLabel,
-  stat,
+  fullLabel,
+  caption,
 }: {
-  week: readonly { day: string; off: readonly string[]; short?: boolean }[];
+  week: readonly { day: string; date?: string; off: readonly string[]; short?: boolean }[];
+  weekLabel?: string;
   shortLabel?: string;
-  stat?: { value: string; label: string };
+  fullLabel?: string;
+  caption?: string;
 }) {
+  const spoken =
+    "A week of time off requests, checked against coverage. " +
+    week
+      .map((d) =>
+        d.off.length
+          ? `${d.day}: ${d.off.join(", ")} off${d.short && shortLabel ? `, ${shortLabel}` : ""}`
+          : `${d.day}: ${fullLabel ?? "nobody off"}`,
+      )
+      .join(". ") +
+    ".";
+
   return (
     <div>
-      <div className="grid grid-cols-5 gap-1.5" role="table" aria-label="A week of time off requests, checked against coverage">
-        {week.map((d) => (
-          <div key={d.day} role="row" className="min-w-0">
-            <p
+      <div
+        role="img"
+        aria-label={spoken}
+        className="overflow-hidden rounded-tile border border-rule-soft bg-white/55 shadow-[inset_0_1px_0_#fff,0_6px_18px_rgba(112,62,40,0.05)]"
+      >
+        {weekLabel ? (
+          <p
+            aria-hidden="true"
+            className="border-b border-rule-soft bg-white/55 px-3 py-2 font-label text-[10.5px] uppercase tracking-[0.08em] text-ink-2"
+          >
+            {weekLabel}
+          </p>
+        ) : null}
+
+        {/* Weekday over date, the way a week view names its columns. */}
+        <div
+          aria-hidden="true"
+          className="grid grid-cols-5 divide-x divide-rule-soft border-b border-rule-soft bg-white/35"
+        >
+          {week.map((d) => (
+            <div
+              key={d.day}
               className={
-                "mb-1.5 text-center font-label text-[11px] uppercase tracking-[0.06em] " +
-                (d.short ? "text-accent-deep" : "text-ink-2")
+                // the tint runs the full column height, so the flagged day
+                // reads as one column rather than as a lit cell under a plain
+                // header
+                "px-1 py-2 text-center " + (d.short ? "bg-accent-soft" : "")
               }
             >
-              {d.day}
-            </p>
+              <span
+                className={
+                  "block font-label text-[10px] uppercase tracking-[0.07em] " +
+                  (d.short ? "text-accent-deep" : "text-ink-2")
+                }
+              >
+                {d.day}
+              </span>
+              {d.date ? (
+                <span
+                  className={
+                    "mx-auto mt-1 flex h-[21px] w-[21px] items-center justify-center rounded-full font-heading text-[14px] font-medium leading-none " +
+                    // the filled date pill is how a week view marks the day in
+                    // question. accent-deep, not accent: white on #DC6843 is
+                    // 3.0:1 and this is 14px text.
+                    (d.short ? "bg-accent-deep text-white" : "text-ink")
+                  }
+                >
+                  {d.date}
+                </span>
+              ) : null}
+            </div>
+          ))}
+        </div>
+
+        <div aria-hidden="true" className="grid grid-cols-5 divide-x divide-rule-soft">
+          {week.map((d) => (
             <div
+              key={d.day}
               className={
-                "flex min-h-[104px] flex-col gap-1 rounded-tile border p-1.5 " +
-                (d.short
-                  ? "border-accent-line bg-accent-soft"
-                  : "border-rule-soft bg-white/45")
+                "flex min-h-[112px] flex-col gap-1 p-1.5 " +
+                // the page behind is a warm gradient, so a transparent cell
+                // picks up as much tint as the flagged one does
+                (d.short ? "bg-accent-soft" : "bg-white/55")
               }
             >
               {d.off.map((role) => (
                 <span
                   key={role}
-                  className={
-                    "rounded-chip px-1.5 py-1 text-center text-[11px] leading-[1.25] " +
-                    (d.short ? "bg-white/70 text-ink" : "bg-white/70 text-ink-2")
-                  }
+                  className="flex items-start justify-center gap-1 rounded-[7px] bg-white/85 px-1 py-[5px] text-center text-[10.5px] font-medium leading-[1.25] text-ink ring-1 ring-rule-soft"
                 >
+                  <PersonGlyph />
                   {role}
                 </span>
               ))}
+
+              {d.off.length === 0 && fullLabel ? (
+                <span className="m-auto px-0.5 text-center text-[10.5px] leading-[1.3] text-ink-2 opacity-70">
+                  {fullLabel}
+                </span>
+              ) : null}
+
               {d.short && shortLabel ? (
-                <span className="mt-auto text-center text-[10.5px] font-medium leading-[1.2] text-accent-deep">
+                <span className="mt-auto pt-1 text-center text-[10.5px] font-semibold leading-[1.25] text-accent-deep">
                   {shortLabel}
                 </span>
               ) : null}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {stat ? (
-        <div className="mt-8 border-t border-rule pt-6">
-          <p className="font-heading text-[40px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[48px]">
-            {stat.value}
-          </p>
-          <p className="mt-2.5 max-w-[28ch] text-[13.5px] leading-[1.5] text-ink-2">
-            {stat.label}
-          </p>
-        </div>
+      {caption ? (
+        <p className="mt-3.5 max-w-[46ch] text-[13.5px] leading-[1.6] text-ink-2">
+          {caption}
+        </p>
       ) : null}
+
     </div>
   );
 }
@@ -300,6 +382,16 @@ export function Systems() {
                   <p className="mt-5 max-w-[52ch] text-[15.5px] leading-[1.62] text-ink-2">
                     {s.body}
                   </p>
+                  {s.mechanism.stat ? (
+                    <div className="mt-6 flex items-baseline gap-4 border-t border-rule-soft pt-5">
+                      <p className="shrink-0 font-heading text-[38px] font-medium leading-none tracking-[-0.02em] text-accent-display md:text-[42px]">
+                        {s.mechanism.stat.value}
+                      </p>
+                      <p className="max-w-[24ch] text-[13.5px] leading-[1.5] text-ink-2">
+                        {s.mechanism.stat.label}
+                      </p>
+                    </div>
+                  ) : null}
                   <p className="mt-6 border-t border-rule-soft pt-4 text-[15.5px] leading-[1.55] text-ink">
                     {s.price}
                   </p>
@@ -320,8 +412,10 @@ export function Systems() {
                     ) : (
                       <CalendarPicture
                         week={s.mechanism.week ?? []}
+                        weekLabel={s.mechanism.weekLabel}
                         shortLabel={s.mechanism.shortLabel}
-                        stat={s.mechanism.stat}
+                        fullLabel={s.mechanism.fullLabel}
+                        caption={s.mechanism.caption}
                       />
                     )}
                   </div>
