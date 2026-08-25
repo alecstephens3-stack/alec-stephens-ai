@@ -175,7 +175,7 @@ export const PROOF = {
  */
 export const SYSTEMS = {
   "kicker": "Two more systems",
-  "title": "The other two jobs that slip",
+  "title": "Recall and time off",
   "lede": "Both run alongside whatever you already pay for. Neither needs a rip-out.",
   "items": [
     {
@@ -193,15 +193,15 @@ export const SYSTEMS = {
           { "day": "Day 28", "channel": "SMS or email" },
           { "day": "Day 42", "channel": "SMS or email" }
         ],
-        "note": "Day 10 is email only. That is a compliance rule, not a preference. The sequence stops the moment a patient books, replies, or opts out."
+        "note": "The sequence stops the moment a patient books, replies, or opts out."
       },
       "price": "$600 a month, flat. No contract, no setup fee. Live in 10 business days.",
-      "limit": "It works from your patients' contact details, so a BAA is signed before any data moves. Contact details only, never charts."
+      "limit": ""
     },
     {
       "name": "Time off and payroll",
       "summary": "The request loop, automated end to end.",
-      "body": "A staff member files a time off request. It is checked against coverage. It reaches payroll. That loop is the whole product, and it returned 60 to 100 admin hours a year at the practice we built it for.",
+      "body": "Scoped to your practice, so it follows the rules you already run on instead of making your team learn someone else's. A staff member files a request, it is checked against coverage, and it reaches payroll. Your office manager can keep it current the same way they keep the knowledge base current. It returned 60 to 100 admin hours a year at the practice we built it for.",
       "mechanism": {
         "kind": "flow",
         "label": "The loop",
@@ -213,7 +213,7 @@ export const SYSTEMS = {
         "note": "It does not schedule shifts, and it does not connect to your practice management system."
       },
       "price": "Included in the knowledge base plus operations tier, $4,500 to set up and $350 a month.",
-      "limit": "Staff data, not patient data. Time off requests and payroll. No charts, no patient records."
+      "limit": ""
     }
   ]
 };
@@ -269,12 +269,13 @@ export const PRICING_TIERS = [
   }
 ];
 
+/**
+ * One line, not five. The cap and second-location notes used vocabulary a buyer
+ * has no way to decode from the page, and the rest read as a stack of unrelated
+ * sentences under the table. ReExam's price is stated in its own section.
+ */
 export const PRICING_NOTES = [
-  "Extra sections beyond a tier's cap are $600 each.",
-  "A second location is $1,500 to set up and $149 per month.",
-  "Clinical pages go live only after your doctor signs off.",
-  "No long-term contract. Cancel any time and keep every page.",
-  "ReExam is priced on its own: $600 a month, flat, no contract and no setup fee."
+  "No long-term contract. Cancel any time and keep every page."
 ];
 
 export const TIMELINE = [
