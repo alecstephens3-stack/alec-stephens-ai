@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://stephensai.co/jp">
+<title>建設会社のホームページ制作 · Stephens AI</title>
+<meta name="description" content="建設会社・工務店向けのホームページ制作。オリジナルデザイン、御社で更新できる管理画面、制作費200,000円（税別）から。仙台を拠点に全国対応。">
+<meta property="og:title" content="建設会社の、次のホームページ。| Stephens AI">
+<meta property="og:description" content="施工の質が、そのまま伝わるように。オリジナルデザイン、御社で更新できる管理画面、制作費200,000円（税別）から。仙台を拠点に全国対応。">
+<meta property="og:image" content="https://stephensai.co/jp/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="建設会社の、次のホームページ。Stephens AI">
+<meta property="og:url" content="https://stephensai.co/jp">
+<meta property="og:site_name" content="Stephens AI">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<!-- SAI:FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400..600;1,400..600&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<!-- /SAI:FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- SAI:KIT -->
+<style>
+/* ============================================================================
+   Stephens AI — "Lens" v3 · THE KIT
+   ----------------------------------------------------------------------------
+   The single stylesheet for every branded HTML artifact. One vocabulary
+   (.sai-*), tokens + primitives + explainer widgets, no build step.
+
+   DO NOT hand-copy this into an artifact. Put the SAI:KIT marker comment in
+   the head and run:  python3 scripts/inline_kit.py <file.html>
+   (The marker is never written literally in here — it would nest inside the
+   payload and break the inliner's idempotency fence.)
+
+   Canonical visual reference: explorations/2026-07-20-liquid-glass/final-h-lens.html
+   Live component gallery:     kit/gallery.html
+   Rules of the system:        ../CLAUDE.md
+   ========================================================================== */
+
+:root {
+  /* ——— Ink & cream ——— */
+  --sai-ink:       #171310;   /* primary text on light */
+  --sai-ink-90:    #241E19;   /* headings emphasis */
+  --sai-ink-2:     #6E6258;   /* secondary text — the LIGHTEST allowed for reading */
+  --sai-cream:     #F5F1E8;   /* primary text on night surfaces */
+  --sai-cream-2:   #B3AB9E;   /* secondary text on night — the floor on dark */
+
+  /* ——— Accent ——— */
+  --sai-accent:        #DC6843;
+  --sai-accent-deep:   #C55532;                 /* hover / pressed on light */
+  --sai-accent-night:  #FF8E76;                 /* the accent on night surfaces */
+  --sai-accent-soft:   rgba(220,104,67,0.08);   /* tinted fills, verdict strips */
+  --sai-accent-line:   rgba(220,104,67,0.18);   /* tinted borders */
+  --sai-salmon:        #F47B6B;                 /* SCENE color (tint pools). Not for components. */
+
+  /* ——— The scene ——— */
+  --sai-sky: linear-gradient(180deg, #F3EEE8 0%, #F7E7DA 42%, #F7DCC9 74%, #F2CFB8 100%);
+  --sai-sky-fallback: #F5E9DE;
+  --sai-night: radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%);
+  --sai-night-fallback: #100C0E;
+
+  --sai-tint-1: #DC6843;   /* opacity ~.10 */
+  --sai-tint-2: #F47B6B;   /* opacity ~.12 */
+  --sai-tint-3: #A8988A;   /* opacity ~.12 */
+
+  /* ——— Glass ——— */
+  --sai-glass:        rgba(255,255,255,0.55);  /* structural panes */
+  --sai-glass-strong: rgba(255,255,255,0.78);  /* floating layers that must pop */
+  --sai-glass-tile:   rgba(255,255,255,0.48);  /* nested tiles inside a pane */
+  --sai-glass-edge:   rgba(255,255,255,0.85);  /* 1px borders */
+  --sai-glass-blur:   30px;
+  --sai-glass-saturate: 1.5;
+  --sai-pane-shadow: 0 14px 44px rgba(112,62,40,0.13),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-pane-shadow-hover: 0 22px 56px rgba(112,62,40,0.19),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-float-shadow: 0 24px 54px rgba(112,62,40,0.22), inset 0 1px 0 #fff;
+
+  /* ——— Night glass ——— */
+  --sai-nglass:       rgba(255,255,255,0.065);
+  --sai-nglass-tile:  rgba(255,255,255,0.035);
+  --sai-nglass-edge:  rgba(255,255,255,0.12);
+  --sai-nrule:        rgba(255,255,255,0.11);
+  --sai-nrule-soft:   rgba(255,255,255,0.06);
+  --sai-npane-shadow: 0 24px 60px rgba(40,20,10,0.35), inset 0 1px 0 rgba(255,255,255,0.10);
+  --sai-daysheet:     rgba(250,247,241,0.96);  /* the "day window" inside dark */
+
+  /* ——— Status (ledger chips ONLY — never decorative) ——— */
+  --sai-status-good:        #2E7A56;  --sai-status-good-tint:  rgba(46,122,86,0.12);
+  --sai-status-warn:        #946A12;  --sai-status-warn-tint:  rgba(176,130,40,0.16);
+  --sai-status-bad:         #B23A2F;  --sai-status-bad-tint:   rgba(178,58,47,0.10);
+  --sai-status-good-night:  #7BD8A8;  --sai-status-good-night-tint: rgba(75,214,151,0.13);
+  --sai-status-warn-night:  #E4BC66;  --sai-status-warn-night-tint: rgba(200,155,60,0.15);
+  --sai-status-bad-night:   #F09A8E;  --sai-status-bad-night-tint:  rgba(210,95,80,0.16);
+
+  /* ——— Rules ——— */
+  --sai-rule:        rgba(23,19,16,0.10);
+  --sai-rule-soft:   rgba(23,19,16,0.06);
+  --sai-rule-strong: rgba(23,19,16,0.16);
+  --sai-hollow:      rgba(23,19,16,0.035);   /* the recessed "before" wash */
+
+  /* ——— Type ——— */
+  --sai-font-sans:  'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+  --sai-font-label: 'Schibsted Grotesk', 'Inter Tight', sans-serif;
+
+  --sai-fs-display: clamp(38px, 5vw, 58px);
+  --sai-fs-h1:      clamp(34px, 4.6vw, 48px);
+  --sai-fs-h2:      24px;
+  --sai-fs-h3:      18.5px;
+  --sai-fs-stat:    44px;
+  --sai-fs-body:    17px;
+  --sai-fs-sub:     15.5px;   /* secondary lines under headings */
+  --sai-fs-label:   14.5px;   /* Schibsted caps labels (13.5px absolute label floor) */
+  --sai-fs-small:   15px;
+  --sai-fs-micro:   13px;     /* ABSOLUTE floor for any text */
+
+  --sai-lh-display: 1.02;
+  --sai-lh-heading: 1.05;
+  --sai-lh-body:    1.55;
+
+  --sai-ls-display: -0.032em;
+  --sai-ls-heading: -0.02em;
+  --sai-ls-label:    0.05em;   /* Schibsted caps tracking */
+
+  --sai-fw-regular: 400;
+  --sai-fw-medium:  500;   /* display + headings — never 700 for Inter Tight display */
+  --sai-fw-bold:    600;   /* in-line emphasis, Schibsted labels */
+  --sai-fw-label:   600;   /* Schibsted caps */
+  --sai-fw-numeral: 700;   /* Schibsted numerals (timestamps, rungs, step numbers) */
+
+  /* ——— Radii ——— */
+  --sai-radius-chip:   8px;
+  --sai-radius-flag:   10px;
+  --sai-radius-tile:   18px;
+  --sai-radius-card:   22px;
+  --sai-radius-panel:  26px;
+  --sai-radius-window: 30px;
+  --sai-radius-pill:   999px;
+
+  /* ——— Space ——— */
+  --sai-space-1: 4px;  --sai-space-2: 8px;   --sai-space-3: 12px; --sai-space-4: 16px;
+  --sai-space-5: 24px; --sai-space-6: 32px;  --sai-space-7: 48px; --sai-space-8: 64px;
+
+  /* ——— Motion ——— */
+  --sai-ease:      cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sai-dur-fast:  150ms;
+  --sai-dur-base:  220ms;
+  --sai-dur-slow:  350ms;
+  --sai-drift:     16s;    /* lens drift period; vary per lens (11-24s) */
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--sai-sky-fallback);
+  color: var(--sai-ink);
+  font-family: var(--sai-font-sans);
+  font-size: var(--sai-fs-body);
+  line-height: var(--sai-lh-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================================
+   THE SCENE — fixed sky, tint pools, drifting lenses.
+   Markup is emitted by the SAI:SCENE marker.
+   For scroll-through day-to-night pages swap position to absolute.
+   ========================================================================== */
+
+.sai-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: var(--sai-sky); }
+.sai-tint { position: absolute; border-radius: 50%; filter: blur(100px); }
+.sai-tint.t1 { width: 600px; height: 600px; background: var(--sai-tint-1); opacity: .10; top: -200px; right: -160px; }
+.sai-tint.t2 { width: 520px; height: 520px; background: var(--sai-tint-2); opacity: .12; top: 36%; left: -200px; }
+.sai-tint.t3 { width: 620px; height: 620px; background: var(--sai-tint-3); opacity: .12; bottom: -260px; right: 22%; }
+
+.sai-lens {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.30) 14%, rgba(255,255,255,0.05) 38%, transparent 60%),
+    radial-gradient(circle at 50% 88%, rgba(220,104,67,0.28) 0%, rgba(220,104,67,0.08) 34%, transparent 55%),
+    radial-gradient(circle at 50% 115%, rgba(243,206,184,0.55) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(255,255,255,0.16) 88%, rgba(255,255,255,0.42) 99%);
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow:
+    inset -10px -14px 30px rgba(220,104,67,0.13),
+    inset 8px 12px 26px rgba(255,255,255,0.38),
+    0 26px 52px rgba(112,62,40,0.14);
+  animation: sai-drift var(--sai-drift) ease-in-out infinite alternate;
+}
+.sai-lens::before { content:''; position:absolute; top: 11%; left: 17%; width: 36%; height: 18%;
+  border-radius: 50%; background: rgba(255,255,255,0.9); filter: blur(5px); transform: rotate(-20deg); }
+.sai-lens::after { content:''; position:absolute; bottom: 7%; left: 30%; width: 40%; height: 12%;
+  border-radius: 50%; background: rgba(220,104,67,0.30); filter: blur(9px); }
+.sai-lens.far  { filter: blur(5px);   opacity: .6; }
+.sai-lens.mid  { filter: blur(1.5px); opacity: .85; }
+.sai-lens.near { opacity: 1; }
+@keyframes sai-drift { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+
+/* Placement presets — the balanced 5-lens arrangement. */
+.sai-lens.l1 { width: 150px; height: 150px; top: 9%;  right: 6%;  --sai-drift: 17s; }
+.sai-lens.l2 { width: 64px;  height: 64px;  top: 24%; left: 4%;   --sai-drift: 13s; }
+.sai-lens.l3 { width: 96px;  height: 96px;  top: 47%; right: 12%; --sai-drift: 21s; }
+.sai-lens.l4 { width: 42px;  height: 42px;  top: 66%; left: 9%;   --sai-drift: 11s; }
+.sai-lens.l5 { width: 210px; height: 210px; bottom: -60px; right: 30%; --sai-drift: 24s; }
+
+/* ==========================================================================
+   LAYOUT & SURFACES
+   ========================================================================== */
+
+.sai-page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto;
+  padding: 116px clamp(20px, 4vw, 48px) 88px; }
+.sai-page.no-dock { padding-top: 64px; }
+
+.sai-pane {
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: var(--sai-pane-shadow);
+}
+.sai-streak { position: relative; overflow: hidden; }
+.sai-streak::before { content:''; position:absolute; top:-40%; left:-20%; width: 55%; height: 190%; pointer-events:none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.34) 50%, transparent 70%);
+  transform: rotate(2deg); }
+
+/* A nested tile inside a pane. Never a pane inside a pane. */
+.sai-tile { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85); }
+
+/* The standard section block. */
+.sai-widget { padding: 36px; border-radius: var(--sai-radius-window); margin-bottom: 34px; position: relative; }
+.sai-widget > h3, .sai-w-title { font-size: var(--sai-fs-h2); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-heading); line-height: 1.15; margin-bottom: 4px; }
+.sai-w-sub { color: var(--sai-ink-2); font-size: var(--sai-fs-sub); margin-bottom: 26px; }
+.sai-w-note { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--sai-rule-soft);
+  color: var(--sai-ink-2); font-size: 14.5px; }
+.sai-w-note strong { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* Display type. */
+.sai-display { font-size: var(--sai-fs-display); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-display); line-height: var(--sai-lh-display); max-width: 21ch; }
+.sai-display em, .sai-h1 em { font-style: normal; color: var(--sai-accent); }
+.sai-lede { margin-top: 18px; font-size: 19px; color: var(--sai-ink-2); max-width: 56ch; }
+.sai-lede b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* ==========================================================================
+   MARKERS — porthole, stamp, tick flag, bubble bullets, ledger chip.
+   NO dot-pills. Ever.
+   ========================================================================== */
+
+.sai-port { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+.sai-port .disc { width: 26px; height: 26px; border-radius: 50%; flex: none;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 30%, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(220,104,67,0.5) 0%, transparent 60%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 4px rgba(220,104,67,0.25), 0 4px 10px rgba(112,62,40,0.18); }
+.sai-port .ptext { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); }
+.sai-port.on-night .disc {
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.06) 30%, transparent 55%),
+    radial-gradient(circle at 50% 82%, rgba(255,142,118,0.55) 0%, transparent 62%),
+    linear-gradient(180deg, #322734 0%, #100C0E 100%);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35), 0 0 14px rgba(255,142,118,0.25); }
+.sai-port.on-night .ptext { color: var(--sai-accent-night); }
+
+.sai-stamp { position: relative; display: inline-block; font-family: var(--sai-font-label); font-size: 13.5px;
+  font-weight: var(--sai-fw-label); letter-spacing: .07em; text-transform: uppercase; padding: 8px 14px; color: var(--sai-accent); }
+.sai-stamp::before { content:''; position:absolute; top:0; left:0; width: 12px; height: 12px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; }
+.sai-stamp::after  { content:''; position:absolute; bottom:0; right:0; width: 12px; height: 12px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
+.sai-stamp.on-night { color: var(--sai-accent-night); }
+.sai-stamp.corner { position: absolute; top: 26px; right: 28px; }
+
+.sai-flag { display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label); letter-spacing: .01em;
+  color: var(--sai-ink-90); padding: 6px 14px 6px 8px; border-radius: var(--sai-radius-flag);
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112,62,40,0.10); white-space: nowrap; }
+.sai-flag .tick { width: 4px; align-self: stretch; border-radius: 2px; background: var(--sai-accent); }
+
+ul.sai-bullets { list-style: none; }
+ul.sai-bullets li { position: relative; padding: 7px 0 7px 30px; }
+ul.sai-bullets li b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+ul.sai-bullets li::before { content:''; position:absolute; left: 0; top: 10px; width: 15px; height: 15px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+
+.sai-status { display:inline-flex; align-items:stretch; border:1px solid var(--sai-rule);
+  border-radius: var(--sai-radius-chip); overflow:hidden; background: rgba(255,255,255,0.8); }
+.sai-status .kw { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 10px 15px; display:flex; align-items:center; }
+.sai-status .detail { font: 500 15px var(--sai-font-sans); color: var(--sai-ink-90); padding: 10px 16px;
+  border-left: 1px solid var(--sai-rule); display:flex; align-items:center; }
+.sai-status.good .kw { color: var(--sai-status-good); background: var(--sai-status-good-tint); }
+.sai-status.warn .kw { color: var(--sai-status-warn); background: var(--sai-status-warn-tint); }
+.sai-status.bad  .kw { color: var(--sai-status-bad);  background: var(--sai-status-bad-tint); }
+.sai-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ==========================================================================
+   CHROME — dock, buttons, footer
+   ========================================================================== */
+
+.sai-dock { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; align-items: center; gap: 22px; padding: 12px 22px; border-radius: var(--sai-radius-pill);
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 12px 36px rgba(112,62,40,0.16), inset 0 1px 0 #fff; white-space: nowrap; }
+.sai-dock .mark { width: 27px; height: 27px; display: block; }
+.sai-dock .word { font-size: 17.5px; font-weight: var(--sai-fw-medium); letter-spacing: -0.01em; }
+.sai-dock nav { display: flex; gap: 6px; }
+.sai-dock nav a { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--sai-ink-2);
+  padding: 8px 14px; border-radius: var(--sai-radius-pill); transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-dock nav a:hover { color: var(--sai-ink); background: rgba(255,255,255,0.75); }
+.sai-dock nav a.on { color: #fff; background: var(--sai-ink); }
+@media (max-width: 720px) { .sai-dock nav { display: none; } }
+
+.sai-btn { display:inline-block; text-decoration:none; cursor: pointer; border: none;
+  font: 500 14.5px var(--sai-font-sans); border-radius: var(--sai-radius-pill); padding: 14px 26px;
+  transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-btn.primary { background: var(--sai-ink); color: #fff; box-shadow: 0 8px 20px rgba(23,19,16,0.2); }
+.sai-btn.primary:hover { background: var(--sai-accent); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(220,104,67,0.35); }
+.sai-btn.ghost { color: var(--sai-ink); background: rgba(255,255,255,0.62); border: 1px solid var(--sai-glass-edge);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
+.sai-btn.ghost:hover { background: rgba(255,255,255,0.8); transform: translateY(-2px); }
+
+.sai-footer { margin-top: 60px; display:flex; justify-content:space-between; align-items:center; gap: 20px; flex-wrap: wrap; }
+.sai-footer .lockup { display:flex; align-items:center; gap: 12px; }
+.sai-footer .lockup .mark { width: 25px; height: 25px; }
+.sai-footer .lockup .word { font-size: 16.5px; font-weight: var(--sai-fw-medium); }
+.sai-footer .meta { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); }
+
+/* ==========================================================================
+   MODES — night window in a light page, day window in a dark one.
+   `night` is ALWAYS section-scoped. A bare .night once inherited a whole
+   section's padding onto a marker span and drew phantom boxes.
+   ========================================================================== */
+
+section.sai-night {
+  border-radius: var(--sai-radius-window); padding: 36px; margin-bottom: 34px; color: var(--sai-cream);
+  background: var(--sai-night);
+  border: 1px solid var(--sai-nglass-edge);
+  box-shadow: var(--sai-npane-shadow);
+  position: relative; overflow: hidden;
+}
+section.sai-night .sai-ember { position:absolute; width: 380px; height: 380px; border-radius: 50%; filter: blur(90px);
+  background: var(--sai-accent); opacity: .2; top: -120px; right: -80px; pointer-events: none; }
+section.sai-night .sai-ember.left { top: auto; right: auto; bottom: -140px; left: -100px; opacity: .15; }
+section.sai-night > h3, section.sai-night .sai-w-title { color: var(--sai-cream); }
+section.sai-night .sai-w-sub { color: var(--sai-cream-2); }
+section.sai-night .sai-w-note { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-w-note strong { color: var(--sai-cream); }
+section.sai-night .sai-tile { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+/* Bullet lead-ins carry an explicit ink color on light, so they render near-black
+   on night without this. Every other component had its night override; this one
+   was the gap. */
+section.sai-night ul.sai-bullets li b { color: var(--sai-cream); }
+
+.sai-day-window { position: relative; border-radius: 20px; padding: 28px; background: var(--sai-daysheet); color: var(--sai-ink);
+  border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 18px 44px rgba(0,0,0,0.4), inset 0 1px 0 #fff; }
+.sai-day-window .cap { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 12px; }
+
+/* The floating stat layer. Parent pane needs >= 72px bottom padding. */
+.sai-float-stat { position: absolute; right: 28px; bottom: -34px; z-index: 3;
+  display: flex; gap: 26px; padding: 22px 30px; border-radius: var(--sai-radius-card);
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95); box-shadow: var(--sai-float-shadow); }
+.sai-float-stat .n { font-size: 34px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.sai-float-stat .n em { font-style: normal; color: var(--sai-accent); }
+.sai-float-stat .l { margin-top: 6px; font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+@media (max-width: 860px) { .sai-float-stat { position: static; margin-top: 18px; flex-wrap: wrap; gap: 18px; } }
+
+/* ==========================================================================
+   ██ WIDGET 1 — BEFORE / AFTER SPLIT  (.sai-split)
+   The argument made before a word is read. The "before" column is deliberately
+   NOT glass: flat, recessed, dashed, dead. The "after" column is lifted glass
+   with the win outline. The asymmetry IS the content.
+   ========================================================================== */
+
+.sai-split { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; position: relative; align-items: start; }
+
+.sai-split .col { border-radius: 20px; padding: 26px; }
+
+/* BEFORE — a hollow in the page. No blur, no lift, no life. */
+.sai-split .col.before {
+  background: var(--sai-hollow);
+  border: 1px dashed var(--sai-rule-strong);
+  box-shadow: inset 0 2px 6px rgba(23,19,16,0.04);
+  color: var(--sai-ink-2);
+}
+/* AFTER — lifted glass, wearing the win outline. */
+.sai-split .col.after {
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: var(--sai-float-shadow);
+  outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+}
+
+.sai-split .col-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.sai-split .col-head h4 { font-size: var(--sai-fs-h3); font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-split .col.before .col-head h4 { color: var(--sai-ink-2); }
+.sai-split .tag { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 5px 12px; border-radius: var(--sai-radius-pill); }
+.sai-split .tag.old { color: var(--sai-ink-2); border: 1px solid var(--sai-rule-strong); }
+.sai-split .tag.new { color: #fff; background: var(--sai-accent); }
+
+.sai-split .row { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0;
+  border-bottom: 1px solid var(--sai-rule-soft); font-size: var(--sai-fs-sub); }
+.sai-split .row:last-child { border-bottom: none; padding-bottom: 0; }
+.sai-split .row .k { color: var(--sai-ink-2); flex: none; }
+.sai-split .col.before .row .k { color: rgba(110,98,88,0.75); }
+.sai-split .row .v { text-align: right; font-weight: var(--sai-fw-bold); }
+.sai-split .col.before .row .v { color: var(--sai-ink-2); font-weight: var(--sai-fw-regular); }
+.sai-split .col.after  .row .v { color: var(--sai-ink-90); }
+
+/* The transition lens: a real lens sitting in the gutter between the columns. */
+.sai-split .sai-turn {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 34%, transparent 58%),
+    radial-gradient(circle at 50% 84%, rgba(220,104,67,0.45) 0%, transparent 62%),
+    linear-gradient(180deg, #F9EFE6 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.9), inset 0 -3px 6px rgba(220,104,67,0.25), 0 8px 20px rgba(112,62,40,0.22); }
+.sai-split .sai-turn svg { width: 17px; height: 17px; display: block; }
+
+@media (max-width: 780px) {
+  .sai-split { grid-template-columns: 1fr; gap: 44px; }
+  .sai-split .sai-turn { top: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+}
+
+/* Night variant. */
+section.sai-night .sai-split .col.before { background: rgba(255,255,255,0.025); border-color: var(--sai-nrule);
+  box-shadow: none; color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after { background: rgba(255,255,255,0.10);
+  border-color: var(--sai-nglass-edge); outline-color: var(--sai-accent-night);
+  box-shadow: 0 20px 44px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.12); }
+section.sai-night .sai-split .col-head h4 { color: var(--sai-cream); }
+section.sai-night .sai-split .col.before .col-head h4 { color: var(--sai-cream-2); }
+section.sai-night .sai-split .tag.old { color: var(--sai-cream-2); border-color: var(--sai-nrule); }
+section.sai-night .sai-split .tag.new { color: #1A120E; background: var(--sai-accent-night); }
+section.sai-night .sai-split .row { border-bottom-color: var(--sai-nrule-soft); }
+section.sai-night .sai-split .row .k,
+section.sai-night .sai-split .col.before .row .k,
+section.sai-night .sai-split .col.before .row .v { color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after .row .v { color: var(--sai-cream); }
+
+/* ==========================================================================
+   ██ WIDGET 2 — LEDGER MATH  (.sai-ledger)
+   The quantified argument, laid out like an accountant's page: dotted leaders,
+   a single rule above the total, a double rule under it. The number lands in
+   terracotta because the number is the pitch.
+   ========================================================================== */
+
+.sai-ledger { font-variant-numeric: tabular-nums; }
+
+.sai-ledger .line { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; }
+.sai-ledger .line .k { color: var(--sai-ink-90); font-size: var(--sai-fs-sub); flex: none; max-width: 62%; }
+.sai-ledger .line .lead { flex: 1 1 auto; border-bottom: 1.5px dotted var(--sai-rule-strong); transform: translateY(-4px); min-width: 18px; }
+.sai-ledger .line .v { flex: none; font-size: 17px; font-weight: var(--sai-fw-bold); color: var(--sai-ink); }
+.sai-ledger .line .v .unit { font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); font-size: 14.5px; margin-left: 3px; }
+
+/* The operator gutter: × + − sitting in the margin like working shown. */
+.sai-ledger .line .op { flex: none; width: 18px; text-align: center; font-family: var(--sai-font-label);
+  font-size: 14px; font-weight: var(--sai-fw-numeral); color: var(--sai-accent); }
+.sai-ledger .line .op.blank { color: transparent; }
+
+/* An assumption note hanging under a line. */
+.sai-ledger .basis { margin: -4px 0 8px 28px; font-size: var(--sai-fs-micro); color: var(--sai-ink-2); max-width: 60ch; }
+
+/* Subtotal: single rule. */
+.sai-ledger .line.subtotal { border-top: 1px solid var(--sai-rule); margin-top: 6px; padding-top: 15px; }
+
+/* The total: accounting double-rule, the number in accent at stat size. */
+.sai-ledger .total { position: relative; margin-top: 14px; padding-top: 20px; border-top: 1.5px solid var(--sai-ink);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.sai-ledger .total::before { content:''; position: absolute; top: 3px; left: 0; right: 0; height: 1px; background: var(--sai-ink); }
+.sai-ledger .total .k { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); padding-bottom: 8px; }
+.sai-ledger .total .v { font-size: var(--sai-fs-stat); font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-accent); }
+.sai-ledger .total .v .unit { font-size: 19px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 6px; letter-spacing: 0; }
+
+/* Optional second reading under the total ("that's 1.5 weeks of one FTE"). */
+.sai-ledger .restate { margin-top: 20px; font-size: var(--sai-fs-sub); color: var(--sai-ink-2); }
+.sai-ledger .restate b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+@media (max-width: 620px) {
+  .sai-ledger .line { flex-wrap: wrap; }
+  .sai-ledger .line .k { max-width: none; }
+}
+
+section.sai-night .sai-ledger .line .k { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .v { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .lead { border-bottom-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .line .op { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .basis, section.sai-night .sai-ledger .restate { color: var(--sai-cream-2); }
+section.sai-night .sai-ledger .line.subtotal { border-top-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .total { border-top-color: var(--sai-cream); }
+section.sai-night .sai-ledger .total::before { background: var(--sai-cream); }
+section.sai-night .sai-ledger .total .v { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .total .k { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 3 — DECISION PATH  (.sai-path)
+   A rail with lens beads. Linear for "how it runs", forked for "what to do
+   when". This is the front-desk-protocol primitive: condition, route, outcome.
+   ========================================================================== */
+
+.sai-path { position: relative; padding-left: 34px; }
+/* The rail, fading at both ends so it never hard-stops. */
+.sai-path::before { content:''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, transparent 0%, var(--sai-accent-line) 5%, var(--sai-accent-line) 95%, transparent 100%); }
+
+.sai-path .step { position: relative; padding-bottom: 22px; }
+.sai-path .step:last-child { padding-bottom: 0; }
+
+/* The bead: a miniature lens sitting on the rail. */
+.sai-path .step::before { content:''; position: absolute; left: -34px; top: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* A decision point gets a bigger, brighter bead. */
+.sai-path .step.fork::before { width: 22px; height: 22px; left: -36px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+
+.sai-path .step .num { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .06em; color: var(--sai-accent); display: block; margin-bottom: 3px; }
+.sai-path .step h4 { font-size: 17.5px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-path .step p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 62ch; }
+
+/* The fork: sibling outcomes side by side. */
+.sai-path .branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(212px, 1fr)); gap: 12px; margin-top: 16px; }
+.sai-path .branch { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 16px 18px 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+/* The condition chip: leads with an accent bar, never a dot. */
+.sai-path .branch .cond { display: inline-flex; align-items: stretch; gap: 8px; margin-bottom: 9px;
+  font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-accent); }
+.sai-path .branch .cond::before { content:''; width: 3px; border-radius: 2px; background: var(--sai-accent); flex: none; }
+.sai-path .branch .out { font-size: var(--sai-fs-small); color: var(--sai-ink-90); }
+.sai-path .branch .out b { font-weight: var(--sai-fw-bold); }
+.sai-path .branch .sai-status { margin-top: 12px; }
+/* The recommended branch. */
+.sai-path .branch.win { background: var(--sai-glass-strong); outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+  box-shadow: 0 10px 26px rgba(112,62,40,0.14), inset 0 1px 0 #fff; }
+
+/* A terminal step (the path ends here). */
+.sai-path .step.end::before { background: var(--sai-accent); border-color: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 5px rgba(220,104,67,0.12), 0 3px 8px rgba(112,62,40,0.22); }
+
+section.sai-night .sai-path::before { background: linear-gradient(180deg, transparent 0%, rgba(255,142,118,0.28) 5%, rgba(255,142,118,0.28) 95%, transparent 100%); }
+section.sai-night .sai-path .step h4 { color: var(--sai-cream); }
+section.sai-night .sai-path .step p  { color: var(--sai-cream-2); }
+section.sai-night .sai-path .step .num { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-path .branch .cond { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .cond::before { background: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .out { color: var(--sai-cream); }
+section.sai-night .sai-path .branch.win { background: rgba(255,255,255,0.10); outline-color: var(--sai-accent-night); }
+
+/* ==========================================================================
+   ██ WIDGET 4 — VITALS READOUT  (.sai-vitals)
+   Metrics against a benchmark. The bar shows where you are, the tick shows
+   where you should be, and the gap between them is the sale. Bars are ALWAYS
+   accent — good/warn/bad belong to the verdict chip only.
+   ========================================================================== */
+
+.sai-vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 14px; }
+
+.sai-vital { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 22px 22px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+
+/* min-height reserves two label lines so a wrapping label never knocks its
+   card's value and gauge out of line with its neighbours. */
+.sai-vital .label { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2);
+  line-height: 1.35; min-height: 2.7em; }
+.sai-vital .value { margin-top: 9px; font-size: 38px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.sai-vital .value .unit { font-size: 17px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 3px; letter-spacing: 0; }
+
+/* The gauge. Set --at (current) and --target as percentages. */
+.sai-vital .gauge { position: relative; margin-top: 20px; height: 7px; border-radius: var(--sai-radius-pill);
+  background: rgba(23,19,16,0.07); box-shadow: inset 0 1px 2px rgba(23,19,16,0.06); }
+.sai-vital .gauge .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--at, 50%);
+  border-radius: var(--sai-radius-pill); background: var(--sai-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 1px 4px rgba(220,104,67,0.35); }
+/* The benchmark tick: a hairline gate the fill either reaches or doesn't. */
+.sai-vital .gauge .mark-t { position: absolute; left: var(--target, 75%); top: -6px; bottom: -6px; width: 2px;
+  background: var(--sai-ink); border-radius: 1px; }
+.sai-vital .gauge .mark-t::after { content: attr(data-label); position: absolute; left: 50%; top: -20px;
+  transform: translateX(-50%); white-space: nowrap;
+  font-family: var(--sai-font-label); font-size: var(--sai-fs-micro); font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+.sai-vital .gauge.has-label { margin-top: 36px; }
+
+.sai-vital .verdict { margin-top: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sai-vital .delta { font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-vital .delta b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+.sai-vital .sai-status .kw { padding: 7px 11px; font-size: 13.5px; }
+.sai-vital .sai-status .detail { padding: 7px 12px; font-size: 14px; }
+
+section.sai-night .sai-vital { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-vital .label, section.sai-night .sai-vital .delta { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .value { color: var(--sai-cream); }
+section.sai-night .sai-vital .value .unit { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .gauge { background: rgba(255,255,255,0.09); box-shadow: none; }
+section.sai-night .sai-vital .gauge .fill { background: var(--sai-accent-night); box-shadow: 0 0 10px rgba(255,142,118,0.4); }
+section.sai-night .sai-vital .gauge .mark-t { background: var(--sai-cream); }
+section.sai-night .sai-vital .gauge .mark-t::after { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .delta b { color: var(--sai-cream); }
+section.sai-night .sai-status { background: rgba(255,255,255,0.06); border-color: var(--sai-nrule); }
+section.sai-night .sai-status .detail { color: var(--sai-cream); border-left-color: var(--sai-nrule); }
+section.sai-night .sai-status.good .kw { color: var(--sai-status-good-night); background: var(--sai-status-good-night-tint); }
+section.sai-night .sai-status.warn .kw { color: var(--sai-status-warn-night); background: var(--sai-status-warn-night-tint); }
+section.sai-night .sai-status.bad  .kw { color: var(--sai-status-bad-night);  background: var(--sai-status-bad-night-tint); }
+
+/* ==========================================================================
+   ██ WIDGET 5 — SOURCE TRACK  (.sai-track)
+   A timestamped spine through a video, a call, or a project. Schibsted
+   numerals in the gutter — exactly what the numeral weight exists for.
+   ========================================================================== */
+
+.sai-track { display: grid; grid-template-columns: 74px 1fr; }
+
+.sai-track .when { grid-column: 1; text-align: right; padding: 3px 20px 0 0;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .01em; color: var(--sai-accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.sai-track .entry { grid-column: 2; position: relative; padding: 0 0 24px 26px;
+  border-left: 2px solid var(--sai-accent-line); }
+.sai-track .entry:last-child { border-left-color: transparent; padding-bottom: 0; }
+/* Bead on the spine. */
+.sai-track .entry::before { content:''; position: absolute; left: -8px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* The moment that matters: bigger bead, headline in accent. */
+.sai-track .entry.key::before { width: 19px; height: 19px; left: -10.5px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+.sai-track .entry.key h4 { color: var(--sai-accent); }
+
+.sai-track .entry h4 { font-size: 17px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-track .entry p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 64ch; }
+.sai-track .entry .sai-status { margin-top: 12px; }
+
+@media (max-width: 560px) {
+  .sai-track { grid-template-columns: 58px 1fr; }
+  .sai-track .when { padding-right: 14px; font-size: 13.5px; }
+  .sai-track .entry { padding-left: 20px; }
+}
+
+section.sai-night .sai-track .when { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry { border-left-color: rgba(255,142,118,0.26); }
+section.sai-night .sai-track .entry:last-child { border-left-color: transparent; }
+section.sai-night .sai-track .entry h4 { color: var(--sai-cream); }
+section.sai-night .sai-track .entry.key h4 { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry p { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 6 — CLAIM CARD  (.sai-claim)
+   The idea-extraction unit. Somebody's claim, attributed, then the verdict
+   strip: what it actually means for us. The strip is the whole point — a
+   claim without a "so what" is a screenshot.
+   ========================================================================== */
+
+.sai-claim { border-radius: var(--sai-radius-card); overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge); box-shadow: var(--sai-pane-shadow); }
+
+/* flex:1 pushes every verdict strip to the card's bottom edge, so a row of
+   claim cards lines its strips up regardless of quote length. */
+.sai-claim .body { padding: 26px 28px 24px; flex: 1; }
+.sai-claim .quote { font-size: 21px; font-weight: var(--sai-fw-medium); letter-spacing: -0.018em;
+  line-height: 1.34; color: var(--sai-ink-90); max-width: 46ch; }
+.sai-claim .quote em { font-style: normal; color: var(--sai-accent); }
+
+.sai-claim .attrib { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--sai-rule-soft);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-claim .attrib .who { font-weight: var(--sai-fw-bold); color: var(--sai-ink-90); }
+.sai-claim .attrib .at { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .02em; color: var(--sai-accent); font-variant-numeric: tabular-nums; }
+
+/* The verdict strip — the sanctioned use of accent-soft. */
+.sai-claim .verdict { padding: 18px 28px 20px; background: var(--sai-accent-soft);
+  border-top: 1px solid var(--sai-accent-line); }
+.sai-claim .verdict .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 7px; }
+.sai-claim .verdict p { font-size: var(--sai-fs-small); color: var(--sai-ink-90); max-width: 62ch; }
+.sai-claim .verdict p b { font-weight: var(--sai-fw-bold); }
+
+/* Stack claim cards in a grid when there are several. Stretch, not start —
+   equal heights are what let the verdict strips align. */
+.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: stretch; }
+
+section.sai-night .sai-claim { background: var(--sai-nglass); border-color: var(--sai-nglass-edge);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.09); }
+section.sai-night .sai-claim .quote { color: var(--sai-cream); }
+section.sai-night .sai-claim .quote em { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .attrib { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-claim .attrib .who { color: var(--sai-cream); }
+section.sai-night .sai-claim .attrib .at { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict { background: rgba(255,142,118,0.09); border-top-color: rgba(255,142,118,0.2); }
+section.sai-night .sai-claim .verdict .cap { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict p { color: var(--sai-cream); }
+
+/* ==========================================================================
+   CALLOUT — the v2 survivor: registration crop marks on a glass pane.
+   Never a left-border bar.
+   ========================================================================== */
+
+.sai-callout { position: relative; padding: 26px 30px; border-radius: var(--sai-radius-tile);
+  background: var(--sai-glass-strong); border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(112,62,40,0.10); }
+.sai-callout::before, .sai-callout::after { content:''; position: absolute; width: 16px; height: 16px; }
+.sai-callout::before { top: 10px; left: 10px; border-top: 2px solid var(--sai-accent); border-left: 2px solid var(--sai-accent); }
+.sai-callout::after { bottom: 10px; right: 10px; border-bottom: 2px solid var(--sai-accent); border-right: 2px solid var(--sai-accent); }
+.sai-callout .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 8px; }
+.sai-callout p { font-size: 17px; color: var(--sai-ink-90); max-width: 62ch; }
+
+/* ==========================================================================
+   TABLE — hairline rows, no zebra striping.
+   ========================================================================== */
+
+.sai-table { width: 100%; border-collapse: collapse; font-size: var(--sai-fs-sub); }
+.sai-table th { text-align: left; font-size: 13.5px; font-weight: var(--sai-fw-bold); text-transform: uppercase;
+  letter-spacing: .05em; color: var(--sai-ink-2); padding: 0 16px 12px 0; border-bottom: 1px solid var(--sai-rule-strong); }
+.sai-table td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--sai-rule-soft); color: var(--sai-ink-90); vertical-align: top; }
+.sai-table tr:last-child td { border-bottom: none; }
+.sai-table td.num { font-family: var(--sai-font-label); font-weight: var(--sai-fw-numeral); color: var(--sai-accent);
+  font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+section.sai-night .sai-table th { color: var(--sai-cream-2); border-bottom-color: var(--sai-nrule); }
+section.sai-night .sai-table td { color: var(--sai-cream); border-bottom-color: var(--sai-nrule-soft); }
+section.sai-night .sai-table td.num { color: var(--sai-accent-night); }
+section.sai-night .sai-table td i { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ENTRANCE — one staggered rise, then only the lenses move.
+   ========================================================================== */
+
+@keyframes sai-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.sai-rise { animation: sai-rise 700ms var(--sai-ease) both; }
+.sai-rise:nth-child(1) { animation-delay: 0ms; }
+.sai-rise:nth-child(2) { animation-delay: 60ms; }
+.sai-rise:nth-child(3) { animation-delay: 120ms; }
+.sai-rise:nth-child(4) { animation-delay: 180ms; }
+.sai-rise:nth-child(5) { animation-delay: 240ms; }
+.sai-rise:nth-child(6) { animation-delay: 300ms; }
+.sai-rise:nth-child(7) { animation-delay: 360ms; }
+.sai-rise:nth-child(8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai-rise { animation: none; }
+  .sai-lens { animation: none; }
+}
+
+/* ==========================================================================
+   ██ FIGURES — hand-drawn concept diagrams  (.sai-fig)
+   Adopted 2026-08-25 (Alec: "more of that, on the default, on the regular").
+   A figure is an inline SVG that carries an argument: a position, a gap, a
+   loop, a two-way failure, a target. Drawn with the system's own marks, never
+   a chart library, never an icon set, never sample data. Archetypes + rules:
+   kit/figures.md
+   ========================================================================== */
+
+.sai-fig { margin: 26px 0 6px; overflow-x: auto; }
+.sai-fig svg { width: 100%; min-width: 640px; height: auto; display: block; overflow: visible; }
+.sai-fig .cap { font-family: var(--sai-font-label); font-weight: var(--sai-fw-label); font-size: 13.5px;
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); margin-top: 12px; }
+
+/* text */
+.sai-fig text { font-family: var(--sai-font-sans); fill: var(--sai-ink); font-size: 15px; }
+.sai-fig text.lbl { font-family: var(--sai-font-label); font-weight: var(--sai-fw-bold); font-size: 13.5px;
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; fill: var(--sai-ink-2); }
+.sai-fig text.lbl.acc { fill: var(--sai-accent-deep); }
+.sai-fig text.big { font-family: var(--sai-font-label); font-weight: var(--sai-fw-bold); font-size: 22px; fill: var(--sai-ink); }
+.sai-fig text.big.acc { fill: var(--sai-accent); }
+.sai-fig text.sm { font-size: 14px; fill: var(--sai-ink-2); }
+.sai-fig text.strong, .sai-fig tspan.strong { font-weight: var(--sai-fw-medium); fill: var(--sai-ink); }
+
+/* strokes */
+.sai-fig .hair { stroke: var(--sai-rule); stroke-width: 1; fill: none; }
+.sai-fig .hair-strong { stroke: var(--sai-rule-strong); stroke-width: 1.2; fill: none; }
+.sai-fig .ink-line { stroke: var(--sai-ink); stroke-width: 1.6; fill: none; }
+.sai-fig .ink-line.soft { stroke: var(--sai-ink-2); }
+.sai-fig .acc-line { stroke: var(--sai-accent); stroke-width: 2.4; fill: none; }
+.sai-fig .dash { stroke-dasharray: 5 6; }
+
+/* fills + marks */
+.sai-fig .acc-fill { fill: rgba(220,104,67,0.14); }
+.sai-fig .acc-solid { fill: var(--sai-accent); }
+.sai-fig .hollow { fill: var(--sai-hollow); }
+.sai-fig .glass { fill: rgba(255,255,255,0.62); stroke: rgba(255,255,255,0.9); }
+.sai-fig .node { fill: rgba(255,255,255,0.66); stroke: rgba(23,19,16,0.14); stroke-width: 1.2; }
+.sai-fig .node.win { stroke: var(--sai-accent); stroke-width: 2; }
+.sai-fig .port { fill: #fff; stroke: var(--sai-accent); stroke-width: 2.2; }
+.sai-fig .port-ink { fill: #fff; stroke: var(--sai-ink); stroke-width: 1.6; }
+.sai-fig .zone { fill: rgba(220,104,67,0.07); stroke: var(--sai-accent); stroke-width: 1.4; stroke-dasharray: 6 6; }
+.sai-fig .arrow-ink { fill: var(--sai-ink); }
+.sai-fig .arrow-acc { fill: var(--sai-accent); }
+
+/* night variant */
+section.sai-night .sai-fig .cap { color: var(--sai-cream-2); }
+section.sai-night .sai-fig text, section.sai-night .sai-fig text.big,
+section.sai-night .sai-fig text.strong, section.sai-night .sai-fig tspan.strong { fill: var(--sai-cream); }
+section.sai-night .sai-fig text.lbl, section.sai-night .sai-fig text.sm { fill: var(--sai-cream-2); }
+section.sai-night .sai-fig text.lbl.acc, section.sai-night .sai-fig text.big.acc { fill: var(--sai-accent-night); }
+section.sai-night .sai-fig .hair { stroke: var(--sai-nrule-soft); }
+section.sai-night .sai-fig .hair-strong { stroke: var(--sai-nrule); }
+section.sai-night .sai-fig .ink-line { stroke: var(--sai-cream); }
+section.sai-night .sai-fig .ink-line.soft { stroke: var(--sai-cream-2); }
+section.sai-night .sai-fig .acc-line, section.sai-night .sai-fig .node.win,
+section.sai-night .sai-fig .port, section.sai-night .sai-fig .zone { stroke: var(--sai-accent-night); }
+section.sai-night .sai-fig .acc-fill { fill: rgba(255,142,118,0.16); }
+section.sai-night .sai-fig .zone { fill: rgba(255,142,118,0.08); }
+section.sai-night .sai-fig .acc-solid, section.sai-night .sai-fig .arrow-acc { fill: var(--sai-accent-night); }
+section.sai-night .sai-fig .arrow-ink { fill: var(--sai-cream); }
+section.sai-night .sai-fig .hollow { fill: var(--sai-nglass-tile); }
+section.sai-night .sai-fig .glass, section.sai-night .sai-fig .node { fill: var(--sai-nglass); stroke: var(--sai-nglass-edge); }
+section.sai-night .sai-fig .port, section.sai-night .sai-fig .port-ink { fill: #1A130F; }
+section.sai-night .sai-fig .port-ink { stroke: var(--sai-cream); }
+
+/* ==========================================================================
+   PRINT / PDF — frost cannot print. Panes go near-solid, motion stops.
+   ========================================================================== */
+
+@media print {
+  .sai-scene { position: absolute; }
+  .sai-dock { display: none; }
+  .sai-pane, .sai-claim { background: rgba(255,255,255,0.92); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-split .col.after, .sai-float-stat { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-widget, section.sai-night, .sai-claim, .sai-vital { break-inside: avoid; }
+  .sai-fig { overflow: visible; break-inside: avoid; }
+  .sai-fig svg { min-width: 0; }
+  * { animation: none !important; }
+}
+
+/* ── Behaviour-layer styles (2026-08-28). Pair with lens-kit.js via the JS marker. ── */
+.sai-page section[id] { scroll-margin-top: 96px; }
+.sai-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: var(--sai-radius-pill);
+  background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.8); }
+.sai-seg button { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--sai-ink-2); background: transparent; border: none; cursor: pointer;
+  padding: 8px 14px; border-radius: var(--sai-radius-pill); transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-seg button:hover { color: var(--sai-ink); background: rgba(255,255,255,0.75); }
+.sai-seg button.on { color: #fff; background: var(--sai-ink); }
+section.sai-night .sai-seg { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.14); }
+section.sai-night .sai-seg button { color: var(--sai-cream-2); }
+section.sai-night .sai-seg button.on { color: var(--sai-ink); background: var(--sai-cream); }
+.sai-copy { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--sai-ink); background: rgba(255,255,255,0.7); border: 1px solid rgba(23,19,16,0.14);
+  border-radius: var(--sai-radius-pill); padding: 7px 14px; cursor: pointer; transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-copy:hover { border-color: var(--sai-accent); color: var(--sai-accent); }
+.sai-copy.done { color: #fff; background: var(--sai-ink); border-color: var(--sai-ink); }
+[hidden] { display: none !important; }
+
+/* ── Night contrast guard (2026-08-28). Alec: "$22,000 is unreadable in dark mode; careful with black on black."
+   Every bold/strong inside a night window is cream unless a more specific rule says accent. ── */
+section.sai-night b, section.sai-night strong { color: var(--sai-cream); }
+section.sai-night .sai-ledger .restate b, section.sai-night .sai-ledger .basis b { color: var(--sai-cream); }
+section.sai-night .sai-callout { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--sai-cream); }
+section.sai-night .sai-callout .cap { color: var(--sai-accent-night); }
+section.sai-night .sai-callout p { color: var(--sai-cream); }
+section.sai-night .sai-callout::before, section.sai-night .sai-callout::after { border-color: var(--sai-accent-night); }
+section.sai-night ul.sai-bullets li { color: var(--sai-cream-2); }
+section.sai-night ul.sai-bullets li b { color: var(--sai-cream); }
+section.sai-night .sai-w-note { color: var(--sai-cream-2); border-color: var(--sai-nrule); }
+section.sai-night .sai-w-sub, section.sai-night p { color: var(--sai-cream-2); }
+section.sai-night h3, section.sai-night h4, section.sai-night .sai-w-title { color: var(--sai-cream); }
+section.sai-night .sai-copy { color: var(--sai-cream); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.16); }
+section.sai-night .sai-copy.done { color: var(--sai-ink); background: var(--sai-cream); border-color: var(--sai-cream); }
+section.sai-night .sai-btn.ghost { color: var(--sai-cream); border-color: rgba(255,255,255,0.28); }
+section.sai-night .sai-btn.ghost:hover { border-color: var(--sai-accent-night); color: var(--sai-accent-night); }
+section.sai-night .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+section.sai-night .sai-btn.primary:hover { background: #fff; }
+section.sai-night .sai-btn.ghost { background: rgba(255,255,255,0.06); }
+section.sai-night .sai-btn.ghost:hover { background: rgba(255,255,255,0.12); }
+
+/* ── Lens Night: page-level dark mode. Adopted 2026-08-28 (Alec: "save that as our dark mode").
+   Put class="sai-dark" on <body>, make every content section a section.sai-night, use the
+   LOGO-NIGHT marker in the dock and footer. The 95+ night rules do the widget work; this block
+   darkens the scene, the dock, the hero and turns night windows into dark glass over the night sky.
+   Reference page: explorations/2026-08-28-full-dark/dark-sample.html ── */
+body.sai-dark { background: var(--sai-night-fallback); color: var(--sai-cream); }
+body.sai-dark .sai-scene { background: var(--sai-night); }
+body.sai-dark .sai-tint.t1 { opacity: .14; } body.sai-dark .sai-tint.t2 { opacity: .10; } body.sai-dark .sai-tint.t3 { opacity: .12; }
+body.sai-dark .sai-lens { opacity: .55; }
+body.sai-dark .sai-dock { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+body.sai-dark .sai-dock .word { color: var(--sai-cream); }
+body.sai-dark .sai-dock nav a { color: var(--sai-cream-2); }
+body.sai-dark .sai-dock nav a:hover { color: var(--sai-cream); background: rgba(255,255,255,0.1); }
+body.sai-dark .sai-dock nav a.on { color: var(--sai-ink); background: var(--sai-cream); }
+body.sai-dark .sai-display { color: var(--sai-cream); }
+body.sai-dark .sai-display em { color: var(--sai-accent-night); }
+body.sai-dark .sai-lede { color: var(--sai-cream-2); }
+body.sai-dark .sai-lede b { color: var(--sai-cream); }
+body.sai-dark .sai-port .ptext { color: var(--sai-accent-night); }
+body.sai-dark .sai-footer, body.sai-dark .sai-footer .word, body.sai-dark .sai-footer .meta { color: var(--sai-cream-2); }
+body.sai-dark section.sai-night { background: rgba(255,255,255,0.045);
+  backdrop-filter: blur(30px) saturate(1.4); -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.14); }
+body.sai-dark .sai-float-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+body.sai-dark .sai-float-stat .n { color: var(--sai-cream); } body.sai-dark .sai-float-stat .n em { color: var(--sai-accent-night); }
+body.sai-dark .sai-float-stat .l { color: var(--sai-cream-2); }
+body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.10); color: var(--sai-cream); }
+</style>
+<!-- /SAI:KIT -->
+<style>
+  /* ── Japanese typography on the Lens system ── */
+  body, .sai-page, .sai-display, .sai-lede, h1, h2, h3, h4, p, li, td, th, input, textarea, button, .sai-btn, .sai-fig text {
+    font-family: 'Inter Tight', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; }
+  .sai-page { line-height: 1.8; letter-spacing: 0.01em; font-feature-settings: 'palt' 1; line-break: strict; }
+  .sai-page b, .sai-page strong { font-weight: 500; color: var(--sai-ink); }
+  .u { display: inline-block; }            /* 文節改行: a phrase never breaks inside */
+  /* General orphan control, so a fixed tail cannot push a new one onto the next paragraph. */
+  .sai-page p, .sai-page li, .sub, .own, .tnote, .opt .d, details p, .why-cols p { text-wrap: pretty; }
+  /* Japanese-capable stack for every label the kit sets in Schibsted (Schibsted/Inter carry no JP glyphs) */
+  .sai-port .ptext, .sai-stamp, .sai-dock nav a, .fact .n, .base .amt small, .tier .amt small, .tier .k, .why-cols .k,
+  .ba figcaption .tag, .sai-path .num, .sai-fig text.lbl, .panel .crumb, .sai-status .kw,
+  .sai-callout .cap, .sai-fig .cap, .trow .v, .total .v {
+    font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; letter-spacing: 0.02em; }
+  .sai-btn { font-size: 16px; }
+  .sai-display { font-size: clamp(34px, 4.2vw, 54px); line-height: 1.3; letter-spacing: 0.01em; font-weight: 500; }
+  .sai-display em { white-space: nowrap; }
+  .sai-lede { font-size: 18.5px; line-height: 1.8; max-width: 33em; }
+  .sai-dock nav a { text-transform: none; letter-spacing: 0.02em; font-size: 14.5px; }
+  .sai-dock .tel { font-family: 'Schibsted Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--sai-ink); text-decoration: none; padding-left: 10px; border-left: 1px solid rgba(23,19,16,0.14); margin-left: 4px; white-space: nowrap; }
+  h2.sec { font-size: clamp(25px, 2.9vw, 34px); font-weight: 500; line-height: 1.45; margin: 10px 0 10px; letter-spacing: 0.015em; }
+  .sub { color: var(--sai-ink-2); font-size: 17px; max-width: 40em; margin-bottom: 26px; }
+  .pane { padding: 44px; border-radius: var(--sai-radius-window); margin-bottom: 34px; }
+  .fact { border-radius: 22px; }
+  .facts { margin-bottom: 34px; }
+  .foot { border-radius: 30px; }
+  .sai-w-note { font-size: 15px; }
+  .sai-port .ptext { font-size: 14px; }
+  @media (max-width: 760px) { .pane { padding: 28px 22px; } }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 44px; align-items: center; padding: 26px 0 10px; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 26px; }
+  .hero-tel { margin-top: 18px; color: var(--sai-ink-2); font-size: 15.5px; }
+  .hero-tel b { font-family: 'Schibsted Grotesk', sans-serif; font-size: 20px; letter-spacing: 0.01em; font-weight: 700; }
+  .hero-tel span { white-space: nowrap; }
+  .laptop { border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid rgba(255,255,255,0.9);
+    box-shadow: 0 40px 90px rgba(60,30,10,0.22), 0 1px 0 rgba(255,255,255,0.9) inset; }
+  .laptop .bar { height: 30px; background: rgba(245,241,232,0.95); display: flex; gap: 6px; align-items: center; padding: 0 12px; border-bottom: 1px solid rgba(23,19,16,0.06); }
+  .laptop .bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(23,19,16,0.14); display: block; }
+  .laptop .bar span { margin-left: 8px; font-size: 13.5px; color: var(--sai-ink-2); font-family: 'Schibsted Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.02em; }
+  .laptop img { display: block; width: 100%; height: auto; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+  .fact { padding: 18px 20px; }
+  .fact .n { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 26px; color: var(--sai-ink); }
+  .fact .l { color: var(--sai-ink-2); font-size: 16px; margin-top: 2px; }
+
+  /* case */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+  .ba figure { margin: 0; border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 18px 50px rgba(60,30,10,0.12); position: relative; }
+  .ba figure.old { background: rgba(255,255,255,0.35); border: 1.5px dashed rgba(23,19,16,0.16); box-shadow: none; }
+  .ba figure.old img { filter: saturate(0.6); opacity: 0.92; }
+  .ba figure img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; object-position: top; }
+  .ba figcaption { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 14.5px; color: var(--sai-ink-2); }
+  .ba figcaption .tag { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 14.5px; letter-spacing: 0.06em; color: var(--sai-ink); }
+  .ba figure.now { outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px; }
+  .ba img.mob { display: none; }
+  .ba figure.now figcaption .tag { color: var(--sai-accent); }
+  .case-meta { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 22px; color: var(--sai-ink-2); font-size: 15.5px; align-items: center; }
+  .case-cta { margin-top: 18px; }
+  .work-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-radius: 18px; overflow: hidden; margin-top: 26px; }
+  .work-pair img { display: block; width: 100%; height: 240px; object-fit: cover; }
+  .work-pair figure { margin: 0; position: relative; }
+  .work-pair .sai-stamp { position: absolute; left: 14px; top: 14px; background: rgba(255,255,255,0.86); padding: 6px 12px; border-radius: 0; }
+
+  /* fork figure + three columns */
+  .why-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 8px; }
+  .why-cols .k { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; color: var(--sai-accent); }
+  .why-cols p { margin: 6px 0 0; color: var(--sai-ink); font-size: 17px; }
+  .sai-fig.m { display: none; }
+  @media (max-width: 1000px) { .sai-fig.d { display: none; } .sai-fig.m { display: block; }
+    .sai-fig.m svg { min-width: 0; width: 100%; max-width: 420px; margin: 0 auto; display: block; } }
+  .sai-fig .cap { font-size: 14.5px; }
+  .sai-fig text { font-size: 17px; } .sai-fig text.sm { font-size: 15.5px; } .sai-fig text.lbl { font-size: 15.5px; }
+
+  /* admin mock */
+  .edit { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
+  .panel { padding: 0; overflow: hidden; background: rgba(255,255,255,0.72); border: 1px solid rgba(255,255,255,0.95); box-shadow: 0 18px 50px rgba(60,30,10,0.12); border-radius: 22px; }
+  .panel .chrome { display: flex; flex-wrap: nowrap; overflow: hidden; align-items: center; gap: 18px; padding: 12px 18px; background: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(23,19,16,0.08); font-size: 14px; color: var(--sai-ink-2); }
+  .panel .chrome b { color: var(--sai-ink); font-weight: 500; }
+  .panel .chrome > span, .panel .chrome > b { white-space: nowrap; }
+  .panel .chrome .sp { flex: 1; }
+  .panel .chrome .who { width: 28px; height: 28px; border-radius: 50%; background: var(--sai-ink); color: #fff; font-size: 13.5px; display: grid; place-items: center; }
+  .panel .body { padding: 20px 22px 22px; }
+  .panel .crumb { font-size: 14px; color: var(--sai-ink-2); margin-bottom: 12px; }
+  .panel .crumb b { font-weight: 500; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 15px; color: var(--sai-ink-2); margin-bottom: 5px; }
+  .field .in { border: 1px solid rgba(23,19,16,0.12); background: rgba(255,255,255,0.7); border-radius: 10px; padding: 10px 12px; font-size: 15px; }
+  .field .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pic { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(23,19,16,0.12); aspect-ratio: 4 / 3; background: #fff; }
+  .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pic span { position: absolute; right: 8px; bottom: 8px; background: rgba(255,255,255,0.9); border-radius: 999px; padding: 3px 10px; font-size: 13.5px; color: var(--sai-ink); }
+  .panel .save { display: inline-block; margin-top: 4px; }
+  .mocknote { grid-column: 2; margin-top: 10px; font-size: 14.5px; color: var(--sai-ink-2); }
+  .edit ul.sai-bullets { margin-top: 18px; }
+
+  /* price (night window) */
+  .price-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: start; margin-top: 8px; }
+  .price-grid .col-left { display: flex; flex-direction: column; gap: 20px; }
+  .price-grid .col-left { grid-column: 1; grid-row: 1; }
+  .price-grid .addons { grid-column: 2; grid-row: 1; }
+  .price-grid .sai-callout.wide { grid-column: 1 / -1; grid-row: 2; margin: 0; }
+  .ledger-wrap { margin-top: 20px; padding: 26px 30px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px 40px; align-items: start; }
+  .ledger-wrap .side { padding-top: 4px; }
+  .ledger-wrap .total { margin-top: 0; padding-top: 0; border-top: none; }
+  .price-grid .sai-callout { margin: 0; }
+  .base, .addons, .tier { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; }
+  .base { padding: 30px; }
+  .base .amt { font-family: 'Schibsted Grotesk', sans-serif; font-weight: 700; font-size: 44px; color: var(--sai-cream); line-height: 1; margin: 6px 0 4px; }
+  .base .amt small { font-size: 15px; font-weight: 600; color: var(--sai-cream-2); margin-left: 6px; }
+  .base ul { list-style: none; padding: 0; margin: 18px 0 0; }
+  .base li { padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.1); font-size: 17px; color: var(--sai-cream); }
+  .base li:first-child { border-top: none; }
+  .own { margin-top: 16px; font-size: 15px; color: var(--sai-cream-2); }
+  .addons { padding: 26px 30px; }
+  .addons h4 { margin: 0 0 4px; font-weight: 500; font-size: 19px; color: var(--sai-cream); }
+  .addons .hint { font-size: 14.5px; color: var(--sai-cream-2); margin-bottom: 10px; }
+  .opt { display: grid; grid-template-columns: 20px 1fr auto; column-gap: 12px; row-gap: 2px; align-items: start; padding: 11px 0; border-top: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+  .opt:first-of-type { border-top: none; }
+  .opt input { appearance: none; margin-top: 3px; width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid rgba(255,255,255,0.4); background: transparent; display: grid; place-items: center; flex: none; cursor: pointer; }
+  .opt input:checked { background: var(--sai-cream); border-color: var(--sai-cream); }
+  .opt input:checked::after { content: ''; width: 10px; height: 6px; border-left: 2px solid var(--sai-ink); border-bottom: 2px solid var(--sai-ink); transform: rotate(-45deg) translateY(-1px); }
+  .opt .t { font-size: 17px; color: var(--sai-cream); }
+  .opt .p { font-family: 'Schibsted Grotesk', sans-serif; font-weight: 700; font-size: 15px; white-space: nowrap; color: var(--sai-cream); }
+  .opt .d { grid-column: 2 / 4; color: var(--sai-cream-2); font-size: 17px; line-height: 1.6; }
+  .total { display: grid; grid-template-columns: auto 1fr auto; column-gap: 12px; align-items: baseline; margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--sai-cream); }
+  .total .k { font-size: 15px; color: var(--sai-cream-2); white-space: nowrap; }
+  .trow { display: grid; grid-template-columns: auto 1fr auto; column-gap: 12px; align-items: baseline; padding: 8px 0; font-size: 15.5px; color: var(--sai-cream-2); border-top: 1px solid rgba(255,255,255,0.1); }
+  .trow .lead, .total .lead { border-bottom: 1.5px dotted rgba(255,255,255,0.22); transform: translateY(-5px); min-width: 18px; }
+  .trow .v { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; color: var(--sai-cream); font-size: 16px; white-space: nowrap; }
+  .total .v { white-space: nowrap; }
+  .trow .short { display: none; }
+  .trow > span:first-child, .total .k { white-space: nowrap; }
+  .trow.pay { color: var(--sai-cream); }
+  .trow.pay .v { font-size: 26px; }
+  .trow.net { border-top: 2px solid var(--sai-cream); margin-top: 6px; padding-top: 12px; color: var(--sai-cream); font-size: 16.5px; }
+  .trow.net .v { color: var(--sai-accent-night); font-size: 26px; }
+  .tnote { font-size: 15px; color: var(--sai-cream-2); margin-top: 10px; max-width: 62em; }
+  .preset { font-family: 'Schibsted Grotesk','Zen Kaku Gothic New',sans-serif; font-weight: 600; font-size: 14.5px; color: var(--sai-cream); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+  .preset:hover { background: rgba(255,255,255,0.14); }
+  #addons input:focus-visible, .preset:focus-visible { outline: 2px solid var(--sai-accent-night); outline-offset: 2px; }
+  .total .v { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 30px; color: var(--sai-accent-night); }
+  .total .v small { font-size: 13.5px; color: var(--sai-cream-2); margin-left: 6px; font-weight: 600; }
+  .tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .tier { padding: 24px 26px; }
+  .tier .k { font-family: 'Schibsted Grotesk', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 14.5px; letter-spacing: 0.06em; color: var(--sai-accent-night); }
+  .tier h4 { margin: 4px 0 2px; font-size: 19px; font-weight: 500; line-height: 1.5; color: var(--sai-cream); min-height: 3em; }
+  .tier .amt { font-family: 'Schibsted Grotesk', sans-serif; font-weight: 700; font-size: 28px; color: var(--sai-cream); }
+  .tier .amt small { font-size: 13.5px; color: var(--sai-cream-2); font-weight: 600; margin-left: 4px; }
+  .tier .term { font-size: 14.5px; color: var(--sai-cream-2); margin-top: 3px; }
+  .tier ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .tier li { font-size: 17px; padding: 5px 0; color: var(--sai-cream-2); }
+  .tier li b { color: var(--sai-cream); }
+  .tier.rec { outline: 1.5px solid var(--sai-accent-night); outline-offset: -1.5px; }
+  section.sai-night .sai-w-note { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 16px; }
+  section.sai-night .sai-callout p { font-size: 16.5px; }
+
+  /* flow */
+  .supply-h { margin: 40px 0 12px; font-size: 19px; font-weight: 500; }
+  .supply { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .supply div { padding: 16px 18px; font-size: 15px; }
+  .supply div b { display: block; margin-bottom: 2px; font-size: 16.5px; }
+  .supply div span { color: var(--sai-ink-2); font-size: 16px; }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: start; }
+  .people { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .people.one { grid-template-columns: 1fr; max-width: 300px; margin-left: auto; }
+  .person img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 18px; display: block; }
+  .person .nm { margin-top: 10px; font-weight: 500; font-size: 16px; }
+  .person .rl { color: var(--sai-ink-2); font-size: 14.5px; }
+
+  /* faq */
+  details { border-top: 1px solid rgba(23,19,16,0.1); padding: 16px 0; }
+  details:last-of-type { border-bottom: 1px solid rgba(23,19,16,0.1); }
+  summary { cursor: pointer; list-style: none; font-size: 17.5px; font-weight: 500; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  summary .q { flex: 1; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font-family: 'Schibsted Grotesk', sans-serif; color: var(--sai-accent); font-size: 22px; flex: none; transition: transform var(--sai-dur-base) var(--sai-ease); }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 10px 0 0; color: var(--sai-ink-2); font-size: 17px; max-width: 60ch; }
+
+  /* contact */
+  .contact { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: start; }
+  .contact .big { font-family: 'Schibsted Grotesk', sans-serif; font-weight: 700; font-size: 34px; color: var(--sai-ink); text-decoration: none; display: inline-block; margin: 8px 0 2px; }
+  .contact .hrs { color: var(--sai-ink-2); font-size: 15px; }
+  .contact .mail { display: inline-block; margin-top: 10px; color: var(--sai-ink); text-decoration: none; border-bottom: 1px solid var(--sai-accent); }
+  form.f { display: grid; gap: 12px; }
+  form.f .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  form.f label { font-size: 15.5px; color: var(--sai-ink-2); display: block; margin-bottom: 5px; }
+  form.f input, form.f textarea { width: 100%; box-sizing: border-box; border: 1px solid rgba(23,19,16,0.14); background: rgba(255,255,255,0.75); border-radius: 10px; padding: 12px 14px; font-size: 16px; color: var(--sai-ink); }
+  form.f textarea { min-height: 110px; resize: vertical; }
+  form.f input:focus, form.f textarea:focus { outline: 2px solid var(--sai-accent); outline-offset: 1px; border-color: transparent; }
+  .privacy { font-size: 15px; color: var(--sai-ink-2); }
+  .sent { display: none; padding: 26px; }
+  .sent h4 { margin: 0 0 6px; font-size: 20px; font-weight: 500; }
+  .sent p { margin: 0; color: var(--sai-ink-2); }
+
+  /* footer with company facts */
+  .foot { margin-top: 10px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; padding: 30px 34px; font-size: 15px; color: var(--sai-ink-2); }
+  .foot b { color: var(--sai-ink); font-weight: 500; display: block; margin-bottom: 4px; }
+  .foot a { color: var(--sai-ink); text-decoration: none; border-bottom: 1px solid var(--sai-accent); }
+  .copy { text-align: center; color: var(--sai-ink-2); font-size: 13.5px; margin: 18px 0 40px; font-family: 'Schibsted Grotesk', sans-serif; letter-spacing: 0.03em; }
+
+  /* sticky mobile action bar */
+  .bar-m { display: none; }
+  @media (max-width: 900px) {
+    .hero, .edit, .price-grid, .contact, .about, .ledger-wrap { grid-template-columns: 1fr; }
+    .mocknote { grid-column: 1; }
+    .price-grid .col-left, .price-grid .addons, .price-grid .sai-callout.wide { grid-column: 1; grid-row: auto; }
+    .hero-cta { display: grid; gap: 10px; } .hero-cta .sai-btn { width: 100%; box-sizing: border-box; text-align: center; }
+    .ledger-wrap { padding: 22px 20px; }
+    .laptop img { height: auto; }
+    .why-cols, .facts, .supply { grid-template-columns: 1fr; }
+    .ba, .tiers, .work-pair, form.f .two, .foot { grid-template-columns: 1fr; }
+    .ba figure img { aspect-ratio: 3 / 4; }
+    .ba img.dsk { display: none; } .ba img.mob { display: block; aspect-ratio: 3 / 4; object-fit: cover; object-position: top; }
+    .sai-dock .word { display: none; }
+    .sai-dock { gap: 12px; padding: 10px 16px; }
+    .sai-dock .tel { border-left: none; padding-left: 0; margin-left: 0; }
+    .total .v { font-size: 24px; } .trow .lead { min-width: 8px; } .trow, .total { column-gap: 8px; } .trow.net .v { font-size: 22px; } .trow { font-size: 15px; } .trow .v { font-size: 15px; }
+    section.sai-night { padding: 26px 18px; } .ledger-wrap { padding: 18px 14px; } .price-grid .addons { padding: 20px 16px; } .base { padding: 20px 16px; }
+    .base .amt { font-size: 38px; }
+    .opt { grid-template-columns: 20px 1fr; row-gap: 0; }
+    .opt .p { grid-column: 2; justify-self: start; margin-top: -2px; }
+    .opt .d { grid-column: 2; margin-top: 2px; }
+    .bar-m::before { content: ''; position: absolute; left: -12px; right: -12px; bottom: -12px; top: -18px; z-index: -1;
+      background: linear-gradient(to top, var(--sai-sky-fallback) 55%, transparent); pointer-events: none; }
+    .bar-m { display: flex; position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 12; gap: 8px; padding: 8px; border-radius: 999px;
+      background: rgba(255,255,255,0.72); backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 18px 50px rgba(60,30,10,0.18); transform: translateY(120%); transition: transform .35s var(--sai-ease); }
+    .bar-m.show { transform: none; }
+    .bar-m a { flex: 1; text-align: center; padding: 14px 10px; font-size: 16px; }
+    .sai-lens.near { display: none; }
+    .panel .chrome { gap: 12px; font-size: 13.5px; } .panel .chrome span:nth-of-type(n+3):not(.sp):not(.who) { display: none; }
+    .sai-page { padding-bottom: 80px; }
+  }
+  @media (max-width: 520px) { .trow .long { display: none; } .trow .short { display: inline; } }
+  @media (max-width: 430px) { h2.sec { font-size: 23px; } summary { font-size: 16.5px; } }
+  @media (max-width: 430px) { .sai-fig.m svg text { font-size: 18px; } .sai-fig.m svg text.lbl, .sai-fig.m svg text.sm { font-size: 16.5px; } }
+  @media (max-width: 389px) { .sai-display { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<!-- SAI:SCENE -->
+<div class="sai-scene">
+  <div class="sai-tint t1"></div>
+  <div class="sai-tint t2"></div>
+  <div class="sai-tint t3"></div>
+  <div class="sai-lens near l1"></div>
+  <div class="sai-lens mid  l2"></div>
+  <div class="sai-lens far  l3"></div>
+  <div class="sai-lens mid  l4"></div>
+  <div class="sai-lens far  l5"></div>
+</div>
+<!-- /SAI:SCENE -->
+
+<div class="sai-dock">
+  <!-- SAI:LOGO -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO -->
+  <span class="word">Stephens AI</span>
+  <nav><a class="on" href="#work">実例</a><a href="#why">できること</a><a href="#price">料金</a><a href="#flow">進め方</a><a href="#contact">お問い合わせ</a></nav>
+  <a class="tel" href="tel:08033352109">080-3335-2109</a>
+</div>
+<div class="bar-m" id="barm"><a class="sai-btn ghost" href="tel:08033352109">電話する</a><a class="sai-btn primary" href="#contact">無料相談</a></div>
+
+<div class="sai-page">
+
+  <section class="sai-rise">
+    <div class="hero">
+      <div>
+        <span class="sai-port"><span class="disc"></span><span class="ptext">建設会社・工務店のホームページ制作</span></span>
+        <h1 class="sai-display"><span class="u">建設会社の、</span><br><em>次のホームページ。</em></h1>
+        <p class="sai-lede">施工の質が、そのまま伝わるように。オリジナルデザインで制作し、公開後は御社で更新できます。<b>仙台を拠点に、東北は現場まで伺います。</b>それ以外の地域は、オンラインで対応します。</p>
+        <div class="hero-cta">
+          <a class="sai-btn primary" href="#contact">30分の無料相談を申し込む</a>
+          <a class="sai-btn ghost" href="#price">料金を見る</a>
+        </div>
+        <div class="hero-tel">お電話でもどうぞ。<b>080-3335-2109</b> <span>（平日 9:00〜18:00）</span></div>
+      </div>
+      <div class="laptop"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>kamata-koumuten.co.jp</span></div><img src="img/kamata-hero.jpg" alt="制作実績：株式会社鎌田工務店のウェブサイト（外構工事ページ）"></div>
+    </div>
+    <div class="facts">
+      <div class="sai-pane fact"><div class="n">¥200,000〜</div><div class="l">制作費（税別）。必要なものだけを足していく料金です。</div></div>
+      <div class="sai-pane fact"><div class="n">4〜6週間</div><div class="l">ご相談から公開まで。写真が揃っていれば早まります。</div></div>
+      <div class="sai-pane fact"><div class="n">御社で更新</div><div class="l">施工事例の追加も写真の差し替えも、日本語の管理画面から。</div></div>
+    </div>
+  </section>
+
+  <section id="work" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">01 · 実例</span></span>
+    <h2 class="sec"><span class="u">株式会社鎌田工務店</span><span class="u">（宮城県宮城郡利府町）</span></h2>
+    <p class="sub">昭和40年創立の総合建設会社。基礎工事・外構工事・公共工事。以前のサイトは、会社概要の文字が並んでいるだけでした。施工事例を軸に、現場の写真が最初に見える構成に<span class="u">作り直しました。</span></p>
+    <div class="ba">
+      <figure class="old"><img class="dsk" src="img/kamata-before.jpg" alt="以前のサイト"><img class="mob" src="img/kamata-before-mobile.jpg" alt="以前のサイト（スマートフォン表示）"><figcaption><span class="tag">以前</span><span>文字中心・スマートフォン非対応</span></figcaption></figure>
+      <figure class="now"><img class="dsk" src="img/kamata-now.jpg" alt="現在のサイト"><img class="mob" src="img/kamata-live-mobile.jpg" alt="現在のサイト（スマートフォン表示）"><figcaption><span class="tag">現在</span><span>kamata-koumuten.co.jp</span></figcaption></figure>
+    </div>
+    <div class="case-meta">
+      <span><b>6ページ</b>（トップ・会社について・外構工事・基礎工事・求人情報・お問い合わせ）</span>
+      <span><b>スマートフォン対応</b></span>
+      <span><b>施工事例</b>は御社で追加</span>
+    </div>
+    <div class="case-cta"><a class="sai-btn ghost" href="https://kamata-koumuten.co.jp/" target="_blank" rel="noopener">サイトを見る →</a></div>
+    <div class="work-pair">
+      <figure><img src="img/deck-before.jpg" alt="ウッドデッキ 施工前"><span class="sai-stamp">施工前</span></figure>
+      <figure><img src="img/deck-after.jpg" alt="ウッドデッキ 施工後"><span class="sai-stamp">施工後</span></figure>
+    </div>
+    <div class="sai-w-note">施工事例は、この形で載せます（上はウッドデッキの新設）。施工前・施工後の写真、工事の種類、地域、ひとこと。写真が2枚あれば1件できます。</div>
+  </section>
+
+  <section id="why" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">02 · 何のために作るか</span></span>
+    <h2 class="sec"><span class="u">見る人が違えば、</span><span class="u">必要なページも</span><span class="u">違います。</span></h2>
+    <p class="sub">建設会社のホームページを見る人は、大きく3種類です。どなたに向けたサイトかを最初に決めると、ページ数も内容も無駄がなくなります。</p>
+
+    <div class="sai-fig d">
+      <svg viewBox="-10 0 980 400" role="img" aria-label="御社のホームページを見る3種類の人と、それぞれに必要なページ">
+        <defs>
+          <marker id="ahf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow-acc" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="node" x="20" y="150" width="230" height="100" rx="18"/>
+        <text class="lbl" x="135" y="190" text-anchor="middle">御社のホームページ</text>
+        <text class="sm" x="135" y="216" text-anchor="middle">誰が、何を見に来るか</text>
+
+        <path class="acc-line" d="M250,200 C330,200 340,70 420,70" marker-end="url(#ahf)"/>
+        <path class="acc-line" d="M250,200 L420,200" marker-end="url(#ahf)"/>
+        <path class="acc-line" d="M250,200 C330,200 340,330 420,330" marker-end="url(#ahf)"/>
+
+        <rect class="node" x="430" y="30" width="230" height="80" rx="16"/>
+        <text class="lbl acc" x="450" y="60">求職者</text>
+        <text x="450" y="88">求人を見て、社名で検索</text>
+        <rect class="node" x="430" y="160" width="230" height="80" rx="16"/>
+        <text class="lbl acc" x="450" y="190">元請・発注者</text>
+        <text x="450" y="218">取引の前に会社を確認</text>
+        <rect class="node" x="430" y="290" width="230" height="80" rx="16"/>
+        <text class="lbl acc" x="450" y="320">施主・地域のお客様</text>
+        <text x="450" y="348">外構やリフォームを検討</text>
+
+        <line class="hair-strong" x1="670" y1="70" x2="706" y2="70"/>
+        <line class="hair-strong" x1="670" y1="200" x2="706" y2="200"/>
+        <line class="hair-strong" x1="670" y1="330" x2="706" y2="330"/>
+        <text class="strong" x="718" y="62">採用ページ</text>
+        <text class="sm" x="718" y="84">働く人、仕事の一日、募集要項</text>
+        <text class="strong" x="718" y="192">許可・有資格者・施工実績</text>
+        <text class="sm" x="718" y="214">「きちんとした会社」だと分かる</text>
+        <text class="strong" x="718" y="322">施工事例と問い合わせ</text>
+        <text class="sm" x="718" y="344">写真が多く、連絡しやすい</text>
+      </svg>
+      <div class="cap">図1 · 見る人が3種類いて、それぞれ見たいページが違う。最初にどなた向けかを決めると、作るものが決まります。</div>
+    </div>
+    <div class="sai-fig m">
+      <svg viewBox="0 0 360 620" role="img" aria-label="御社のホームページを見る3種類の人と、それぞれに必要なページ">
+        <defs><marker id="ahm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="arrow-acc" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="node" x="20" y="16" width="320" height="76" rx="16"/>
+        <text class="lbl" x="180" y="48" text-anchor="middle">御社のホームページ</text>
+        <text class="sm" x="180" y="72" text-anchor="middle">誰が、何を見に来るか</text>
+        <path class="acc-line" d="M44,92 L44,560"/>
+        <path class="acc-line" d="M44,180 L72,180" marker-end="url(#ahm)"/>
+        <path class="acc-line" d="M44,360 L72,360" marker-end="url(#ahm)"/>
+        <path class="acc-line" d="M44,540 L72,540" marker-end="url(#ahm)"/>
+        <rect class="node" x="80" y="130" width="260" height="110" rx="16"/>
+        <text class="lbl acc" x="98" y="160">求職者</text>
+        <text x="98" y="186">求人を見て、社名で検索</text>
+        <text class="strong" x="98" y="222">→ 採用ページ</text>
+        <rect class="node" x="80" y="310" width="260" height="110" rx="16"/>
+        <text class="lbl acc" x="98" y="340">元請・発注者</text>
+        <text x="98" y="366">取引の前に会社を確認</text>
+        <text class="strong" x="98" y="402">→ 許可・有資格者・実績</text>
+        <rect class="node" x="80" y="490" width="260" height="110" rx="16"/>
+        <text class="lbl acc" x="98" y="520">施主・地域のお客様</text>
+        <text x="98" y="546">外構やリフォームを検討</text>
+        <text class="strong" x="98" y="582">→ 施工事例と問い合わせ</text>
+      </svg>
+      <div class="cap">図1 · 見る人が3種類いて、それぞれ見たいページが違う。最初にどなた向けかを決めると、作るものが決まります。</div>
+    </div>
+
+    <div class="why-cols">
+      <div><span class="k">採用</span><p>求人を見た人は、まず社名で検索します。そのとき最初に開くのがホームページです。現場の写真、働く人、仕事の一日が伝わる採用ページを<span class="u">用意します。</span></p></div>
+      <div><span class="k">元請・発注者</span><p>「きちんとした会社」だと、初めての相手にも分かるように。建設業許可、有資格者、主な施工実績を整理して掲載します。公共工事の実績も<span class="u">載せられます。</span></p></div>
+      <div><span class="k">地域のお客様</span><p>外構やリフォームは、施工事例で決まります。写真の多い施工事例と、問い合わせのしやすさが効きます。</p></div>
+    </div>
+  </section>
+
+  <section id="edit" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">03 · 公開後</span></span>
+    <div class="edit">
+      <div>
+        <h2 class="sec"><span class="u">公開したら終わり、</span><span class="u">ではありません。</span></h2>
+        <p class="sub">施工事例の追加や写真の差し替えは、御社の管理画面から行えます。日本語の画面で、スマートフォンからも操作できます。</p>
+        <ul class="sai-bullets">
+          <li><b>WordPressではありません。</b>プラグインの更新に追われることも、更新のたびに表示が崩れることもありません。</li>
+          <li><b>写真2枚と数行で、施工事例が1件できます。</b>操作は初回にご説明します。</li>
+          <li><b>任せることもできます。</b>更新おまかせプラン（月額15,000円・税別）では、送っていただいた写真で私が追加します。</li>
+        </ul>
+      </div>
+      <div class="sai-tile panel">
+        <div class="chrome"><b>鎌田工務店</b><span>施工事例</span><span>お知らせ</span><span>会社概要</span><span class="sp"></span><span class="who">鎌</span></div>
+        <div class="body">
+          <div class="crumb">施工事例 › <b>新規追加</b></div>
+          <div class="field"><label>工事名</label><div class="in">駐車場の舗装とカーポート設置</div></div>
+          <div class="field"><div class="row">
+            <div><label>施工前の写真</label><div class="pic"><img src="img/parking-before.jpg" alt=""><span>変更</span></div></div>
+            <div><label>施工後の写真</label><div class="pic"><img src="img/parking-after.jpg" alt=""><span>変更</span></div></div>
+          </div></div>
+          <div class="field"><div class="row">
+            <div><label>工事の種類</label><div class="in">外構工事</div></div>
+            <div><label>地域</label><div class="in">宮城県利府町</div></div>
+          </div></div>
+          <div class="field"><label>ひとこと</label><div class="in">砂利の駐車場を舗装し、2台分のカーポートを設置しました。</div></div>
+          <span class="sai-btn primary save">保存して公開</span>
+        </div>
+      </div>
+      <div class="mocknote">※ 管理画面のイメージです。実際の画面は御社の内容に合わせて設定します。</div>
+    </div>
+  </section>
+
+  <section id="price" class="sai-night sai-rise">
+    <span class="sai-ember"></span>
+    <span class="sai-stamp corner on-night">税別</span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">04 · 料金</span></span>
+    <h2 class="sec sai-w-title"><span class="u">制作費 200,000円から。</span><span class="u">必要なものだけ、</span><span class="u">足してください。</span></h2>
+    <div class="sai-w-sub">基本の内容で、5ページの会社サイトが完成します。撮影や採用ページは、必要なときだけ。項目にチェックを入れると、概算が出ます。</div>
+    <div class="price-grid">
+      <div class="col-left">
+      <div class="base">
+        <span class="sai-port on-night"><span class="disc"></span><span class="ptext">基本</span></span>
+        <div class="amt">¥200,000<small>税別</small></div>
+        <ul>
+          <li>オリジナルデザイン<span class="u">（テンプレートは使いません）</span></li>
+          <li>5ページ：トップ・事業内容・施工事例<span class="u">・会社概要</span><span class="u">・お問い合わせ</span></li>
+          <li>スマートフォン対応</li>
+          <li>御社で更新できる管理画面<span class="u">（日本語）</span></li>
+          <li>お問い合わせフォーム</li>
+          <li><span class="u">検索エンジン向けの基本設定</span><span class="u">（Google Search Console 登録）</span></li>
+          <li>操作説明1回、<span class="u">公開後30日間のサポート</span></li>
+        </ul>
+        <p class="own">サイトのデータ、ドメイン、サーバーはすべて御社名義です。サーバー・ドメインは御社名義でご契約いただきます<span class="u">（実費は年間およそ20,000円）。</span></p>
+        <p class="own">管理画面は買い切りライセンスのCMS「Kirby」を使います。ライセンス費は<span class="u">17,000円前後</span>です（会社の規模によっては<span class="u">60,000円前後</span>になる場合があります）。<span class="u">ご相談時に確定してお伝えし、</span><span class="u">実費でご請求します。</span></p>
+      </div>
+      </div>
+      <div class="sai-callout wide">
+        <div class="cap">補助金について<span class="u">（2026年8月30日 確認）</span></div>
+        <p>「小規模事業者持続化補助金（第20回）」は、常時使用する従業員が<span class="u">20人以下</span>の建設業も対象です。ホームページ制作費の3分の2が補助されます（ウェブサイト関連費に対する補助金は<span class="u">30万円まで</span>）。商工会議所・商工会が発行する様式4の受付は<span class="u">2026年12月4日</span>まで、申請は<span class="u">12月15日17時</span>までです。ほかの経費と一緒に申請する必要があり、採択は保証されません。書類の準備はお手伝いします。</p>
+      </div>
+      <div class="addons" id="addons">
+        <h4>追加できるもの</h4>
+        <div class="hint" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;"><span>チェックを入れると、下の概算に反映されます。</span><button type="button" class="preset" id="preset">よくある構成にする</button></div>
+        <label class="opt"><input type="checkbox" data-price="60000"><span class="t">施工事例ギャラリー</span><span class="p">¥60,000</span><small class="d">工事の種類・地域で絞り込み。事例が増える会社に。</small></label>
+        <label class="opt"><input type="checkbox" data-price="80000"><span class="t">採用ページ</span><span class="p">¥80,000</span><small class="d">先輩の声、仕事の一日、募集要項。</small></label>
+        <label class="opt"><input type="checkbox" data-price="30000"><span class="t">協力会社募集ページ</span><span class="p">¥30,000</span><small class="d">対象工種、エリア、<span class="u">必要な資格。</span></small></label>
+        <label class="opt"><input type="checkbox" data-price="70000"><span class="t">写真撮影（半日）</span><span class="p">¥70,000</span><small class="d">半日かけて現場と会社を撮影します。<span class="u">宮城県内（県外は交通費を別途）。</span></small></label>
+        <label class="opt"><input type="checkbox" data-price="80000"><span class="t">ドローン空撮（半日）</span><span class="p">¥80,000</span><small class="d">現場の全景、完成した構造物。</small></label>
+        <label class="opt"><input type="checkbox" data-price="20000"><span class="t">Googleビジネスプロフィール</span><span class="p">¥20,000</span><small class="d">地図検索で正しく表示されるように整備します。</small></label>
+        <label class="opt"><input type="checkbox" data-price="20000"><span class="t">ページ追加（1ページ）</span><span class="p">¥20,000</span><small class="d">安全への取り組み、沿革、ISO・認定など。</small></label>
+        <label class="opt"><input type="checkbox" data-price="30000" data-nosub="1"><span class="t">補助金申請の書類サポート</span><span class="p">¥30,000</span><small class="d">持続化補助金の事業計画づくりをお手伝い<span class="u">（申請は御社名義）。</span></small></label>
+      </div>
+    </div>
+
+    <div class="ledger-wrap" id="ledger">
+      <div class="rows">
+        <div class="total"><span class="k">概算（税別）</span><span class="lead"></span><span class="v"><span id="total">¥200,000</span></span></div>
+        <div class="trow"><span>消費税 10%</span><span class="lead"></span><span class="v" id="tax">¥20,000</span></div>
+        <div class="trow pay"><span><span class="long">お支払い合計（税込）</span><span class="short">税込合計</span></span><span class="lead"></span><span class="v" id="gross">¥220,000</span></div>
+        <div class="trow"><span><span class="long">補助金の目安（採択された場合）</span><span class="short">補助金の目安（採択時）</span></span><span class="lead"></span><span class="v" id="subsidy">−¥133,333</span></div>
+        <div class="trow net"><span><span class="long">実質のご負担の目安</span><span class="short">実質負担の目安</span></span><span class="lead"></span><span class="v" id="net">¥86,667</span></div>
+        <div class="trow"><span><span class="long">別途 実費（ライセンス・サーバー）</span><span class="short">別途 実費</span></span><span class="lead"></span><span class="v">約¥37,000〜</span></div>
+              </div>
+      <div class="side">
+        <div class="tnote">小規模事業者持続化補助金（一般型・通常枠）第20回での試算です。制作費（税抜）の3分の2が補助され、ウェブサイト関連費に対する補助金は30万円が上限です（補助金全体の上限は<span class="u">50万円</span>、課税事業者は消費税分を除いて申請）。ウェブサイト関連費のみでの申請はできず、ほかの経費と一緒に申請します。採択は保証されません。別途 実費は初年度の目安です。出典：<a href="https://r6.jizokukahojokin.info/doc/r6_koubover8_ip20.pdf" target="_blank" rel="noopener" style="color: inherit;">第20回公募要領 第8版「7．補助対象経費」</a>（2026年7月21日）。</div>
+
+        <div style="margin-top: 16px;"><a class="sai-btn primary" href="#contact" id="quote-btn">この内容で相談する</a></div>
+        <p id="quote-text" hidden></p>
+      </div>
+    </div>
+
+    <div class="tiers">
+      <div class="tier">
+        <span class="k">保守 · 管理プラン</span>
+        <h4><span class="u">サーバーと管理画面は、</span><span class="u">こちらで運用します。</span></h4>
+        <div class="amt">¥8,000<small>/月 税別</small></div>
+        <div class="term">12ヶ月契約</div>
+        <ul>
+          <li><b>サーバー・ドメインの管理</b>（御社名義のまま）</li>
+          <li><b>システムとセキュリティの更新</b></li>
+          <li><b>毎月のバックアップ</b></li>
+          <li><b>軽微な修正</b>（月2回まで）</li>
+          <li><b>翌営業日までのご返信</b></li>
+        </ul>
+      </div>
+      <div class="tier rec">
+        <span class="k">保守 · 更新おまかせプラン</span>
+        <h4><span class="u">写真を送るだけ。</span><span class="u">あとは私が更新します。</span></h4>
+        <div class="amt">¥15,000<small>/月 税別</small></div>
+        <div class="term">12ヶ月契約</div>
+        <ul>
+          <li>管理プランの内容すべて</li>
+          <li>修正・更新の<b>回数制限なし</b>（大幅なデザイン変更は別途お見積りします）</li>
+          <li><b>施工事例の追加</b>を代行</li>
+          <li>月1回、サイトの状況をご報告</li>
+          <li>送っていただいた写真の<span class="u"><b>整理・補正</b>もこちらで対応</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sai-w-note">保守は12ヶ月契約です。保守なしでも運用できます。お支払いは、着手時に50%、公開後に50%です。請求書の形式（適格請求書の可否を含む）は、<span class="u">書面でお伝えします。</span></div>
+  </section>
+
+  <section id="flow" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">05 · 進め方</span></span>
+    <h2 class="sec"><span class="u">ご相談から公開まで、</span><span class="u">4〜6週間。</span></h2>
+    <p class="sub">お忙しい社長に、宿題はほとんどお出ししません。ご用意いただくものは3つだけです。</p>
+    <div class="sai-path">
+      <div class="step"><span class="num">01 · ご相談（30分・無料）</span><h4>今のサイトと、何のために作るかを伺います</h4><p>お電話かオンラインで。その場で概算をお伝えします。</p></div>
+      <div class="step"><span class="num">02 · 取材</span><h4>今の会社と現場を見せていただきます</h4><p>東北は直接伺います。それ以外の地域はオンラインで進めます。<b>撮影は追加オプションです</b><span class="u">（宮城県外は交通費を別途）。</span></p></div>
+      <div class="step"><span class="num">03 · 制作</span><h4>2〜3週間でデザイン案をお見せします</h4><p>修正は2回まで含みます。文章はこちらで整えます。</p></div>
+      <div class="step end"><span class="num">04 · 公開・操作説明</span><h4>公開後30日間はサポートします</h4><p>画面を見ながら操作をご説明します。<span class="u">ご不明な点は、お電話でもどうぞ。</span></p></div>
+    </div>
+    <h4 class="supply-h">ご用意いただくもの</h4>
+    <div class="supply">
+      <div class="sai-tile"><b>会社の基本情報</b><span>会社概要、建設業許可番号、主な工事の種類</span></div>
+      <div class="sai-tile"><b>施工写真</b><span>あるものだけで大丈夫です。スマートフォンの写真でも。</span></div>
+      <div class="sai-tile"><b>ロゴ</b><span>あれば。なければ制作できます。</span></div>
+    </div>
+  </section>
+
+  <section id="about" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">06 · 担当者について</span></span>
+    <div class="about">
+      <div>
+        <h2 class="sec"><span class="u">担当は、</span><span class="u">代表の私ひとりです。</span></h2>
+        <p class="sub" style="margin-bottom: 14px">アレック・スティーブンス。米国出身、仙台在住。ウェブ制作と、業務へのAI活用が専門です。先ほどご紹介した鎌田工務店のサイトは、<span class="u">私が制作しました。</span></p>
+        <p class="sub" style="margin-bottom: 0">ひとりで対応しているため、同時にお受けできるのは数社までです。そのぶん、現場まで伺い、公開後も最後まで私が対応します。</p>
+      </div>
+      <div class="people one">
+        <div class="person"><img src="img/alec.jpg" alt="アレック・スティーブンス"><div class="nm">アレック・スティーブンス</div><div class="rl">Stephens AI 代表 · 仙台</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">07 · ご質問</span></span>
+    <h2 class="sec">よくあるご質問</h2>
+    <details><summary><span class="q"><span class="u">日本語で</span><span class="u">打ち合わせできますか。</span></span></summary><p>はい。ご相談も打ち合わせも、日本語で対応します。仙台に住み、普段の仕事も日本語です。契約書やお見積りなど大切な書類は、日本語ネイティブの校正者が必ず確認します。</p></details>
+    <details><summary><span class="q"><span class="u">写真が</span><span class="u">ほとんどありません。</span></span></summary><p>撮影に伺います（追加オプション）。スマートフォンで撮った写真でも、選び方と補正で見違えます。まずはあるものを見せてください。</p></details>
+    <details><summary><span class="q"><span class="u">本当に自分たちで</span><span class="u">更新できますか。</span></span></summary><p>はい。日本語の管理画面で、文章と写真の差し替え、施工事例の追加ができます。操作は初回にご説明します。不安な場合は、更新おまかせプランをご利用ください。</p></details>
+    <details><summary><span class="q"><span class="u">建設業許可や有資格者、</span><span class="u">公共工事の実績は</span><span class="u">載せられますか。</span></span></summary><p>はい。むしろ載せることをお勧めします。元請や発注者が最初に確認する情報です。</p></details>
+    <details><summary><span class="q"><span class="u">宮城県外でも</span><span class="u">頼めますか。</span></span></summary><p>はい。全国対応です。東北は現場に伺い、それ以外の地域はオンラインで進めます。</p></details>
+    <details><summary><span class="q"><span class="u">途中で他社に変えたくなったら、</span><span class="u">どうなりますか。</span></span></summary><p>サイトのデータもドメインも御社名義なので、そのまま引き継げます。管理画面は一般的なPHPサーバーで動く買い切りライセンスのCMS（Kirby）で、他の制作会社でも引き継いで運用できます。私の都合で御社を縛ることはありません。</p></details>
+  </section>
+
+  <section id="contact" class="sai-pane sai-streak sai-rise pane">
+    <span class="sai-port"><span class="disc"></span><span class="ptext">08 · お問い合わせ</span></span>
+    <div class="contact">
+      <div>
+        <h2 class="sec"><span class="u">まずは、</span><br><span class="u">今のサイトを</span><span class="u">見せてください。</span></h2>
+        <p class="sub">30分の無料相談で、今のサイトの状態と、作る目的を伺います。その場で概算をお伝えします。<span class="u">売り込みはしません。</span></p>
+        <a class="big" href="tel:08033352109">080-3335-2109</a>
+        <div class="hrs">平日 9:00〜18:00（日本時間）</div>
+        <a class="mail" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+      </div>
+      <div>
+        <form class="f" id="form" action="mailto:alec@stephensai.co" method="get" data-api="/api/contact">
+          <div class="two">
+            <div><label for="co">会社名</label><input id="co" name="company" required></div>
+            <div><label for="nm">お名前</label><input id="nm" name="name" required></div>
+          </div>
+          <div class="two">
+            <div><label for="em">メールアドレス</label><input id="em" name="email" type="email" required></div>
+            <div><label for="tl">電話番号（任意）</label><input id="tl" name="tel" type="tel"></div>
+          </div>
+          <div><label for="url">今のサイト（あれば）</label><input id="url" name="url" placeholder="https://"></div>
+          <div><label for="msg">ご相談内容</label><textarea id="msg" name="message" placeholder="例：採用に使えるサイトにしたい。写真は少しあります。"></textarea></div>
+          <div class="privacy">いただいた情報は、ご相談への返信以外には使いません。</div>
+          <div><button class="sai-btn primary" type="submit">送信する</button></div>
+        </form>
+        <div class="sai-tile sent" id="sent"><h4>ありがとうございます。</h4><p>内容を受け取りました。翌営業日までに、alec@stephensai.co からご返信します。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sai-pane foot">
+    <div><b>Stephens AI<span style="white-space:nowrap">（スティーブンス・エーアイ）</span></b>代表　アレック・スティーブンス<span style="white-space:nowrap">（Alec Stephens）</span><br>宮城県仙台市<br>ウェブサイト制作・業務のAI活用支援</div>
+    <div><b>連絡先</b><a href="tel:08033352109">080-3335-2109</a><br><a href="mailto:alec@stephensai.co">alec@stephensai.co</a><br>平日 9:00〜18:00（日本時間）</div>
+    <div><b>リンク</b><a href="https://kamata-koumuten.co.jp/" target="_blank" rel="noopener">制作実績：鎌田工務店</a><br><a href="https://stephensai.co/">English site</a>（会社案内）</div>
+  </div>
+  <div class="copy">© 2026 Stephens AI</div>
+
+</div>
+
+<!-- SAI:JS -->
+<script>
+/* Lens v3 — behaviour layer. Inlined by scripts/inline_kit.py at the SAI:JS marker.
+   Three things, nothing else: the dock follows the reader, copy buttons copy,
+   segmented toggles switch. Added 2026-08-28 (Alec: "the black part of the pill
+   needs to move", and "little parts of the HTML, when necessary, interactive"). */
+(function () {
+  'use strict';
+  var OFFSET = 96;
+
+  /* Dock: the active pill follows scroll and moves on click. */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sai-dock nav a[href^="#"]'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function setOn(i) { links.forEach(function (a, j) { a.classList.toggle('on', i === j); }); }
+  function top(el) { return el.getBoundingClientRect().top + window.scrollY; }
+  function spy() {
+    var y = window.scrollY + OFFSET + 8, cur = -1;
+    targets.forEach(function (t, i) { if (t && top(t) <= y) cur = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) cur = links.length - 1;
+    setOn(cur);
+  }
+  if (links.length) {
+    links.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = targets[i]; if (!t) return;
+        e.preventDefault(); setOn(i);
+        window.scrollTo({ top: top(t) - OFFSET, behavior: (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+        if (history.replaceState) history.replaceState(null, '', '#' + t.id);
+      });
+    });
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () { spy(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener('load', spy); spy();
+  }
+
+  /* Copy buttons: <button class="sai-copy" data-sai-copy="#id">. Copies the target's text. */
+  document.querySelectorAll('[data-sai-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var t = document.querySelector(btn.getAttribute('data-sai-copy')); if (!t) return;
+      var label = btn.textContent;
+      var done = function () { btn.textContent = btn.getAttribute('data-sai-done') || 'Copied'; btn.classList.add('done');
+        setTimeout(function () { btn.textContent = label; btn.classList.remove('done'); }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t.innerText).then(done);
+      else { var r = document.createRange(); r.selectNodeContents(t); var s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); s.removeAllRanges(); done(); }
+    });
+  });
+
+  /* Segmented toggles: <div class="sai-seg" data-sai-seg="name"><button data-value="a" class="on">…</button></div>
+     Elements with data-sai-show="name:a" show only for that value.
+     Elements with data-sai-val="name" data-sai-map='{"a":"text"}' swap their text. */
+  document.querySelectorAll('[data-sai-seg]').forEach(function (seg) {
+    var name = seg.getAttribute('data-sai-seg');
+    var apply = function (value) {
+      seg.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-value') === value); });
+      document.querySelectorAll('[data-sai-show^="' + name + ':"]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-sai-show').slice(name.length + 1) !== value;
+      });
+      document.querySelectorAll('[data-sai-val="' + name + '"]').forEach(function (el) {
+        try { var map = JSON.parse(el.getAttribute('data-sai-map')); if (value in map) el.textContent = map[value]; } catch (e) {}
+      });
+    };
+    seg.querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-value')); }); });
+    var first = seg.querySelector('button.on') || seg.querySelector('button'); if (first) apply(first.getAttribute('data-value'));
+  });
+})();
+</script>
+<!-- /SAI:JS -->
+<script>
+(function(){
+  var boxes=document.querySelectorAll('#addons input[type=checkbox]'), total=document.getElementById('total'), qt=document.getElementById('quote-text'), msg=document.getElementById('msg');
+  function fmt(n){ return '¥'+n.toLocaleString('ja-JP'); }
+  function calc(){
+    var sum=200000, basis=200000, items=[];
+    boxes.forEach(function(b){ if(b.checked){ var v=+b.getAttribute('data-price'); sum+=v;
+      if(!b.getAttribute('data-nosub')) basis+=v;   // only ウェブサイト関連費 counts toward the subsidy
+      items.push(b.parentNode.querySelector('.t').textContent.trim()); } });
+    var tax=Math.round(sum*0.1), gross=sum+tax, sub=Math.min(Math.round(basis*2/3),300000), net=gross-sub;
+    total.textContent=fmt(sum); document.getElementById('tax').textContent=fmt(tax); document.getElementById('gross').textContent=fmt(gross);
+    document.getElementById('subsidy').textContent='−'+fmt(sub); document.getElementById('net').textContent=fmt(net);
+    qt.textContent='基本 ¥200,000'+(items.length?' ＋ '+items.join('、'):'')+' ＝ 概算 '+fmt(sum)+'（税別）、税込 '+fmt(gross)+'、補助金が採択された場合の実質 '+fmt(net);
+  }
+  var preset=document.getElementById('preset'), presetOn=false;
+  function inPreset(b){ var pr=b.getAttribute('data-price');
+    return (pr==='80000' && b.parentNode.querySelector('.t').textContent.indexOf('採用')===0) || pr==='70000'; }
+  function syncPreset(){
+    var matches=true; boxes.forEach(function(b){ if(b.checked!==inPreset(b)) matches=false; });
+    presetOn=matches; preset.textContent = presetOn ? '基本のみに戻す' : 'よくある構成にする';
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', function(){ calc(); syncPreset(); }); });
+  calc(); syncPreset();
+  preset.addEventListener('click', function(){
+    if(presetOn){ boxes.forEach(function(b){ b.checked=false; }); }
+    else { boxes.forEach(function(b){ b.checked=inPreset(b); }); }
+    calc(); syncPreset();
+    document.getElementById('ledger').scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  });
+
+  document.getElementById('quote-btn').addEventListener('click', function(){ if(msg && !msg.value) msg.value=qt.textContent+'\n'; });
+
+  /* form: POST to the site's /api/contact (Resend). Falls back to mail if the API is unreachable. */
+  var form=document.getElementById('form'), sent=document.getElementById('sent');
+  form.addEventListener('submit', function(e){
+    e.preventDefault(); var f=form.elements, btn=form.querySelector('button'); btn.disabled=true; btn.textContent='送信中…';
+    var message='会社名：'+f.company.value+'\n電話番号：'+(f.tel.value||'')+'\n今のサイト：'+(f.url.value||'')+'\n\n'+(f.message.value||'');
+    var payload={name:f.name.value, email:f.email.value, message:message};
+    fetch(form.getAttribute('data-api'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); form.style.display='none'; sent.style.display='block'; })
+      .catch(function(){ btn.disabled=false; btn.textContent='送信する';
+        location.href='mailto:alec@stephensai.co?subject='+encodeURIComponent('ホームページ制作のご相談：'+f.company.value)+'&body='+encodeURIComponent('お名前：'+f.name.value+'\nメール：'+f.email.value+'\n'+message); });
+  });
+
+  /* mobile action bar after the hero */
+  var bar=document.getElementById('barm'), hero=document.querySelector('.hero');
+  function chk(){ if(!bar||!hero) return; bar.classList.toggle('show', window.scrollY > hero.offsetTop + hero.offsetHeight - 80); }
+  window.addEventListener('scroll', chk, {passive:true}); chk();
+})();
+</script>
+</body>
+</html>
