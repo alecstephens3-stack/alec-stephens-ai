@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async rewrites() {
+    // The Japanese construction landing page ships as a self-contained static
+    // file in public/jp/. Next serves it at /jp/index.html; this makes /jp work.
+    return [{ source: "/jp", destination: "/jp/index.html" }];
+  },
   async redirects() {
     return [
       // v4 folded the eyecare page into the home page. Keep the old URLs
