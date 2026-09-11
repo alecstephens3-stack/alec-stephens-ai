@@ -53,7 +53,10 @@ export function Footer() {
 
         <div className="mt-7 border-t border-rule-soft pt-5 text-center sm:text-left">
           <p className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2">
-            &copy; {new Date().getFullYear()} {SITE_NAME}
+            &copy; {new Date().getFullYear()} {SITE_NAME} LLC
+          </p>
+          <p className="mt-1.5 text-[13.5px] text-ink-2">
+            Stephens AI LLC is a Kansas limited liability company based in Wichita, Kansas.
           </p>
         </div>
       </div>
