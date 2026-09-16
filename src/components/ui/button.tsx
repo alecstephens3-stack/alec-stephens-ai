@@ -13,14 +13,24 @@ export function ButtonLink({
   children,
   className,
   external = false,
+  download = false,
 }: {
   href: string;
   variant?: ButtonVariant;
   children: React.ReactNode;
   className?: string;
   external?: boolean;
+  /** A file on this site (a PDF, say): a plain anchor with the download attribute. */
+  download?: boolean;
 }) {
   const classes = cn("sai-btn", variant, className);
+  if (download) {
+    return (
+      <a href={href} className={classes} download>
+        {children}
+      </a>
+    );
+  }
   if (external) {
     return (
       <a href={href} className={classes} target="_blank" rel="noopener noreferrer">

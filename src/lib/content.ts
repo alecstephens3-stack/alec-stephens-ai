@@ -24,7 +24,7 @@ export const SITE_DESCRIPTION =
 
 export const NAV_LINKS = [
   { label: "The front desk", href: "/#day" },
-  { label: "Case study", href: "/#proof" },
+  { label: "Case studies", href: "/#proof" },
   { label: "How we work", href: "/#how" },
   { label: "FAQ", href: "/#faq" },
 ];
@@ -115,9 +115,9 @@ export const PROOF = {
       label: "Rewritten from the clinic's own files, checked one by one with the front office manager.",
     },
     {
-      value: "6",
-      unit: "weeks",
-      label: "From their documents to a live tool. In daily use since August 2026.",
+      value: "0",
+      unit: "patient records",
+      label: "Nothing about patients goes in it, by design. In daily use since August 2026.",
     },
   ],
   before: {
@@ -129,35 +129,87 @@ export const PROOF = {
   after: {
     title: "What we built",
     body: [
-      "One tool that's open on every front desk screen. We rewrote 35 protocol pages from the clinic's own files (scheduling, insurance, charges, recall, triage, the daily checklist) and built four small decision tools for the questions anyone can get wrong: which doctor can see this patient, what this year's price is, whether to collect or bill, and how urgent the call is. Two managers can edit any page themselves, with a history of every change and one-click undo. Staff sign in with their clinic email, and there's no patient information in it.",
-      "It took about six weeks from getting their files to the tool being live. It runs on hosting the clinic owns, so it keeps working whether or not we're around.",
+      "One tool that's open on every front desk screen. We rewrote 35 protocol pages from the clinic's own files (scheduling, insurance, charges, recall, triage, the daily checklist) and built four small decision tools for the questions anyone can get wrong: which doctor can see this patient, what this year's price is, whether to collect or bill, and how urgent the call is. Two managers can edit any page themselves, with a history of every change and one-click undo. Staff sign in with their clinic email, there's no patient information in it, and it runs on hosting the clinic owns.",
     ],
   },
   mock: {
-    window: "Front desk knowledge base",
-    placeholder: "Try “red eye”, “KanCare”, or “what does an exam cost”",
+    app: "Front Desk",
+    nav: ["Home", "Tools", "Browse"],
+    heading: "What's happening on the call?",
+    query: "vision plan, medical complaint",
+    chips: ["Red eye call", "Book a new patient", "Price of an exam", "Run recall"],
     resultTitle: "Refraction: collect or bill?",
+    resultTag: "Protocol",
     resultBody:
       "The vision plan covers the refraction only when the visit bills as a routine exam.",
     resultRule:
-      "Exception: if the visit bills medical, the refraction is not covered. Collect at checkout.",
-    resultMeta: "Last updated by your office manager · every change saved, one-click undo",
+      "If the visit bills medical, the refraction is not covered. Collect at checkout.",
+    resultMeta: "Last edited by the office manager · one-click undo",
     tools: [
-      "Which doctor can see this patient",
-      "This year's price",
-      "Collect or bill",
-      "How urgent is the call",
+      { label: "Which doctor can see this patient", icon: "doctor" },
+      { label: "This year's price", icon: "price" },
+      { label: "Collect or bill", icon: "bill" },
+      { label: "How urgent is the call", icon: "pulse" },
     ],
     caption:
-      "You type the situation and get the protocol. The four tools walk through the questions in order so the exception can't get skipped.",
+      "Based on the live app, with the clinic's prices and rules left out. Staff type what's happening on the call and get the protocol, with the exception called out.",
   },
   footnote: {
     lead: "How we got the numbers.",
     body: "About four questions a day that used to take ten minutes of digging now take one search. That is about 200 hours a year, roughly $4,500 in pay. Then shorter training: the clinic said a new hire took about six months to learn the job. Cut that in half for two or three hires a year and that is another $8,000 to $12,000. Both are estimates from the clinic's own numbers, kept on the low side.",
   },
   ctaPrimary: { label: "Read the full case study", href: CASE_STUDY_URL },
-  ctaSecondary: { label: "Book a 20-minute call", href: CALENDLY },
+  ctaSecondary: { label: "Download the PDF", href: "/case-studies/front-desk-knowledge-base.pdf" },
 };
+
+/**
+ * The PDF shelf under the front desk case study. One page each, built from
+ * scratchpad/pdfkit/build.py. Only the front desk study names its clinic; these
+ * use plain descriptors and never claim to be separate clients.
+ */
+export const CASE_STUDIES = {
+  title: "More case studies",
+  lede: "One page each: the old way, what we built, and how we got the numbers.",
+  linkLabel: "Open the PDF",
+  items: [
+    {
+      title: "Time off and payroll",
+      context: "Independent healthcare practice",
+      from: "15 to 20 min",
+      to: "~1 min",
+      unit: "per request",
+      summary: "Staff ask from their phones, the manager approves in one tap, and a payroll sheet shows up every other Monday.",
+      status: "Live since spring 2026",
+      tone: "good",
+      pdf: "/case-studies/time-off-and-payroll.pdf",
+      thumb: "/case-studies/time-off-and-payroll-thumb.webp",
+    },
+    {
+      title: "Vendor bills",
+      context: "Independent clinic",
+      from: "",
+      to: "~1¢",
+      unit: "to read each bill",
+      summary: "Bills get read, renamed and filed into the right vendor folder after one review. Nothing moves until someone clicks Go.",
+      status: "Rolling out, September 2026",
+      tone: "warn",
+      pdf: "/case-studies/vendor-bills.pdf",
+      thumb: "/case-studies/vendor-bills-thumb.webp",
+    },
+    {
+      title: "Admin tools",
+      context: "Multi-department practice",
+      from: "5 hand edits",
+      to: "1 click",
+      unit: "to cancel a request",
+      summary: "A menu inside the office's own sheet for the exceptions: missed days, new hires, departures and cancellations.",
+      status: "Live since May 2026",
+      tone: "good",
+      pdf: "/case-studies/admin-tools.pdf",
+      thumb: "/case-studies/admin-tools-thumb.webp",
+    },
+  ],
+} as const;
 
 export const HOW = {
   title: "How a project goes.",
@@ -175,7 +227,7 @@ export const HOW = {
     {
       n: "03",
       title: "Build and test with your staff",
-      body: "We build from your own documents and show your team early, so by the time it goes live it's answering the questions they were already asking. About six weeks.",
+      body: "We build from your own documents and show your team early, so what goes live matches how they work. Plan on about two weeks.",
     },
     {
       n: "04",
@@ -202,7 +254,6 @@ export const HOW = {
 export const FOUNDERS_SECTION = {
   title: "It's the two of us.",
   lede: "You'll be talking to the people who build it, from the first call on.",
-  note: "Stephens AI LLC is registered in Kansas. The two of us work from Asia, so if you send a question in the afternoon you'll usually have an answer by the next morning, Central time.",
 };
 
 export const FOUNDERS = [
@@ -243,12 +294,8 @@ export const FAQ = [
     a: "Your office manager, right inside the tool. Every change is saved and can be undone with one click. If you'd rather we go through it with your office manager every so often, that's what the monthly support is for.",
   },
   {
-    q: "What happens if you two disappear?",
-    a: "You own the tool and every page in it, and you can export everything as plain files any time. The content reads fine without our software, so you'd still have all of it.",
-  },
-  {
     q: "How long until staff are using it?",
-    a: "About six weeks to go live. Your team is involved early on, so by launch it's answering the questions they were already asking.",
+    a: "About two weeks to go live. Your team is involved early on, so by launch it's answering the questions they were already asking.",
   },
 ];
 
