@@ -1342,7 +1342,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-<p class="who comp"><b>Compliance.</b> Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</p>              <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
+<p class="who comp"><b>Compliance.</b> Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</p>              <p class="who"><b>My role.</b> I built it: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, and the tests. A second engineer ran the pre-merge security review and the deployment.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/knowledge-base">Open the build</a>
@@ -1359,7 +1359,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               <div><dt>Where it runs</dt><dd>Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic&#39;s domain. Installed as a PWA on the front desk iPad and PCs.</dd></div>
               <div><dt>Tests and evals</dt><dd>21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.</dd></div>
               <div><dt>Cost and latency</dt><dd>$0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.</dd></div>
-              <div><dt>Guardrails</dt><dd>Jusheen&#39;s pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.</dd></div>
+              <div><dt>Guardrails</dt><dd>A pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.</dd></div>
               <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>We built a plain PWA with search instead of the AI assistant layer the first scope had. Search on 35 well-structured pages answers the front desk&#39;s question faster than a chat box, costs nothing to run, and never invents a rule. The assistant is on the roadmap only if search ever fails a real staff question.</p></div></dd></div>
 <div class="wide"><dt>Code</dt><dd><a class="repo" href="https://github.com/alecstephens3-stack/supabase-team-knowledge-base">github.com/alecstephens3-stack/supabase-team-knowledge-base</a><br><span style="color:var(--sai-ink-2);font-size:14.5px">The pattern, rebuilt without any clinic content: RLS, domain-gated auth, revision history, sanitizer, offline sync.</span></dd></div>            </dl>
             <div class="acts">
@@ -1391,7 +1391,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-<p class="who comp"><b>Compliance.</b> Employee data only, no patient data, kept entirely inside the clinic&#39;s own Google Workspace. Built under the same business associate agreement as the clinic&#39;s other systems.</p>              <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
+<p class="who comp"><b>Compliance.</b> Employee data only, no patient data, kept entirely inside the clinic&#39;s own Google Workspace. Built under the same business associate agreement as the clinic&#39;s other systems.</p>              <p class="who"><b>My role.</b> I built it: the engine, the accrual and date math, the migration, the payroll report, the tests, and the guides. A second engineer added the employee-management dialogs and audited the sheets.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/pto-payroll">Open the build</a>
@@ -1440,7 +1440,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-<p class="who comp"><b>Compliance.</b> HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</p>              <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
+<p class="who comp"><b>Compliance.</b> HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</p>              <p class="who"><b>My role.</b> I built it: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, and the synthetic test set. A second engineer ran the QuickBooks trial tests.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/invoice-agent">Open the build</a>
@@ -1489,7 +1489,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>Who built it.</b> Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.</p>
+              <p class="who"><b>My role.</b> I built all of it as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/ai-lab">Open the build</a>
@@ -1538,7 +1538,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>Who built it.</b> Alec: all of it.</p>
+              <p class="who"><b>My role.</b> I built all of it.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/coaching-aios">Open the build</a>
@@ -1587,7 +1587,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>Who built it.</b> Alec: all of it, with the company&#39;s own photography.</p>
+              <p class="who"><b>My role.</b> I built all of it, with the company&#39;s own photography.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/construction-site">Open the build</a>
@@ -1646,7 +1646,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>Who built it.</b> Alec, as English curriculum specialist turned AI integration lead.</p>
+              <p class="who"><b>My role.</b> I built it, as the English curriculum specialist who became the AI integration lead.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/curriculum-system">Open the build</a>
@@ -1695,7 +1695,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>Who built it.</b> Alec.</p>
+              <p class="who"><b>My role.</b> I built all of it.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/aios">Open the build</a>
@@ -1750,7 +1750,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/alec-stephens-55b392213/">Alec Stephens</a></dd>
       <dt>Upwork</dt><dd><a href="https://www.upwork.com/freelancers/~0144c4c3757a94de2e">@AlecStephens, 5+ years, 100% Job Success</a></dd>
     </dl>
-    <p class="cofounder">Jusheen Kim, co-founder, ex-J.P. Morgan lead software engineer. Where a build says Jusheen, he built that part. <a href="https://www.linkedin.com/in/jusheenkim">LinkedIn</a>.</p>
+    <p class="cofounder">Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer. <a href="https://www.linkedin.com/in/jusheenkim">LinkedIn</a></p>
   </section>
 
   <footer class="sai-footer">

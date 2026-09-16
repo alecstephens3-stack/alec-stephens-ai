@@ -1192,7 +1192,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
           <div><dt>Shipped</dt><dd>Live 2026-08-07. About 6 weeks from scope to live.</dd></div>
           <div><dt>Stack</dt><dd><ul class="chips"><li>Supabase</li><li>PostgreSQL with row-level security</li><li>Google OAuth</li><li>Vanilla JS PWA</li><li>Vercel</li><li>GitHub Actions</li><li>DOMPurify</li><li>Claude Code</li></ul></dd></div>
 <div><dt>Compliance</dt><dd>Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</dd></div>          <div><dt>Cost to run</dt><dd>$0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.</dd></div>
-          <div><dt>Who built it</dt><dd>Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</dd></div>
+          <div><dt>My role</dt><dd>I built it: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, and the tests. A second engineer ran the pre-merge security review and the deployment.</dd></div>
         </dl>
       </aside>
     </div>
@@ -1238,7 +1238,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       <div><dt>Where it runs</dt><dd>Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic&#39;s domain. Installed as a PWA on the front desk iPad and PCs.</dd></div>
       <div><dt>Tests and evals</dt><dd>21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.</dd></div>
       <div><dt>Cost and latency</dt><dd>$0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.</dd></div>
-      <div><dt>Guardrails</dt><dd>Jusheen&#39;s pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.</dd></div>
+      <div><dt>Guardrails</dt><dd>A pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.</dd></div>
       <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>We built a plain PWA with search instead of the AI assistant layer the first scope had. Search on 35 well-structured pages answers the front desk&#39;s question faster than a chat box, costs nothing to run, and never invents a rule. The assistant is on the roadmap only if search ever fails a real staff question.</p></div></dd></div>
 <div class="wide"><dt>Code</dt><dd><a href="https://github.com/alecstephens3-stack/supabase-team-knowledge-base">github.com/alecstephens3-stack/supabase-team-knowledge-base</a><br><span style="color:var(--sai-ink-2);font-size:14.5px">The pattern, rebuilt without any clinic content: RLS, domain-gated auth, revision history, sanitizer, offline sync.</span></dd></div>    </dl>
 <div class="links"><a class="sai-btn ghost" href="https://github.com/alecstephens3-stack/supabase-team-knowledge-base">The pattern on GitHub</a></div>  </section>
@@ -1247,7 +1247,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <span class="sai-ember"></span>
     <span class="sai-port on-night"><span class="disc"></span><span class="ptext">In their words</span></span>
     <p class="quote">“This is highly valuable, both in the short term and long term. It&#39;s already saving a lot of time.”</p>
-    <p class="quote-who">Front office manager, Wichita Family Vision</p>
+    <p class="quote-who">Jill Romines, Front Office Manager, Wichita Family Vision</p>
   </section>
 
   <section id="next" class="sai-widget sai-pane" data-night-widget data-sc-in>
