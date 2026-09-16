@@ -1107,14 +1107,15 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 
 /* ------------------------------------------------------------ deck */
 /* the stage: one card forward, the neighbours set back at the sides, everything glides */
-.deck { position: relative; perspective: 1800px; perspective-origin: 50% 40%; padding: 18px 0 26px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
-.card { position: absolute; top: 18px; left: 50%; width: min(100%, 920px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
-  transform: translateX(calc(-50% + var(--dx, 0px))) translateZ(var(--dz, 0px)) rotateY(var(--ry, 0deg)); opacity: var(--op, 1); transform-origin: 50% 50%;
-  transition: transform 760ms var(--glide), opacity 520ms var(--glide); will-change: transform; }
+.deck { position: relative; padding: 18px 0 26px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
+.card { position: absolute; top: 18px; left: 0; width: min(100%, 920px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
+  transform: translate3d(var(--x, 0px), 0, 0); opacity: var(--op, 1);
+  transition: transform 760ms var(--glide), opacity 560ms var(--glide); will-change: transform, opacity; }
+.card:not(.is-active) .face { box-shadow: none; }
 .card:not(.is-active) { cursor: pointer; }
 .card:not(.is-active) .flip { pointer-events: none; }
 .deck:not(.list) .card:not(.is-active) .face.back { visibility: hidden; }
-.deck.list { perspective: none; display: grid; grid-template-columns: 1fr; gap: 28px; height: auto !important; }
+.deck.list { display: grid; grid-template-columns: 1fr; gap: 28px; height: auto !important; }
 .deck.list .card { position: static; width: auto; transform: none; opacity: 1; cursor: auto; }
 .deck.list .card .flip { pointer-events: auto; }
 .flip { display: grid; position: relative; transform-style: preserve-3d; transition: height 760ms var(--glide); }
@@ -1198,7 +1199,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 .face.back > .lbl.back-title { display: none; }
 .no-js .face.back > .lbl.back-title, .stacked .face.back > .lbl.back-title { display: block; }
 .stacked .card, .no-js .card { position: static; width: auto; transform: none; opacity: 1; }
-.stacked .deck, .no-js .deck { height: auto !important; perspective: none; }
+.stacked .deck, .no-js .deck { height: auto !important; }
 .stacked .card .flip, .no-js .card .flip { pointer-events: auto; }
 .stacked .face, .no-js .face { animation: none !important; }
 .stacked .back .head, .stacked .back .eng > div, .stacked .back .acts { animation: none !important; opacity: 1; }
@@ -1379,7 +1380,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/pto-payroll/01-figure-flow.webp" srcset="/alec/img/pto-payroll/01-figure-flow-800.webp 800w, /alec/img/pto-payroll/01-figure-flow.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report" loading="lazy" decoding="async">
+                  <img src="/alec/img/pto-payroll/01-figure-flow.webp" srcset="/alec/img/pto-payroll/01-figure-flow-800.webp 800w, /alec/img/pto-payroll/01-figure-flow.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report" loading="eager" decoding="async">
                   <figcaption>One form, one engine, five outputs.</figcaption>
                 </figure>
               </div>
@@ -1427,7 +1428,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" loading="lazy" decoding="async">
+                  <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The review page on 12 synthetic invoices. Amounts are invented; nothing moves until Go.</figcaption>
                 </figure>
               </div>
@@ -1475,7 +1476,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/ai-lab/01-figure-architecture.webp" srcset="/alec/img/ai-lab/01-figure-architecture-800.webp 800w, /alec/img/ai-lab/01-figure-architecture.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack" loading="lazy" decoding="async">
+                  <img src="/alec/img/ai-lab/01-figure-architecture.webp" srcset="/alec/img/ai-lab/01-figure-architecture-800.webp 800w, /alec/img/ai-lab/01-figure-architecture.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>One shared context layer, agents in two tools, connections into the tools the team already used.</figcaption>
                 </figure>
               </div>
@@ -1523,7 +1524,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/coaching-aios/01-figure-brain-and-agents.webp" srcset="/alec/img/coaching-aios/01-figure-brain-and-agents-800.webp 800w, /alec/img/coaching-aios/01-figure-brain-and-agents.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one brain document read by four agents, with a maintainer agent as its only editor" loading="lazy" decoding="async">
+                  <img src="/alec/img/coaching-aios/01-figure-brain-and-agents.webp" srcset="/alec/img/coaching-aios/01-figure-brain-and-agents-800.webp 800w, /alec/img/coaching-aios/01-figure-brain-and-agents.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one brain document read by four agents, with a maintainer agent as its only editor" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>One document, four agents, one maintainer.</figcaption>
                 </figure>
               </div>
@@ -1571,7 +1572,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="lazy" decoding="async">
+                  <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The rebuilt homepage.</figcaption>
                 </figure>
               </div>
@@ -1677,7 +1678,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
               <div>
                 <figure class="shot">
-                  <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="lazy" decoding="async">
+                  <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The Bridge, the dashboard over the whole company. Two panels blurred.</figcaption>
                 </figure>
               </div>
@@ -1733,7 +1734,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <dt>Call</dt><dd><a href="https://calendly.com/alecpstephens/30min">Book 30 minutes</a></dd>
       <dt>GitHub</dt><dd><a href="https://github.com/alecstephens3-stack">github.com/alecstephens3-stack</a></dd>
       <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/alec-stephens-55b392213/">Alec Stephens</a></dd>
-      <dt>Upwork</dt><dd><a href="https://www.upwork.com/freelancers/alecstephens">@AlecStephens, 5+ years, 100% Job Success</a></dd>
+      <dt>Upwork</dt><dd><a href="https://www.upwork.com/freelancers/~0144c4c3757a94de2e">@AlecStephens, 5+ years, 100% Job Success</a></dd>
     </dl>
     <p class="cofounder">Jusheen Kim, co-founder, ex-J.P. Morgan lead software engineer. Where a build says Jusheen, he built that part. <a href="https://www.linkedin.com/in/jusheenkim">LinkedIn</a>.</p>
   </section>
@@ -1814,11 +1815,11 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   var active = 0, list = function () { return deck.classList.contains('list') || body.classList.contains('stacked'); };
   function layout() {
     if (list()) { cards.forEach(function (c) { c.classList.toggle('is-active', c === cards[active]); c.removeAttribute('inert'); c.style.visibility = ''; }); return; }
-    var w = cards[0].offsetWidth || 900, phone = innerWidth < 720, k = phone ? 1.08 : 0.9;
+    var w = cards[0].offsetWidth || 900, phone = innerWidth < 720, k = phone ? 1.08 : 0.94, base = Math.round((deck.clientWidth - w) / 2);
     cards.forEach(function (c, i) {
       var o = i - active, a = Math.abs(o);
-      c.style.setProperty('--dx', (o * w * k) + 'px'); c.style.setProperty('--dz', (a === 1 ? -140 : 0) + 'px');
-      c.style.setProperty('--ry', (a === 1 ? -o * 4 : 0) + 'deg'); c.style.setProperty('--op', a === 0 ? 1 : (a === 1 && !phone ? 0.6 : 0));
+      c.style.setProperty('--x', Math.round(base + o * w * k) + 'px');
+      c.style.setProperty('--op', a === 0 ? 1 : (a === 1 && !phone ? 0.55 : 0));
       c.style.zIndex = 6 - Math.min(a, 5); c.style.visibility = a >= 2 ? 'hidden' : ''; c.classList.toggle('is-active', a === 0);
       if (a === 0) c.removeAttribute('inert'); else c.setAttribute('inert', '');
     });
