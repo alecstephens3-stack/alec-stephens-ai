@@ -35,6 +35,12 @@ export function Footer() {
               Pricing
             </Link>
             <a
+              href="/alec"
+              className="text-sm text-ink-2 transition-colors hover:text-ink"
+            >
+              Alec&apos;s builds
+            </a>
+            <a
               href="https://www.linkedin.com/in/alec-stephens-55b392213/"
               target="_blank"
               rel="noopener noreferrer"

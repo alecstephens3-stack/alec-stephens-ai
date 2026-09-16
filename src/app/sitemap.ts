@@ -5,6 +5,11 @@ import { SITE_URL } from "@/lib/content";
 // build teaches crawlers the signal is worthless.
 const LAST_CONTENT_CHANGE = new Date("2026-08-14");
 const JP_PAGE_PUBLISHED = new Date("2026-08-31");
+const PORTFOLIO_PUBLISHED = new Date("2026-09-16");
+const PORTFOLIO_SLUGS = [
+  "knowledge-base", "pto-payroll", "invoice-agent", "ai-lab",
+  "coaching-aios", "construction-site", "curriculum-system", "aios",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -22,5 +27,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      // Alec's portfolio index. Static files in public/alec, rewrites in next.config.ts.
+      url: `${SITE_URL}/alec`,
+      lastModified: PORTFOLIO_PUBLISHED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...PORTFOLIO_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/alec/${slug}`,
+      lastModified: PORTFOLIO_PUBLISHED,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

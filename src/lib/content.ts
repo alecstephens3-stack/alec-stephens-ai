@@ -34,6 +34,10 @@ export const NAV_LINKS = [
   {
     "label": "FAQ",
     "href": "/#faq"
+  },
+  {
+    "label": "Alec's builds",
+    "href": "/alec"
   }
 ];
 
