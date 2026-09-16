@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Invoice processing system · Wichita Family Vision · Alec Stephens</title>
-<meta name="description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click.">
+<meta name="description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.">
 <link rel="canonical" href="https://stephensai.co/alec/invoice-agent">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Invoice processing system · Wichita Family Vision · Alec Stephens">
-<meta property="og:description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click.">
+<meta property="og:description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.">
 <meta property="og:url" content="https://stephensai.co/alec/invoice-agent">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -1165,8 +1165,8 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 
   <section id="result" data-sc-in data-sc-stagger="70">
     <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · optometry · HIPAA · Wichita Family Vision · Bedrock live 2026-09-16</span></span>
-    <h1 class="sai-display">Invoice filing for a clinic&#39;s bookkeeper: Claude on AWS Bedrock, under a BAA, at 0.9 cents an invoice.</h1>
-    <p class="sai-lede">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click.</p>
+    <h1 class="sai-display">Invoice filing for a clinic&#39;s bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice.</h1>
+    <p class="sai-lede">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.</p>
     <div class="cs-stats">
       <div class="num acc sai-pane">
         <span class="v">0.9¢</span>
@@ -1191,7 +1191,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
           <div><dt>Who uses it</dt><dd>Built for the clinic&#39;s bookkeeper. Tested end to end in the clinic&#39;s own AWS account on 2026-09-16; her desk install is the next step.</dd></div>
           <div><dt>Shipped</dt><dd>Bedrock live 2026-09-16. About 4 weeks, including the compliance re-architecture.</dd></div>
           <div><dt>Stack</dt><dd><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>boto3</li><li>PyMuPDF</li><li>QuickBooks Online bill capture</li><li>Windows</li></ul></dd></div>
-          <div><dt>Cost to run</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
+<div><dt>Compliance</dt><dd>HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</dd></div>          <div><dt>Cost to run</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
           <div><dt>Who built it</dt><dd>Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</dd></div>
         </dl>
       </aside>
@@ -1236,7 +1236,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Only the reading step leaves the building, to Bedrock in the clinic&#39;s own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.</dd></div>
       <div><dt>Tests and evals</dt><dd>12 synthetic invoices mirroring her real nine plus the untested cases: 5 rotated image-only scans, a bare-date receipt, a paid invoice, a statement with a period end, an unknown vendor, a same-name collision, 2 patient-data documents. 12 of 12 on Sonnet and on Haiku. Full run, undo, and the browser Go path all proven.</dd></div>
       <div><dt>Cost and latency</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
-      <div><dt>Guardrails</dt><dd>Retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.</dd></div>
+      <div><dt>Guardrails</dt><dd>HIPAA: a business associate agreement between Stephens AI and the clinic, the AWS BAA on the clinic&#39;s own account, retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.</dd></div>
       <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic&#39;s data stays inside its own boundary. Also chosen: QuickBooks&#39; own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.</p></div></dd></div>
     </dl>
   </section>
