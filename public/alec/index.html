@@ -1151,6 +1151,7 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .oneliner b { font-weight: 600; }
 .stack { margin-top: 22px; display: flex; flex-direction: column; gap: 8px; }
 .who { margin: 18px 0 0; font-size: 14.5px; color: var(--pg-ink-2); max-width: 60ch; line-height: 1.5; }
+.who.comp { color: var(--pg-ink); } .who.comp b { color: var(--pg-acc-deep); }
 .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; align-items: center; }
 .acts .users { flex-basis: 100%; font-size: 14px; color: var(--pg-ink-2); }
 .card .sai-btn { font-size: 14.5px; padding: 12px 20px; }
@@ -1272,7 +1273,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       </a>
       <a class="cell sai-pane" href="#invoice-agent" data-slug="invoice-agent">
         <span class="cell-name">Invoice processing system</span>
-        <span class="cell-phrase">To read and file a vendor bill on Claude via Bedrock, under the clinic&#39;s BAA</span>
+        <span class="cell-phrase">To read and file a vendor bill on Claude via AWS Bedrock, HIPAA-compliant, inside the clinic&#39;s own account</span>
         <span class="cell-n">0.9¢ / invoice</span>
       </a>
       <a class="cell sai-pane" href="#ai-lab" data-slug="ai-lab">
@@ -1326,7 +1327,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 <span class="basis">An estimate, not a measurement: about 4 questions a day at 10 minutes each, 250 working days. The clinic has not timed it.</span>                </div>
                 <p class="oneliner">The rules lived in 15 spreadsheet tabs and one manager&#39;s head. Now anyone at the desk looks it up in the 20 seconds a caller gives you.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Supabase</li><li>PostgreSQL with row-level security</li><li>Google OAuth</li><li>Vanilla JS PWA</li><li>Vercel</li><li>GitHub Actions</li><li>DOMPurify</li><li>Claude Code</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
+<p class="who comp"><b>Compliance.</b> Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</p>                <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
               </div>
               <div>
                 <figure class="shot" data-sc-reveal="iris" data-sc-reveal-at="0.02 0.22">
@@ -1374,7 +1375,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 <span class="basis">10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused.</span>                </div>
                 <p class="oneliner">Green paper slips, hand-checked calendars, payroll rebuilt from a notebook. Now one form, one engine, and a payroll report that builds itself.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Google Apps Script</li><li>Google Forms</li><li>Google Sheets</li><li>Google Calendar</li><li>Gmail</li><li>clasp</li><li>Node test runner</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
+<p class="who comp"><b>Compliance.</b> Employee data only, no patient data, kept entirely inside the clinic&#39;s own Google Workspace. Built under the same business associate agreement as the clinic&#39;s other systems.</p>                <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
               </div>
               <div>
                 <figure class="shot">
@@ -1412,7 +1413,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · HIPAA · Wichita Family Vision</span><span class="when">Bedrock live 2026-09-16</span></div>
-            <h2 id="t-invoice-agent">Invoice filing for a clinic&#39;s bookkeeper: Claude on AWS Bedrock, under a BAA, at 0.9 cents an invoice</h2>
+            <h2 id="t-invoice-agent">Invoice filing for a clinic&#39;s bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice</h2>
             <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
             <div class="front-grid">
               <div>
@@ -1420,9 +1421,9 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
                   <span class="v">0.9¢</span>
                   <span class="l">per invoice, 3.4 seconds a file, measured on Claude Sonnet 4.6 in the clinic&#39;s account</span>
 <span class="basis">26,904 input and 2,003 output tokens for 12 files at Bedrock on-demand pricing: $0.11 a run.</span>                </div>
-                <p class="oneliner">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click.</p>
+                <p class="oneliner">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>boto3</li><li>PyMuPDF</li><li>QuickBooks Online bill capture</li><li>Windows</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
+<p class="who comp"><b>Compliance.</b> HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</p>                <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
               </div>
               <div>
                 <figure class="shot">
@@ -1446,7 +1447,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Only the reading step leaves the building, to Bedrock in the clinic&#39;s own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.</dd></div>
               <div><dt>Tests and evals</dt><dd>12 synthetic invoices mirroring her real nine plus the untested cases: 5 rotated image-only scans, a bare-date receipt, a paid invoice, a statement with a period end, an unknown vendor, a same-name collision, 2 patient-data documents. 12 of 12 on Sonnet and on Haiku. Full run, undo, and the browser Go path all proven.</dd></div>
               <div><dt>Cost and latency</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
-              <div><dt>Guardrails</dt><dd>Retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.</dd></div>
+              <div><dt>Guardrails</dt><dd>HIPAA: a business associate agreement between Stephens AI and the clinic, the AWS BAA on the clinic&#39;s own account, retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.</dd></div>
               <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic&#39;s data stays inside its own boundary. Also chosen: QuickBooks&#39; own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.</p></div></dd></div>
             </dl>
             <div class="acts">
@@ -1715,10 +1716,10 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <span class="lbl">About</span>
       <h2>Alec Stephens</h2>
       <p class="role">Applied AI engineer. Co-founder, Stephens AI.</p>
-      <p>I go into a business, find where the hours and the money leak, and build the thing that stops it: usually an agent, a knowledge system, or an automation that a non-technical team runs on its own.</p>
-      <p>I was hired in Seoul to write English lessons and left having turned the company&#39;s curriculum into an AI production line. Everything since has been the same move in a different building.</p>
+      <p>I build AI systems for businesses that have never had an engineer in the building. Eye clinics, a coaching practice, an education company with a million readers, a construction firm in Japan: I find where the hours leak and put something in place that a non-technical team runs on its own.</p>
+      <p>I got here sideways. Hired in Seoul to write English lessons, I ended up turning the company&#39;s curriculum into an AI production line, and every build since has been the same move in a different building.</p>
       <p class="now">Now, September 2026: moving a clinic&#39;s invoice filing onto Claude via AWS Bedrock under a BAA, and turning the front-desk knowledge base into a product for the next practice.</p>
-      <p>Co-founder of Stephens AI, a two-person consultancy for healthcare practices. I also take one contract at a time as an applied AI or forward-deployed engineer: remote, contractor, with live hours for US mornings, Europe, and Australia.</p>
+      <p>Today I run Stephens AI with Jusheen Kim, an ex-J.P. Morgan lead engineer. Our home turf is healthcare, where the work has to be HIPAA-compliant: a business associate agreement in force with the clinic, and the AI running on Claude via AWS Bedrock inside the clinic&#39;s own account, so patient data never leaves its boundary. I also take one contract at a time as an applied AI or forward-deployed engineer, remote, with live hours for US mornings, Europe, and Australia.</p>
       <ul class="chips creds"><li>Upwork: 5+ years, 100% Job Success</li><li>Stephens AI LLC, Kansas</li></ul>
     </div>
   </section>
