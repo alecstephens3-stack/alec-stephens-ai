@@ -988,6 +988,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   --bar-h: 64px;
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
   --toss: cubic-bezier(0.34, 1.18, 0.64, 1);
+  --glide: cubic-bezier(0.22, 1, 0.36, 1);
   --pg-ink: var(--sai-ink); --pg-ink-2: var(--sai-ink-2); --pg-acc: var(--sai-accent); --pg-acc-deep: var(--sai-accent-deep);
   --pg-card: rgba(255,255,255,0.62); --pg-card-edge: rgba(255,255,255,0.92); --pg-card-soft: rgba(255,255,255,0.55);
   --pg-rule: var(--sai-rule); --pg-bar: rgba(255,255,255,0.58); --pg-bar-edge: rgba(255,255,255,0.9);
@@ -1038,7 +1039,10 @@ a { color: inherit; }
 .bar .sai-btn { padding: 10px 18px; font-size: 14px; }
 .bar .back { font-size: 14.5px; color: var(--pg-ink-2); text-decoration: none; }
 .bar .back:hover { color: var(--pg-ink); }
+.bar .word, .bar .sai-btn, .mode { white-space: nowrap; }
+.bar .sai-btn .short { display: none; }
 @media (max-width: 720px) { .bar .sub, .bar .ghost, .bar .back { display: none; } .mode { padding: 8px 10px; } }
+@media (max-width: 480px) { .bar { gap: 10px; } .bar .sai-btn .long { display: none; } .bar .sai-btn .short { display: inline; } .bar .sai-btn { padding: 9px 14px; } .mode { font-size: 13.5px; padding: 8px 9px; } }
 
 /* ------------------------------------------------------------ chips + labels */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
@@ -1084,8 +1088,7 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .railwrap { position: sticky; top: var(--bar-h); z-index: 15; margin: 0 calc(-1 * clamp(20px, 4vw, 48px)); padding: 12px clamp(20px, 4vw, 48px);
   display: flex; align-items: center; gap: 12px;
   background: var(--pg-rail); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
-.rail { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; flex: 1; padding: 4px 2px; -webkit-overflow-scrolling: touch;
-  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+.rail { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex: 1; padding: 4px 2px; -webkit-overflow-scrolling: touch; }
 .rail::-webkit-scrollbar { display: none; }
 .rail a { flex: 0 0 auto; scroll-snap-align: start; text-decoration: none; font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; letter-spacing: .01em;
   padding: 9px 15px; border-radius: 999px; color: var(--pg-ink); background: var(--pg-card); border: 1px solid var(--pg-card-edge);
@@ -1103,31 +1106,35 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 @media (max-width: 720px) { .railctl, .view { display: none; } }
 
 /* ------------------------------------------------------------ deck */
-.deck { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: 0; padding: 18px 2px 26px;
-  margin: 0 -2px; scrollbar-width: thin; scrollbar-color: rgba(23,19,16,0.25) transparent; -webkit-overflow-scrolling: touch; outline-offset: 6px; }
-.deck.list { display: grid; grid-template-columns: 1fr; gap: 28px; overflow: visible; }
-.card { flex: 0 0 min(100%, 920px); scroll-snap-align: start; perspective: 2200px; scroll-margin-top: calc(var(--bar-h) + 78px);
-  transform: scale(calc(1 - 0.045 * var(--away, 0))); opacity: calc(1 - 0.38 * var(--away, 0)); transform-origin: 50% 40%;
-  transition: transform 260ms var(--ease), opacity 260ms var(--ease); }
-.deck.list .card { flex: none; transform: none; opacity: 1; }
-.flip { display: grid; position: relative; transform-style: preserve-3d; transition: height 720ms var(--toss); }
+/* the stage: one card forward, the neighbours set back at the sides, everything glides */
+.deck { position: relative; perspective: 1800px; perspective-origin: 50% 40%; padding: 18px 0 26px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
+.card { position: absolute; top: 18px; left: 50%; width: min(100%, 920px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
+  transform: translateX(calc(-50% + var(--dx, 0px))) translateZ(var(--dz, 0px)) rotateY(var(--ry, 0deg)); opacity: var(--op, 1); transform-origin: 50% 50%;
+  transition: transform 760ms var(--glide), opacity 520ms var(--glide); will-change: transform; }
+.card:not(.is-active) { cursor: pointer; }
+.card:not(.is-active) .flip { pointer-events: none; }
+.deck:not(.list) .card:not(.is-active) .face.back { visibility: hidden; }
+.deck.list { perspective: none; display: grid; grid-template-columns: 1fr; gap: 28px; height: auto !important; }
+.deck.list .card { position: static; width: auto; transform: none; opacity: 1; cursor: auto; }
+.deck.list .card .flip { pointer-events: auto; }
+.flip { display: grid; position: relative; transform-style: preserve-3d; transition: height 760ms var(--glide); }
 .face { grid-area: 1 / 1; align-self: start; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden;
   border-radius: 30px; padding: clamp(22px, 3.2vw, 40px); will-change: transform; }
 .face.back { transform: rotateY(180deg); pointer-events: none; }
 .flip.is-back .back { pointer-events: auto; }
 .flip.is-back .front { pointer-events: none; }
 /* the toss: the card lifts, turns past the edge, and settles */
-@keyframes frontOut { 0% { transform: rotateY(0) translateY(0) } 45% { transform: rotateY(-90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(-180deg) translateY(0) } }
-@keyframes backIn  { 0% { transform: rotateY(180deg) translateY(0) } 45% { transform: rotateY(90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(0) translateY(0) } }
-@keyframes frontIn { 0% { transform: rotateY(-180deg) } 45% { transform: rotateY(-90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(0) } }
-@keyframes backOut { 0% { transform: rotateY(0) } 45% { transform: rotateY(90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(180deg) } }
-.flip.is-back .front { animation: frontOut 760ms var(--toss) both; }
-.flip.is-back .back  { animation: backIn 760ms var(--toss) both; }
-.flip.to-front .front { animation: frontIn 760ms var(--toss) both; }
-.flip.to-front .back  { animation: backOut 760ms var(--toss) both; }
+@keyframes frontOut { 0% { transform: rotateY(0) } 50% { transform: rotateY(-90deg) translateZ(60px) } 100% { transform: rotateY(-180deg) } }
+@keyframes backIn  { 0% { transform: rotateY(180deg) } 50% { transform: rotateY(90deg) translateZ(60px) } 100% { transform: rotateY(0) } }
+@keyframes frontIn { 0% { transform: rotateY(-180deg) } 50% { transform: rotateY(-90deg) translateZ(60px) } 100% { transform: rotateY(0) } }
+@keyframes backOut { 0% { transform: rotateY(0) } 50% { transform: rotateY(90deg) translateZ(60px) } 100% { transform: rotateY(180deg) } }
+.flip.is-back .front { animation: frontOut 900ms var(--glide) both; }
+.flip.is-back .back  { animation: backIn 900ms var(--glide) both; }
+.flip.to-front .front { animation: frontIn 900ms var(--glide) both; }
+.flip.to-front .back  { animation: backOut 900ms var(--glide) both; }
 /* the back's content arrives in reading order once the card has turned */
 @keyframes settle { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
-.flip.is-back .back .head, .flip.is-back .back .eng > div, .flip.is-back .back .acts { animation: settle 520ms var(--ease) both; animation-delay: calc(380ms + var(--i, 0) * 55ms); }
+.flip.is-back .back .head, .flip.is-back .back .eng > div, .flip.is-back .back .acts { animation: settle 560ms var(--glide) both; animation-delay: calc(440ms + var(--i, 0) * 45ms); }
 .back .head { --i: 0 } .back .eng > div:nth-child(1) { --i: 1 } .back .eng > div:nth-child(2) { --i: 2 } .back .eng > div:nth-child(3) { --i: 3 } .back .eng > div:nth-child(4) { --i: 4 } .back .eng > div:nth-child(5) { --i: 5 } .back .eng > div:nth-child(6) { --i: 6 } .back .eng > div:nth-child(7) { --i: 7 } .back .acts { --i: 8 }
 .face.back.sai-pane { background: var(--pg-card); }
 .face.sai-pane { color: var(--pg-ink); }
@@ -1189,7 +1196,9 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 .no-js .deck, .stacked .deck { display: grid; grid-template-columns: 1fr; gap: 28px; overflow: visible; }
 .face.back > .lbl.back-title { display: none; }
 .no-js .face.back > .lbl.back-title, .stacked .face.back > .lbl.back-title { display: block; }
-.stacked .card, .no-js .card { transform: none; opacity: 1; }
+.stacked .card, .no-js .card { position: static; width: auto; transform: none; opacity: 1; }
+.stacked .deck, .no-js .deck { height: auto !important; perspective: none; }
+.stacked .card .flip, .no-js .card .flip { pointer-events: auto; }
 .stacked .face, .no-js .face { animation: none !important; }
 .stacked .back .head, .stacked .back .eng > div, .stacked .back .acts { animation: none !important; opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
@@ -1239,7 +1248,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   <span class="grow"></span>
   <button class="mode" type="button" id="modeBtn" aria-pressed="false">Night</button>
   <a class="sai-btn ghost" href="mailto:alec@stephensai.co">Email</a>
-  <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min"><span class="long">Book a call</span><span class="short">Call</span></a>
 </header>
 
 <main class="sai-page">
@@ -1248,7 +1257,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
     <div data-sc-in data-sc-stagger="70">
       <span class="sai-port"><span class="disc"></span><span class="ptext">Alec Stephens · Applied AI engineer · Co-founder, Stephens AI</span></span>
       <h1 class="sai-display">Build <em>portfolio</em>.</h1>
-      <p class="sai-lede">8 builds with real users, including what was broken, what I built, what the results were, and <b>the engineering behind it on the back of the card.</b></p>
+      <p class="sai-lede">Real users on every build, including what was broken, what I built, what the results were, and <b>the engineering behind it on the back of the card.</b></p>
     </div>
     <div class="wall" data-sc-in data-sc-stagger="60">
       <a class="cell sai-pane acc" href="#knowledge-base" data-slug="knowledge-base">
@@ -1304,8 +1313,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
     <div class="deck" id="deck" tabindex="0" role="region" aria-label="Builds. Use the left and right arrow keys to move between cards.">
       <article class="card" id="knowledge-base" aria-labelledby="t-knowledge-base">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live 2026-08-07</span></div>
             <h2 id="t-knowledge-base">Front desk knowledge base for an eye clinic: six months of training turned into one search</h2>
             <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
@@ -1352,8 +1361,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="pto-payroll" aria-labelledby="t-pto-payroll">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live April 2026</span></div>
             <h2 id="t-pto-payroll">Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself</h2>
             <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
@@ -1400,8 +1409,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="invoice-agent" aria-labelledby="t-invoice-agent">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · HIPAA · Wichita Family Vision</span><span class="when">Bedrock live 2026-09-16</span></div>
             <h2 id="t-invoice-agent">Invoice filing for a clinic&#39;s bookkeeper: Claude on AWS Bedrock, under a BAA, at 0.9 cents an invoice</h2>
             <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
@@ -1448,8 +1457,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="ai-lab" aria-labelledby="t-ai-lab">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">AI education · content and outbound systems · AI Lab, iPhone Photography School</span><span class="when">March to September 2026</span></div>
             <h2 id="t-ai-lab">An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no</h2>
             <p class="client">AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026.</p>
@@ -1496,8 +1505,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="coaching-aios" aria-labelledby="t-coaching-aios">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Professional coaching · solo founder · A business coach</span><span class="when">Live May 2026</span></div>
             <h2 id="t-coaching-aios">An AI operating system for a one-person coaching practice: 4 agents that read one document</h2>
             <p class="client">A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
@@ -1544,8 +1553,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="construction-site" aria-labelledby="t-construction-site">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Live 2026-05-09</span></div>
             <h2 id="t-construction-site">A Japanese construction company&#39;s site, rebuilt in its own language, then referred to the whole industry board</h2>
             <p class="client">Kamata Koumuten, a construction company in Miyagi, Japan.</p>
@@ -1592,8 +1601,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="curriculum-system" aria-labelledby="t-curriculum-system">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Education technology · Korea · 2020 to 2024 · KiwiOPIC</span><span class="when">2020 to 2024</span></div>
             <h2 id="t-curriculum-system">A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI</h2>
             <p class="client">KiwiOPIC, an English test-prep company in Seoul.</p>
@@ -1650,8 +1659,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         </div>
       </article>
       <article class="card" id="aios" aria-labelledby="t-aios">
-        <div class="flip" data-sc-tilt="3">
-          <div class="face front sai-pane sai-streak">
+        <div class="flip">
+          <div class="face front sai-pane">
             <div class="head"><span class="lbl">Stephens AI · our own tooling · Stephens AI</span><span class="when">v2 live 2026-03-01</span></div>
             <h2 id="t-aios">The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services</h2>
             <p class="client">Stephens AI, our own consultancy.</p>
@@ -1700,7 +1709,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
     </div>
   </section>
 
-  <section id="about" class="sai-pane sai-streak" data-sc-in data-sc-stagger="60">
+  <section id="about" class="sai-pane" data-sc-in data-sc-stagger="60">
     <img class="face-img" src="/alec/img/alec.jpg" width="480" height="480" alt="Alec Stephens" loading="lazy">
     <div>
       <span class="lbl">About</span>
@@ -1763,7 +1772,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   function readMode() {
     var q = /[?&]mode=(night|day)/.exec(location.search); if (q) return q[1];
     try { var s = localStorage.getItem('sai-mode'); if (s === 'night' || s === 'day') return s; } catch (e) {}
-    return (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'night' : 'day';
+    return 'day';
   }
   function applyMode(m, save) {
     var night = m === 'night';
@@ -1798,52 +1807,53 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   setView(q ? q[1] : (saved === 'list' || saved === 'deck' ? saved : 'deck'), false);
   viewBtns.forEach(function (b) { b.addEventListener('click', function () { setView(b.getAttribute('data-view'), true); goTo(current(), 'auto'); }); });
 
-  /* which card is current */
-  function current() {
-    if (deck.classList.contains('list') || body.classList.contains('stacked')) {
-      var best = 0, bd = Infinity, y = window.scrollY + innerHeight * 0.35;
-      cards.forEach(function (c, i) { var d = Math.abs(c.offsetTop - y); if (d < bd) { bd = d; best = i; } });
-      return best;
-    }
-    var x = deck.scrollLeft, b2 = 0, bd2 = Infinity;
-    cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - deck.offsetLeft - x); if (d < bd2) { bd2 = d; b2 = i; } });
-    return b2;
+  /* the stage: one active card, neighbours set back */
+  var active = 0, list = function () { return deck.classList.contains('list') || body.classList.contains('stacked'); };
+  function layout() {
+    if (list()) { cards.forEach(function (c) { c.classList.toggle('is-active', c === cards[active]); c.removeAttribute('inert'); c.style.visibility = ''; }); return; }
+    var w = cards[0].offsetWidth || 900, phone = innerWidth < 720, k = phone ? 1.08 : 0.9;
+    cards.forEach(function (c, i) {
+      var o = i - active, a = Math.abs(o);
+      c.style.setProperty('--dx', (o * w * k) + 'px'); c.style.setProperty('--dz', (a === 1 ? -140 : 0) + 'px');
+      c.style.setProperty('--ry', (a === 1 ? -o * 4 : 0) + 'deg'); c.style.setProperty('--op', a === 0 ? 1 : (a === 1 && !phone ? 0.6 : 0));
+      c.style.zIndex = 6 - Math.min(a, 5); c.style.visibility = a >= 2 ? 'hidden' : ''; c.classList.toggle('is-active', a === 0);
+      if (a === 0) c.removeAttribute('inert'); else c.setAttribute('inert', '');
+    });
+    deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 44) + 'px';
   }
+  function current() { return active; }
   function mark(i) {
     pills.forEach(function (p, j) { p.classList.toggle('on', i === j); if (i === j) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current'); });
     var p = pills[i], rail = p && p.parentNode; if (p) { var left = p.offsetLeft - rail.offsetLeft - (rail.clientWidth - p.offsetWidth) / 2; rail.scrollTo({ left: left, behavior: RMOT ? 'auto' : 'smooth' }); }
   }
   function goTo(i, behavior) {
-    i = Math.max(0, Math.min(cards.length - 1, i)); var c = cards[i];
-    var b = behavior || (RMOT ? 'auto' : 'smooth');
-    if (deck.classList.contains('list') || body.classList.contains('stacked')) { c.scrollIntoView({ block: 'start', behavior: b }); }
-    else {
-      deck.scrollTo({ left: c.offsetLeft - deck.offsetLeft, behavior: b });
-      var top = deck.getBoundingClientRect().top; if (top < 0 || top > innerHeight * 0.5) window.scrollTo({ top: window.scrollY + top - 64 - 78, behavior: b });
-    }
-    mark(i);
+    active = Math.max(0, Math.min(cards.length - 1, i)); var c = cards[active]; var b = behavior || (RMOT ? 'auto' : 'smooth');
+    layout(); mark(active);
+    if (list()) { c.scrollIntoView({ block: 'start', behavior: b }); return; }
+    var top = deck.getBoundingClientRect().top; if (top < 0 || top > innerHeight * 0.55) window.scrollTo({ top: window.scrollY + top - 64 - 78, behavior: b });
   }
   pills.forEach(function (p, i) { p.addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', '#' + cards[i].id); goTo(i); }); });
   document.querySelectorAll('.wall .cell').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var i = cards.findIndex(function (c) { return c.id === a.getAttribute('data-slug'); }); history.replaceState(null, '', '#' + cards[i].id); goTo(i); }); });
-  document.querySelectorAll('.railctl button').forEach(function (b) { b.addEventListener('click', function () { goTo(current() + parseInt(b.getAttribute('data-step'), 10)); }); });
+  document.querySelectorAll('.railctl button').forEach(function (b) { b.addEventListener('click', function () { goTo(active + parseInt(b.getAttribute('data-step'), 10)); }); });
+  cards.forEach(function (c, i) { c.addEventListener('click', function () { if (!list() && i !== active) goTo(i); }); });
   deck.addEventListener('keydown', function (e) {
     if (e.target !== deck && e.target.closest('input,textarea,select')) return;
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current() + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current() - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(active + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(active - 1); }
     if (e.key === 'Home') { e.preventDefault(); goTo(0); }
     if (e.key === 'End') { e.preventDefault(); goTo(cards.length - 1); }
   });
-  var t; function spy() { clearTimeout(t); t = setTimeout(function () { mark(current()); }, 80); }
-  /* neighbours step back: --away is 0 for the card under the rail, 1 for the next one over */
-  var raf = 0; function dim() { raf = 0; if (deck.classList.contains('list') || body.classList.contains('stacked')) { cards.forEach(function (c) { c.style.removeProperty('--away'); }); return; }
-    var x = deck.scrollLeft, w = cards[0].offsetWidth + 22; cards.forEach(function (c) { var d = Math.min(1, Math.abs(c.offsetLeft - deck.offsetLeft - x) / w); c.style.setProperty('--away', d.toFixed(3)); }); }
-  function onDeckScroll() { spy(); if (!raf) raf = requestAnimationFrame(dim); }
-  deck.addEventListener('scroll', onDeckScroll, { passive: true }); window.addEventListener('scroll', spy, { passive: true }); window.addEventListener('resize', dim); dim();
-  viewBtns.forEach(function (b) { b.addEventListener('click', dim); });
+  /* trackpad sideways and touch swipe both step the stage */
+  var wheelAt = 0; deck.addEventListener('wheel', function (e) { if (list()) return; if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 14) { e.preventDefault(); var now = Date.now(); if (now - wheelAt > 650) { wheelAt = now; goTo(active + (e.deltaX > 0 ? 1 : -1)); } } }, { passive: false });
+  var px = null, py = null; deck.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse') return; px = e.clientX; py = e.clientY; }, { passive: true });
+  deck.addEventListener('pointerup', function (e) { if (px === null) return; var dx = e.clientX - px, dy = e.clientY - py; px = null; if (!list() && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) goTo(active + (dx < 0 ? 1 : -1)); }, { passive: true });
+  var spyT; function spy() { if (!list()) return; clearTimeout(spyT); spyT = setTimeout(function () { var best = 0, bd = Infinity, y = window.scrollY + innerHeight * 0.35; cards.forEach(function (c, i) { var d = Math.abs(c.offsetTop - y); if (d < bd) { bd = d; best = i; } }); active = best; mark(best); }, 80); }
+  window.addEventListener('scroll', spy, { passive: true }); window.addEventListener('resize', layout);
+  viewBtns.forEach(function (b) { b.addEventListener('click', function () { layout(); }); });
 
   /* the flip: every card has two sides; the container is as tall as the side you see */
   var flips = Array.prototype.slice.call(document.querySelectorAll('.flip'));
-  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; }
+  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; if (!list()) deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 44) + 'px'; }
   function fitAll() { flips.forEach(fit); }
   fitAll(); window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll);
   document.querySelectorAll('.flip img').forEach(function (im) { im.addEventListener('load', fitAll); });
@@ -1863,6 +1873,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   document.addEventListener('animationend', function (e) { if (e.animationName === 'frontIn') e.target.closest('.flip').classList.remove('to-front'); });
 
   /* deep link on load */
+  layout(); window.addEventListener('load', function () { fitAll(); layout(); });
   if (location.hash) { var i0 = cards.findIndex(function (c) { return '#' + c.id === location.hash; }); if (i0 >= 0) setTimeout(function () { goTo(i0, 'auto'); }, 60); }
   else mark(0);
 })();
