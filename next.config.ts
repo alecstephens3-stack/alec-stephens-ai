@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
         destination: "https://stephensai.co/alec",
         permanent: false,
       },
+      {
+        source: "/",
+        has: [{ type: "host", value: "www.alecstephens.tech" }],
+        destination: "https://stephensai.co/alec",
+        permanent: false,
+      },
     ];
   },
   async headers() {
