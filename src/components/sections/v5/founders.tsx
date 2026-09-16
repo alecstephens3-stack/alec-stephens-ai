@@ -29,11 +29,6 @@ export function Founders() {
           </AnimateOnScroll>
         ))}
       </div>
-      <AnimateOnScroll delay={140}>
-        <div className="sai-pane mt-4 rounded-card px-6 py-5">
-          <p className="text-[14.5px] leading-[1.6] text-ink-2">{FOUNDERS_SECTION.note}</p>
-        </div>
-      </AnimateOnScroll>
     </Section>
   );
 }
