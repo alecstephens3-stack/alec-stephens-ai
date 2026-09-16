@@ -6,10 +6,12 @@ Index: https://stephensai.co/alec
 
 ## About
 Applied AI engineer. Co-founder, Stephens AI.
-I build AI systems for businesses that have never had an engineer in the building. Eye clinics, a coaching practice, an education company with a million readers, a construction firm in Japan: I find where the hours leak and put something in place that a non-technical team runs on its own.
-I got here sideways. Hired in Seoul to write English lessons, I ended up turning the company's curriculum into an AI production line, and every build since has been the same move in a different building.
-Now, September 2026: moving a clinic's invoice filing onto Claude via AWS Bedrock under a BAA, and turning the front-desk knowledge base into a product for the next practice.
-Today I run Stephens AI with Jusheen Kim, an ex-J.P. Morgan lead engineer. Our home turf is healthcare, where the work has to be HIPAA-compliant: a business associate agreement in force with the clinic, and the AI running on Claude via AWS Bedrock inside the clinic's own account, so patient data never leaves its boundary. I also take one contract at a time as an applied AI or forward-deployed engineer, remote, with live hours for US mornings, Europe, and Australia.
+I build systems that get my clients real results, and I absolutely love doing it.
+My experience runs across the board: healthcare clinics, coaching businesses, a nine-figure education company, construction firms in Japan, and more.
+I got here sideways, hired in Seoul to write English lessons and leaving with the company's curriculum running on an AI production line.
+What I do best is diagnose where a build will make a client money or save them time, then work alongside them to make it happen.
+Today I run Stephens AI with my co-founder Jusheen Kim, an ex-J.P. Morgan lead engineer. Our home turf is healthcare, where the work has to be HIPAA-compliant: a business associate agreement in force with the clinic, and the AI running on Claude via AWS Bedrock inside the clinic's own account, so patient data never leaves it.
+Outside Stephens AI, I also take contracts as an applied AI or forward-deployed engineer. And if you're ready to grow your business, it would be my pleasure to get you the results you need.
 
 ## Clinic knowledge base (https://stephensai.co/alec/knowledge-base)
 Front desk knowledge base for an eye clinic: six months of training turned into one search.
