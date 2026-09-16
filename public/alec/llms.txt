@@ -29,10 +29,10 @@ Architecture: Static PWA on Vercel reading page content, prices, and revisions f
 Where it runs: Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic's domain. Installed as a PWA on the front desk iPad and PCs.
 Tests: 21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.
 Cost: $0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.
-Guardrails: Jusheen's pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.
+Guardrails: A pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.
 Tradeoff: We built a plain PWA with search instead of the AI assistant layer the first scope had. Search on 35 well-structured pages answers the front desk's question faster than a chat box, costs nothing to run, and never invents a rule. The assistant is on the roadmap only if search ever fails a real staff question.
-Who built it: Alec: the content model from the clinic's front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.
-Quote: "This is highly valuable, both in the short term and long term. It's already saving a lot of time." (Front office manager, Wichita Family Vision)
+My role: I built it: the content model from the clinic's front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, and the tests. A second engineer ran the pre-merge security review and the deployment.
+Quote: "This is highly valuable, both in the short term and long term. It's already saving a lot of time." (Jill Romines, Front Office Manager, Wichita Family Vision)
 Code: https://github.com/alecstephens3-stack/supabase-team-knowledge-base
 
 ## PTO + payroll system (https://stephensai.co/alec/pto-payroll)
@@ -53,7 +53,7 @@ Tests: 183 regression assertions in the public repo, run with Node, no dependenc
 Cost: $0 a month to run. Built at an hourly rate for the clinic.
 Guardrails: The web app URL is read from a config sheet, never from the script API, because the API returns a hidden test deployment. Every change that touches the approve button rolls the pinned deployment; skipping that once put new code on form-submit and old code on approvals. Error emails go to me, action emails go to the manager, so a test can never land in her inbox.
 Tradeoff: Apps Script over a hosted app. The clinic already paid for Google Workspace, the office manager lives in Sheets, and the data never leaves their account. A hosted app would have meant a login, a bill, and a vendor for a 26-person office. The cost of that choice is a deployment model with sharp edges, which the tests and the runbook now cover.
-Who built it: Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.
+My role: I built it: the engine, the accrual and date math, the migration, the payroll report, the tests, and the guides. A second engineer added the employee-management dialogs and audited the sheets.
 Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll
 
 ## Invoice processing system (https://stephensai.co/alec/invoice-agent)
@@ -74,7 +74,7 @@ Tests: 12 synthetic invoices mirroring her real nine plus the untested cases: 5 
 Cost: 0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.
 Guardrails: HIPAA: a business associate agreement between Stephens AI and the clinic, the AWS BAA on the clinic's own account, retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.
 Tradeoff: We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic's data stays inside its own boundary. Also chosen: QuickBooks' own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.
-Who built it: Alec: the runner, the Bedrock path and the BAA setup in the clinic's account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic's AWS account.
+My role: I built it: the runner, the Bedrock path and the BAA setup in the clinic's account, the compliance finding that moved the architecture, and the synthetic test set. A second engineer ran the QuickBooks trial tests.
 
 ## AI Lab content + outbound systems (https://stephensai.co/alec/ai-lab)
 An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no.
@@ -94,7 +94,7 @@ Tests: A rule gate on every cold email (no years, no street names, no clinical l
 Cost: About $1 per 30 researched leads. The content pipeline ran on existing subscriptions.
 Guardrails: A human approves every send: newsletters stage a verified test, campaigns stay drafts until a person activates them. Capacity rules (2 emails per inbox, 100 per domain per day, 14-day warm-up) enforced in code. The whole outbound system was wound down in 2 days with a full export and a restart guide.
 Tradeoff: The opinion question beat the direct pitch in every A/B pair, so we stopped pitching. And when the numbers said cold email was not the channel for this buyer, we reported that instead of optimizing the copy again. The system's job was to make that finding checkable.
-Who built it: Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
+My role: I built all of it as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
 
 ## Coaching practice AI system (https://stephensai.co/alec/coaching-aios)
 An AI operating system for a one-person coaching practice: 4 agents that read one document.
@@ -114,7 +114,7 @@ Tests: A regression test per agent after a scope-creep incident, where the maint
 Cost: About $20 a month in tooling.
 Guardrails: Every agent defaults to skip, forces the assignee and a source stamp on every task it creates, and must cite the inbox message it acted on. No agent sends email.
 Tradeoff: Native ClickUp agents instead of a custom stack. Less power, but she can read and change every instruction herself, and there is nothing of ours to maintain. A one-person practice needs a system she owns, not a vendor.
-Who built it: Alec: all of it.
+My role: I built all of it.
 
 ## Construction company website (https://stephensai.co/alec/construction-site)
 A Japanese construction company's site, rebuilt in its own language, then referred to the whole industry board.
@@ -134,7 +134,7 @@ Tests: Every deploy verifies all 6 pages return 200 and the search-console verif
 Cost: The client's existing hosting. No new subscriptions.
 Guardrails: Never delete the search-console verification file. Backup before every mirror. The deploy script changes into the directory first, because the mirror tool silently no-ops on paths with spaces.
 Tradeoff: Kept their host and a static site instead of moving them to a builder. The owner's team is not technical; the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.
-Who built it: Alec: all of it, with the company's own photography.
+My role: I built all of it, with the company's own photography.
 
 ## Curriculum generation system (https://stephensai.co/alec/curriculum-system)
 A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI.
@@ -154,7 +154,7 @@ Tests: Model-first, human-last review on every published item; accuracy tracked 
 Cost: Not recorded.
 Guardrails: A human signed off on every published lesson.
 Tradeoff: Generate the first draft, never the final. The register of the test is narrow enough that a model drafts it well and a teacher's last pass keeps it honest.
-Who built it: Alec, as English curriculum specialist turned AI integration lead.
+My role: I built it, as the English curriculum specialist who became the AI integration lead.
 
 ## My own AI operating system (https://stephensai.co/alec/aios)
 The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services.
@@ -174,7 +174,7 @@ Tests: A weekly lint over the vault (contradictions, stale facts, orphans), a la
 Cost: One subscription plus about $10 a month of API credits.
 Guardrails: Every agent runs on a least-privilege allow-list. Nothing is sent, deleted, or deployed without a fresh yes. Every scheduled job leaves a trace.
 Tradeoff: Files over a database. A vault of markdown is slower to query than Postgres, but every agent, every human, and every future rebuild can read it, and the whole thing is in git.
-Who built it: Alec.
+My role: I built all of it.
 
 ## Contact
 Email alec@stephensai.co · Call https://calendly.com/alecpstephens/30min · GitHub https://github.com/alecstephens3-stack · LinkedIn https://www.linkedin.com/in/alec-stephens-55b392213/
