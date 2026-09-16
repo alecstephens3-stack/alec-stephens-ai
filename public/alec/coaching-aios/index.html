@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Coaching practice AIOS · A business coach · Alec Stephens</title>
+<title>Coaching practice AI system · A business coach · Alec Stephens</title>
 <meta name="description" content="Inbox triage, scheduling replies, voice-note task capture, and a calendar-to-invoice workflow, all reading one document she edits in plain English.">
 <link rel="canonical" href="https://stephensai.co/alec/coaching-aios">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Coaching practice AIOS · A business coach · Alec Stephens">
+<meta property="og:title" content="Coaching practice AI system · A business coach · Alec Stephens">
 <meta property="og:description" content="Inbox triage, scheduling replies, voice-note task capture, and a calendar-to-invoice workflow, all reading one document she edits in plain English.">
 <meta property="og:url" content="https://stephensai.co/alec/coaching-aios">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
@@ -987,9 +987,39 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   --sc-shadow-color: 20 45% 20%;
   --bar-h: 64px;
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --toss: cubic-bezier(0.34, 1.18, 0.64, 1);
+  --pg-ink: var(--sai-ink); --pg-ink-2: var(--sai-ink-2); --pg-acc: var(--sai-accent); --pg-acc-deep: var(--sai-accent-deep);
+  --pg-card: rgba(255,255,255,0.62); --pg-card-edge: rgba(255,255,255,0.92); --pg-card-soft: rgba(255,255,255,0.55);
+  --pg-rule: var(--sai-rule); --pg-bar: rgba(255,255,255,0.58); --pg-bar-edge: rgba(255,255,255,0.9);
+  --pg-rail: rgba(245,233,222,0.72); --pg-shadow: rgba(112,62,40,0.14); --pg-shadow-strong: rgba(112,62,40,0.22);
+  --pg-on: var(--sai-ink); --pg-on-text: var(--sai-cream);
 }
+body.sai-dark {
+  --pg-ink: var(--sai-cream); --pg-ink-2: var(--sai-cream-2); --pg-acc: var(--sai-accent-night); --pg-acc-deep: var(--sai-accent-night);
+  --pg-card: rgba(255,255,255,0.055); --pg-card-edge: rgba(255,255,255,0.13); --pg-card-soft: rgba(255,255,255,0.07);
+  --pg-rule: rgba(255,255,255,0.12); --pg-bar: rgba(18,13,10,0.62); --pg-bar-edge: rgba(255,255,255,0.10);
+  --pg-rail: rgba(16,12,10,0.66); --pg-shadow: rgba(0,0,0,0.35); --pg-shadow-strong: rgba(0,0,0,0.5);
+  --pg-on: var(--sai-cream); --pg-on-text: var(--sai-ink);
+}
+body.sai-dark .sai-streak::before { opacity: .28; }
+body.sai-dark .sai-btn.ghost { color: var(--sai-cream); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.16); }
+body.sai-dark .sai-btn.ghost:hover { background: rgba(255,255,255,0.14); }
+body.sai-dark .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+body.sai-dark .sai-btn.primary:hover { background: var(--sai-accent-night); color: var(--sai-ink); }
+body.sai-dark .sai-callout { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--sai-cream); }
+body.sai-dark .sai-callout .cap { color: var(--sai-accent-night); }
+body.sai-dark .sai-callout p { color: var(--sai-cream); }
+body.sai-dark .sai-callout::before, body.sai-dark .sai-callout::after { border-color: var(--sai-accent-night); }
+.logo-day, .logo-night { display: block; width: 30px; height: 30px; flex: none; }
+.logo-day .mark, .logo-night .mark { width: 30px; height: 30px; display: block; }
+.logo-night { display: none; }
+body.sai-dark .logo-day { display: none; }
+body.sai-dark .logo-night { display: block; }
+.mode { font: 700 13.5px var(--sai-font-label); letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); background: transparent; border: 1px solid var(--pg-rule); border-radius: 999px; padding: 9px 14px; cursor: pointer; transition: background 140ms var(--ease), color 140ms var(--ease); }
+.mode:hover { color: var(--pg-ink); background: var(--pg-card-soft); }
 html, body { overflow-x: clip !important; overflow-y: visible !important; }
-body { font-family: var(--sai-font-sans); color: var(--sai-ink); background: var(--sai-sky-fallback); font-size: 17px; line-height: 1.55; }
+body { font-family: var(--sai-font-sans); color: var(--pg-ink); background: var(--sai-sky-fallback); font-size: 17px; line-height: 1.55; }
+body.sai-dark { background: var(--sai-night-fallback); }
 h1, h2, h3, h4 { text-wrap: balance; }
 p { text-wrap: pretty; }
 .sai-page { padding-top: 36px; }
@@ -999,44 +1029,47 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------ the bar */
 .bar { position: sticky; top: 0; z-index: 20; height: var(--bar-h); display: flex; align-items: center; gap: 14px;
-  padding: 0 clamp(16px, 3vw, 32px); background: rgba(255,255,255,0.58);
+  padding: 0 clamp(16px, 3vw, 32px); background: var(--pg-bar);
   backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
-  border-bottom: 1px solid rgba(255,255,255,0.9); box-shadow: 0 8px 30px rgba(112,62,40,0.08); }
-.bar .mark { width: 30px; height: 30px; flex: 0 0 auto; }
-.bar .word { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; text-decoration: none; }
-.bar .sub { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+  border-bottom: 1px solid var(--pg-bar-edge); box-shadow: 0 8px 30px var(--pg-shadow); }
+.bar .word { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; text-decoration: none; color: var(--pg-ink); }
+.bar .sub { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pg-ink-2); }
 .bar .grow { flex: 1; }
 .bar .sai-btn { padding: 10px 18px; font-size: 14px; }
-.bar .back { font-size: 14.5px; color: var(--sai-ink-2); text-decoration: none; }
-.bar .back:hover { color: var(--sai-ink); }
-@media (max-width: 720px) { .bar .sub, .bar .ghost, .bar .back { display: none; } }
+.bar .back { font-size: 14.5px; color: var(--pg-ink-2); text-decoration: none; }
+.bar .back:hover { color: var(--pg-ink); }
+@media (max-width: 720px) { .bar .sub, .bar .ghost, .bar .back { display: none; } .mode { padding: 8px 10px; } }
 
 /* ------------------------------------------------------------ chips + labels */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.chips li { font-size: 14px; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--sai-rule); background: rgba(255,255,255,0.55); color: var(--sai-ink); }
-.lbl { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); }
-.lbl.acc { color: var(--sai-accent-deep); }
+.chips li { font-size: 14px; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--pg-rule); background: var(--pg-card-soft); color: var(--pg-ink); }
+.lbl { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); }
+.lbl.acc { color: var(--pg-acc-deep); }
 
 /* ------------------------------------------------------------ the number */
 .num { display: flex; flex-direction: column; gap: 4px; }
-.num .v { font-family: var(--sai-font-label); font-weight: 700; font-size: clamp(34px, 4.6vw, 48px); line-height: 1; letter-spacing: -0.01em; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.num .v { font-family: var(--sai-font-label); font-weight: 700; font-size: clamp(34px, 4.6vw, 48px); line-height: 1; letter-spacing: -0.01em; color: var(--pg-ink); }
 .num .v .u { font-size: 0.5em; letter-spacing: 0; margin-left: 4px; }
-.num.acc .v { color: var(--sai-accent); }
-.num .l { font-size: 16px; color: var(--sai-ink-2); max-width: 34ch; }
-.num .basis { font-size: 14px; color: var(--sai-ink-2); margin-top: 4px; max-width: 46ch; }
+.num.acc .v { color: var(--pg-acc); }
+.num .l { font-size: 16px; color: var(--pg-ink-2); max-width: 34ch; }
+.num .basis { font-size: 14px; color: var(--pg-ink-2); margin-top: 4px; max-width: 46ch; }
 
 /* ------------------------------------------------------------ shots */
-.shot { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 40px rgba(112,62,40,0.14); background: #fff; }
+.shot { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--pg-card-edge); box-shadow: 0 14px 40px var(--pg-shadow); background: #fff; }
 .shot img { display: block; width: 100%; height: auto; }
-.shot figcaption, .cap { font-size: 14px; color: var(--sai-ink-2); padding: 10px 14px 12px; background: rgba(255,255,255,0.7); }
+.shot figcaption, .cap { font-size: 14px; color: var(--sai-ink-2); padding: 10px 14px 12px; background: rgba(255,255,255,0.86); }
+body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); background: rgba(24,18,14,0.9); }
 
 /* ------------------------------------------------------------ footer */
 .sai-footer .meta a { color: inherit; }
 </style>
 <style>
 .sai-page { padding-top: 116px; }
-.sai-dock .back { font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; color: var(--sai-ink-2); text-decoration: none; }
-.sai-dock .back:hover { color: var(--sai-ink); }
+.sai-dock .back { font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; color: var(--pg-ink-2); text-decoration: none; }
+.sai-dock .back:hover { color: var(--pg-ink); }
+.sai-dock .logo-day, .sai-dock .logo-night { width: 27px; height: 27px; } .sai-dock .logo-day .mark, .sai-dock .logo-night .mark { width: 27px; height: 27px; }
+.sai-dock .mode { padding: 7px 12px; }
+@media (max-width: 720px) { .sai-dock .mode { display: none; } }
 .sai-dock .sai-btn { padding: 9px 16px; font-size: 13.5px; }
 @media (max-width: 720px) { .sai-dock .back { display: none; } }
 #result .sai-display { max-width: 24ch; }
@@ -1054,12 +1087,12 @@ a { color: inherit; }
 .media video { display: block; width: 100%; height: auto; border-radius: 14px; background: #000; }
 .facts { padding: 22px 24px 26px; border-radius: 26px; }
 .facts dl { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 12px 0 0; }
-.facts dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); margin: 0 0 3px; }
+.facts dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 3px; }
 .facts dd { margin: 0; font-size: 15.5px; line-height: 1.5; }
 .sai-widget h3 { margin-top: 0; }
 .eng { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 26px; margin-top: 8px; }
 @media (max-width: 760px) { .eng { grid-template-columns: 1fr; } }
-.eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); margin: 0 0 4px; }
+.eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 4px; }
 .eng dd { margin: 0; font-size: 16px; line-height: 1.5; }
 .eng .wide { grid-column: 1 / -1; }
 .eng .sai-callout { margin: 0; }
@@ -1073,10 +1106,13 @@ a { color: inherit; }
 .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .nextprev { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 640px) { .nextprev { grid-template-columns: 1fr; } }
-.nextprev a { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: 22px; text-decoration: none; color: inherit; transition: transform 160ms var(--ease), box-shadow 160ms var(--ease); }
-.nextprev a:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(112,62,40,0.18); }
+.nextprev a { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: 22px; text-decoration: none; color: var(--pg-ink); transition: transform 160ms var(--ease), box-shadow 160ms var(--ease); }
+.nextprev a:hover { transform: translateY(-3px); box-shadow: 0 18px 44px var(--pg-shadow-strong); }
 .nextprev .t { font-size: 17px; font-weight: 600; }
-.nextprev .n { font-size: 14.5px; color: var(--sai-ink-2); }
+.nextprev .n { font-size: 14.5px; color: var(--pg-ink-2); }
+body.sai-dark .fig-shot { background: rgba(24,18,14,0.9); } body.sai-dark .fig-shot text { fill: var(--sai-cream); } body.sai-dark .fig-shot text.mute { fill: var(--sai-cream-2); } body.sai-dark .fig-shot rect.frame { stroke: var(--sai-cream); }
+body.sai-dark .facts, body.sai-dark .media, body.sai-dark .num.sai-pane { color: var(--sai-cream); }
+body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { color: var(--sai-cream); }
 </style>
 </head>
 <body>
@@ -1093,6 +1129,7 @@ a { color: inherit; }
 </div>
 <!-- /SAI:SCENE -->
 <div class="sai-dock">
+  <span class="logo-day">
 <!-- SAI:LOGO -->
 <svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
@@ -1102,8 +1139,21 @@ a { color: inherit; }
   <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
 </svg>
 <!-- /SAI:LOGO -->
+  </span>
+  <span class="logo-night">
+<!-- SAI:LOGO-NIGHT -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#F5F1E8" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO-NIGHT -->
+  </span>
   <a class="back" href="/alec">All builds</a>
   <nav><a class="on" href="#result">RESULT</a><a href="#broken">BROKEN</a><a href="#built">BUILT</a><a href="#changed">CHANGED</a><a href="#how">HOW</a><a href="#next">NEXT</a></nav>
+  <button class="mode" type="button" id="modeBtn" aria-pressed="false">Night</button>
   <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
 </div>
 
@@ -1144,19 +1194,19 @@ a { color: inherit; }
     </div>
   </section>
 
-  <section id="broken" class="sai-widget sai-pane sai-streak" data-sc-in>
+  <section id="broken" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What was broken</span></span>
     <h3>Before</h3>
     <p>A veteran HR leader running her own practice was doing her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. 10 to 12 hours to format one 3-hour workshop. A client had questioned a one-hour line item, and she had no receipts.</p>
   </section>
 
-  <section id="built" class="sai-widget sai-pane sai-streak" data-sc-in>
+  <section id="built" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What I built</span></span>
     <h3>The build</h3>
     <ul class="sai-bullets"><li>The brain document: one doc holding her voice, brand rules, client roster, and policies, read by every agent as live knowledge. She changes it by messaging a maintainer agent in plain English.</li><li>4 agents inside her project tool: inbox triage that defaults to skip and cites the source message, scheduling that drafts the reply inside the task, voice-note capture that splits and routes, and meeting notes on a scheduled routine she owns.</li><li>Calendar to invoice: on the first of the month it reads both calendars, parses client and service codes from the events, and writes hours to a color-coded sheet. Receipts, automatically.</li><li>Every agent stamps its work, so output is always attributable and sweepable. That made a 115-task cleanup safe, reversible, and rehearsed in a sandbox first.</li></ul>
   </section>
 
-  <section id="changed" class="sai-widget sai-pane sai-streak" data-sc-in>
+  <section id="changed" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What changed</span></span>
     <h3>Before and after</h3>
     <div class="sai-split">
@@ -1171,7 +1221,7 @@ a { color: inherit; }
     <div class="sai-w-note"><strong>Where the numbers come from.</strong> The email count is her daily inbox volume during the build; the 115 tasks were the stale backlog archived on 2026-07-20 with an undo manifest kept.</div>
   </section>
 
-  <section id="how" class="sai-widget sai-pane sai-streak" data-sc-in>
+  <section id="how" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">For engineers</span></span>
     <h3>How it's built</h3>
     <dl class="eng">
@@ -1185,17 +1235,18 @@ a { color: inherit; }
   </section>
 
 
-  <section id="next" class="sai-widget sai-pane" data-sc-in>
+  <section id="next" class="sai-widget sai-pane" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">Keep going</span></span>
     <div class="nextprev">
-      <a class="sai-pane" href="/alec/ai-lab"><span class="n">Previous build</span><span class="t">AI Lab</span><span class="n">4,349 emails · sent from a fleet built 2 to 10 domains in 3 weeks; 2.2% human replies</span></a>
-      <a class="sai-pane" href="/alec/construction-site"><span class="n">Next build</span><span class="t">Construction site</span><span class="n">1 industry board · now referring us, off a 6-page rebuild</span></a>
+      <a class="sai-pane" href="/alec/ai-lab"><span class="n">Previous build</span><span class="t">AI Lab content + outbound systems</span><span class="n">4,349 emails · sent from a fleet grown from 2 to 10 domains in 3 weeks, with 2.2% human replies</span></a>
+      <a class="sai-pane" href="/alec/construction-site"><span class="n">Next build</span><span class="t">Construction company website</span><span class="n">1 industry board · now referring us, off a 6-page rebuild in Japanese</span></a>
     </div>
     <div class="links"><a class="sai-btn ghost" href="/alec">All 8 builds</a><a class="sai-btn ghost" href="mailto:alec@stephensai.co">Email Alec</a></div>
   </section>
 
   <footer class="sai-footer">
     <span class="lockup">
+      <span class="logo-day">
 <!-- SAI:LOGO -->
 <svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
@@ -1205,6 +1256,18 @@ a { color: inherit; }
   <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
 </svg>
 <!-- /SAI:LOGO -->
+      </span>
+      <span class="logo-night">
+<!-- SAI:LOGO-NIGHT -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#F5F1E8" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO-NIGHT -->
+      </span>
       <span class="word">Stephens AI</span>
     </span>
     <span class="meta"><a href="/">stephensai.co</a> · <a href="/alec">Alec's builds</a> · Updated 2026-09-16</span>
@@ -1212,6 +1275,25 @@ a { color: inherit; }
 </main>
 <script src="/alec/scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
+<script>
+(function () {
+  var body = document.body, btn = document.getElementById('modeBtn');
+  function readMode() {
+    var q = /[?&]mode=(night|day)/.exec(location.search); if (q) return q[1];
+    try { var s = localStorage.getItem('sai-mode'); if (s === 'night' || s === 'day') return s; } catch (e) {}
+    return (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'night' : 'day';
+  }
+  function applyMode(m, save) {
+    var night = m === 'night';
+    body.classList.toggle('sai-dark', night);
+    document.querySelectorAll('[data-night-widget]').forEach(function (el) { el.classList.toggle('sai-night', night); });
+    if (btn) { btn.textContent = night ? 'Day' : 'Night'; btn.setAttribute('aria-pressed', night ? 'true' : 'false'); btn.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode'); }
+    if (save) { try { localStorage.setItem('sai-mode', m); } catch (e) {} }
+  }
+  applyMode(readMode(), false);
+  if (btn) btn.addEventListener('click', function () { applyMode(body.classList.contains('sai-dark') ? 'day' : 'night', true); });
+})();
+</script>
 <!-- SAI:JS -->
 <script>
 /* Lens v3 — behaviour layer. Inlined by scripts/inline_kit.py at the SAI:JS marker.
