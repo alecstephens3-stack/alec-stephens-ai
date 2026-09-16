@@ -3,7 +3,7 @@ import { Inter_Tight, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Scene } from "@/components/ui/scene";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/content";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/content";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -24,16 +24,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     template: `%s | ${SITE_NAME}`,
-    default: `${SITE_NAME} | Front desk systems for independent eyecare`,
+    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    "optometry front desk training",
-    "eyecare practice knowledge base",
-    "optometry practice operations",
+    "clinic front desk knowledge base",
+    "medical office custom software",
+    "healthcare practice operations",
     "front desk SOP software",
-    "independent optometry consulting",
-    "practice management training",
+    "independent clinic consulting",
+    "office manager tools",
   ],
   authors: [{ name: "Alec Stephens" }, { name: "Jusheen Kim" }],
   alternates: { canonical: SITE_URL },
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Front desk systems for independent eyecare`,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Front desk systems for independent eyecare`,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: ["/og-image.png"],
   },
