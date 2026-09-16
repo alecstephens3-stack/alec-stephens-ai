@@ -9,9 +9,9 @@ Applied AI engineer. Co-founder, Stephens AI.
 I go into a business, find where the hours and the money leak, and build the thing that stops it: usually an agent, a knowledge system, or an automation that a non-technical team runs on its own.
 I was hired in Seoul to write English lessons and left having turned the company's curriculum into an AI production line. Everything since has been the same move in a different building.
 Now, September 2026: moving a clinic's invoice filing onto Claude via AWS Bedrock under a BAA, and turning the front-desk knowledge base into a product for the next practice.
-Co-founder of Stephens AI, a two-person consultancy for healthcare practices. I also take one contract at a time as an applied AI or forward-deployed engineer: remote, contractor, Japan hours (US mornings, Europe, and Australia are live).
+Co-founder of Stephens AI, a two-person consultancy for healthcare practices. I also take one contract at a time as an applied AI or forward-deployed engineer: remote, contractor, with live hours for US mornings, Europe, and Australia.
 
-## Knowledge base (https://stephensai.co/alec/knowledge-base)
+## Clinic knowledge base (https://stephensai.co/alec/knowledge-base)
 Front desk knowledge base for an eye clinic: six months of training turned into one search.
 Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
 Who uses it: The front desk and 2 office managers, daily since August 2026.
@@ -32,10 +32,10 @@ Who built it: Alec: the content model from the clinic's front-desk documents, th
 Quote: "This is highly valuable, both in the short term and long term. It's already saving a lot of time." (Front office manager, Wichita Family Vision)
 Code: https://github.com/alecstephens3-stack/supabase-team-knowledge-base
 
-## PTO + payroll (https://stephensai.co/alec/pto-payroll)
-Time-off and payroll for a 26-person clinic: paper slips to a system that runs itself.
+## PTO + payroll system (https://stephensai.co/alec/pto-payroll)
+Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself.
 Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
-Who uses it: 26 staff file requests; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.
+Who uses it: Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.
 Shipped: Live April 2026. About 8 weeks, then 3 months of fixes found in production.
 Headline number: 60 to 100 hrs/yr of admin time returned. Basis: 10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused.
 Second number: 183 tests in the public repo, every one written from a bug we hit.
@@ -52,7 +52,7 @@ Tradeoff: Apps Script over a hosted app. The clinic already paid for Google Work
 Who built it: Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.
 Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll
 
-## Invoice filing on Bedrock (https://stephensai.co/alec/invoice-agent)
+## Invoice processing system (https://stephensai.co/alec/invoice-agent)
 Invoice filing for a clinic's bookkeeper: Claude on AWS Bedrock, under a BAA, at 0.9 cents an invoice.
 Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
 Who uses it: Built for the clinic's bookkeeper. Tested end to end in the clinic's own AWS account on 2026-09-16; her desk install is the next step.
@@ -71,7 +71,7 @@ Guardrails: Retention set to none in Bedrock, logging off, the Anthropic use-cas
 Tradeoff: We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic's data stays inside its own boundary. Also chosen: QuickBooks' own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.
 Who built it: Alec: the runner, the Bedrock path and the BAA setup in the clinic's account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic's AWS account.
 
-## AI Lab (https://stephensai.co/alec/ai-lab)
+## AI Lab content + outbound systems (https://stephensai.co/alec/ai-lab)
 An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no.
 Client: AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026.
 Who uses it: 2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials.
@@ -90,7 +90,7 @@ Guardrails: A human approves every send: newsletters stage a verified test, camp
 Tradeoff: The opinion question beat the direct pitch in every A/B pair, so we stopped pitching. And when the numbers said cold email was not the channel for this buyer, we reported that instead of optimizing the copy again. The system's job was to make that finding checkable.
 Who built it: Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
 
-## Coaching practice AIOS (https://stephensai.co/alec/coaching-aios)
+## Coaching practice AI system (https://stephensai.co/alec/coaching-aios)
 An AI operating system for a one-person coaching practice: 4 agents that read one document.
 Client: A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).
 Who uses it: The founder, daily, April to July 2026; she owns and edits it herself.
@@ -109,7 +109,7 @@ Guardrails: Every agent defaults to skip, forces the assignee and a source stamp
 Tradeoff: Native ClickUp agents instead of a custom stack. Less power, but she can read and change every instruction herself, and there is nothing of ours to maintain. A one-person practice needs a system she owns, not a vendor.
 Who built it: Alec: all of it.
 
-## Construction site (https://stephensai.co/alec/construction-site)
+## Construction company website (https://stephensai.co/alec/construction-site)
 A Japanese construction company's site, rebuilt in its own language, then referred to the whole industry board.
 Client: Kamata Koumuten, a construction company in Miyagi, Japan.
 Who uses it: The company's storefront; its owner and her customers. Live since May 2026.
@@ -128,7 +128,7 @@ Guardrails: Never delete the search-console verification file. Backup before eve
 Tradeoff: Kept their host and a static site instead of moving them to a builder. The owner's team is not technical; the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.
 Who built it: Alec: all of it, with the company's own photography.
 
-## Curriculum generation (https://stephensai.co/alec/curriculum-system)
+## Curriculum generation system (https://stephensai.co/alec/curriculum-system)
 A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI.
 Client: KiwiOPIC, an English test-prep company in Seoul.
 Who uses it: The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024.
@@ -147,7 +147,7 @@ Guardrails: A human signed off on every published lesson.
 Tradeoff: Generate the first draft, never the final. The register of the test is narrow enough that a model drafts it well and a teacher's last pass keeps it honest.
 Who built it: Alec, as English curriculum specialist turned AI integration lead.
 
-## My own operating system (https://stephensai.co/alec/aios)
+## My own AI operating system (https://stephensai.co/alec/aios)
 The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services.
 Client: Stephens AI, our own consultancy.
 Who uses it: Me and my co-founder, every day since March 2026.

@@ -987,9 +987,39 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   --sc-shadow-color: 20 45% 20%;
   --bar-h: 64px;
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --toss: cubic-bezier(0.34, 1.18, 0.64, 1);
+  --pg-ink: var(--sai-ink); --pg-ink-2: var(--sai-ink-2); --pg-acc: var(--sai-accent); --pg-acc-deep: var(--sai-accent-deep);
+  --pg-card: rgba(255,255,255,0.62); --pg-card-edge: rgba(255,255,255,0.92); --pg-card-soft: rgba(255,255,255,0.55);
+  --pg-rule: var(--sai-rule); --pg-bar: rgba(255,255,255,0.58); --pg-bar-edge: rgba(255,255,255,0.9);
+  --pg-rail: rgba(245,233,222,0.72); --pg-shadow: rgba(112,62,40,0.14); --pg-shadow-strong: rgba(112,62,40,0.22);
+  --pg-on: var(--sai-ink); --pg-on-text: var(--sai-cream);
 }
+body.sai-dark {
+  --pg-ink: var(--sai-cream); --pg-ink-2: var(--sai-cream-2); --pg-acc: var(--sai-accent-night); --pg-acc-deep: var(--sai-accent-night);
+  --pg-card: rgba(255,255,255,0.055); --pg-card-edge: rgba(255,255,255,0.13); --pg-card-soft: rgba(255,255,255,0.07);
+  --pg-rule: rgba(255,255,255,0.12); --pg-bar: rgba(18,13,10,0.62); --pg-bar-edge: rgba(255,255,255,0.10);
+  --pg-rail: rgba(16,12,10,0.66); --pg-shadow: rgba(0,0,0,0.35); --pg-shadow-strong: rgba(0,0,0,0.5);
+  --pg-on: var(--sai-cream); --pg-on-text: var(--sai-ink);
+}
+body.sai-dark .sai-streak::before { opacity: .28; }
+body.sai-dark .sai-btn.ghost { color: var(--sai-cream); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.16); }
+body.sai-dark .sai-btn.ghost:hover { background: rgba(255,255,255,0.14); }
+body.sai-dark .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+body.sai-dark .sai-btn.primary:hover { background: var(--sai-accent-night); color: var(--sai-ink); }
+body.sai-dark .sai-callout { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--sai-cream); }
+body.sai-dark .sai-callout .cap { color: var(--sai-accent-night); }
+body.sai-dark .sai-callout p { color: var(--sai-cream); }
+body.sai-dark .sai-callout::before, body.sai-dark .sai-callout::after { border-color: var(--sai-accent-night); }
+.logo-day, .logo-night { display: block; width: 30px; height: 30px; flex: none; }
+.logo-day .mark, .logo-night .mark { width: 30px; height: 30px; display: block; }
+.logo-night { display: none; }
+body.sai-dark .logo-day { display: none; }
+body.sai-dark .logo-night { display: block; }
+.mode { font: 700 13.5px var(--sai-font-label); letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); background: transparent; border: 1px solid var(--pg-rule); border-radius: 999px; padding: 9px 14px; cursor: pointer; transition: background 140ms var(--ease), color 140ms var(--ease); }
+.mode:hover { color: var(--pg-ink); background: var(--pg-card-soft); }
 html, body { overflow-x: clip !important; overflow-y: visible !important; }
-body { font-family: var(--sai-font-sans); color: var(--sai-ink); background: var(--sai-sky-fallback); font-size: 17px; line-height: 1.55; }
+body { font-family: var(--sai-font-sans); color: var(--pg-ink); background: var(--sai-sky-fallback); font-size: 17px; line-height: 1.55; }
+body.sai-dark { background: var(--sai-night-fallback); }
 h1, h2, h3, h4 { text-wrap: balance; }
 p { text-wrap: pretty; }
 .sai-page { padding-top: 36px; }
@@ -999,36 +1029,36 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------ the bar */
 .bar { position: sticky; top: 0; z-index: 20; height: var(--bar-h); display: flex; align-items: center; gap: 14px;
-  padding: 0 clamp(16px, 3vw, 32px); background: rgba(255,255,255,0.58);
+  padding: 0 clamp(16px, 3vw, 32px); background: var(--pg-bar);
   backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
-  border-bottom: 1px solid rgba(255,255,255,0.9); box-shadow: 0 8px 30px rgba(112,62,40,0.08); }
-.bar .mark { width: 30px; height: 30px; flex: 0 0 auto; }
-.bar .word { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; text-decoration: none; }
-.bar .sub { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+  border-bottom: 1px solid var(--pg-bar-edge); box-shadow: 0 8px 30px var(--pg-shadow); }
+.bar .word { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; text-decoration: none; color: var(--pg-ink); }
+.bar .sub { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pg-ink-2); }
 .bar .grow { flex: 1; }
 .bar .sai-btn { padding: 10px 18px; font-size: 14px; }
-.bar .back { font-size: 14.5px; color: var(--sai-ink-2); text-decoration: none; }
-.bar .back:hover { color: var(--sai-ink); }
-@media (max-width: 720px) { .bar .sub, .bar .ghost, .bar .back { display: none; } }
+.bar .back { font-size: 14.5px; color: var(--pg-ink-2); text-decoration: none; }
+.bar .back:hover { color: var(--pg-ink); }
+@media (max-width: 720px) { .bar .sub, .bar .ghost, .bar .back { display: none; } .mode { padding: 8px 10px; } }
 
 /* ------------------------------------------------------------ chips + labels */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.chips li { font-size: 14px; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--sai-rule); background: rgba(255,255,255,0.55); color: var(--sai-ink); }
-.lbl { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); }
-.lbl.acc { color: var(--sai-accent-deep); }
+.chips li { font-size: 14px; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--pg-rule); background: var(--pg-card-soft); color: var(--pg-ink); }
+.lbl { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); }
+.lbl.acc { color: var(--pg-acc-deep); }
 
 /* ------------------------------------------------------------ the number */
 .num { display: flex; flex-direction: column; gap: 4px; }
-.num .v { font-family: var(--sai-font-label); font-weight: 700; font-size: clamp(34px, 4.6vw, 48px); line-height: 1; letter-spacing: -0.01em; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.num .v { font-family: var(--sai-font-label); font-weight: 700; font-size: clamp(34px, 4.6vw, 48px); line-height: 1; letter-spacing: -0.01em; color: var(--pg-ink); }
 .num .v .u { font-size: 0.5em; letter-spacing: 0; margin-left: 4px; }
-.num.acc .v { color: var(--sai-accent); }
-.num .l { font-size: 16px; color: var(--sai-ink-2); max-width: 34ch; }
-.num .basis { font-size: 14px; color: var(--sai-ink-2); margin-top: 4px; max-width: 46ch; }
+.num.acc .v { color: var(--pg-acc); }
+.num .l { font-size: 16px; color: var(--pg-ink-2); max-width: 34ch; }
+.num .basis { font-size: 14px; color: var(--pg-ink-2); margin-top: 4px; max-width: 46ch; }
 
 /* ------------------------------------------------------------ shots */
-.shot { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 40px rgba(112,62,40,0.14); background: #fff; }
+.shot { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--pg-card-edge); box-shadow: 0 14px 40px var(--pg-shadow); background: #fff; }
 .shot img { display: block; width: 100%; height: auto; }
-.shot figcaption, .cap { font-size: 14px; color: var(--sai-ink-2); padding: 10px 14px 12px; background: rgba(255,255,255,0.7); }
+.shot figcaption, .cap { font-size: 14px; color: var(--sai-ink-2); padding: 10px 14px 12px; background: rgba(255,255,255,0.86); }
+body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); background: rgba(24,18,14,0.9); }
 
 /* ------------------------------------------------------------ footer */
 .sai-footer .meta a { color: inherit; }
@@ -1039,76 +1069,93 @@ a { color: inherit; }
 .wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px; }
 @media (max-width: 900px) { .wall { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .wall { grid-template-columns: 1fr; } }
-.cell { display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 24px; border-radius: 22px; text-decoration: none; color: inherit;
-  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease); }
-.cell:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(112,62,40,0.18); }
+.cell { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 22px; border-radius: 22px; text-decoration: none; color: var(--pg-ink);
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease); }
+.cell:hover { transform: translateY(-4px); box-shadow: 0 22px 48px var(--pg-shadow-strong); }
 .cell:active { transform: translateY(0) scale(0.99); }
-.cell .cell-n { font-family: var(--sai-font-label); font-weight: 700; font-size: 26px; line-height: 1.05; letter-spacing: -0.01em; color: var(--sai-ink); }
-.cell.acc .cell-n { color: var(--sai-accent); }
-.cell .cell-name { font-size: 15px; font-weight: 600; }
-.cell .cell-phrase { font-size: 14.5px; color: var(--sai-ink-2); line-height: 1.4; }
+.cell .cell-name { font-size: 19px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--pg-ink); }
+.cell .cell-phrase { font-size: 14.5px; color: var(--pg-ink-2); line-height: 1.4; }
+.cell .cell-n { margin-top: auto; padding-top: 18px; font-family: var(--sai-font-label); font-weight: 700; font-size: 24px; line-height: 1.1; letter-spacing: -0.01em; color: var(--pg-ink); transition: color 180ms var(--ease); }
+.cell.acc .cell-n { color: var(--pg-acc); }
+.cell:hover .cell-n { color: var(--pg-acc); }
 
 /* ------------------------------------------------------------ rail */
 #builds { margin-top: 64px; }
 .railwrap { position: sticky; top: var(--bar-h); z-index: 15; margin: 0 calc(-1 * clamp(20px, 4vw, 48px)); padding: 12px clamp(20px, 4vw, 48px);
   display: flex; align-items: center; gap: 12px;
-  background: rgba(245,233,222,0.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+  background: var(--pg-rail); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
 .rail { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; flex: 1; padding: 4px 2px; -webkit-overflow-scrolling: touch;
   mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
 .rail::-webkit-scrollbar { display: none; }
 .rail a { flex: 0 0 auto; scroll-snap-align: start; text-decoration: none; font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; letter-spacing: .01em;
-  padding: 9px 15px; border-radius: 999px; color: var(--sai-ink); background: rgba(255,255,255,0.62); border: 1px solid rgba(255,255,255,0.9);
+  padding: 9px 15px; border-radius: 999px; color: var(--pg-ink); background: var(--pg-card); border: 1px solid var(--pg-card-edge);
   transition: background 140ms var(--ease), color 140ms var(--ease), transform 120ms var(--ease); white-space: nowrap; }
-.rail a:hover { background: rgba(255,255,255,0.9); }
+.rail a:hover { background: var(--pg-card-soft); }
 .rail a:active { transform: scale(0.97); }
-.rail a.on { background: var(--sai-ink); color: var(--sai-cream); border-color: var(--sai-ink); }
+.rail a.on { background: var(--pg-on); color: var(--pg-on-text); border-color: var(--pg-on); }
 .railctl { display: flex; gap: 6px; flex: 0 0 auto; }
-.railctl button { width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.9); background: rgba(255,255,255,0.62); color: var(--sai-ink); cursor: pointer; font: 600 16px var(--sai-font-label); }
-.railctl button:hover { background: #fff; }
+.railctl button { width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--pg-card-edge); background: var(--pg-card); color: var(--pg-ink); cursor: pointer; font: 600 16px var(--sai-font-label); }
+.railctl button:hover { background: var(--pg-card-soft); }
 .railctl button:active { transform: scale(0.96); }
-.view { display: inline-flex; border-radius: 999px; border: 1px solid rgba(255,255,255,0.9); background: rgba(255,255,255,0.62); padding: 3px; flex: 0 0 auto; }
-.view button { border: 0; background: transparent; cursor: pointer; padding: 7px 13px; border-radius: 999px; font: 600 13.5px var(--sai-font-label); letter-spacing: .03em; text-transform: uppercase; color: var(--sai-ink-2); }
-.view button.on { background: var(--sai-ink); color: var(--sai-cream); }
+.view { display: inline-flex; border-radius: 999px; border: 1px solid var(--pg-card-edge); background: var(--pg-card); padding: 3px; flex: 0 0 auto; }
+.view button { border: 0; background: transparent; cursor: pointer; padding: 7px 13px; border-radius: 999px; font: 600 13.5px var(--sai-font-label); letter-spacing: .03em; text-transform: uppercase; color: var(--pg-ink-2); }
+.view button.on { background: var(--pg-on); color: var(--pg-on-text); }
 @media (max-width: 720px) { .railctl, .view { display: none; } }
 
 /* ------------------------------------------------------------ deck */
 .deck { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: 0; padding: 18px 2px 26px;
   margin: 0 -2px; scrollbar-width: thin; scrollbar-color: rgba(23,19,16,0.25) transparent; -webkit-overflow-scrolling: touch; outline-offset: 6px; }
 .deck.list { display: grid; grid-template-columns: 1fr; gap: 28px; overflow: visible; }
-.card { flex: 0 0 min(100%, 920px); scroll-snap-align: start; perspective: 2200px; scroll-margin-top: calc(var(--bar-h) + 78px); }
-.deck.list .card { flex: none; }
-.flip { display: grid; position: relative; transition: height 640ms var(--ease); }
+.card { flex: 0 0 min(100%, 920px); scroll-snap-align: start; perspective: 2200px; scroll-margin-top: calc(var(--bar-h) + 78px);
+  transform: scale(calc(1 - 0.045 * var(--away, 0))); opacity: calc(1 - 0.38 * var(--away, 0)); transform-origin: 50% 40%;
+  transition: transform 260ms var(--ease), opacity 260ms var(--ease); }
+.deck.list .card { flex: none; transform: none; opacity: 1; }
+.flip { display: grid; position: relative; transform-style: preserve-3d; transition: height 720ms var(--toss); }
 .face { grid-area: 1 / 1; align-self: start; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  transition: transform 640ms var(--ease); border-radius: 30px; padding: clamp(22px, 3.2vw, 40px); }
+  border-radius: 30px; padding: clamp(22px, 3.2vw, 40px); will-change: transform; }
 .face.back { transform: rotateY(180deg); pointer-events: none; }
 .flip.is-back .back { pointer-events: auto; }
 .flip.is-back .front { pointer-events: none; }
-.flip.is-back .front { transform: rotateY(-180deg); }
-.flip.is-back .back { transform: rotateY(0); }
-.face.back.sai-pane { background: rgba(255,255,255,0.78); }
+/* the toss: the card lifts, turns past the edge, and settles */
+@keyframes frontOut { 0% { transform: rotateY(0) translateY(0) } 45% { transform: rotateY(-90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(-180deg) translateY(0) } }
+@keyframes backIn  { 0% { transform: rotateY(180deg) translateY(0) } 45% { transform: rotateY(90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(0) translateY(0) } }
+@keyframes frontIn { 0% { transform: rotateY(-180deg) } 45% { transform: rotateY(-90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(0) } }
+@keyframes backOut { 0% { transform: rotateY(0) } 45% { transform: rotateY(90deg) translateY(-22px) scale(1.02) } 100% { transform: rotateY(180deg) } }
+.flip.is-back .front { animation: frontOut 760ms var(--toss) both; }
+.flip.is-back .back  { animation: backIn 760ms var(--toss) both; }
+.flip.to-front .front { animation: frontIn 760ms var(--toss) both; }
+.flip.to-front .back  { animation: backOut 760ms var(--toss) both; }
+/* the back's content arrives in reading order once the card has turned */
+@keyframes settle { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+.flip.is-back .back .head, .flip.is-back .back .eng > div, .flip.is-back .back .acts { animation: settle 520ms var(--ease) both; animation-delay: calc(380ms + var(--i, 0) * 55ms); }
+.back .head { --i: 0 } .back .eng > div:nth-child(1) { --i: 1 } .back .eng > div:nth-child(2) { --i: 2 } .back .eng > div:nth-child(3) { --i: 3 } .back .eng > div:nth-child(4) { --i: 4 } .back .eng > div:nth-child(5) { --i: 5 } .back .eng > div:nth-child(6) { --i: 6 } .back .eng > div:nth-child(7) { --i: 7 } .back .acts { --i: 8 }
+.face.back.sai-pane { background: var(--pg-card); }
+.face.sai-pane { color: var(--pg-ink); }
+.card .when { color: var(--pg-ink-2); }
 
 .head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
-.head .when { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; color: var(--sai-ink-2); }
+.head .when { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; color: var(--pg-ink-2); }
 .card h2 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; margin: 12px 0 0; max-width: 26ch; }
-.card .client { margin: 8px 0 0; color: var(--sai-ink-2); font-size: 15.5px; }
+.card .client { margin: 8px 0 0; color: var(--pg-ink-2); font-size: 15.5px; }
 .front-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 28px; margin-top: 26px; align-items: start; }
 @media (max-width: 760px) { .front-grid { grid-template-columns: minmax(0, 1fr); } }
 .front-grid .num { padding-bottom: 6px; }
 .oneliner { font-size: 17px; margin: 18px 0 0; max-width: 46ch; }
 .oneliner b { font-weight: 600; }
 .stack { margin-top: 22px; display: flex; flex-direction: column; gap: 8px; }
-.who { margin: 18px 0 0; font-size: 14.5px; color: var(--sai-ink-2); max-width: 60ch; line-height: 1.5; }
+.who { margin: 18px 0 0; font-size: 14.5px; color: var(--pg-ink-2); max-width: 60ch; line-height: 1.5; }
 .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; align-items: center; }
-.acts .users { flex-basis: 100%; font-size: 14px; color: var(--sai-ink-2); }
+.acts .users { flex-basis: 100%; font-size: 14px; color: var(--pg-ink-2); }
 .card .sai-btn { font-size: 14.5px; padding: 12px 20px; }
 .fig { margin: 0; border-radius: 18px; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.9); padding: 16px 18px 12px; }
-.fig { overflow-x: auto; min-width: 0; }
+.fig { overflow-x: auto; min-width: 0; background: var(--pg-card-soft); border-color: var(--pg-card-edge); }
+body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute { fill: var(--sai-cream-2); } body.sai-dark .fig rect.frame { stroke: var(--sai-cream); }
 .fig svg { width: 100%; min-width: 340px; height: auto; display: block; }
 
 /* back face */
 .eng { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 26px; margin-top: 22px; }
 @media (max-width: 760px) { .eng { grid-template-columns: 1fr; } }
-.eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); margin: 0 0 4px; }
+.eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 4px; }
 .eng dd { margin: 0; font-size: 15.5px; line-height: 1.5; }
 .eng .wide { grid-column: 1 / -1; }
 .eng .sai-callout { margin: 0; }
@@ -1118,19 +1165,20 @@ a { color: inherit; }
 /* ------------------------------------------------------------ about + plate */
 #about { margin-top: 64px; padding: clamp(24px, 3.4vw, 40px); border-radius: 30px; display: grid; grid-template-columns: 168px 1fr; gap: 32px; align-items: start; }
 @media (max-width: 640px) { #about { grid-template-columns: 1fr; } }
-#about .face-img { width: 168px; height: 168px; border-radius: 999px; object-fit: cover; border: 1px solid rgba(255,255,255,0.95); box-shadow: 0 14px 36px rgba(112,62,40,0.18); }
+#about .face-img { width: 168px; height: 168px; border-radius: 999px; object-fit: cover; border: 1px solid var(--pg-card-edge); box-shadow: 0 14px 36px var(--pg-shadow-strong); }
 #about h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 500; letter-spacing: -0.015em; margin: 6px 0 4px; }
-#about .role { color: var(--sai-ink-2); font-size: 16px; margin: 0 0 16px; }
+#about .role { color: var(--pg-ink-2); font-size: 16px; margin: 0 0 16px; }
 #about p { margin: 0 0 12px; max-width: 62ch; }
-#about .now { padding: 14px 18px; border-radius: 18px; background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.9); }
+#about .now { padding: 14px 18px; border-radius: 18px; background: var(--pg-card-soft); border: 1px solid var(--pg-card-edge); }
 #about .creds { margin-top: 16px; margin-bottom: 6px; }
 #contact { margin-top: 40px; padding: clamp(24px, 3.4vw, 40px); border-radius: 30px; }
 .plate { display: grid; grid-template-columns: max-content 1fr; gap: 12px 28px; margin: 18px 0 0; }
-.plate dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--sai-ink-2); padding-top: 3px; }
+.plate dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); padding-top: 3px; }
 .plate dd { margin: 0; font-size: 17px; }
-.plate a { text-decoration: none; border-bottom: 1px solid var(--sai-rule-strong); }
-.plate a:hover { color: var(--sai-accent-deep); border-color: var(--sai-accent); }
-#contact .cofounder { margin: 22px 0 0; font-size: 15px; color: var(--sai-ink-2); max-width: 60ch; }
+.plate a { text-decoration: none; border-bottom: 1px solid var(--pg-rule); color: var(--pg-ink); }
+.plate a:hover { color: var(--pg-acc-deep); border-color: var(--pg-acc); }
+#contact .cofounder { margin: 22px 0 0; font-size: 15px; color: var(--pg-ink-2); max-width: 60ch; }
+#contact .cofounder a { color: var(--pg-ink); }
 
 /* ------------------------------------------------------------ motion off / no js: both sides, stacked, listed */
 .no-js .flip, .stacked .flip { display: block; }
@@ -1141,8 +1189,11 @@ a { color: inherit; }
 .no-js .deck, .stacked .deck { display: grid; grid-template-columns: 1fr; gap: 28px; overflow: visible; }
 .face.back > .lbl.back-title { display: none; }
 .no-js .face.back > .lbl.back-title, .stacked .face.back > .lbl.back-title { display: block; }
+.stacked .card, .no-js .card { transform: none; opacity: 1; }
+.stacked .face, .no-js .face { animation: none !important; }
+.stacked .back .head, .stacked .back .eng > div, .stacked .back .acts { animation: none !important; opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  .face { transition: none; }
+  .face { animation: none !important; } .card { transition: none; }
   .cell, .rail a, .railctl button { transition: none; }
 }
 </style>
@@ -1161,6 +1212,7 @@ a { color: inherit; }
 </div>
 <!-- /SAI:SCENE -->
 <header class="bar">
+  <span class="logo-day">
 <!-- SAI:LOGO -->
 <svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
@@ -1170,76 +1222,89 @@ a { color: inherit; }
   <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
 </svg>
 <!-- /SAI:LOGO -->
+  </span>
+  <span class="logo-night">
+<!-- SAI:LOGO-NIGHT -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#F5F1E8" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO-NIGHT -->
+  </span>
   <a class="word" href="/alec">Alec Stephens</a>
   <span class="sub">What I've built</span>
   <span class="grow"></span>
+  <button class="mode" type="button" id="modeBtn" aria-pressed="false">Night</button>
   <a class="sai-btn ghost" href="mailto:alec@stephensai.co">Email</a>
   <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
 </header>
 
 <main class="sai-page">
 
-  <section id="wall">
+  <section id="wall" data-sc-act="flow">
     <div data-sc-in data-sc-stagger="70">
-      <span class="sai-port"><span class="disc"></span><span class="ptext">Applied AI engineer · Co-founder, Stephens AI · Sendai, Japan</span></span>
-      <h1 class="sai-display">What I've built, <em>with the numbers</em>.</h1>
-      <p class="sai-lede">8 builds with real users. Each one below: what was broken, what I built, what changed, and <b>the engineering behind it on the back of the card.</b></p>
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Alec Stephens · Applied AI engineer · Co-founder, Stephens AI</span></span>
+      <h1 class="sai-display">Build <em>portfolio</em>.</h1>
+      <p class="sai-lede">8 builds with real users, including what was broken, what I built, what the results were, and <b>the engineering behind it on the back of the card.</b></p>
     </div>
     <div class="wall" data-sc-in data-sc-stagger="60">
       <a class="cell sai-pane acc" href="#knowledge-base" data-slug="knowledge-base">
+        <span class="cell-name">Clinic knowledge base</span>
+        <span class="cell-phrase">Of manager interruptions removed each year, estimated</span>
         <span class="cell-n">~200 hrs/yr</span>
-        <span class="cell-name">Knowledge base</span>
-        <span class="cell-phrase">of manager interruptions removed, estimated</span>
       </a>
       <a class="cell sai-pane" href="#pto-payroll" data-slug="pto-payroll">
+        <span class="cell-name">PTO + payroll system</span>
+        <span class="cell-phrase">Of paper-slip admin gone, with 183 tests in the open</span>
         <span class="cell-n">60 to 100 hrs/yr</span>
-        <span class="cell-name">PTO + payroll</span>
-        <span class="cell-phrase">of paper-slip admin gone; 183 tests in the open</span>
       </a>
       <a class="cell sai-pane" href="#invoice-agent" data-slug="invoice-agent">
+        <span class="cell-name">Invoice processing system</span>
+        <span class="cell-phrase">To read and file a vendor bill on Claude via Bedrock, under the clinic&#39;s BAA</span>
         <span class="cell-n">0.9¢ / invoice</span>
-        <span class="cell-name">Invoice filing on Bedrock</span>
-        <span class="cell-phrase">on Claude via Bedrock, under the clinic&#39;s BAA</span>
       </a>
       <a class="cell sai-pane" href="#ai-lab" data-slug="ai-lab">
+        <span class="cell-name">AI Lab content + outbound systems</span>
+        <span class="cell-phrase">Sent from a fleet grown from 2 to 10 domains in 3 weeks, with 2.2% human replies</span>
         <span class="cell-n">4,349 emails</span>
-        <span class="cell-name">AI Lab</span>
-        <span class="cell-phrase">sent from a fleet built 2 to 10 domains in 3 weeks; 2.2% human replies</span>
       </a>
       <a class="cell sai-pane" href="#coaching-aios" data-slug="coaching-aios">
+        <span class="cell-name">Coaching practice AI system</span>
+        <span class="cell-phrase">Triaged every day by agents that read one plain-English brain document</span>
         <span class="cell-n">13 to 15 emails/day</span>
-        <span class="cell-name">Coaching practice AIOS</span>
-        <span class="cell-phrase">triaged by agents that read one plain-English brain document</span>
       </a>
       <a class="cell sai-pane" href="#construction-site" data-slug="construction-site">
+        <span class="cell-name">Construction company website</span>
+        <span class="cell-phrase">Now referring us, off a 6-page rebuild in Japanese</span>
         <span class="cell-n">1 industry board</span>
-        <span class="cell-name">Construction site</span>
-        <span class="cell-phrase">now referring us, off a 6-page rebuild</span>
       </a>
       <a class="cell sai-pane" href="#curriculum-system" data-slug="curriculum-system">
+        <span class="cell-name">Curriculum generation system</span>
+        <span class="cell-phrase">Of a curriculum team&#39;s manual work now handled by AI</span>
         <span class="cell-n">~80%</span>
-        <span class="cell-name">Curriculum generation</span>
-        <span class="cell-phrase">of a curriculum team&#39;s manual work handled by AI</span>
       </a>
       <a class="cell sai-pane" href="#aios" data-slug="aios">
+        <span class="cell-name">My own AI operating system</span>
+        <span class="cell-phrase">Running the company I test everything on first</span>
         <span class="cell-n">9 agents · 51 skills</span>
-        <span class="cell-name">My own operating system</span>
-        <span class="cell-phrase">running the company I test everything on first</span>
       </a>
     </div>
   </section>
 
-  <section id="builds" aria-label="The builds">
+  <section id="builds" aria-label="The builds" data-sc-act="flow">
     <div class="railwrap">
       <nav class="rail" aria-label="Builds">
-<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice filing on Bedrock</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching practice AIOS</a><a href="#construction-site">Construction site</a><a href="#curriculum-system">Curriculum generation</a><a href="#aios">My own operating system</a>      </nav>
+<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">My AIOS</a>      </nav>
       <div class="railctl" aria-hidden="true"><button type="button" data-step="-1" title="Previous build">‹</button><button type="button" data-step="1" title="Next build">›</button></div>
       <div class="view" role="group" aria-label="View"><button type="button" class="on" data-view="deck" aria-pressed="true">Deck</button><button type="button" data-view="list" aria-pressed="false">List</button></div>
     </div>
 
     <div class="deck" id="deck" tabindex="0" role="region" aria-label="Builds. Use the left and right arrow keys to move between cards.">
       <article class="card" id="knowledge-base" aria-labelledby="t-knowledge-base">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live 2026-08-07</span></div>
             <h2 id="t-knowledge-base">Front desk knowledge base for an eye clinic: six months of training turned into one search</h2>
@@ -1255,7 +1320,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot" data-sc-reveal="iris" data-sc-reveal-at="0.02 0.22">
                   <img src="/alec/img/knowledge-base/01-kb-home.webp" srcset="/alec/img/knowledge-base/01-kb-home-800.webp 800w, /alec/img/knowledge-base/01-kb-home.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The front desk knowledge base home screen: a search box, quick-pick chips, and the four decision tools" loading="eager" decoding="async">
                   <figcaption>The home screen the front desk sees. Clinic logo blurred; everything else is the live app.</figcaption>
                 </figure>
@@ -1270,7 +1335,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Knowledge base</span><span class="when">Live 2026-08-07</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Clinic knowledge base</span><span class="when">Live 2026-08-07</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>Static PWA on Vercel reading page content, prices, and revisions from Supabase over the REST API. Editors are a Postgres table; RLS gives everyone read and 2 named emails write. Rendering sanitizes at read time, not only at save, so a REST write can never reach a reader unfiltered.</dd></div>
               <div><dt>Where it runs</dt><dd>Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic&#39;s domain. Installed as a PWA on the front desk iPad and PCs.</dd></div>
@@ -1287,10 +1352,10 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="pto-payroll" aria-labelledby="t-pto-payroll">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live April 2026</span></div>
-            <h2 id="t-pto-payroll">Time-off and payroll for a 26-person clinic: paper slips to a system that runs itself</h2>
+            <h2 id="t-pto-payroll">Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself</h2>
             <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
             <div class="front-grid">
               <div>
@@ -1303,14 +1368,14 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/pto-payroll/01-figure-flow.webp" srcset="/alec/img/pto-payroll/01-figure-flow-800.webp 800w, /alec/img/pto-payroll/01-figure-flow.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report" loading="lazy" decoding="async">
                   <figcaption>One form, one engine, five outputs.</figcaption>
                 </figure>
               </div>
             </div>
             <div class="acts">
-              <span class="users"><b>Who uses it.</b> 26 staff file requests; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.</span>
+              <span class="users"><b>Who uses it.</b> Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.</span>
               <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
               <a class="sai-btn ghost" href="/alec/pto-payroll">Open the build</a>
             </div>
@@ -1318,7 +1383,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · PTO + payroll</span><span class="when">Live April 2026</span></div>
+            <div class="head"><span class="lbl acc">How it's built · PTO + payroll system</span><span class="when">Live April 2026</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>Form submit trigger into a bound Apps Script project of about 7,000 lines: validation, weekday and anniversary math, attendance-sheet writes, a calendar owned by a Workspace user the script runs as, approve and deny links served by a pinned web-app deployment, and a payroll builder on a time trigger.</dd></div>
               <div><dt>Where it runs</dt><dd>Entirely inside the clinic&#39;s Google Workspace. No server, no SaaS bill, $0 a month.</dd></div>
@@ -1335,7 +1400,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="invoice-agent" aria-labelledby="t-invoice-agent">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Healthcare · optometry · HIPAA · Wichita Family Vision</span><span class="when">Bedrock live 2026-09-16</span></div>
             <h2 id="t-invoice-agent">Invoice filing for a clinic&#39;s bookkeeper: Claude on AWS Bedrock, under a BAA, at 0.9 cents an invoice</h2>
@@ -1351,7 +1416,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" loading="lazy" decoding="async">
                   <figcaption>The review page on 12 synthetic invoices. Amounts are invented; nothing moves until Go.</figcaption>
                 </figure>
@@ -1366,7 +1431,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Invoice filing on Bedrock</span><span class="when">Bedrock live 2026-09-16</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Invoice processing system</span><span class="when">Bedrock live 2026-09-16</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>A local Python runner: PDF pages to PNG at 150 DPI (3 pages max), one prompt with two backends (Bedrock for production, OpenRouter for synthetic tests only), a deterministic vendor matcher (exceptions, normalized exact, unique containment), a plan step that names files and resolves collisions, a review page on 127.0.0.1, then move, log, and queue for QuickBooks.</dd></div>
               <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Only the reading step leaves the building, to Bedrock in the clinic&#39;s own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.</dd></div>
@@ -1383,7 +1448,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="ai-lab" aria-labelledby="t-ai-lab">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">AI education · content and outbound systems · AI Lab, iPhone Photography School</span><span class="when">March to September 2026</span></div>
             <h2 id="t-ai-lab">An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no</h2>
@@ -1399,7 +1464,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/ai-lab/01-figure-architecture.webp" srcset="/alec/img/ai-lab/01-figure-architecture-800.webp 800w, /alec/img/ai-lab/01-figure-architecture.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack" loading="lazy" decoding="async">
                   <figcaption>One shared context layer, agents in two tools, connections into the tools the team already used.</figcaption>
                 </figure>
@@ -1414,7 +1479,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · AI Lab</span><span class="when">March to September 2026</span></div>
+            <div class="head"><span class="lbl acc">How it's built · AI Lab content + outbound systems</span><span class="when">March to September 2026</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>A shared context layer (voice, rules, trackers, decisions) synced to both Claude Code and Codex, so any agent picks up where the last one stopped. Skills for each job: video ideas, post-video, newsletter build and publish, KPI report, lead enrich, lead check, email capacity. MCP and API connections into Wistia, Circle, the email platform, Google Workspace, and Slack.</dd></div>
               <div><dt>Where it runs</dt><dd>On the educators&#39; machines, with a person pressing start. Sending ran on Smartlead over Microsoft mailboxes; sourcing on Apify and free registries; the KPI report published to a stable link.</dd></div>
@@ -1431,7 +1496,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="coaching-aios" aria-labelledby="t-coaching-aios">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Professional coaching · solo founder · A business coach</span><span class="when">Live May 2026</span></div>
             <h2 id="t-coaching-aios">An AI operating system for a one-person coaching practice: 4 agents that read one document</h2>
@@ -1447,7 +1512,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: all of it.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/coaching-aios/01-figure-brain-and-agents.webp" srcset="/alec/img/coaching-aios/01-figure-brain-and-agents-800.webp 800w, /alec/img/coaching-aios/01-figure-brain-and-agents.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one brain document read by four agents, with a maintainer agent as its only editor" loading="lazy" decoding="async">
                   <figcaption>One document, four agents, one maintainer.</figcaption>
                 </figure>
@@ -1462,7 +1527,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Coaching practice AIOS</span><span class="when">Live May 2026</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Coaching practice AI system</span><span class="when">Live May 2026</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>No-code agents configured in plain English inside ClickUp, all pointed at one Brain Doc as shared knowledge. A maintainer agent is the only writer to that doc. One integration workflow for calendar to sheet, because that step crosses tools.</dd></div>
               <div><dt>Where it runs</dt><dd>Inside her own ClickUp and Google accounts. She owns every piece; the exit shipped a portable 7-file operating system and a 15-page printed system tour.</dd></div>
@@ -1479,7 +1544,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="construction-site" aria-labelledby="t-construction-site">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Live 2026-05-09</span></div>
             <h2 id="t-construction-site">A Japanese construction company&#39;s site, rebuilt in its own language, then referred to the whole industry board</h2>
@@ -1495,7 +1560,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec: all of it, with the company&#39;s own photography.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="lazy" decoding="async">
                   <figcaption>The rebuilt homepage.</figcaption>
                 </figure>
@@ -1510,7 +1575,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Construction site</span><span class="when">Live 2026-05-09</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Live 2026-05-09</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>A static site on the client&#39;s existing shared PHP host, deployed by mirror with a backup taken first and a health check of every page after.</dd></div>
               <div><dt>Where it runs</dt><dd>The client&#39;s own hosting. Nothing of ours in the loop.</dd></div>
@@ -1527,7 +1592,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="curriculum-system" aria-labelledby="t-curriculum-system">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Education technology · Korea · 2020 to 2024 · KiwiOPIC</span><span class="when">2020 to 2024</span></div>
             <h2 id="t-curriculum-system">A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI</h2>
@@ -1543,13 +1608,13 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec, as English curriculum specialist turned AI integration lead.</p>
               </div>
               <div>
-                <figure class="fig" data-sc-tilt="3">
+                <figure class="fig">
 <svg viewBox="0 0 360 232" role="img" aria-label="Share of the curriculum work: before, all by hand; after, about 80 percent by AI with a human last pass">
-                    <text x="0" y="18" font-family="Schibsted Grotesk, Inter Tight, sans-serif" font-weight="700" font-size="14.5" letter-spacing="0.6" fill="#6E6258">BEFORE · 2020</text>
-                    <rect x="0" y="30" width="360" height="48" rx="10" fill="none" stroke="#171310" stroke-width="1.4"/>
+                    <text x="0" y="18" font-family="Schibsted Grotesk, Inter Tight, sans-serif" font-weight="700" font-size="14.5" letter-spacing="0.6" class="mute" fill="#6E6258">BEFORE · 2020</text>
+                    <rect class="frame" x="0" y="30" width="360" height="48" rx="10" fill="none" stroke="#171310" stroke-width="1.4"/>
                     <text x="14" y="60" font-family="Inter Tight, sans-serif" font-size="17" fill="#171310">All of it written by hand</text>
-                    <text x="0" y="118" font-family="Schibsted Grotesk, Inter Tight, sans-serif" font-weight="700" font-size="14.5" letter-spacing="0.6" fill="#6E6258">AFTER · 2024</text>
-                    <rect x="0" y="130" width="360" height="48" rx="10" fill="none" stroke="#171310" stroke-width="1.4"/>
+                    <text x="0" y="118" font-family="Schibsted Grotesk, Inter Tight, sans-serif" font-weight="700" font-size="14.5" letter-spacing="0.6" class="mute" fill="#6E6258">AFTER · 2024</text>
+                    <rect class="frame" x="0" y="130" width="360" height="48" rx="10" fill="none" stroke="#171310" stroke-width="1.4"/>
                     <rect x="0" y="130" width="288" height="48" rx="10" fill="#DC6843" fill-opacity="0.16" stroke="#DC6843" stroke-width="1.6"/>
                     <text x="14" y="160" font-family="Inter Tight, sans-serif" font-size="17" fill="#171310">~80% drafted by the pipeline</text>
                     <text x="298" y="160" font-family="Inter Tight, sans-serif" font-size="15" fill="#171310">Human</text>
@@ -1568,7 +1633,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Curriculum generation</span><span class="when">2020 to 2024</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Curriculum generation system</span><span class="when">2020 to 2024</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>Prompt pipelines per content type, a human-last review cycle, and a transcription-plus-scoring loop for spoken answers.</dd></div>
               <div><dt>Where it runs</dt><dd>Inside the company&#39;s own tooling at the time.</dd></div>
@@ -1585,7 +1650,7 @@ a { color: inherit; }
         </div>
       </article>
       <article class="card" id="aios" aria-labelledby="t-aios">
-        <div class="flip">
+        <div class="flip" data-sc-tilt="3">
           <div class="face front sai-pane sai-streak">
             <div class="head"><span class="lbl">Stephens AI · our own tooling · Stephens AI</span><span class="when">v2 live 2026-03-01</span></div>
             <h2 id="t-aios">The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services</h2>
@@ -1601,7 +1666,7 @@ a { color: inherit; }
                 <p class="who"><b>Who built it.</b> Alec.</p>
               </div>
               <div>
-                <figure class="shot" data-sc-tilt="4">
+                <figure class="shot">
                   <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="lazy" decoding="async">
                   <figcaption>The Bridge, the dashboard over the whole company. Two panels blurred.</figcaption>
                 </figure>
@@ -1616,7 +1681,7 @@ a { color: inherit; }
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · My own operating system</span><span class="when">v2 live 2026-03-01</span></div>
+            <div class="head"><span class="lbl acc">How it's built · My own AI operating system</span><span class="when">v2 live 2026-03-01</span></div>
             <dl class="eng">
               <div class="wide"><dt>Architecture</dt><dd>A markdown vault with frontmatter as the database, a generator that rebuilds the index, sub-agents defined as files with tool allow-lists, skills as files with the gotchas at the top, a local dashboard server, and scheduled jobs on the Mac that deliver to iMessage.</dd></div>
               <div><dt>Where it runs</dt><dd>On my Mac, with connectors into Google Workspace, Slack, Fathom, and the clients&#39; tools.</dd></div>
@@ -1644,7 +1709,7 @@ a { color: inherit; }
       <p>I go into a business, find where the hours and the money leak, and build the thing that stops it: usually an agent, a knowledge system, or an automation that a non-technical team runs on its own.</p>
       <p>I was hired in Seoul to write English lessons and left having turned the company&#39;s curriculum into an AI production line. Everything since has been the same move in a different building.</p>
       <p class="now">Now, September 2026: moving a clinic&#39;s invoice filing onto Claude via AWS Bedrock under a BAA, and turning the front-desk knowledge base into a product for the next practice.</p>
-      <p>Co-founder of Stephens AI, a two-person consultancy for healthcare practices. I also take one contract at a time as an applied AI or forward-deployed engineer: remote, contractor, Japan hours (US mornings, Europe, and Australia are live).</p>
+      <p>Co-founder of Stephens AI, a two-person consultancy for healthcare practices. I also take one contract at a time as an applied AI or forward-deployed engineer: remote, contractor, with live hours for US mornings, Europe, and Australia.</p>
       <ul class="chips creds"><li>Upwork: 5+ years, 100% Job Success</li><li>Stephens AI LLC, Kansas</li></ul>
     </div>
   </section>
@@ -1663,6 +1728,7 @@ a { color: inherit; }
 
   <footer class="sai-footer">
     <span class="lockup">
+      <span class="logo-day">
 <!-- SAI:LOGO -->
 <svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
@@ -1672,6 +1738,18 @@ a { color: inherit; }
   <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
 </svg>
 <!-- /SAI:LOGO -->
+      </span>
+      <span class="logo-night">
+<!-- SAI:LOGO-NIGHT -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#F5F1E8" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO-NIGHT -->
+      </span>
       <span class="word">Stephens AI</span>
     </span>
     <span class="meta"><a href="/">stephensai.co</a> · Updated 2026-09-16</span>
@@ -1679,6 +1757,25 @@ a { color: inherit; }
 </main>
 <script src="/alec/scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
+<script>
+(function () {
+  var body = document.body, btn = document.getElementById('modeBtn');
+  function readMode() {
+    var q = /[?&]mode=(night|day)/.exec(location.search); if (q) return q[1];
+    try { var s = localStorage.getItem('sai-mode'); if (s === 'night' || s === 'day') return s; } catch (e) {}
+    return (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'night' : 'day';
+  }
+  function applyMode(m, save) {
+    var night = m === 'night';
+    body.classList.toggle('sai-dark', night);
+    document.querySelectorAll('[data-night-widget]').forEach(function (el) { el.classList.toggle('sai-night', night); });
+    if (btn) { btn.textContent = night ? 'Day' : 'Night'; btn.setAttribute('aria-pressed', night ? 'true' : 'false'); btn.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode'); }
+    if (save) { try { localStorage.setItem('sai-mode', m); } catch (e) {} }
+  }
+  applyMode(readMode(), false);
+  if (btn) btn.addEventListener('click', function () { applyMode(body.classList.contains('sai-dark') ? 'day' : 'night', true); });
+})();
+</script>
 <script>
 (function () {
   'use strict';
@@ -1737,7 +1834,12 @@ a { color: inherit; }
     if (e.key === 'End') { e.preventDefault(); goTo(cards.length - 1); }
   });
   var t; function spy() { clearTimeout(t); t = setTimeout(function () { mark(current()); }, 80); }
-  deck.addEventListener('scroll', spy, { passive: true }); window.addEventListener('scroll', spy, { passive: true });
+  /* neighbours step back: --away is 0 for the card under the rail, 1 for the next one over */
+  var raf = 0; function dim() { raf = 0; if (deck.classList.contains('list') || body.classList.contains('stacked')) { cards.forEach(function (c) { c.style.removeProperty('--away'); }); return; }
+    var x = deck.scrollLeft, w = cards[0].offsetWidth + 22; cards.forEach(function (c) { var d = Math.min(1, Math.abs(c.offsetLeft - deck.offsetLeft - x) / w); c.style.setProperty('--away', d.toFixed(3)); }); }
+  function onDeckScroll() { spy(); if (!raf) raf = requestAnimationFrame(dim); }
+  deck.addEventListener('scroll', onDeckScroll, { passive: true }); window.addEventListener('scroll', spy, { passive: true }); window.addEventListener('resize', dim); dim();
+  viewBtns.forEach(function (b) { b.addEventListener('click', dim); });
 
   /* the flip: every card has two sides; the container is as tall as the side you see */
   var flips = Array.prototype.slice.call(document.querySelectorAll('.flip'));
@@ -1749,7 +1851,7 @@ a { color: inherit; }
   document.querySelectorAll('.flipbtn').forEach(function (b) {
     b.addEventListener('click', function () {
       var flip = b.closest('.flip'), toBack = b.getAttribute('data-flip') === 'back';
-      flip.classList.toggle('is-back', toBack); fit(flip);
+      flip.classList.toggle('is-back', toBack); flip.classList.toggle('to-front', !toBack); fit(flip);
       var front = flip.querySelector('.front'), back = flip.querySelector('.back');
       if (toBack) { front.setAttribute('inert', ''); back.removeAttribute('inert'); } else { back.setAttribute('inert', ''); front.removeAttribute('inert'); }
       var target = flip.querySelector(toBack ? '.back .flipbtn' : '.front .flipbtn');
@@ -1757,6 +1859,8 @@ a { color: inherit; }
     });
   });
   if (body.classList.contains('stacked')) document.querySelectorAll('.face.back').forEach(function (f) { f.removeAttribute('inert'); });
+
+  document.addEventListener('animationend', function (e) { if (e.animationName === 'frontIn') e.target.closest('.flip').classList.remove('to-front'); });
 
   /* deep link on load */
   if (location.hash) { var i0 = cards.findIndex(function (c) { return '#' + c.id === location.hash; }); if (i0 >= 0) setTimeout(function () { goTo(i0, 'auto'); }, 60); }
