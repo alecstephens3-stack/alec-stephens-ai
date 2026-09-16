@@ -1110,7 +1110,7 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 
 /* ------------------------------------------------------------ deck */
 /* the stage: one card forward, the neighbours set back at the sides, everything glides */
-.deck { position: relative; padding: 14px 0 22px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
+.deck { position: relative; padding: 14px 0 22px; transition: height 760ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
 .card { position: absolute; top: 18px; left: 0; width: min(100%, 940px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
   transform: translate3d(var(--x, 0px), 0, 0); opacity: var(--op, 1);
   transition: transform 760ms var(--glide), opacity 560ms var(--glide); will-change: transform, opacity; }
@@ -1826,6 +1826,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   viewBtns.forEach(function (b) { b.addEventListener('click', function () { setView(b.getAttribute('data-view'), true); goTo(current(), 'auto'); }); });
 
   /* the stage: one active card, neighbours set back */
+  function faceH(card) { var flip = card.querySelector('.flip'); return flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front').offsetHeight; }
   var active = 0, list = function () { return deck.classList.contains('list') || body.classList.contains('stacked'); };
   function layout() {
     if (list()) { cards.forEach(function (c) { c.classList.toggle('is-active', c === cards[active]); c.removeAttribute('inert'); c.style.visibility = ''; }); return; }
@@ -1837,7 +1838,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       c.style.zIndex = 6 - Math.min(a, 5); c.style.visibility = a >= 2 ? 'hidden' : ''; c.classList.toggle('is-active', a === 0);
       if (a === 0) c.removeAttribute('inert'); else c.setAttribute('inert', '');
     });
-    deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 36) + 'px';
+    deck.style.height = (faceH(cards[active]) + 36) + 'px';
   }
   function current() { return active; }
   function mark(i) {
@@ -1871,7 +1872,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
   /* the flip: every card has two sides; the container is as tall as the side you see */
   var flips = Array.prototype.slice.call(document.querySelectorAll('.flip'));
-  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; if (!list()) deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 36) + 'px'; }
+  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; if (!list()) deck.style.height = (faceH(cards[active]) + 36) + 'px'; }
   function fitAll() { flips.forEach(fit); }
   fitAll(); window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll);
   document.querySelectorAll('.flip img').forEach(function (im) { im.addEventListener('load', fitAll); });
