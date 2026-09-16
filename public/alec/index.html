@@ -1084,11 +1084,14 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .cell:hover .cell-n { color: var(--pg-acc); }
 
 /* ------------------------------------------------------------ rail */
-#builds { margin-top: 64px; }
-.railwrap { position: sticky; top: var(--bar-h); z-index: 15; margin: 0 calc(-1 * clamp(20px, 4vw, 48px)); padding: 12px clamp(20px, 4vw, 48px);
-  display: flex; align-items: center; gap: 12px;
-  background: var(--pg-rail); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
-.rail { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex: 1; padding: 4px 2px; -webkit-overflow-scrolling: touch; }
+#builds { margin-top: 56px; }
+.railwrap { position: sticky; top: calc(var(--bar-h) + 10px); z-index: 15; padding: 0; display: flex; justify-content: center; }
+.railbar { display: flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px; border-radius: 999px;
+  background: var(--pg-card); border: 1px solid var(--pg-card-edge); box-shadow: 0 12px 36px var(--pg-shadow);
+  backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6); }
+.rail { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; padding: 0; border-radius: 999px; -webkit-overflow-scrolling: touch; }
+.rail a { background: transparent; border-color: transparent; }
+.rail a:hover { background: var(--pg-card-soft); }
 .rail::-webkit-scrollbar { display: none; }
 .rail a { flex: 0 0 auto; scroll-snap-align: start; text-decoration: none; font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; letter-spacing: .01em;
   padding: 9px 15px; border-radius: 999px; color: var(--pg-ink); background: var(--pg-card); border: 1px solid var(--pg-card-edge);
@@ -1097,18 +1100,18 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .rail a:active { transform: scale(0.97); }
 .rail a.on { background: var(--pg-on); color: var(--pg-on-text); border-color: var(--pg-on); }
 .railctl { display: flex; gap: 6px; flex: 0 0 auto; }
-.railctl button { width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--pg-card-edge); background: var(--pg-card); color: var(--pg-ink); cursor: pointer; font: 600 16px var(--sai-font-label); }
+.railctl button { width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--pg-card-edge); background: var(--pg-card); color: var(--pg-ink); cursor: pointer; font: 600 16px var(--sai-font-label); }
 .railctl button:hover { background: var(--pg-card-soft); }
 .railctl button:active { transform: scale(0.96); }
-.view { display: inline-flex; border-radius: 999px; border: 1px solid var(--pg-card-edge); background: var(--pg-card); padding: 3px; flex: 0 0 auto; }
+.view { display: inline-flex; border-radius: 999px; border: 1px solid var(--pg-rule); background: transparent; padding: 3px; flex: 0 0 auto; }
 .view button { border: 0; background: transparent; cursor: pointer; padding: 7px 13px; border-radius: 999px; font: 600 13.5px var(--sai-font-label); letter-spacing: .03em; text-transform: uppercase; color: var(--pg-ink-2); }
 .view button.on { background: var(--pg-on); color: var(--pg-on-text); }
 @media (max-width: 720px) { .railctl, .view { display: none; } }
 
 /* ------------------------------------------------------------ deck */
 /* the stage: one card forward, the neighbours set back at the sides, everything glides */
-.deck { position: relative; padding: 18px 0 26px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
-.card { position: absolute; top: 18px; left: 0; width: min(100%, 920px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
+.deck { position: relative; padding: 14px 0 22px; transition: height 640ms var(--glide); outline-offset: 6px; touch-action: pan-y; }
+.card { position: absolute; top: 18px; left: 0; width: min(100%, 940px); scroll-margin-top: calc(var(--bar-h) + 78px); perspective: 2200px;
   transform: translate3d(var(--x, 0px), 0, 0); opacity: var(--op, 1);
   transition: transform 760ms var(--glide), opacity 560ms var(--glide); will-change: transform, opacity; }
 .card:not(.is-active) .face { box-shadow: none; }
@@ -1120,7 +1123,7 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .deck.list .card .flip { pointer-events: auto; }
 .flip { display: grid; position: relative; transform-style: preserve-3d; transition: height 760ms var(--glide); }
 .face { grid-area: 1 / 1; align-self: start; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  border-radius: 30px; padding: clamp(22px, 3.2vw, 40px); will-change: transform; }
+  border-radius: 28px; padding: clamp(18px, 2.2vw, 26px); will-change: transform; }
 .face.back { transform: rotateY(180deg); pointer-events: none; }
 .flip.is-back .back { pointer-events: auto; }
 .flip.is-back .front { pointer-events: none; }
@@ -1136,36 +1139,39 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 /* the back's content arrives in reading order once the card has turned */
 @keyframes settle { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
 .flip.is-back .back .head, .flip.is-back .back .eng > div, .flip.is-back .back .acts { animation: settle 560ms var(--glide) both; animation-delay: calc(440ms + var(--i, 0) * 45ms); }
-.back .head { --i: 0 } .back .eng > div:nth-child(1) { --i: 1 } .back .eng > div:nth-child(2) { --i: 2 } .back .eng > div:nth-child(3) { --i: 3 } .back .eng > div:nth-child(4) { --i: 4 } .back .eng > div:nth-child(5) { --i: 5 } .back .eng > div:nth-child(6) { --i: 6 } .back .eng > div:nth-child(7) { --i: 7 } .back .acts { --i: 8 }
+.back .head { --i: 0 } .back .eng > div:nth-child(1) { --i: 1 } .back .eng > div:nth-child(2) { --i: 2 } .back .eng > div:nth-child(3) { --i: 3 } .back .eng > div:nth-child(4) { --i: 4 } .back .eng > div:nth-child(5) { --i: 5 } .back .eng > div:nth-child(6) { --i: 6 } .back .eng > div:nth-child(7) { --i: 7 } .back .eng > div:nth-child(8) { --i: 8 } .back .acts { --i: 9 }
 .face.back.sai-pane { background: var(--pg-card); }
 .face.sai-pane { color: var(--pg-ink); }
 .card .when { color: var(--pg-ink-2); }
 
 .head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
 .head .when { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; color: var(--pg-ink-2); }
-.card h2 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; line-height: 1.12; letter-spacing: -0.015em; margin: 12px 0 0; max-width: 26ch; }
-.card .client { margin: 8px 0 0; color: var(--pg-ink-2); font-size: 15.5px; }
-.front-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 28px; margin-top: 26px; align-items: start; }
+.card h2 { font-size: clamp(22px, 2.2vw, 27px); font-weight: 500; line-height: 1.15; letter-spacing: -0.015em; margin: 10px 0 0; }
+.card .sub { margin: 8px 0 0; color: var(--pg-ink-2); font-size: 15.5px; line-height: 1.45; max-width: 52ch; }
+.front-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 22px; margin-top: 4px; align-items: start; }
+.front .num { margin-top: 16px; } .front .num .v { font-size: clamp(30px, 3.4vw, 40px); } .front .num .l { font-size: 15px; }
+.fmedia .shot img { aspect-ratio: 4 / 3; object-fit: cover; object-position: top; }
+.foot { margin-top: 14px; }
 @media (max-width: 760px) { .front-grid { grid-template-columns: minmax(0, 1fr); } }
 .front-grid .num { padding-bottom: 6px; }
 .oneliner { font-size: 17px; margin: 18px 0 0; max-width: 46ch; }
 .oneliner b { font-weight: 600; }
-.stack { margin-top: 22px; display: flex; flex-direction: column; gap: 8px; }
-.who { margin: 18px 0 0; font-size: 14.5px; color: var(--pg-ink-2); max-width: 60ch; line-height: 1.5; }
+.stack { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.card .chips li { font-size: 13.5px; padding: 4px 9px; }
+.who { margin: 10px 0 0; font-size: 14px; color: var(--pg-ink-2); max-width: 80ch; line-height: 1.45; }
 .who.comp { color: var(--pg-ink); } .who.comp b { color: var(--pg-acc-deep); }
-.acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; align-items: center; }
-.acts .users { flex-basis: 100%; font-size: 14px; color: var(--pg-ink-2); }
-.card .sai-btn { font-size: 14.5px; padding: 12px 20px; }
+.acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+.card .sai-btn { font-size: 14px; padding: 10px 18px; }
 .fig { margin: 0; border-radius: 18px; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.9); padding: 16px 18px 12px; }
 .fig { overflow-x: auto; min-width: 0; background: var(--pg-card-soft); border-color: var(--pg-card-edge); }
 body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute { fill: var(--sai-cream-2); } body.sai-dark .fig rect.frame { stroke: var(--sai-cream); }
 .fig svg { width: 100%; min-width: 340px; height: auto; display: block; }
 
 /* back face */
-.eng { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 26px; margin-top: 22px; }
+.eng { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; margin-top: 14px; }
 @media (max-width: 760px) { .eng { grid-template-columns: 1fr; } }
 .eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 4px; }
-.eng dd { margin: 0; font-size: 15.5px; line-height: 1.5; }
+.eng dd { margin: 0; font-size: 14.5px; line-height: 1.45; }
 .eng .wide { grid-column: 1 / -1; }
 .eng .sai-callout { margin: 0; }
 .eng .sai-callout p { margin: 0; }
@@ -1306,41 +1312,41 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   </section>
 
   <section id="builds" aria-label="The builds" data-sc-act="flow">
-    <div class="railwrap">
+    <div class="railwrap"><div class="railbar">
       <nav class="rail" aria-label="Builds">
 <a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">My AIOS</a>      </nav>
       <div class="railctl" aria-hidden="true"><button type="button" data-step="-1" title="Previous build">‹</button><button type="button" data-step="1" title="Next build">›</button></div>
       <div class="view" role="group" aria-label="View"><button type="button" class="on" data-view="deck" aria-pressed="true">Deck</button><button type="button" data-view="list" aria-pressed="false">List</button></div>
-    </div>
+    </div></div>
 
     <div class="deck" id="deck" tabindex="0" role="region" aria-label="Builds. Use the left and right arrow keys to move between cards.">
       <article class="card" id="knowledge-base" aria-labelledby="t-knowledge-base">
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live 2026-08-07</span></div>
-            <h2 id="t-knowledge-base">Front desk knowledge base for an eye clinic: six months of training turned into one search</h2>
-            <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-knowledge-base">Clinic knowledge base</h2>
+                <p class="sub">Front desk knowledge base for an eye clinic: six months of training turned into one search. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num acc">
                   <span class="v">~200<span class="u">hrs/yr</span></span>
                   <span class="l">of interruptions off the office manager&#39;s desk</span>
-<span class="basis">An estimate, not a measurement: about 4 questions a day at 10 minutes each, 250 working days. The clinic has not timed it.</span>                </div>
-                <p class="oneliner">The rules lived in 15 spreadsheet tabs and one manager&#39;s head. Now anyone at the desk looks it up in the 20 seconds a caller gives you.</p>
+                </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Supabase</li><li>PostgreSQL with row-level security</li><li>Google OAuth</li><li>Vanilla JS PWA</li><li>Vercel</li><li>GitHub Actions</li><li>DOMPurify</li><li>Claude Code</li></ul></div>
-<p class="who comp"><b>Compliance.</b> Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</p>                <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot" data-sc-reveal="iris" data-sc-reveal-at="0.02 0.22">
-                  <img src="/alec/img/knowledge-base/01-kb-home.webp" srcset="/alec/img/knowledge-base/01-kb-home-800.webp 800w, /alec/img/knowledge-base/01-kb-home.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The front desk knowledge base home screen: a search box, quick-pick chips, and the four decision tools" loading="eager" decoding="async">
+                  <img src="/alec/img/knowledge-base/01-kb-home.webp" srcset="/alec/img/knowledge-base/01-kb-home-800.webp 800w, /alec/img/knowledge-base/01-kb-home.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The front desk knowledge base home screen: a search box, quick-pick chips, and the four decision tools" loading="eager" decoding="async">
                   <figcaption>The home screen the front desk sees. Clinic logo blurred; everything else is the live app.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> The front desk and 2 office managers, daily since August 2026.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/knowledge-base">Open the build</a>
+            <div class="foot">
+<p class="who comp"><b>Compliance.</b> Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic&#39;s domain, a business associate agreement in force with the practice.</p>              <p class="who"><b>Who built it.</b> Alec: the content model from the clinic&#39;s front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, the tests. Jusheen: the pre-merge security review, the Supabase and Vercel deployment, the soft launch with the managers.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/knowledge-base">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1348,6 +1354,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · Clinic knowledge base</span><span class="when">Live 2026-08-07</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>The front desk and 2 office managers, daily since August 2026.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>Static PWA on Vercel reading page content, prices, and revisions from Supabase over the REST API. Editors are a Postgres table; RLS gives everyone read and 2 named emails write. Rendering sanitizes at read time, not only at save, so a REST write can never reach a reader unfiltered.</dd></div>
               <div><dt>Where it runs</dt><dd>Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic&#39;s domain. Installed as a PWA on the front desk iPad and PCs.</dd></div>
               <div><dt>Tests and evals</dt><dd>21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.</dd></div>
@@ -1366,29 +1373,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · Wichita Family Vision</span><span class="when">Live April 2026</span></div>
-            <h2 id="t-pto-payroll">Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself</h2>
-            <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-pto-payroll">PTO + payroll system</h2>
+                <p class="sub">Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num">
                   <span class="v">60 to 100<span class="u">hrs/yr</span></span>
                   <span class="l">of admin time returned</span>
-<span class="basis">10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused.</span>                </div>
-                <p class="oneliner">Green paper slips, hand-checked calendars, payroll rebuilt from a notebook. Now one form, one engine, and a payroll report that builds itself.</p>
+                </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Google Apps Script</li><li>Google Forms</li><li>Google Sheets</li><li>Google Calendar</li><li>Gmail</li><li>clasp</li><li>Node test runner</li></ul></div>
-<p class="who comp"><b>Compliance.</b> Employee data only, no patient data, kept entirely inside the clinic&#39;s own Google Workspace. Built under the same business associate agreement as the clinic&#39;s other systems.</p>                <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/pto-payroll/01-figure-flow.webp" srcset="/alec/img/pto-payroll/01-figure-flow-800.webp 800w, /alec/img/pto-payroll/01-figure-flow.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report" loading="eager" decoding="async">
+                  <img src="/alec/img/pto-payroll/01-figure-flow.webp" srcset="/alec/img/pto-payroll/01-figure-flow-800.webp 800w, /alec/img/pto-payroll/01-figure-flow.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report" loading="eager" decoding="async">
                   <figcaption>One form, one engine, five outputs.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/pto-payroll">Open the build</a>
+            <div class="foot">
+<p class="who comp"><b>Compliance.</b> Employee data only, no patient data, kept entirely inside the clinic&#39;s own Google Workspace. Built under the same business associate agreement as the clinic&#39;s other systems.</p>              <p class="who"><b>Who built it.</b> Alec: the engine, the accrual and date math, the migration, the payroll report, the tests, the guides. Jusheen: the employee add and archive dialogs, cancel-request flow, manual-entry menu, and the May audit sweep of every sheet.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/pto-payroll">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1396,6 +1403,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · PTO + payroll system</span><span class="when">Live April 2026</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>Form submit trigger into a bound Apps Script project of about 7,000 lines: validation, weekday and anniversary math, attendance-sheet writes, a calendar owned by a Workspace user the script runs as, approve and deny links served by a pinned web-app deployment, and a payroll builder on a time trigger.</dd></div>
               <div><dt>Where it runs</dt><dd>Entirely inside the clinic&#39;s Google Workspace. No server, no SaaS bill, $0 a month.</dd></div>
               <div><dt>Tests and evals</dt><dd>183 regression assertions in the public repo, run with Node, no dependencies. Sections cover accrual routing, weekend-aware date math, partial days, recompute-on-write balance integrity, and the migration.</dd></div>
@@ -1414,29 +1422,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Healthcare · optometry · HIPAA · Wichita Family Vision</span><span class="when">Bedrock live 2026-09-16</span></div>
-            <h2 id="t-invoice-agent">Invoice filing for a clinic&#39;s bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice</h2>
-            <p class="client">Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-invoice-agent">Invoice processing system</h2>
+                <p class="sub">Invoice filing for a clinic&#39;s bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num">
                   <span class="v">0.9¢</span>
                   <span class="l">per invoice, 3.4 seconds a file, measured on Claude Sonnet 4.6 in the clinic&#39;s account</span>
-<span class="basis">26,904 input and 2,003 output tokens for 12 files at Bedrock on-demand pricing: $0.11 a run.</span>                </div>
-                <p class="oneliner">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.</p>
+                </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>boto3</li><li>PyMuPDF</li><li>QuickBooks Online bill capture</li><li>Windows</li></ul></div>
-<p class="who comp"><b>Compliance.</b> HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</p>                <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" loading="eager" decoding="async" fetchpriority="low">
+                  <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The review page on 12 synthetic invoices. Amounts are invented; nothing moves until Go.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> Built for the clinic&#39;s bookkeeper. Tested end to end in the clinic&#39;s own AWS account on 2026-09-16; her desk install is the next step.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/invoice-agent">Open the build</a>
+            <div class="foot">
+<p class="who comp"><b>Compliance.</b> HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</p>              <p class="who"><b>Who built it.</b> Alec: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, the synthetic test set. Jusheen: the first version as a Cowork skill, the QuickBooks trial testing, and the move into the clinic&#39;s AWS account.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/invoice-agent">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1444,6 +1452,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · Invoice processing system</span><span class="when">Bedrock live 2026-09-16</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>Built for the clinic&#39;s bookkeeper. Tested end to end in the clinic&#39;s own AWS account on 2026-09-16; her desk install is the next step.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A local Python runner: PDF pages to PNG at 150 DPI (3 pages max), one prompt with two backends (Bedrock for production, OpenRouter for synthetic tests only), a deterministic vendor matcher (exceptions, normalized exact, unique containment), a plan step that names files and resolves collisions, a review page on 127.0.0.1, then move, log, and queue for QuickBooks.</dd></div>
               <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Only the reading step leaves the building, to Bedrock in the clinic&#39;s own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.</dd></div>
               <div><dt>Tests and evals</dt><dd>12 synthetic invoices mirroring her real nine plus the untested cases: 5 rotated image-only scans, a bare-date receipt, a paid invoice, a statement with a period end, an unknown vendor, a same-name collision, 2 patient-data documents. 12 of 12 on Sonnet and on Haiku. Full run, undo, and the browser Go path all proven.</dd></div>
@@ -1462,29 +1471,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">AI education · content and outbound systems · AI Lab, iPhone Photography School</span><span class="when">March to September 2026</span></div>
-            <h2 id="t-ai-lab">An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no</h2>
-            <p class="client">AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-ai-lab">AI Lab content + outbound systems</h2>
+                <p class="sub">An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no. AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026.</p>
                 <div class="num">
                   <span class="v">4,349<span class="u">emails</span></span>
                   <span class="l">to 2,661 businesses, a 2.2% human reply rate, from a fleet grown 2 to 10 domains and 104 to 320 mailboxes in 3 weeks</span>
-<span class="basis">Campaign export, 4 August to 7 September 2026.</span>                </div>
-                <p class="oneliner">Two systems for one brand: an idea-to-published-video pipeline for the tutorial channel, then a cold email machine that told us, with numbers, that the channel was wrong for the buyer.</p>
+                </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude Code</li><li>Codex</li><li>MCP</li><li>Python</li><li>Wistia API</li><li>Circle</li><li>Customer.io</li><li>Smartlead</li><li>Clay</li><li>Apify</li><li>Google Workspace</li><li>Slack</li><li>Kie image API</li><li>Whisper</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/ai-lab/01-figure-architecture.webp" srcset="/alec/img/ai-lab/01-figure-architecture-800.webp 800w, /alec/img/ai-lab/01-figure-architecture.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack" loading="eager" decoding="async" fetchpriority="low">
+                  <img src="/alec/img/ai-lab/01-figure-architecture.webp" srcset="/alec/img/ai-lab/01-figure-architecture-800.webp 800w, /alec/img/ai-lab/01-figure-architecture.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>One shared context layer, agents in two tools, connections into the tools the team already used.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> 2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/ai-lab">Open the build</a>
+            <div class="foot">
+              <p class="who"><b>Who built it.</b> Alec: all of it, as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/ai-lab">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1492,6 +1501,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · AI Lab content + outbound systems</span><span class="when">March to September 2026</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A shared context layer (voice, rules, trackers, decisions) synced to both Claude Code and Codex, so any agent picks up where the last one stopped. Skills for each job: video ideas, post-video, newsletter build and publish, KPI report, lead enrich, lead check, email capacity. MCP and API connections into Wistia, Circle, the email platform, Google Workspace, and Slack.</dd></div>
               <div><dt>Where it runs</dt><dd>On the educators&#39; machines, with a person pressing start. Sending ran on Smartlead over Microsoft mailboxes; sourcing on Apify and free registries; the KPI report published to a stable link.</dd></div>
               <div><dt>Tests and evals</dt><dd>A rule gate on every cold email (no years, no street names, no clinical language, no &#39;AI&#39;, sign-off matches the inbox), run as a script before any batch. A lint on the KPI report before publish, with a corrections trail when a number was wrong. Every capacity number came from the script, never from memory.</dd></div>
@@ -1510,29 +1520,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Professional coaching · solo founder · A business coach</span><span class="when">Live May 2026</span></div>
-            <h2 id="t-coaching-aios">An AI operating system for a one-person coaching practice: 4 agents that read one document</h2>
-            <p class="client">A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-coaching-aios">Coaching practice AI system</h2>
+                <p class="sub">An AI operating system for a one-person coaching practice: 4 agents that read one document. A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
                 <div class="num">
                   <span class="v">13 to 15<span class="u">emails/day</span></span>
                   <span class="l">triaged with zero noise, each decision citing its source message</span>
                 </div>
-                <p class="oneliner">Inbox triage, scheduling replies, voice-note task capture, and a calendar-to-invoice workflow, all reading one document she edits in plain English.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude</li><li>ClickUp Super Agents</li><li>ClickUp Brain</li><li>n8n (then)</li><li>Google Calendar</li><li>Google Sheets</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: all of it.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/coaching-aios/01-figure-brain-and-agents.webp" srcset="/alec/img/coaching-aios/01-figure-brain-and-agents-800.webp 800w, /alec/img/coaching-aios/01-figure-brain-and-agents.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="Diagram: one brain document read by four agents, with a maintainer agent as its only editor" loading="eager" decoding="async" fetchpriority="low">
+                  <img src="/alec/img/coaching-aios/01-figure-brain-and-agents.webp" srcset="/alec/img/coaching-aios/01-figure-brain-and-agents-800.webp 800w, /alec/img/coaching-aios/01-figure-brain-and-agents.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Diagram: one brain document read by four agents, with a maintainer agent as its only editor" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>One document, four agents, one maintainer.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> The founder, daily, April to July 2026; she owns and edits it herself.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/coaching-aios">Open the build</a>
+            <div class="foot">
+              <p class="who"><b>Who built it.</b> Alec: all of it.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/coaching-aios">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1540,6 +1550,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · Coaching practice AI system</span><span class="when">Live May 2026</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>The founder, daily, April to July 2026; she owns and edits it herself.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>No-code agents configured in plain English inside ClickUp, all pointed at one Brain Doc as shared knowledge. A maintainer agent is the only writer to that doc. One integration workflow for calendar to sheet, because that step crosses tools.</dd></div>
               <div><dt>Where it runs</dt><dd>Inside her own ClickUp and Google accounts. She owns every piece; the exit shipped a portable 7-file operating system and a 15-page printed system tour.</dd></div>
               <div><dt>Tests and evals</dt><dd>A regression test per agent after a scope-creep incident, where the maintainer rewrote unrelated sections; instructions hardened with a self-check step. The 115-task sweep was rehearsed in a sandbox before it ran.</dd></div>
@@ -1558,29 +1569,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Live 2026-05-09</span></div>
-            <h2 id="t-construction-site">A Japanese construction company&#39;s site, rebuilt in its own language, then referred to the whole industry board</h2>
-            <p class="client">Kamata Koumuten, a construction company in Miyagi, Japan.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-construction-site">Construction company website</h2>
+                <p class="sub">A Japanese construction company&#39;s site, rebuilt in its own language, then referred to the whole industry board. Kamata Koumuten, a construction company in Miyagi, Japan.</p>
                 <div class="num">
                   <span class="v">6<span class="u">pages</span></span>
                   <span class="l">rebuilt for mobile and desktop, verified live 6 of 6 on every deploy</span>
                 </div>
-                <p class="oneliner">Unreadable text over photos, a broken mobile layout, and a Google listing pointing at the wrong domain. Now a storefront that brings in referral work.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>lftp deploys</li><li>Google Search Console</li><li>Google Business Profile</li><li>Kirby CMS (next)</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec: all of it, with the company&#39;s own photography.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="eager" decoding="async" fetchpriority="low">
+                  <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The rebuilt homepage.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> The company&#39;s storefront; its owner and her customers. Live since May 2026.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/construction-site">Open the build</a>
+            <div class="foot">
+              <p class="who"><b>Who built it.</b> Alec: all of it, with the company&#39;s own photography.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/construction-site">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1588,6 +1599,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Live 2026-05-09</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>The company&#39;s storefront; its owner and her customers. Live since May 2026.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A static site on the client&#39;s existing shared PHP host, deployed by mirror with a backup taken first and a health check of every page after.</dd></div>
               <div><dt>Where it runs</dt><dd>The client&#39;s own hosting. Nothing of ours in the loop.</dd></div>
               <div><dt>Tests and evals</dt><dd>Every deploy verifies all 6 pages return 200 and the search-console verification file is intact.</dd></div>
@@ -1606,19 +1618,17 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Education technology · Korea · 2020 to 2024 · KiwiOPIC</span><span class="when">2020 to 2024</span></div>
-            <h2 id="t-curriculum-system">A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI</h2>
-            <p class="client">KiwiOPIC, an English test-prep company in Seoul.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-curriculum-system">Curriculum generation system</h2>
+                <p class="sub">A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI. KiwiOPIC, an English test-prep company in Seoul.</p>
                 <div class="num">
                   <span class="v">~80%</span>
                   <span class="l">of the manual curriculum work now handled by AI</span>
-<span class="basis">Per Alec, confirmed 2026-07-25; the company&#39;s own estimate.</span>                </div>
-                <p class="oneliner">Hired to write English lessons. Left having turned the company&#39;s production line into an AI-assisted pipeline.</p>
+                </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>LLM APIs</li><li>speech-to-text APIs</li><li>prompt pipelines</li><li>automated review cycles</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec, as English curriculum specialist turned AI integration lead.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="fig">
 <svg viewBox="0 0 360 232" role="img" aria-label="Share of the curriculum work: before, all by hand; after, about 80 percent by AI with a human last pass">
                     <text x="0" y="18" font-family="Schibsted Grotesk, Inter Tight, sans-serif" font-weight="700" font-size="14.5" letter-spacing="0.6" class="mute" fill="#6E6258">BEFORE · 2020</text>
@@ -1635,10 +1645,12 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/curriculum-system">Open the build</a>
+            <div class="foot">
+              <p class="who"><b>Who built it.</b> Alec, as English curriculum specialist turned AI integration lead.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/curriculum-system">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1646,6 +1658,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · Curriculum generation system</span><span class="when">2020 to 2024</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>Prompt pipelines per content type, a human-last review cycle, and a transcription-plus-scoring loop for spoken answers.</dd></div>
               <div><dt>Where it runs</dt><dd>Inside the company&#39;s own tooling at the time.</dd></div>
               <div><dt>Tests and evals</dt><dd>Model-first, human-last review on every published item; accuracy tracked on the feedback loop.</dd></div>
@@ -1664,29 +1677,29 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <div class="flip">
           <div class="face front sai-pane">
             <div class="head"><span class="lbl">Stephens AI · our own tooling · Stephens AI</span><span class="when">v2 live 2026-03-01</span></div>
-            <h2 id="t-aios">The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services</h2>
-            <p class="client">Stephens AI, our own consultancy.</p>
             <div class="front-grid">
-              <div>
+              <div class="ftext">
+                <h2 id="t-aios">My own AI operating system</h2>
+                <p class="sub">The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services. Stephens AI, our own consultancy.</p>
                 <div class="num">
                   <span class="v">9<span class="u">agents</span></span>
                   <span class="l">each on a least-privilege tool list, plus 51 reusable skills and 15 connected services</span>
                 </div>
-                <p class="oneliner">I test everything on myself first. The same architecture I install for clients runs my own practice.</p>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude Code</li><li>Claude Agent SDK</li><li>MCP</li><li>Python</li><li>Three.js</li><li>Playwright</li><li>Fathom</li><li>Google Workspace</li><li>launchd</li></ul></div>
-                <p class="who"><b>Who built it.</b> Alec.</p>
               </div>
-              <div>
+              <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 440px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="eager" decoding="async" fetchpriority="low">
+                  <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="eager" decoding="async" fetchpriority="low">
                   <figcaption>The Bridge, the dashboard over the whole company. Two panels blurred.</figcaption>
                 </figure>
               </div>
             </div>
-            <div class="acts">
-              <span class="users"><b>Who uses it.</b> Me and my co-founder, every day since March 2026.</span>
-              <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-              <a class="sai-btn ghost" href="/alec/aios">Open the build</a>
+            <div class="foot">
+              <p class="who"><b>Who built it.</b> Alec.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/aios">Open the build</a>
+              </div>
             </div>
           </div>
 
@@ -1694,6 +1707,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <span class="lbl back-title">How it's built</span>
             <div class="head"><span class="lbl acc">How it's built · My own AI operating system</span><span class="when">v2 live 2026-03-01</span></div>
             <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>Me and my co-founder, every day since March 2026.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A markdown vault with frontmatter as the database, a generator that rebuilds the index, sub-agents defined as files with tool allow-lists, skills as files with the gotchas at the top, a local dashboard server, and scheduled jobs on the Mac that deliver to iMessage.</dd></div>
               <div><dt>Where it runs</dt><dd>On my Mac, with connectors into Google Workspace, Slack, Fathom, and the clients&#39; tools.</dd></div>
               <div><dt>Tests and evals</dt><dd>A weekly lint over the vault (contradictions, stale facts, orphans), a layout lint on every branded page, and a two-reviewer gate (adversarial fact-check plus a domain reviewer) before anything client-facing ships.</dd></div>
@@ -1815,7 +1829,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   var active = 0, list = function () { return deck.classList.contains('list') || body.classList.contains('stacked'); };
   function layout() {
     if (list()) { cards.forEach(function (c) { c.classList.toggle('is-active', c === cards[active]); c.removeAttribute('inert'); c.style.visibility = ''; }); return; }
-    var w = cards[0].offsetWidth || 900, phone = innerWidth < 720, k = phone ? 1.08 : 0.94, base = Math.round((deck.clientWidth - w) / 2);
+    var w = cards[0].offsetWidth || 900, phone = innerWidth < 720, k = phone ? 1.08 : 1.03, base = Math.round((deck.clientWidth - w) / 2);
     cards.forEach(function (c, i) {
       var o = i - active, a = Math.abs(o);
       c.style.setProperty('--x', Math.round(base + o * w * k) + 'px');
@@ -1823,7 +1837,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       c.style.zIndex = 6 - Math.min(a, 5); c.style.visibility = a >= 2 ? 'hidden' : ''; c.classList.toggle('is-active', a === 0);
       if (a === 0) c.removeAttribute('inert'); else c.setAttribute('inert', '');
     });
-    deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 44) + 'px';
+    deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 36) + 'px';
   }
   function current() { return active; }
   function mark(i) {
@@ -1857,7 +1871,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
   /* the flip: every card has two sides; the container is as tall as the side you see */
   var flips = Array.prototype.slice.call(document.querySelectorAll('.flip'));
-  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; if (!list()) deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 44) + 'px'; }
+  function fit(flip) { if (body.classList.contains('stacked')) return; var f = flip.querySelector(flip.classList.contains('is-back') ? '.back' : '.front'); flip.style.height = f.offsetHeight + 'px'; if (!list()) deck.style.height = (cards[active].querySelector('.flip').offsetHeight + 36) + 'px'; }
   function fitAll() { flips.forEach(fit); }
   fitAll(); window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll);
   document.querySelectorAll('.flip img').forEach(function (im) { im.addEventListener('load', fitAll); });
