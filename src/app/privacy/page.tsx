@@ -270,9 +270,9 @@ const sections: LegalSection[] = [
           <li>
             The system runs inside the practice&apos;s own cloud account, under
             the agreement between the practice and that cloud provider, rather
-            than on infrastructure we own. We hold a key scoped to only the
-            actions the system performs, never full administrator access, and
-            you can revoke it at any time.
+            than on infrastructure we own. The system runs with a key scoped to
+            only the actions it performs rather than full administrator access,
+            and you can revoke it at any time.
           </li>
           <li>
             The AI services involved are configured so the data is not retained
@@ -324,8 +324,8 @@ const sections: LegalSection[] = [
           </li>
           <li>
             <strong>
-              We will not add or change an AI provider that touches client data
-              without telling affected clients first.
+              If we change an AI provider that touches client data, we tell the
+              affected clients.
             </strong>
           </li>
         </ul>

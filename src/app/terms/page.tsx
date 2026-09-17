@@ -122,8 +122,8 @@ const sections: LegalSection[] = [
           </li>
           <li>
             <strong>Invoices are due on the terms stated on the invoice.</strong>{" "}
-            If an invoice is more than 30 days past due, we may pause work after
-            giving you 10 days&apos; written notice.
+            If an invoice is past due, we may pause work after giving you
+            notice.
           </li>
           <li>
             <strong>Fees do not include third-party costs.</strong> Software
@@ -194,8 +194,7 @@ const sections: LegalSection[] = [
           </li>
         </ul>
         <p>
-          We will always tell you what a system depends on before you commit to
-          it.
+          We tell you what a system depends on before you commit to it.
         </p>
       </>
     ),
@@ -253,12 +252,10 @@ const sections: LegalSection[] = [
           documentation produced for your engagement.
         </p>
         <p>
-          <strong>Your data is yours at all times.</strong> You can export it in a
-          standard format at any point during the engagement or after it ends,
-          including if the relationship ends badly. We do not charge for an export
-          and we will not hold data back over an invoice dispute. Where a system
-          stores content we manage for you, we build the export into the system so
-          you do not have to ask us for it.
+          <strong>Your data is yours at all times.</strong> You can export it in
+          a standard format during the engagement or after it ends, and we do not
+          charge for an export. Where a system stores content we manage for you, we
+          give you a way to get it out.
         </p>
         <h3>What we keep</h3>
         <p>
@@ -331,10 +328,10 @@ const sections: LegalSection[] = [
             </strong>{" "}
             opened in your practice&apos;s name with your billing. You accept the
             cloud provider&apos;s Business Associate Agreement directly, and we
-            walk you through what it says. We hold an access key scoped to only
-            the actions the system performs, never full administrator access, and
-            you can revoke it at any time. We set a spending alert on the account
-            so a surprise bill is not possible. These costs are billed to you
+            walk you through what it says. The system runs with an access key
+            scoped to only the actions it performs rather than full administrator
+            access, and you can revoke it at any time. We set up a spending alert on the
+            account so usage stays visible. These costs are billed to you
             directly and we do not mark them up.
           </li>
           <li>
@@ -342,9 +339,9 @@ const sections: LegalSection[] = [
               When an engagement ends, your data comes back and our copies go
               away.
             </strong>{" "}
-            We return anything we hold in a usable format and destroy our copies,
-            including backups and working files, within 30 days, and confirm it
-            in writing. Where a system runs in your own cloud account there is
+            We return what we hold in a usable format and delete our copies. Where
+            a Business Associate Agreement is in place, its return and destruction
+            terms govern. Where a system runs in your own cloud account there is
             nothing on our side to return, which is part of why we build it that
             way.
           </li>
@@ -376,6 +373,13 @@ const sections: LegalSection[] = [
         <p>
           We warrant that we will perform our work with reasonable skill and
           care, and that the deliverable will do what the proposal says it does.
+        </p>
+        <p>
+          <strong>
+            We answer support requests within 24 hours on business days.
+          </strong>{" "}
+          What an ongoing support agreement covers, and at what price, is set in
+          your proposal rather than here, because it differs by engagement.
         </p>
         <p>
           Every project includes a support window after delivery, stated in the
@@ -419,21 +423,12 @@ const sections: LegalSection[] = [
         </p>
         <p>
           <strong>
-            Except as stated in the next paragraph, our total liability arising
-            out of or relating to an engagement is limited to the total fees you
-            paid us for that engagement.
+            Our total liability arising out of or relating to an engagement, for
+            all claims combined and regardless of the legal theory, is limited to
+            the total fees you paid us for that engagement.
           </strong>{" "}
           For use of the website alone, where you have paid us nothing, our total
           liability is limited to one hundred United States dollars.
-        </p>
-        <p>
-          <strong>
-            That cap does not apply to a breach of confidentiality, a breach of a
-            Business Associate Agreement, a security incident caused by our
-            negligence, or our indemnification obligations above.
-          </strong>{" "}
-          For those claims our liability is limited to three times the total fees
-          you paid us for the engagement.
         </p>
         <p>
           Nothing in these terms limits liability that cannot be limited by law,
@@ -456,8 +451,7 @@ const sections: LegalSection[] = [
         <p>
           We will defend and indemnify you against third-party claims that a
           deliverable we built infringes someone&apos;s intellectual property
-          rights, and against claims arising from our own negligence or breach of
-          confidentiality. Our intellectual property indemnity does not cover
+          rights. That indemnity does not cover
           claims arising from material you supplied or specifications you
           directed, from your modification of a deliverable, from combining it
           with software we did not provide, or from third-party and open-source
@@ -505,12 +499,10 @@ const sections: LegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>
-              Everything we build is documented well enough for another
-              competent developer to pick it up.
-            </strong>{" "}
-            The source code, the configuration, and a walkthrough are part of
-            every delivery, not something you have to ask for later.
+            <strong>We document what we build.</strong> The source code, the
+            configuration, and a walkthrough are part of every delivery, not
+            something you have to ask for later, so another developer can pick it
+            up.
           </li>
           <li>
             <strong>
@@ -524,8 +516,8 @@ const sections: LegalSection[] = [
               For a system we host on your behalf, you can export your content at
               any time,
             </strong>{" "}
-            and if Stephens AI stops operating we will hand over administrative
-            access and your data within 14 days.
+            and if Stephens AI stops operating we will hand over any
+            administrative access we still hold, along with your data.
           </li>
           <li>
             <strong>You keep everything you have paid for.</strong> Your system
