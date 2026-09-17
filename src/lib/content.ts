@@ -10,6 +10,7 @@
 export const SITE_NAME = "Stephens AI";
 export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
+export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
 
 // Shown on /privacy and /terms. Bump this whenever either page changes in
@@ -38,10 +39,6 @@ export const NAV_LINKS = [
   {
     "label": "FAQ",
     "href": "/#faq"
-  },
-  {
-    "label": "Alec's builds",
-    "href": "/alec"
   }
 ];
 

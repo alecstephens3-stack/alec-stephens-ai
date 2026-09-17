@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LEGAL_UPDATED } from "@/lib/content";
+import { CONTACT_EMAIL, CONTACT_EMAIL_JUSHEEN, LEGAL_UPDATED } from "@/lib/content";
 
 /**
  * Shared shell for /privacy and /terms.
@@ -85,12 +85,19 @@ export function LegalPage({
 
         <div className="mt-4 rounded-panel sai-pane px-7 py-7 md:px-10">
           <p className="text-[15px] leading-relaxed text-ink-2">
-            Questions about this page? Email{" "}
+            Questions about this page may be directed to{" "}
             <a
               className="text-accent-deep underline underline-offset-4"
-              href="mailto:alec@stephensai.co"
+              href={`mailto:${CONTACT_EMAIL}`}
             >
-              alec@stephensai.co
+              {CONTACT_EMAIL}
+            </a>{" "}
+            or{" "}
+            <a
+              className="text-accent-deep underline underline-offset-4"
+              href={`mailto:${CONTACT_EMAIL_JUSHEEN}`}
+            >
+              {CONTACT_EMAIL_JUSHEEN}
             </a>
             . See also our{" "}
             <Link
