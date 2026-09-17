@@ -12,6 +12,10 @@ export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
 
+// Shown on /privacy and /terms. Bump this whenever either page changes in
+// substance, not for typo fixes.
+export const LEGAL_UPDATED = "September 17, 2026";
+
 export const SITE_DESCRIPTION = "We build independent eyecare practices a searchable knowledge base that holds the insurance rules, prices, and protocols the front desk keeps in their heads. It is live in a 27-person clinic and holds no patient data.";
 
 export const NAV_LINKS = [

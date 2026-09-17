@@ -547,3 +547,43 @@ section.sai-night ul.sai-bullets li::before {
   .sai-lens { animation: none; }
 }
 body:has(#mobile-menu) .sai-scene { display: none; }
+
+/* Long-form legal prose (/privacy, /terms). The marketing pages never run more
+   than a few sentences in a row, so these rules live here rather than in the
+   type scale above. Body stays at the 17px legibility floor. */
+.legal-prose { color: var(--color-ink-2); font-size: 1.0625rem; line-height: 1.7; }
+.legal-prose > * + * { margin-top: 1.05rem; }
+.legal-prose h3 {
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+  margin-top: 1.75rem;
+}
+.legal-prose strong { color: var(--color-ink); font-weight: 600; }
+.legal-prose a {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.legal-prose ul, .legal-prose ol { padding-left: 1.5rem; }
+.legal-prose ul { list-style: disc; }
+.legal-prose ol { list-style: decimal; }
+.legal-prose li { margin-top: 0.5rem; padding-left: 0.25rem; }
+.legal-prose li::marker { color: var(--color-accent); }
+.legal-prose table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.legal-prose th, .legal-prose td {
+  border-bottom: 1px solid var(--color-rule-soft);
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  text-align: left;
+  vertical-align: top;
+}
+.legal-prose th {
+  font-family: var(--font-label);
+  font-size: 0.84375rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink);
+}

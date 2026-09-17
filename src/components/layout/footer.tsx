@@ -64,6 +64,20 @@ export function Footer() {
           <p className="mt-1.5 text-[13.5px] text-ink-2">
             Stephens AI LLC is a Kansas limited liability company based in Wichita, Kansas.
           </p>
+          <p className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-1.5 text-[13.5px] sm:justify-start">
+            <Link
+              href="/privacy"
+              className="text-ink-2 underline-offset-4 transition-colors hover:text-ink hover:underline"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-ink-2 underline-offset-4 transition-colors hover:text-ink hover:underline"
+            >
+              Terms of Service
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
