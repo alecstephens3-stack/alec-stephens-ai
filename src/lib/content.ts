@@ -243,7 +243,7 @@ export const HOW = {
   guardrails: [
     {
       title: "Patient records",
-      body: "Nothing we build reads a chart. Claims and chart work stay where they are, and if the problem you bring us lives in there, we'll tell you on the first call. We sign a BAA before we start regardless.",
+      body: "Most of what we build sits alongside your charts and never touches them. When a job does involve patient data, it runs inside your own cloud account under a BAA, so nothing about your patients sits on our servers. We sign a BAA before we start regardless.",
     },
     {
       title: "Your IT company stays",
@@ -284,7 +284,7 @@ export const FAQ_SECTION = {
 export const FAQ = [
   {
     q: "Does any patient information go into this?",
-    a: "No. Everything we build sits alongside your practice software and holds no patient records. We sign a BAA before we start regardless.",
+    a: "Only when the job calls for it. The knowledge base holds none: it's your rules, prices, and protocols, not your charts. For work that does involve patient data, like billing or claims, the system runs inside your own cloud account under a BAA, so the data stays with you and never sits on our servers. We sign a BAA before we start either way.",
   },
   {
     q: "Do we have to write the content ourselves?",
@@ -292,7 +292,7 @@ export const FAQ = [
   },
   {
     q: "Does it matter what practice software we use?",
-    a: "No. Nothing we build reads or writes to your chart or scheduling system, so it works alongside whatever you have.",
+    a: "No. Most of what we build sits alongside your practice software rather than inside it, so it works with whatever you have. If a job does need to connect to your system, we scope that with you on the first call.",
   },
   {
     q: "Who keeps it up to date after launch?",
