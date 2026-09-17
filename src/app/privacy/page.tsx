@@ -270,9 +270,8 @@ const sections: LegalSection[] = [
           <li>
             The system runs inside the practice&apos;s own cloud account, under
             the agreement between the practice and that cloud provider, rather
-            than on infrastructure we own. The system runs with a key scoped to
-            only the actions it performs rather than full administrator access,
-            and you can revoke it at any time.
+            than on infrastructure we own. The account is yours, and any access
+            you grant us is yours to revoke.
           </li>
           <li>
             The AI services involved are configured so the data is not retained
@@ -363,11 +362,10 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          The site is served over an encrypted connection. We use multi-factor
-          authentication where it is available, and we follow least-privilege
-          access: where a system we build needs credentials, we scope them to the
-          specific actions that system performs rather than granting broad
-          administrator access.
+          The site is served over an encrypted connection, and we use
+          multi-factor authentication where it is available. Where a system we
+          build runs in your own accounts, the access it uses is granted by you
+          and can be changed or withdrawn by you at any time.
         </p>
         <h3>Who can see your systems</h3>
         <p>
