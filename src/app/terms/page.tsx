@@ -328,9 +328,8 @@ const sections: LegalSection[] = [
             </strong>{" "}
             opened in your practice&apos;s name with your billing. You accept the
             cloud provider&apos;s Business Associate Agreement directly, and we
-            walk you through what it says. The system runs with an access key
-            scoped to only the actions it performs rather than full administrator
-            access, and you can revoke it at any time. We set up a spending alert on the
+            walk you through what it says. The account is yours, any access you
+            grant us is yours to revoke, and we set up a spending alert on the
             account so usage stays visible. These costs are billed to you
             directly and we do not mark them up.
           </li>
