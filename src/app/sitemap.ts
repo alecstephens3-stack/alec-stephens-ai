@@ -35,6 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/case-studies/front-desk-knowledge-base`,
+      lastModified: LEGAL_PUBLISHED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     ...["privacy", "terms"].map((slug) => ({
       url: `${SITE_URL}/${slug}`,
       lastModified: LEGAL_PUBLISHED,

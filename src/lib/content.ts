@@ -19,7 +19,7 @@ export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.
 export const LEGAL_UPDATED = "September 17, 2026";
-export const CASE_STUDY_URL = "https://stephens-ai-front-desk-case-study.vercel.app/";
+export const CASE_STUDY_URL = "https://stephensai.co/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
 export const SITE_TAGLINE = "Custom office tools for independent clinics";
@@ -28,7 +28,7 @@ export const SITE_DESCRIPTION =
   "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a tool the whole office can use, built from your own documents. Custom office tools for independent healthcare clinics.";
 
 export const NAV_LINKS = [
-  { label: "The front desk", href: "/#day" },
+  { label: "What we fix", href: "/#day" },
   { label: "Case studies", href: "/#proof" },
   { label: "How we work", href: "/#how" },
   { label: "FAQ", href: "/#faq" },
@@ -41,7 +41,7 @@ export const HERO = {
     accent: "remember everything.",
   },
   sub: "When they're busy or out, the answers go with them. Stephens AI takes what they know and puts it into one tool the whole office can use, built from your own documents. We also take the repetitive jobs off their plate, so your staff can spend their time on the work only people can do.",
-  primaryCta: { label: "Book a 20-minute call", href: CALENDLY },
+  primaryCta: { label: "Talk to us", href: CALENDLY },
   secondaryCta: { label: "See what we built", href: "/#proof" },
   result: {
     big: "~200 hours a year",
@@ -61,8 +61,8 @@ export const QUOTE = {
 };
 
 export const DAY = {
-  title: "A day at the front desk is a long list of small jobs.",
-  lede: "Greet the patient, check the insurance, quote the price, book the follow-up, chase the bill. Most offices have never written the whole list down, and honestly most don't need to. When we sit down with a clinic we sort the list into three piles.",
+  title: "A day at the clinic is a long list of small jobs.",
+  lede: "Greet the patient, check the insurance, quote the price, book the follow-up, chase the bill. Most offices have never written the whole list down, and honestly most don't need to. When we sit down with a clinic we sort the list into three piles. The front desk is where we started. The same tool holds the technicians\', optical, and billing rules too.",
   columns: [
     {
       tag: "01 · A person keeps",
@@ -221,7 +221,7 @@ export const HOW = {
   steps: [
     {
       n: "01",
-      title: "A 20-minute call",
+      title: "A short call",
       body: "Tell us about the job that eats up your week. We'll tell you whether we can fix it and roughly what it would take.",
     },
     {
@@ -266,7 +266,7 @@ export const FOUNDERS = [
     name: "Alec Stephens",
     role: "Co-founder",
     image: "/images/headshot.png",
-    bio: "Alec spent the past year working inside an eyecare practice, in the office, watching how the front desk gets through a day. Most of what we build for clinics started there.",
+    bio: "Alec spent the past year working inside an eyecare practice, on site and remote, watching how the front desk gets through a day. Most of what we build for clinics started there.",
   },
   {
     name: "Jusheen Kim",
@@ -302,11 +302,15 @@ export const FAQ = [
     q: "How long until staff are using it?",
     a: "About two weeks to go live. Your team is involved early on, so by launch it's answering the questions they were already asking.",
   },
+  {
+    q: "Is this only for the front desk?",
+    a: "No. It started there because that's where the interruptions were. Any role with rules people carry in their heads works the same way.",
+  },
 ];
 
 export const CONTACT = {
   kicker: "Book a call",
   title: "Bring one thing your clinic does by hand.",
-  body: "It's a 20-minute call. Tell us about the job, and we'll tell you whether we can fix it and roughly what it would take. Even if we're not the right fit, you'll probably leave with an idea or two.",
-  bookLabel: "Book a 20-minute call",
+  body: "It's a short call. Tell us about the job, and we'll tell you whether we can fix it and roughly what it would take. Even if we're not the right fit, you'll probably leave with an idea or two.",
+  bookLabel: "Talk to us",
 };
