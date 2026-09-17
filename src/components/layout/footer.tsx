@@ -38,7 +38,7 @@ export function Footer() {
               href="/alec"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              Alec&apos;s builds
+              Alec&apos;s portfolio
             </a>
             <a
               href="https://www.linkedin.com/in/alec-stephens-55b392213/"
