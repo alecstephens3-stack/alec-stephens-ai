@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       // artifacts/scrollcraft/builds/alec-portfolio/ into public/alec/.
       { source: "/alec", destination: "/alec/index.html" },
       { source: "/alec/:slug", destination: "/alec/:slug/index.html" },
+      // The full front desk case study: self-contained static page from
+      // artifacts/case-studies/ in the vault, served on our own domain.
+      {
+        source: "/case-studies/front-desk-knowledge-base",
+        destination: "/case-studies/front-desk-knowledge-base/index.html",
+      },
     ];
   },
   async redirects() {
