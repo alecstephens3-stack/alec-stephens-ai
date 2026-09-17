@@ -1,22 +1,17 @@
-import { Hero } from "@/components/sections/v4/hero";
-import {
-  Problem,
-  Product,
-  Proof,
-  Timeline,
-  Ownership,
-  Faq,
-  Founders,
-} from "@/components/sections/v4/body";
-import { Pricing } from "@/components/sections/v4/pricing";
-import { Contact } from "@/components/sections/v4/contact";
+import { Hero } from "@/components/sections/v5/hero";
+import { Day } from "@/components/sections/v5/day";
+import { Proof } from "@/components/sections/v5/proof";
+import { How } from "@/components/sections/v5/how";
+import { Founders } from "@/components/sections/v5/founders";
+import { Faq } from "@/components/sections/v5/faq";
+import { Contact } from "@/components/sections/v5/contact";
 import {
   SITE_NAME,
   SITE_URL,
   SITE_DESCRIPTION,
   CONTACT_EMAIL,
+  LINKEDIN_URL,
   FAQ,
-  PRICING_TIERS,
 } from "@/lib/content";
 
 export default function Home() {
@@ -33,30 +28,20 @@ export default function Home() {
         logo: `${SITE_URL}/logo-light.svg`,
         image: `${SITE_URL}/og-image.png`,
         sameAs: [
+          LINKEDIN_URL,
           "https://www.linkedin.com/in/alec-stephens-55b392213/",
           "https://www.linkedin.com/in/jusheenkim",
         ],
-        areaServed: ["United States", "Worldwide"],
+        areaServed: ["United States"],
         serviceType: [
-          "Front desk knowledge base for eyecare practices",
+          "Custom office tools for healthcare clinics",
+          "Front desk knowledge base",
           "Practice operations automation",
-          "Custom internal software",
         ],
         founder: [
-          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co founder" },
-          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co founder" },
+          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co-founder" },
+          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co-founder" },
         ],
-        hasOfferCatalog: {
-          "@type": "OfferCatalog",
-          name: "Eyecare practice systems",
-          itemListElement: PRICING_TIERS.map((tier) => ({
-            "@type": "Offer",
-            name: tier.name,
-            description: tier.summary,
-            price: tier.setup.replace(/[$,]/g, ""),
-            priceCurrency: "USD",
-          })),
-        },
       },
       {
         "@type": "FAQPage",
@@ -81,14 +66,11 @@ export default function Home() {
         }}
       />
       <Hero />
-      <Problem />
-      <Product />
+      <Day />
       <Proof />
-      <Pricing />
-      <Timeline />
-      <Ownership />
-      <Faq />
+      <How />
       <Founders />
+      <Faq />
       <Contact />
     </>
   );

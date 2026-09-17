@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SITE_NAME, CONTACT_EMAIL } from "@/lib/content";
+import { SITE_NAME, CONTACT_EMAIL, CASE_STUDY_URL, LINKEDIN_URL } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -21,18 +21,20 @@ export function Footer() {
             />
           </Link>
 
-          <nav className="flex items-center gap-6" aria-label="Footer navigation">
-            <Link
-              href="/#product"
+          <nav className="flex flex-wrap items-center justify-center gap-6" aria-label="Footer navigation">
+            <a
+              href={CASE_STUDY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              What we build
-            </Link>
+              Case study
+            </a>
             <Link
-              href="/#pricing"
+              href="/#how"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              Pricing
+              How we work
             </Link>
             <a
               href="/alec"
@@ -41,7 +43,7 @@ export function Footer() {
               Alec&apos;s portfolio
             </a>
             <a
-              href="https://www.linkedin.com/in/alec-stephens-55b392213/"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-ink-2 transition-colors hover:text-ink"

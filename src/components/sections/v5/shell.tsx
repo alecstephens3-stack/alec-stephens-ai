@@ -1,18 +1,20 @@
 import { cn } from "@/lib/utils";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { Porthole } from "@/components/ui/lens-primitives";
 
 /**
- * The v4 section shell. One rhythm for the whole page so the site reads as
- * one document instead of a stack of unrelated blocks. Vertical rhythm is
- * deliberately tighter than v3: the brief was "way too bulky."
+ * The v5 section shell. Same rhythm as v4 (one document, not a stack of
+ * blocks), plus the porthole kicker that v4 declared but never rendered.
  */
 export function Section({
   id,
+  kicker,
   title,
   lede,
   children,
   className,
   center = false,
+  headMax,
 }: {
   id?: string;
   kicker?: string;
@@ -21,17 +23,24 @@ export function Section({
   children: React.ReactNode;
   className?: string;
   center?: boolean;
+  headMax?: string;
 }) {
   return (
-    <section id={id} className={cn("scroll-mt-28 py-11 md:py-14", className)}>
+    <section id={id} className={cn("scroll-mt-28 py-12 md:py-16", className)}>
       <div className="mx-auto w-full max-w-[1080px] px-5 md:px-8">
-        {title && (
-          <AnimateOnScroll className={cn("mb-7 md:mb-9", center && "text-center")}>
+        {(kicker || title) && (
+          <AnimateOnScroll className={cn("mb-8 md:mb-10", center && "text-center")}>
+            {kicker && (
+              <div className={cn("mb-4", center && "flex justify-center")}>
+                <Porthole>{kicker}</Porthole>
+              </div>
+            )}
             {title && (
               <h2
                 className={cn(
                   "font-heading text-[30px] font-medium leading-[1.12] tracking-[-0.02em] text-ink md:text-[42px]",
-                  center ? "mx-auto max-w-[22ch]" : "max-w-[24ch]"
+                  center ? "mx-auto" : "",
+                  headMax ?? (center ? "max-w-[22ch]" : "max-w-[24ch]")
                 )}
               >
                 {title}

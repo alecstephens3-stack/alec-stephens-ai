@@ -1,305 +1,312 @@
 /**
- * Site content, v4 (clinics). One file so copy can be edited without touching
- * layout. Voice: plain language, no em dashes in client-facing copy, no invented
- * numbers, no tool names in buyer-facing lines, and never gender a staff role.
- * The product is a front desk knowledge base (never use the old p-word for it).
- * Prices: Alec's 2026-08-14 direction (below the internal card). WFV facts:
- * clients/WFV/wfv-core.md. Pricing model: artifacts/pricing-knowledge-base-and-enablement-2026-08-01.html
+ * Site content, v5 (the office-manager homepage, Sep 2026). One file so copy
+ * can be edited without touching layout. Voice rules: plain language, no em
+ * dashes, no invented numbers, "tool" or "system" and never "AI" outside the
+ * company name, never gender a staff role. Every number here traces to Alec's
+ * published case study (stephens-ai-front-desk-case-study.vercel.app).
+ *
+ * Positioning is healthcare clinics in general. The eyecare detail appears
+ * only as the case-study clinic.
  */
 
 export const SITE_NAME = "Stephens AI";
 export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
-export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
+export const SECOND_EMAIL = "jusheen@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
+export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.
 export const LEGAL_UPDATED = "September 17, 2026";
+export const CASE_STUDY_URL = "https://stephens-ai-front-desk-case-study.vercel.app/";
+export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
-export const SITE_DESCRIPTION = "We build independent eyecare practices a searchable knowledge base that holds the insurance rules, prices, and protocols the front desk keeps in their heads. It is live in a 27-person clinic and holds no patient data.";
+export const SITE_TAGLINE = "Custom office tools for independent clinics";
+
+export const SITE_DESCRIPTION =
+  "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a tool the whole office can use, built from your own documents. Custom office tools for independent healthcare clinics.";
 
 export const NAV_LINKS = [
-  {
-    "label": "Home",
-    "href": "/"
-  },
-  {
-    "label": "What we build",
-    "href": "/#product"
-  },
-  {
-    "label": "Proof",
-    "href": "/#proof"
-  },
-  {
-    "label": "Pricing",
-    "href": "/#pricing"
-  },
-  {
-    "label": "FAQ",
-    "href": "/#faq"
-  }
+  { label: "The front desk", href: "/#day" },
+  { label: "Case studies", href: "/#proof" },
+  { label: "How we work", href: "/#how" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export const HERO = {
-  "headline": {
-    "lead": "Your front desk can find the answer",
-    "accent": "in one place",
-    "tail": "instead of asking around."
+  kicker: "For independent healthcare clinics",
+  headline: {
+    lead: "Your clinic runs on a few people who",
+    accent: "remember everything.",
   },
-  "sub": "We build independent eyecare practices a searchable knowledge base for the insurance rules, prices, and protocols their teams need. The system is already in daily use at a working front desk. Office managers can update answers as policies change, while we handle implementation, staff training, and ongoing support.",
-  "primaryCta": {
-    "label": "See pricing",
-    "href": "/#pricing"
+  sub: "When they're busy or out, the answers go with them. Stephens AI takes what they know and puts it into one tool the whole office can use, built from your own documents. We also take the repetitive jobs off their plate, so your staff can spend their time on the work only people can do.",
+  primaryCta: { label: "Book a 20-minute call", href: CALENDLY },
+  secondaryCta: { label: "See what we built", href: "/#proof" },
+  result: {
+    big: "~200 hours a year",
+    rest: "back at one clinic's front desk. Estimated from the clinic's own numbers.",
   },
-  "secondaryCta": {
-    "label": "Book a 20-minute call",
-    "href": "https://calendly.com/alecpstephens/30min"
-  },
-  "trustLine": "It holds no patient data, and we sign a BAA before we start."
+  trustLine:
+    "It sits alongside your practice software, holds no patient information, and we sign a BAA before we start.",
 };
 
-export const PROBLEMS = [
-  {
-    "title": "The hard questions all go through one or two people",
-    "body": "Several times a day someone puts a patient on hold and walks to the office manager's desk. Two people stop working. The answer was written down somewhere, just not anywhere you can find it while a patient waits on the line."
-  },
-  {
-    "title": "Nobody is sure which price is current",
-    "body": "This is what we found at the practice we built this for: four price lists stacked in one spreadsheet. When the answer is unclear the front desk guesses, and the guess turns up later as an uncollected charge or a surprise balance at checkout."
-  },
-  {
-    "title": "New hires take months to get up to speed",
-    "body": "Turnover at the front desk is normal. Losing months of training every time is not. The knowledge exists. It just lives in a few people's heads and a binder nobody has updated since the last insurance change."
-  }
-];
+export const QUOTE = {
+  kicker: "From the front desk at Wichita Family Vision",
+  text: "This is highly valuable, both in the short term and long term. It's already saving a lot of time.",
+  who: "Jill Romines",
+  role: "Front Office Manager",
+  where: "Wichita Family Vision · Wichita, Kansas",
+  chips: ["About 200 hours a year back", "In daily use since Aug 2026"],
+};
 
-export const PRODUCT_FEATURES = [
-  {
-    "title": "Every situation written down and searchable",
-    "body": "Your protocols become short situation pages your team can find mid-call. One search box returns an answer in a few seconds, instead of a folder to dig through."
+export const DAY = {
+  title: "A day at the front desk is a long list of small jobs.",
+  lede: "Greet the patient, check the insurance, quote the price, book the follow-up, chase the bill. Most offices have never written the whole list down, and honestly most don't need to. When we sit down with a clinic we sort the list into three piles.",
+  columns: [
+    {
+      tag: "01 · A person keeps",
+      title: "Only a person can do these",
+      items: ["The exam", "Calming a nervous kid", "Calling a patient about a result"],
+      note: "We don't build anything for these, and we wouldn't want to.",
+    },
+    {
+      tag: "02 · Made faster",
+      title: "Someone in the building already knows the answer",
+      items: [
+        "The insurance question mid-call",
+        "Which doctor can see this patient",
+        "Training the new hire",
+      ],
+      note: "We put that answer where anyone on the desk can find it in a few seconds.",
+    },
+    {
+      tag: "03 · Off the plate",
+      title: "These have a right answer every time",
+      items: [
+        "Typing the same numbers into a second system",
+        "Filing paperwork in the right folder",
+        "Building the same report every period",
+      ],
+      note: "So a program can do them, and a person checks the result.",
+    },
+  ],
+  foot: {
+    strong: "We start with one job.",
+    rest: "For most clinics it's something in the middle pile. Here's what that looked like at one of them.",
   },
-  {
-    "title": "Decision lookups for the calls that cost money",
-    "body": "A few decisions do most of the damage when they go wrong: how soon a caller needs to be seen, which doctor can see them, whether to collect or bill the refraction, and this year's price. Each one gets a short guided lookup that shows the buried exception instead of relying on someone to remember it. On anything clinical it is a reference, never a substitute for judgment. Your doctor signs off on every clinical page before it goes live and again when it changes."
-  },
-  {
-    "title": "Your office manager keeps it current",
-    "body": "A price changes, your office manager updates the page, and it is live. There is no ticket and no waiting on us. Every edit is saved, so a wrong change is one click back."
-  },
-  {
-    "title": "Access stays inside your practice",
-    "body": "Staff sign in with their practice Google account. Nobody outside the domain can open it, and only the people your practice approves can edit. The system holds no patient records."
-  },
-  {
-    "title": "Installs on the front desk computers",
-    "body": "It installs from the browser with no admin rights and no ticket to your IT vendor. Pages your team has already opened keep working if the internet drops, which matters at a front desk that cannot stop taking calls."
-  },
-  {
-    "title": "Staff flag a problem in one click",
-    "body": "When a page is wrong or missing, whoever found it says so from inside the app and you see it. At the practice we built this for, the first four were fixed within a day."
-  }
-];
+};
 
 export const PROOF = {
-  "title": "Hundreds of hours spent getting the details right",
-  "body": [
-    "We built and refined this system with direct input from clinic owners, doctors, office managers, and front-desk staff. At the live 27-person practice, where 6 to 7 doctors work from one location, the product was shaped by real clinic documents, days spent watching the front desk, and 76 situations mapped from the questions staff actually face.",
-    "That work is already built into the product. Your team does not start from an empty template or spend months writing pages. We handle the document review, interviews, writing, access setup, testing, training, and rollout."
+  kicker: "Case study · Wichita Family Vision, Wichita, Kansas",
+  title: {
+    lead: "Every front desk question used to land on the office manager.",
+    accent: "Now the answer is one search away.",
+  },
+  stats: [
+    {
+      value: "~200",
+      unit: "hours a year",
+      label: "Front desk time back. Estimated from the clinic's own numbers; a measured figure is coming.",
+    },
+    {
+      value: "~$15,000",
+      unit: "a year",
+      label: "Fewer interruptions, and new hires trained in weeks instead of months.",
+    },
+    {
+      value: "35",
+      unit: "pages, 4 tools",
+      label: "Rewritten from the clinic's own files, checked one by one with the front office manager.",
+    },
+    {
+      value: "0",
+      unit: "patient records",
+      label: "Nothing about patients goes in it, by design. In daily use since August 2026.",
+    },
   ],
-  "stats": [
-    {
-      "value": "76",
-      "label": "Front desk situations mapped"
-    },
-    {
-      "value": "4",
-      "label": "Decision lookups built"
-    },
-    {
-      "value": "60 to 100",
-      "label": "Admin hours a year returned by the time-off build"
-    },
-    {
-      "value": "0",
-      "label": "Patient records in the system"
-    }
-  ]
+  before: {
+    title: "What was happening",
+    body: [
+      "“Which doctor can see this patient?” “Do we collect for this or bill it?” Whoever was on the phone ended up at the office manager's desk. The answers lived in 15 spreadsheet tabs, a scheduling document, a per-doctor rulebook and the office manager's memory. A question on a live call meant ten minutes of digging or a patient on hold. A new hire took about six months before the questions stopped, and four price lists sat stacked in one sheet with nobody sure which one was live.",
+    ],
+  },
+  after: {
+    title: "What we built",
+    body: [
+      "One tool that's open on every front desk screen. We rewrote 35 protocol pages from the clinic's own files (scheduling, insurance, charges, recall, triage, the daily checklist) and built four small decision tools for the questions anyone can get wrong: which doctor can see this patient, what this year's price is, whether to collect or bill, and how urgent the call is. Two managers can edit any page themselves, with a history of every change and one-click undo. Staff sign in with their clinic email, there's no patient information in it, and it runs on hosting the clinic owns.",
+    ],
+  },
+  mock: {
+    app: "Front Desk",
+    nav: ["Home", "Tools", "Browse"],
+    heading: "What's happening on the call?",
+    query: "vision plan, medical complaint",
+    chips: ["Red eye call", "Book a new patient", "Price of an exam", "Run recall"],
+    resultTitle: "Refraction: collect or bill?",
+    resultTag: "Protocol",
+    resultBody:
+      "The vision plan covers the refraction only when the visit bills as a routine exam.",
+    resultRule:
+      "If the visit bills medical, the refraction is not covered. Collect at checkout.",
+    resultMeta: "Last edited by the office manager · one-click undo",
+    tools: [
+      { label: "Which doctor can see this patient", icon: "doctor" },
+      { label: "This year's price", icon: "price" },
+      { label: "Collect or bill", icon: "bill" },
+      { label: "How urgent is the call", icon: "pulse" },
+    ],
+    caption:
+      "Based on the live app, with the clinic's prices and rules left out. Staff type what's happening on the call and get the protocol, with the exception called out.",
+  },
+  footnote: {
+    lead: "How we got the numbers.",
+    body: "About four questions a day that used to take ten minutes of digging now take one search. That is about 200 hours a year, roughly $4,500 in pay. Then shorter training: the clinic said a new hire took about six months to learn the job. Cut that in half for two or three hires a year and that is another $8,000 to $12,000. Both are estimates from the clinic's own numbers, kept on the low side.",
+  },
+  ctaPrimary: { label: "Read the full case study", href: CASE_STUDY_URL },
+  ctaSecondary: { label: "Download the PDF", href: "/case-studies/front-desk-knowledge-base.pdf" },
 };
 
-export const PRICING_TIERS = [
-  {
-    "name": "Front desk knowledge base",
-    "setup": "$2,500",
-    "monthly": "$299",
-    "monthlyBasis": "per month",
-    "summary": "The front desk's knowledge, written up and searchable, kept current by your office manager.",
-    "features": [
-      "Up to 30 situation pages, written by us from your material",
-      "4 decision lookups",
-      "Search, in-app editing, and a saved history of every change",
-      "Google sign-in, with editors you choose",
-      "A one-click way for staff to flag a problem",
-      "Installs on the front desk computers"
-    ],
-    "highlighted": false
-  },
-  {
-    "name": "Whole-practice knowledge base",
-    "setup": "$3,500",
-    "monthly": "$250",
-    "monthlyBasis": "per month",
-    "summary": "The whole floor, not just the front desk: technicians, optical, and each doctor's rules.",
-    "features": [
-      "Everything in the front desk tier",
-      "Up to 70 pages and 6 decision lookups",
-      "Technician, optical, and doctor-restriction pages",
-      "Views that show each role its own work",
-      "A content review with your office manager each quarter",
-      "A short written AI-use policy for your staff"
-    ],
-    "highlighted": true,
-    "badge": "Where we would start you"
-  },
-  {
-    "name": "Knowledge base plus operations",
-    "setup": "$4,500",
-    "monthly": "$350",
-    "monthlyBasis": "per month",
-    "summary": "The knowledge base plus operations work like time-off and payroll automation, with us on call every month.",
-    "features": [
-      "Everything in the whole-practice tier",
-      "Time-off and payroll automation, scoped to your practice",
-      "A quarterly practice snapshot",
-      "Monthly working time with both of us",
-      "Your builds go to the front of our queue"
-    ],
-    "highlighted": false
-  }
-];
+/**
+ * The PDF shelf under the front desk case study. One page each, built from
+ * scratchpad/pdfkit/build.py. Only the front desk study names its clinic; these
+ * use plain descriptors and never claim to be separate clients.
+ */
+export const CASE_STUDIES = {
+  title: "More case studies",
+  lede: "One page each: the old way, what we built, and how we got the numbers.",
+  linkLabel: "Open the PDF",
+  items: [
+    {
+      title: "Time off and payroll",
+      context: "Independent healthcare practice",
+      from: "15 to 20 min",
+      to: "~1 min",
+      unit: "per request",
+      summary: "Staff ask from their phones, the manager approves in one tap, and a payroll sheet shows up every other Monday.",
+      status: "Live since spring 2026",
+      tone: "good",
+      pdf: "/case-studies/time-off-and-payroll.pdf",
+      thumb: "/case-studies/time-off-and-payroll-thumb.webp",
+    },
+    {
+      title: "Vendor bills",
+      context: "Independent clinic",
+      from: "",
+      to: "~1¢",
+      unit: "to read each bill",
+      summary: "Bills get read, renamed and filed into the right vendor folder after one review. Nothing moves until someone clicks Go.",
+      status: "Rolling out, September 2026",
+      tone: "warn",
+      pdf: "/case-studies/vendor-bills.pdf",
+      thumb: "/case-studies/vendor-bills-thumb.webp",
+    },
+    {
+      title: "Admin tools",
+      context: "Multi-department practice",
+      from: "5 hand edits",
+      to: "1 click",
+      unit: "to cancel a request",
+      summary: "A menu inside the office's own sheet for the exceptions: missed days, new hires, departures and cancellations.",
+      status: "Live since May 2026",
+      tone: "good",
+      pdf: "/case-studies/admin-tools.pdf",
+      thumb: "/case-studies/admin-tools-thumb.webp",
+    },
+  ],
+} as const;
 
-export const PRICING_NOTES = [
-  "Extra sections beyond a tier's cap are $600 each.",
-  "A second location is $1,500 to set up and $149 per month.",
-  "Clinical pages go live only after your doctor signs off.",
-  "No long-term contract. Cancel any time and keep every page."
-];
+export const HOW = {
+  title: "How a project goes.",
+  steps: [
+    {
+      n: "01",
+      title: "A 20-minute call",
+      body: "Tell us about the job that eats up your week. We'll tell you whether we can fix it and roughly what it would take.",
+    },
+    {
+      n: "02",
+      title: "We watch the job",
+      body: "We do a screen share with whoever does the job today, then write up what we'd change, what we'd leave alone, and what it would cost. It's a flat fee, and you have it in writing before anything starts.",
+    },
+    {
+      n: "03",
+      title: "Build and test with your staff",
+      body: "We build from your own documents and show your team early, so what goes live matches how they work. Plan on about two weeks.",
+    },
+    {
+      n: "04",
+      title: "Yours to keep",
+      body: "Your office manager can change it, and you can export everything whenever you want. If you'd like us to stay on and keep it current, that's a month-to-month arrangement.",
+    },
+  ],
+  guardrails: [
+    {
+      title: "Patient records",
+      body: "Nothing we build reads a chart. Claims and chart work stay where they are, and if the problem you bring us lives in there, we'll tell you on the first call. We sign a BAA before we start regardless.",
+    },
+    {
+      title: "Your IT company stays",
+      body: "There's nothing for them to install. It opens in a browser, doesn't need admin rights, and nothing on your server changes.",
+    },
+    {
+      title: "What it costs",
+      body: "One flat fee for the build, quoted in writing after the first call. Monthly support is optional. No hourly billing and no long-term contract.",
+    },
+  ],
+};
 
-export const TIMELINE = [
-  {
-    "week": "Week 1",
-    "title": "Send us what you already have",
-    "body": "You do not need to organize or rewrite anything first. We sort the protocols, price sheets, insurance notes, and the binder, resolve duplicates, and scope the build before you commit."
-  },
-  {
-    "week": "Week 2",
-    "title": "We learn how your front desk actually works",
-    "body": "We meet with the people who answer the phone in a few short sessions scheduled around the clinic. Their input shapes the pages and decision lookups, so the system fits the work instead of forcing a new process on the team."
-  },
-  {
-    "week": "Weeks 3 and 4",
-    "title": "We write, secure, and test it",
-    "body": "We write every page, build the decision lookups, and configure Google sign-in for approved staff. Your team reviews a working version, and we fix anything that is unclear before launch."
-  },
-  {
-    "week": "Day 30",
-    "title": "Live at the front desk",
-    "body": "We install it on the front desk computers, train the office manager to make updates, and open the feedback channel. Staff get a finished system, not an empty platform they still have to build."
-  }
-];
-
-export const OWNERSHIP = [
-  {
-    "q": "Who owns the content",
-    "a": "You do. They are your practice's rules. We wrote them down. We do not own them."
-  },
-  {
-    "q": "Can you export it",
-    "a": "Yes, any time, as plain files you can open without us. Ask and we send it, no charge."
-  },
-  {
-    "q": "What if we cancel",
-    "a": "It is month to month, no term. You keep every page. You lose the search, and we will tell you the two easiest ways to get that back."
-  },
-  {
-    "q": "What if you two disappear",
-    "a": "You have the export, and the content reads fine without our software. Better you know that now than find out at a bad moment."
-  }
-];
-
-export const FAQ = [
-  {
-    "q": "Does any patient data go into this?",
-    "a": "No. It holds your rules, not your charts: insurance policies, pricing, scheduling protocols, procedures. There are no patient records in it, so there is nothing in it to breach. If a later project ever needs patient data, it runs inside your own accounts under a signed BAA, never on our systems. We sign the BAA before we start either way."
-  },
-  {
-    "q": "Do we have to write all the content ourselves?",
-    "a": "No, and this is the main difference between us and a training platform. Tools like Trainual and Whale hand you an empty system at $249 to $300 a month and you still write every page. We write the pages from the material you already have, then hand you the keys so your manager keeps them current."
-  },
-  {
-    "q": "What if our practice management system isn't Compulink?",
-    "a": "It does not connect to your practice management system, so it does not matter which one you run. That is on purpose. Most hosted systems, whether that is Compulink, RevolutionEHR, or Eyefinity, do not give an outside vendor database access. Any vendor promising a nightly sync into a hosted system is either overselling or has not checked yet."
-  },
-  {
-    "q": "Who keeps it up to date after launch?",
-    "a": "Your office manager, in the app, in about ten seconds. That is what the monthly fee protects. A knowledge base that goes stale becomes the exact problem it was built to solve, so the monthly pays for keeping it true, not for hosting."
-  },
-  {
-    "q": "What does the monthly fee cover?",
-    "a": "The writing, not the hosting. Hosting this costs almost nothing. When an insurance rule changes, a doctor's restrictions change, or your prices reset for the year, we update the pages and run the accuracy review, so it is our job rather than something your office manager does on a weekend. Compare it to a training platform, not to your practice management software: Trainual and Whale run about $249 to $300 a month at your size and still hand you an empty system to fill in yourself. If you would rather not pay it, you can cancel after launch, keep the exported content, and maintain it yourself."
-  },
-  {
-    "q": "How long until staff are actually using it?",
-    "a": "Live at day 30. Getting people to use it is a separate job and we treat it that way. The feedback button and the same-day fixes in the first two weeks are what turn it from a tool you bought into a tool they open."
-  },
-  {
-    "q": "Who are we actually hiring?",
-    "a": "Two people. Alec Stephens and Jusheen Kim, and you work with both of us, not an account manager. We are based in Asia, so we are not at a desk during your morning rush. Urgent issues get answered by the next business morning your time, and we put the escalation path in writing before you sign anything. We would rather state the limit than imply a promise we cannot keep."
-  },
-  {
-    "q": "What happens if a page is wrong and it costs us money?",
-    "a": "You review and approve every page before it goes live, and your doctor signs off on anything clinical. If we wrote it wrong against the source you gave us, we fix it free and tell you which other pages shared the mistake. If the underlying rule changed and nobody told either of us, that is what the monthly is for. A knowledge base does not remove the need for someone to own the answer. It removes the need for that person to be interrupted forty times a week."
-  },
-  {
-    "q": "We run more than one location. Does that change things?",
-    "a": "It usually makes the problem worse and the case stronger. More locations means more sets of tribal knowledge that drifted apart, staff who cover across sites and get a different answer at each one, and a weak spot at every front desk. We build the shared pages once and let each site override only what genuinely differs. A second location is $1,500 to set up and $149 a month."
-  },
-  {
-    "q": "Why not just build this ourselves?",
-    "a": "Some practices should. If you have someone in house with the time to interview the front desk, write 30 to 70 situation pages, build the decision lookups, and keep it current, you do not need us. What you are paying for is that nobody in your building has to spend the next three months on it."
-  }
-];
+export const FOUNDERS_SECTION = {
+  title: "It's the two of us.",
+  lede: "You'll be talking to the people who build it, from the first call on.",
+};
 
 export const FOUNDERS = [
   {
-    "name": "Alec Stephens",
-    "role": "Co-founder",
-    "image": "/images/headshot.png",
-    "bio": "Spent the last year inside a 27-person eyecare practice, in the office, watching the front desk work. Most of what we build for clinics came out of that. Five-plus years and a 100% job success score on Upwork before this."
+    name: "Alec Stephens",
+    role: "Co-founder",
+    image: "/images/headshot.png",
+    bio: "Alec spent the past year working inside an eyecare practice, in the office, watching how the front desk gets through a day. Most of what we build for clinics started there.",
   },
   {
-    "name": "Jusheen Kim",
-    "role": "Co-founder",
-    "image": "/images/headshot-jusheen.png",
-    "bio": "Former lead software engineer at J.P. Morgan. Builds the systems that have to hold up under real use, and has worked with healthcare practices, solo operators, and software companies."
-  }
+    name: "Jusheen Kim",
+    role: "Co-founder",
+    image: "/images/headshot-jusheen.png",
+    bio: "Jusheen studied computer science at UC Berkeley and was a lead software engineer at J.P. Morgan before this. He builds the things that have to keep working every day, and has done that for healthcare practices and software companies.",
+  },
 ];
 
-export const OTHER_WORK = [
+export const FAQ_SECTION = {
+  kicker: "Common questions",
+  title: "A few questions you'll probably have.",
+};
+
+export const FAQ = [
   {
-    "title": "Business coaching practice",
-    "body": "A full operating system: software agents handling inbox, scheduling, voice-note capture, meeting notes, and calendar-to-invoice.",
-    "metric": "5 agents running daily operations"
+    q: "Does any patient information go into this?",
+    a: "No. Everything we build sits alongside your practice software and holds no patient records. We sign a BAA before we start regardless.",
   },
   {
-    "title": "Construction company, Japan",
-    "body": "A full site rebuild across six pages, search console set up, and a corrected business profile. Now on an upkeep retainer.",
-    "metric": "Complete digital rebuild"
+    q: "Do we have to write the content ourselves?",
+    a: "No. You share the documents you already have, as they are. We read through them, figure out what's current and what's stale, write the pages, and check each one with your office manager before it goes in.",
   },
   {
-    "title": "Language test-prep company",
-    "body": "AI worked into curriculum drafting, formatting, review cycles, and process automation.",
-    "metric": "80% of the manual work cut"
-  }
+    q: "Does it matter what practice software we use?",
+    a: "No. Nothing we build reads or writes to your chart or scheduling system, so it works alongside whatever you have.",
+  },
+  {
+    q: "Who keeps it up to date after launch?",
+    a: "Your office manager, right inside the tool. Every change is saved and can be undone with one click. If you'd rather we go through it with your office manager every so often, that's what the monthly support is for.",
+  },
+  {
+    q: "How long until staff are using it?",
+    a: "About two weeks to go live. Your team is involved early on, so by launch it's answering the questions they were already asking.",
+  },
 ];
+
+export const CONTACT = {
+  kicker: "Book a call",
+  title: "Bring one thing your clinic does by hand.",
+  body: "It's a 20-minute call. Tell us about the job, and we'll tell you whether we can fix it and roughly what it would take. Even if we're not the right fit, you'll probably leave with an idea or two.",
+  bookLabel: "Book a 20-minute call",
+};
