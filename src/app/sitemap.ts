@@ -3,7 +3,7 @@ import { SITE_URL } from "@/lib/content";
 
 // Fixed date, not `new Date()`. Re-stamping every page as modified on every
 // build teaches crawlers the signal is worthless.
-const LAST_CONTENT_CHANGE = new Date("2026-08-14");
+const LAST_CONTENT_CHANGE = new Date("2026-09-16");
 const JP_PAGE_PUBLISHED = new Date("2026-08-31");
 const PORTFOLIO_PUBLISHED = new Date("2026-09-16");
 const LEGAL_PUBLISHED = new Date("2026-09-17");
