@@ -23,7 +23,8 @@ const DEFAULTS = {
   blurRadius: 2.9,        // design units, depth of field outside the glass
   grain: 0.055,
   tallBelow: 520,         // css px width under which the portrait layout is used
-  handFont: 'Caveat',
+  handFont: 'Kalam',            // the office manager's hand
+  handFont2: 'Reenie Beanie',   // whoever took the phone message
   textFont: 'Inter Tight',
   labelFont: 'Schibsted Grotesk',
   power: '+2.00',
@@ -109,221 +110,204 @@ function paper(ctx, w, h, color, o = {}) {
   ctx.strokeStyle = 'rgba(80,50,30,0.13)'; ctx.lineWidth = 0.5; ctx.stroke(); ctx.restore();
 }
 
-/* handwriting: glyph by glyph, wobbling baseline, uneven pressure */
-function hand(ctx, text, x, y, size, o = {}) {
-  const r = mulberry(o.seed ?? 3);
-  ctx.save();
-  ctx.font = `${o.weight ?? 600} ${size}px '${o.font}', cursive`;
-  ctx.fillStyle = o.color ?? '#27325A';
-  ctx.textBaseline = 'alphabetic';
-  let cx = x; const slope = o.slope ?? -0.035;
-  for (const ch of text) {
-    const w = ctx.measureText(ch).width;
+/* handwriting: ONE layout whose messiness m (1 = hurried scrawl, 0 = written neatly) is a parameter.
+   Same words, same hand, same ink, same line breaks. Nothing is ever cross-faded. */
+function script(ctx, lines, m, o = {}) {
+  const font = o.font, color = o.color ?? '#27325A', weight = o.weight ?? 400;
+  ctx.save(); ctx.fillStyle = color; ctx.strokeStyle = color; ctx.textBaseline = 'alphabetic';
+  lines.forEach((ln, li) => {
+    const r = mulberry((o.seed ?? 1) * 97 + li * 13);
+    const size = ln.size, lr = r(), lx = r(), ly = r(), ls = r(), ph = r() * 6;
     ctx.save();
-    ctx.translate(cx, y + (cx - x) * slope + (r() - 0.5) * size * 0.10);
-    ctx.rotate((r() - 0.5) * 0.13);
-    ctx.globalAlpha = 0.80 + r() * 0.20;
-    ctx.fillText(ch, 0, 0);
-    if (o.bold) ctx.fillText(ch, 0.35, 0.2);
-    ctx.restore();
-    cx += w * (0.93 + r() * 0.1);
-  }
-  ctx.restore();
-  return cx - x;
-}
-function scribble(ctx, pts, color, width, seed = 1) {
-  const r = mulberry(seed);
-  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.globalAlpha = 0.85; ctx.beginPath();
-  pts.forEach((p, i) => {
-    const px = p[0] + (r() - 0.5) * 1.2, py = p[1] + (r() - 0.5) * 1.2;
-    if (!i) ctx.moveTo(px, py); else {
-      const q = pts[i - 1];
-      ctx.quadraticCurveTo((q[0] + px) / 2 + (r() - 0.5) * 3, (q[1] + py) / 2 + (r() - 0.5) * 3, px, py);
+    ctx.translate(ln.x + (lx - 0.5) * 7 * m, ln.y + (ly - 0.5) * 6 * m);
+    ctx.rotate(((lr - 0.5) * 0.20 + (ln.tilt ?? 0)) * m);
+    const grow = 1 + m * (0.10 + 0.10 * ls);
+    ctx.font = `${weight} ${size}px '${font}', cursive`;
+    let cx = 0;
+    const slant = -(o.slant ?? 0.06) - m * (0.10 + 0.22 * ls);
+    for (const ch of ln.text) {
+      const a = r(), b = r(), c = r(), d = r();
+      const w = ctx.measureText(ch).width;
+      const sc = grow * (1 + (a - 0.5) * (0.05 + 0.34 * m));
+      const gy = m * (Math.sin(cx * 0.11 + ph) * size * 0.13 + (b - 0.5) * size * 0.22) + (b - 0.5) * 0.5 + cx * m * (lr - 0.5) * 0.05;
+      ctx.save();
+      ctx.translate(cx, gy); ctx.rotate((c - 0.5) * (0.04 + 0.26 * m)); ctx.transform(1, 0, slant, 1, 0, 0); ctx.scale(sc, sc);
+      ctx.globalAlpha = 0.86 + d * 0.10;
+      ctx.fillText(ch, 0, 0);
+      if (m > 0.02) { ctx.globalAlpha = 0.55 * m; ctx.fillText(ch, 0.45, 0.25); }   // a hurried pen doubles its strokes
+      ctx.restore();
+      cx += w * sc * (1 + m * (d - 0.5) * 0.22) * (ch === ' ' ? 1 + m * 0.35 : 1);
     }
+    // what only haste adds: extra question marks, a false start struck out. They thin away as the hand calms.
+    if (ln.extra && m > 0.01) {
+      ctx.save(); ctx.globalAlpha = smooth(0.0, 0.7, m) * 0.9; ctx.translate(cx + (ln.struck ? 6 : 1.5), (r() - 0.5) * 3); ctx.rotate(0.12 * m); ctx.scale(grow * (0.6 + 0.5 * m), grow * (0.6 + 0.5 * m));
+      ctx.fillText(ln.extra, 0, 0);
+      if (ln.struck) { const ew = ctx.measureText(ln.extra).width; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(-1, -size * 0.30); ctx.lineTo(ew + 1, -size * 0.36); ctx.stroke(); }
+      ctx.restore();
+    }
+    if (ln.underline) { // the underline stays; it just stops being a slash
+      const ru = mulberry((o.seed ?? 1) * 31 + li);
+      ctx.globalAlpha = 0.85; ctx.lineWidth = 1.05 + 0.35 * m; ctx.lineCap = 'round'; ctx.beginPath();
+      const n = 6, len = cx * (ln.underline === true ? 1 : ln.underline);
+      for (let i = 0; i <= n; i++) {
+        const ux = len * i / n, uy = size * 0.20 + m * ((ru() - 0.5) * 5 + Math.sin(i * 1.7) * 1.6 - ux * 0.04);
+        if (!i) ctx.moveTo(ux, uy); else ctx.lineTo(ux, uy);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
   });
-  ctx.stroke(); ctx.restore();
-}
-function label(ctx, F, text, x, y, size = 7.6, color = ACCENT) {
-  ctx.save();
-  ctx.fillStyle = ACCENT; ctx.fillRect(x, y - size * 0.80, 1.8, size * 0.86);
-  ctx.font = `700 ${size}px '${F.label}', sans-serif`; ctx.fillStyle = color;
-  try { ctx.letterSpacing = '0.9px'; } catch (e) { /* older engines */ }
-  ctx.fillText(text.toUpperCase(), x + 5, y);
   ctx.restore();
 }
-function setType(ctx, F, lines, x, y, size, lh, color = INK, weight = 600) {
-  ctx.save(); ctx.font = `${weight} ${size}px '${F.text}', sans-serif`; ctx.fillStyle = color;
-  try { ctx.letterSpacing = '-0.2px'; } catch (e) { /* noop */ }
-  lines.forEach((l, i) => ctx.fillText(l, x, y + i * lh)); ctx.restore();
+/* print: quiet office-document type. Never bold display, never brand UI. */
+function print(ctx, F, text, x, y, size, o = {}) {
+  ctx.save(); ctx.font = `${o.weight ?? 400} ${size}px '${o.label ? F.label : F.text}', sans-serif`;
+  ctx.fillStyle = o.color ?? 'rgba(34,30,28,0.86)'; ctx.textAlign = o.align ?? 'left';
+  try { ctx.letterSpacing = o.track ?? '0px'; } catch (e) { /* older engines */ }
+  ctx.fillText(text, x, y); ctx.restore();
 }
 
 /* ------------------------------------------------------------ desk items */
-/* Every item: size in design units, a draw(ctx, tidy, F) and a pose per
-   layout: m = messy [cx, cy, deg], t = tidy [cx, cy]. */
+/* Every item: size in design units; draw(ctx, F) paints the object itself (paper and
+   anything PRINTED on it, identical in both states); ink(ctx, m, F) writes whatever is
+   HANDWRITTEN on it at messiness m. Pose per layout: m = messy [cx, cy, deg], t = tidy [cx, cy, deg]. */
 function buildItems() {
   const items = [];
+  const BLUE = '#26336B', BLACK = '#2A2826', RED = '#B5452A';
 
   items.push({
     id: 'fees', w: 186, h: 238, shadow: 1,
     wide: { m: [142, 170, -8.5], t: [121, 153, 0.5] }, tall: { m: [118, 152, -7.5], t: [111, 143, 0.5] },
-    draw(ctx, tidy, F) {
+    draw(ctx, F) {
       const w = this.w, h = this.h;
-      paper(ctx, w, h, '#FBF8F2');
-      if (!tidy) {
-        // a photocopied price list, corrected by hand for years
-        ctx.save(); ctx.fillStyle = 'rgba(40,36,34,0.78)'; ctx.font = `700 9px '${F.text}', sans-serif`;
-        ctx.fillText('FEE SHEET  (old copy?)', 16, 24); ctx.restore();
-        const r = mulberry(21);
-        for (let i = 0; i < 12; i++) {
-          const y = 42 + i * 15.2;
-          ctx.fillStyle = 'rgba(40,36,34,0.42)';
-          ctx.fillRect(16, y, 56 + r() * 56, 2.6);
-          ctx.fillRect(w - 44, y, 20 + r() * 8, 2.6);
-          ctx.fillStyle = 'rgba(40,36,34,0.10)'; ctx.fillRect(16, y + 7, w - 32, 0.5);
-        }
-        scribble(ctx, [[w - 48, 58], [w - 16, 60]], '#27325A', 1.3, 2);
-        scribble(ctx, [[w - 48, 104], [w - 14, 101]], '#27325A', 1.3, 4);
-        scribble(ctx, [[w - 50, 103], [w - 16, 106]], '#27325A', 1.1, 5);
-        hand(ctx, 'new?', w - 50, 96, 15, { font: F.hand, seed: 5, bold: true });
-        hand(ctx, 'ask Dr.', 92, 139, 15, { font: F.hand, seed: 8, color: '#B5452A' });
-        scribble(ctx, [[84, 142], [110, 146], [138, 141]], '#B5452A', 1.1, 9);
-        hand(ctx, 'collect or bill??', 30, 205, 17, { font: F.hand, seed: 12, bold: true, slope: -0.06 });
-        scribble(ctx, [[28, 212], [70, 210], [126, 204]], '#27325A', 1.2, 14);
-        // circled row
-        ctx.save(); ctx.strokeStyle = 'rgba(181,69,42,0.8)'; ctx.lineWidth = 1.3;
-        ctx.beginPath(); ctx.ellipse(62, 166, 50, 9, -0.05, 0.2, Math.PI * 2.05); ctx.stroke(); ctx.restore();
-        // fold crease
-        const c = ctx.createLinearGradient(0, h * 0.5 - 3, 0, h * 0.5 + 3);
-        c.addColorStop(0, 'rgba(0,0,0,0)'); c.addColorStop(0.5, 'rgba(90,60,40,0.13)'); c.addColorStop(1, 'rgba(255,255,255,0.0)');
-        ctx.fillStyle = c; ctx.fillRect(0, h * 0.5 - 3, w, 6);
-      } else {
-        label(ctx, F, 'Fees', 16, 25);
-        setType(ctx, F, ['Fee sheet'], 16, 47, 17, 18, INK, 600);
-        const rows = [['Comprehensive exam'], ['Refraction'], ['Contact lens fitting'], ['Frame adjustment'], ['Kids under 5']];
-        rows.forEach((row, i) => {
-          const y = 79 + i * 29.5;
-          ctx.fillStyle = 'rgba(23,19,16,0.12)'; ctx.fillRect(16, y - 17, w - 32, 0.6);
-          setType(ctx, F, [row[0]], 16, y, 11.2, 12, INK, 500);
-          ctx.fillStyle = i === 2 ? ACCENT : 'rgba(23,19,16,0.78)';
-          rr(ctx, w - 16 - 22, y - 5.2, 22, 2.6, 1.3); ctx.fill();          // a short ink dash where the amount goes
-        });
-        ctx.fillStyle = 'rgba(23,19,16,0.12)'; ctx.fillRect(16, 79 + 5 * 29.5 - 17, w - 32, 0.6);
-      }
+      paper(ctx, w, h, '#FBF9F4');
+      // a laser-printed price list: regular weight, dotted leaders, a blank rule where the amount is filled in
+      print(ctx, F, 'Fee sheet', 18, 30, 12.5, { weight: 500 });
+      print(ctx, F, 'Front desk copy', w - 18, 30, 8.2, { align: 'right', color: 'rgba(34,30,28,0.55)' });
+      ctx.fillStyle = 'rgba(34,30,28,0.55)'; ctx.fillRect(18, 38, w - 36, 0.7);
+      const rows = ['Comprehensive exam', 'Refraction', 'Contact lens fitting', 'Contact lens follow-up', 'Frame adjustment', 'Frame repair', 'Kids under 5'];
+      rows.forEach((row, i) => {
+        const y = 60 + i * 19.5;
+        print(ctx, F, row, 18, y, 10.4);
+        const tw = (() => { ctx.save(); ctx.font = `400 10.4px '${F.text}', sans-serif`; const v = ctx.measureText(row).width; ctx.restore(); return v; })();
+        ctx.fillStyle = 'rgba(34,30,28,0.40)';
+        for (let x = 18 + tw + 5; x < w - 50; x += 3.6) ctx.fillRect(x, y - 1, 1, 1);
+        ctx.fillStyle = 'rgba(34,30,28,0.60)'; ctx.fillRect(w - 46, y + 1, 28, 0.6);
+      });
+      print(ctx, F, 'Notes', 18, 206, 8.2, { color: 'rgba(34,30,28,0.55)' });
+      ctx.fillStyle = 'rgba(34,30,28,0.30)'; ctx.fillRect(18, 226, w - 36, 0.6);
+      // fold crease from living in a drawer
+      const c = ctx.createLinearGradient(0, h * 0.5 - 3, 0, h * 0.5 + 3);
+      c.addColorStop(0, 'rgba(0,0,0,0)'); c.addColorStop(0.5, 'rgba(90,60,40,0.11)'); c.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = c; ctx.fillRect(0, h * 0.5 - 3, w, 6);
       grainAtop(ctx, w, h, 0.07);
+    },
+    ink(ctx, m, F) {
+      script(ctx, [{ text: 'new', x: this.w - 45, y: 99, size: 11.5, extra: '??' }], m, { font: F.hand, color: BLUE, seed: 5 });
+      script(ctx, [{ text: 'ask Dr.', x: this.w - 47, y: 177, size: 11, extra: '!' }], m, { font: F.hand, color: RED, seed: 8 });
+      script(ctx, [{ text: 'collect or bill?', x: 50, y: 222, size: 13.5, underline: true, extra: '?', tilt: -0.25 }], m, { font: F.hand, color: BLUE, seed: 12 });
     },
   });
 
   items.push({
     id: 'slip', w: 152, h: 104, shadow: 1,
     wide: { m: [372, 110, 12.5], t: [304, 86, 0] }, tall: { m: [112, 356, 8], t: [100, 340, -0.4] },
-    draw(ctx, tidy, F) {
+    draw(ctx, F) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, '#FBE9DC');
-      if (!tidy) {
-        ctx.fillStyle = '#C8583A'; ctx.fillRect(0, 0, w, 19);
-        ctx.save(); ctx.font = `700 8.6px '${F.label}', sans-serif`; ctx.fillStyle = '#FFF4EC';
-        try { ctx.letterSpacing = '1px'; } catch (e) { /* noop */ }
-        ctx.fillText('WHILE YOU WERE OUT', 10, 13); ctx.restore();
-        ctx.fillStyle = 'rgba(181,69,42,0.35)';
-        [40, 60, 80].forEach(y => ctx.fillRect(10, y, w - 20, 0.6));
-        hand(ctx, 'Mrs. Alvarez', 14, 37, 17, { font: F.hand, seed: 31, bold: true });
-        hand(ctx, 'call back!! frames', 12, 58, 16, { font: F.hand, seed: 33, slope: -0.05 });
-        hand(ctx, 'ready?? 2nd time', 22, 79, 15, { font: F.hand, seed: 36, slope: 0.02 });
-        scribble(ctx, [[12, 63], [60, 65], [118, 60]], '#27325A', 1.1, 37);
-      } else {
-        label(ctx, F, 'Callback', 14, 24);
-        setType(ctx, F, ['Call Mrs. Alvarez', 'back re: frames'], 14, 50, 15.5, 19.5);
-        ctx.fillStyle = 'rgba(23,19,16,0.12)'; ctx.fillRect(14, 82, w - 28, 0.6);
-        setType(ctx, F, ['Today'], 14, 95, 9.6, 12, '#6E6258', 500);
-      }
+      // a pre-printed message pad
+      ctx.fillStyle = '#C8583A'; ctx.fillRect(0, 0, w, 18);
+      print(ctx, F, 'WHILE YOU WERE OUT', 10, 12.6, 8.4, { label: true, weight: 700, color: '#FFF4EC', track: '1px' });
+      const ink = 'rgba(168,66,40,0.85)';
+      print(ctx, F, 'From', 10, 34, 6.6, { color: ink }); print(ctx, F, 'Message', 10, 54, 6.6, { color: ink });
+      ctx.fillStyle = 'rgba(181,69,42,0.40)';
+      [38, 60, 80].forEach(y => ctx.fillRect(10, y, w - 20, 0.6));
+      // tick boxes
+      [['Telephoned', 10], ['Please call', 62], ['Will call again', 112]].forEach(([t, x], i) => {
+        ctx.strokeStyle = ink; ctx.lineWidth = 0.6; ctx.strokeRect(x, 90, 5, 5);
+        if (i < 2) print(ctx, F, t, x + 8, 95, 6, { color: ink }); else print(ctx, F, 'Urgent', x + 8, 95, 6, { color: ink });
+      });
       grainAtop(ctx, w, h, 0.07);
+    },
+    ink(ctx, m, F) {
+      const o = { font: F.hand2, color: BLUE, seed: 31, slant: 0.10 };
+      script(ctx, [
+        { text: 'Mrs. Alvarez', x: 34, y: 36.5, size: 17 },
+        { text: 'call back re: frames', x: 12, y: 78, size: 17, extra: '!!', underline: 0.45 },
+      ], m, o);
+      // the tick in "Please call"
+      ctx.save(); ctx.strokeStyle = BLUE; ctx.lineWidth = 1.2; ctx.lineCap = 'round'; ctx.beginPath();
+      ctx.moveTo(62.5, 92.5 - m); ctx.lineTo(64.5, 95); ctx.lineTo(69 + 3 * m, 87.5 - 3 * m); ctx.stroke(); ctx.restore();
     },
   });
 
-  const sticky = (id, color, poses, messy, tidyLabel, tidyLines, seed) => ({
+  const sticky = (id, color, poses, lines, seed) => ({
     id, w: 96, h: 96, shadow: 1.25, ...poses,
-    draw(ctx, tidy, F) {
+    draw(ctx) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, color, { curl: true, radius: 0.8 });
       ctx.fillStyle = 'rgba(90,60,30,0.05)'; ctx.fillRect(0, 0, w, 17); // adhesive strip
-      if (!tidy) {
-        messy.forEach((m, i) => hand(ctx, m[0], m[1], m[2], m[3], { font: F.hand, seed: seed + i, bold: true, slope: m[4] ?? -0.05, color: m[5] }));
-        scribble(ctx, [[14, h - 20], [44, h - 17], [70, h - 23]], '#27325A', 1.2, seed + 9);
-        // the corner that stopped sticking months ago
-        const k = 21; ctx.save();
-        ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.moveTo(w, h - k); ctx.lineTo(w, h + 1); ctx.lineTo(w - k, h + 1); ctx.closePath(); ctx.fill();
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.beginPath(); ctx.moveTo(w, h - k); ctx.lineTo(w - k, h); ctx.lineTo(w - k * 0.92, h - k * 0.80); ctx.closePath();
-        const fg = ctx.createLinearGradient(w - k, h - k, w - k * 0.3, h - k * 0.3);
-        fg.addColorStop(0, 'rgba(255,255,255,0.95)'); fg.addColorStop(1, color); ctx.fillStyle = fg;
-        ctx.shadowColor = 'rgba(60,30,10,0.45)'; ctx.shadowBlur = 5; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 3; ctx.fill(); ctx.restore();
-      } else {
-        label(ctx, F, tidyLabel, 11, 22);
-        setType(ctx, F, tidyLines, 11, 46, 14.6, 18.4);
-      }
+      // the corner that stopped sticking months ago
+      const k = 13; ctx.save();
+      ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.moveTo(w, h - k); ctx.lineTo(w, h + 1); ctx.lineTo(w - k, h + 1); ctx.closePath(); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.beginPath(); ctx.moveTo(w, h - k); ctx.lineTo(w - k, h); ctx.lineTo(w - k * 0.92, h - k * 0.80); ctx.closePath();
+      const fg = ctx.createLinearGradient(w - k, h - k, w - k * 0.3, h - k * 0.3);
+      fg.addColorStop(0, 'rgba(255,255,255,0.95)'); fg.addColorStop(1, color); ctx.fillStyle = fg;
+      ctx.shadowColor = 'rgba(60,30,10,0.40)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 1.5; ctx.shadowOffsetY = 2; ctx.fill(); ctx.restore();
       grainAtop(ctx, w, h, 0.075);
     },
+    ink(ctx, m, F) { script(ctx, lines, m, { font: F.hand, color: BLUE, seed }); },
   });
   items.push(sticky('vsp', '#F8E7A6',
     { wide: { m: [226, 214, -13], t: [276, 202, -0.7] }, tall: { m: [246, 98, 13], t: [286, 80, -0.7] } },
-    [['VSP or', 12, 42, 24], ['EyeMed???', 9, 68, 22, 0.03]], 'Insurance', ['VSP or', 'EyeMed?'], 40));
+    [{ text: 'VSP or', x: 13, y: 44, size: 19 }, { text: 'EyeMed?', x: 13, y: 70, size: 19, extra: '??', underline: true }], 40));
   items.push(sticky('refr', '#F6CDB9',
     { wide: { m: [366, 236, 9.5], t: [380, 202, 0.3] }, tall: { m: [272, 208, -11], t: [286, 188, 0.4] } },
-    [['refraction', 9, 38, 20], ['collect', 12, 58, 20, 0.02], ['or bill?', 20, 77, 20, -0.08]], 'Billing', ['Refraction:', 'collect', 'or bill?'], 52));
+    [{ text: 'Refraction:', x: 10, y: 38, size: 16.5 }, { text: 'collect', x: 10, y: 60, size: 16.5 }, { text: 'or bill?', x: 10, y: 82, size: 16.5, extra: '?', underline: true }], 52));
 
   items.push({
     id: 'kids', w: 152, h: 84, shadow: 1,
     wide: { m: [272, 326, -16], t: [304, 306, 0.4] }, tall: null,
-    draw(ctx, tidy, F) {
+    draw(ctx) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, '#FCFAF5');
-      if (!tidy) {
-        ctx.fillStyle = 'rgba(190,80,60,0.45)'; ctx.fillRect(0, 17, w, 0.7);
-        ctx.fillStyle = 'rgba(70,110,170,0.28)';
-        [31, 45, 59, 73].forEach(y => ctx.fillRect(0, y, w, 0.6));
-        hand(ctx, 'which dr sees kids', 10, 35, 17, { font: F.hand, seed: 61, bold: true, color: '#2B2B2B' });
-        hand(ctx, 'under 5 ??', 16, 56, 19, { font: F.hand, seed: 63, bold: true, color: '#2B2B2B', slope: -0.07 });
-        hand(ctx, 'ask again', 78, 75, 14, { font: F.hand, seed: 66, color: '#B5452A' });
-      } else {
-        label(ctx, F, 'Scheduling', 13, 23);
-        setType(ctx, F, ['Which doctor sees', 'kids under 5?'], 13, 46, 14.6, 18.4);
-      }
+      ctx.fillStyle = 'rgba(190,80,60,0.50)'; ctx.fillRect(0, 17, w, 0.7);       // a ruled index card
+      ctx.fillStyle = 'rgba(70,110,170,0.30)';
+      [33, 49, 65, 81].forEach(y => ctx.fillRect(0, y, w, 0.6));
       grainAtop(ctx, w, h, 0.07);
+    },
+    ink(ctx, m, F) {
+      script(ctx, [{ text: 'Which doctor sees', x: 11, y: 47.5, size: 15.5 }, { text: 'kids under 5?', x: 11, y: 63.5, size: 15.5, extra: '??', underline: true }], m, { font: F.hand, color: BLACK, seed: 61 });
     },
   });
 
   items.push({
     id: 'binder', w: 176, h: 214, shadow: 2.0,
     wide: { m: [512, 156, 5.2], t: [518, 143, 0] }, tall: null,
-    draw(ctx, tidy, F) {
+    draw(ctx, F) {
       const w = this.w, h = this.h;
       rr(ctx, 0, 0, w, h, 7); ctx.fillStyle = '#231E1A'; ctx.fill();
       ctx.save(); rr(ctx, 0, 0, w, h, 7); ctx.clip();
       const g = ctx.createLinearGradient(0, 0, w, h);
       g.addColorStop(0, 'rgba(255,240,225,0.17)'); g.addColorStop(0.5, 'rgba(255,240,225,0.03)'); g.addColorStop(1, 'rgba(0,0,0,0.22)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-      // spine ridge
       const s = ctx.createLinearGradient(14, 0, 30, 0);
       s.addColorStop(0, 'rgba(0,0,0,0.35)'); s.addColorStop(0.4, 'rgba(255,240,225,0.16)'); s.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = s; ctx.fillRect(14, 0, 16, h);
       ctx.restore();
-      // rivets
       [[22, 40], [22, h - 40]].forEach(([x, y]) => {
         const rg = ctx.createRadialGradient(x - 1, y - 1, 0.5, x, y, 4);
         rg.addColorStop(0, '#E9E2D8'); rg.addColorStop(1, '#7E746A');
         ctx.beginPath(); ctx.arc(x, y, 3.4, 0, 7); ctx.fillStyle = rg; ctx.fill();
       });
-      // label window
-      ctx.save(); ctx.translate(36, 66);
-      rr(ctx, 0, 0, 118, 64, 2.5); ctx.fillStyle = '#F7F1E6'; ctx.fill();
-      if (!tidy) {
-        hand(ctx, 'front desk', 9, 25, 19, { font: F.hand, seed: 71, bold: true, color: '#2B2B2B' });
-        hand(ctx, 'stuff (old?)', 12, 46, 16, { font: F.hand, seed: 73, color: '#2B2B2B' });
-      } else {
-        label(ctx, F, 'Playbook', 10, 20);
-        setType(ctx, F, ['Front desk'], 10, 42, 15.5, 18);
-      }
+      // a label-maker strip, stuck on not quite level
+      ctx.save(); ctx.translate(42, 86); ctx.rotate(-0.012);
+      ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 2; ctx.shadowOffsetY = 1;
+      rr(ctx, 0, 0, 112, 21, 1.6); ctx.fillStyle = '#F4F1EA'; ctx.fill(); ctx.shadowColor = 'transparent';
+      const lg = ctx.createLinearGradient(0, 0, 0, 21); lg.addColorStop(0, 'rgba(255,255,255,0.8)'); lg.addColorStop(0.5, 'rgba(255,255,255,0)'); lg.addColorStop(1, 'rgba(0,0,0,0.08)');
+      rr(ctx, 0, 0, 112, 21, 1.6); ctx.fillStyle = lg; ctx.fill();
+      print(ctx, F, 'FRONT DESK', 56, 15.2, 11.5, { label: true, weight: 700, align: 'center', track: '2.2px', color: '#1B1917' });
       ctx.restore();
       grainAtop(ctx, w, h, 0.10);
     },
@@ -332,23 +316,23 @@ function buildItems() {
   items.push({
     id: 'card', w: 118, h: 74, shadow: 0.8,
     wide: { m: [462, 306, -12], t: [489, 300, 0] }, tall: { m: [262, 352, -13], t: [268, 340, 0] },
-    draw(ctx, tidy, F) {
+    draw(ctx, F) {
       const w = this.w, h = this.h;
-      rr(ctx, 0, 0, w, h, 6); ctx.fillStyle = '#F3F2EE'; ctx.fill();
+      rr(ctx, 0, 0, w, h, 6); ctx.fillStyle = '#F1F0EC'; ctx.fill();
       ctx.save(); rr(ctx, 0, 0, w, h, 6); ctx.clip();
-      ctx.fillStyle = '#51657A'; ctx.fillRect(0, 0, w, 21);
+      ctx.fillStyle = '#51657A'; ctx.fillRect(0, 0, w, 20);
       const g = ctx.createLinearGradient(0, 0, w, h);
-      g.addColorStop(0, 'rgba(255,255,255,0.35)'); g.addColorStop(0.5, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(60,50,40,0.10)');
+      g.addColorStop(0, 'rgba(255,255,255,0.40)'); g.addColorStop(0.5, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(60,50,40,0.12)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, w, h); ctx.restore();
-      ctx.save(); ctx.font = `700 8.4px '${F.label}', sans-serif`; ctx.fillStyle = '#F4F6F8';
-      try { ctx.letterSpacing = '1px'; } catch (e) { /* noop */ }
-      ctx.fillText('VISION PLAN', 10, 14); ctx.restore();
-      setType(ctx, F, ['Member ID'], 10, 36, 8, 10, '#6E6258', 500);
-      ctx.fillStyle = 'rgba(23,19,16,0.55)';
-      [0, 1, 2].forEach(i => { rr(ctx, 10 + i * 26, 42, 21, 6.5, 2); ctx.fill(); });
-      setType(ctx, F, ['Group'], 10, 62, 8, 10, '#6E6258', 500);
-      ctx.fillStyle = 'rgba(23,19,16,0.40)'; rr(ctx, 40, 56, 34, 6.5, 2); ctx.fill();
-      void tidy;
+      print(ctx, F, 'VISION PLAN', 10, 13.6, 8, { label: true, weight: 600, color: '#F4F6F8', track: '1px' });
+      print(ctx, F, 'Member ID', 10, 34, 6.6, { color: 'rgba(40,40,44,0.7)' });
+      print(ctx, F, 'Group', 10, 58, 6.6, { color: 'rgba(40,40,44,0.7)' });
+      // embossed characters: raised plastic, lit from the top left, no readable number
+      const emboss = (x, y, n) => { for (let i = 0; i < n; i++) { const ex = x + i * 7.4 + (i > 3 ? 5 : 0) + (i > 7 ? 5 : 0);
+        rr(ctx, ex + 0.6, y + 0.7, 5, 7.4, 1.4); ctx.fillStyle = 'rgba(40,36,34,0.40)'; ctx.fill();
+        rr(ctx, ex - 0.4, y - 0.5, 5, 7.4, 1.4); ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fill();
+        rr(ctx, ex, y, 5, 7.4, 1.4); ctx.fillStyle = '#D8D6D0'; ctx.fill(); } };
+      emboss(10, 38, 12); emboss(10, 62, 6);
       grainAtop(ctx, w, h, 0.05);
     },
   });
@@ -356,22 +340,17 @@ function buildItems() {
   items.push({
     id: 'scrap', w: 100, h: 54, shadow: 1.2,
     wide: { m: [540, 344, 21], t: [480, 369, -0.6] }, tall: null,
-    draw(ctx, tidy, F) {
+    draw(ctx) {
       const w = this.w, h = this.h, r = mulberry(88);
-      // torn along the top: a ragged edge, fibres showing
       ctx.beginPath(); ctx.moveTo(0, 5);
       for (let x = 0; x <= w; x += 4) ctx.lineTo(x, 2 + r() * 5.5);
       ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
       ctx.save(); ctx.clip(); paper(ctx, w, h, '#FAF6EC');
       ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(0, 0, w, 8); ctx.restore();
-      if (!tidy) {
-        hand(ctx, 'call lab!!', 9, 27, 18, { font: F.hand, seed: 91, bold: true, color: '#2B2B2B' });
-        hand(ctx, 're: order ??', 14, 45, 15, { font: F.hand, seed: 93, color: '#27325A' });
-      } else {
-        label(ctx, F, 'Lab', 10, 21);
-        setType(ctx, F, ['Call lab re: order'], 10, 40, 11.6, 14);
-      }
       grainAtop(ctx, w, h, 0.08);
+    },
+    ink(ctx, m, F) {
+      script(ctx, [{ text: 'call lab', x: 10, y: 27, size: 15, extra: 'today', struck: true }, { text: 're: order', x: 10, y: 45, size: 15, extra: '?' }], m, { font: F.hand, color: BLACK, seed: 91 });
     },
   });
 
@@ -394,8 +373,7 @@ function buildItems() {
     id: 'pen', w: 150, h: 12, shadow: 1.5, soft: true,
     wide: { m: [150, 268, -27], t: [121, 318, 0] }, tall: { m: [150, 236, 31], t: [111, 286, 0] },
     draw(ctx) {
-      const w = this.w, h = this.h, y = 1.5, bh = 9;
-      // tip
+      const w = this.w, y = 1.5, bh = 9;
       ctx.beginPath(); ctx.moveTo(0, y + bh / 2); ctx.lineTo(14, y + 1); ctx.lineTo(14, y + bh - 1); ctx.closePath();
       const tg = ctx.createLinearGradient(0, y, 0, y + bh);
       tg.addColorStop(0, '#F2EEE8'); tg.addColorStop(0.5, '#B7AEA4'); tg.addColorStop(1, '#6E665E');
@@ -409,11 +387,9 @@ function buildItems() {
       const cg = ctx.createLinearGradient(0, y, 0, y + bh);
       cg.addColorStop(0, '#F08A66'); cg.addColorStop(0.4, ACCENT); cg.addColorStop(1, '#9E4326');
       ctx.fillStyle = cg; ctx.fill();
-      // clip
       rr(ctx, w - 62, y - 1.5, 46, 3.2, 1.5);
       const kg = ctx.createLinearGradient(0, y - 1.5, 0, y + 2);
       kg.addColorStop(0, '#FFFFFF'); kg.addColorStop(1, '#9A9088'); ctx.fillStyle = kg; ctx.fill();
-      void h;
     },
   });
 
@@ -620,7 +596,7 @@ void main(){
 /* ------------------------------------------------------------------ init */
 export function init(canvas, options = {}) {
   const opt = { ...DEFAULTS, ...options };
-  const F = { hand: opt.handFont, text: opt.textFont, label: opt.labelFont };
+  const F = { hand: opt.handFont, hand2: opt.handFont2, text: opt.textFont, label: opt.labelFont };
   const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarse = window.matchMedia('(hover: none)').matches;
   let reduced = opt.reducedMotion ?? mqReduce.matches;
@@ -702,12 +678,14 @@ export function init(canvas, options = {}) {
     const pad = 22;
     active = items.filter(it => it[S.layout]);
     active.forEach(it => {
-      const mk = (tidy) => {
+      const mk = (fn) => {
         const c = makeCanvas((it.w + pad * 2) * SS, (it.h + pad * 2) * SS), x = c.getContext('2d');
         x.setTransform(SS, 0, 0, SS, pad * SS, pad * SS);
-        it.draw(x, tidy, F); return c;
+        fn(x); return c;
       };
-      it.pad = pad; it.messy = mk(false); it.tidy = mk(true);
+      it.pad = pad; it.base = mk(x => it.draw(x, F));
+      it.inkRest = it.ink ? [mk(x => it.ink(x, 0, F)), mk(x => it.ink(x, 1, F))] : null;   // neat, scrawled
+      it.messy = it.tidy = it.base;
       // shadow from the sprite's own silhouette
       const sc = makeCanvas(it.messy.width, it.messy.height), sx = sc.getContext('2d');
       sx.shadowColor = 'rgba(58,30,12,0.95)'; sx.shadowBlur = (it.soft ? 2.0 : 2.8) * SS; sx.shadowOffsetX = 10000;
@@ -748,10 +726,15 @@ export function init(canvas, options = {}) {
       x.setTransform(SS, 0, 0, SS, (px + 1.5 * lift) * SS, (py + 2.2 * lift) * SS); x.rotate(rot);
       x.globalAlpha = 0.50; x.drawImage(it.shadowSprite, -w / 2, -h / 2, w, h);        // the tight contact shadow
       x.setTransform(SS, 0, 0, SS, px * SS, py * SS); x.rotate(rot);
-      const a = smooth(0.28, 0.82, tc);
       x.globalAlpha = 1;
-      if (a < 1) x.drawImage(it.messy, -w / 2, -h / 2, w, h);
-      if (a > 0) { x.globalAlpha = a; x.drawImage(it.tidy, -w / 2, -h / 2, w, h); }
+      x.drawImage(it.base, -w / 2, -h / 2, w, h);
+      if (it.ink) {   // one piece of writing, redrawn at its current messiness. Never two renderings at once.
+        const mess = 1 - smooth(0.10, 0.95, tc);
+        x.globalAlpha = 0.92;
+        if (mess > 0.999) x.drawImage(it.inkRest[1], -w / 2, -h / 2, w, h);
+        else if (mess < 0.001) x.drawImage(it.inkRest[0], -w / 2, -h / 2, w, h);
+        else { x.save(); x.translate(-it.w / 2, -it.h / 2); it.ink(x, mess, F); x.restore(); }
+      }
     }
     x.globalAlpha = 1;
   }
@@ -819,9 +802,14 @@ export function init(canvas, options = {}) {
   function step(dt) {
     const L = S.lens, st = lensState();
     const idle = idleTarget(S.time);
-    const usePointer = opt.followPointer && S.pointer.active && !coarse;
+    const dragging = !!S.drag;
+    const usePointer = dragging || (opt.followPointer && S.pointer.active && !coarse);
     let tx = usePointer ? S.pointer.x : idle.x, ty = usePointer ? S.pointer.y : idle.y;
-    if (usePointer) { // a parked pointer lets the glass settle onto the nearest paper rather than bare wood or binder cover
+    if (dragging) { // a finger holds the glass: it rises clear of the fingertip so what it shows stays visible
+      const D = S.drag, up = smooth(0, 0.22, S.time - D.t0), R0 = baseRadius();
+      tx = clamp(D.x + D.ox * (1 - up), R0 * 0.5, S.dW - R0 * 0.5);
+      ty = clamp(D.y + lerp(D.oy, -R0 * 0.78, up), R0 * 0.5, S.dH - R0 * 0.5);
+    } else if (usePointer) { // a parked pointer lets the glass settle onto the nearest paper rather than bare wood or binder cover
       const still = smooth(0.35, 1.1, S.time - S.pointer.lastMove), ns = nearestStop(tx, ty);
       const pull = still * 0.9 * (1 - smooth(80, 170, ns.d));
       tx = lerp(tx, ns.s[0], pull); ty = lerp(ty, ns.s[1], pull);
@@ -829,7 +817,7 @@ export function init(canvas, options = {}) {
     // as the lens grows it settles on the middle of the desk
     const cen = smooth(0.05, 0.8, st.e);
     tx = lerp(tx, S.dW * 0.5, cen); ty = lerp(ty, S.dH * 0.5, cen);
-    const k = usePointer ? 46 : 7.5, c = usePointer ? 8.2 : 4.4;   // underdamped on purpose: it overshoots, then settles
+    const k = dragging ? 120 : usePointer ? 46 : 7.5, c = dragging ? 16 : usePointer ? 8.2 : 4.4;   // underdamped on purpose: it overshoots, then settles
     const ax = (tx - L.x) * k - L.vx * c, ay = (ty - L.y) * k - L.vy * c;
     L.vx += ax * dt; L.vy += ay * dt; L.x += L.vx * dt; L.y += L.vy * dt;
     // the tab swings with lateral motion like a weight on the rim
@@ -968,7 +956,24 @@ export function init(canvas, options = {}) {
     S.pointer.x = clamp(q.x, R, S.dW - R); S.pointer.y = clamp(q.y, R, S.dH - R);
   }
   function onLeave() { S.pointer.active = false; }
+  /* touch: a finger that lands on the glass drags it; a finger anywhere else scrolls the page as usual */
+  function touchOf(ev, id) { for (const t of ev.changedTouches) if (t.identifier === id) return t; return null; }
+  function onTouchStart(ev) {
+    if (S.drag || reduced || S.mode !== 'webgl' || !opt.followPointer) return;
+    const t = ev.changedTouches[0], q = toDesign(t), L = S.lens;
+    const hit = Math.max(lensState().R * 1.25, 30 * (S.dW / q.r.width));   // never smaller than a fingertip
+    if (Math.hypot(q.x - L.x, q.y - L.y) > hit) return;
+    ev.preventDefault();
+    S.drag = { id: t.identifier, x: q.x, y: q.y, ox: L.x - q.x, oy: L.y - q.y, t0: S.time };
+    L.lv += 1.2; schedule();
+  }
+  function onTouchMove(ev) {
+    if (!S.drag) return; const t = touchOf(ev, S.drag.id); if (!t) return;
+    ev.preventDefault(); const q = toDesign(t); S.drag.x = q.x; S.drag.y = q.y;
+  }
+  function onTouchEnd(ev) { if (S.drag && touchOf(ev, S.drag.id)) S.drag = null; }
   function onDown(ev) {
+    if (ev.pointerType === 'touch') return;   // touch has its own handlers; a scrolling thumb must not shove the glass
     const q = toDesign(ev), L = S.lens;
     if (q.x < 0 || q.y < 0 || q.x > S.dW || q.y > S.dH) return;
     const dx = L.x - q.x, dy = L.y - q.y, d = Math.hypot(dx, dy) || 1;
@@ -998,6 +1003,10 @@ export function init(canvas, options = {}) {
     window.addEventListener('pointermove', onMove, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
     canvas.addEventListener('pointerdown', onDown);
+    canvas.style.touchAction = 'pan-y';
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd); canvas.addEventListener('touchcancel', onTouchEnd);
     document.addEventListener('visibilitychange', onVis);
     mqReduce.addEventListener?.('change', onReduce);
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stop(); });
@@ -1006,7 +1015,7 @@ export function init(canvas, options = {}) {
   }
 
   // wait for the faces the illustration is set in, but never for long
-  const faces = [`600 16px '${F.hand}'`, `600 16px '${F.text}'`, `500 16px '${F.text}'`, `700 16px '${F.label}'`];
+  const faces = [`400 16px '${F.hand}'`, `400 16px '${F.hand2}'`, `600 16px '${F.text}'`, `500 16px '${F.text}'`, `700 16px '${F.label}'`];
   const fontWait = document.fonts ? Promise.all(faces.map(f => document.fonts.load(f, 'Aa+2.00?'))).catch(() => {}) : Promise.resolve();
   Promise.race([fontWait, new Promise(r => setTimeout(r, 2500))]).then(() => { S.fontsReady = true; start(); });
 
@@ -1023,6 +1032,8 @@ export function init(canvas, options = {}) {
       window.removeEventListener('pointermove', onMove);
       document.documentElement.removeEventListener('pointerleave', onLeave);
       canvas.removeEventListener('pointerdown', onDown);
+      canvas.removeEventListener('touchstart', onTouchStart); canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd); canvas.removeEventListener('touchcancel', onTouchEnd);
       document.removeEventListener('visibilitychange', onVis);
       mqReduce.removeEventListener?.('change', onReduce);
       if (gl) { const ext = gl.getExtension('WEBGL_lose_context'); if (ext) ext.loseContext(); }

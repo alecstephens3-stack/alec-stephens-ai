@@ -14,6 +14,7 @@ export interface LensHeroOptions {
   grain?: number;
   tallBelow?: number;
   handFont?: string;
+  handFont2?: string;
   textFont?: string;
   labelFont?: string;
   power?: string;

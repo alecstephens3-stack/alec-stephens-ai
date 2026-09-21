@@ -48,7 +48,8 @@ export function LensHeroStage({ children }: { children: React.ReactNode }) {
       if (cancelled || !canvas || !track) return;
 
       hero = init(canvas, {
-        handFont: resolveFamily("--font-caveat", "Caveat"),
+        handFont: resolveFamily("--font-kalam", "Kalam"),
+        handFont2: resolveFamily("--font-reenie", "Reenie Beanie"),
         textFont: resolveFamily("--font-inter-tight", "Inter Tight"),
         labelFont: resolveFamily("--font-schibsted", "Schibsted Grotesk"),
         // The warm peach the page's sky settles to behind the hero, so the
