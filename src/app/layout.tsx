@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Inter_Tight, Schibsted_Grotesk } from "next/font/google";
+import { Inter_Tight, Kalam, Reenie_Beanie, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Scene } from "@/components/ui/scene";
@@ -21,14 +21,22 @@ const schibstedGrotesk = Schibsted_Grotesk({
 });
 
 /**
- * Caveat is the third face, and it is ONLY the handwriting inside the lens
- * hero illustration. It is never page type. The hero reads the generated
- * family name off this variable, because next/font scopes it.
+ * Kalam and Reenie Beanie are ONLY the two handwritings inside the lens hero
+ * illustration (the office manager, and whoever took the phone message). They
+ * are never page type. The hero reads the generated family names off these
+ * variables, because next/font scopes them.
  */
-const caveat = Caveat({
-  variable: "--font-caveat",
+const kalam = Kalam({
+  variable: "--font-kalam",
   subsets: ["latin"],
-  weight: ["600"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const reenie = Reenie_Beanie({
+  variable: "--font-reenie",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -73,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable} ${caveat.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable} ${kalam.variable} ${reenie.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"
