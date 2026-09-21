@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Schibsted_Grotesk } from "next/font/google";
+import { Caveat, Inter_Tight, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Scene } from "@/components/ui/scene";
@@ -17,6 +17,18 @@ const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+/**
+ * Caveat is the third face, and it is ONLY the handwriting inside the lens
+ * hero illustration. It is never page type. The hero reads the generated
+ * family name off this variable, because next/font scopes it.
+ */
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["600"],
   display: "swap",
 });
 
@@ -61,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable} ${caveat.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"

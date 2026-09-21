@@ -694,6 +694,11 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 
 /* 4 · section rhythm. Scroll length comes from whitespace, not more sections. */
 .draft-section { padding-top: var(--draft-air); padding-bottom: 0; }
+/* html already carries scroll-padding-top: 96px for the dock, and the sections
+   carry scroll-mt-28 as well, so the two stacked and every anchor landed 208px
+   down with the section's own top padding under that. One of them is enough,
+   and the sections now have plenty of air of their own. */
+.draft-section[id], #contact { scroll-margin-top: 0; }
 .draft-wrap {
   margin-inline: auto;
   width: 100%;
@@ -702,15 +707,61 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 @media (min-width: 768px) { .draft-wrap { padding-inline: 32px; } }
 
-/* The hero slot: the frame the new hero visual mounts into. Neutral warm
-   block, no glass, no border chrome to fight the artwork. */
-.draft-hero-slot {
-  background:
-    radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.62) 0%, transparent 62%),
-    #EFE2D6;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 24px;
-  box-shadow: 0 18px 50px rgba(112, 62, 40, 0.10);
+/* ── The lens hero (2026-09-21). The module is vendored at
+   src/components/lens-hero/; this is only the page side of it.
+
+   The track is tall and pinScroll() sets its real height at runtime; the value
+   here is the pre-hydration placeholder so the page does not jump on mount.
+   The stage is sticky, and it carries the window AND the eyebrow and headline
+   so the whole first thought is on screen together.
+
+   The window is capped by viewport HEIGHT as well as width, because the thing
+   that breaks first is a short laptop screen (1280 x 720), where a
+   width-capped window pushes the last line of the headline below the fold.
+   The 350px subtracted is the dock, the paddings, the gap and the headline. ── */
+.lh-track { position: relative; height: 270vh; }
+.lh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3vh, 38px);
+  padding: 92px 20px 30px;
+}
+.lh-window {
+  display: block;
+  width: min(600px, 100%, calc((100svh - 350px) * 1.538));
+  aspect-ratio: 640 / 416;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.lh-copy { text-align: center; }
+/* The display size steps down inside the pinned stage: the whole headline
+   sharing one screen with the window beats a bigger first line. */
+.lh-head {
+  font-size: clamp(30px, 3.05vw, 46px) !important;
+  line-height: 1.05;
+  max-width: 21ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+@media (max-width: 560px) {
+  .lh-window {
+    width: min(358px, 100%, calc((100svh - 300px) * 0.8136));
+    aspect-ratio: 358 / 440;
+  }
+  .lh-stage { justify-content: flex-start; padding-top: 84px; gap: 22px; }
+  .lh-head { font-size: clamp(27px, 7.8vw, 34px) !important; max-width: 15ch; }
+}
+/* Reduced motion: no pin, no tall track. The module paints the tidy desk once
+   and the page scrolls like any other page. */
+@media (prefers-reduced-motion: reduce) {
+  .lh-track { height: auto !important; }
+  .lh-stage { position: static; height: auto; padding-top: 118px; padding-bottom: 56px; }
 }
 
 /* A hairline rail for the four project steps. No cards, no glass. */
