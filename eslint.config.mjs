@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored, byte-identical copy of the lens hero module (see
+    // src/components/lens-hero/SOURCE.md). Linting it here would invite
+    // edits, and every edit has to happen at the source instead.
+    "src/components/lens-hero/lens-hero.js",
   ]),
 ]);
 
