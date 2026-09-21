@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "node scripts/check-no-left-bar-callout.mjs && eslint"
   },
   "dependencies": {
     "clsx": "^2.1.1",
