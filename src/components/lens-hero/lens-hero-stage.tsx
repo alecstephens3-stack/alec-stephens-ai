@@ -4,16 +4,24 @@ import { useEffect, useRef } from "react";
 import type { LensHero } from "./lens-hero";
 
 /**
- * The page-side half of the lens hero.
+ * The lens hero, mounted as an ordinary block at the top of the page.
  *
- * A tall track with a sticky stage inside it. The stage holds the window and
- * the eyebrow and headline beneath it, so the whole first thought stays on
- * screen together while scroll grows the lens. `pinScroll` sets the track's
- * height, so the height here is only a pre-hydration placeholder.
+ * There is no scroll story any more. The window sits in normal document flow
+ * and the page scrolls past it like any page. The lens keeps its own life
+ * (idle drift, pointer follow, finger drag), all of which lives inside the
+ * vendored module. Nothing here listens to scroll, nothing is sticky, nothing
+ * calls setProgress, and the lens radius never changes.
  *
- * The module is a vendored, framework-free ES module that touches WebGL and
- * window on import, so it is loaded with a dynamic import inside the effect and
- * never runs on the server.
+ * Removed 2026-09-22 on Alec's call: the scroll-driven growth read as buggy
+ * and "messes with the hero". `pinScroll` is still exported by the module; we
+ * simply do not import it. If it ever comes back, it needs a tall track and a
+ * sticky stage again, which is what git history has.
+ *
+ * Reduced motion needs no branch here: the module reads the media query itself
+ * and paints one still frame of the tidy desk.
+ *
+ * The module touches WebGL and window at import time, so it is loaded with a
+ * dynamic import inside the effect and never runs on the server.
  */
 
 const ARIA_LABEL =
@@ -33,19 +41,16 @@ function resolveFamily(cssVar: string, fallback: string) {
 }
 
 export function LensHeroStage({ children }: { children: React.ReactNode }) {
-  const trackRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     let hero: LensHero | null = null;
-    let unpin: (() => void) | null = null;
     let cancelled = false;
 
     (async () => {
-      const { init, pinScroll } = await import("./lens-hero.js");
+      const { init } = await import("./lens-hero.js");
       const canvas = canvasRef.current;
-      const track = trackRef.current;
-      if (cancelled || !canvas || !track) return;
+      if (cancelled || !canvas) return;
 
       hero = init(canvas, {
         handFont: resolveFamily("--font-kalam", "Kalam"),
@@ -56,33 +61,18 @@ export function LensHeroStage({ children }: { children: React.ReactNode }) {
         // feathered window edge melts into the page rather than onto a seam.
         pageColor: [0.957, 0.898, 0.851],
       });
-
-      // Reduced motion: no pin at all. The module paints the tidy desk once and
-      // the page scrolls like any other page.
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        unpin = pinScroll(track, hero, {
-          growVh: 1.4,
-          holdVh: 0.3,
-          phoneGrowVh: 1.0,
-          phoneHoldVh: 0.25,
-          phoneBelow: 560,
-        });
-      }
     })();
 
     return () => {
       cancelled = true;
-      unpin?.();
       hero?.destroy();
     };
   }, []);
 
   return (
-    <div ref={trackRef} className="lh-track">
-      <div className="lh-stage">
-        <canvas ref={canvasRef} className="lh-window" role="img" aria-label={ARIA_LABEL} />
-        <div className="lh-copy">{children}</div>
-      </div>
+    <div className="lh-stage">
+      <canvas ref={canvasRef} className="lh-window" role="img" aria-label={ARIA_LABEL} />
+      <div className="lh-copy">{children}</div>
     </div>
   );
 }

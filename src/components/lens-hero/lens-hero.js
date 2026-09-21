@@ -15,6 +15,7 @@
  */
 
 const DEFAULTS = {
+  scrollGrow: false,      // OFF (founder, 2026-09-22): the lens keeps one size and scrolling never touches it. true restores setProgress/pinScroll.
   progress: 0,            // initial scroll progress 0..1
   maxDpr: 2,              // devicePixelRatio cap
   sceneScale: 1.15,       // scene texture supersample (sharpness under magnification)
@@ -603,7 +604,7 @@ export function init(canvas, options = {}) {
 
   const S = {
     destroyed: false, raf: 0, visible: true, pageVisible: !document.hidden,
-    progress: clamp(opt.progress, 0, 1), layout: 'wide', dW: 640, dH: 416, cssW: 0, cssH: 0, dpr: 1,
+    progress: opt.scrollGrow ? clamp(opt.progress, 0, 1) : 0, layout: 'wide', dW: 640, dH: 416, cssW: 0, cssH: 0, dpr: 1,
     quality: 1, slowFrames: 0, fastFrames: 0, fps: 60, frameMs: 16, last: 0, time: 0,
     lens: { x: 320, y: 200, vx: 0, vy: 0, ang: 0.62, av: 0, lift: 0, lv: 0 },
     pointer: { x: 0, y: 0, rx: 0, ry: 0, active: false, lastMove: -10 },
@@ -1024,7 +1025,7 @@ export function init(canvas, options = {}) {
 
   return {
     setProgress(p) {
-      if (reduced) return;
+      if (reduced || !opt.scrollGrow) return;
       const v = clamp(p, 0, 1); if (v === S.progress) return; S.progress = v; schedule();
     },
     get stats() { return { fps: S.fps, frameMs: S.frameMs, quality: S.quality, mode: S.mode, layout: S.layout }; },
