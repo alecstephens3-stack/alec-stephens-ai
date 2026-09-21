@@ -863,6 +863,7 @@ export function init(canvas, options = {}) {
 
   /* ---- draw ---- */
   function drawGL(st) {
+    if (!deskCanvas) return;
     const pw = canvas.width, ph = canvas.height;
     if (S.sceneDirty) {
       composeScene();
@@ -898,6 +899,7 @@ export function init(canvas, options = {}) {
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
   function draw2D() {
+    if (!deskCanvas) return;
     // still fallback: the tidy, focused desk with a feathered edge and grain
     active.forEach(it => { it.t = 1; });
     composeScene();
@@ -922,6 +924,7 @@ export function init(canvas, options = {}) {
   function frame(now) {
     S.raf = 0;
     if (S.destroyed) return;
+    if (!deskCanvas) { resize(); if (!deskCanvas) { schedule(); return; } }   // laid out at zero size so far: try again next frame
     const dtRaw = S.last ? (now - S.last) / 1000 : 1 / 60; S.last = now;
     const dt = Math.min(dtRaw, 1 / 30);
     S.frameMs = lerp(S.frameMs, dtRaw * 1000, 0.08); S.fps = 1000 / S.frameMs;
@@ -936,7 +939,7 @@ export function init(canvas, options = {}) {
   }
   function schedule() {
     if (S.destroyed || S.raf || reduced || S.mode !== 'webgl') return;
-    if (!S.visible || !S.pageVisible) return;
+    if (!S.started || !S.visible || !S.pageVisible) return;   // never draw before start() has built the scene (a scroll can arrive while fonts load)
     S.raf = requestAnimationFrame(frame);
   }
   function stop() { if (S.raf) cancelAnimationFrame(S.raf); S.raf = 0; S.last = 0; }
@@ -997,7 +1000,7 @@ export function init(canvas, options = {}) {
       still.setAttribute('aria-label', canvas.getAttribute('aria-label') || ''); still.style.cssText = canvas.style.cssText;
       canvas.replaceWith(still); canvas = still; ctx2d = still.getContext('2d'); S.mode = '2d';
     }
-    resize();
+    resize(); S.started = true;
     if (reduced || S.mode !== 'webgl') settleStill();
     io.observe(canvas); if (ro) ro.observe(canvas);
     window.addEventListener('pointermove', onMove, { passive: true });
