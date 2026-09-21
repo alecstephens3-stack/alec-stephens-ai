@@ -41,6 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      // DRAFT v6: the FAQ moved off the homepage onto its own page.
+      url: `${SITE_URL}/faq`,
+      lastModified: LAST_CONTENT_CHANGE,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     ...["privacy", "terms"].map((slug) => ({
       url: `${SITE_URL}/${slug}`,
       lastModified: LEGAL_PUBLISHED,
