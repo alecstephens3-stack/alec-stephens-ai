@@ -108,10 +108,11 @@ export function Demo() {
               </span>
             </div>
             <p className="mt-3 text-[18px] leading-[1.55] text-[#46554F]">{DEMO.resultBody}</p>
-            <div className="mt-4 rounded-[10px] border-l-[3px] border-accent bg-[#FDF0E8] px-4 py-3">
-              <p className="font-label text-[15px] font-bold uppercase tracking-[0.1em] text-accent-deep">Exception</p>
-              <p className="mt-1.5 text-[18px] font-medium leading-[1.5] text-ink">{DEMO.resultRule}</p>
-            </div>
+            {/* No tinted box with a bar down the left: that callout is banned (Alec, 2026-09-22). A protocol
+                sheet states its exception as a plain run-in sentence under a rule. */}
+            <p className="mt-4 border-t border-[#E3EAE7] pt-4 text-[18px] leading-[1.55] text-[#1C2B27]">
+              <span className="font-semibold">Exception.</span> {DEMO.resultRule}
+            </p>
             <p className="mt-4 text-[15px] leading-[1.5] text-[#5E6E68]">{DEMO.resultMeta}</p>
           </div>
         </div>
