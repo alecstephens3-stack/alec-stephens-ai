@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/v6/hero";
+import { Tool } from "@/components/sections/v6/tool";
 import { Proof } from "@/components/sections/v6/proof";
 import { How } from "@/components/sections/v6/how";
 import { Founders } from "@/components/sections/v6/founders";
@@ -13,9 +14,10 @@ import {
 } from "@/lib/content";
 
 /**
- * DRAFT v6 homepage. Seven things, each said once:
- * the hero slot and the headline, the proof (quote, number, demonstration),
- * how a project goes, the two founders, the patient-data answer, one CTA.
+ * DRAFT v6 homepage, in the order a stranger reads it: the desk and the
+ * headline, what we build and one thing to do, the sticky note from that desk
+ * answered by the real tool, the person who uses it, how a project goes, the
+ * two of us, the patient-data answer, the call.
  *
  * The FAQ moved to /faq, which is where the FAQPage JSON-LD went with it.
  */
@@ -62,6 +64,7 @@ export default function Home() {
         }}
       />
       <Hero />
+      <Tool />
       <Proof />
       <How />
       <Founders />

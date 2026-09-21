@@ -707,41 +707,37 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 @media (min-width: 768px) { .draft-wrap { padding-inline: 32px; } }
 
-/* ── The lens hero (2026-09-21). The module is vendored at
-   src/components/lens-hero/; this is only the page side of it.
+/* ── The lens hero (2026-09-21, pin removed 2026-09-22).
 
-   The track is tall and pinScroll() sets its real height at runtime; the value
-   here is the pre-hydration placeholder so the page does not jump on mount.
-   The stage is sticky, and it carries the window AND the eyebrow and headline
-   so the whole first thought is on screen together.
+   There is NO scroll story left. The window is an ordinary block in normal
+   flow: no track, no sticky stage, no transforms, no scroll listener, no
+   scroll-snap and no overflow rules. Alec's call: the scroll-driven growth
+   read as buggy and "messes with the hero", and the lens never needed to
+   resize. The lens still drifts, follows a pointer and takes a finger drag,
+   all of that inside the vendored module.
 
-   The window is capped by viewport HEIGHT as well as width, because the thing
-   that breaks first is a short laptop screen (1280 x 720), where a
-   width-capped window pushes the last line of the headline below the fold.
-   The 350px subtracted is the dock, the paddings, the gap and the headline. ── */
-.lh-track { position: relative; height: 270vh; }
+   The sizes below exist to put the nav, the window, the whole headline, the
+   proof line and the start of the statement on one screen at 1440 x 900, and
+   the first four of those at 1280 x 720 and 390 x 844. The window is capped by
+   viewport HEIGHT as well as width, because a short laptop screen is what
+   breaks first. Reduced motion needs nothing here; the module paints a still. ── */
+.lh-hero { padding: 92px 20px 0; }
 .lh-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(18px, 3vh, 38px);
-  padding: 92px 20px 30px;
+  gap: clamp(16px, 2.6vh, 30px);
 }
 .lh-window {
   display: block;
-  width: min(600px, 100%, calc((100svh - 350px) * 1.538));
+  width: min(560px, 100%, calc((100svh - 420px) * 1.538));
   aspect-ratio: 640 / 416;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 }
-.lh-copy { text-align: center; }
-/* The display size steps down inside the pinned stage: the whole headline
-   sharing one screen with the window beats a bigger first line. */
+.lh-copy { text-align: center; max-width: 42rem; }
+/* The display size steps down here: the whole sentence sharing one screen with
+   the window beats a bigger first line. */
 .lh-head {
   font-size: clamp(30px, 3.05vw, 46px) !important;
   line-height: 1.05;
@@ -749,36 +745,46 @@ body:has(#mobile-menu) .sai-scene { display: none; }
   margin-inline: auto;
   text-wrap: balance;
 }
+/* The proof, once, on the first screen. Never below 18px. */
+.lh-proof {
+  margin: 14px auto 0;
+  max-width: 50ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.lh-proof-caveat { color: var(--color-ink-2); }
+
+/* The plain statement: what we build, at reading size, right under the fold
+   line rather than three sections down. */
+.lh-statement {
+  margin: clamp(38px, 5.5vh, 68px) auto 0;
+  max-width: 44rem;
+  text-align: center;
+  /* No bottom padding: the next section brings its own --draft-air, and the
+     two stacked to about 270px of nothing under the call to action. */
+}
+.lh-statement-big {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 1.95vw, 28px);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: -0.014em;
+  color: var(--color-ink);
+  max-width: 30ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+@media (min-width: 768px) { .lh-hero { padding-left: 32px; padding-right: 32px; } }
 @media (max-width: 560px) {
+  .lh-hero { padding-top: 84px; }
   .lh-window {
-    width: min(358px, 100%, calc((100svh - 300px) * 0.8136));
+    width: min(320px, 100%, calc((100svh - 400px) * 0.8136));
     aspect-ratio: 358 / 440;
   }
-  .lh-stage { justify-content: flex-start; padding-top: 84px; gap: 22px; }
   .lh-head { font-size: clamp(27px, 7.8vw, 34px) !important; max-width: 15ch; }
+  .lh-proof { font-size: 18px; }
 }
-/* Reduced motion: no pin, no tall track. The module paints the tidy desk once
-   and the page scrolls like any other page. */
-@media (prefers-reduced-motion: reduce) {
-  .lh-track { height: auto !important; }
-  .lh-stage { position: static; height: auto; padding-top: 118px; padding-bottom: 56px; }
-}
-
-/* A hairline rail for the four project steps. No cards, no glass. */
-.draft-rail { border-top: 1px solid var(--color-rule); }
-.draft-rail > * { border-bottom: 1px solid var(--color-rule-soft); }
-@media (min-width: 900px) {
-  .draft-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .draft-rail > * { border-bottom: none; border-left: 1px solid var(--color-rule-soft); }
-  .draft-rail > *:first-child { border-left: none; }
-  /* Same reason .sai-vital .label carries one in the kit: a step title that
-     wraps to two lines must not push its own body out of line with the rest. */
-  .draft-rail h3 { min-height: 2.5em; }
-}
-
-/* The one CTA is the size of a thing you are meant to press, not a 14.5px
-   kit default. Scoped to the draft so lens-kit.css is untouched. */
-.sai-btn { font-size: 17px; padding: 15px 30px; }
 /* ════════════════════ end draft experiment ════════════════════ */
 
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more

@@ -31,6 +31,7 @@ export const SITE_DESCRIPTION =
   "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a tool the whole office can use, built from your own documents. Custom office tools for independent healthcare clinics.";
 
 export const NAV_LINKS = [
+  { label: "The tool", href: "/#tool" },
   { label: "Case study", href: "/#proof" },
   { label: "How we work", href: "/#how" },
   { label: "FAQ", href: "/faq" },
@@ -42,9 +43,21 @@ export const HERO = {
     lead: "Your clinic runs on a few people who",
     accent: "remember everything.",
   },
-  sub: "When they're busy or out, the answers go with them. We put what they know into one tool the whole office can use, built from your own documents, and take the repetitive jobs off their plate.",
+  /**
+   * The 200 hours moved up here, onto the first screen, and came OUT of the
+   * proof section. It is said once, and the word estimate is in the sentence
+   * rather than in a footnote. 200 is final.
+   */
+  proof: {
+    lead: "About 200 hours a year back at one Kansas clinic's front desk.",
+    caveat: "An estimate, from the clinic's own numbers.",
+  },
+  /** The plain statement, at reading size, the moment the pin lets go. */
+  statement:
+    "We put what they know into one tool the whole office can use, built from your own documents.",
+  statementSub:
+    "When they're busy or out, the answers go with them. We take the repetitive jobs off their plate too.",
   primaryCta: { label: "Talk to us", href: CALENDLY },
-  slotLabel: "Hero visual",
 };
 
 export const QUOTE = {
@@ -58,10 +71,6 @@ export const QUOTE = {
   text: "This is highly valuable, both in the short term and long term. It's already saving a lot of time.",
   who: "Jill Romines",
   role: "Front Office Manager",
-  stat: {
-    big: "~200 hours a year",
-    rest: "back at the front desk. An estimate, from the clinic's own numbers.",
-  },
   since: "In daily use since August 2026.",
 };
 
@@ -71,6 +80,13 @@ export const QUOTE = {
  * chips are gone) because they were words on screen that carried no argument.
  */
 export const DEMO = {
+  /**
+   * The lead-in names the link out loud: the sticky note in the hero
+   * illustration asks this exact question, and this is the answer.
+   */
+  kicker: "What we built",
+  title: "The note on the desk, answered.",
+  lead: "Refraction: collect or bill? Here is what the front desk sees now.",
   app: "Front Desk",
   heading: "What's happening on the call?",
   query: "vision plan, medical complaint",
