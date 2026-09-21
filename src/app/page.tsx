@@ -1,19 +1,24 @@
-import { Hero } from "@/components/sections/v5/hero";
-import { Day } from "@/components/sections/v5/day";
-import { Proof } from "@/components/sections/v5/proof";
-import { How } from "@/components/sections/v5/how";
-import { Founders } from "@/components/sections/v5/founders";
-import { Faq } from "@/components/sections/v5/faq";
-import { Contact } from "@/components/sections/v5/contact";
+import { Hero } from "@/components/sections/v6/hero";
+import { Proof } from "@/components/sections/v6/proof";
+import { How } from "@/components/sections/v6/how";
+import { Founders } from "@/components/sections/v6/founders";
+import { Patient } from "@/components/sections/v6/patient";
+import { Contact } from "@/components/sections/v6/contact";
 import {
   SITE_NAME,
   SITE_URL,
   SITE_DESCRIPTION,
   CONTACT_EMAIL,
   LINKEDIN_URL,
-  FAQ,
 } from "@/lib/content";
 
+/**
+ * DRAFT v6 homepage. Seven things, each said once:
+ * the hero slot and the headline, the proof (quote, number, demonstration),
+ * how a project goes, the two founders, the patient-data answer, one CTA.
+ *
+ * The FAQ moved to /faq, which is where the FAQPage JSON-LD went with it.
+ */
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -43,15 +48,6 @@ export default function Home() {
           { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co-founder" },
         ],
       },
-      {
-        "@type": "FAQPage",
-        "@id": `${SITE_URL}#faq`,
-        mainEntity: FAQ.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a },
-        })),
-      },
     ],
   };
 
@@ -66,11 +62,10 @@ export default function Home() {
         }}
       />
       <Hero />
-      <Day />
       <Proof />
       <How />
       <Founders />
-      <Faq />
+      <Patient />
       <Contact />
     </>
   );

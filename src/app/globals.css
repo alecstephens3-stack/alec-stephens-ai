@@ -548,6 +548,188 @@ section.sai-night ul.sai-bullets li::before {
 }
 body:has(#mobile-menu) .sai-scene { display: none; }
 
+/* ═════════════════════════════════════════════════════════════════════════════
+   DRAFT EXPERIMENT — homepage trim, 2026-09-21
+   Branch: draft/homepage-trim-2026-09-21. NOT shipped, NOT in the kit.
+
+   Everything the experiment changes is in this one block so it can be deleted
+   whole (or ported into brand-assets/.../kit/lens-kit.css) without touching a
+   line above it. Nothing above is edited. The palette, both typefaces, the
+   hand-drawn figures, the dock and Day/Night are untouched on purpose.
+
+   What it does:
+   1. Four type sizes, strong contrast, nothing meant to be read under 18px.
+      The one exception is .t-fine (15px) for genuine fine print: the
+      compliance detail and the legal entity line, quieter but in plain sight.
+   2. Paper grain over the warm peach ground (one 180px SVG noise tile,
+      multiplied, no per-frame cost).
+   3. Registration crop marks promoted from the callout box to a recurring
+      section-opener and figure-corner motif. Salmon on the leading corner,
+      terracotta on the trailing one, which is the kit's existing callout
+      convention rather than a new colour rule.
+   4. Air: section rhythm driven by --draft-air, not by more sections.
+   The floating spheres are retired in scene.tsx (they are not rendered at
+   all rather than hidden here, so nothing animates off screen).
+   ═════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* 1 · the four sizes */
+  --t-display: clamp(2.5rem, 1.15rem + 5.4vw, 4.75rem);  /* 40 → 76 */
+  --t-title: clamp(1.75rem, 1.32rem + 1.9vw, 2.5rem);    /* 28 → 40 */
+  --t-body: 1.125rem;                                     /* 18, → 20 on desktop */
+  --t-fine: 0.9375rem;                                    /* 15, fine print + caps labels */
+
+  /* 4 · air */
+  --draft-air: clamp(5rem, 8vw, 8.5rem);
+  --draft-air-tight: clamp(2.75rem, 4vw, 4rem);
+
+  /* 3 · crop-mark inks */
+  --draft-crop-lead: var(--color-salmon);
+  --draft-crop-trail: var(--color-accent);
+}
+@media (min-width: 768px) {
+  :root { --t-body: 1.25rem; }  /* 20px */
+}
+
+.t-display {
+  font-family: var(--font-heading);
+  font-size: var(--t-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  color: var(--color-ink);
+}
+.t-title {
+  font-family: var(--font-heading);
+  font-size: var(--t-title);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+  color: var(--color-ink);
+}
+.t-body {
+  font-size: var(--t-body);
+  line-height: 1.62;
+  color: var(--color-ink-2);
+}
+.t-body strong, .t-body b { color: var(--color-ink); font-weight: 500; }
+.t-fine {
+  font-size: var(--t-fine);
+  line-height: 1.6;
+  color: var(--color-ink-2);
+}
+/* Caps labels ride the fine-print size. They are labels, not reading text. */
+.t-label {
+  font-family: var(--font-label);
+  font-size: var(--t-fine);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+
+/* 2 · paper grain. One tile, painted once, over the sky and under content. */
+.draft-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* 3 · the recurring crop marks.
+   .draft-crop puts one pair around a section opener; .draft-crop-frame puts
+   all four around a figure. Used sparingly: a section opener or a figure, not
+   both on the same screen. */
+.draft-crop {
+  position: relative;
+  display: inline-block;
+  padding: 9px 16px;
+}
+.draft-crop::before,
+.draft-crop::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+}
+.draft-crop::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid var(--draft-crop-lead);
+  border-left: 2px solid var(--draft-crop-lead);
+}
+.draft-crop::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid var(--draft-crop-trail);
+  border-right: 2px solid var(--draft-crop-trail);
+}
+/* Block form: the marks hold a whole paragraph rather than a caps label. */
+.draft-crop.is-block { display: block; padding: 20px 26px; }
+.draft-crop-frame { position: relative; }
+.draft-crop-frame::before,
+.draft-crop-frame::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.draft-crop-frame::before {
+  top: -14px;
+  left: -14px;
+  border-top: 2px solid var(--draft-crop-lead);
+  border-left: 2px solid var(--draft-crop-lead);
+}
+.draft-crop-frame::after {
+  bottom: -14px;
+  right: -14px;
+  border-bottom: 2px solid var(--draft-crop-trail);
+  border-right: 2px solid var(--draft-crop-trail);
+}
+
+/* 4 · section rhythm. Scroll length comes from whitespace, not more sections. */
+.draft-section { padding-top: var(--draft-air); padding-bottom: 0; }
+.draft-wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1000px;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) { .draft-wrap { padding-inline: 32px; } }
+
+/* The hero slot: the frame the new hero visual mounts into. Neutral warm
+   block, no glass, no border chrome to fight the artwork. */
+.draft-hero-slot {
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.62) 0%, transparent 62%),
+    #EFE2D6;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(112, 62, 40, 0.10);
+}
+
+/* A hairline rail for the four project steps. No cards, no glass. */
+.draft-rail { border-top: 1px solid var(--color-rule); }
+.draft-rail > * { border-bottom: 1px solid var(--color-rule-soft); }
+@media (min-width: 900px) {
+  .draft-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .draft-rail > * { border-bottom: none; border-left: 1px solid var(--color-rule-soft); }
+  .draft-rail > *:first-child { border-left: none; }
+  /* Same reason .sai-vital .label carries one in the kit: a step title that
+     wraps to two lines must not push its own body out of line with the rest. */
+  .draft-rail h3 { min-height: 2.5em; }
+}
+
+/* The one CTA is the size of a thing you are meant to press, not a 14.5px
+   kit default. Scoped to the draft so lens-kit.css is untouched. */
+.sai-btn { font-size: 17px; padding: 15px 30px; }
+/* ════════════════════ end draft experiment ════════════════════ */
+
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more
    than a few sentences in a row, so these rules live here rather than in the
    type scale above. Body stays at the 17px legibility floor. */
