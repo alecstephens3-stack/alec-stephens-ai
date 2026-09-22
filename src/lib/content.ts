@@ -28,10 +28,10 @@ export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 export const SITE_TAGLINE = "Custom office tools for independent clinics";
 
 export const SITE_DESCRIPTION =
-  "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a tool the whole office can use, built from your own documents. Custom office tools for independent healthcare clinics.";
+  "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a knowledge base the whole office can search, built from your own documents. Custom office tools for independent healthcare clinics.";
 
 export const NAV_LINKS = [
-  { label: "The tool", href: "/#tool" },
+  { label: "Knowledge base", href: "/#knowledge-base" },
   { label: "Case study", href: "/#proof" },
   { label: "How we work", href: "/#how" },
   { label: "FAQ", href: "/faq" },
@@ -54,7 +54,7 @@ export const HERO = {
   },
   /** The plain statement, at reading size, the moment the pin lets go. */
   statement:
-    "We put what they know into one tool the whole office can use, built from your own documents.",
+    "We put what they know into a knowledge base the whole office can search, built from your own documents.",
   statementSub:
     "When they're busy or out, the answers go with them. We take the repetitive jobs off their plate too.",
   primaryCta: { label: "Talk to us", href: CALENDLY },
@@ -181,7 +181,7 @@ export const FAQ = [
   },
   {
     q: "Who keeps it up to date after launch?",
-    a: "Your office manager, right inside the tool. Every change is saved and can be undone with one click. If you'd rather we go through it with your office manager every so often, that's what the monthly support is for.",
+    a: "Your office manager, right inside the knowledge base. Every change is saved and can be undone with one click. If you'd rather we go through it with your office manager every so often, that's what the monthly support is for.",
   },
   {
     q: "How long until staff are using it?",
