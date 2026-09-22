@@ -13,7 +13,7 @@ import { DEMO } from "@/lib/content";
  */
 export function Tool() {
   return (
-    <Section id="tool" kicker={DEMO.kicker} title={DEMO.title} titleMax="max-w-[22ch]">
+    <Section id="knowledge-base" kicker={DEMO.kicker} title={DEMO.title} titleMax="max-w-[22ch]">
       <AnimateOnScroll>
         <p className="t-body -mt-4 mb-12 max-w-[52ch] md:mb-14">{DEMO.lead}</p>
       </AnimateOnScroll>
