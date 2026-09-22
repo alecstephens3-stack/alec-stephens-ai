@@ -730,7 +730,9 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 .lh-window {
   display: block;
-  width: min(560px, 100%, calc((100svh - 420px) * 1.538));
+  /* Wider (Alec, 2026-09-22): the window is the page's one object and 560px read as a thumbnail.
+     Height cap loosened to match; the headline may start at the fold on a short laptop screen. */
+  width: min(780px, 100%, calc((100svh - 330px) * 1.538));
   aspect-ratio: 640 / 416;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
@@ -779,7 +781,7 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 @media (max-width: 560px) {
   .lh-hero { padding-top: 84px; }
   .lh-window {
-    width: min(320px, 100%, calc((100svh - 400px) * 0.8136));
+    width: min(358px, 100%, calc((100svh - 360px) * 0.8136));
     aspect-ratio: 358 / 440;
   }
   .lh-head { font-size: clamp(27px, 7.8vw, 34px) !important; max-width: 15ch; }
