@@ -72,7 +72,8 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/og-image.png"],
   },
-  robots: { index: true, follow: true },
+  // Draft deploys (DRAFT_NOINDEX=1) must never be indexed as a second copy of the site.
+  robots: process.env.DRAFT_NOINDEX ? { index: false, follow: false } : { index: true, follow: true },
 };
 
 export default function RootLayout({
