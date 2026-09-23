@@ -1345,6 +1345,9 @@ export function init(canvas, options = {}) {
     if (S.time - P.t < 0.5 && Math.hypot(q.x - P.x, q.y - P.y) < 5) openItem(P.item);
   }
   function onLeave() { S.pointer.active = false; }
+  function onScroll() {   // the page moved under a still pointer: whatever was under it no longer is
+    if (S.hoverId != null) { S.hoverId = null; canvas.style.cursor = ''; if (opt.onHover) opt.onHover(null); }
+  }
   /* touch: a finger that lands on the glass drags it; a finger anywhere else scrolls the page as usual */
   function touchOf(ev, id) { for (const t of ev.changedTouches) if (t.identifier === id) return t; return null; }
   function onTouchStart(ev) {
@@ -1412,6 +1415,7 @@ export function init(canvas, options = {}) {
     io.observe(canvas); if (ro) ro.observe(canvas);
     window.addEventListener('pointermove', onMove, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
+    window.addEventListener('scroll', onScroll, { passive: true });
     canvas.addEventListener('pointerdown', onDown);
     window.addEventListener('pointerup', onUp);
     canvas.addEventListener('pointercancel', onCancel); window.addEventListener('blur', onCancel);
@@ -1484,6 +1488,7 @@ export function init(canvas, options = {}) {
       S.destroyed = true; stop(); io.disconnect(); if (ro) ro.disconnect(); clearTimeout(resizeT);
       window.removeEventListener('pointermove', onMove);
       document.documentElement.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('scroll', onScroll);
       canvas.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointerup', onUp); clearInterval(S.clockT);
       canvas.removeEventListener('pointercancel', onCancel); window.removeEventListener('blur', onCancel);
