@@ -285,3 +285,6 @@ body:has(.desk-root) > .sai-scene { display: none !important; }
 .desk-root.is-night .desk-chip[aria-pressed="true"] { background: var(--color-cream); color: #171310; }
 .desk-root.is-night .bc-seg.is-on { background: var(--color-cream); color: #171310; }
 .desk-root.is-night .bc-seg:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* dock controls never wrap, whatever the phone width */
+.desk-dock .sai-btn, .desk-dock .desk-chip { white-space: nowrap; }
