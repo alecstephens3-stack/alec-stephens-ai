@@ -449,19 +449,19 @@ export const CASES: BuildCase[] = [
     "shipped": "March to September 2026",
     "duration": "6 months, in two phases",
     "number": {
-      "value": "4,349",
-      "unit": "emails",
-      "label": "to 2,661 businesses, a 2.2% human reply rate, from a fleet grown 2 to 10 domains and 104 to 320 mailboxes in 3 weeks",
-      "basis": "Campaign export, 4 August to 7 September 2026."
-    },
-    "second": {
       "value": "~10",
       "unit": "hrs/wk",
-      "label": "saved on the content side across a split team, with a person approving every send"
+      "label": "returned to a two-person content team by an idea-to-published pipeline, a person approving every send",
+      "basis": "The team's own estimate of the hours the idea engine, publishing pipeline, newsletter builder and KPI report took off the week."
+    },
+    "second": {
+      "value": "320",
+      "unit": "mailboxes",
+      "label": "on 10 domains, grown from 104 on 2 in 3 weeks, with a rule check on every email before it could send"
     },
     "wall": {
-      "n": "4,349 emails",
-      "phrase": "sent from a fleet grown from 2 to 10 domains in 3 weeks, with 2.2% human replies"
+      "n": "~10 hrs/wk",
+      "phrase": "returned to the content team, and an outbound machine built in 3 weeks that reported its own numbers honestly"
     },
     "oneliner": "Two systems for one brand: an idea-to-published-video pipeline for the tutorial channel, then a cold email machine that told us, with numbers, that the channel was wrong for the buyer.",
     "broken": "Phase one: a channel teaching AI to non-technical adults needed a steady stream of short tutorials, 3 newsletters a week, and weekly numbers, with 2 educators and no production team. Phase two: the company restructured around a B2B arm with a December deadline, inheriting a sending stack from a departing contractor, no lead pipeline, no offer, and no defined buyer.",
@@ -541,16 +541,17 @@ export const CASES: BuildCase[] = [
     "name": "Coaching practice AI system",
     "short": "Coaching AI system",
     "kicker": "Professional coaching · solo founder",
-    "title": "An AI operating system for a one-person coaching practice: 4 agents that read one document",
+    "title": "An AI operating system for a one-person coaching practice: 4 custom AI agents that read one document",
     "client": "A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands)",
     "client_short": "A business coach",
     "users": "The founder, daily, April to July 2026; she owns and edits it herself",
     "shipped": "Live May 2026",
     "duration": "About 10 weeks, in phases",
     "number": {
-      "value": "13 to 15",
-      "unit": "emails/day",
-      "label": "triaged with zero noise, each decision citing its source message"
+      "value": "4",
+      "unit": "custom AI agents",
+      "label": "built for her practice, inbox triage, scheduling replies, voice-note task capture and meeting notes, all reading one brain document she edits in plain English",
+      "basis": "Phase A shipped and live: the Brain Doc plus 4 ClickUp Super Agents (Email Manager, Scheduling, Brain Dump, Maintainer), with meeting notes on a scheduled routine she owns."
     },
     "second": {
       "value": "115 of 115",
@@ -558,10 +559,10 @@ export const CASES: BuildCase[] = [
       "label": "stale tasks archived in one sweep, fully reversible, because every agent stamps its work"
     },
     "wall": {
-      "n": "13 to 15 emails/day",
-      "phrase": "triaged every day by agents that read one plain-English brain document"
+      "n": "4 custom AI agents",
+      "phrase": "running a one-person coaching practice from one plain-English document she edits herself"
     },
-    "oneliner": "Inbox triage, scheduling replies, voice-note task capture, and a calendar-to-invoice workflow, all reading one document she edits in plain English.",
+    "oneliner": "Four custom agents, built for how she actually works: inbox triage, scheduling replies, voice-note task capture, meeting notes, plus a calendar-to-invoice workflow, all reading one document she edits in plain English.",
     "broken": "A veteran HR leader running her own practice was doing her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. 10 to 12 hours to format one 3-hour workshop. A client had questioned a one-hour line item, and she had no receipts.",
     "built": [
       "The brain document: one doc holding her voice, brand rules, client roster, and policies, read by every agent as live knowledge. She changes it by messaging a maintainer agent in plain English.",
@@ -633,14 +634,15 @@ export const CASES: BuildCase[] = [
     "shipped": "Live 2026-05-09",
     "duration": "About 3 weeks, plus photo and copy updates since",
     "number": {
-      "value": "6",
-      "unit": "pages",
-      "label": "rebuilt for mobile and desktop, verified live 6 of 6 on every deploy"
-    },
-    "second": {
       "value": "1",
       "unit": "industry board",
-      "label": "referral: a regional construction association board member is recommending the site to the whole board"
+      "label": "now referring the work: a regional construction association board member is recommending the site to the whole board",
+      "basis": "One board member's active recommendation, off the rebuilt site. No board contract signed."
+    },
+    "second": {
+      "value": "6",
+      "unit": "pages",
+      "label": "rebuilt in Japanese for mobile and desktop, verified live 6 of 6 on every deploy"
     },
     "wall": {
       "n": "1 industry board",

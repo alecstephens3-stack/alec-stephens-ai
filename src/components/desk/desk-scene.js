@@ -1354,19 +1354,23 @@ export function init(canvas, options = {}) {
     if (S.drag || S.press || S.dragItem || reduced || S.mode !== 'webgl' || !opt.followPointer) return;   // one finger at a time
     const t = ev.changedTouches[0], q = toDesign(t), L = S.lens;
     const hit = Math.max(lensState().R * 1.25, 30 * (S.dW / q.r.width));   // never smaller than a fingertip
-    if (Math.hypot(q.x - L.x, q.y - L.y) > hit) {
-      const item = (q.x >= 0 && q.y >= 0 && q.x <= S.dW && q.y <= S.dH) ? itemAt(q.x, q.y) : null;
-      if (!item) return;
-      ev.preventDefault(); S.press = { x: q.x, y: q.y, t: S.time, item, touch: t.identifier }; return;
-    }
+    const onLens = Math.hypot(q.x - L.x, q.y - L.y) <= hit;
+    const item = (q.x >= 0 && q.y >= 0 && q.x <= S.dW && q.y <= S.dH) ? itemAt(q.x, q.y) : null;
+    if (!onLens && !item) return;
     ev.preventDefault();
-    S.drag = { id: t.identifier, x: q.x, y: q.y, ox: L.x - q.x, oy: L.y - q.y, t0: S.time };
-    L.lv += 1.2; schedule();
+    // a finger on an object is a press even when the glass is parked over it: a tap opens it, a move drags the glass
+    if (item) S.press = { x: q.x, y: q.y, t: S.time, item, touch: t.identifier, viaLens: onLens };
+    if (onLens) { S.drag = { id: t.identifier, x: q.x, y: q.y, ox: L.x - q.x, oy: L.y - q.y, t0: S.time }; L.lv += 1.2; schedule(); }
   }
   function onTouchMove(ev) {
     if (S.press && S.press.touch != null) {
       const t = touchOf(ev, S.press.touch); if (!t) return;
       ev.preventDefault(); const q = toDesign(t);
+      if (S.press.viaLens) {   // the finger started on the glass: a real move means it is dragging the glass, not tapping the object
+        if (Math.hypot(q.x - S.press.x, q.y - S.press.y) > 5) S.press = null;
+        if (S.drag) { S.drag.x = q.x; S.drag.y = q.y; }
+        return;
+      }
       if (!S.dragItem && Math.hypot(q.x - S.press.x, q.y - S.press.y) > 5) beginDrag(S.press.item, q);
       if (S.dragItem) { dragSample(q); schedule(); }
       return;
@@ -1377,6 +1381,7 @@ export function init(canvas, options = {}) {
   function onTouchEnd(ev) {
     if (S.press && S.press.touch != null && touchOf(ev, S.press.touch)) {
       const P = S.press; S.press = null;
+      if (P.viaLens && S.drag && S.drag.id === P.touch) S.drag = null;
       if (S.dragItem) endDrag(); else if (ev.type === 'touchend' && S.time - P.t < 0.6) openItem(P.item);
       return;
     }
