@@ -38,6 +38,10 @@ export interface DeskSceneOptions {
   onOpen?: (id: string, tool: string, info: { name: string; verb: string }) => void;
   onHover?: (info: DeskHover | null) => void;
   onLight?: (light: DeskLight) => void;
+  /** A different set of objects on the same desk (the sandbox). */
+  items?: (painters: Record<string, unknown>) => unknown[];
+  stops?: { wide: number[][]; tall: number[][] };
+  deskColor?: string;
 }
 
 export interface DeskScene {
@@ -48,6 +52,7 @@ export interface DeskScene {
   flyTo(id: string, ms?: number): boolean;
   nudge(id: string): void;
   open(id: string): void;
+  shake(strength?: number): void;
   setHour(h: number | null): void;
   addNote(text: string): { id: string; lines: string[] } | null;
   setProgress(p: number): void;
@@ -55,3 +60,4 @@ export interface DeskScene {
 }
 
 export function init(canvas: HTMLCanvasElement, options?: DeskSceneOptions): DeskScene;
+export const painters: Record<string, unknown>;

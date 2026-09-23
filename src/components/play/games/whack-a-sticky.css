@@ -1,0 +1,222 @@
+/* Whack a sticky. Every class is prefixed g-whack-. Motion is CSS only. */
+
+.g-whack-root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Clock row: the time left as numerals and a thin bar that empties. */
+.g-whack-clockbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 28px;
+}
+.g-whack-clock {
+  font: 700 17px/1 var(--font-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink, #171310);
+  min-width: 3.2em;
+}
+.g-whack-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(23, 19, 16, 0.10);
+  overflow: hidden;
+}
+.g-whack-fill {
+  display: block;
+  height: 100%;
+  background: var(--color-accent, #DC6843);
+  transform-origin: left center;
+  transition: transform 100ms linear;
+}
+.g-whack-penalty,
+.g-whack-combo {
+  position: absolute;
+  top: -4px;
+  font: 700 14.5px/1 var(--font-label);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  animation: g-whack-float 700ms ease-out forwards;
+}
+.g-whack-penalty { left: 0; color: var(--color-accent-deep, #8F3616); }
+.g-whack-combo { right: 0; color: var(--color-accent, #DC6843); }
+
+/* The desk: warm laminate with a faint grain. */
+.g-whack-desk {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 2.4vw, 14px);
+  padding: clamp(10px, 3vw, 18px);
+  border-radius: 18px;
+  background-color: #D9B896;
+  background-image:
+    repeating-linear-gradient(92deg, rgba(120, 78, 40, 0.05) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(88deg, rgba(255, 244, 225, 0.07) 0 1px, transparent 1px 13px),
+    linear-gradient(180deg, rgba(255, 246, 230, 0.18), rgba(120, 78, 40, 0.10));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 6px rgba(90, 60, 30, 0.12);
+}
+
+.g-whack-spot {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(90, 60, 30, 0.07);
+  box-shadow: inset 0 1px 3px rgba(90, 60, 30, 0.16);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.g-whack-spot:focus-visible {
+  outline: 2px solid var(--color-accent, #DC6843);
+  outline-offset: 2px;
+}
+.g-whack-key {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font: 700 13.5px/1 var(--font-label);
+  color: rgba(90, 60, 30, 0.45);
+}
+
+/* A coffee ring left on one spot. */
+.g-whack-spot--ring::before {
+  content: "";
+  position: absolute;
+  width: 58%;
+  aspect-ratio: 1;
+  right: 8%;
+  top: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 60%, rgba(110, 62, 28, 0.22) 64%, rgba(110, 62, 28, 0.10) 70%, transparent 74%);
+  pointer-events: none;
+}
+
+/* The sticky note. */
+.g-whack-note {
+  --g-whack-tilt: 0deg;
+  position: relative;
+  z-index: 1;
+  width: 92%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 3px 3px 10px 3px;
+  box-shadow: 0 1px 1px rgba(23, 19, 16, 0.10), 0 6px 12px -4px rgba(60, 40, 20, 0.35);
+  transform: rotate(var(--g-whack-tilt));
+}
+.g-whack-text {
+  font-family: var(--font-kalam), "Kalam", cursive;
+  font-size: clamp(17px, 3.6vw, 20px);
+  line-height: 1.15;
+  color: #26336B;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.g-whack-note--up { animation: g-whack-pop 180ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.g-whack-note--hit { animation: g-whack-squash 320ms ease-out both; }
+.g-whack-note--miss { animation: g-whack-shake 360ms ease-in-out both; }
+.g-whack-note--out { animation: g-whack-out 220ms ease-in forwards; }
+
+.g-whack-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 3px 8px;
+  border: 2px solid var(--color-accent, #DC6843);
+  border-radius: 6px;
+  font: 700 14.5px/1 var(--font-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent, #DC6843);
+  background: rgba(245, 241, 232, 0.55);
+  transform: translate(-50%, -50%) rotate(-10deg);
+  animation: g-whack-stamp 200ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  pointer-events: none;
+}
+
+/* Start and end card over the desk. */
+.g-whack-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(245, 241, 232, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+.g-whack-cover-line {
+  margin: 0;
+  font: 400 17px/1.5 var(--font-sans);
+  color: var(--color-ink-2, #5A4F46);
+}
+.g-whack-result {
+  margin: 0;
+  font: 500 clamp(30px, 7vw, 40px)/1.1 var(--font-heading);
+  color: var(--color-ink, #171310);
+}
+
+@keyframes g-whack-pop {
+  from { transform: rotate(var(--g-whack-tilt)) scale(0.6); opacity: 0; }
+  to { transform: rotate(var(--g-whack-tilt)) scale(1); opacity: 1; }
+}
+@keyframes g-whack-squash {
+  0% { transform: rotate(var(--g-whack-tilt)) scale(1, 1); }
+  30% { transform: rotate(var(--g-whack-tilt)) scale(1.12, 0.8); }
+  60% { transform: rotate(var(--g-whack-tilt)) scale(0.96, 1.05); }
+  100% { transform: rotate(var(--g-whack-tilt)) scale(1, 1); }
+}
+@keyframes g-whack-shake {
+  0%, 100% { transform: rotate(var(--g-whack-tilt)) translateX(0); }
+  20% { transform: rotate(var(--g-whack-tilt)) translateX(-7px); }
+  40% { transform: rotate(var(--g-whack-tilt)) translateX(6px); }
+  60% { transform: rotate(var(--g-whack-tilt)) translateX(-4px); }
+  80% { transform: rotate(var(--g-whack-tilt)) translateX(2px); }
+}
+@keyframes g-whack-out {
+  from { transform: rotate(var(--g-whack-tilt)) translateY(0); opacity: 1; }
+  to { transform: rotate(calc(var(--g-whack-tilt) * 2)) translateY(-18px) scale(0.9); opacity: 0; }
+}
+@keyframes g-whack-stamp {
+  from { transform: translate(-50%, -50%) rotate(-10deg) scale(1.7); opacity: 0; }
+  to { transform: translate(-50%, -50%) rotate(-10deg) scale(1); opacity: 1; }
+}
+@keyframes g-whack-float {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-14px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g-whack-note--up,
+  .g-whack-note--hit,
+  .g-whack-note--miss,
+  .g-whack-note--out,
+  .g-whack-stamp,
+  .g-whack-penalty,
+  .g-whack-combo {
+    animation-duration: 1ms;
+  }
+  .g-whack-fill { transition: none; }
+}
