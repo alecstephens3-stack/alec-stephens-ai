@@ -187,7 +187,7 @@ function buildItems() {
 
   items.push({
     id: 'fees', w: 186, h: 238, shadow: 1,
-    wide: { m: [150, 182, -8.5], t: [132, 166, 0.5] }, tall: { m: [118, 152, -7.5], t: [111, 143, 0.5] }, tool: 'playbook', name: 'Fee sheet', verb: 'Collect or bill?',
+    wide: { m: [150, 182, -8.5], t: [132, 166, 0.5] }, tall: { m: [110, 150, -7.5], t: [104, 142, 0.5] }, tool: 'playbook', name: 'Fee sheet', verb: 'Collect or bill?',
     draw(ctx, F) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, '#FBF9F4');
@@ -221,7 +221,7 @@ function buildItems() {
 
   items.push({
     id: 'slip', w: 152, h: 104, shadow: 1,
-    wide: { m: [522, 92, 12.5], t: [500, 82, 0] }, tall: { m: [112, 356, 8], t: [100, 340, -0.4] }, tool: 'reminders', name: 'Phone message', verb: 'Confirm tomorrow',
+    wide: { m: [522, 92, 12.5], t: [500, 82, 0] }, tall: { m: [104, 322, 8], t: [100, 314, -0.4] }, tool: 'reminders', name: 'Phone message', verb: 'Confirm tomorrow',
     draw(ctx, F) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, '#FBE9DC');
@@ -253,10 +253,10 @@ function buildItems() {
 
   const sticky = stickyItem;
   items.push(sticky('vsp', '#F8E7A6',
-    { wide: { m: [300, 250, -13], t: [318, 244, -0.7] }, tall: { m: [246, 98, 13], t: [286, 80, -0.7] }, tool: 'playbook', name: 'Sticky note', verb: 'Look it up' },
+    { wide: { m: [300, 250, -13], t: [318, 244, -0.7] }, tall: { m: [280, 212, 13], t: [284, 206, -0.7] }, tool: 'playbook', name: 'Sticky note', verb: 'Look it up' },
     [{ text: 'VSP or', x: 13, y: 44, size: 19 }, { text: 'EyeMed?', x: 13, y: 70, size: 19, extra: '??', underline: true }], 40));
   items.push(sticky('refr', '#F6CDB9',
-    { wide: { m: [420, 258, 9.5], t: [428, 246, 0.3] }, tall: { m: [272, 208, -11], t: [286, 188, 0.4] }, tool: 'playbook', name: 'Sticky note', verb: 'Look it up' },
+    { wide: { m: [420, 258, 9.5], t: [428, 246, 0.3] }, tall: null, tool: 'playbook', name: 'Sticky note', verb: 'Look it up' },
     [{ text: 'Refraction:', x: 10, y: 38, size: 16.5 }, { text: 'collect', x: 10, y: 60, size: 16.5 }, { text: 'or bill?', x: 10, y: 82, size: 16.5, extra: '?', underline: true }], 52));
 
   items.push({
@@ -308,7 +308,7 @@ function buildItems() {
 
   items.push({
     id: 'card', w: 118, h: 74, shadow: 0.8,
-    wide: { m: [520, 332, -12], t: [520, 322, 0] }, tall: { m: [262, 352, -13], t: [268, 340, 0] }, tool: 'eligibility', name: 'Insurance card', verb: 'Check coverage',
+    wide: { m: [520, 332, -12], t: [520, 322, 0] }, tall: { m: [268, 320, -13], t: [268, 312, 0] }, tool: 'eligibility', name: 'Insurance card', verb: 'Check coverage',
     draw(ctx, F) {
       const w = this.w, h = this.h;
       rr(ctx, 0, 0, w, h, 6); ctx.fillStyle = '#F1F0EC'; ctx.fill();
@@ -349,7 +349,7 @@ function buildItems() {
 
   items.push({
     id: 'clip', w: 34, h: 12, shadow: 0.7, soft: true, follow: 'fees',
-    wide: { m: [78, 78, 64], t: [71, 52, 90] }, tall: { m: [48, 50, 66], t: [50, 29, 90] },
+    wide: { m: [78, 78, 64], t: [71, 52, 90] }, tall: { m: [40, 48, 66], t: [43, 28, 90] },
     draw(ctx) {
       const g = ctx.createLinearGradient(0, 0, 0, 12);
       g.addColorStop(0, '#FFFFFF'); g.addColorStop(0.5, '#A8A29A'); g.addColorStop(1, '#6F6861');
@@ -364,7 +364,7 @@ function buildItems() {
 
   items.push({
     id: 'pen', w: 150, h: 12, shadow: 1.5, soft: true,
-    wide: { m: [232, 300, -27], t: [232, 322, 0] }, tall: { m: [150, 236, 31], t: [111, 286, 0] },
+    wide: { m: [232, 300, -27], t: [232, 322, 0] }, tall: { m: [150, 262, 31], t: [111, 254, 0] },
     draw(ctx) {
       const w = this.w, y = 1.5, bh = 9;
       ctx.beginPath(); ctx.moveTo(0, y + bh / 2); ctx.lineTo(14, y + 1); ctx.lineTo(14, y + bh - 1); ctx.closePath();
@@ -389,7 +389,7 @@ function buildItems() {
   // the 2004 manual with the notebook of Alexis's notes on top: the whole onboarding, on paper
   items.push({
     id: 'manual', w: 168, h: 122, shadow: 2.2, tool: 'playbook', name: 'The manual and the notebook', verb: 'Search it',
-    wide: { m: [332, 112, 6], t: [330, 104, 0] }, tall: { m: [250, 112, 6], t: [250, 104, 0] },
+    wide: { m: [332, 112, 6], t: [330, 104, 0] }, tall: { m: [266, 92, 6], t: [266, 84, 0] },
     draw(ctx, F) {
       const w = this.w, h = this.h;
       rr(ctx, 0, 0, w, h, 4); ctx.fillStyle = '#3B5B8C'; ctx.fill();
@@ -430,7 +430,7 @@ function buildItems() {
   // the denial letter, weeks late, half out of its envelope
   items.push({
     id: 'letter', w: 172, h: 104, shadow: 1.4, tool: 'claims', name: 'Denial letter', verb: 'See the claims',
-    wide: { m: [662, 334, 8], t: [660, 322, 0] }, tall: { m: [250, 430, 8], t: [250, 424, 0] },
+    wide: { m: [662, 334, 8], t: [660, 322, 0] }, tall: { m: [252, 428, 8], t: [252, 420, 0] },
     draw(ctx, F) {
       const w = this.w, h = this.h;
       ctx.save(); ctx.translate(18, -16); ctx.rotate(-0.06);
@@ -466,7 +466,7 @@ function buildItems() {
   // the review card that does not exist yet: a tent card with a dashed square where the QR code should be
   items.push({
     id: 'review', w: 112, h: 84, shadow: 1.2, tool: 'review', name: 'Review card', verb: 'Make the card',
-    wide: { m: [148, 404, 10], t: [140, 404, 0] }, tall: { m: [96, 444, 10], t: [96, 440, 0] },
+    wide: { m: [148, 404, 10], t: [140, 404, 0] }, tall: { m: [82, 456, 10], t: [82, 452, 0] },
     draw(ctx, F) {
       const w = this.w, h = this.h;
       paper(ctx, w, h, '#FFF9EE', { radius: 3 });
@@ -486,7 +486,7 @@ function buildItems() {
   // the vendor bill, with two more underneath
   items.push({
     id: 'invoice', w: 150, h: 100, shadow: 1.5, tool: 'invoices', name: 'Vendor bill', verb: 'File it',
-    wide: { m: [432, 434, -6], t: [432, 432, 0] }, tall: null,
+    wide: { m: [432, 434, -6], t: [432, 432, 0] }, tall: { m: [182, 546, -6], t: [182, 544, 0] },
     draw(ctx, F) {
       const w = this.w, h = this.h;
       ctx.save(); ctx.translate(6, 6); ctx.rotate(0.05); paper(ctx, w - 12, h - 8, '#F3EFE6'); ctx.restore();
@@ -936,7 +936,7 @@ export function init(canvas, options = {}) {
   function initItemState(it) { it.t = 0; it.tv = 0; it.hold = 0; it.want = 0; it.ox = 0; it.oy = 0; it.orot = 0; it.vx = 0; it.vy = 0; it.vrot = 0; it.air = 0; it.write = 1; }
   const STOPS = {
     wide: [[330, 104], [318, 244], [520, 322], [660, 322], [500, 82], [140, 404], [432, 432], [132, 166]],   // manual, stickies, insurance card, letter, slip, review card, bill, fee sheet
-    tall: [[250, 104], [270, 200], [260, 300], [100, 340], [250, 424], [96, 440]],
+    tall: [[266, 84], [284, 206], [268, 312], [100, 314], [252, 420], [82, 452], [182, 544]],
   };
   const DWELL = 3.4, TRAVEL = 2.4;
   function idleTarget(t) {
@@ -1124,7 +1124,7 @@ export function init(canvas, options = {}) {
   }
   const NOTE_SPOTS = {
     wide: [[600, 236, 14], [220, 66, -9], [560, 452, 7], [752, 452, -12]],
-    tall: [[180, 462, 10], [62, 472, -8], [300, 472, 12], [200, 382, 5]],
+    tall: [[300, 546, 10], [54, 548, -8], [186, 222, 12], [186, 404, 5]],
   };
   function wrapHand(text) {
     const c = measureCtx();
