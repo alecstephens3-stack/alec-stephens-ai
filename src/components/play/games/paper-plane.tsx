@@ -283,8 +283,10 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
       }
     };
 
-    const text = (s: string, x: number, y: number, px: number, family: string, color: string, align: CanvasTextAlign) => {
-      [ctx.font, ctx.fillStyle, ctx.textAlign] = [`${css(px)}px ${family}`, color, align];
+    // Weight goes before size in the font shorthand; "24px 500 Inter Tight" is
+    // invalid and the canvas silently keeps whatever font it had before.
+    const text = (s: string, x: number, y: number, px: number, family: string, color: string, align: CanvasTextAlign, weight = 400) => {
+      [ctx.font, ctx.fillStyle, ctx.textAlign] = [`${weight} ${css(px)}px ${family}`, color, align];
       ctx.fillText(s, x, y);
     };
 
@@ -337,8 +339,8 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
         ball(PX, w.by, 11 * Math.max(0.35, w.ball));
       }
       if (w.phase !== "ready") {
-        text("DISTANCE", VW - 20, css(28), 13.5, fCaps, "#5A4F46", "right");
-        text(`${toMetres(d)} m`, VW - 20, css(56), 24, fNum, "#171310", "right");
+        text("DISTANCE", VW - 20, css(28), 13.5, fCaps, "#5A4F46", "right", 600);
+        text(`${toMetres(d)} m`, VW - 20, css(56), 24, fNum, "#171310", "right", 500);
       }
       if (w.phase === "ready") {
         note(1, 92);
@@ -379,8 +381,12 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
       e.preventDefault();
       action();
     };
-    const onCanvasKey = (e: KeyboardEvent) => {
-      if (!isLift(e) || w.phase === "flying") return; // in flight the window listener lifts
+    /* Space launches and relaunches from anywhere in the open window, not only
+       once the canvas has focus; buttons and fields keep their own space key. */
+    const onIdleKey = (e: KeyboardEvent) => {
+      if (!isLift(e) || w.phase === "flying" || w.phase === "crashing") return; // in flight onWinKey lifts
+      const el = e.target as HTMLElement | null;
+      if (el !== canvas && (e.key === "ArrowUp" || el?.closest("button, a, input, textarea, select, [contenteditable]"))) return;
       e.preventDefault();
       if (!e.repeat) action();
     };
@@ -389,8 +395,8 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
       const cs = getComputedStyle(canvas);
       const v = (n: string, f: string) => cs.getPropertyValue(n).trim() || f;
       fHand = `${v("--font-kalam", "Kalam")}, cursive`;
-      fNum = `500 ${v("--font-inter-tight", "Inter Tight")}, sans-serif`;
-      fCaps = `600 ${v("--font-schibsted", "Schibsted Grotesk")}, sans-serif`;
+      fNum = `${v("--font-inter-tight", "Inter Tight")}, sans-serif`;
+      fCaps = `${v("--font-schibsted", "Schibsted Grotesk")}, sans-serif`;
     };
 
     const resize = () => {
@@ -427,7 +433,7 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
       }
     });
     canvas.addEventListener("pointerdown", onDown);
-    canvas.addEventListener("keydown", onCanvasKey);
+    window.addEventListener("keydown", onIdleKey);
 
     return () => {
       alive = false;
@@ -436,7 +442,7 @@ export function PaperPlaneGame({ onRound, best }: { onRound?: (score: number) =>
       ro.disconnect();
       keys(false);
       canvas.removeEventListener("pointerdown", onDown);
-      canvas.removeEventListener("keydown", onCanvasKey);
+      window.removeEventListener("keydown", onIdleKey);
       restartRef.current = () => {};
     };
   }, []);

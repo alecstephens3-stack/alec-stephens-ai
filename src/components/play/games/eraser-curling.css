@@ -1,7 +1,8 @@
 /* Eraser curling. Every class here is prefixed g-eraser-. */
 .g-eraser-wrap {
   width: 100%;
-  max-width: 520px;
+  /* 3:4 board: cap the width so the whole desk and the score line fit one screen. */
+  max-width: min(520px, 52vh);
   margin: 0 auto;
 }
 

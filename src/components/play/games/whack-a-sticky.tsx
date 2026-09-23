@@ -212,12 +212,14 @@ export function WhackAStickyGame({ onRound, best }: { onRound?: (score: number) 
           <span className="g-whack-track" aria-hidden="true">
             <span className="g-whack-fill" style={{ transform: `scaleX(${msLeft / ROUND_MS})` }} />
           </span>
-          {phase === "playing" && penalties > 0 ? (
-            <span key={penalties} className="g-whack-penalty" aria-hidden="true">minus 2 s</span>
-          ) : null}
-          {phase === "playing" && combo > 0 ? (
-            <span key={`c${answered}`} className="g-whack-combo" aria-hidden="true">+{lastGain}</span>
-          ) : null}
+          <span className="g-whack-flash" aria-hidden="true">
+            {phase === "playing" && penalties > 0 ? (
+              <span key={penalties} className="g-whack-penalty">{"\u22122 s"}</span>
+            ) : null}
+            {phase === "playing" && combo > 0 ? (
+              <span key={`c${answered}`} className="g-whack-combo">+{lastGain}</span>
+            ) : null}
+          </span>
         </div>
 
         <div className="g-whack-desk">
@@ -246,11 +248,11 @@ export function WhackAStickyGame({ onRound, best }: { onRound?: (score: number) 
           ))}
 
           {phase !== "playing" ? (
-            <div className="g-whack-cover">
+            <div className={`g-whack-cover g-whack-cover--${phase}`}>
               {phase === "ready" ? (
                 <>
                   <p className="g-whack-cover-line">Questions pile up at the front desk. Answer them.</p>
-                  <button type="button" className="sai-btn g-whack-start" onClick={() => engine.start()}>
+                  <button type="button" className="sai-btn primary g-whack-start" onClick={() => engine.start()}>
                     Start the round
                   </button>
                 </>

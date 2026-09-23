@@ -170,6 +170,16 @@
   text-align: center;
 }
 
+/* Phone width: the notes are about 70px square, so give the words the paper. */
+@media (max-width: 520px) {
+  .g-match-grid { gap: 8px; }
+  .g-match-front { padding: 7% 6% 11%; }
+  .g-match-text { font-size: 13px; line-height: 1.08; }
+  .g-match-face::after { width: 13px; height: 13px; }
+  .g-match-face { background: linear-gradient(-45deg, transparent 9px, var(--g-match-paper, #F8E7A6) 9px); }
+  .g-match-tick { top: 2px; right: 2px; width: 16px; height: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .g-match-note,
   .g-match-card {
