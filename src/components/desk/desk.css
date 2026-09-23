@@ -13,7 +13,42 @@
   color: var(--color-ink);
   transition: color 900ms var(--sai-ease);
 }
-.desk-root.is-night { color: var(--color-cream); }
+.desk-root.is-night {
+  color: var(--color-cream);
+  /* the room's tokens after hours: every pane, label, table and window on the page reads them */
+  --color-ink: var(--color-cream);
+  --color-ink-90: var(--color-cream);
+  --color-ink-2: var(--color-cream-2);
+  --color-accent-deep: var(--color-accent-night);
+  --color-accent-display: var(--color-accent-night);
+  --sai-glass: rgba(28, 22, 18, 0.72);
+  --sai-glass-strong: rgba(24, 19, 16, 0.88);
+  --sai-glass-tile: rgba(255, 255, 255, 0.06);
+  --sai-glass-edge: rgba(255, 255, 255, 0.14);
+  --shadow-pane: 0 14px 44px rgba(0, 0, 0, 0.45);
+  --shadow-float: 0 24px 70px rgba(0, 0, 0, 0.6);
+}
+/* the switch is slow on purpose: the lights go down, they do not snap */
+.desk-root .sai-pane, .desk-root .sai-pane-strong, .desk-root .sai-tile, .desk-root .desk-chip, .desk-root .dw-close, .desk-root .sai-btn.ghost {
+  transition: background 900ms var(--sai-ease), border-color 900ms var(--sai-ease), color 900ms var(--sai-ease), box-shadow 900ms var(--sai-ease), transform var(--duration-base) var(--sai-ease);
+}
+/* the lamp's pool reaches past the desk onto the page */
+.desk-frame::after {
+  content: "";
+  position: absolute;
+  inset: -12% -8% -14% -8%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 55% at 78% 8%, rgba(255, 190, 120, 0.28) 0%, rgba(255, 170, 100, 0.08) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 1400ms var(--sai-ease);
+}
+.desk-root.is-night .desk-frame::after { opacity: 1; }
+/* the window after hours */
+.desk-root.is-night .dw-backdrop { background: rgba(0, 0, 0, 0.45); }
+.desk-root.is-night .dw-close { background: rgba(255, 255, 255, 0.1); color: var(--color-cream); border-color: rgba(255, 255, 255, 0.16); }
+.desk-root.is-night .dw-close:hover { background: var(--color-accent); color: #fff; }
+.desk-root.is-night .dw-pane img { filter: brightness(0.92); }
 
 /* the desk is its own page: the site header, footer and drifting-lens scene stay out of it */
 body:has(.desk-root) > header,
@@ -243,3 +278,10 @@ body:has(.desk-root) > .sai-scene { display: none !important; }
   .dw-scroll { padding: 22px 18px 24px; }
   .dw-pane { border-radius: 20px; }
 }
+
+/* after hours, the ink-filled controls flip to cream so they stay visible on the dark room */
+.desk-root.is-night .sai-btn.primary { background: var(--color-cream); color: #171310; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); }
+.desk-root.is-night .sai-btn.primary:hover { background: var(--color-accent); color: #fff; }
+.desk-root.is-night .desk-chip[aria-pressed="true"] { background: var(--color-cream); color: #171310; }
+.desk-root.is-night .bc-seg.is-on { background: var(--color-cream); color: #171310; }
+.desk-root.is-night .bc-seg:hover { background: rgba(255, 255, 255, 0.08); }

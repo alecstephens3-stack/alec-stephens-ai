@@ -120,3 +120,12 @@
   .bn-about { grid-template-columns: minmax(0, 1fr); gap: 20px; border-radius: 22px; }
   .bn-face { width: 112px; height: 112px; }
 }
+
+/* ── the hint under the headline ── */
+.bn-hint { display: inline-flex; align-items: baseline; gap: 10px; max-width: none; white-space: nowrap; font-size: clamp(17px, 1.45vw, 20px); font-weight: 400; color: var(--color-ink-2); }
+@media (max-width: 720px) { .bn-hint { white-space: normal; flex-direction: column; align-items: center; gap: 4px; max-width: 30ch; } }
+.bn-hint-k { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-accent-deep); }
+.bn-hint span:last-child { color: var(--color-ink-2); font-weight: 400; }
+.desk-root.is-night .bn-hint span:last-child { color: var(--color-cream-2); }
+.desk-root.is-night .bn-hint-k { color: var(--color-accent-night); }
+.bn-lights { min-width: 11.5em; justify-content: center; }
