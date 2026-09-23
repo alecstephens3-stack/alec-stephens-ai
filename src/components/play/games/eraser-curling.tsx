@@ -99,6 +99,7 @@ export function EraserCurlingGame({ onRound, best }: { onRound?: (score: number)
     const g: Game = newGame();
     const bg = document.createElement("canvas");
     let k = 1; // board unit to device pixel
+    let sized = 0; // backing-store width this mount last sized to
     let raf = 0;
     let last = 0;
     let alive = true;
@@ -223,14 +224,16 @@ export function EraserCurlingGame({ onRound, best }: { onRound?: (score: number)
       const left = ROUND - g.thrown - (g.phase === "done" ? 0 : 1);
       for (let i = 0; i < left; i++) fillRound(ctx, PINK, W - 22 - i * 14, H - 16, 10, 6, 2);
       if (g.phase === "done") {
-        fillRound(ctx, "rgba(245, 241, 232, 0.82)", W / 2 - 80, H / 2 + 26, 160, 54, 12);
+        // Below the throw line, where the next eraser would sit, so it never covers the ring.
+        const cy = THROW_LINE + 22;
+        fillRound(ctx, "rgba(245, 241, 232, 0.9)", W / 2 - 80, cy, 160, 58, 12);
         ctx.textAlign = "center";
-        ctx.fillStyle = "#171310";
+        ctx.fillStyle = "#5A4F46";
         ctx.font = `600 10px ${fonts.label}`;
-        ctx.fillText("ROUND TOTAL", W / 2, H / 2 + 40);
+        ctx.fillText("ROUND TOTAL", W / 2, cy + 15);
         ctx.fillStyle = INK;
-        ctx.font = `500 24px ${fonts.num}`;
-        ctx.fillText(`${totalOf(g)}`, W / 2, H / 2 + 62);
+        ctx.font = `500 26px ${fonts.num}`;
+        ctx.fillText(`${totalOf(g)}`, W / 2, cy + 39);
       }
     };
 
@@ -353,7 +356,7 @@ export function EraserCurlingGame({ onRound, best }: { onRound?: (score: number)
       ev.preventDefault();
       const p = toBoard(ev);
       let dx = p.x - START.x - g.px;
-      let dy = p.y - START.y - g.py;
+      let dy = Math.max(0, p.y - START.y - g.py); // back toward the player only
       const len = Math.hypot(dx, dy);
       if (len > PULL_MAX) [dx, dy] = [(dx * PULL_MAX) / len, (dy * PULL_MAX) / len];
       const e = g.list[g.thrown];
@@ -390,7 +393,11 @@ export function EraserCurlingGame({ onRound, best }: { onRound?: (score: number)
       if (cssW <= 0) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const pw = Math.round(cssW * dpr);
-      if (pw === canvas.width) return;
+      // Compare with this mount's own size, never canvas.width: a remount (React
+      // strict mode, hot reload) finds the canvas already sized, and skipping here
+      // left k at 1, so the board baked a second time at a third of the scale.
+      if (pw === sized) return;
+      sized = pw;
       canvas.width = pw;
       canvas.height = Math.round(((cssW * H) / W) * dpr);
       k = pw / W;

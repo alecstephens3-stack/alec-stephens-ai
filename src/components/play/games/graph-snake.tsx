@@ -18,8 +18,8 @@ const KEYS: Record<string, Dir> = {
   ArrowLeft: "left", KeyA: "left", ArrowRight: "right", KeyD: "right",
 };
 
-/** Moves per second: 9 to start, one step faster every 5 clips, capped at 16. */
-const speedFor = (clips: number) => Math.min(16, 9 + Math.floor(clips / 5));
+/** Moves per second: 8 to start, one step faster every 5 clips, capped at 14. */
+const speedFor = (clips: number) => Math.min(14, 8 + Math.floor(clips / 5));
 const opposite = (a: Dir, b: Dir) => DIRS[a][0] === -DIRS[b][0] && DIRS[a][1] === -DIRS[b][1];
 /** Stable wobble in [-1, 1], so hand-drawn marks do not shimmer between ticks. */
 const wob = (i: number) => {
@@ -162,10 +162,10 @@ export function GraphSnakeGame({ onRound, best }: { onRound?: (score: number) =>
         c.rotate(-0.6 + wob(g.food) * 0.3);
         c.scale(cell * 0.95, cell * 0.95);
         c.translate(0.03, 0.04);
-        for (const [col, lw] of [["rgba(23, 19, 16, 0.12)", 0.08], ["#8E959E", 0.075], ["#E4E7EB", 0.025]] as const) {
+        for (const [col, lw] of [["rgba(23, 19, 16, 0.16)", 0.09], ["#6E7580", 0.085], ["#D5D9DE", 0.028]] as const) {
           Object.assign(c, { strokeStyle: col, lineWidth: lw });
           c.stroke(clipPath);
-          if (lw === 0.08) c.translate(-0.03, -0.04);
+          if (lw === 0.09) c.translate(-0.03, -0.04);
         }
         c.restore();
       }

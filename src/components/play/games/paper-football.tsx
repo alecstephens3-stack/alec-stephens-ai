@@ -12,7 +12,8 @@ const EDGE = 78; // far edge of the desk: the goal line
 const FLICKS = 10, START_X = 340, START_Y = 440;
 const R = 16; // football collision radius
 const S = 25; // football circumradius (drawn)
-const GRAB = 58, MAX_PULL = 150, MAX_SPEED = 820, FRICTION = 1.5;
+// A two-thirds pull reaches the pencils; at 150 / 820 only a near-full pull ever did.
+const GRAB = 58, MAX_PULL = 130, MAX_SPEED = 1000, FRICTION = 1.5;
 const AIR = 0.42, OUT_DUR = 0.5, MSG_DUR = 1.4, TAU = Math.PI * 2;
 const POST_L = 270, POST_R = 410;
 const MUG = { x: 425, y: 290, r: 38 };

@@ -16,7 +16,7 @@ const PAIRS: ReadonlyArray<readonly [string, string]> = [
   ["Kids under 5?", "Dr. Lee, mornings"],
   ["Collect or bill?", "Refraction: collect"],
   ["VSP or EyeMed?", "Check the card first"],
-  ["Delta Care says other facility", "Patient calls Delta Care"],
+  ["Delta Care: other office?", "Patient calls Delta Care"],
   ["No group number?", "Call the insurer"],
   ["Running 15 late?", "Offer to rebook"],
   ["New insurance at checkup?", "Verify before the chair"],
@@ -87,14 +87,22 @@ export function StickyMatchGame({ onRound, best }: { onRound?: (score: number) =
 
   const flip = useCallback(
     (i: number) => {
-      if (finalSecs !== null || up.length >= 2 || matched[i] || up.includes(i)) return;
+      if (finalSecs !== null || matched[i] || up.includes(i)) return;
+      // A third tap while a wrong pair is still showing: put them back now and
+      // turn the new note, rather than making the player wait out the timer.
+      let open = up;
+      if (open.length >= 2) {
+        if (flipBack.current) clearTimeout(flipBack.current);
+        flipBack.current = null;
+        open = [];
+      }
       const t = Date.now();
       const started = startAt ?? t;
       if (startAt === null) {
         setStartAt(t);
         setNow(t);
       }
-      const next = [...up, i];
+      const next = [...open, i];
       if (next.length < 2) {
         setUp(next);
         return;
