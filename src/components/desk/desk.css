@@ -237,7 +237,7 @@ body:has(.desk-root) > .sai-scene { display: none !important; }
   .desk-chip-v { display: none; }
   .desk-cta { display: none; }
   .desk-frame { width: 100%; }
-  .desk-canvas { aspect-ratio: 358 / 520; }
+  .desk-canvas { aspect-ratio: 358 / 600; }
   .desk-lede { font-size: 19px; }
   .desk-ask-row { flex-direction: column; }
   .dw-scroll { padding: 22px 18px 24px; }
