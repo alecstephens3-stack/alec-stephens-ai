@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Schibsted_Grotesk } from "next/font/google";
+import { Inter_Tight, Kalam, Reenie_Beanie, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Scene } from "@/components/ui/scene";
@@ -17,6 +17,26 @@ const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+/**
+ * Kalam and Reenie Beanie are ONLY the two handwritings inside the lens hero
+ * illustration (the office manager, and whoever took the phone message). They
+ * are never page type. The hero reads the generated family names off these
+ * variables, because next/font scopes them.
+ */
+const kalam = Kalam({
+  variable: "--font-kalam",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const reenie = Reenie_Beanie({
+  variable: "--font-reenie",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -52,7 +72,8 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/og-image.png"],
   },
-  robots: { index: true, follow: true },
+  // Draft deploys (DRAFT_NOINDEX=1) must never be indexed as a second copy of the site.
+  robots: process.env.DRAFT_NOINDEX ? { index: false, follow: false } : { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -61,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable} ${kalam.variable} ${reenie.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"

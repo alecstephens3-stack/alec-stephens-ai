@@ -1,0 +1,17 @@
+/* Pencil snake on a pad of graph paper. The board is one canvas; the paper is drawn on it. */
+.g-snake-board {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.g-snake-canvas {
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: default;
+}

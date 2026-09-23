@@ -1,0 +1,24 @@
+/* Paper football: the desk is drawn on the canvas; this file only frames it. */
+.g-football-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.g-football-canvas {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-tile, 18px);
+  background: #D9B896;
+  box-shadow: 0 12px 32px rgba(112, 62, 40, 0.16), 0 0 0 1px var(--color-rule);
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.g-football-canvas:active {
+  cursor: grabbing;
+}
+
