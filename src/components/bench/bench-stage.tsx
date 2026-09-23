@@ -21,14 +21,9 @@ import "./bench.css";
 const ARIA_LABEL =
   "Alec's workbench seen from above, with one object on it for each of the eight builds listed below. A round trial lens drifts across it, bringing whatever is under the glass into focus. Click an object to open its build.";
 
-// The portfolio opens in afternoon light whatever the clock says: a first visit
-// should not meet the bench in the dark. Live is one tap away.
-const HOURS: { label: string; hour: number | null }[] = [
-  { label: "3 pm", hour: 15 },
-  { label: "Live", hour: null },
-  { label: "8 am", hour: 8 },
-  { label: "After hours", hour: 20.5 },
-];
+// The lights: on is a warm afternoon on the bench, off is the lamp after hours.
+// The portfolio always opens with the lights on.
+const LIGHTS_ON = 15, LIGHTS_OFF = 20.5;
 
 function resolveFamily(cssVar: string, fallback: string) {
   if (typeof window === "undefined") return fallback;
@@ -37,11 +32,6 @@ function resolveFamily(cssVar: string, fallback: string) {
   return first || fallback;
 }
 
-function clockText(h: number) {
-  const hh = Math.floor(h) % 24, mm = Math.round((h - Math.floor(h)) * 60);
-  const h12 = hh % 12 === 0 ? 12 : hh % 12;
-  return `${h12}:${String(mm).padStart(2, "0")} ${hh >= 12 ? "pm" : "am"}`;
-}
 
 const SLUGS = new Set(CASES.map((c) => c.slug));
 
@@ -51,7 +41,7 @@ export function BenchStage() {
   const flyTimer = useRef<number | null>(null);
   const [hover, setHover] = useState<DeskHover | null>(null);
   const [light, setLight] = useState<DeskLight | null>(null);
-  const [hourIdx, setHourIdx] = useState(0);
+  const [lightsOn, setLightsOn] = useState(true);
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -66,7 +56,7 @@ export function BenchStage() {
       const canvas = canvasRef.current;
       if (cancelled || !canvas) return;
       scene = init(canvas, {
-        hour: HOURS[0].hour,
+        hour: LIGHTS_ON,
         handFont: resolveFamily("--font-kalam", "Kalam"),
         handFont2: resolveFamily("--font-reenie", "Reenie Beanie"),
         textFont: resolveFamily("--font-inter-tight", "Inter Tight"),
@@ -94,11 +84,11 @@ export function BenchStage() {
 
   const closeWindow = useCallback(() => setOpenSlug(null), []);
 
-  const cycleHour = useCallback(() => {
-    const next = (hourIdx + 1) % HOURS.length;
-    setHourIdx(next);
-    sceneRef.current?.setHour(HOURS[next].hour);
-  }, [hourIdx]);
+  const toggleLights = useCallback(() => {
+    const next = !lightsOn;
+    setLightsOn(next);
+    sceneRef.current?.setHour(next ? LIGHTS_ON : LIGHTS_OFF);
+  }, [lightsOn]);
 
   /** The index strip: bring the glass over the object, then open its build. */
   const goTo = useCallback((slug: string) => {
@@ -120,9 +110,8 @@ export function BenchStage() {
         </Link>
         <span className="desk-dock-title">Alec Stephens · builds</span>
         <div className="desk-dock-actions">
-          <button type="button" className="desk-chip" onClick={cycleHour} aria-label="Change the time of day">
-            <span className="desk-chip-k">{HOURS[hourIdx].label}</span>
-            {light ? <span className="desk-chip-v">{clockText(light.hour)}</span> : null}
+          <button type="button" className="desk-chip bn-lights" onClick={toggleLights} aria-pressed={!lightsOn}>
+            {lightsOn ? "Turn off the lights" : "Turn on the lights"}
           </button>
           <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="desk-chip bn-dock-github">GitHub</a>
           <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" className="sai-btn primary desk-cta">Talk to us</a>
@@ -131,9 +120,10 @@ export function BenchStage() {
 
       <section className="desk-main" aria-labelledby="bn-title">
         <div className="bn-head">
-          <h1 id="bn-title" className="bn-display">Build <em>portfolio</em>.</h1>
-          <p className="desk-lede">
-            Eight builds, each one an object on my bench. <span>Bring the glass over one, then click it.</span>
+          <h1 id="bn-title" className="bn-display">Portfolio</h1>
+          <p className="desk-lede bn-hint">
+            <span className="bn-hint-k">Hint</span>
+            <span>Move the lens over an object and click on it to see each project</span>
           </p>
         </div>
 
