@@ -1,0 +1,131 @@
+/* ── Alec's bench (/alec, 2026-09-23) ──
+   The portfolio on the desk engine. desk.css carries the dock, lede, desk,
+   label and window; this file adds the headline, the index strip under the
+   desk, and the about block. Tokens only, one accent, no hand colours. */
+
+/* the headline takes some height, so the desk gives a little back */
+.bn-root .desk-frame { width: min(1240px, 100%, calc((100svh - 330px) * 1.6)); }
+
+.bn-head { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.bn-display {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 1.6rem + 3.2vw, 4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  text-align: center;
+}
+.bn-display em { font-style: normal; color: var(--color-accent-display); }
+.desk-root.is-night .bn-display em { color: var(--color-accent-night); }
+
+/* ── the index strip ── */
+.bn-index { width: min(1240px, 100%); }
+.bn-index ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 4px;
+}
+.bn-index-btn {
+  font: 500 15px var(--font-sans);
+  color: var(--color-ink-2);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: color var(--duration-base) var(--sai-ease), background var(--duration-base) var(--sai-ease), border-color var(--duration-base) var(--sai-ease);
+}
+.bn-index-btn:hover { color: var(--color-ink); background: rgba(255, 255, 255, 0.55); border-color: var(--sai-glass-edge); }
+.bn-index-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.bn-index-btn.is-on { color: var(--color-ink); background: rgba(255, 255, 255, 0.85); border-color: var(--color-accent-line); }
+.desk-root.is-night .bn-index-btn { color: var(--color-cream-2); }
+.desk-root.is-night .bn-index-btn:hover,
+.desk-root.is-night .bn-index-btn.is-on { color: var(--color-cream); background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.16); }
+
+/* ── about ── */
+.bn-about {
+  width: min(1040px, 100%);
+  margin-top: clamp(40px, 6vw, 72px);
+  padding: clamp(24px, 3.4vw, 40px);
+  border-radius: 30px;
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+.bn-face {
+  width: 168px;
+  height: 168px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: var(--shadow-pane);
+}
+.bn-label {
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+.bn-about-name {
+  margin: 8px 0 18px;
+  font-family: var(--font-heading);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+}
+.bn-about-p { margin: 0 0 16px; max-width: 62ch; font-size: 17px; line-height: 1.62; color: var(--color-ink-2); }
+.bn-about-p:first-of-type { color: var(--color-ink); }
+
+/* credentials: ledger chips, tinted rectangle, label face, no dot */
+.bn-creds { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.bn-chip {
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  padding: 5px 10px;
+  border-radius: var(--radius-chip);
+  color: var(--color-ink);
+  background: var(--color-rule-soft);
+  border: 1px solid var(--color-rule);
+}
+.bn-cofounder { margin: 18px 0 0; font-size: 15px; color: var(--color-ink-2); }
+.bn-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.bn-links .sai-btn { padding: 10px 18px; font-size: 14.5px; }
+
+.desk-root.is-night .bn-about { background: rgba(28, 22, 18, 0.72); border-color: rgba(255, 255, 255, 0.14); }
+.desk-root.is-night .bn-label { color: var(--color-accent-night); }
+.desk-root.is-night .bn-about-p { color: var(--color-cream-2); }
+.desk-root.is-night .bn-about-p:first-of-type { color: var(--color-cream); }
+.desk-root.is-night .bn-chip { color: var(--color-cream); background: var(--color-nrule-soft); border-color: var(--color-nrule); }
+.desk-root.is-night .bn-cofounder { color: var(--color-cream-2); }
+.desk-root.is-night .bn-links .sai-btn.ghost { color: var(--color-cream); background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.16); box-shadow: none; }
+
+@media (max-width: 720px) {
+  .bn-root .desk-frame { width: 100%; }
+  /* on a phone the booking pill stays; GitHub waits in the about links */
+  .bn-root .desk-cta { display: inline-flex; }
+  .bn-dock-github { display: none; }
+  .bn-about { grid-template-columns: minmax(0, 1fr); gap: 20px; border-radius: 22px; }
+  .bn-face { width: 112px; height: 112px; }
+}
+
+/* ── the hint under the headline ── */
+.bn-hint { display: inline-flex; align-items: baseline; gap: 10px; max-width: none; white-space: nowrap; font-size: clamp(17px, 1.45vw, 20px); font-weight: 400; color: var(--color-ink-2); }
+@media (max-width: 720px) { .bn-hint { white-space: normal; flex-direction: column; align-items: center; gap: 4px; max-width: 30ch; } }
+.bn-hint-k { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-accent-deep); }
+.bn-hint span:last-child { color: var(--color-ink-2); font-weight: 400; }
+.desk-root.is-night .bn-hint span:last-child { color: var(--color-cream-2); }
+.desk-root.is-night .bn-hint-k { color: var(--color-accent-night); }
+.bn-lights { min-width: 11.5em; justify-content: center; }

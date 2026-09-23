@@ -7,9 +7,11 @@ const nextConfig: NextConfig = {
     // file in public/jp/. Next serves it at /jp/index.html; this makes /jp work.
     return [
       { source: "/jp", destination: "/jp/index.html" },
-      // Alec's portfolio: static pages generated from
+      // Alec's portfolio: static per-build pages generated from
       // artifacts/scrollcraft/builds/alec-portfolio/ into public/alec/.
-      { source: "/alec", destination: "/alec/index.html" },
+      // The /alec index moved to the app route (src/app/alec, the bench) on
+      // 2026-09-23. The static public/alec/index.html is kept as the old
+      // gallery, reachable at /alec/index.html.
       { source: "/alec/:slug", destination: "/alec/:slug/index.html" },
       // The full front desk case study: self-contained static page from
       // artifacts/case-studies/ in the vault, served on our own domain.

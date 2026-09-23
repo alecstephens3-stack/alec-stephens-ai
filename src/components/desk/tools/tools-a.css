@@ -1,0 +1,588 @@
+/* Desk tools, set A: playbook, eligibility, claims.
+   Every class here is prefixed dta-. The shared dt-* frame classes from
+   tool-frame.tsx are styled once, here, by agreement with the other set.
+   Colours come only from the Lens tokens in globals.css. */
+
+/* ── The frame (shared) ─────────────────────────────────────────────── */
+.dt-frame {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+.dt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 12px;
+  flex-wrap: wrap;
+  /* The window's round close button (38px, 14px in from the pane edge) sits
+     over this row's right end; keep the chip clear of it. */
+  padding-right: 52px;
+  min-height: 38px;
+}
+/* The honesty line is a ledger chip: tinted rounded rectangle, label face, no dot. */
+.dt-status {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  padding: 5px 10px;
+  border-radius: var(--radius-chip);
+  white-space: nowrap;
+}
+.dt-status.working {
+  background: var(--color-status-good-tint);
+  color: var(--color-status-good);
+}
+.dt-status.sample {
+  background: rgba(23, 19, 16, 0.06);
+  color: var(--color-ink-2);
+}
+.dt-title {
+  margin-top: 16px;
+  text-wrap: balance;
+  font-size: clamp(24px, 3.6vw, 30px);
+  line-height: 1.16;
+}
+.dt-note {
+  margin-top: 10px;
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 58ch;
+}
+.dt-body { margin-top: 24px; }
+.dt-foot {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-rule-soft);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-ink-2);
+}
+
+/* ── Shared bits ────────────────────────────────────────────────────── */
+
+/* Ledger status chip: small tinted rectangle, never a pill with a dot. */
+.dta-chip {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  padding: 4px 9px;
+  border-radius: var(--radius-chip);
+  background: rgba(23, 19, 16, 0.06);
+  color: var(--color-ink);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.dta-chip.good { background: var(--color-status-good-tint); color: var(--color-status-good); }
+.dta-chip.warn { background: var(--color-status-warn-tint); color: var(--color-status-warn); }
+.dta-chip.bad { background: var(--color-status-bad-tint); color: var(--color-status-bad); }
+.dta-chip.accent { background: var(--color-accent-soft); color: var(--color-accent-deep); }
+.dta-chip.quiet {
+  background: transparent;
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink-2);
+}
+
+/* Small caps label above a field or a group. 13.5px is the floor. */
+.dta-label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  margin-bottom: 6px;
+}
+
+/* Text inputs and selects: glass field, hairline edge, 17px text. */
+.dta-input {
+  display: block;
+  width: 100%;
+  font: 400 17px/1.4 var(--font-sans);
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid var(--color-rule);
+  border-radius: 12px;
+  padding: 11px 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: border-color var(--duration-fast) var(--sai-ease), background var(--duration-fast) var(--sai-ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.dta-input:hover { background: rgba(255, 255, 255, 0.78); }
+.dta-input:focus,
+.dta-input:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(220, 104, 67, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.dta-input::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+  filter: sepia(0.4);
+}
+.dta-input::-webkit-calendar-picker-indicator:hover { opacity: 0.9; }
+.dta-input[type="search"]::-webkit-search-cancel-button,
+.dta-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
+.dta-input::placeholder { color: var(--color-ink-2); opacity: 0.75; }
+select.dta-input {
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%235A4F46' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+textarea.dta-input {
+  resize: vertical;
+  min-height: 300px;
+  line-height: 1.55;
+}
+
+/* Smaller button size for inside a window; the pill recipe stays the kit's. */
+.dta-btn-sm {
+  padding: 10px 18px;
+  font-size: 14.5px;
+}
+.sai-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+/* A run-in note: plain sentence, no box, no bar. */
+.dta-runin { font-size: 17px; line-height: 1.6; color: var(--color-ink-2); }
+.dta-runin strong { color: var(--color-ink); font-weight: 500; }
+
+/* Field grid: two across at 520px and up, stacked below. */
+.dta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px 18px;
+}
+@media (min-width: 520px) {
+  .dta-grid { grid-template-columns: 1fr 1fr; }
+  .dta-grid .dta-span { grid-column: 1 / -1; }
+}
+
+/* Switch: a toggle for "patient is a dependent". No dot-pill; a track and a knob. */
+.dta-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  color: var(--color-ink);
+  user-select: none;
+}
+.dta-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.dta-switch .track {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(23, 19, 16, 0.14);
+  border: 1px solid var(--color-rule);
+  transition: background var(--duration-base) var(--sai-ease);
+}
+.dta-switch .track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(23, 19, 16, 0.25);
+  transition: transform var(--duration-base) var(--sai-ease);
+}
+.dta-switch input:checked + .track { background: var(--color-ink); }
+.dta-switch input:checked + .track::after { transform: translateX(18px); }
+.dta-switch input:focus-visible + .track { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* ── Playbook ───────────────────────────────────────────────────────── */
+.dta-search {
+  position: relative;
+}
+.dta-search .dta-input { padding-left: 46px; padding-right: 50px; font-size: 18px; }
+.dta-search > svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.dta-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--sai-ease), color var(--duration-fast) var(--sai-ease);
+}
+.dta-search-clear svg { width: 12px; height: 12px; }
+.dta-search-clear:hover { background: rgba(23, 19, 16, 0.07); color: var(--color-ink); }
+.dta-search-clear:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+.dta-search-count {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--color-ink-2);
+}
+
+.dta-pb {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+@media (min-width: 600px) {
+  .dta-pb { grid-template-columns: 236px minmax(0, 1fr); gap: 22px; }
+  .dta-pb-list { max-height: min(460px, 56svh); overflow-y: auto; padding-right: 6px; overscroll-behavior: contain; }
+  .dta-pb-page { max-height: min(460px, 56svh); overflow-y: auto; overscroll-behavior: contain; }
+  .dta-pb-back { display: none; }
+}
+.dta-pb-section {
+  margin: 14px 0 6px;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+.dta-pb-section:first-child { margin-top: 0; }
+.dta-pb-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font: 500 17px/1.35 var(--font-sans);
+  color: var(--color-ink);
+  transition: background var(--duration-fast) var(--sai-ease);
+}
+.dta-pb-item:hover { background: rgba(255, 255, 255, 0.6); }
+.dta-pb-item.is-open {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112, 62, 40, 0.1);
+}
+.dta-pb-item .sub {
+  display: block;
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-ink-2);
+}
+.dta-pb-page {
+  align-self: start;
+  border-radius: var(--radius-tile);
+  padding: 22px 24px 24px;
+}
+@media (max-width: 420px) { .dta-pb-page { padding: 18px 18px 20px; } }
+.dta-pb-title {
+  margin-top: 12px;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.016em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+.dta-pb-meta { margin-top: 6px; font-size: 15px; color: var(--color-ink-2); }
+.dta-steps {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.dta-steps li {
+  position: relative;
+  padding: 0 0 0 38px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-ink);
+  counter-increment: step;
+}
+.dta-steps li + li { margin-top: 12px; }
+.dta-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  font-family: var(--font-label);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--color-accent-deep);
+  text-align: right;
+  padding-right: 8px;
+}
+.dta-pb-watch { margin-top: 20px; }
+.dta-pb-source { margin-top: 14px; font-size: 15px; color: var(--color-ink-2); }
+.dta-pb-back { margin-bottom: 18px; }
+.dta-pb-back .sai-btn { display: inline-flex; align-items: center; gap: 6px; }
+.dta-pb-empty { padding: 26px 4px 8px; }
+.dta-pb-empty p { font-size: 17px; line-height: 1.6; color: var(--color-ink); max-width: 46ch; }
+.dta-pb-empty .sai-btn { margin-top: 16px; }
+.dta-pb-idle { padding: 8px 4px; font-size: 17px; line-height: 1.55; color: var(--color-ink-2); }
+.dta-pb-quick { display: flex; flex-wrap: wrap; gap: 10px; }
+.dta-pb-draft { margin-top: 18px; padding: 22px 24px 24px; border-radius: var(--radius-tile); animation: dta-rise 320ms var(--sai-ease) both; }
+@media (max-width: 420px) { .dta-pb-draft { padding: 18px 18px 20px; } }
+textarea.dta-input.dta-pb-steps-input { min-height: 150px; }
+
+/* ── Eligibility ────────────────────────────────────────────────────── */
+.dta-el-actions {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.dta-el-checking {
+  font-size: 17px;
+  color: var(--color-ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.dta-el-checking .disc {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-rule);
+  border-top-color: var(--color-accent);
+  animation: dta-spin 800ms linear infinite;
+}
+@keyframes dta-spin { to { transform: rotate(360deg); } }
+
+.dta-result {
+  margin-top: 22px;
+  border-radius: var(--radius-tile);
+  padding: 22px 24px 24px;
+  animation: dta-rise 420ms var(--sai-ease) both;
+}
+@media (max-width: 420px) { .dta-result { padding: 18px 18px 20px; } }
+@keyframes dta-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.dta-result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dta-result-name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  line-height: 1.2;
+}
+.dta-result-plan { margin-top: 3px; font-size: 15px; color: var(--color-ink-2); }
+
+/* Facts: a definition list with dotted leaders, like the kit's ledger. */
+.dta-facts {
+  margin: 18px 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px 22px;
+}
+@media (min-width: 520px) { .dta-facts { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 600px) { .dta-facts.three { grid-template-columns: 1fr 1fr 1fr; } }
+.dta-fact { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dta-fact dt {
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+}
+.dta-fact dd {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+.dta-fact dd .num { font-family: var(--font-label); font-weight: 600; letter-spacing: 0.02em; }
+.dta-fact.wide { grid-column: 1 / -1; }
+.dta-fact dd .dta-chip { margin-right: 8px; }
+.dta-fact dd .sub { display: block; margin-top: 6px; font-size: 17px; color: var(--color-ink-2); }
+
+.dta-sub-head {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-rule-soft);
+}
+
+/* Coverage table: hairline rows, no zebra, numerals in the label face. */
+.dta-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 17px;
+}
+.dta-table th {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  text-align: left;
+  padding: 0 10px 10px 0;
+  border-bottom: 1px solid var(--color-rule);
+  white-space: nowrap;
+}
+.dta-table td {
+  padding: 11px 10px 11px 0;
+  border-bottom: 1px solid var(--color-rule-soft);
+  vertical-align: top;
+  line-height: 1.45;
+}
+.dta-table th.num, .dta-table td.num { text-align: right; padding-right: 0; }
+.dta-table td.num { font-family: var(--font-label); font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+.dta-table tr:last-child td { border-bottom: 0; }
+.dta-table td .sub { display: block; font-size: 15px; color: var(--color-ink-2); margin-top: 2px; font-family: var(--font-sans); font-weight: 400; letter-spacing: 0; }
+
+.dta-result-note { margin-top: 16px; }
+.dta-result-actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.dta-copied { font-size: 15px; color: var(--color-status-good); }
+
+/* ── Claims ─────────────────────────────────────────────────────────── */
+.dta-cl-summary {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+.dta-cl-summary .num { font-family: var(--font-label); font-weight: 600; color: var(--color-accent-deep); }
+.dta-cl-wrap { margin-top: 16px; }
+.dta-cl-table { width: 100%; border-collapse: collapse; font-size: 17px; }
+.dta-cl-table th {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  text-align: left;
+  padding: 0 10px 10px 0;
+  border-bottom: 1px solid var(--color-rule);
+  white-space: nowrap;
+}
+.dta-cl-table td {
+  padding: 12px 10px 12px 0;
+  border-bottom: 1px solid var(--color-rule-soft);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.dta-cl-table td:last-child, .dta-cl-table th:last-child { padding-right: 0; }
+.dta-cl-table .num { text-align: right; font-family: var(--font-label); font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+.dta-cl-table th.num { font-family: var(--font-heading); font-weight: 600; }
+.dta-cl-table .sub { display: block; font-size: 15px; color: var(--color-ink-2); margin-top: 2px; font-family: var(--font-sans); font-weight: 400; letter-spacing: 0; white-space: normal; }
+.dta-cl-table td[data-label="Insurer"] { white-space: nowrap; }
+/* Status and the next step share one cell: the chip, then the link under it. */
+.dta-cl-status { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+/* Hold the status column at the width of its widest chip, so opening a row
+   (whose link then reads "Hide") does not shuffle the other columns. */
+.dta-cl-table th:last-child { width: 150px; }
+.dta-cl-table tr.is-open td { border-bottom-color: transparent; }
+.dta-cl-table tr.dta-cl-detail td { padding: 0 0 16px; border-bottom: 1px solid var(--color-rule-soft); }
+.dta-cl-link {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: 500 16px/1.4 var(--font-sans);
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-accent-line);
+  transition: text-decoration-color var(--duration-fast) var(--sai-ease);
+}
+.dta-cl-link:hover { text-decoration-color: var(--color-accent); }
+
+.dta-cl-table .unit { display: none; }
+.dta-cl-table td.num .sub { white-space: nowrap; }
+.dta-cl-link { white-space: nowrap; }
+.dta-cl-call .line a { color: inherit; text-decoration: none; }
+.dta-cl-call .line a:hover { color: var(--color-accent-deep); }
+
+/* Under 600px each claim becomes a three-line ledger entry:
+   patient and amount, insurer and days out, status and the next step. */
+@media (max-width: 599px) {
+  .dta-cl-table thead { display: none; }
+  .dta-cl-table, .dta-cl-table tbody { display: block; }
+  .dta-cl-table tr:not(.dta-cl-detail) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "patient amount"
+      "insurer days"
+      "status status";
+    gap: 6px 14px;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+  .dta-cl-table tr.is-open { border-bottom-color: transparent; padding-bottom: 12px; }
+  .dta-cl-table td { display: block; padding: 0; border-bottom: 0; text-align: left; }
+  .dta-cl-table td[data-label="Patient"] { grid-area: patient; font-weight: 500; }
+  .dta-cl-table td[data-label="Amount"] { grid-area: amount; text-align: right; }
+  .dta-cl-table td[data-label="Insurer"] { grid-area: insurer; color: var(--color-ink-2); }
+  .dta-cl-table td[data-label="Days out"] { grid-area: days; text-align: right; font-family: var(--font-sans); font-weight: 400; letter-spacing: 0; color: var(--color-ink-2); }
+  .dta-cl-table td[data-label="Days out"] .unit { display: inline; }
+  .dta-cl-table td[data-label="Days out"] .sub { display: none; }
+  .dta-cl-table td[data-label="Status"] { grid-area: status; padding-top: 6px; }
+  .dta-cl-status { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+  .dta-cl-table tr.dta-cl-detail { display: block; padding: 0 0 16px; border-bottom: 1px solid var(--color-rule-soft); }
+  .dta-cl-table tr.dta-cl-detail td { display: block; padding: 0; }
+}
+
+.dta-cl-call, .dta-cl-appeal {
+  border-radius: var(--radius-tile);
+  padding: 18px 20px 20px;
+  animation: dta-rise 320ms var(--sai-ease) both;
+}
+@media (max-width: 420px) { .dta-cl-call, .dta-cl-appeal { padding: 16px 16px 18px; } }
+.dta-cl-call .line {
+  font-family: var(--font-label);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+  margin-top: 6px;
+}
+.dta-cl-call .script { margin-top: 12px; }
+.dta-cl-appeal .dta-input { margin-top: 12px; font-size: 17px; }
+.dta-cl-appeal-actions { margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.dta-cl-appeal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+@media print {
+  .dta-cl-appeal textarea { border: 0; box-shadow: none; background: #fff; }
+}

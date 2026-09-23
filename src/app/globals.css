@@ -548,6 +548,247 @@ section.sai-night ul.sai-bullets li::before {
 }
 body:has(#mobile-menu) .sai-scene { display: none; }
 
+/* ═════════════════════════════════════════════════════════════════════════════
+   DRAFT EXPERIMENT — homepage trim, 2026-09-21
+   Branch: draft/homepage-trim-2026-09-21. NOT shipped, NOT in the kit.
+
+   Everything the experiment changes is in this one block so it can be deleted
+   whole (or ported into brand-assets/.../kit/lens-kit.css) without touching a
+   line above it. Nothing above is edited. The palette, both typefaces, the
+   hand-drawn figures, the dock and Day/Night are untouched on purpose.
+
+   What it does:
+   1. Four type sizes, strong contrast, nothing meant to be read under 18px.
+      The one exception is .t-fine (15px) for genuine fine print: the
+      compliance detail and the legal entity line, quieter but in plain sight.
+   2. Paper grain over the warm peach ground (one 180px SVG noise tile,
+      multiplied, no per-frame cost).
+   3. Registration crop marks promoted from the callout box to a recurring
+      section-opener and figure-corner motif. Salmon on the leading corner,
+      terracotta on the trailing one, which is the kit's existing callout
+      convention rather than a new colour rule.
+   4. Air: section rhythm driven by --draft-air, not by more sections.
+   The floating spheres are retired in scene.tsx (they are not rendered at
+   all rather than hidden here, so nothing animates off screen).
+   ═════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* 1 · the four sizes */
+  --t-display: clamp(2.5rem, 1.15rem + 5.4vw, 4.75rem);  /* 40 → 76 */
+  --t-title: clamp(1.75rem, 1.32rem + 1.9vw, 2.5rem);    /* 28 → 40 */
+  --t-body: 1.125rem;                                     /* 18, → 20 on desktop */
+  --t-fine: 0.9375rem;                                    /* 15, fine print + caps labels */
+
+  /* 4 · air */
+  --draft-air: clamp(5rem, 8vw, 8.5rem);
+  --draft-air-tight: clamp(2.75rem, 4vw, 4rem);
+
+  /* 3 · crop-mark inks */
+  --draft-crop-lead: var(--color-salmon);
+  --draft-crop-trail: var(--color-accent);
+}
+@media (min-width: 768px) {
+  :root { --t-body: 1.25rem; }  /* 20px */
+}
+
+.t-display {
+  font-family: var(--font-heading);
+  font-size: var(--t-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  color: var(--color-ink);
+}
+.t-title {
+  font-family: var(--font-heading);
+  font-size: var(--t-title);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+  color: var(--color-ink);
+}
+.t-body {
+  font-size: var(--t-body);
+  line-height: 1.62;
+  color: var(--color-ink-2);
+}
+.t-body strong, .t-body b { color: var(--color-ink); font-weight: 500; }
+.t-fine {
+  font-size: var(--t-fine);
+  line-height: 1.6;
+  color: var(--color-ink-2);
+}
+/* Caps labels ride the fine-print size. They are labels, not reading text. */
+.t-label {
+  font-family: var(--font-label);
+  font-size: var(--t-fine);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+
+/* 2 · paper grain. One tile, painted once, over the sky and under content. */
+.draft-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* 3 · the recurring crop marks.
+   .draft-crop puts one pair around a section opener; .draft-crop-frame puts
+   all four around a figure. Used sparingly: a section opener or a figure, not
+   both on the same screen. */
+.draft-crop {
+  position: relative;
+  display: inline-block;
+  padding: 9px 16px;
+}
+.draft-crop::before,
+.draft-crop::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+}
+.draft-crop::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid var(--draft-crop-lead);
+  border-left: 2px solid var(--draft-crop-lead);
+}
+.draft-crop::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid var(--draft-crop-trail);
+  border-right: 2px solid var(--draft-crop-trail);
+}
+/* Block form: the marks hold a whole paragraph rather than a caps label. */
+.draft-crop.is-block { display: block; padding: 20px 26px; }
+.draft-crop-frame { position: relative; }
+.draft-crop-frame::before,
+.draft-crop-frame::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.draft-crop-frame::before {
+  top: -14px;
+  left: -14px;
+  border-top: 2px solid var(--draft-crop-lead);
+  border-left: 2px solid var(--draft-crop-lead);
+}
+.draft-crop-frame::after {
+  bottom: -14px;
+  right: -14px;
+  border-bottom: 2px solid var(--draft-crop-trail);
+  border-right: 2px solid var(--draft-crop-trail);
+}
+
+/* 4 · section rhythm. Scroll length comes from whitespace, not more sections. */
+.draft-section { padding-top: var(--draft-air); padding-bottom: 0; }
+/* html already carries scroll-padding-top: 96px for the dock, and the sections
+   carry scroll-mt-28 as well, so the two stacked and every anchor landed 208px
+   down with the section's own top padding under that. One of them is enough,
+   and the sections now have plenty of air of their own. */
+.draft-section[id], #contact { scroll-margin-top: 0; }
+.draft-wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1000px;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) { .draft-wrap { padding-inline: 32px; } }
+
+/* ── The lens hero (2026-09-21, pin removed 2026-09-22).
+
+   There is NO scroll story left. The window is an ordinary block in normal
+   flow: no track, no sticky stage, no transforms, no scroll listener, no
+   scroll-snap and no overflow rules. Alec's call: the scroll-driven growth
+   read as buggy and "messes with the hero", and the lens never needed to
+   resize. The lens still drifts, follows a pointer and takes a finger drag,
+   all of that inside the vendored module.
+
+   The sizes below exist to put the nav, the window, the whole headline, the
+   proof line and the start of the statement on one screen at 1440 x 900, and
+   the first four of those at 1280 x 720 and 390 x 844. The window is capped by
+   viewport HEIGHT as well as width, because a short laptop screen is what
+   breaks first. Reduced motion needs nothing here; the module paints a still. ── */
+.lh-hero { padding: 92px 20px 0; }
+.lh-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 2.6vh, 30px);
+}
+.lh-window {
+  display: block;
+  /* Wider (Alec, 2026-09-22): the window is the page's one object and 560px read as a thumbnail.
+     Height cap loosened to match; the headline may start at the fold on a short laptop screen. */
+  width: min(780px, 100%, calc((100svh - 330px) * 1.538));
+  aspect-ratio: 640 / 416;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.lh-copy { text-align: center; max-width: 42rem; }
+/* The display size steps down here: the whole sentence sharing one screen with
+   the window beats a bigger first line. */
+.lh-head {
+  font-size: clamp(30px, 3.05vw, 46px) !important;
+  line-height: 1.05;
+  max-width: 21ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+/* The proof, once, on the first screen. Never below 18px. */
+.lh-proof {
+  margin: 14px auto 0;
+  max-width: 50ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.lh-proof-caveat { color: var(--color-ink-2); }
+
+/* The plain statement: what we build, at reading size, right under the fold
+   line rather than three sections down. */
+.lh-statement {
+  margin: clamp(38px, 5.5vh, 68px) auto 0;
+  max-width: 44rem;
+  text-align: center;
+  /* No bottom padding: the next section brings its own --draft-air, and the
+     two stacked to about 270px of nothing under the call to action. */
+}
+.lh-statement-big {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 1.95vw, 28px);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: -0.014em;
+  color: var(--color-ink);
+  max-width: 30ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+@media (min-width: 768px) { .lh-hero { padding-left: 32px; padding-right: 32px; } }
+@media (max-width: 560px) {
+  .lh-hero { padding-top: 84px; }
+  .lh-window {
+    width: min(358px, 100%, calc((100svh - 360px) * 0.8136));
+    aspect-ratio: 358 / 440;
+  }
+  .lh-head { font-size: clamp(27px, 7.8vw, 34px) !important; max-width: 15ch; }
+  .lh-proof { font-size: 18px; }
+}
+/* ════════════════════ end draft experiment ════════════════════ */
+
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more
    than a few sentences in a row, so these rules live here rather than in the
    type scale above. Body stays at the 17px legibility floor. */
