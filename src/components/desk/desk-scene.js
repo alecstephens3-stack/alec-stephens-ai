@@ -41,6 +41,9 @@ const DEFAULTS = {
   onOpen: null,           // (id, tool) when an object is clicked
   onHover: null,          // ({id, name, verb, tool, x, y} | null) as the pointer moves over objects
   onLight: null,          // ({hour, night, warm}) when the light target changes
+  items: null,            // (painters) => items: a different set of objects on the same desk (the sandbox). null = the front desk
+  stops: null,            // { wide: [[x, y], ...], tall: [...] } the idle lens visits, when items are supplied
+  deskColor: null,        // the laminate colour; null = the front desk's
 };
 
 /* ------------------------------------------------------------------ utils */
@@ -536,9 +539,12 @@ function stickyItem(id, color, poses, lines, seed) {
   };
 }
 
+/* the painters an outside item set can use: same paper, same hand, same print */
+export const painters = { paper, print, script, rr, grainAtop, mulberry, makeCanvas, stickyItem, INK, ACCENT, CREAM, BLUE_INK };
+
 /* the desk surface itself: pale warm laminate, faint grain, a coffee ring */
-function paintDesk(ctx, W, H, layout) {
-  ctx.fillStyle = '#D9B896'; ctx.fillRect(0, 0, W, H);
+function paintDesk(ctx, W, H, layout, color) {
+  ctx.fillStyle = color || '#D9B896'; ctx.fillRect(0, 0, W, H);
   const r = mulberry(99);
   ctx.save();
   for (let i = 0; i < 900; i++) {
@@ -758,7 +764,7 @@ export function init(canvas, options = {}) {
     pointer: { x: 0, y: 0, rx: 0, ry: 0, active: false, lastMove: -10 },
     sceneDirty: true, fontsReady: false, mode: 'webgl', nudge: 0,
   };
-  const items = buildItems();
+  const items = opt.items ? opt.items(painters) : buildItems();
   items.forEach(initItemState);
   S.light = { ld: [-0.5547, -0.8320], warm: 0, night: 0 }; S.lightT = { ld: [-0.5547, -0.8320], warm: 0, night: 0 }; S.hour = opt.hour; S.noteN = 0; S.press = null; S.dragItem = null; S.hoverId = null; S.goto = null;
 
@@ -850,7 +856,7 @@ export function init(canvas, options = {}) {
     active.forEach(bakeItem);
     deskCanvas = makeCanvas(sceneCanvas.width, sceneCanvas.height);
     const dx = deskCanvas.getContext('2d'); dx.setTransform(SS, 0, 0, SS, 0, 0);
-    paintDesk(dx, S.dW, S.dH, S.layout);
+    paintDesk(dx, S.dW, S.dH, S.layout, opt.deskColor);
     grainAtopFull(dx);
     messCanvas = makeCanvas(sceneCanvas.width, sceneCanvas.height);
     composeScene(messCanvas.getContext('2d'), true);
@@ -934,7 +940,7 @@ export function init(canvas, options = {}) {
     return { R, e, mag: lerp(opt.magnification, 1.0, smooth(0.15, 0.95, e)), distort: lerp(0.30, 0.0, smooth(0.1, 0.8, e)) };
   }
   function initItemState(it) { it.t = 0; it.tv = 0; it.hold = 0; it.want = 0; it.ox = 0; it.oy = 0; it.orot = 0; it.vx = 0; it.vy = 0; it.vrot = 0; it.air = 0; it.write = 1; }
-  const STOPS = {
+  const STOPS = opt.stops || {
     wide: [[330, 104], [318, 244], [520, 322], [660, 322], [500, 82], [140, 404], [432, 432], [132, 166]],   // manual, stickies, insurance card, letter, slip, review card, bill, fee sheet
     tall: [[266, 84], [284, 206], [268, 312], [100, 314], [252, 420], [82, 452], [182, 544]],
   };
@@ -1437,6 +1443,16 @@ export function init(canvas, options = {}) {
     flyTo(id, ms = 2500) { const it = active.find(o => o.id === id); if (!it) return false; const p = it.pose; S.goto = { x: p.t[0], y: p.t[1], until: S.time + ms / 1000 }; schedule(); return true; },
     nudge(id) { const it = active.find(o => o.id === id); if (it) { it.air = 1.3; it.z = ++S.zTop; S.lens.lv += 0.8; S.sceneDirty = true; S.messDirty = true; schedule(); } },
     open(id) { openItem(active.find(o => o.id === id)); },
+    shake(strength = 1) {   // the whole desk jolts: everything that can move gets a shove
+      for (const it of active) {
+        if (it.follow) continue;
+        const a = Math.random() * Math.PI * 2, sp = (260 + Math.random() * 520) * strength;
+        it.vx += Math.cos(a) * sp; it.vy += Math.sin(a) * sp * 0.7; it.vrot += (Math.random() - 0.5) * 90 * strength;
+        it.air = Math.max(it.air, 0.8); it.homing = false; it.settleAt = S.time + 3.0;
+      }
+      S.lens.lv += 2.0; S.lens.av += (Math.random() > 0.5 ? 1 : -1) * 3;
+      S.sceneDirty = true; S.messDirty = true; schedule();
+    },
     setHour(h) { S.hour = (h == null ? null : clamp(+h, 0, 24)); applyHour(); },
     get hour() { return S.hour; },
     get light() { return { ...S.lightT }; },

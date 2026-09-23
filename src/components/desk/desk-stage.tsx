@@ -192,6 +192,7 @@ export function DeskStage() {
             <span className="desk-chip-k">{HOURS[hourIdx].label}</span>
             {light ? <span className="desk-chip-v">{clockText(light.hour)}</span> : null}
           </button>
+          <Link href="/play" className="desk-chip">The sandbox</Link>
           <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="sai-btn primary desk-cta">Talk to us</a>
         </div>
       </header>
