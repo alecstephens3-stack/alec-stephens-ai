@@ -53,6 +53,16 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
         ],
       },
+      {
+        // Last on purpose: when two rules set the same header, the later wins.
+        // The QuickBooks callback carries a one-time code in its address:
+        // never send it on as a referrer, never cache the page.
+        source: "/qb/:path*",
+        headers: [
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "no-store" },
+        ],
+      },
     ];
   },
 };
