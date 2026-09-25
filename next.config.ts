@@ -27,6 +27,15 @@ const nextConfig: NextConfig = {
       // alive: /optometry was the link we handed to prospects.
       { source: "/optometry", destination: "/", permanent: true },
       { source: "/eyecare", destination: "/", permanent: true },
+      // Curtis Cole (Medari Advisors) partner link: the one address he uses
+      // on his partners page, newsletter, blasts and podcast. Visitors land
+      // on the normal home page; the tag marks them as his channel under the
+      // partnership agreement (10% on channel leads). 302 so it can change.
+      {
+        source: "/medari",
+        destination: "/?utm_source=medari&utm_medium=partner",
+        permanent: false,
+      },
       // alecstephens.tech is the founder domain on this same project; its
       // front door is the portfolio. 302 for the first weeks, then 301.
       {
