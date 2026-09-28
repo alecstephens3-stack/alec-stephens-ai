@@ -141,7 +141,7 @@ export const PATIENT = {
 
 export const FOUNDERS_SECTION = {
   title: "It's the two of us.",
-  note: "We work from Japan and Korea. Audits fit before your clinic opens or after it closes, Central time, and a question sent in the afternoon is answered by the next morning.",
+  note: "We work from Japan and Korea. Audits fit before your clinic opens or after it closes, Central time, and a question sent in the afternoon is answered by the next business morning.",
 };
 
 export const FOUNDERS = [
@@ -298,12 +298,12 @@ export const V7_WORK = {
     {
       title: "Bills into QuickBooks",
       body: "Lab, frame and supply invoices read, filed and entered into QuickBooks Online. Your bookkeeper checks them instead of typing them.",
-      link: { label: "How it works", href: "/case-studies/vendor-bills.pdf" },
+      link: { label: "One-page summary", href: "/case-studies/vendor-bills.pdf" },
     },
     {
       title: "Time off and payroll",
       body: "For practices still on paper slips or a spreadsheet: requests, approvals, the calendar and the payroll report in one place.",
-      link: { label: "How it works", href: "/case-studies/time-off-and-payroll.pdf" },
+      link: { label: "One-page summary", href: "/case-studies/time-off-and-payroll.pdf" },
     },
     {
       title: "AI your staff can use",

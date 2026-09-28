@@ -950,7 +950,8 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 
 /* what we build: a hairline grid, not cards */
 .v7-work { display: grid; gap: 0; border-top: 1px solid var(--color-rule-strong); }
-.v7-work > li { padding: 26px 0; border-bottom: 1px solid var(--color-rule); }
+.v7-work > li { padding: 26px 0; border-bottom: 1px solid var(--color-rule); display: flex; flex-direction: column; align-items: flex-start; }
+.v7-work > li > a { margin-top: auto; padding-top: 12px; }
 @media (min-width: 768px) {
   .v7-work { grid-template-columns: 1fr 1fr; column-gap: 56px; }
 }

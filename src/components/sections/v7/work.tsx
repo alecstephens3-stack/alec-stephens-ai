@@ -17,7 +17,7 @@ export function Work() {
                   href={w.link.href}
                   target="_blank"
                   rel="noopener"
-                  className="mt-3 inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+                  className="inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
                 >
                   {w.link.label} &rarr;
                 </a>
