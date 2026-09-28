@@ -308,7 +308,7 @@ export const V7_WORK = {
     },
     {
       title: "Systems built around your practice",
-      body: "Whatever your office needs, we build it, from setting up AI workflows for everyday admin work to complete, HIPAA compliant systems that connect to your EHR and work with patient records. Then we train your team to use it.",
+      body: "Whatever your office needs, we build it, from setting up AI workflows for everyday admin work to complete, HIPAA compliant systems that connect to your EHR and work with patient records. We stay on to keep things running as your practice changes.",
     },
   ],
 };
