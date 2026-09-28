@@ -22,6 +22,28 @@ export const metadata: Metadata = {
   },
 };
 
+// Who this page is about, for search engines: ties the name "Alec Stephens"
+// to this page, his profiles and the company, so a name search finds it.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${SITE_URL}/alec#person`,
+  name: "Alec Stephens",
+  url: `${SITE_URL}/alec`,
+  jobTitle: "Co-founder",
+  email: `mailto:${SITE.email}`,
+  worksFor: { "@type": "Organization", "@id": `${SITE_URL}#business`, name: "Stephens AI", url: SITE_URL },
+  sameAs: [SITE.linkedin, SITE.github],
+};
+
 export default function AlecPage() {
-  return <BenchStage />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+      />
+      <BenchStage />
+    </>
+  );
 }

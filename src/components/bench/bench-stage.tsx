@@ -120,7 +120,7 @@ export function BenchStage() {
 
       <section className="desk-main" aria-labelledby="bn-title">
         <div className="bn-head">
-          <h1 id="bn-title" className="bn-display">Portfolio</h1>
+          <h1 id="bn-title" className="bn-display"><span className="sr-only">Alec Stephens: </span>Portfolio</h1>
           <p className="desk-lede bn-hint">
             <span className="bn-hint-k">Hint</span>
             <span>Move the lens over an object and click on it to see each project</span>
