@@ -44,8 +44,19 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
 - Logos: OK to show all five.
 - Open: hosting after cancel (Charlie explained; fine print now promises only "your content stays yours").
 
+## Hero decision (2026-09-28, late)
+- Floor plan: built, rejected ("no idea what this is supposed to convey"), removed.
+- Two options built: /preview/paper (paper in, software out) and /preview/depth. Depth v1
+  rejected ("physics have to be flawless, we have to look expensive"); rebuilt from a study of
+  Linear, Stripe, Raycast, Attio, Mercury, Cursor, Vercel, Superhuman heroes: one dense app
+  window on a framed warm backdrop, two satellites carry the parallax, damped-spring physics.
+  Measured 60fps, zero dropped frames. Alec: "that one is good. i like it."
+- Depth is now the main hero (hero.tsx default). Window copy moved from the eye-care refraction
+  question to the universal "Patient is late. Can we still see them?" (Alec's pick).
+- The old ToolWindow (tabs) is no longer used on / but kept in the repo.
+
 ## Next, in order
-1. Alec reviews the local preview (localhost:3217, `npx next dev -p 3217`).
+1. Re-run website-qa-agent on the new hero (the approval was for the tab window).
 2. Rebuild the two linked one-pagers (vendor-bills.pdf, time-off-and-payroll.pdf) on the kit,
    QuickBooks step on the bills page after the WFV install call.
 3. Noindex preview deploy on Alec's go, then port to main.

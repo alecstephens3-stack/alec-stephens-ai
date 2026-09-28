@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
  * so the two never fight over one transform. Reduced motion: final state.
  */
 
-const QUERY = "vision plan, medical complaint";
+const QUERY = "patient running late";
 
 export function DepthHero() {
   const wrap = useRef<HTMLDivElement>(null);
@@ -111,14 +111,14 @@ export function DepthHero() {
         ref={wrap}
         className={cn("dx", on && "is-on")}
         role="img"
-        aria-label="The front desk app answering 'Refraction: collect or bill?', with this week's bills entered in QuickBooks and a time off request approved."
+        aria-label="The front desk app answering 'Patient is late. Can we still see them?', with this week's bills entered in QuickBooks and a time off request approved."
       >
         <div className="dx-backdrop" aria-hidden="true" />
         <div className="dx-stage" aria-hidden="true">
           <div className="dx-enter dx-enter-win">
             <div ref={win} className="dx-win">
               <aside className="dx-side">
-                <div className="dx-brand"><span className="dx-av">EC</span>Eye Clinic</div>
+                <div className="dx-brand"><span className="dx-av">FD</span>Front Desk</div>
                 <p className="dx-nav-h">Front desk</p>
                 {[["Home", ""], ["Answers", "35"], ["Prices", "41"], ["Doctors", "4"], ["Insurance", "12"]].map(([n, c]) => (
                   <p key={n} className={cn("dx-nav", n === "Answers" && "is-on")}><span>{n}</span>{c && <em>{c}</em>}</p>
@@ -131,28 +131,28 @@ export function DepthHero() {
               </aside>
               <main className="dx-main">
                 <div className="dx-top">
-                  <p className="dx-crumb">Answers <i>/</i> Billing <i>/</i> Vision plans</p>
+                  <p className="dx-crumb">Answers <i>/</i> Scheduling <i>/</i> Late arrivals</p>
                   <div className="dx-search">
                     <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.75" stroke="currentColor" strokeWidth="1.6" /><path d="M10.6 10.6 14 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
                     <span>{QUERY.slice(0, typed)}</span><span className="dx-caret" />
                   </div>
                 </div>
                 <div className={cn("dx-page", answer && "is-in")}>
-                  <p className="dx-h">Refraction: collect or bill?</p>
-                  <p className="dx-meta">Protocol · updated by the office manager</p>
+                  <p className="dx-h">Patient is late. Can we still see them?</p>
+                  <p className="dx-meta">Policy · updated by the office manager</p>
                   <div className="dx-cases">
                     <div className="dx-case">
-                      <p className="dx-case-k">Routine exam</p>
-                      <p className="dx-case-v">The vision plan covers the refraction.</p>
+                      <p className="dx-case-k">Under 15 minutes</p>
+                      <p className="dx-case-v">Check them in and tell the doctor&apos;s assistant.</p>
                     </div>
                     <div className="dx-case is-hot">
-                      <p className="dx-case-k">Medical visit</p>
-                      <p className="dx-case-v">Not covered. Collect at checkout.</p>
+                      <p className="dx-case-k">Over 15 minutes</p>
+                      <p className="dx-case-v">Offer the next open slot today, or rebook.</p>
                     </div>
                   </div>
                   <p className="dx-rel-h">Related</p>
                   <div className="dx-rel">
-                    <span>Red eye call</span><span>Price of an exam</span><span>Which doctor can see this patient</span>
+                    <span>No-show fee</span><span>Double-booking</span><span>Walk-ins</span>
                   </div>
                 </div>
               </main>
