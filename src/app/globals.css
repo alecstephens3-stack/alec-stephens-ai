@@ -1127,6 +1127,37 @@ body:has(#mobile-menu) .sai-scene { display: none; }
   .dx-enter, .dx-page, .dx-tick, .dx-bill { transition: none; }
   .dx-caret { animation: none; }
 }
+
+/* v7 depth hero: results page + popped-out answer (2026-09-28) */
+.dx-stats { margin-top: 22px; display: grid; grid-template-columns: 1.75fr 1fr 1fr 1fr; gap: 12px; }
+.dx-stat { border-radius: 14px; padding: 16px 16px 14px; background: #FAF7F3; box-shadow: inset 0 0 0 1px rgba(23,19,16,.07); }
+.dx-stat-n { font-family: var(--font-heading); font-size: 30px; font-weight: 500; letter-spacing: -.02em; line-height: 1.05; color: var(--color-ink); font-variant-numeric: tabular-nums; }
+.dx-stat-l { margin-top: 6px; font-size: 13.5px; line-height: 1.35; color: rgba(23,19,16,.58); }
+.dx-stat-big { background: #fff; box-shadow: inset 0 0 0 1px rgba(220,104,67,.35), 0 8px 20px rgba(220,104,67,.10); }
+.dx-stat-big .dx-stat-n { color: var(--color-accent-display); }
+.dx-feed { margin-top: 8px; }
+.dx-feed-row {
+  display: grid; grid-template-columns: 52px minmax(0,1fr) auto; gap: 14px; align-items: center;
+  padding: 10px 2px; border-bottom: 1px solid rgba(23,19,16,.06); font-size: 15px;
+  opacity: 0; transform: translateY(6px); transition: opacity 500ms ease, transform 700ms cubic-bezier(.16,1,.3,1);
+}
+.dx-feed-row.is-in { opacity: 1; transform: none; }
+.dx-feed-t { color: rgba(23,19,16,.45); font-variant-numeric: tabular-nums; }
+.dx-feed-w { color: var(--color-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dx-feed-o { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: rgba(23,19,16,.6); padding: 4px 9px; border-radius: 7px; background: #F5F1EC; }
+.dx-enter-s2 { bottom: auto !important; top: 30px; right: 1.5%; width: 360px; }
+.dx-top { justify-content: flex-start; }
+.dx-pop { padding: 16px 18px 14px; }
+.dx-pop-q { font-family: var(--font-heading); font-size: 17px; font-weight: 600; color: var(--color-ink); letter-spacing: -.01em; }
+.dx-pop-r { margin-top: 9px; display: grid; grid-template-columns: 112px 1fr; gap: 10px; font-size: 15px; color: var(--color-ink); }
+.dx-pop-r span { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: rgba(23,19,16,.5); padding-top: 1px; }
+.dx-pop-f { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(23,19,16,.07); font-size: 13.5px; color: var(--color-accent-deep); }
+@media (max-width: 900px) {
+  .dx-stats { grid-template-columns: 1fr 1fr; }
+  .dx-stat-big { grid-column: 1 / -1; }
+  .dx-feed-row:nth-child(n+3) { display: none; }
+  .dx-enter-s2 { top: auto; right: auto; width: 94%; }
+}
 /* ════════════════════ end v7 ════════════════════ */
 
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more
