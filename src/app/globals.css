@@ -1221,6 +1221,16 @@ body:has(#mobile-menu) .sai-scene { display: none; }
   .sv-node { grid-template-columns: 1fr; gap: 4px; }
 }
 @media (prefers-reduced-motion: reduce) { .sv-body, .sv-shot, .sv-chev { transition: none; } }
+
+/* case study payoff (2026-09-28) */
+.pf-pay { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 20px 56px; }
+.pf-n { font-family: var(--font-heading); font-size: clamp(34px, 3.4vw, 46px); font-weight: 500; letter-spacing: -.025em; line-height: 1.05; color: var(--color-ink); font-variant-numeric: tabular-nums; }
+.pf-fig.is-lead .pf-n { color: var(--color-accent-display); }
+.pf-l { margin-top: 6px; font-size: 18px; color: var(--color-ink); }
+.pf-note { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.pf-live { display: inline-flex; align-items: center; padding: 6px 11px; border-radius: 8px;
+  background: var(--color-status-good-tint); color: var(--color-status-good);
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
 /* ════════════════════ end v7 ════════════════════ */
 
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more

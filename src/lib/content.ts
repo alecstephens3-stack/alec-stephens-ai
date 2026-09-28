@@ -72,6 +72,13 @@ export const QUOTE = {
   who: "Jill Romines",
   role: "Front Office Manager",
   since: "In daily use since August 2026.",
+  /** The payoff, from portfolio.md (200 hours is final; always with its label). */
+  payoff: [
+    { n: "About 200 hours", l: "a year back at the front desk" },
+    { n: "About $4,500", l: "a year in front desk pay" },
+  ],
+  payoffNote: "Estimated from the clinic's own numbers.",
+  status: "Live in production",
 };
 
 /**
