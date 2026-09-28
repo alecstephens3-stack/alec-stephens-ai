@@ -195,7 +195,7 @@ export function DepthHero() {
         </div>
       </div>
       <figcaption className="t-fine mt-5 text-center">
-        Drawn from the tools we built for a Kansas eye clinic. Names and amounts are examples.
+        Based on our systems in production. Names and amounts are examples.
       </figcaption>
     </figure>
   );
