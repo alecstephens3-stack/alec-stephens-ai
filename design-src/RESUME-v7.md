@@ -55,8 +55,25 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
   question to the universal "Patient is late. Can we still see them?" (Alec's pick).
 - The old ToolWindow (tabs) is no longer used on / but kept in the repo.
 
-## Next, in order
-1. Re-run website-qa-agent on the new hero (the approval was for the tab window).
-2. Rebuild the two linked one-pagers (vendor-bills.pdf, time-off-and-payroll.pdf) on the kit,
-   QuickBooks step on the bills page after the WFV install call.
-3. Noindex preview deploy on Alec's go, then port to main.
+## Done 2026-09-28 (evening), in Alec's order
+- Hero: depth window shows results ("Front desk results": about 5 hours back since Monday, 20
+  questions without the office manager, bills in QuickBooks, time off approved, live feed); the
+  search types "patient running late" and the answer pops out as a card. No "week" wording (Alec
+  dislikes it). Hours line removed from the hero. Subline = the Medari partners-page line, word for
+  word: "We diagnose where practices can save time and increase profit, then build the solutions
+  that get them there." Kicker "For independent healthcare practices", no bracket marks.
+- "What we build" renamed Services (nav, label, hero button "See our services"). Headline, Alec's
+  words: "Your staff can focus on patients. We handle the rest."
+- Service copy is FINAL (Alec: "the copy is perfect"), incl. card 4 "Systems built around your
+  practice" (EHR + patient records via AWS under a BAA, custom builds; ends "We stay on to keep
+  things running as your practice changes."). "HIPAA compliant" wording flagged to Alec, kept.
+- Services display: pick-a-service switcher (list left, that service working on the right in the
+  hero's app style; nothing moves on its own). Alec: "good work".
+- One-pagers: all four rebuilt on Lens v3 and replaced on the LIVE site too (sources in the vault,
+  artifacts/case-studies/*-2026-09-28/). PDF grey-box defect now blocked by the converters.
+
+## Next session: the rest of the sections, one at a time, with Alec
+Order on the page after Services: Proof (Wichita Family Vision quote), How it works, Pricing,
+Patient data, Founders, Contact. Rule for copy: go section by section with Alec, match the vibe
+(warm, plain, patient-first), never a sentence-shape formula, flowing sentences.
+Then: re-run website-qa-agent on the whole page; noindex preview deploy on Alec's go; port to main.
