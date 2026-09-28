@@ -307,8 +307,8 @@ export const V7_WORK = {
       link: { label: "One-page summary", href: "/case-studies/time-off-and-payroll.pdf" },
     },
     {
-      title: "AI your staff can use",
-      body: "Claude or ChatGPT set up for the office work with no patient information in it, like bookkeeping, hiring paperwork and marketing. Written rules for staff, and a training session.",
+      title: "Systems built around your practice",
+      body: "Whatever your office needs, we build it, from setting up AI workflows for everyday admin work to complete, HIPAA compliant systems that connect to your EHR and work with patient records. Then we train your team to use it.",
     },
   ],
 };
