@@ -58,7 +58,7 @@ export function ContactForm() {
           Message sent.
         </h3>
         <p className="mt-3 text-base text-ink-2">
-          We&apos;ll get back to you within 24 hours.
+          We&apos;ll get back to you by the next business morning.
         </p>
         <button
           onClick={() => setStatus("idle")}

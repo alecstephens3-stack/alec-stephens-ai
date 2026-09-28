@@ -114,7 +114,6 @@ export const PROOF_LINKS = {
   items: [
     { label: "Time off and payroll", href: "/case-studies/time-off-and-payroll.pdf" },
     { label: "Vendor bills", href: "/case-studies/vendor-bills.pdf" },
-    { label: "Admin tools", href: "/case-studies/admin-tools.pdf" },
   ],
 };
 
@@ -136,12 +135,13 @@ export const HOW = {
  */
 export const PATIENT = {
   headline:
-    "Patient information: none by default, and when a job does need it, the system runs inside your own cloud account under a BAA.",
-  fine: "The knowledge base holds none of it: your rules, prices and protocols, not your charts. For work that does involve patient data, like billing or claims, the data stays with you and never sits on our servers. We sign a BAA before we start either way.",
+    "We sign a BAA before we start. Most of what we build never sees patient information.",
+  fine: "The front desk answers hold your rules, prices and protocols, not your charts. When a job does need patient data, like billing or claims, it runs in an account in your practice's name that we set up and you own, never on our servers.",
 };
 
 export const FOUNDERS_SECTION = {
   title: "It's the two of us.",
+  note: "We work from Japan and Korea. Audits fit before your clinic opens or after it closes, Central time, and a question sent in the afternoon is answered by the next morning.",
 };
 
 export const FOUNDERS = [
@@ -149,7 +149,7 @@ export const FOUNDERS = [
     name: "Alec Stephens",
     role: "Co-founder",
     image: "/images/headshot.png",
-    bio: "Spent the past year inside an eyecare practice, watching how a front desk gets through a day.",
+    bio: "Built the front desk answers, time off and bills tools at a Kansas eye clinic, working with its office manager and bookkeeper.",
   },
   {
     name: "Jusheen Kim",
@@ -185,7 +185,7 @@ export const FAQ = [
   },
   {
     q: "How long until staff are using it?",
-    a: "About two weeks to go live. Your team is involved early on, so by launch it's answering the questions they were already asking.",
+    a: "About 30 days for one build. Your team is involved early on, so by launch it's answering the questions they were already asking.",
   },
   {
     q: "Is this only for the front desk?",
@@ -193,7 +193,7 @@ export const FAQ = [
   },
   {
     q: "What does it cost?",
-    a: "One flat fee for the build, quoted in writing after the first call. Monthly support is optional. No hourly billing and no long-term contract.",
+    a: "Three flat prices: $4,500, $9,500 or $18,000 for the build, then $299, $499 or $899 a month. The free time audit tells you which fits. No hourly billing and no long-term contract.",
   },
   {
     q: "Does our IT company have to do anything?",
@@ -218,26 +218,26 @@ export const CONTACT = {
 
 export const V7_NAV = [
   { label: "What we build", href: "/#work" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "How we work", href: "/#how" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "FAQ", href: "/faq" },
 ];
 
 export const V7_CTA = { label: "Book a free time audit", short: "Free time audit", href: CALENDLY };
 
 export const V7_HERO = {
-  kicker: "For clinics, dental and eye care practices",
+  kicker: "For independent clinics, dental and eye care practices",
   headline: { lead: "Less busywork.", accent: "More time for patients." },
   sub: "We find where your office loses hours to work done by hand, then build software that does it, around the tools you already use.",
   secondary: { label: "See what we build", href: "/#work" },
-  proof: "About 260 to 300 hours a year back at one Kansas eye clinic.",
+  proof: "About 260 to 300 hours a year back at one Kansas eye clinic, from two builds.",
   proofCaveat: "Estimated from the clinic's own numbers.",
 };
 
 /** The window in the hero: three real tools, drawn with names and prices left out. */
 export const V7_WINDOW = {
   caption:
-    "Drawn from the tools we run at a Kansas eye clinic. Names and amounts are examples.",
+    "Drawn from the tools we built for a Kansas eye clinic. Names and amounts are examples.",
   tabs: [
     {
       id: "answers",
@@ -292,22 +292,22 @@ export const V7_WORK = {
   items: [
     {
       title: "Front desk answers",
-      body: "Every rule, price and exception in one place staff can search, kept current by your office manager.",
+      body: "Every rule, price and exception in one place staff can search, kept current by your office manager. In use at a Kansas eye clinic, now being set up for a dental practice in California.",
       link: { label: "Case study", href: CASE_STUDY_URL },
     },
     {
       title: "Bills into QuickBooks",
-      body: "Vendor invoices read, filed and entered for you. Your bookkeeper checks them instead of typing them.",
-      link: { label: "One page", href: "/case-studies/vendor-bills.pdf" },
+      body: "Lab, frame and supply invoices read, filed and entered into QuickBooks Online. Your bookkeeper checks them instead of typing them.",
+      link: { label: "How it works", href: "/case-studies/vendor-bills.pdf" },
     },
     {
       title: "Time off and payroll",
-      body: "Requests, approvals, the calendar and the payroll report, without the paper slips.",
-      link: { label: "One page", href: "/case-studies/time-off-and-payroll.pdf" },
+      body: "For practices still on paper slips or a spreadsheet: requests, approvals, the calendar and the payroll report in one place.",
+      link: { label: "How it works", href: "/case-studies/time-off-and-payroll.pdf" },
     },
     {
       title: "AI your staff can use",
-      body: "Claude or ChatGPT set up for your office, with written rules on what it may touch, and your team trained on it.",
+      body: "Claude or ChatGPT set up for the office work with no patient information in it, like bookkeeping, hiring paperwork and marketing. Written rules for staff, and a training session.",
     },
   ],
 };
@@ -315,10 +315,10 @@ export const V7_WORK = {
 export const V7_HOW = {
   title: "How a project goes.",
   steps: [
-    { n: "01", title: "Free time audit", body: "30 minutes. You keep the Opportunity Map: your biggest wins and the fix for each." },
+    { n: "01", title: "Free time audit", body: "30 minutes. You keep the Opportunity Map: where your staff lose the most hours, and what we'd do about each." },
     { n: "02", title: "We watch the job", body: "A screen share with whoever does it today, then a flat price in writing." },
-    { n: "03", title: "Build with your staff", body: "Around the tools you already use. Weeks, not months." },
-    { n: "04", title: "Yours to keep", body: "Your office manager can change it. Month to month support." },
+    { n: "03", title: "Build with your staff", body: "Next to your practice software and QuickBooks, not inside them. Weeks, not months." },
+    { n: "04", title: "Yours to keep", body: "Your office manager edits the answers. We handle the rest, month to month." },
   ],
 };
 
@@ -337,7 +337,7 @@ export const V7_PRICING = {
       price: "$9,500",
       monthly: "then $499 a month",
       body: "Two builds, plus your staff trained on Claude or ChatGPT for bookkeeping, hiring paperwork and the front desk.",
-      note: "Where most practices start.",
+      note: "What we'd suggest for most practices.",
     },
     {
       name: "The whole practice",
