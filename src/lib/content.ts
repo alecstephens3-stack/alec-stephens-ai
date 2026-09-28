@@ -226,7 +226,7 @@ export const V7_NAV = [
 export const V7_CTA = { label: "Book a free time audit", short: "Free time audit", href: CALENDLY };
 
 export const V7_HERO = {
-  kicker: "For independent clinics, dental and eye care practices",
+  kicker: "For independent healthcare practices",
   headline: { lead: "Less busywork.", accent: "More time for patients." },
   sub: "We find where your office loses hours to work done by hand, then build software that does it, around the tools you already use.",
   secondary: { label: "See what we build", href: "/#work" },
@@ -280,7 +280,7 @@ export const V7_LOGOS = {
   items: [
     { name: "Wichita Family Vision", src: "/logos/wfv.png", w: 232, h: 96, size: 46 },
     { name: "Workthentic", src: "/logos/workthentic.png", w: 209, h: 96, size: 44 },
-    { name: "Kamata Koumuten", src: "/logos/kamata.png", w: 622, h: 96, size: 30 },
+    { name: "Kamata Koumuten", src: "/logos/kamata.png", w: 543, h: 96, size: 32 },
     { name: "Medari Advisors", src: "/logos/medari.png", w: 239, h: 96, size: 44 },
     { name: "Tri-Valley Dental Care", src: "/logos/trivalley.png", w: 723, h: 96, size: 26 },
   ],
