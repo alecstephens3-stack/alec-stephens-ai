@@ -289,7 +289,7 @@ export const V7_LOGOS = {
 
 export const V7_WORK = {
   kicker: "Services",
-  title: "The jobs your staff do by hand, done for them.",
+  title: "Your staff can focus on patients. We handle the rest.",
   items: [
     {
       title: "Front desk answers",
