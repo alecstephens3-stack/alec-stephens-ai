@@ -50,7 +50,18 @@ export function ToolWindow() {
           if (!root.current?.contains(e.relatedTarget as Node)) setPaused(false);
         }}
       >
-        <div className="v7-window-bar" role="tablist" aria-label="Tools we build">
+        <div
+          className="v7-window-bar"
+          role="tablist"
+          aria-label="Tools we build"
+          onKeyDown={(e) => {
+            if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+            e.preventDefault();
+            const next = (active + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+            setActive(next);
+            root.current?.querySelector<HTMLButtonElement>(`#v7-tab-${tabs[next].id}`)?.focus();
+          }}
+        >
           {tabs.map((t, i) => (
             <button
               key={t.id}
@@ -58,6 +69,7 @@ export function ToolWindow() {
               role="tab"
               id={`v7-tab-${t.id}`}
               aria-selected={i === active}
+              tabIndex={i === active ? 0 : -1}
               aria-controls={`v7-panel-${t.id}`}
               onClick={() => setActive(i)}
               className={cn("v7-tab", i === active && "is-on")}
@@ -80,7 +92,7 @@ export function ToolWindow() {
               aria-hidden={i !== active}
               className={cn("v7-panel", i === active && "is-on")}
             >
-              {i === active && <Panel tab={t} />}
+              <Panel tab={t} />
             </div>
           ))}
         </div>

@@ -7,6 +7,11 @@ import { FOUNDERS, FOUNDERS_SECTION } from "@/lib/content";
 export function Founders() {
   return (
     <Section id="about" kicker="Who we are" title={FOUNDERS_SECTION.title}>
+      {"note" in FOUNDERS_SECTION && (
+        <AnimateOnScroll>
+          <p className="t-body -mt-4 mb-10 max-w-[56ch] md:mb-12">{FOUNDERS_SECTION.note}</p>
+        </AnimateOnScroll>
+      )}
       <div className="grid gap-10 md:grid-cols-2 md:gap-14">
         {FOUNDERS.map((f, i) => (
           <AnimateOnScroll key={f.name} delay={i * 80}>

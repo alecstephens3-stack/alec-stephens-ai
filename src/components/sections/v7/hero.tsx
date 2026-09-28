@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section className="v7-hero">
       <div className="v7-hero-copy">
-        <p className="t-label">{V7_HERO.kicker}</p>
+        <p className="draft-crop t-label">{V7_HERO.kicker}</p>
         <h1 className="v7-head">
           {V7_HERO.headline.lead}{" "}
           <span className="text-accent-display">{V7_HERO.headline.accent}</span>
