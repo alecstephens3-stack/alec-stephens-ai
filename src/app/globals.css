@@ -1231,6 +1231,13 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 .pf-live { display: inline-flex; align-items: center; padding: 6px 11px; border-radius: 8px;
   background: var(--color-status-good-tint); color: var(--color-status-good);
   font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+
+/* Lens v4 section opening (2026-09-28): a two-tone statement, no label. */
+.v7-open { font-family: var(--font-heading); font-weight: 500; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.18; letter-spacing: -.022em; color: var(--color-ink); }
+.v7-client { display: flex; align-items: center; gap: 16px; }
+.v7-client-logo { height: 44px; width: auto; opacity: .7; filter: grayscale(1); }
+.v7-client-bar { width: 1px; height: 30px; background: var(--color-rule-strong); }
+.v7-client-lab { font-family: var(--font-label); font-weight: 600; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-accent-deep); }
 /* ════════════════════ end v7 ════════════════════ */
 
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more

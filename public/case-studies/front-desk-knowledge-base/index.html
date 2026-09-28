@@ -936,6 +936,12 @@ body.sai-quiet::before { content: ''; position: fixed; inset: 0; z-index: -1; po
 .sai-quote figcaption { margin-top: 22px; display: flex; align-items: center; gap: 14px; font-size: var(--sai-fs-body); color: var(--sai-ink-2); }
 .sai-quote figcaption::before { content: ''; width: 32px; height: 2px; border-radius: 2px; background: var(--sai-accent); flex-shrink: 0; }
 .sai-quote figcaption b { color: var(--sai-ink); font-weight: 500; }
+/* Section opening: a two-tone statement, first sentence ink, the continuation in terracotta
+   (<em>). Replaces the crop-mark .sai-stamp as a section opener (retired 2026-09-28, Alec). */
+.sai-open { margin: 0; font-family: var(--sai-font-sans); font-weight: 500; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.18; letter-spacing: -.022em; color: var(--sai-ink); max-width: 30ch; }
+.sai-open em { font-style: normal; color: var(--sai-accent-deep); }
+section.sai-night .sai-open { color: var(--sai-cream); }
+section.sai-night .sai-open em { color: var(--sai-accent-night); }
 /* Case study header: the client's logo (muted, like the logo row), a hairline, the label,
    then one line of facts. Opens every v4 case study (Alec's pick, 2026-09-28). */
 .sai-client { display: flex; align-items: center; gap: 18px; }
@@ -1087,7 +1093,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   .cs .quote-after { margin-top: 18px; font-size: 16px; color: var(--sai-ink-2); max-width: 62ch; }
   .cs .cta { margin-top: clamp(80px, 11vh, 128px); }
   .cs .cta .sai-night { padding: clamp(28px, 5vw, 56px); }
-  .cs .cta h2 { color: var(--sai-cream); margin-top: 16px; }
+  .cs .sai-open { margin-top: 0; }
   .cs .cta p.body { margin-top: 16px; max-width: 48ch; font-size: 18px; line-height: 1.6; color: var(--sai-cream-2); }
   .cs .cta .row-cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
   .cs .cta a.mail { color: var(--sai-cream-2); font-size: 16px; text-decoration: none; }
@@ -1141,9 +1147,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   </section>
 
   <section id="change">
-    <span class="sai-stamp">Before and after</span>
-    <h2>What changed at the front desk.</h2>
-    <p class="sub">Same clinic, same staff, same rules, and one place to look.</p>
+    <h2 class="sai-open">What changed at the front desk. <em>Same clinic, same staff, same rules, and one place to look.</em></h2>
     <div class="sai-split">
       <div class="col before">
         <div class="col-head"><h4>Before</h4><span class="tag old">Scattered</span></div>
@@ -1168,9 +1172,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   </section>
 
   <section id="inside">
-    <span class="sai-stamp">What we built</span>
-    <h2>A front desk playbook the clinic owns.</h2>
-    <p class="sub">Built from their own documents, not a template.</p>
+    <h2 class="sai-open">A front desk playbook the clinic owns. <em>Built from their own documents, not a template.</em></h2>
     <div class="sai-rows two">
         <div><h4>35 protocol pages</h4><p>Rewritten from the clinic's own files: scheduling, insurance, charges, recall, triage and the daily checklist. We read every tab, pulled the rules out of side notes and stale copies, and checked each one with the front office manager before it went in.</p></div>
         <div><h4>4 decision tools</h4><p>For the questions anyone at the desk can get wrong, new or experienced: which doctor can see this patient, this year's price, collect or bill, and how urgent the call is. Each one asks the questions in order and cannot skip the exception.</p></div>
@@ -1187,8 +1189,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   </section>
 
   <section id="talk">
-    <span class="sai-stamp">In their words</span>
-    <figure class="sai-quote" style="margin-top:22px">
+    <figure class="sai-quote">
       <blockquote>This is highly valuable, both in the short term and long term. It's already saving a lot of time.</blockquote>
       <figcaption><span><b>Jill Romines</b>, Front Office Manager, Wichita Family Vision</span></figcaption>
     </figure>
@@ -1197,8 +1198,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
     <div class="cta">
       <section class="sai-night">
         <span class="sai-ember"></span>
-        <span class="sai-stamp on-night">Free time audit</span>
-        <h2>30 minutes. You keep the map.</h2>
+        <h2 class="sai-open">30 minutes. <em>You keep the map.</em></h2>
         <p class="body">If your front desk has one person everyone interrupts, we can build this for your practice from your own documents. Book a free time audit and we'll send you an Opportunity Map with the fix for each thing we find, yours to keep whether you hire us or not.</p>
         <div class="row-cta">
           <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a free time audit</a>

@@ -11,16 +11,22 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
  */
 export function Section({
   id,
-  kicker,
   title,
+  accent,
+  eyebrow,
   children,
   className,
   center = false,
   titleMax,
 }: {
   id?: string;
+  /** Retired 2026-09-28 (Lens v4): the crop-mark kicker. Kept so old callers compile; never rendered. */
   kicker?: string;
   title?: React.ReactNode;
+  /** Lens v4 section opening: the continuation of the statement, in terracotta. */
+  accent?: React.ReactNode;
+  /** Optional real object above the title (e.g. a client logo lockup), never a text label. */
+  eyebrow?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
   center?: boolean;
@@ -29,14 +35,13 @@ export function Section({
   return (
     <section id={id} className={cn("draft-section scroll-mt-28", className)}>
       <div className={cn("draft-wrap", center && "text-center")}>
-        {(kicker || title) && (
+        {(eyebrow || title) && (
           <AnimateOnScroll className={cn("mb-10 md:mb-14", center && "flex flex-col items-center")}>
-            {kicker && (
-              <p className={cn("draft-crop t-label", center && "self-center")}>{kicker}</p>
-            )}
+            {eyebrow}
             {title && (
-              <h2 className={cn("t-title mt-5", titleMax ?? "max-w-[20ch]", center && "mx-auto")}>
+              <h2 className={cn("v7-open", eyebrow && "mt-6", titleMax ?? "max-w-[30ch]", center && "mx-auto")}>
                 {title}
+                {accent && <> <span className="text-accent-display">{accent}</span></>}
               </h2>
             )}
           </AnimateOnScroll>
