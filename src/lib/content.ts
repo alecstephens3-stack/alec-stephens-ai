@@ -61,7 +61,7 @@ export const HERO = {
 };
 
 export const QUOTE = {
-  kicker: "Wichita Family Vision · Wichita, Kansas",
+  kicker: "Case Study · Wichita Family Vision",
   title: {
     lead: "Every front desk question used to land on the office manager.",
     accent: "Now the answer is one search away.",
