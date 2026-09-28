@@ -143,14 +143,11 @@ export const HOW = {
 export const PATIENT = {
   headline:
     "We sign a BAA before we start. Most of what we build never sees patient information.",
-  lead: "We sign a BAA before we start.",
-  accent: "Most of what we build never sees patient information.",
   fine: "The front desk answers hold your rules, prices and protocols, not your charts. When a job does need patient data, like billing or claims, it runs in an account in your practice's name that we set up and you own, never on our servers.",
 };
 
 export const FOUNDERS_SECTION = {
   title: "It's the two of us.",
-  accent: "No account managers, and no hand-offs.",
   note: "We work from Japan and Korea. Audits fit before your clinic opens or after it closes, Central time, and a question sent in the afternoon is answered by the next business morning.",
 };
 
@@ -299,8 +296,7 @@ export const V7_LOGOS = {
 
 export const V7_WORK = {
   kicker: "Services",
-  title: "Your staff can focus on patients.",
-  accent: "We handle the rest, from front desk answers to bills in QuickBooks and the systems in between.",
+  title: "Your staff can focus on patients. We handle the rest.",
   items: [
     {
       title: "Front desk answers",
@@ -326,7 +322,6 @@ export const V7_WORK = {
 
 export const V7_HOW = {
   title: "How a project goes.",
-  accent: "From a free time audit to a system you own.",
   steps: [
     { n: "01", title: "Free time audit", body: "30 minutes. You keep the Opportunity Map: where your staff lose the most hours, and what we'd do about each." },
     { n: "02", title: "We watch the job", body: "A screen share with whoever does it today, then a flat price in writing." },
@@ -337,8 +332,7 @@ export const V7_HOW = {
 
 export const V7_PRICING = {
   kicker: "Pricing",
-  title: "Three prices.",
-  accent: "The audit tells you which fits.",
+  title: "Three prices. The audit tells you which fits.",
   tiers: [
     {
       name: "One fix",
@@ -365,8 +359,7 @@ export const V7_PRICING = {
 
 export const V7_CONTACT = {
   kicker: "Free time audit",
-  title: "30 minutes.",
-  accent: "You keep the map.",
+  title: "30 minutes. You keep the map.",
   body: "Tell us about your week. We'll find where the hours go and send you an Opportunity Map with the fix for each, yours to keep whether you hire us or not.",
   bookLabel: "Book a free time audit",
 };

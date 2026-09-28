@@ -16,9 +16,8 @@ export function Contact() {
           <NightWindow ariaLabel="Contact" className="p-7 md:p-12">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
               <div className="lg:self-center">
-                <h2 className="v7-open !text-cream">
-                  {CONTACT.title} <span className="!text-accent-night">{CONTACT.accent}</span>
-                </h2>
+                <p className="draft-crop t-label !text-accent-night">{CONTACT.kicker}</p>
+                <h2 className="t-title mt-5 !text-cream">{CONTACT.title}</h2>
                 <p className="t-body mt-5 max-w-[40ch] !text-cream-2">{CONTACT.body}</p>
                 <div className="mt-8 flex flex-col gap-2.5">
                   <a

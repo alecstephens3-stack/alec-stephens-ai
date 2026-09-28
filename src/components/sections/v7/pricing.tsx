@@ -9,7 +9,7 @@ import { V7_PRICING, V7_CTA } from "@/lib/content";
  */
 export function Pricing() {
   return (
-    <Section id="pricing" title={V7_PRICING.title} accent={V7_PRICING.accent}>
+    <Section id="pricing" kicker={V7_PRICING.kicker} title={V7_PRICING.title} titleMax="max-w-[24ch]">
       <AnimateOnScroll>
         <div className="grid gap-5 md:grid-cols-3">
           {V7_PRICING.tiers.map((t) => (

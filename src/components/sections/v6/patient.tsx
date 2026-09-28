@@ -12,13 +12,13 @@ export function Patient() {
     <section id="patient-data" className="draft-section scroll-mt-28">
       <div className="draft-wrap">
         <AnimateOnScroll>
-          <div className="max-w-[760px]">
-            <p className="v7-open">
-              {PATIENT.lead} <span className="text-accent-display">{PATIENT.accent}</span>
+          <div className="draft-crop is-block mx-auto max-w-[760px]">
+            <p className="t-title !text-[clamp(1.35rem,1.05rem+1.1vw,1.8rem)] !leading-[1.35]">
+              {PATIENT.headline}
             </p>
             <p className="t-fine mt-6 max-w-[64ch]">{PATIENT.fine}</p>
           </div>
-          </AnimateOnScroll>
+        </AnimateOnScroll>
       </div>
     </section>
   );
