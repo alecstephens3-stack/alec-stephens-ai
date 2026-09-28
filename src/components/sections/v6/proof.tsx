@@ -47,7 +47,20 @@ export function Proof() {
       </AnimateOnScroll>
 
       <AnimateOnScroll delay={60}>
-        <p className="t-body mt-8">{QUOTE.since}</p>
+        <div className="pf-pay">
+          {QUOTE.payoff.map((x, i) => (
+            <div key={x.n} className={i === 0 ? "pf-fig is-lead" : "pf-fig"}>
+              <p className="pf-n">{x.n}</p>
+              <p className="pf-l">{x.l}</p>
+            </div>
+          ))}
+        </div>
+        <p className="pf-note">
+          <span className="pf-live">
+            {QUOTE.status}
+          </span>
+          <span className="t-fine">{QUOTE.payoffNote}</span>
+        </p>
         <p className="t-body mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-3">
           <a
             href={PROOF_LINKS.full.href}
