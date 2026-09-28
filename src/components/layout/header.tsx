@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS, CALENDLY } from "@/lib/content";
+import { V7_NAV as NAV_LINKS, V7_CTA } from "@/lib/content";
 
 /**
  * The Dock: the Lens floating pill header.
@@ -117,12 +117,12 @@ export function Header() {
             );
           })}
           <a
-            href={CALENDLY}
+            href={V7_CTA.href}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-1.5 rounded-full bg-ink px-4 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-white shadow-[0_8px_20px_rgba(23,19,16,0.2)] transition-all duration-[220ms] hover:-translate-y-px hover:bg-accent"
           >
-            Book a call &rarr;
+            {V7_CTA.short} &rarr;
           </a>
         </nav>
 
@@ -187,13 +187,13 @@ export function Header() {
                 </Link>
               ))}
               <a
-                href={CALENDLY}
+                href={V7_CTA.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={close}
                 className="mt-2 rounded-full bg-ink px-7 py-3.5 font-heading text-lg font-medium text-white transition-colors hover:bg-accent"
               >
-                Book a call &rarr;
+                {V7_CTA.short} &rarr;
               </a>
               <button
                 type="button"

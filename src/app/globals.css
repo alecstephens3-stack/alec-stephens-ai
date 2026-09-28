@@ -789,6 +789,167 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 /* ════════════════════ end draft experiment ════════════════════ */
 
+/* ════════════════════ DRAFT v7 homepage (2026-09-28) ════════════════════
+   Orgo-style clarity: short headline, the work in one calm window, a still
+   logo row. One moving thing on the page (the window), nothing else animates
+   on its own. */
+
+/* the How rail: four steps on one hairline (was referenced by v6, never defined) */
+.draft-rail {
+  display: grid;
+  border-top: 1px solid var(--color-rule-strong);
+}
+.draft-rail > li + li { border-top: 1px solid var(--color-rule); }
+@media (min-width: 768px) {
+  .draft-rail { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .draft-rail > li + li { border-top: 0; border-left: 1px solid var(--color-rule); }
+}
+
+.v7-hero { padding: 132px 20px 0; }
+@media (min-width: 768px) { .v7-hero { padding: 150px 32px 0; } }
+.v7-hero-copy { max-width: 46rem; margin-inline: auto; text-align: center; }
+.v7-head {
+  margin-top: 18px;
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 5.2vw, 68px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+.v7-sub {
+  margin: 22px auto 0;
+  max-width: 40ch;
+  font-size: clamp(18px, 1.35vw, 20px);
+  line-height: 1.55;
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+}
+.v7-proof {
+  margin: 26px auto 0;
+  max-width: 48ch;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.v7-hero-window { max-width: 860px; margin: clamp(44px, 6vh, 64px) auto 0; }
+
+/* the window */
+.v7-window {
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: #fff;
+  box-shadow: 0 34px 74px rgba(60, 35, 20, 0.18), 0 2px 8px rgba(60, 35, 20, 0.06);
+}
+.v7-window-bar {
+  display: flex;
+  gap: 4px;
+  padding: 10px;
+  background: #F6F2EC;
+  border-bottom: 1px solid var(--color-rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.v7-window-bar::-webkit-scrollbar { display: none; }
+.v7-tab {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border-radius: 12px;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  transition: background-color 220ms, color 220ms;
+  overflow: hidden;
+}
+.v7-tab:hover { color: var(--color-ink); }
+.v7-tab.is-on { background: #fff; color: var(--color-ink); box-shadow: 0 1px 3px rgba(60, 35, 20, 0.12); }
+.v7-tab-progress {
+  position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px;
+  border-radius: 2px; background: var(--color-accent);
+  transform-origin: left; transform: scaleX(0);
+  animation: v7-progress 6500ms linear forwards;
+}
+@keyframes v7-progress { to { transform: scaleX(1); } }
+
+.v7-window-body { position: relative; display: grid; min-height: 372px; }
+.v7-panel {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 500ms ease, visibility 0s linear 500ms;
+}
+.v7-panel.is-on { opacity: 1; visibility: visible; transition: opacity 500ms ease; }
+.v7-p { padding: 26px; display: flex; flex-direction: column; gap: 16px; }
+@media (min-width: 768px) { .v7-p { padding: 34px 40px; } }
+
+.v7-in { opacity: 0; transform: translateY(6px); animation: v7-in 520ms cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--d, 0ms); }
+@keyframes v7-in { to { opacity: 1; transform: none; } }
+
+.v7-search {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px; border-radius: 12px;
+  border: 1px solid var(--color-rule-strong); color: var(--color-ink-2);
+  font-size: 18px;
+}
+.v7-typed { color: var(--color-ink); }
+.v7-card { border: 1px solid var(--color-rule); border-radius: 16px; padding: 20px 22px; background: #FCFAF7; }
+.v7-card-title { font-family: var(--font-heading); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--color-ink); }
+.v7-card-body { margin-top: 8px; font-size: 17px; line-height: 1.55; color: var(--color-ink-2); }
+.v7-card-rule { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--color-rule); font-size: 17px; line-height: 1.55; color: var(--color-ink); }
+.v7-card-rule strong { font-weight: 600; }
+.v7-card-meta { margin-top: 10px; font-size: 15px; color: var(--color-ink-2); }
+
+.v7-table { display: flex; flex-direction: column; border-top: 1px solid var(--color-rule); }
+.v7-row {
+  display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr) 112px 22px; align-items: center; gap: 14px;
+  padding: 12px 2px; border-bottom: 1px solid var(--color-rule);
+  font-size: 17px; color: var(--color-ink);
+}
+.v7-row-to { color: var(--color-ink-2); }
+.v7-row-amt { font-variant-numeric: tabular-nums; text-align: right; }
+.v7-check {
+  display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 999px;
+  background: var(--color-status-good-tint); color: var(--color-status-good);
+}
+.v7-done { font-size: 16px; font-weight: 500; color: var(--color-status-good); }
+
+.v7-dl { margin-top: 12px; display: grid; gap: 8px; }
+.v7-dl > div { display: grid; grid-template-columns: 90px 1fr; font-size: 17px; }
+.v7-dl dt { color: var(--color-ink-2); }
+.v7-dl dd { color: var(--color-ink); }
+.v7-steps { display: flex; flex-direction: column; gap: 12px; padding-left: 4px; }
+.v7-steps li { display: flex; align-items: center; gap: 12px; font-size: 17px; color: var(--color-ink); }
+
+@media (max-width: 560px) {
+  .v7-hero { padding-top: 112px; }
+  .v7-row { grid-template-columns: minmax(0,1fr) auto 22px; }
+  .v7-row-to { display: none; }
+  .v7-window-body { min-height: 400px; }
+}
+
+/* the still logo row */
+.v7-logos { margin: clamp(64px, 9vh, 96px) auto 0; padding-inline: 20px; max-width: 1100px; }
+.v7-logo-row {
+  margin-top: 22px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 26px 52px;
+}
+.v7-logo { opacity: 0.6; }
+
+/* what we build: a hairline grid, not cards */
+.v7-work { display: grid; gap: 0; border-top: 1px solid var(--color-rule-strong); }
+.v7-work > li { padding: 26px 0; border-bottom: 1px solid var(--color-rule); }
+@media (min-width: 768px) {
+  .v7-work { grid-template-columns: 1fr 1fr; column-gap: 56px; }
+}
+/* ════════════════════ end v7 ════════════════════ */
+
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more
    than a few sentences in a row, so these rules live here rather than in the
    type scale above. Body stays at the 17px legibility floor. */
