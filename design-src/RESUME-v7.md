@@ -38,13 +38,14 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
   4481d8e. Clinic-owner (optometrist-reviewer) copy fixes applied. Post-approval nits applied:
   link labels "One-page summary", work links aligned, "next business morning".
 
+## Alec's answers (2026-09-28, evening)
+- Monthly fee = our guarantee that the systems keep doing their job (now on the card fine print + FAQ).
+- No family disclosure ("literally no reason to"). No reference call with Jill. Headline stays for now.
+- Logos: OK to show all five.
+- Open: hosting after cancel (Charlie explained; fine print now promises only "your content stays yours").
+
 ## Next, in order
-1. Alec's calls from the copy review: what the monthly fee buys; what "keep everything" means
-   if we host it (add one FAQ line); say the first clinic is family?; offer a reference call
-   with Jill (clinic OK needed); keep or change the headline.
-2. Written OK from Tri-Valley (Dr. Jo), Medari and Workthentic to show their logos (the dental
-   line + logo identify Tri-Valley). Note each in the client files. Blocks deploy.
-3. Rebuild the two linked one-pagers (vendor-bills.pdf, time-off-and-payroll.pdf) on the kit:
-   no dot-pills, "Book a free time audit" footer, QuickBooks step on the bills page after the
-   WFV install call.
-4. Noindex preview deploy on Alec's go, then port to main.
+1. Alec reviews the local preview (localhost:3217, `npx next dev -p 3217`).
+2. Rebuild the two linked one-pagers (vendor-bills.pdf, time-off-and-payroll.pdf) on the kit,
+   QuickBooks step on the bills page after the WFV install call.
+3. Noindex preview deploy on Alec's go, then port to main.
