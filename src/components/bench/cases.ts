@@ -443,7 +443,7 @@ export const CASES: BuildCase[] = [
     "short": "AI Lab",
     "kicker": "AI education · content and outbound systems",
     "title": "An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no",
-    "client": "AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026",
+    "client": "AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Applied AI Engineer (in-house), contract, March to September 2026",
     "client_short": "AI Lab, iPhone Photography School",
     "users": "2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials",
     "shipped": "March to September 2026",
@@ -526,7 +526,7 @@ export const CASES: BuildCase[] = [
       "repo": null,
       "repo_note": "The live proof pages (offer chains, ICP decision, KPI report, savings calculator) are still up on Vercel; links on request."
     },
-    "attribution": "I built all of it as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.",
+    "attribution": "I built all of it as the in-house Applied AI Engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.",
     "media": {
       "hero": "/alec/img/ai-lab/01-figure-architecture.webp",
       "alt": "Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack",
