@@ -24,9 +24,16 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
   v6 used but never defined.
 - Header: v7 nav (What we build, Pricing, How we work, FAQ) + "Free time audit" button.
 
+## Done since (2026-09-28, second pass)
+- Full-page QA at 1440 and 390: fixed the window's empty space, phone tab labels (Answers /
+  Bills / Time off), logo row scale on phones (now 3 + 2), price tiers aligned (middle tier
+  renamed "Two fixes"; "Where most practices start." moved under its price, no caps eyebrow),
+  form prompt now "What takes up the most time in your week?", SITE_TAGLINE / DESCRIPTION.
+- copy_check (artifact profile) clean; site lint + left-bar guard clean; layout_lint clean
+  (its one hit is the contact form's off-screen honeypot, on purpose). ~760 visible words.
+- Sent to website-qa-agent and optometrist-reviewer (results go in the next pass).
+
 ## Next, in order
-1. Review the full-page screenshots (desktop + 390 phone); fix what's off.
-2. `scripts/layout_lint.py` equivalent pass + `scripts/copy_check.py` on the V7 copy.
-3. Ask Alec: is each company OK with its logo shown (Tri-Valley, Medari, Workthentic especially)?
-4. Update SITE_DESCRIPTION / page title (still v6 "Custom office tools for independent clinics").
-5. website-qa-agent gate, then a noindex preview deploy on Alec's go, then port to main.
+1. Apply the two reviewers' findings.
+2. Ask Alec: is each company OK with its logo shown (Tri-Valley, Medari, Workthentic especially)?
+3. Noindex preview deploy on Alec's go, then port to main.
