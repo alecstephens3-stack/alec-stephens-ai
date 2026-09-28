@@ -193,7 +193,7 @@ export const FAQ = [
   },
   {
     q: "What does it cost?",
-    a: "Three flat prices: $4,500, $9,500 or $18,000 for the build, then $299, $499 or $899 a month. The free time audit tells you which fits. No hourly billing and no long-term contract.",
+    a: "Three flat prices: $4,500, $9,500 or $18,000 for the build, then $299, $499 or $899 a month. The free time audit tells you which fits. The monthly fee is our guarantee that everything we build keeps doing its job. No hourly billing and no long-term contract.",
   },
   {
     q: "Does our IT company have to do anything?",
@@ -346,7 +346,7 @@ export const V7_PRICING = {
       body: "Everything above, plus custom software where it pays for itself, and monthly working time with both of us.",
     },
   ],
-  fine: "No long-term contract. Cancel any time and keep everything. Bugs on our side are free.",
+  fine: "The monthly fee is our guarantee: everything we build keeps doing its job, and if it stops, we fix it. No long-term contract. Cancel any time and your content stays yours.",
 };
 
 export const V7_CONTACT = {
