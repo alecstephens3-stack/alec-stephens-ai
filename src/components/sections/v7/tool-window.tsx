@@ -62,7 +62,8 @@ export function ToolWindow() {
               onClick={() => setActive(i)}
               className={cn("v7-tab", i === active && "is-on")}
             >
-              {t.label}
+              <span className="max-sm:hidden">{t.label}</span>
+              <span className="sm:hidden">{t.short}</span>
               {i === active && !paused && !reduced && (
                 <span key={`p${active}`} className="v7-tab-progress" aria-hidden="true" />
               )}

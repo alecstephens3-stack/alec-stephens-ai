@@ -21,14 +21,10 @@ export function Pricing() {
                   : "sai-pane flex flex-col rounded-card p-7"
               }
             >
-              {"note" in t && t.note ? (
-                <p className="t-label">{t.note}</p>
-              ) : (
-                <p className="t-label invisible max-md:hidden" aria-hidden="true">&nbsp;</p>
-              )}
-              <h3 className="mt-3 font-heading text-[22px] font-medium leading-[1.25] text-ink">{t.name}</h3>
+              <h3 className="font-heading text-[22px] font-medium leading-[1.25] text-ink">{t.name}</h3>
               <p className="mt-5 font-heading text-[40px] font-medium leading-none tracking-[-0.02em] text-ink">{t.price}</p>
               <p className="t-fine mt-2">{t.monthly}</p>
+              {"note" in t && t.note && <p className="mt-3 text-[16px] font-medium text-accent-deep">{t.note}</p>}
               <p className="t-body mt-5">{t.body}</p>
             </div>
           ))}

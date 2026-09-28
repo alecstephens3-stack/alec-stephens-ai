@@ -877,7 +877,7 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 @keyframes v7-progress { to { transform: scaleX(1); } }
 
-.v7-window-body { position: relative; display: grid; min-height: 372px; }
+.v7-window-body { position: relative; display: grid; min-height: 344px; }
 .v7-panel {
   grid-area: 1 / 1;
   opacity: 0;
@@ -940,7 +940,11 @@ body:has(#mobile-menu) .sai-scene { display: none; }
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 26px 52px;
 }
-.v7-logo { opacity: 0.6; }
+.v7-logo { opacity: 0.6; height: var(--h); width: auto; }
+@media (max-width: 560px) {
+  .v7-logo-row { gap: 22px 30px; }
+  .v7-logo { height: calc(var(--h) * 0.72); }
+}
 
 /* what we build: a hairline grid, not cards */
 .v7-work { display: grid; gap: 0; border-top: 1px solid var(--color-rule-strong); }
