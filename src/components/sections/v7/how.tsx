@@ -5,7 +5,7 @@ import { V7_HOW } from "@/lib/content";
 /** How a project goes, with the free time audit as step one. */
 export function How() {
   return (
-    <Section id="how" kicker="How we work" title={V7_HOW.title}>
+    <Section id="how" title={V7_HOW.title} accent={V7_HOW.accent}>
       <AnimateOnScroll>
         <ol className="draft-rail">
           {V7_HOW.steps.map((s) => (

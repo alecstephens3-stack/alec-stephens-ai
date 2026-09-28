@@ -6,7 +6,7 @@ import { FOUNDERS, FOUNDERS_SECTION } from "@/lib/content";
 /** The two of us: a face and a line each. No cards. */
 export function Founders() {
   return (
-    <Section id="about" kicker="Who we are" title={FOUNDERS_SECTION.title}>
+    <Section id="about" title={FOUNDERS_SECTION.title} accent={FOUNDERS_SECTION.accent}>
       {"note" in FOUNDERS_SECTION && (
         <AnimateOnScroll>
           <p className="t-body -mt-4 mb-10 max-w-[56ch] md:mb-12">{FOUNDERS_SECTION.note}</p>

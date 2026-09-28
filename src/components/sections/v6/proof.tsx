@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Section } from "./shell";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { QUOTE, PROOF_LINKS } from "@/lib/content";
@@ -14,14 +15,15 @@ export function Proof() {
   return (
     <Section
       id="proof"
-      kicker={QUOTE.kicker}
-      titleMax="max-w-[26ch]"
-      title={
-        <>
-          {QUOTE.title.lead}{" "}
-          <span className="text-accent-display">{QUOTE.title.accent}</span>
-        </>
+      eyebrow={
+        <div className="v7-client">
+          <Image src="/logos/wfv.png" alt="Wichita Family Vision" width={232} height={96} className="v7-client-logo" />
+          <span className="v7-client-bar" aria-hidden="true" />
+          <span className="v7-client-lab">Case study</span>
+        </div>
       }
+      title={QUOTE.title.lead}
+      accent={QUOTE.title.accent}
     >
       <AnimateOnScroll>
         <p className="t-body -mt-4 mb-12 max-w-[56ch] md:mb-14">{QUOTE.problem}</p>
