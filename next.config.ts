@@ -36,20 +36,34 @@ const nextConfig: NextConfig = {
         destination: "/?utm_source=medari&utm_medium=partner",
         permanent: false,
       },
-      // alecstephens.tech is the founder domain on this same project; its
-      // front door is the portfolio. 302 for the first weeks, then 301.
+      // One address per page (SEO, 2026-09-28). The same Vercel project also
+      // answers on www.stephensai.co and alecstephens.tech, and every page
+      // used to render in full on both: duplicate copies of the whole site,
+      // and search results were still showing an old alecstephens.tech
+      // title for "Stephens AI". Permanent redirects hand the ranking to
+      // stephensai.co.
       {
-        source: "/",
-        has: [{ type: "host", value: "alecstephens.tech" }],
-        destination: "https://stephensai.co/alec",
-        permanent: false,
+        source: "/:path*",
+        has: [{ type: "host", value: "www.stephensai.co" }],
+        destination: "https://stephensai.co/:path*",
+        permanent: true,
       },
-      {
-        source: "/",
-        has: [{ type: "host", value: "www.alecstephens.tech" }],
-        destination: "https://stephensai.co/alec",
-        permanent: false,
-      },
+      // alecstephens.tech is the founder domain; its front door is the
+      // portfolio. Was 302 for the first weeks, permanent since 2026-09-28.
+      ...["alecstephens.tech", "www.alecstephens.tech"].flatMap((host) => [
+        {
+          source: "/",
+          has: [{ type: "host" as const, value: host }],
+          destination: "https://stephensai.co/alec",
+          permanent: true,
+        },
+        {
+          source: "/:path+",
+          has: [{ type: "host" as const, value: host }],
+          destination: "https://stephensai.co/:path+",
+          permanent: true,
+        },
+      ]),
     ];
   },
   async headers() {

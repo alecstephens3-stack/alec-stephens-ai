@@ -5,6 +5,7 @@ import { How } from "@/components/sections/v5/how";
 import { Founders } from "@/components/sections/v5/founders";
 import { Faq } from "@/components/sections/v5/faq";
 import { Contact } from "@/components/sections/v5/contact";
+import type { Metadata } from "next";
 import {
   SITE_NAME,
   SITE_URL,
@@ -14,6 +15,10 @@ import {
   FAQ,
 } from "@/lib/content";
 
+export const metadata: Metadata = {
+  alternates: { canonical: SITE_URL },
+};
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -22,6 +27,7 @@ export default function Home() {
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}#business`,
         name: SITE_NAME,
+        legalName: "Stephens AI LLC",
         description: SITE_DESCRIPTION,
         url: SITE_URL,
         email: CONTACT_EMAIL,
@@ -39,9 +45,31 @@ export default function Home() {
           "Practice operations automation",
         ],
         founder: [
-          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co-founder" },
-          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co-founder" },
+          {
+            "@type": "Person",
+            "@id": `${SITE_URL}/alec#person`,
+            name: "Alec Stephens",
+            jobTitle: "Co-founder",
+            url: `${SITE_URL}/alec`,
+            sameAs: ["https://www.linkedin.com/in/alec-stephens-55b392213/"],
+          },
+          {
+            "@type": "Person",
+            name: "Jusheen Kim",
+            jobTitle: "Co-founder",
+            sameAs: ["https://www.linkedin.com/in/jusheenkim"],
+          },
         ],
+      },
+      {
+        // Tells Google the site's name is "Stephens AI", so results show the
+        // brand rather than the bare domain.
+        "@type": "WebSite",
+        "@id": `${SITE_URL}#website`,
+        name: SITE_NAME,
+        alternateName: ["Stephens AI LLC", "stephensai.co"],
+        url: SITE_URL,
+        publisher: { "@id": `${SITE_URL}#business` },
       },
       {
         "@type": "FAQPage",

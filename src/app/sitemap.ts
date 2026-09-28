@@ -3,9 +3,11 @@ import { SITE_URL } from "@/lib/content";
 
 // Fixed date, not `new Date()`. Re-stamping every page as modified on every
 // build teaches crawlers the signal is worthless.
-const LAST_CONTENT_CHANGE = new Date("2026-09-16");
+const LAST_CONTENT_CHANGE = new Date("2026-09-17");
 const JP_PAGE_PUBLISHED = new Date("2026-08-31");
 const PORTFOLIO_PUBLISHED = new Date("2026-09-16");
+// The /alec index became the bench on 2026-09-23 and was last edited 09-28.
+const BENCH_UPDATED = new Date("2026-09-28");
 const LEGAL_PUBLISHED = new Date("2026-09-17");
 const PORTFOLIO_SLUGS = [
   "knowledge-base", "pto-payroll", "invoice-agent", "ai-lab",
@@ -31,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       // Alec's portfolio index. Static files in public/alec, rewrites in next.config.ts.
       url: `${SITE_URL}/alec`,
-      lastModified: PORTFOLIO_PUBLISHED,
+      lastModified: BENCH_UPDATED,
       changeFrequency: "monthly",
       priority: 0.8,
     },
