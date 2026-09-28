@@ -25,10 +25,10 @@ export const LEGAL_UPDATED = "September 17, 2026";
 export const CASE_STUDY_URL = "https://stephensai.co/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
-export const SITE_TAGLINE = "Custom office tools for independent clinics";
+export const SITE_TAGLINE = "Less busywork for clinics, dental and eye care practices";
 
 export const SITE_DESCRIPTION =
-  "Your clinic runs on a few people who remember everything. Stephens AI puts what they know into a knowledge base the whole office can search, built from your own documents. Custom office tools for independent healthcare clinics.";
+  "We find where your practice loses hours to work done by hand, then build software that does it, around the tools you already use. Book a free 30-minute time audit.";
 
 export const NAV_LINKS = [
   { label: "Knowledge base", href: "/#knowledge-base" },
@@ -242,6 +242,7 @@ export const V7_WINDOW = {
     {
       id: "answers",
       label: "Front desk answers",
+      short: "Answers",
       query: "vision plan, medical complaint",
       title: "Refraction: collect or bill?",
       body: "The vision plan covers the refraction only when the visit bills as a routine exam.",
@@ -251,6 +252,7 @@ export const V7_WINDOW = {
     {
       id: "bills",
       label: "Vendor bills",
+      short: "Bills",
       title: "This week's bills",
       rows: [
         { vendor: "Lens lab", amount: "$1,284.60", to: "Lab fees" },
@@ -263,6 +265,7 @@ export const V7_WINDOW = {
     {
       id: "timeoff",
       label: "Time off",
+      short: "Time off",
       title: "Time off request",
       who: "Front desk",
       when: "Friday, half day",
@@ -330,11 +333,11 @@ export const V7_PRICING = {
       body: "One build, live in about 30 days: front desk answers, time off and payroll, or vendor bills.",
     },
     {
-      name: "Front desk and back office",
+      name: "Two fixes",
       price: "$9,500",
       monthly: "then $499 a month",
       body: "Two builds, plus your staff trained on Claude or ChatGPT for bookkeeping, hiring paperwork and the front desk.",
-      note: "Where most practices start",
+      note: "Where most practices start.",
     },
     {
       name: "The whole practice",

@@ -18,7 +18,7 @@ export function Logos() {
               alt={l.name}
               width={l.w}
               height={l.h}
-              style={{ height: l.size, width: "auto" }}
+              style={{ ["--h" as string]: `${l.size}px` }}
               className="v7-logo"
             />
           </li>

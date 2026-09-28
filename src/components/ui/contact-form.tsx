@@ -120,7 +120,7 @@ export function ContactForm() {
             setFormData((prev) => ({ ...prev, message: e.target.value }))
           }
           className={cn(FIELD_CLASS, "resize-none")}
-          placeholder="Tell us about your project..."
+          placeholder="What takes up the most time in your week?"
         />
       </div>
 
