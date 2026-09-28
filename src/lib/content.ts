@@ -63,11 +63,11 @@ export const HERO = {
 export const QUOTE = {
   kicker: "Case Study · Wichita Family Vision",
   title: {
-    lead: "Every front desk question used to land on the office manager.",
-    accent: "Now the answer is one search away.",
+    lead: "Every question used to go through one person.",
+    accent: "Now anyone working at the front desk finds the answer in seconds.",
   },
   problem:
-    "\u201cWhich doctor can see this patient?\u201d \u201cDo we collect for this or bill it?\u201d Whoever was on the phone walked it over to the office manager's desk.",
+    "\u201cWhich doctor can see this patient?\u201d \u201cDo we collect for this or bill it?\u201d Questions like these came up all day, and each one meant putting a patient on hold and pulling the office manager away from their own work.",
   text: "This is highly valuable, both in the short term and long term. It's already saving a lot of time.",
   who: "Jill Romines",
   role: "Front Office Manager",
