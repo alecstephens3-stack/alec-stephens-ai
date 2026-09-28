@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
-import { ToolWindow } from "./tool-window";
+import { DepthHero } from "./hero-depth";
 import { V7_HERO, V7_CTA } from "@/lib/content";
 
 /**
@@ -29,7 +29,7 @@ export function Hero({ visual }: { visual?: React.ReactNode }) {
           {V7_HERO.proof} <span className="text-ink-2">{V7_HERO.proofCaveat}</span>
         </p>
       </div>
-      <div className="v7-hero-window">{visual ?? <ToolWindow />}</div>
+      <div className="v7-hero-window">{visual ?? <DepthHero />}</div>
     </section>
   );
 }
