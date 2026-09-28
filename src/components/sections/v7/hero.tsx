@@ -25,9 +25,6 @@ export function Hero({ visual }: { visual?: React.ReactNode }) {
             {V7_HERO.secondary.label}
           </ButtonLink>
         </div>
-        <p className="v7-proof">
-          {V7_HERO.proof} <span className="text-ink-2">{V7_HERO.proofCaveat}</span>
-        </p>
       </div>
       <div className="v7-hero-window">{visual ?? <DepthHero />}</div>
     </section>

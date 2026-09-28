@@ -228,7 +228,8 @@ export const V7_CTA = { label: "Book a free time audit", short: "Free time audit
 export const V7_HERO = {
   kicker: "For independent healthcare practices",
   headline: { lead: "Less busywork.", accent: "More time for patients." },
-  sub: "We find where your office loses hours to work done by hand, then build software that does it, around the tools you already use.",
+  /** Word for word from the Medari partners-page line sent to Curtis 2026-09-25 (Alec, 2026-09-28). */
+  sub: "We diagnose where practices can save time and increase profit, then build the solutions that get them there.",
   secondary: { label: "See what we build", href: "/#work" },
   proof: "About 260 to 300 hours a year back at one Kansas eye clinic, from two builds.",
   proofCaveat: "Estimated from the clinic's own numbers.",
