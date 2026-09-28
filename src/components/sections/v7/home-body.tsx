@@ -1,0 +1,79 @@
+import { Hero } from "@/components/sections/v7/hero";
+import { Logos } from "@/components/sections/v7/logos";
+import { Work } from "@/components/sections/v7/work";
+import { Proof } from "@/components/sections/v6/proof";
+import { How } from "@/components/sections/v7/how";
+import { Pricing } from "@/components/sections/v7/pricing";
+import { Founders } from "@/components/sections/v6/founders";
+import { Patient } from "@/components/sections/v6/patient";
+import { Contact } from "@/components/sections/v7/contact";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  CONTACT_EMAIL,
+  LINKEDIN_URL,
+} from "@/lib/content";
+
+/**
+ * DRAFT v6 homepage, in the order a stranger reads it: the desk and the
+ * headline, what we build and one thing to do, the sticky note from that desk
+ * answered by the real tool, the person who uses it, how a project goes, the
+ * two of us, the patient-data answer, the call.
+ *
+ * The FAQ moved to /faq, which is where the FAQPage JSON-LD went with it.
+ */
+export function HomeBody({ visual }: { visual?: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": `${SITE_URL}#business`,
+        name: SITE_NAME,
+        description: SITE_DESCRIPTION,
+        url: SITE_URL,
+        email: CONTACT_EMAIL,
+        logo: `${SITE_URL}/logo-light.svg`,
+        image: `${SITE_URL}/og-image.png`,
+        sameAs: [
+          LINKEDIN_URL,
+          "https://www.linkedin.com/in/alec-stephens-55b392213/",
+          "https://www.linkedin.com/in/jusheenkim",
+        ],
+        areaServed: ["United States"],
+        serviceType: [
+          "Custom office tools for healthcare clinics",
+          "Front desk knowledge base",
+          "Practice operations automation",
+        ],
+        founder: [
+          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co-founder" },
+          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co-founder" },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          // Escaping "<" so a future copy string containing </script> cannot
+          // break out of the tag and take the page with it.
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <Hero visual={visual} />
+      <Logos />
+      <Work />
+      <Proof />
+      <How />
+      <Pricing />
+      <Patient />
+      <Founders />
+      <Contact />
+    </>
+  );
+}

@@ -7,7 +7,7 @@ import { V7_HERO, V7_CTA } from "@/lib/content";
  * two buttons, the proof line, then the work itself in one window.
  * The copy never animates; the window is the one moving thing.
  */
-export function Hero() {
+export function Hero({ visual }: { visual?: React.ReactNode }) {
   return (
     <section className="v7-hero">
       <div className="v7-hero-copy">
@@ -29,9 +29,7 @@ export function Hero() {
           {V7_HERO.proof} <span className="text-ink-2">{V7_HERO.proofCaveat}</span>
         </p>
       </div>
-      <div className="v7-hero-window">
-        <ToolWindow />
-      </div>
+      <div className="v7-hero-window">{visual ?? <ToolWindow />}</div>
     </section>
   );
 }
