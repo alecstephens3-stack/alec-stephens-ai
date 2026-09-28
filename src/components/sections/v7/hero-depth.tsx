@@ -23,6 +23,12 @@ import { cn } from "@/lib/utils";
 
 const QUERY = "patient running late";
 
+const FEED = [
+  { t: "9:14", what: "Patient running late", out: "Answered" },
+  { t: "9:31", what: "Lens lab invoice, $1,284.60", out: "In QuickBooks" },
+  { t: "10:02", what: "Friday, half day", out: "Approved" },
+];
+
 export function DepthHero() {
   const wrap = useRef<HTMLDivElement>(null);
   const win = useRef<HTMLDivElement>(null);
@@ -31,6 +37,7 @@ export function DepthHero() {
   const [on, setOn] = useState(false);
   const [typed, setTyped] = useState(0);
   const [answer, setAnswer] = useState(false);
+  const [feed, setFeed] = useState(0);
   const [bills, setBills] = useState(0);
   const [toast, setToast] = useState(false);
 
@@ -40,14 +47,16 @@ export function DepthHero() {
     const timers: number[] = [];
     const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
     if (reduce) {
-      at(0, () => { setOn(true); setTyped(QUERY.length); setAnswer(true); setBills(3); setToast(true); });
+      at(0, () => { setOn(true); setTyped(QUERY.length); setAnswer(true); setFeed(3); setBills(3); setToast(true); });
       return () => timers.forEach(clearTimeout);
     }
     at(60, () => setOn(true));
-    for (let i = 1; i <= QUERY.length; i++) at(700 + i * 42, () => setTyped(i));
-    at(700 + QUERY.length * 42 + 260, () => setAnswer(true));
-    [0, 1, 2].forEach((i) => at(2300 + i * 420, () => setBills(i + 1)));
-    at(3700, () => setToast(true));
+    for (let i = 1; i <= QUERY.length; i++) at(900 + i * 42, () => setTyped(i));
+    at(300, () => setAnswer(true));
+    const typedAt = 900 + QUERY.length * 42;
+    at(typedAt + 250, () => setToast(true));
+    [0, 1, 2].forEach((i) => at(typedAt + 700 + i * 480, () => setFeed(i + 1)));
+    [0, 1, 2].forEach((i) => at(typedAt + 1300 + i * 380, () => setBills(i + 1)));
     return () => timers.forEach(clearTimeout);
   }, []);
 
@@ -111,7 +120,7 @@ export function DepthHero() {
         ref={wrap}
         className={cn("dx", on && "is-on")}
         role="img"
-        aria-label="The front desk app answering 'Patient is late. Can we still see them?', with this week's bills entered in QuickBooks and a time off request approved."
+        aria-label="Front desk results: about 5 hours back since Monday, 20 questions answered without the office manager, 12 bills entered in QuickBooks, 3 time off requests approved. A search for 'patient running late' opens the policy."
       >
         <div className="dx-backdrop" aria-hidden="true" />
         <div className="dx-stage" aria-hidden="true">
@@ -121,7 +130,7 @@ export function DepthHero() {
                 <div className="dx-brand"><span className="dx-av">FD</span>Front Desk</div>
                 <p className="dx-nav-h">Front desk</p>
                 {[["Home", ""], ["Answers", "35"], ["Prices", "41"], ["Doctors", "4"], ["Insurance", "12"]].map(([n, c]) => (
-                  <p key={n} className={cn("dx-nav", n === "Answers" && "is-on")}><span>{n}</span>{c && <em>{c}</em>}</p>
+                  <p key={n} className={cn("dx-nav", n === "Home" && "is-on")}><span>{n}</span>{c && <em>{c}</em>}</p>
                 ))}
                 <p className="dx-nav-h">Office</p>
                 {[["Bills", ""], ["Time off", ""], ["Payroll report", ""]].map(([n]) => (
@@ -131,29 +140,33 @@ export function DepthHero() {
               </aside>
               <main className="dx-main">
                 <div className="dx-top">
-                  <p className="dx-crumb">Answers <i>/</i> Scheduling <i>/</i> Late arrivals</p>
                   <div className="dx-search">
                     <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.75" stroke="currentColor" strokeWidth="1.6" /><path d="M10.6 10.6 14 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
                     <span>{QUERY.slice(0, typed)}</span><span className="dx-caret" />
                   </div>
                 </div>
                 <div className={cn("dx-page", answer && "is-in")}>
-                  <p className="dx-h">Patient is late. Can we still see them?</p>
-                  <p className="dx-meta">Policy · updated by the office manager</p>
-                  <div className="dx-cases">
-                    <div className="dx-case">
-                      <p className="dx-case-k">Under 15 minutes</p>
-                      <p className="dx-case-v">Check them in and tell the doctor&apos;s assistant.</p>
+                  <p className="dx-h">Front desk results</p>
+                  <p className="dx-meta">Updated as it happens</p>
+                  <div className="dx-stats">
+                    <div className="dx-stat dx-stat-big">
+                      <p className="dx-stat-n">About 5 hours</p>
+                      <p className="dx-stat-l">back since Monday</p>
                     </div>
-                    <div className="dx-case is-hot">
-                      <p className="dx-case-k">Over 15 minutes</p>
-                      <p className="dx-case-v">Offer the next open slot today, or rebook.</p>
-                    </div>
+                    <div className="dx-stat"><p className="dx-stat-n">20</p><p className="dx-stat-l">questions answered without the office manager</p></div>
+                    <div className="dx-stat"><p className="dx-stat-n">12</p><p className="dx-stat-l">bills entered in QuickBooks</p></div>
+                    <div className="dx-stat"><p className="dx-stat-n">3</p><p className="dx-stat-l">time off requests approved</p></div>
                   </div>
-                  <p className="dx-rel-h">Related</p>
-                  <div className="dx-rel">
-                    <span>No-show fee</span><span>Double-booking</span><span>Walk-ins</span>
-                  </div>
+                  <p className="dx-rel-h">Today</p>
+                  <ol className="dx-feed">
+                    {FEED.map((f, i) => (
+                      <li key={f.what} className={cn("dx-feed-row", i < feed && "is-in")}>
+                        <span className="dx-feed-t">{f.t}</span>
+                        <span className="dx-feed-w">{f.what}</span>
+                        <span className="dx-feed-o">{f.out}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               </main>
             </div>
@@ -172,12 +185,11 @@ export function DepthHero() {
           </div>
 
           <div className={cn("dx-enter dx-enter-s2", toast && "is-in")}>
-            <div ref={s2} className="dx-sat dx-toast">
-              <span className="dx-toast-dot"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 5.7 10 11 4" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
-              <div>
-                <p className="dx-toast-t">Time off approved</p>
-                <p className="dx-toast-b">Friday, half day. On the calendar and in this week&apos;s payroll report.</p>
-              </div>
+            <div ref={s2} className="dx-sat dx-pop">
+              <p className="dx-pop-q">Patient is late. Can we still see them?</p>
+              <p className="dx-pop-r"><span>Under 15 min</span>Check them in.</p>
+              <p className="dx-pop-r"><span>Over 15 min</span>Offer the next open slot.</p>
+              <p className="dx-pop-f">Found in one search. Nobody walked over to ask.</p>
             </div>
           </div>
         </div>
