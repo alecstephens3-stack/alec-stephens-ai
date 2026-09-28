@@ -78,7 +78,7 @@ My role: I built it: the runner, the Bedrock path and the BAA setup in the clini
 
 ## AI Lab content + outbound systems (https://stephensai.co/alec/ai-lab)
 An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no.
-Client: AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Contract, March to September 2026.
+Client: AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Applied AI Engineer (in-house), contract, March to September 2026.
 Who uses it: 2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials.
 Shipped: March to September 2026. 6 months, in two phases.
 Headline number: ~10 hrs/wk returned to a two-person content team by an idea-to-published pipeline, a person approving every send. Basis: The team's own estimate of the hours the idea engine, publishing pipeline, newsletter builder and KPI report took off the week.
@@ -94,7 +94,7 @@ Tests: A rule gate on every cold email (no years, no street names, no clinical l
 Cost: About $1 per 30 researched leads. The content pipeline ran on existing subscriptions.
 Guardrails: A human approves every send: newsletters stage a verified test, campaigns stay drafts until a person activates them. Capacity rules (2 emails per inbox, 100 per domain per day, 14-day warm-up) enforced in code. The whole outbound system was wound down in 2 days with a full export and a restart guide.
 Tradeoff: The opinion question beat the direct pitch in every A/B pair, so we stopped pitching. And when the numbers said cold email was not the channel for this buyer, we reported that instead of optimizing the copy again. The system's job was to make that finding checkable.
-My role: I built all of it as the in-house AI engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
+My role: I built all of it as the in-house Applied AI Engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
 
 ## Coaching practice AI system (https://stephensai.co/alec/coaching-aios)
 An AI operating system for a one-person coaching practice: 4 custom AI agents that read one document.
