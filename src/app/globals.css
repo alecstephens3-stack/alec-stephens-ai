@@ -955,6 +955,77 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 @media (min-width: 768px) {
   .v7-work { grid-template-columns: 1fr 1fr; column-gap: 56px; }
 }
+
+/* ── The practice map (v7 signature, 2026-09-28) ── */
+.pm { border-radius: 30px; padding: 22px; }
+@media (min-width: 900px) { .pm { padding: 34px; } }
+.pm-grid { display: grid; gap: 28px; }
+.pm-plan svg { max-width: 920px; margin-inline: auto; }
+.pm-plan { position: relative; }
+.pm-plan svg { display: block; width: 100%; height: auto; overflow: visible; }
+.pm-stamp {
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-ink-2); margin-bottom: 12px;
+}
+.pm-dot { fill: rgba(23, 19, 16, 0.10); }
+.pm-floor { fill: rgba(255, 255, 255, 0.55); }
+.pm-walls path {
+  fill: none; stroke: var(--color-ink); stroke-width: 4; stroke-linecap: square;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms cubic-bezier(.6, 0, .2, 1);
+}
+.pm-doors path {
+  fill: none; stroke: var(--color-ink); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .55;
+  transition: stroke-dashoffset 700ms ease 1100ms;
+}
+.pm-furn { fill: none; stroke: var(--color-ink); stroke-width: 1.2; opacity: 0; transition: opacity 700ms ease 1200ms; }
+.pm-furn .pm-counter { stroke-width: 3.5; }
+.pm-labels text {
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; fill: var(--color-ink-2); opacity: 0; transition: opacity 600ms ease 1500ms;
+}
+.pm.is-drawn .pm-walls path, .pm.is-drawn .pm-doors path { stroke-dashoffset: 0; }
+.pm.is-drawn .pm-furn { opacity: .42; }
+.pm.is-drawn .pm-labels text { opacity: 1; }
+
+.pm-marker { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.4); transition: opacity 380ms ease, transform 520ms cubic-bezier(.2, 1.4, .4, 1); cursor: default; }
+.pm-marker.is-in { opacity: 1; transform: scale(1); }
+.pm-pin { fill: var(--color-accent); stroke: #fff; stroke-width: 3; }
+.pm-num { font-family: var(--font-label); font-size: 17px; font-weight: 700; fill: #fff; }
+.pm-ring { fill: none; stroke: var(--color-accent); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.pm-marker.is-on .pm-ring { animation: pm-ring 1800ms ease-out infinite; }
+@keyframes pm-ring { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
+
+.pm-list { display: grid; gap: 6px; border-top: 1px solid var(--color-rule); padding-top: 18px; }
+@media (min-width: 900px) {
+  .pm-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .pm-list .pm-item { grid-template-columns: 1fr; gap: 12px; padding: 18px; }
+}
+.pm-item {
+  display: grid; grid-template-columns: 30px 1fr; align-content: start; gap: 14px; padding: 14px 16px; border-radius: 18px;
+  opacity: .28; transform: translateY(4px);
+  transition: opacity 420ms ease, transform 420ms ease, background-color 300ms ease;
+}
+.pm-item.is-in { opacity: .8; transform: none; }
+.pm-item.is-in.is-on { opacity: 1; background: rgba(255, 255, 255, .7); box-shadow: 0 1px 3px rgba(60, 35, 20, .08); }
+.pm-badge {
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; margin-top: 2px;
+  background: var(--color-accent); color: #fff; font-family: var(--font-label); font-size: 14px; font-weight: 700;
+}
+.pm-where { font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-2); }
+.pm-problem { margin-top: 4px; font-family: var(--font-heading); font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--color-ink); }
+.pm-fix { margin-top: 4px; font-size: 16px; line-height: 1.45; color: var(--color-ink-2); }
+.pm-fix span { color: var(--color-accent-deep); }
+
+@media (max-width: 560px) {
+  .pm-labels { display: none; }
+  .pm-marker.is-in { transform: scale(1.7); }
+  .pm-furn { stroke-width: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-walls path, .pm-doors path, .pm-furn, .pm-labels text, .pm-marker, .pm-item { transition: none; }
+  .pm-marker.is-on .pm-ring { animation: none; }
+}
 /* ════════════════════ end v7 ════════════════════ */
 
 /* Long-form legal prose (/privacy, /terms). The marketing pages never run more

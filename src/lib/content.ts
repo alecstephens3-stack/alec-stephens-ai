@@ -355,3 +355,17 @@ export const V7_CONTACT = {
   body: "Tell us about your week. We'll find where the hours go and send you an Opportunity Map with the fix for each, yours to keep whether you hire us or not.",
   bookLabel: "Book a free time audit",
 };
+
+/** The signature section: a sample practice floor plan, diagnosed. Every finding maps to a real build. */
+export const V7_MAP = {
+  kicker: "The free time audit",
+  title: "We start by finding where the hours go.",
+  lead: "Every audit ends with an Opportunity Map like this one: where your staff lose time, and the fix for each. It takes 30 minutes, and it's yours to keep.",
+  stamp: "Opportunity Map · sample practice",
+  findings: [
+    { id: "desk", n: "1", where: "Front desk", problem: "The same questions, all day.", fix: "Front desk answers, one search away." },
+    { id: "om", n: "2", where: "Office manager", problem: "Every question walks over here.", fix: "Staff find the answer themselves." },
+    { id: "billing", n: "3", where: "Billing", problem: "Invoices typed into QuickBooks by hand.", fix: "Bills read, filed and entered for you." },
+    { id: "office", n: "4", where: "Back office", problem: "Time-off slips on paper.", fix: "Requests, approvals and payroll in one place." },
+  ],
+} as const;
