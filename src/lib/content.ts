@@ -238,7 +238,7 @@ export const V7_HERO = {
 /** The window in the hero: three real tools, drawn with names and prices left out. */
 export const V7_WINDOW = {
   caption:
-    "Drawn from the tools we built for a Kansas eye clinic. Names and amounts are examples.",
+    "Based on our systems in production. Names and amounts are examples.",
   tabs: [
     {
       id: "answers",
