@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/v7/hero";
 import { Logos } from "@/components/sections/v7/logos";
+import { PracticeMap } from "@/components/sections/v7/practice-map";
 import { Work } from "@/components/sections/v7/work";
 import { Proof } from "@/components/sections/v6/proof";
 import { How } from "@/components/sections/v7/how";
@@ -67,6 +68,7 @@ export default function Home() {
       />
       <Hero />
       <Logos />
+      <PracticeMap />
       <Work />
       <Proof />
       <How />
