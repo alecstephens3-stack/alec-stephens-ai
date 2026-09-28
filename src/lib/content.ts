@@ -207,3 +207,148 @@ export const CONTACT = {
   body: "Tell us about the job, and we'll tell you whether we can fix it and roughly what it would take.",
   bookLabel: "Talk to us",
 };
+
+/* ════════════════════════════════════════════════════════════════════════
+   DRAFT v7 homepage (Sep 28 2026). Healthcare first, not only the knowledge
+   base. Orgo-style clarity: a short headline, the real tools moving calmly in
+   one window, a still logo row, the free time audit as the one ask, the price
+   card on the page. Numbers: the combined 260 to 300 hours is the WFV figure
+   approved 2026-09-25 (portfolio.md), always with its "estimated" label.
+   ════════════════════════════════════════════════════════════════════════ */
+
+export const V7_NAV = [
+  { label: "What we build", href: "/#work" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "How we work", href: "/#how" },
+  { label: "FAQ", href: "/faq" },
+];
+
+export const V7_CTA = { label: "Book a free time audit", short: "Free time audit", href: CALENDLY };
+
+export const V7_HERO = {
+  kicker: "For clinics, dental and eye care practices",
+  headline: { lead: "Less busywork.", accent: "More time for patients." },
+  sub: "We find where your office loses hours to work done by hand, then build software that does it, around the tools you already use.",
+  secondary: { label: "See what we build", href: "/#work" },
+  proof: "About 260 to 300 hours a year back at one Kansas eye clinic.",
+  proofCaveat: "Estimated from the clinic's own numbers.",
+};
+
+/** The window in the hero: three real tools, drawn with names and prices left out. */
+export const V7_WINDOW = {
+  caption:
+    "Drawn from the tools we run at a Kansas eye clinic. Names and amounts are examples.",
+  tabs: [
+    {
+      id: "answers",
+      label: "Front desk answers",
+      query: "vision plan, medical complaint",
+      title: "Refraction: collect or bill?",
+      body: "The vision plan covers the refraction only when the visit bills as a routine exam.",
+      rule: "If the visit bills medical, collect at checkout.",
+      meta: "Last edited by the office manager",
+    },
+    {
+      id: "bills",
+      label: "Vendor bills",
+      title: "This week's bills",
+      rows: [
+        { vendor: "Lens lab", amount: "$1,284.60", to: "Lab fees" },
+        { vendor: "Frame supplier", amount: "$642.00", to: "Optical inventory" },
+        { vendor: "Office supplies", amount: "$89.47", to: "Supplies" },
+        { vendor: "Internet service", amount: "$129.99", to: "Utilities" },
+      ],
+      done: "4 bills in QuickBooks, filed and ready to pay",
+    },
+    {
+      id: "timeoff",
+      label: "Time off",
+      title: "Time off request",
+      who: "Front desk",
+      when: "Friday, half day",
+      balance: "32 hours left this year",
+      steps: ["Approved", "On the calendar", "In this week's payroll report"],
+    },
+  ],
+} as const;
+
+export const V7_LOGOS = {
+  label: "Who we work with",
+  items: [
+    { name: "Wichita Family Vision", src: "/logos/wfv.png", w: 232, h: 96, size: 46 },
+    { name: "Workthentic", src: "/logos/workthentic.png", w: 209, h: 96, size: 44 },
+    { name: "Kamata Koumuten", src: "/logos/kamata.png", w: 622, h: 96, size: 30 },
+    { name: "Medari Advisors", src: "/logos/medari.png", w: 239, h: 96, size: 44 },
+    { name: "Tri-Valley Dental Care", src: "/logos/trivalley.png", w: 723, h: 96, size: 26 },
+  ],
+};
+
+export const V7_WORK = {
+  kicker: "What we build",
+  title: "The jobs your staff do by hand, done for them.",
+  items: [
+    {
+      title: "Front desk answers",
+      body: "Every rule, price and exception in one place staff can search, kept current by your office manager.",
+      link: { label: "Case study", href: CASE_STUDY_URL },
+    },
+    {
+      title: "Bills into QuickBooks",
+      body: "Vendor invoices read, filed and entered for you. Your bookkeeper checks them instead of typing them.",
+      link: { label: "One page", href: "/case-studies/vendor-bills.pdf" },
+    },
+    {
+      title: "Time off and payroll",
+      body: "Requests, approvals, the calendar and the payroll report, without the paper slips.",
+      link: { label: "One page", href: "/case-studies/time-off-and-payroll.pdf" },
+    },
+    {
+      title: "AI your staff can use",
+      body: "Claude or ChatGPT set up for your office, with written rules on what it may touch, and your team trained on it.",
+    },
+  ],
+};
+
+export const V7_HOW = {
+  title: "How a project goes.",
+  steps: [
+    { n: "01", title: "Free time audit", body: "30 minutes. You keep the Opportunity Map: your biggest wins and the fix for each." },
+    { n: "02", title: "We watch the job", body: "A screen share with whoever does it today, then a flat price in writing." },
+    { n: "03", title: "Build with your staff", body: "Around the tools you already use. Weeks, not months." },
+    { n: "04", title: "Yours to keep", body: "Your office manager can change it. Month to month support." },
+  ],
+};
+
+export const V7_PRICING = {
+  kicker: "Pricing",
+  title: "Three prices. The audit tells you which fits.",
+  tiers: [
+    {
+      name: "One fix",
+      price: "$4,500",
+      monthly: "then $299 a month",
+      body: "One build, live in about 30 days: front desk answers, time off and payroll, or vendor bills.",
+    },
+    {
+      name: "Front desk and back office",
+      price: "$9,500",
+      monthly: "then $499 a month",
+      body: "Two builds, plus your staff trained on Claude or ChatGPT for bookkeeping, hiring paperwork and the front desk.",
+      note: "Where most practices start",
+    },
+    {
+      name: "The whole practice",
+      price: "$18,000",
+      monthly: "then $899 a month",
+      body: "Everything above, plus custom software where it pays for itself, and monthly working time with both of us.",
+    },
+  ],
+  fine: "No long-term contract. Cancel any time and keep everything. Bugs on our side are free.",
+};
+
+export const V7_CONTACT = {
+  kicker: "Free time audit",
+  title: "30 minutes. You keep the map.",
+  body: "Tell us about your week. We'll find where the hours go and send you an Opportunity Map with the fix for each, yours to keep whether you hire us or not.",
+  bookLabel: "Book a free time audit",
+};

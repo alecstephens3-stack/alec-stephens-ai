@@ -1,10 +1,12 @@
-import { Hero } from "@/components/sections/v6/hero";
-import { Tool } from "@/components/sections/v6/tool";
+import { Hero } from "@/components/sections/v7/hero";
+import { Logos } from "@/components/sections/v7/logos";
+import { Work } from "@/components/sections/v7/work";
 import { Proof } from "@/components/sections/v6/proof";
-import { How } from "@/components/sections/v6/how";
+import { How } from "@/components/sections/v7/how";
+import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
 import { Patient } from "@/components/sections/v6/patient";
-import { Contact } from "@/components/sections/v6/contact";
+import { Contact } from "@/components/sections/v7/contact";
 import {
   SITE_NAME,
   SITE_URL,
@@ -64,11 +66,13 @@ export default function Home() {
         }}
       />
       <Hero />
-      <Tool />
+      <Logos />
+      <Work />
       <Proof />
       <How />
-      <Founders />
+      <Pricing />
       <Patient />
+      <Founders />
       <Contact />
     </>
   );
