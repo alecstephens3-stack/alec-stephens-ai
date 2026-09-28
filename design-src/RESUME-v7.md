@@ -33,7 +33,18 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
   (its one hit is the contact form's off-screen honeypot, on purpose). ~760 visible words.
 - Sent to website-qa-agent and optometrist-reviewer (results go in the next pass).
 
+## QA (2026-09-28)
+- website-qa-agent: REJECTED round 1 (render/code mismatch + real fixes), APPROVED round 2 at
+  4481d8e. Clinic-owner (optometrist-reviewer) copy fixes applied. Post-approval nits applied:
+  link labels "One-page summary", work links aligned, "next business morning".
+
 ## Next, in order
-1. Apply the two reviewers' findings.
-2. Ask Alec: is each company OK with its logo shown (Tri-Valley, Medari, Workthentic especially)?
-3. Noindex preview deploy on Alec's go, then port to main.
+1. Alec's calls from the copy review: what the monthly fee buys; what "keep everything" means
+   if we host it (add one FAQ line); say the first clinic is family?; offer a reference call
+   with Jill (clinic OK needed); keep or change the headline.
+2. Written OK from Tri-Valley (Dr. Jo), Medari and Workthentic to show their logos (the dental
+   line + logo identify Tri-Valley). Note each in the client files. Blocks deploy.
+3. Rebuild the two linked one-pagers (vendor-bills.pdf, time-off-and-payroll.pdf) on the kit:
+   no dot-pills, "Book a free time audit" footer, QuickBooks step on the bills page after the
+   WFV install call.
+4. Noindex preview deploy on Alec's go, then port to main.
