@@ -17,7 +17,7 @@ export function Work() {
   const items = V7_WORK.items;
 
   return (
-    <Section id="work" title={V7_WORK.title} accent={V7_WORK.accent}>
+    <Section id="work" kicker={V7_WORK.kicker} title={V7_WORK.title} titleMax="max-w-[22ch]">
       <div className="sv">
         <ul className="sv-list" role="tablist" aria-label="Services">
           {items.map((w, i) => (
