@@ -293,12 +293,12 @@ export const V7_WORK = {
   items: [
     {
       title: "Front desk answers",
-      body: "Every rule, price and exception in one place staff can search, kept current by your office manager. In use at a Kansas eye clinic, now being set up for a dental practice in California.",
+      body: "Every rule, price and exception in one place staff can search, kept current by your office manager. Systems live in production from Kansas to California.",
       link: { label: "Case study", href: CASE_STUDY_URL },
     },
     {
       title: "Bills into QuickBooks",
-      body: "Lab, frame and supply invoices read, filed and entered into QuickBooks Online. Your bookkeeper checks them instead of typing them.",
+      body: "Invoices read, filed and entered straight into QuickBooks through our own app, approved by Intuit. Your bookkeeper checks them instead of typing them.",
       link: { label: "One-page summary", href: "/case-studies/vendor-bills.pdf" },
     },
     {

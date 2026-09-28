@@ -25,7 +25,7 @@ const QUERY = "patient running late";
 
 const FEED = [
   { t: "9:14", what: "Patient running late", out: "Answered" },
-  { t: "9:31", what: "Lens lab invoice, $1,284.60", out: "In QuickBooks" },
+  { t: "9:31", what: "Medical supply invoice, $1,284.60", out: "In QuickBooks" },
   { t: "10:02", what: "Friday, half day", out: "Approved" },
 ];
 
@@ -175,7 +175,7 @@ export function DepthHero() {
           <div className="dx-enter dx-enter-s1">
             <div ref={s1} className="dx-sat dx-bills">
               <div className="dx-sat-bar"><span className="dx-qb">qb</span>QuickBooks · bills entered today</div>
-              {[["Lens lab", "$1,284.60"], ["Frame supplier", "$642.00"], ["Office supplies", "$89.47"]].map(([v, a], i) => (
+              {[["Medical supplies", "$1,284.60"], ["Janitorial service", "$642.00"], ["Office supplies", "$89.47"]].map(([v, a], i) => (
                 <p key={v} className={cn("dx-bill", i < bills && "is-done")}>
                   <span className="dx-tick"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 5.7 10 11 4" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                   <span>{v}</span><span className="dx-amt">{a}</span>
