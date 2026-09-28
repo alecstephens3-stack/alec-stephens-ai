@@ -217,7 +217,7 @@ export const CONTACT = {
    ════════════════════════════════════════════════════════════════════════ */
 
 export const V7_NAV = [
-  { label: "What we build", href: "/#work" },
+  { label: "Services", href: "/#work" },
   { label: "How we work", href: "/#how" },
   { label: "Pricing", href: "/#pricing" },
   { label: "FAQ", href: "/faq" },
@@ -230,7 +230,7 @@ export const V7_HERO = {
   headline: { lead: "Less busywork.", accent: "More time for patients." },
   /** Word for word from the Medari partners-page line sent to Curtis 2026-09-25 (Alec, 2026-09-28). */
   sub: "We diagnose where practices can save time and increase profit, then build the solutions that get them there.",
-  secondary: { label: "See what we build", href: "/#work" },
+  secondary: { label: "See our services", href: "/#work" },
   proof: "About 260 to 300 hours a year back at one Kansas eye clinic, from two builds.",
   proofCaveat: "Estimated from the clinic's own numbers.",
 };
@@ -288,7 +288,7 @@ export const V7_LOGOS = {
 };
 
 export const V7_WORK = {
-  kicker: "What we build",
+  kicker: "Services",
   title: "The jobs your staff do by hand, done for them.",
   items: [
     {
