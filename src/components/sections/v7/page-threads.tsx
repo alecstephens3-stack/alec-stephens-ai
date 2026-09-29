@@ -1,30 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./page-threads.module.css";
 
 /**
- * DRAFT: the hero's threads carried down the rest of the page, quieter.
- * Two versions for Alec (2026-09-29), picked with ?threads=margin | stitches.
- * No parameter, nothing renders.
+ * The hero's threads carried below it, quietly: stitches (Alec's pick,
+ * 2026-09-29, over a knotted margin thread that ran down the whole page; that
+ * one is in git at 82f9c1f). Site-only: not part of the Lens design system.
  *
  * Below the hero nothing loops: each piece draws itself in once as its
  * section scrolls into view, then holds still (Lens v4: motion is triggered,
  * never on a timer, never scrubbed by scroll). Hidden under 1100px.
  */
 
-type Version = "margin" | "stitches";
-const readVersion = (): Version | null => {
-  const v = new URLSearchParams(window.location.search).get("threads");
-  return v === "margin" || v === "stitches" ? v : null;
-};
-const noSubscribe = () => () => {};
-
 export function PageThreads() {
-  const v = useSyncExternalStore(noSubscribe, readVersion, () => null);
-  if (v === "margin") return <MarginThread />;
-  if (v === "stitches") return <Stitches />;
-  return null;
+  return <Stitches />;
 }
 
 /** Document position that ignores transforms (the scroll-in animations move
@@ -41,102 +31,7 @@ function docPos(el: HTMLElement) {
   return { x, y };
 }
 
-/* ── Version 1: the margin thread ─────────────────────────────────────────
-   One thread leaves the bottom of the product window, runs down the left
-   margin and ties into each section's label with a knot, like a binding
-   stitch, then plugs into the booking panel at the end. */
-
-type Knot = { x: number; y: number; tie: number; section: string };
-type MarginGeo = { w: number; h: number; start: { x: number; y: number }; knots: Knot[]; end: { x: number; y: number } };
-
-function MarginThread() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [geo, setGeo] = useState<MarginGeo | null>(null);
-  const [shown, setShown] = useState<Set<string>>(() => new Set());
-
-  useEffect(() => {
-    const root = ref.current?.parentElement;
-    if (!root) return;
-    const measure = () => {
-      const frame = root.querySelector<HTMLElement>(".dx");
-      const panel = root.querySelector<HTMLElement>("#contact .sai-night");
-      if (!frame || !panel) return;
-      const o = docPos(root);
-      const rr = root.getBoundingClientRect();
-      const fr = frame.getBoundingClientRect();
-      const labels = [...root.querySelectorAll<HTMLElement>("section[id] > .draft-wrap .draft-crop:not(.is-block)")].filter(
-        (el) => !el.closest("#contact"),
-      );
-      if (!labels.length) return;
-      const first = docPos(labels[0]);
-      const x = first.x - o.x - 60;
-      const knots = labels.map((el) => {
-        const p = docPos(el);
-        return { x, y: p.y - o.y + el.offsetHeight / 2, tie: p.x - o.x - 8, section: el.closest("section")?.id ?? "" };
-      });
-      const pp = docPos(panel);
-      setGeo({
-        w: rr.width,
-        h: root.offsetHeight,
-        start: { x, y: Math.round(fr.bottom - rr.top) - 2 },
-        knots,
-        end: { x: pp.x - o.x + 64, y: pp.y - o.y },
-      });
-    };
-    const ro = new ResizeObserver(measure);
-    ro.observe(root);
-    document.fonts?.ready.then(measure);
-    return () => ro.disconnect();
-  }, []);
-
-  // each stretch draws when the section it leads into comes on screen
-  useEffect(() => {
-    const root = ref.current?.parentElement;
-    if (!root || !geo) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const hit = entries.filter((e) => e.isIntersecting).map((e) => (e.target as HTMLElement).id);
-        if (hit.length) setShown((prev) => new Set([...prev, ...hit]));
-      },
-      { rootMargin: "0px 0px -30% 0px" },
-    );
-    [...geo.knots.map((k) => k.section), "contact"].forEach((id) => {
-      const el = id && root.querySelector<HTMLElement>(`#${id}`);
-      if (el) io.observe(el);
-    });
-    return () => io.disconnect();
-  }, [geo]);
-
-  if (!geo || geo.w < 1100) return <div ref={ref} className={s.layer} aria-hidden="true" />;
-
-  const pts = [geo.start, ...geo.knots, geo.end];
-  const segs = pts.slice(1).map((b, i) => {
-    const a = pts[i];
-    const dy = b.y - a.y;
-    const sway = i % 2 ? -26 : 26;
-    return `M${a.x} ${a.y}C${a.x + sway} ${a.y + dy * 0.4} ${b.x - sway} ${b.y - dy * 0.4} ${b.x} ${b.y}`;
-  });
-  const ids = [...geo.knots.map((k) => k.section), "contact"];
-
-  return (
-    <div ref={ref} className={s.layer} aria-hidden="true">
-      <svg className={s.svg} width={geo.w} height={geo.h} viewBox={`0 0 ${geo.w} ${geo.h}`}>
-        {segs.map((d, i) => (
-          <path key={i} d={d} pathLength={1} className={`${s.thread} ${shown.has(ids[i]) ? s.on : ""}`} />
-        ))}
-        {geo.knots.map((k) => (
-          <g key={k.section} className={`${s.knot} ${shown.has(k.section) ? s.on : ""}`}>
-            <path d={`M${k.x + 4} ${k.y}H${k.tie}`} className={s.tie} />
-            <circle cx={k.x} cy={k.y} r={3.5} className={s.port} />
-          </g>
-        ))}
-        <circle cx={geo.end.x} cy={geo.end.y} r={3.5} className={`${s.port} ${s.knot} ${shown.has("contact") ? s.on : ""}`} />
-      </svg>
-    </div>
-  );
-}
-
-/* ── Version 2: stitches ──────────────────────────────────────────────────
+/* ── Stitches ─────────────────────────────────────────────────────────────
    No page-long line. Short threads inside sections, where they connect two
    things that belong together: the service you pick and its window (re-
    stitches when you pick another), and the four steps of a project, joined
