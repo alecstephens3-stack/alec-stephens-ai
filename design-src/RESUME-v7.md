@@ -148,3 +148,12 @@ references in LOWER-INSPO.md). Alec's calls:
   tiers as Apple-style cards that move a little and respond on hover, and every tier's button leads
   somewhere. Do not build until Alec says.
 - Next: Pricing, then Patient data, Founders, Contact, section by section.
+- **Stitches retired below the hero (2026-09-29).** The Services stitch became a notch on its window
+  (work.tsx); the dotted Work with us thread became a terracotta tab bar on the hairline over the chosen
+  step ("wth is this line? it doesn't look good"). page-threads.tsx is deleted. Threads live only in
+  the hero now.
+- **Pricing DONE (first pass):** "A plan for every practice." Foundation / Growth / Partner, $4,500 /
+  $7,500 / $20,000 + $399 / $699 / $1,499; a value line per tier; Apple-style cards, Growth dark and
+  raised, spring tilt + light on hover, prices roll in once, each Get started tagged with its plan.
+  "Get started" replaced "time audit" across the site.
+

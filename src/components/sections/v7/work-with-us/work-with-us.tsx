@@ -18,9 +18,10 @@ import s from "./work-with-us.module.css";
  * from the card's left edge). Click, tap and arrow keys work too. Nothing
  * moves on its own.
  *
- * The rail keeps the global .draft-rail, because the page thread in
- * page-threads.tsx stitches through `#how .draft-rail`. Under 900px the chosen
- * step's window opens inside the list instead.
+ * Above the steps: one hairline, with a short terracotta bar over the chosen
+ * step that glides with the highlight (replaced a dotted page thread that sat
+ * on top of the hairline, 2026-09-29: "it doesn't look good"). Under 900px the
+ * chosen step's window opens inside the list instead.
  */
 
 const Arrow = ({ down }: { down?: boolean }) => (
@@ -56,6 +57,7 @@ export function WorkWithUs() {
         <div className={s.how} style={{ "--i": active, "--n": n } as CSSProperties}>
           <div className={s.railWrap}>
             <span className={s.glide} aria-hidden="true" />
+            <span className={s.bar} aria-hidden="true" />
             <ol className={cn("draft-rail", s.rail)} role="tablist" aria-label="Working with us, step by step">
               {steps.map((st, i) => (
                 <li
