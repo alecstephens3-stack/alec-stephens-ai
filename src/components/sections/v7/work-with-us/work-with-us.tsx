@@ -10,22 +10,18 @@ import s from "./work-with-us.module.css";
 
 /**
  * Work with us (Alec's pick of the three builder versions, 2026-09-29: Builder
- * C's Granola-style steps, reworked). Three steps, no numbers. The chosen step
- * sits on a highlight that glides between steps, each step says what it will
- * show, and hovering switches it (the same as Services above), so it is
- * obvious the steps are something you can pick. Click, tap and arrow keys work
- * too. Nothing moves on its own.
+ * C's Granola-style steps, reworked). Three steps, no numbers: Discover,
+ * Deliver, Optimize. The chosen step sits on a highlight that glides between
+ * steps, each step says what it will show, and hovering switches it (the same
+ * as Services above). The window below has a notch in its top edge, centred
+ * under the chosen step, that glides with it (Alec did not like a thread hung
+ * from the card's left edge). Click, tap and arrow keys work too. Nothing
+ * moves on its own.
  *
  * The rail keeps the global .draft-rail, because the page thread in
  * page-threads.tsx stitches through `#how .draft-rail`. Under 900px the chosen
  * step's window opens inside the list instead.
  */
-
-// which of Builder C's windows and notes each step shows:
-// Discovery = the Opportunity Map, Build = pages in review + the flat price,
-// Yours to keep = page history + month to month
-const WINDOW = [0, 2, 3];
-const NOTE = [0, 1, 3];
 
 const Arrow = ({ down }: { down?: boolean }) => (
   <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" className={down ? s.down : undefined}>
@@ -114,8 +110,8 @@ export function WorkWithUs() {
                   >
                     <div className={cn(s.frame, s.inlineFrame)}>
                       <div className={s.shotIn}>
-                        <StepWindow i={WINDOW[i]} />
-                        <Satellite i={NOTE[i]} />
+                        <StepWindow i={i} />
+                        <Satellite i={i} />
                       </div>
                     </div>
                   </div>
@@ -124,9 +120,9 @@ export function WorkWithUs() {
             </ol>
           </div>
 
-          {/* wide screens: one frame under the steps; the pin hangs it from the chosen one */}
+          {/* wide screens: one frame under the steps; a notch in its top edge points at the chosen one */}
           <div className={s.stage}>
-            <span className={s.pin} aria-hidden="true"><span className={s.pinLine} /></span>
+            <span className={s.notch} aria-hidden="true" />
             <div className={cn(s.frame, s.stageFrame)}>
               <div className={s.shots}>
                 {steps.map((st, i) => (
@@ -137,8 +133,8 @@ export function WorkWithUs() {
                     aria-labelledby={`wwu-tab-${i}`}
                     className={cn(s.shot, i === active && s.isOn)}
                   >
-                    <StepWindow i={WINDOW[i]} />
-                    <Satellite i={NOTE[i]} />
+                    <StepWindow i={i} />
+                    <Satellite i={i} />
                   </div>
                 ))}
               </div>

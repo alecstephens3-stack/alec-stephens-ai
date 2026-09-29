@@ -323,26 +323,26 @@ export const V7_WORK = {
 export const V7_HOW = {
   kicker: "Work with us",
   title: "Simple on purpose.",
-  // Alec, 2026-09-29: three steps, no numbers; Discovery's line is his, finished by Charlie.
-  // `n` is an id only (never rendered on the homepage).
+  // Alec, 2026-09-29: three steps, no numbers. Discover is his line; Deliver and
+  // Optimize are Charlie's finish of his drafts. `n` is an id only (never rendered).
   steps: [
     {
       n: "01",
-      title: "Discovery",
-      body: "This part is free. We work together to find where your practice can get the biggest results, and the best part is you keep our analysis, the Opportunity Map, whether you work with us or not.",
+      title: "Discover",
+      body: "This part is free. We work together to find where we can get your practice the best results, and you get to keep our analysis regardless of the next steps.",
       shows: "See the Opportunity Map",
     },
     {
       n: "02",
-      title: "Build",
-      body: "We watch the job on a screen share, send a flat price in writing, then build it with your staff, next to your practice software, not inside it. Weeks, not months.",
-      shows: "See a build in review",
+      title: "Deliver",
+      body: "We take the results from our analysis and build the solutions that give your team hours back, around the tools you already use. A flat price, in writing.",
+      shows: "See the build",
     },
     {
       n: "03",
-      title: "Yours to keep",
-      body: "Your team can change it themselves. We keep it running, month to month.",
-      shows: "See what you keep",
+      title: "Optimize",
+      body: "Once it's live, we keep it running and keep making it better, month to month. It stays yours.",
+      shows: "See it running",
     },
   ],
 };
