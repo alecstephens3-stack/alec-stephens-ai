@@ -1,0 +1,16 @@
+/* The pointer light on night surfaces (2026-09-29). See cursor-glow.tsx.
+   Same recipe as the Growth price card's light, scaled for a wide panel;
+   plain alpha, no blend mode. */
+.host::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 142, 118, .15), rgba(255, 142, 118, .05) 38%, transparent 62%);
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+.host[data-glow="on"]::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .host::after { display: none; } }
