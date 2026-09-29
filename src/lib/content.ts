@@ -28,7 +28,7 @@ export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 export const SITE_TAGLINE = "Less busywork for clinics, dental and eye care practices";
 
 export const SITE_DESCRIPTION =
-  "We find where your practice loses hours to work done by hand, then build software that does it, around the tools you already use. Book a free 30-minute time audit.";
+  "We find where your practice loses hours to work done by hand, then build software that does it, around the tools you already use. Get started with a free discovery call.";
 
 export const NAV_LINKS = [
   { label: "Knowledge base", href: "/#knowledge-base" },
@@ -200,7 +200,7 @@ export const FAQ = [
   },
   {
     q: "What does it cost?",
-    a: "Three flat prices: $4,500, $9,500 or $18,000 for the build, then $299, $499 or $899 a month. The free time audit tells you which fits. The monthly fee is our guarantee that everything we build keeps doing its job. No hourly billing and no long-term contract.",
+    a: "Three flat prices: $4,500, $7,500 or $20,000 for the build, then $399, $699 or $1,499 a month. Your free discovery call tells you which fits. The monthly fee is our guarantee that everything we build keeps doing its job. No hourly billing and no long-term contract.",
   },
   {
     q: "Does our IT company have to do anything?",
@@ -230,7 +230,8 @@ export const V7_NAV = [
   { label: "FAQ", href: "/faq" },
 ];
 
-export const V7_CTA = { label: "Book a free time audit", short: "Free time audit", href: CALENDLY };
+// Alec, 2026-09-29: "Get started" everywhere; never "time audit" on the site.
+export const V7_CTA = { label: "Get started", short: "Get started", href: CALENDLY };
 
 export const V7_HERO = {
   kicker: "For independent healthcare practices",
@@ -347,27 +348,32 @@ export const V7_HOW = {
   ],
 };
 
+// Alec, 2026-09-29: new card ($4,500 / $7,500 / $20,000 + $399 / $699 / $1,499), tiers renamed
+// Foundation / Growth / Partner, one-line headline. `slug` tags each tier's booking link.
 export const V7_PRICING = {
   kicker: "Pricing",
-  title: "Three prices. The audit tells you which fits.",
+  title: "A plan for every practice.",
   tiers: [
     {
-      name: "One fix",
+      name: "Foundation",
+      slug: "foundation",
       price: "$4,500",
-      monthly: "then $299 a month",
+      monthly: "then $399 a month",
       body: "One build, live in about 30 days: front desk answers, time off and payroll, or vendor bills.",
     },
     {
-      name: "Two fixes",
-      price: "$9,500",
-      monthly: "then $499 a month",
+      name: "Growth",
+      slug: "growth",
+      price: "$7,500",
+      monthly: "then $699 a month",
       body: "Two builds, plus your staff trained on Claude or ChatGPT for bookkeeping, hiring paperwork and the front desk.",
       note: "What we'd suggest for most practices.",
     },
     {
-      name: "The whole practice",
-      price: "$18,000",
-      monthly: "then $899 a month",
+      name: "Partner",
+      slug: "partner",
+      price: "$20,000",
+      monthly: "then $1,499 a month",
       body: "Everything above, plus custom software where it pays for itself, and monthly working time with both of us.",
     },
   ],
@@ -375,8 +381,8 @@ export const V7_PRICING = {
 };
 
 export const V7_CONTACT = {
-  kicker: "Free time audit",
+  kicker: "Get started",
   title: "30 minutes. You keep the map.",
   body: "Tell us about your week. We'll find where the hours go and send you an Opportunity Map with the fix for each, yours to keep whether you hire us or not.",
-  bookLabel: "Book a free time audit",
+  bookLabel: "Get started",
 };

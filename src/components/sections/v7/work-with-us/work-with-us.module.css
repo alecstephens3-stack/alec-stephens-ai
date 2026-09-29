@@ -247,3 +247,13 @@
   .cases { grid-template-columns: 1fr; }
 }
 
+/* Alec, 2026-09-29: the three windows must be the same height (Optimize was
+   105px shorter than Discover). On wide screens each window fills the frame's
+   row and its footer sits on the bottom edge. */
+@media (min-width: 900px) {
+  .shot > .app { align-self: stretch; display: flex; flex-direction: column; }
+  .shot > .app > .appBody { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .shot .appFoot { margin-top: auto; }
+  .shot .rows + .appFoot { margin-top: auto; }
+  .shot .appBody > .rows { margin-bottom: 18px; }
+}

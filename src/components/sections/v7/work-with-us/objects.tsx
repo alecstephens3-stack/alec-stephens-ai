@@ -21,10 +21,12 @@ const BUILD = [
   { what: "Front desk answers", state: "Live", good: true },
   { what: "Bills into QuickBooks", state: "Testing with your team", good: false },
   { what: "Treatment follow-up", state: "Building", good: false },
+  { what: "Claims follow-up", state: "Next", good: false },
 ];
 const MONTH = [
   { what: "New insurance rules added", state: "Done", good: true },
   { what: "Follow-up timing adjusted to your schedule", state: "Done", good: true },
+  { what: "Monthly report sent to the owner", state: "Sent", good: true },
   { what: "Monthly check-in with your office manager", state: "Booked", good: false },
 ];
 
@@ -99,7 +101,7 @@ export function StepWindow({ i }: { i: number }) {
         <div className={s.appBar}><span>Your build</span><span>Delivery</span></div>
         <div className={s.appBody}>
           <p className={s.appH}>What we&apos;re building for you</p>
-          <p className={s.appMeta}>From the Opportunity Map, in the order it pays off</p>
+          <p className={s.appMeta}>From the Opportunity Map, one fix at a time</p>
           <StatusRows rows={BUILD} />
           <p className={s.appFoot}>Runs next to your practice software, not inside it.</p>
         </div>
@@ -112,6 +114,7 @@ export function StepWindow({ i }: { i: number }) {
         <p className={s.appH}>Kept running, and getting better</p>
         <p className={s.appMeta}>What changed since last month</p>
         <StatusRows rows={MONTH} />
+        <p className={s.appFoot}>Your team can still change anything themselves.</p>
       </div>
     </div>
   );
