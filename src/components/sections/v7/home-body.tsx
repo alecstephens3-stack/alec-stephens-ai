@@ -31,6 +31,7 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}#business`,
         name: SITE_NAME,
+        legalName: "Stephens AI LLC",
         description: SITE_DESCRIPTION,
         url: SITE_URL,
         email: CONTACT_EMAIL,
@@ -48,9 +49,31 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
           "Practice operations automation",
         ],
         founder: [
-          { "@type": "Person", name: "Alec Stephens", jobTitle: "Co-founder" },
-          { "@type": "Person", name: "Jusheen Kim", jobTitle: "Co-founder" },
+          {
+            "@type": "Person",
+            "@id": `${SITE_URL}/alec#person`,
+            name: "Alec Stephens",
+            jobTitle: "Co-founder",
+            url: `${SITE_URL}/alec`,
+            sameAs: ["https://www.linkedin.com/in/alec-stephens-55b392213/"],
+          },
+          {
+            "@type": "Person",
+            name: "Jusheen Kim",
+            jobTitle: "Co-founder",
+            sameAs: ["https://www.linkedin.com/in/jusheenkim"],
+          },
         ],
+      },
+      {
+        // Tells Google the site's name is "Stephens AI", so results show the
+        // brand rather than the bare domain.
+        "@type": "WebSite",
+        "@id": `${SITE_URL}#website`,
+        name: SITE_NAME,
+        alternateName: ["Stephens AI LLC", "stephensai.co"],
+        url: SITE_URL,
+        publisher: { "@id": `${SITE_URL}#business` },
       },
     ],
   };

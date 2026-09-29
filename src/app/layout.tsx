@@ -56,7 +56,9 @@ export const metadata: Metadata = {
     "office manager tools",
   ],
   authors: [{ name: "Alec Stephens" }, { name: "Jusheen Kim" }],
-  alternates: { canonical: SITE_URL },
+  // No site-wide canonical here on purpose: every page that did not set its
+  // own inherited the home page's, telling Google /qb, /desk and /play were
+  // copies of the home page. Each indexable page declares its own.
   openGraph: {
     type: "website",
     locale: "en_US",

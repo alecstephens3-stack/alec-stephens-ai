@@ -1,0 +1,488 @@
+/* The Front Desk, tools B: reminders, review card, vendor bills.
+   Every class here is prefixed dtb-. Colours come only from the site tokens.
+   The shared dt-* frame classes belong to tool-frame and are not styled here. */
+
+/* Ledger status chip: a small tinted rectangle, label face, no dot. */
+.dtb-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 7px 10px;
+  border-radius: var(--radius-chip);
+  color: var(--color-ink-2);
+  background: var(--color-rule-soft);
+  white-space: nowrap;
+  transition:
+    background var(--duration-base) var(--ease-brand),
+    color var(--duration-base) var(--ease-brand);
+}
+.dtb-chip.good { color: var(--color-status-good); background: var(--color-status-good-tint); }
+.dtb-chip.warn { color: var(--color-status-warn); background: var(--color-status-warn-tint); }
+
+/* Small caps key above a value. */
+.dtb-k {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  line-height: 1.3;
+}
+
+/* A quiet label next to a row (the channel: Text, Email only, Call only). */
+.dtb-tag {
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--color-ink-2);
+  white-space: nowrap;
+}
+
+/* Action row under a section: buttons on the left, the summary on the right. */
+.dtb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+}
+.dtb-actions .dtb-summary {
+  flex: 1 1 220px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--color-ink);
+  min-width: 0;
+}
+.dtb-summary .n { font-family: var(--font-label); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sai-btn.dtb-btn { font-size: 15px; padding: 12px 22px; }
+.sai-btn.dtb-btn[disabled] { opacity: 0.55; pointer-events: none; }
+/* A summary that gets its own line under the buttons. */
+.dtb-tally {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+.dtb-stack > .dtb-tally { margin-top: 14px; }
+.dtb-actions > .dtb-tally { flex: 1 1 100%; }
+
+/* Visually hidden, still read aloud. */
+.dtb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Text inputs share one look. */
+.dtb-input {
+  width: 100%;
+  font: 500 17px var(--font-sans);
+  line-height: 1.4;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-rule-strong);
+  background: var(--sai-glass-strong);
+  color: var(--color-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.dtb-input,
+.dtb-select,
+textarea.dtb-bubble {
+  transition:
+    border-color var(--duration-base) var(--ease-brand),
+    box-shadow var(--duration-base) var(--ease-brand);
+}
+.dtb-input:focus,
+.dtb-select:focus,
+textarea.dtb-bubble:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 3px rgba(220, 104, 67, 0.22);
+}
+textarea.dtb-input { resize: vertical; min-height: 96px; display: block; }
+.dtb-input::placeholder { color: var(--color-ink-2); opacity: 0.7; }
+.dtb-field { display: flex; flex-direction: column; gap: 6px; }
+.dtb-field + .dtb-field { margin-top: 14px; }
+
+/* Section spacing inside a tool body. */
+.dtb-stack > * + * { margin-top: 22px; }
+.dtb-fine { font-size: 15px; line-height: 1.55; color: var(--color-ink-2); }
+.dtb-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+.dtb-meta b { font-weight: 500; color: var(--color-ink); }
+
+/* ═══════════════ Reminders ═══════════════ */
+
+.dtb-bubble-wrap { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.dtb-bubble {
+  position: relative;
+  max-width: 380px;
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 20px;
+  border-bottom-left-radius: 6px;
+  background: var(--sai-glass-strong);
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 18px rgba(112, 62, 40, 0.08);
+  font: 400 17px/1.5 var(--font-sans);
+  color: var(--color-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+textarea.dtb-bubble {
+  resize: vertical;
+  min-height: 132px;
+  display: block;
+}
+
+
+.dtb-rem-list { display: flex; flex-direction: column; }
+.dtb-rem-row {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) auto;
+  gap: 4px 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--color-rule-soft);
+}
+.dtb-rem-row:last-child { border-bottom: 0; }
+.dtb-rem-time {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.dtb-rem-who { min-width: 0; }
+.dtb-rem-name { font-size: 17px; line-height: 1.35; color: var(--color-ink); font-weight: 500; }
+.dtb-rem-proc { font-size: 15px; line-height: 1.4; color: var(--color-ink-2); }
+.dtb-rem-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dtb-rem-lunch {
+  padding: 8px 0 8px 82px;
+  font-size: 15px;
+  color: var(--color-ink-2);
+  border-bottom: 1px solid var(--color-rule-soft);
+}
+@media (max-width: 480px) {
+  .dtb-rem-row { grid-template-columns: 58px minmax(0, 1fr); gap: 6px 12px; }
+  .dtb-rem-side { grid-column: 2; justify-content: flex-start; }
+  .dtb-rem-lunch { padding-left: 70px; }
+}
+
+/* ═══════════════ Review card ═══════════════ */
+
+.dtb-rc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 620px) {
+  .dtb-rc-grid { grid-template-columns: 1fr; }
+}
+.dtb-rc-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* The printed card. Type is sized in container units so the same markup is a
+   340px preview on screen and a 5 by 7 inch card on paper. */
+.dtb-paper-wrap {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 340px;
+}
+.dtb-rc-preview .dtb-paper-wrap {
+  position: relative;
+  max-width: 320px;
+  margin: 6px auto 18px;
+}
+.dtb-rc-preview .dtb-paper-wrap::after {
+  /* the soft shadow the card throws on the counter */
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -14px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(60, 32, 18, 0.28), rgba(60, 32, 18, 0));
+  filter: blur(4px);
+  z-index: -1;
+  pointer-events: none;
+}
+.dtb-rc-preview .dtb-paper {
+  transform: rotate(-0.8deg);
+  transition: transform var(--duration-slow) var(--ease-brand);
+}
+.dtb-rc-preview .dtb-paper-wrap:hover .dtb-paper { transform: rotate(0deg) translateY(-2px); }
+.dtb-rc-preview { isolation: isolate; }
+.dtb-rc-actions { justify-content: center; }
+.dtb-paper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 5px rgba(23, 19, 16, 0.12),
+    0 22px 44px rgba(112, 62, 40, 0.22);
+  padding: 9cqw 8cqw 7cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  overflow: hidden;
+}
+.dtb-paper::before {
+  /* paper tooth, one small noise tile, painted once */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.28'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+.dtb-paper::after {
+  /* hairline frame inset from the edge, like a letterpress rule */
+  content: "";
+  position: absolute;
+  inset: 4cqw;
+  border: 1px solid var(--color-rule);
+  pointer-events: none;
+}
+.dtb-paper > * { position: relative; }
+.dtb-paper-name {
+  font-family: var(--font-label);
+  font-size: max(13px, 4cqw);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.dtb-paper-head {
+  font-family: var(--font-heading);
+  font-size: 9cqw;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+  margin-top: 3cqw;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.dtb-paper-qr {
+  width: 48cqw;
+  height: 48cqw;
+  display: block;
+  margin: 4cqw auto;
+}
+.dtb-paper-qr.is-empty {
+  border: 1px dashed var(--color-rule-strong);
+  border-radius: 2px;
+}
+.dtb-paper-line {
+  font-family: var(--font-sans);
+  font-size: 5cqw;
+  line-height: 1.4;
+  color: var(--color-ink-2);
+  max-width: 78cqw;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+.dtb-paper-thanks {
+  font-family: var(--font-label);
+  font-size: max(13px, 3.9cqw);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+  margin-top: 5cqw;
+}
+.dtb-paper-foot { display: flex; flex-direction: column; align-items: center; }
+
+/* The print copy lives in a portal at the end of body. Hidden on screen,
+   the only thing on the page when printing, on one 5 by 7 inch sheet. */
+.dtb-print-only { display: none; }
+@media print {
+  @page { size: 5in 7in; margin: 0; }
+  body > *:not(.dtb-print-only) { display: none !important; }
+  .dtb-print-only { display: block !important; }
+  .dtb-print-only .dtb-paper-wrap { max-width: none; width: 5in; }
+  .dtb-print-only .dtb-paper {
+    width: 5in;
+    height: 7in;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* ═══════════════ Vendor bills ═══════════════ */
+
+.dtb-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 190px;
+  padding: 30px 20px;
+  border-radius: var(--radius-tile);
+  border: 1.5px dashed var(--color-rule-strong);
+  background: var(--sai-glass-tile);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-base) var(--ease-brand),
+    background var(--duration-base) var(--ease-brand),
+    transform var(--duration-base) var(--ease-brand);
+}
+.dtb-drop:hover { border-color: var(--color-ink-2); }
+.dtb-drop.is-over {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  transform: scale(1.01);
+}
+.dtb-drop-title { font-size: 19px; font-weight: 500; color: var(--color-ink); line-height: 1.3; }
+.dtb-drop-sub { font-size: 15px; color: var(--color-ink-2); line-height: 1.5; max-width: 40ch; }
+.dtb-drop .dtb-drop-or { margin-top: 10px; }
+
+.dtb-inv-list { display: flex; flex-direction: column; }
+.dtb-inv-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 18px;
+  align-items: start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-rule-soft);
+  transition: opacity var(--duration-slow) var(--ease-brand);
+}
+.dtb-inv-row:last-child { border-bottom: 0; }
+.dtb-inv-row.is-filed .dtb-inv-main,
+.dtb-inv-row.is-filed .dtb-inv-total { opacity: 0.8; }
+.dtb-inv-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dtb-inv-vendor { font-size: 17px; font-weight: 500; line-height: 1.35; color: var(--color-ink); overflow-wrap: anywhere; }
+.dtb-inv-meta { font-size: 15px; line-height: 1.45; color: var(--color-ink-2); overflow-wrap: anywhere; }
+.dtb-inv-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+.dtb-inv-total {
+  font-size: 17px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+  white-space: nowrap;
+  transition: opacity var(--duration-slow) var(--ease-brand);
+}
+.dtb-inv-total.quiet { color: var(--color-ink-2); font-weight: 400; }
+.dtb-inv-side .dtb-chip { min-width: 112px; justify-content: center; }
+.dtb-inv-file {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--color-ink-2);
+  overflow-wrap: anywhere;
+}
+.dtb-inv-file .arrow { color: var(--color-accent); margin: 0 8px; }
+.dtb-inv-file .to { color: var(--color-ink); }
+.dtb-inv-file .folder { color: var(--color-ink-2); }
+.dtb-inv-file .nb { white-space: nowrap; }
+.dtb-select:disabled { opacity: 0.55; cursor: default; }
+@media (max-width: 520px) {
+  .dtb-inv-side { flex-direction: column; align-items: flex-end; gap: 8px; }
+  .dtb-inv-side .dtb-chip { min-width: 0; }
+  .dtb-inv-file .to { display: block; }
+}
+.dtb-inv-look {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 10px;
+}
+.dtb-inv-look .why { font-size: 17px; color: var(--color-ink); line-height: 1.45; }
+.dtb-select {
+  appearance: none;
+  -webkit-appearance: none;
+  font: 500 16px var(--font-sans);
+  line-height: 1.3;
+  padding: 10px 40px 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-rule-strong);
+  background-color: var(--sai-glass-strong);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235A4F46' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
+  max-width: 100%;
+  cursor: pointer;
+}
+.dtb-rule {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+.dtb-rule b { color: var(--color-accent-deep); font-weight: 600; font-family: var(--font-label); font-size: 13.5px; letter-spacing: 0.05em; text-transform: uppercase; margin-right: 6px; }
+.dtb-inv-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-rule);
+}
+.dtb-inv-head .lead { font-size: 17px; color: var(--color-ink); font-weight: 500; }
+.dtb-inv-head .sub { font-size: 15px; color: var(--color-ink-2); }
+.dtb-result {
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+.dtb-result .n { font-family: var(--font-label); font-weight: 600; font-variant-numeric: tabular-nums; }

@@ -1,0 +1,25 @@
+/* Paper plane: a side-on glide across the desk. Every class is g-plane-. */
+.g-plane-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.g-plane-canvas {
+  display: block;
+  max-width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(23, 19, 16, 0.1);
+  background: #f6ebe1;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.g-plane-canvas:focus-visible {
+  outline: 2px solid #dc6843;
+  outline-offset: 3px;
+}

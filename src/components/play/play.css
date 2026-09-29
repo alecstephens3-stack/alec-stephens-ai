@@ -1,0 +1,38 @@
+/* ── The sandbox (2026-09-23, Yamagata Build Day) ──
+   The play version of the front desk. Same page grammar as desk.css (which is
+   loaded too): dock, lede, desk, window. This file adds the best-scores strip
+   and the frame every game renders inside. */
+
+.play-scores {
+  width: min(1240px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  padding: 0 8px;
+  font-size: 15px;
+  color: var(--color-ink-2);
+}
+.play-scores b { font-weight: 500; color: var(--color-ink); }
+.play-scores .play-score-k { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-deep); margin-right: 6px; }
+.desk-root.is-night .play-scores { color: var(--color-cream-2); }
+.desk-root.is-night .play-scores b { color: var(--color-cream); }
+.desk-root.is-night .play-scores .play-score-k { color: var(--color-accent-night); }
+
+/* ── the game frame ── */
+.gf-frame { display: flex; flex-direction: column; gap: 10px; padding-right: 52px; }
+.gf-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.gf-best { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-deep); }
+.gf-title { margin: 2px 0 0; text-wrap: balance; }
+.gf-howto { margin: 0; color: var(--color-ink-2); max-width: 58ch; }
+.gf-board { margin-top: 8px; margin-right: -52px; }
+.gf-board canvas { display: block; width: 100%; height: auto; border-radius: 16px; touch-action: none; }
+.gf-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; margin-right: -52px; min-height: 44px; }
+.gf-score { font: 500 17px var(--font-sans); color: var(--color-ink); }
+.gf-status { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-deep); }
+.gf-restart { margin-left: auto; padding: 10px 18px !important; font-size: 14px !important; }
+
+@media (max-width: 720px) {
+  .gf-frame { padding-right: 40px; }
+  .gf-board, .gf-foot { margin-right: -40px; }
+}
