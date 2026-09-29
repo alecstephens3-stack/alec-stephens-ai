@@ -2,6 +2,8 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { ContactForm } from "@/components/ui/contact-form";
 import { DayWindow, NightWindow } from "@/components/ui/lens-primitives";
 import { V7_CONTACT as CONTACT, CONTACT_EMAIL, SECOND_EMAIL, CALENDLY } from "@/lib/content";
+import { CursorGlow } from "./cursor-glow";
+import glow from "./cursor-glow.module.css";
 
 /**
  * The one call to action. Kept as the night window because the contact form is
@@ -13,8 +15,9 @@ export function Contact() {
     <section id="contact" className="scroll-mt-28 px-5 pb-[var(--draft-air-tight)] pt-[var(--draft-air)] md:px-8">
       <div className="mx-auto max-w-[1000px]">
         <AnimateOnScroll>
-          <NightWindow ariaLabel="Contact" className="p-7 md:p-12">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+          <NightWindow ariaLabel="Contact" className={`p-7 md:p-12 ${glow.host}`}>
+            <CursorGlow />
+            <div className="relative z-[1] grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
               <div className="lg:self-center">
                 <p className="draft-crop t-label !text-accent-night">{CONTACT.kicker}</p>
                 <h2 className="t-title mt-5 !text-cream">
