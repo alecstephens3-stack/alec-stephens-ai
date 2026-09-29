@@ -7,7 +7,6 @@ import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
 import { Patient } from "@/components/sections/v6/patient";
 import { Contact } from "@/components/sections/v7/contact";
-import { PageThreads } from "@/components/sections/v7/page-threads";
 import {
   SITE_NAME,
   SITE_URL,
@@ -66,7 +65,6 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      {/* relative + isolate so the page threads can sit behind every section */}
       <div className="relative isolate">
         <Hero visual={visual} />
         <Logos />
@@ -82,7 +80,6 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
             <Contact />
           </>
         )}
-        <PageThreads />
       </div>
     </>
   );
