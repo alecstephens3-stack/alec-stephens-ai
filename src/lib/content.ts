@@ -225,7 +225,7 @@ export const CONTACT = {
 
 export const V7_NAV = [
   { label: "Services", href: "/#work" },
-  { label: "How we work", href: "/#how" },
+  { label: "Work with us", href: "/#how" },
   { label: "Pricing", href: "/#pricing" },
   { label: "FAQ", href: "/faq" },
 ];
@@ -321,12 +321,29 @@ export const V7_WORK = {
 };
 
 export const V7_HOW = {
-  title: "How a project goes.",
+  kicker: "Work with us",
+  title: "Simple on purpose.",
+  // Alec, 2026-09-29: three steps, no numbers; Discovery's line is his, finished by Charlie.
+  // `n` is an id only (never rendered on the homepage).
   steps: [
-    { n: "01", title: "Free time audit", body: "30 minutes. You keep the Opportunity Map: where your staff lose the most hours, and what we'd do about each." },
-    { n: "02", title: "We watch the job", body: "A screen share with whoever does it today, then a flat price in writing." },
-    { n: "03", title: "Build with your staff", body: "Next to your practice software and QuickBooks, not inside them. Weeks, not months." },
-    { n: "04", title: "Yours to keep", body: "Your office manager edits the answers. We handle the rest, month to month." },
+    {
+      n: "01",
+      title: "Discovery",
+      body: "This part is free. We work together to find where your practice can get the biggest results, and the best part is you keep our analysis, the Opportunity Map, whether you work with us or not.",
+      shows: "See the Opportunity Map",
+    },
+    {
+      n: "02",
+      title: "Build",
+      body: "We watch the job on a screen share, send a flat price in writing, then build it with your staff, next to your practice software, not inside it. Weeks, not months.",
+      shows: "See a build in review",
+    },
+    {
+      n: "03",
+      title: "Yours to keep",
+      body: "Your team can change it themselves. We keep it running, month to month.",
+      shows: "See what you keep",
+    },
   ],
 };
 
