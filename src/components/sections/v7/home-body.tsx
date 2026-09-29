@@ -5,7 +5,7 @@ import { Proof } from "@/components/sections/v6/proof";
 import { WorkWithUs } from "@/components/sections/v7/work-with-us/work-with-us";
 import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
-import { Patient } from "@/components/sections/v6/patient";
+import { PatientStrip } from "@/components/sections/v7/patient-strip";
 import { Contact } from "@/components/sections/v7/contact";
 import {
   SITE_NAME,
@@ -69,13 +69,13 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
         <Hero visual={visual} />
         <Logos />
         <Work />
+        <PatientStrip />
         <Proof />
         {/* How we work down to Contact; preview routes swap in their own version */}
         {lower ?? (
           <>
             <WorkWithUs />
             <Pricing />
-            <Patient />
             <Founders />
             <Contact />
           </>

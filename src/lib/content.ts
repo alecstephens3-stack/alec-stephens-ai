@@ -141,14 +141,23 @@ export const HOW = {
  * beneath it, quieter but never hidden.
  */
 export const PATIENT = {
+  // Alec, 2026-09-29: simplified to a slim strip after Services (headline/fine
+  // stay for the frozen /preview/lower-* pages only).
+  label: "Patient data",
+  points: [
+    "We sign a BAA before we start.",
+    "Most of what we build never touches patient data.",
+    "When it does, it stays in an account in your practice's name.",
+  ],
   headline:
     "We sign a BAA before we start. Most of what we build never sees patient information.",
   fine: "The front desk answers hold your rules, prices and protocols, not your charts. When a job does need patient data, like billing or claims, it runs in an account in your practice's name that we set up and you own, never on our servers.",
 };
 
+// Alec, 2026-09-29: "Meet the founders"; never mention Japan, Korea or time zones.
 export const FOUNDERS_SECTION = {
-  title: "It's the two of us.",
-  note: "We work from Japan and Korea. Audits fit before your clinic opens or after it closes, Central time, and a question sent in the afternoon is answered by the next business morning.",
+  title: "Meet the founders",
+  note: "Every system is built by the two of us, from the first call to the monthly check-in.",
 };
 
 export const FOUNDERS = [
@@ -227,6 +236,7 @@ export const V7_NAV = [
   { label: "Services", href: "/#work" },
   { label: "Work with us", href: "/#how" },
   { label: "Pricing", href: "/#pricing" },
+  { label: "Founders", href: "/#about" },
   { label: "FAQ", href: "/faq" },
 ];
 
