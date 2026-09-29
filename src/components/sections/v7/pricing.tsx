@@ -64,6 +64,7 @@ export function Pricing() {
               </p>
               <p className={s.monthly}>{t.monthly}</p>
               <span className={s.rule} aria-hidden="true" />
+              <p className={s.lead}>{t.lead}</p>
               <p className={s.body}>{t.body}</p>
               <ButtonLink
                 href={`${V7_CTA.href}?utm_source=stephensai.co&utm_medium=pricing&utm_content=${t.slug}`}
