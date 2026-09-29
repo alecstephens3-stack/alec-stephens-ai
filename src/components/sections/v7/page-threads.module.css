@@ -1,0 +1,70 @@
+/* DRAFT page threads (2026-09-29). See page-threads.tsx. */
+
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+@media (max-width: 1099px) {
+  .layer { display: none; }
+}
+.svg { position: absolute; inset: 0; overflow: visible; }
+
+.thread {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1600ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.thread.on { stroke-dashoffset: 0; }
+
+.knot { opacity: 0; transition: opacity 500ms ease-out 1300ms; }
+.knot.on { opacity: 1; }
+.tie { fill: none; stroke: rgba(220, 104, 67, 0.3); stroke-width: 1; }
+.port { fill: #fbf3ea; stroke: rgba(220, 104, 67, 0.6); stroke-width: 1.2; }
+
+/* stitches: the "How" thread appears dotted, then one piece passes along it */
+.dotted {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.4);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 6;
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+}
+.on > .dotted { opacity: 1; }
+.once {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.95);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 0.07 1.5;
+  stroke-dashoffset: 0.07;
+  opacity: 0;
+}
+.on > .once { animation: once 2600ms cubic-bezier(0.45, 0, 0.55, 1) 400ms forwards; }
+@keyframes once {
+  0% { stroke-dashoffset: 0.07; opacity: 0; }
+  6% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { stroke-dashoffset: -1; opacity: 0; }
+}
+.stitch { fill: none; stroke: rgba(220, 104, 67, 0.42); stroke-width: 1; }
+.stitchIn {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: stitch-in 520ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes stitch-in { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .thread { transition: none; stroke-dashoffset: 0; }
+  .knot { transition: none; opacity: 1; }
+  .stitchIn { animation: none; stroke-dashoffset: 0; }
+  .dotted { transition: none; opacity: 1; }
+  .once { display: none; }
+}
