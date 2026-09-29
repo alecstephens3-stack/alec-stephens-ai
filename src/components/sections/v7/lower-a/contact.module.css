@@ -1,0 +1,59 @@
+/* Builder A · Contact. Same night panel as v7; the body becomes three lines
+   on a short dotted thread (the How thread's knots, carried to the end). */
+
+.section { padding: var(--draft-air) 20px var(--draft-air-tight); }
+@media (min-width: 768px) { .section { padding-left: 32px; padding-right: 32px; } }
+.wrap { margin-inline: auto; max-width: 1000px; }
+
+.panel { padding: 28px; }
+@media (min-width: 768px) { .panel { padding: 48px; } }
+
+.grid { display: grid; gap: 40px; }
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+}
+
+.steps { position: relative; margin-top: 26px; display: grid; gap: 14px; max-width: 42ch; }
+.steps li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--color-cream-2);
+}
+.steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: #1c1510;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 142, 118, 0.75);
+}
+/* the thread: one dotted piece from each knot down to the next, so it ends on the last */
+.steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 21px;
+  bottom: -20px;
+  border-left: 1.5px dotted rgba(255, 142, 118, 0.45);
+}
+.steps li.keep { color: var(--color-cream); }
+.steps li.keep::before { background: var(--color-accent-night); box-shadow: 0 0 0 3px rgba(255, 142, 118, 0.18); }
+
+.links { margin-top: 30px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.book {
+  font-family: var(--font-label);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-night);
+  transition: opacity 200ms ease;
+}
+.book:hover { opacity: 0.8; }
+.mail { font-size: 17px; color: var(--color-cream-2); transition: color 200ms ease; }
+.mail:hover { color: var(--color-accent-night); }
