@@ -1,0 +1,28 @@
+/* Patient data strip (2026-09-29). See patient-strip.tsx. */
+.wrap { padding-top: var(--draft-air-tight); padding-inline: 20px; }
+@media (min-width: 768px) { .wrap { padding-inline: 32px; } }
+.strip {
+  max-width: 936px; margin-inline: auto;
+  display: grid; gap: 18px;
+  padding: 24px 26px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8), 0 14px 34px rgba(90, 45, 25, .07);
+}
+@media (min-width: 900px) {
+  .strip { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 30px; padding: 22px 30px; }
+}
+.label {
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--color-accent-deep);
+  white-space: nowrap;
+}
+.points { display: grid; gap: 14px; }
+@media (min-width: 900px) {
+  .points { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .point + .point { border-left: 1px solid rgba(23, 19, 16, .09); padding-left: 22px; }
+  .point { padding-right: 18px; }
+}
+.point { display: flex; align-items: flex-start; gap: 12px; font-size: 16.5px; line-height: 1.45; color: var(--color-ink); text-wrap: pretty; }
+.check { flex: 0 0 auto; margin-top: -2px; stroke: var(--color-accent); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.check path { stroke-width: 1.8; }
