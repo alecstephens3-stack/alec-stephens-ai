@@ -104,7 +104,13 @@ where they cross), /?amb=light (light through blinds), /?amb=contours (topograph
 /?amb=day (appointment book drifting up; paperwork blocks turn into patient time at the "now"
 line). No parameter = unchanged page. Code: v7/hero-ambient.tsx + .module.css. An exception to
 the v4 "nothing on a timer" rule, at Alec's request; strips never sit under glass (header pill,
-product window), hidden under 1100px, sleep off screen, reduced motion = still. Waiting on his pick.
+product window), hidden under 1100px, sleep off screen, reduced motion = still.
+Alec: contours and the appointment book were "good starts"; asked for healthcare relevance. Round two
+(scout: 21st + Lapa Ninja): /?amb=anatomy (contours around a molar, left, and an eye, right),
+/?amb=claims (insurance ledger drifting up, unpaid to paid at the "now" line; the claims offer),
+/?amb=threads (after Impilo's hero: fine-line tooth, claim form, appointment book / trial frame,
+vendor bill, clipboard, each with a terracotta thread carrying a dot into the product window).
+Waiting on his pick. Gotcha: contours INSIDE a molar pinch into a face; outline + outside only.
 Gotcha: never loseContext() in a WebGL effect cleanup; React's dev double-mount reuses the canvas.
 
 ## Next, in order (section by section WITH Alec; show, don't describe; he picks)
