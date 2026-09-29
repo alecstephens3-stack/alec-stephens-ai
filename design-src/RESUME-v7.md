@@ -156,4 +156,11 @@ references in LOWER-INSPO.md). Alec's calls:
   $7,500 / $20,000 + $399 / $699 / $1,499; a value line per tier; Apple-style cards, Growth dark and
   raised, spring tilt + light on hover, prices roll in once, each Get started tagged with its plan.
   "Get started" replaced "time audit" across the site.
+- **Done, same day, in Alec's order:** pricing value lines + money-back guarantee band; Patient data is a
+  slim three-point strip right after Services (old boxed section removed); founders = "Meet the founders",
+  no Japan/Korea line, Alec's bio in his own words, "Founders" in the header menu; Contact = Discover /
+  "Let's find your biggest win. The first step is free."; header menu hover is a terracotta tint.
+- **Next:** Jusheen's bio in the same style (offered), a full-page website-qa-agent pass, the noindex
+  preview link (Alec's go), then port v7 to main. The live site still shows the old price card and
+  "time audit" until then. /preview/lower-a, -b, -c are frozen references; delete before the port.
 
