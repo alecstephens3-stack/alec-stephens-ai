@@ -1,0 +1,28 @@
+/* Services: the notch on the window's left edge that points at the chosen
+   service (Alec, 2026-09-29: "add that arrow... and replace the thread stitch").
+   Painted with the frame's own gradient, sampled at the notch's position, so it
+   matches the edge at any height. Keep the three layers in step with .sv-frame
+   in globals.css. The wrapper carries the white edge and the soft shadow,
+   because a clip-path clips any shadow on the element it shapes. */
+.wrap {
+  position: absolute; z-index: 1; left: -14px; top: calc(var(--ny) - 15px);
+  width: 15px; height: 30px;
+  filter: drop-shadow(-1px 0 0 rgba(255, 255, 255, .8)) drop-shadow(-3px 2px 4px rgba(90, 45, 25, .10));
+  transition: top 420ms cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+.notch {
+  position: absolute; inset: 0;
+  clip-path: path("M15 0 L1.8 13.2 Q0 15 1.8 16.8 L15 30 Z");
+  background:
+    radial-gradient(110% 90% at 10% 110%, rgba(220, 104, 67, .40), transparent 55%),
+    radial-gradient(80% 80% at 80% -10%, rgba(255, 247, 238, .95), transparent 60%),
+    linear-gradient(180deg, #F4E6DA 0%, #EFCDB6 70%, #E8B79E 100%);
+  background-size: var(--fw) var(--fh);
+  /* sample the frame's first 15px of edge colour: the notch itself sits outside
+     the frame, where the frame's gradient would paint nothing */
+  background-position: 0 calc(15px - var(--ny));
+  background-repeat: no-repeat;
+  transition: background-position 420ms cubic-bezier(.16, 1, .3, 1);
+}
+@media (prefers-reduced-motion: reduce) { .wrap, .notch { transition: none; } }

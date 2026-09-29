@@ -140,7 +140,6 @@ export function WorkWithUs() {
               </div>
             </div>
           </div>
-          <p className={s.caption}>Names and amounts are examples.</p>
         </div>
       </AnimateOnScroll>
     </Section>

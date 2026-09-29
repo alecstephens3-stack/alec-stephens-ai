@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { Section } from "../v6/shell";
 import { V7_WORK } from "@/lib/content";
+import n from "./work-notch.module.css";
 
 /**
  * Services, shown instead of listed (Alec, 2026-09-28: "we don't want it too
@@ -11,15 +12,55 @@ import { V7_WORK } from "@/lib/content";
  * Left: the four services; the chosen one opens to show its copy (verbatim)
  * and link. Right: that service working, drawn in the hero's app style.
  * Nothing moves on its own: it changes only on hover, focus or click.
+ * A notch in the window's left edge points at the chosen service (replaced the
+ * thread stitch, 2026-09-29). The window is sticky, so the notch is measured
+ * against the chosen row on change, on scroll and on resize.
  */
 export function Work() {
   const [active, setActive] = useState(0);
   const items = V7_WORK.items;
+  const listRef = useRef<HTMLUListElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [notch, setNotch] = useState<{ y: number; w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const list = listRef.current;
+    const frame = frameRef.current;
+    if (!list || !frame) return;
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      if (!frame.offsetParent) return setNotch(null); // phones: the side window is hidden
+      const f = frame.getBoundingClientRect();
+      if (f.bottom < 0 || f.top > window.innerHeight) return;
+      const head = list.querySelector<HTMLElement>(".sv-item.is-on .sv-head");
+      if (!head) return;
+      const h = head.getBoundingClientRect();
+      const y = Math.min(Math.max(h.top + h.height / 2 - f.top, 44), f.height - 44);
+      setNotch({ y: Math.round(y), w: Math.round(f.width), h: Math.round(f.height) });
+    };
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    kick();
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("resize", kick);
+    // the chosen row opens over 420ms; follow it while it does
+    const ro = new ResizeObserver(kick);
+    ro.observe(list);
+    ro.observe(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("resize", kick);
+      ro.disconnect();
+    };
+  }, [active]);
 
   return (
     <Section id="work" kicker={V7_WORK.kicker} title={V7_WORK.title} titleMax="max-w-[22ch]">
       <div className="sv">
-        <ul className="sv-list" role="tablist" aria-label="Services">
+        <ul ref={listRef} className="sv-list" role="tablist" aria-label="Services">
           {items.map((w, i) => (
             <li key={w.title} className={cn("sv-item", i === active && "is-on")}>
               <button
@@ -59,7 +100,15 @@ export function Work() {
           ))}
         </ul>
         <div className="sv-stage sv-stage-side" aria-hidden="true">
-          <div className="sv-frame">
+          {notch && (
+            <span
+              className={n.wrap}
+              style={{ "--ny": `${notch.y}px`, "--fw": `${notch.w}px`, "--fh": `${notch.h}px` } as CSSProperties}
+            >
+              <span className={n.notch} />
+            </span>
+          )}
+          <div ref={frameRef} className="sv-frame">
             {items.map((w, i) => (
               <div key={w.title} className={cn("sv-shot", i === active && "is-on")}>
                 <Preview i={i} />
