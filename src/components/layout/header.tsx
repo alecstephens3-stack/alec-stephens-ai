@@ -108,8 +108,9 @@ export function Header() {
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-3.5 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] transition-colors duration-[220ms] hover:bg-white/70 hover:text-ink",
-                  isActive ? "bg-white/70 text-accent-deep" : "text-ink-2"
+                  // a warm tint, not white: the pill itself is near-white (Alec, 2026-09-29)
+                  "rounded-full px-3.5 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] transition-colors duration-[220ms] hover:bg-accent/10 hover:text-accent-deep",
+                  isActive ? "bg-accent/10 text-accent-deep" : "text-ink-2"
                 )}
               >
                 {link.label}
