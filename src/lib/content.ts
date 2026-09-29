@@ -401,9 +401,12 @@ export const V7_PRICING = {
   fine: "The monthly fee is our guarantee: everything we build keeps doing its job, and if it stops, we fix it. No long-term contract. Cancel any time and your content stays yours.",
 };
 
+// Alec, 2026-09-29: matches Discover ("This part is free") and Get started.
 export const V7_CONTACT = {
-  kicker: "Get started",
-  title: "30 minutes. You keep the map.",
-  body: "Tell us about your week. We'll find where the hours go and send you an Opportunity Map with the fix for each, yours to keep whether you hire us or not.",
+  kicker: "Discover",
+  title: "Let's find your biggest win. The first step is free.",
+  titleLead: "Let's find your biggest win.",
+  titleAccent: "The first step is free.",
+  body: "Tell us what slows your practice down. We'll find where you can get the best results and send you our analysis, the Opportunity Map, yours to keep regardless of the next steps.",
   bookLabel: "Get started",
 };
