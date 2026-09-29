@@ -1,0 +1,249 @@
+/* Work with us (2026-09-29): Builder C's steps + windows, reworked to three steps. */
+/* Builder C, "Working product" (2026-09-29).
+   Every lower section shows one real object in the hero's product-window
+   style. How we work is the one interactive standout; the rest is quiet.
+   Tokens come from globals.css (@theme); nothing here edits the globals. */
+
+/* ── shared: the product window (kit .sai-app / .sai-app-bar recipe) ── */
+.app {
+  position: relative;
+  background: #FFFEFC;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(60, 35, 20, .10), 0 2px 4px rgba(60, 35, 20, .06), 0 24px 48px rgba(60, 35, 20, .16), 0 60px 120px rgba(90, 45, 25, .14);
+}
+.appBar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 20px;
+  background: #F7F3EE;
+  border-bottom: 1px solid var(--color-rule-soft);
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink-2);
+}
+.appBody { padding: 22px 24px 24px; }
+.appH { font-family: var(--font-heading); font-size: 21px; font-weight: 500; line-height: 1.25; letter-spacing: -.015em; color: var(--color-ink); }
+.appMeta { margin-top: 4px; font-size: 15px; line-height: 1.45; color: var(--color-ink-2); }
+.sat {
+  position: relative; z-index: 1;
+  background: #fff; border-radius: 16px; padding: 16px 18px;
+  box-shadow: 0 0 0 1px rgba(60, 35, 20, .10), 0 18px 40px rgba(60, 35, 20, .18), 0 40px 90px rgba(90, 45, 25, .14);
+}
+.satK { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--color-accent-deep); }
+.satT { margin-top: 6px; font-size: 16px; line-height: 1.45; color: var(--color-ink); text-wrap: pretty; }
+.satF { margin-top: 8px; font-size: 14px; line-height: 1.4; color: var(--color-ink-2); }
+.chip {
+  display: inline-flex; align-items: center; white-space: nowrap;
+  padding: 5px 9px; border-radius: 7px;
+  font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--color-ink-2); background: #F2ECE5;
+}
+.chipGood { color: var(--color-status-good); background: var(--color-status-good-tint); }
+.av {
+  display: inline-grid; place-items: center; flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: 999px;
+  background: #E7DDD3; color: var(--color-ink);
+  font-family: var(--font-label); font-size: 13px; font-weight: 700; letter-spacing: .02em;
+}
+.frame {
+  position: relative; border-radius: 28px;
+  background:
+    radial-gradient(120% 90% at 12% 110%, rgba(220, 104, 67, .46), transparent 55%),
+    radial-gradient(90% 70% at 95% 105%, rgba(244, 123, 107, .30), transparent 60%),
+    radial-gradient(80% 80% at 70% -10%, rgba(255, 247, 238, .95), transparent 60%),
+    linear-gradient(180deg, #F4E6DA 0%, #EFCDB6 62%, #E8B79E 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55), 0 30px 70px rgba(90, 45, 25, .10);
+}
+.caption { margin-top: 18px; font-size: 15px; line-height: 1.5; color: var(--color-ink-2); }
+
+/* ════════════ How we work ════════════ */
+.how { position: relative; }
+
+/* the rail keeps the global .draft-rail (the page thread and the Services
+   stitch both measure it); below 900 it becomes one column with the chosen
+   step's object opening inside it */
+.how .rail { grid-template-columns: minmax(0, 1fr); border-bottom: 1px solid var(--color-rule); }
+.how .rail > li + li { border-left: 0; border-top: 1px solid var(--color-rule); }
+.step { position: relative; padding: 22px 0 24px; }
+.num {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-label); font-size: 15px; font-weight: 700; letter-spacing: .12em;
+  color: var(--color-ink-2); transition: color 250ms ease;
+}
+.start {
+  padding: 4px 9px; border-radius: 7px;
+  background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px var(--color-accent-line);
+  font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent-deep);
+}
+.first .num { color: var(--color-accent-deep); }
+.tab {
+  display: block; margin-top: 10px; padding: 0; text-align: left; cursor: pointer;
+  font-family: var(--font-heading); font-size: 21px; font-weight: 500; line-height: 1.25; letter-spacing: -.01em;
+  color: var(--color-ink-2); transition: color 250ms ease;
+}
+/* the whole column is the target, not just the title */
+.tab::after { content: ''; position: absolute; inset: 0; border-radius: 14px; }
+.tab:focus-visible { outline: none; }
+.tab:focus-visible::after { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+.step:hover .tab, .on .tab { color: var(--color-ink); }
+.on .num { color: var(--color-ink); }
+.first.on .num { color: var(--color-accent-deep); }
+.body { margin-top: 8px; font-size: 17px; line-height: 1.55; color: var(--color-ink-2); text-wrap: pretty; }
+.titleMark {
+  display: block; height: 2px; width: 34px; margin-top: 10px; border-radius: 2px;
+  background: var(--color-ink); transform-origin: left; transform: scaleX(0);
+  transition: transform 420ms cubic-bezier(.16, 1, .3, 1);
+}
+.on .titleMark { transform: scaleX(1); }
+
+.chev { margin-left: auto; display: grid; place-items: center; width: 28px; height: 28px; color: var(--color-ink-2); transition: transform 300ms cubic-bezier(.16, 1, .3, 1), color 250ms ease; }
+.on .chev { transform: rotate(90deg); color: var(--color-accent); }
+
+/* phones and narrow tablets: the object opens under its own step */
+.inline { position: relative; z-index: 1; margin-top: 18px; }
+.inline[hidden] { display: none; }
+.stage { display: none; }
+
+@media (min-width: 900px) {
+  .how .rail { grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 0; }
+  /* the gliding highlight marks the columns now, so no dividers */
+  .how .rail > li + li { border-top: 0; border-left: 0; }
+  .step { padding: 30px 26px 30px 28px; cursor: pointer; }
+  .step:first-child { padding-left: 0; }
+  .inline, .chev { display: none; }
+  .stage { display: block; position: relative; padding-top: 30px; }
+}
+
+/* ── Alec 2026-09-29: make "pick a step" obvious ── */
+.railWrap { position: relative; }
+.top { display: flex; align-items: center; gap: 10px; min-height: 26px; }
+.glide { display: none; }
+@media (min-width: 900px) {
+  /* one highlight that glides to the chosen step: the step's text box plus 18px air */
+  .glide {
+    display: block; position: absolute; z-index: 0; top: 12px; bottom: 8px;
+    left: calc(var(--i) * (100% / var(--n)) + min(var(--i), 1) * 28px - 18px);
+    width: calc(100% / var(--n) + 10px - min(var(--i), 1) * 28px);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .55);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8), 0 14px 34px rgba(90, 45, 25, .08), 0 2px 6px rgba(90, 45, 25, .05);
+    transition: left 560ms cubic-bezier(.16, 1, .3, 1), width 560ms cubic-bezier(.16, 1, .3, 1);
+    pointer-events: none;
+  }
+  .rail { position: relative; z-index: 1; }
+  .step:not(.on):hover .tab { color: var(--color-ink); }
+}
+/* what the step will show: a link-like line under the text */
+.shows {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+  font-size: 15px; font-weight: 500; color: var(--color-ink-2);
+  transition: color 250ms ease;
+}
+.shows svg { transition: transform 360ms cubic-bezier(.16, 1, .3, 1); }
+.step:hover .shows { color: var(--color-ink); }
+.step:not(.on):hover .shows svg { transform: translateX(3px); }
+.on .shows { color: var(--color-accent-deep); }
+.down { transform: rotate(90deg); }
+.step:hover .down, .on .down { transform: rotate(90deg); }
+@media (max-width: 899px) {
+  .shows { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glide, .shows svg { transition: none; }
+}
+
+/* the pin: hangs the chosen step's object from the step */
+.pin {
+  position: absolute; top: -8px; width: 9px; height: 43px;
+  left: calc(var(--i) * (100% / var(--n)) + min(var(--i), 1) * 28px - 4.5px);
+  transition: left 560ms cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none; z-index: 2;
+}
+.pin::before, .pin::after {
+  content: ''; position: absolute; left: 0; width: 9px; height: 9px; border-radius: 999px;
+  background: #FBF3EA; box-shadow: inset 0 0 0 1.3px rgba(220, 104, 67, .75);
+}
+.pin::before { top: 0; }
+.pin::after { bottom: 0; }
+.pinLine { position: absolute; left: 3.75px; top: 9px; bottom: 9px; width: 1.5px; background: rgba(220, 104, 67, .7); }
+
+.stageFrame { padding: 32px 36px; }
+.shots { display: grid; }
+.shot {
+  grid-area: 1 / 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) 276px; align-items: start;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 360ms ease, transform 620ms cubic-bezier(.16, 1, .3, 1), visibility 0s linear 360ms;
+}
+.shot.isOn { opacity: 1; visibility: visible; transform: none; transition: opacity 360ms ease, transform 620ms cubic-bezier(.16, 1, .3, 1); }
+.shot > .sat { margin-left: -16px; margin-top: 64px; }
+.shot .sat { opacity: 0; transform: translateY(12px); transition: opacity 420ms ease 140ms, transform 700ms cubic-bezier(.16, 1, .3, 1) 140ms; }
+.shot.isOn .sat { opacity: 1; transform: none; }
+
+/* inline (phone) version of the same shot */
+.inlineFrame { padding: 16px 14px 18px; border-radius: 22px; }
+.inlineFrame .shotIn { display: flex; flex-direction: column; }
+.inlineFrame .sat { align-self: flex-end; width: 88%; margin-top: -14px; margin-right: -2px; }
+
+/* rows inside the objects: each settles in when its step opens */
+.rows { margin-top: 14px; display: grid; gap: 2px; }
+.row { transition: opacity 360ms ease, transform 520ms cubic-bezier(.16, 1, .3, 1); }
+.shot:not(.isOn) .row { opacity: 0; transform: translateY(6px); }
+.shot.isOn .row:nth-child(2) { transition-delay: 50ms; }
+.shot.isOn .row:nth-child(3) { transition-delay: 100ms; }
+.shot.isOn .row:nth-child(4) { transition-delay: 150ms; }
+
+/* 01 the Opportunity Map */
+.map {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: baseline;
+  padding: 8px 12px; border-radius: 12px;
+}
+.map + .map { box-shadow: inset 0 1px 0 var(--color-rule-soft); border-radius: 0; }
+.mapHot + .map { box-shadow: none; }
+.map.mapHot { border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgba(220, 104, 67, .35), 0 8px 20px rgba(220, 104, 67, .10); }
+.rank { font-family: var(--font-label); font-size: 14px; font-weight: 700; color: var(--color-ink-2); font-variant-numeric: tabular-nums; }
+.mapHot .rank { color: var(--color-accent-deep); }
+.mapWhere { font-size: 16px; line-height: 1.4; color: var(--color-ink); }
+.mapFix { margin-top: 2px; font-size: 15px; line-height: 1.4; color: var(--color-ink-2); }
+.mapFix span { color: var(--color-accent); margin-right: 6px; }
+
+/* 02 notes from watching the job */
+.note { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 14px; padding: 10px 0; font-size: 15.5px; line-height: 1.45; }
+.note + .note { border-top: 1px solid var(--color-rule-soft); }
+.noteK { color: var(--color-ink); font-weight: 500; }
+.noteV { color: var(--color-ink-2); }
+.priceLine { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; }
+.priceLine b { font-weight: 500; color: var(--color-ink); font-size: 16px; }
+.priceLead { flex: 1 1 auto; min-width: 16px; border-bottom: 1.5px dotted var(--color-rule-strong); transform: translateY(-4px); }
+.priceN { font-family: var(--font-heading); font-size: 24px; font-weight: 500; letter-spacing: -.02em; color: var(--color-ink); font-variant-numeric: tabular-nums; }
+
+/* 03 pages checked with the office manager */
+.page { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 16px; color: var(--color-ink); }
+.page + .page { border-top: 1px solid var(--color-rule-soft); }
+.appFoot { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--color-rule-soft); font-size: 14.5px; color: var(--color-ink-2); }
+.who { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; color: var(--color-ink); }
+
+/* 04 the page the office manager edits */
+.editHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.editBtn {
+  flex-shrink: 0; padding: 6px 12px; border-radius: 8px;
+  background: var(--color-ink); color: #fff; font-size: 14px; font-weight: 500;
+}
+.cases { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.case { border-radius: 12px; padding: 12px 14px; background: #FAF7F3; box-shadow: inset 0 0 0 1px rgba(23, 19, 16, .07); font-size: 15px; line-height: 1.4; color: var(--color-ink); }
+.caseK { display: block; margin-bottom: 4px; font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-2); }
+.case.caseEdit { background: #fff; box-shadow: inset 0 0 0 1.5px rgba(220, 104, 67, .5); }
+.hist { margin-top: 16px; }
+.hist .rows { margin-top: 4px; }
+.histH { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-2); }
+.histRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; font-size: 15px; color: var(--color-ink); }
+.histRow + .histRow { border-top: 1px solid var(--color-rule-soft); }
+.histRow em { font-style: normal; color: var(--color-ink-2); margin-left: 8px; white-space: nowrap; }
+.linkish { font-size: 14.5px; font-weight: 500; color: var(--color-accent-deep); white-space: nowrap; }
+
+@media (max-width: 899px) {
+  .appBody { padding: 18px 18px 20px; }
+  .appBar { padding: 11px 16px; }
+  .note { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .cases { grid-template-columns: 1fr; }
+}
+

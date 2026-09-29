@@ -2,7 +2,7 @@ import { Hero } from "@/components/sections/v7/hero";
 import { Logos } from "@/components/sections/v7/logos";
 import { Work } from "@/components/sections/v7/work";
 import { Proof } from "@/components/sections/v6/proof";
-import { How } from "@/components/sections/v7/how";
+import { WorkWithUs } from "@/components/sections/v7/work-with-us/work-with-us";
 import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
 import { Patient } from "@/components/sections/v6/patient";
@@ -75,7 +75,7 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
         {/* How we work down to Contact; preview routes swap in their own version */}
         {lower ?? (
           <>
-            <How />
+            <WorkWithUs />
             <Pricing />
             <Patient />
             <Founders />

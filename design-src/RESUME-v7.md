@@ -134,3 +134,17 @@ Gotcha: never loseContext() in a WebGL effect cleanup; React's dev double-mount 
 Working rules: flowing warm sentences, never a sentence-shape formula; build 3-4 visual options
 when he asks for options and look at them before showing; check `copy_check.py`; restart the dev
 server after CSS changes (`rm -rf .next`), it does not pick up globals.css edits in this worktree.
+
+## 2026-09-29 (late): lower half, section by section with Alec
+Three builders made versions of How-we-work-down (/preview/lower-a, -b, -c; brief in LOWER-CONTRACT.md,
+references in LOWER-INSPO.md). Alec's calls:
+- **Work with us DONE** (replaces "How we work"; menu and footer renamed): Builder C's steps, reworked in
+  v7/work-with-us/. Title "Simple on purpose." Three steps, no numbers: Discovery (Alec's line, finished by
+  Charlie), Build, Yours to keep. A highlight glides to the chosen step, each step says what it shows,
+  hover switches it like Services. The old v7/how.tsx is removed.
+- **Time zone: scrapped.** Never mention our time zone, Japan/Korea hours or clocks on the site. The
+  Founders section (and anything else that says it) changes when we get there.
+- **Pricing: all three versions rejected.** Direction for when we get there: the middle tier dark, the
+  tiers as Apple-style cards that move a little and respond on hover, and every tier's button leads
+  somewhere. Do not build until Alec says.
+- Next: Pricing, then Patient data, Founders, Contact, section by section.

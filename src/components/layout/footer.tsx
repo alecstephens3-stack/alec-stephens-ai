@@ -34,7 +34,7 @@ export function Footer() {
               href="/#how"
               className="text-sm text-ink-2 transition-colors hover:text-ink"
             >
-              How we work
+              Work with us
             </Link>
             <a
               href="/alec"
