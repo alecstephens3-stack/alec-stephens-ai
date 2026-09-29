@@ -257,3 +257,11 @@
   .shot .rows + .appFoot { margin-top: auto; }
   .shot .appBody > .rows { margin-bottom: 18px; }
 }
+
+/* Alec, 2026-09-29: the "See ..." lines sit on one line across all three
+   steps, whatever the length of each step's text (Optimize is shortest). */
+@media (min-width: 900px) {
+  .step { display: flex; flex-direction: column; }
+  .step .shows { margin-top: auto; padding-top: 18px; align-self: flex-start; }
+}
+
