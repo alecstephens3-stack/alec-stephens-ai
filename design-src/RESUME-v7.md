@@ -98,6 +98,15 @@ line + name, margin note, run-in caps, § section marks, handwriting, folder tab
 `.sai-stamp` label STAYS. The floor-plan "practice map", the paper-in hero and the tab window were
 all dropped earlier.
 
+## In progress 2026-09-29: moving hero side strips (Alec's ask)
+Four draft options, switched by URL: /?amb=rings (Placido rings, two ring sets drifting, terracotta
+where they cross), /?amb=light (light through blinds), /?amb=contours (topography lines redrawn),
+/?amb=day (appointment book drifting up; paperwork blocks turn into patient time at the "now"
+line). No parameter = unchanged page. Code: v7/hero-ambient.tsx + .module.css. An exception to
+the v4 "nothing on a timer" rule, at Alec's request; strips never sit under glass (header pill,
+product window), hidden under 1100px, sleep off screen, reduced motion = still. Waiting on his pick.
+Gotcha: never loseContext() in a WebGL effect cleanup; React's dev double-mount reuses the canvas.
+
 ## Next, in order (section by section WITH Alec; show, don't describe; he picks)
 1. Case study section: the links row ("Read the full case study", "More, one page each: Time off
    and payroll, Vendor bills").

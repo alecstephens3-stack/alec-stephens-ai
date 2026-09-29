@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/button";
 import { DepthHero } from "./hero-depth";
+import { HeroAmbient } from "./hero-ambient";
 import { V7_HERO, V7_CTA } from "@/lib/content";
 
 /**
@@ -9,7 +10,8 @@ import { V7_HERO, V7_CTA } from "@/lib/content";
  */
 export function Hero({ visual }: { visual?: React.ReactNode }) {
   return (
-    <section className="v7-hero">
+    <section className="v7-hero" style={{ position: "relative", isolation: "isolate" }}>
+      <HeroAmbient />
       <div className="v7-hero-copy">
         <p className="t-label">{V7_HERO.kicker}</p>
         <h1 className="v7-head">
