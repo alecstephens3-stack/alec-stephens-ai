@@ -32,11 +32,10 @@ function docPos(el: HTMLElement) {
 }
 
 /* ── Stitches ─────────────────────────────────────────────────────────────
-   No page-long line. Short threads inside sections, where they connect two
-   things that belong together: the service you pick and its window (re-
-   stitches when you pick another), and the four steps of a project, joined
-   by a dotted thread that one piece of light passes along once (Stripe's
-   connector move, found by the scout). */
+   No page-long line. The steps of Work with us are joined by a dotted thread
+   that one piece of light passes along once (Stripe's connector move, found
+   by the scout). The Services stitch was replaced by a notch on its window
+   (work.tsx, 2026-09-29). */
 
 type Pt = { x: number; y: number };
 type StitchGeo = { w: number; h: number; steps: Pt[] };
@@ -44,7 +43,6 @@ type StitchGeo = { w: number; h: number; steps: Pt[] };
 function Stitches() {
   const ref = useRef<HTMLDivElement>(null);
   const [geo, setGeo] = useState<StitchGeo | null>(null);
-  const [svc, setSvc] = useState<{ a: Pt; b: Pt; key: string } | null>(null);
   const [howOn, setHowOn] = useState(false);
 
   // static geometry: the four steps
@@ -67,42 +65,6 @@ function Stitches() {
     ro.observe(root);
     document.fonts?.ready.then(measure);
     return () => ro.disconnect();
-  }, []);
-
-  // the service stitch follows the sticky window while Services is on screen
-  useEffect(() => {
-    const root = ref.current?.parentElement;
-    const work = root?.querySelector<HTMLElement>("#work");
-    if (!root || !work) return;
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      const wr = work.getBoundingClientRect();
-      if (wr.bottom < 0 || wr.top > window.innerHeight) return; // off screen: keep the last reading
-      const on = work.querySelector<HTMLElement>(".sv-item.is-on .sv-head");
-      const frame = work.querySelector<HTMLElement>(".sv-stage-side .sv-frame");
-      if (!on || !frame || !frame.offsetParent) return setSvc(null);
-      const rr = root.getBoundingClientRect();
-      const h = on.getBoundingClientRect();
-      const f = frame.getBoundingClientRect();
-      setSvc({
-        a: { x: h.right - rr.left + 8, y: h.top + h.height / 2 - rr.top },
-        b: { x: f.left - rr.left, y: Math.min(Math.max(h.top + h.height / 2, f.top + 56), f.bottom - 56) - rr.top },
-        key: on.textContent ?? "",
-      });
-    };
-    const kick = () => { if (!raf) raf = requestAnimationFrame(measure); };
-    const mo = new MutationObserver(kick);
-    mo.observe(work, { subtree: true, attributes: true, attributeFilter: ["class"] });
-    window.addEventListener("scroll", kick, { passive: true });
-    window.addEventListener("resize", kick);
-    kick();
-    return () => {
-      cancelAnimationFrame(raf);
-      mo.disconnect();
-      window.removeEventListener("scroll", kick);
-      window.removeEventListener("resize", kick);
-    };
   }, []);
 
   useEffect(() => {
@@ -129,16 +91,6 @@ function Stitches() {
   return (
     <div ref={ref} className={s.layer} aria-hidden="true">
       <svg className={s.svg} width={geo.w} height={geo.h} viewBox={`0 0 ${geo.w} ${geo.h}`}>
-        {svc && (
-          <g key={svc.key}>
-            <path
-              className={`${s.stitch} ${s.stitchIn}`}
-              pathLength={1}
-              d={`M${svc.a.x} ${svc.a.y}C${svc.a.x + 22} ${svc.a.y} ${svc.b.x - 22} ${svc.b.y} ${svc.b.x} ${svc.b.y}`}
-            />
-            <circle className={s.port} cx={svc.b.x} cy={svc.b.y} r={3.5} />
-          </g>
-        )}
         {how && (
           <g className={howOn ? s.on : ""}>
             <path className={s.dotted} d={how} />
