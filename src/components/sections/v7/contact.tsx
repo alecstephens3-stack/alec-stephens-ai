@@ -29,14 +29,14 @@ export function Contact() {
                     href={CALENDLY}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
+                    className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
                   >
                     {CONTACT.bookLabel} &rarr;
                   </a>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
                     {CONTACT_EMAIL}
                   </a>
-                  <a href={`mailto:${SECOND_EMAIL}`} className="self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
+                  <a href={`mailto:${SECOND_EMAIL}`} className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
                     {SECOND_EMAIL}
                   </a>
                 </div>

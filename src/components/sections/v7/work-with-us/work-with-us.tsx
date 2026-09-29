@@ -66,12 +66,7 @@ export function WorkWithUs() {
                   className={cn(s.step, i === 0 && s.first, i === active && s.on)}
                   onMouseEnter={() => setActive(i)}
                 >
-                  <span className={s.top}>
-                    {i === 0 && <span className={s.start}>Start here</span>}
-                    <span className={s.chev} aria-hidden="true">
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                    </span>
-                  </span>
+                  <span className={s.top}>{i === 0 && <span className={s.start}>Start here</span>}</span>
                   <button
                     ref={(el) => {
                       tabs.current[i] = el;
@@ -87,7 +82,10 @@ export function WorkWithUs() {
                     onFocus={() => setActive(i)}
                     onKeyDown={(e) => onKey(e, i)}
                   >
-                    {st.title}
+                    <span>{st.title}</span>
+                    <span className={s.chev} aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </span>
                   </button>
                   <p className={s.body}>{st.body}</p>
                   <span className={s.shows} aria-hidden="true">
