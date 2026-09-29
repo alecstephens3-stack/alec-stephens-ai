@@ -284,7 +284,7 @@ export const V7_WINDOW = {
 } as const;
 
 export const V7_LOGOS = {
-  label: "Who we work with",
+  label: "Partners",
   items: [
     { name: "Wichita Family Vision", src: "/logos/wfv.png", w: 232, h: 96, size: 46 },
     { name: "Workthentic", src: "/logos/workthentic.png", w: 209, h: 96, size: 44 },

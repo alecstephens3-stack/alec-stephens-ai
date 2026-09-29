@@ -110,7 +110,17 @@ Alec: contours and the appointment book were "good starts"; asked for healthcare
 /?amb=claims (insurance ledger drifting up, unpaid to paid at the "now" line; the claims offer),
 /?amb=threads (after Impilo's hero: fine-line tooth, claim form, appointment book / trial frame,
 vendor bill, clipboard, each with a terracotta thread carrying a dot into the product window).
-Waiting on his pick. Gotcha: contours INSIDE a molar pinch into a face; outline + outside only.
+Gotcha: contours INSIDE a molar pinch into a face; outline + outside only.
+PICKED (Alec + Jusheen, 2026-09-29): threads. Now the default hero (other six removed from code,
+in git at ae8b019). Upgrades: threads measured to plug into sockets on the product window's top
+edge, draw in on load, a short piece of light travels one thread at a time (Impilo's move) and the
+socket pings; nested so they never cross; paused off screen. Label "Who we work with" -> "Partners".
+Rest of the page, two draft versions (page-threads.tsx), waiting on his pick:
+/?threads=margin (one thread from the window's bottom down the left margin, a knot tied to each
+section label, ends at a socket on the contact panel; each stretch draws in as its section enters)
+/?threads=stitches (Impilo's pattern: no page-long line; a stitch from the chosen service to its
+window that re-stitches on change; a dotted thread through the four How steps with one piece of
+light passing once, after Stripe). Contact ending left out: parting lines would cross the emails.
 Gotcha: never loseContext() in a WebGL effect cleanup; React's dev double-mount reuses the canvas.
 
 ## Next, in order (section by section WITH Alec; show, don't describe; he picks)

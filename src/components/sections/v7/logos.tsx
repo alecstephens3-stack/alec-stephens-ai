@@ -2,7 +2,7 @@ import Image from "next/image";
 import { V7_LOGOS } from "@/lib/content";
 
 /**
- * Who we work with: one still, grayscale row. Deliberately NOT a moving
+ * Partners (label renamed from "Who we work with", Alec 2026-09-29): one still, grayscale row. Deliberately NOT a moving
  * marquee (a ticker is on the banned list, Alec 2026-09-22). "Work with",
  * not "clients": Medari is a partner.
  */

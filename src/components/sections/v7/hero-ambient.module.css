@@ -1,9 +1,9 @@
-/* DRAFT hero side-strip options (2026-09-29). See hero-ambient.tsx. */
+/* The hero threads (2026-09-29). See hero-ambient.tsx. */
 
 .amb {
   position: absolute;
   inset: 0 0 auto 0;
-  height: 660px;
+  height: 700px;
   z-index: -1;
   pointer-events: none;
 }
@@ -11,201 +11,79 @@
   .amb { display: none; }
 }
 
-/* Each strip stops short of the header pill and the headline, fades toward
-   the middle of the page and out before the product window. */
-.side {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: max(0px, calc((100% - 900px) / 2));
-  overflow: hidden;
-  -webkit-mask-image:
-    linear-gradient(to var(--inward), #000 35%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 16%, #000 55%, transparent 92%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to var(--inward), #000 35%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 16%, #000 55%, transparent 92%);
-  mask-composite: intersect;
-}
-.left { left: 0; --inward: right; }
-.right { right: 0; --inward: left; }
+.strand { position: absolute; top: 0; }
+.left { left: 0; }
+.right { right: 0; transform: scaleX(-1); }
+.svg { position: absolute; inset: 0; overflow: visible; }
 
-.canvas { display: block; width: 100%; height: 100%; }
-
-/* ── light through blinds ───────────────────────────────────────────────── */
-.flip { position: absolute; inset: 0; }
-.right .flip { transform: scaleX(-1); }
-.blinds {
-  position: absolute;
-  inset: -25% -60% -25% -40%;
-  background: repeating-linear-gradient(
-    104deg,
-    rgba(255, 250, 242, 0) 0px,
-    rgba(255, 250, 242, 0) 26px,
-    rgba(255, 250, 242, 0.9) 42px,
-    rgba(255, 250, 242, 0.9) 66px,
-    rgba(255, 250, 242, 0) 82px,
-    rgba(255, 250, 242, 0) 100px
-  );
-  opacity: 0.5;
-  will-change: transform;
-  -webkit-mask-image: linear-gradient(158deg, #000 18%, rgba(0, 0, 0, 0.45) 48%, transparent 76%);
-  mask-image: linear-gradient(158deg, #000 18%, rgba(0, 0, 0, 0.45) 48%, transparent 76%);
-  animation: blinds-drift 48s ease-in-out infinite alternate;
+/* the objects rise in, then the threads draw from them to the window */
+.obj {
+  fill: none;
+  stroke: rgba(23, 19, 16, 0.36);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  animation: obj-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.blindsSoft {
-  opacity: 0.22;
-  background-size: 160% 100%;
-  animation-duration: 31s;
-  animation-delay: -14s;
+@keyframes obj-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
-@keyframes blinds-drift {
-  from { transform: translate3d(-46px, -12px, 0) skewX(-7deg); }
-  to { transform: translate3d(54px, 20px, 0) skewX(-2deg); }
+.thread {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.34);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1500ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
 }
 
-/* ── the day ────────────────────────────────────────────────────────────── */
-.day { position: absolute; inset: 0; }
-.dayLayer { position: absolute; inset: 0; }
-.future {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 47%, #000 53%);
-  mask-image: linear-gradient(to bottom, transparent 47%, #000 53%);
+/* the socket on the window's top edge; the frame covers its lower half */
+.socket { opacity: 0; animation: obj-in 500ms ease-out forwards; }
+.port { fill: #fbf3ea; stroke: rgba(220, 104, 67, 0.6); stroke-width: 1.2; }
+.ping {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.7);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 14s linear infinite;
 }
-.past {
-  -webkit-mask-image: linear-gradient(to bottom, #000 47%, transparent 53%);
-  mask-image: linear-gradient(to bottom, #000 47%, transparent 53%);
-}
-.dayTrack {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0 28px;
-  will-change: transform;
-  animation: day-drift 150s linear infinite;
-}
-.dayRight .dayTrack { animation-delay: -60s; }
-@keyframes day-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(0, -50%, 0); }
-}
-.slot {
-  display: flex;
-  align-items: stretch;
-  gap: 14px;
-  padding: 3px 0;
-  border-top: 1px solid rgba(23, 19, 16, 0.05);
-}
-.dayRight .slot { flex-direction: row-reverse; }
-.time {
-  flex: 0 0 44px;
-  font-family: var(--font-label);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  padding-top: 4px;
-  color: rgba(23, 19, 16, 0.22);
-}
-.dayRight .time { text-align: right; }
-.block {
-  flex: 1 1 auto;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-.admin {
-  background: rgba(220, 104, 67, 0.05);
-  border: 1px dashed rgba(220, 104, 67, 0.32);
-}
-.now {
-  position: absolute;
-  left: 28px;
-  right: 28px;
-  top: 50%;
-  height: 1px;
-  background: rgba(220, 104, 67, 0.32);
+@keyframes ping {
+  0%, 27% { opacity: 0; transform: scale(1); }
+  28% { opacity: 0.75; transform: scale(1); }
+  42% { opacity: 0; transform: scale(2.8); }
+  100% { opacity: 0; transform: scale(2.8); }
 }
 
-/* ── claims ─────────────────────────────────────────────────────────────── */
-.claimTrack {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0 28px;
-  will-change: transform;
-  animation: day-drift 140s linear infinite;
+/* a short piece of light per thread: travels in about 3 s, arrives at 28%,
+   then rests; the socket's ping shares the timing */
+.comet {
+  fill: none;
+  stroke: rgba(220, 104, 67, 0.95);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.12 1.5;
+  stroke-dashoffset: 0.12;
+  opacity: 0;
+  animation: comet 12s linear infinite;
 }
-.claimsRight .claimTrack { animation-delay: -55s; }
-.claim {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 46px;
-  border-top: 1px solid rgba(23, 19, 16, 0.05);
-  font-family: var(--font-label);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: rgba(23, 19, 16, 0.26);
-  white-space: nowrap;
+@keyframes comet {
+  0% { stroke-dashoffset: 0.12; opacity: 0; }
+  3% { opacity: 1; }
+  27% { opacity: 1; }
+  28% { stroke-dashoffset: -1; opacity: 0; }
+  100% { stroke-dashoffset: -1; opacity: 0; }
 }
-.claimsRight .claim { flex-direction: row-reverse; }
-.claimLead {
-  flex: 1 1 auto;
-  min-width: 12px;
-  border-bottom: 1.5px dotted rgba(23, 19, 16, 0.14);
-  transform: translateY(3px);
-}
-.claimChip {
-  flex: 0 0 auto;
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(23, 19, 16, 0.1);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.unpaid {
-  color: rgba(197, 85, 50, 0.62);
-  border: 1px dashed rgba(220, 104, 67, 0.45);
-  background: rgba(220, 104, 67, 0.05);
-}
-
-/* ── threads ────────────────────────────────────────────────────────────── */
-.amb.threads { height: 740px; }
-.threads .side {
-  -webkit-mask-image:
-    linear-gradient(to var(--inward), #000 45%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 10%, #000 80%, transparent 98%);
-  mask-image:
-    linear-gradient(to var(--inward), #000 45%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 10%, #000 80%, transparent 98%);
-}
-.threadWrap { position: absolute; top: 0; left: 0; width: 340px; height: 740px; }
-.threadSvg { position: absolute; inset: 0; overflow: visible; }
-.obj { stroke: rgba(23, 19, 16, 0.34); stroke-width: 1.3; }
-.thread { fill: none; stroke: rgba(220, 104, 67, 0.3); stroke-width: 1; }
-.pulse {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(220, 104, 67, 0.8);
-  offset-rotate: 0deg;
-  animation: travel 13s linear infinite;
-}
-@keyframes travel {
-  0% { offset-distance: 0%; opacity: 0; }
-  10% { opacity: 1; }
-  82% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
-}
+.paused .comet, .paused .ping { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
-  .blinds, .dayTrack, .claimTrack { animation: none; }
-  .pulse { display: none; }
+  .obj, .socket { animation: none; opacity: 1; }
+  .thread { animation: none; stroke-dashoffset: 0; }
+  .comet, .ping { display: none; }
 }
