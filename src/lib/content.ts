@@ -380,6 +380,13 @@ export const V7_PRICING = {
       body: "Everything in Growth, plus custom software wherever it pays for itself and working time with both of us every month.",
     },
   ],
+  // Alec, 2026-09-29. "Deliver" is anchored to the written agreement, the same
+  // standard the terms warrant ("performs as described in the proposal").
+  guarantee: {
+    lead: "If we don't deliver,",
+    accent: "you get your money back.",
+    sub: "Guaranteed. What we'll build is agreed in writing before we start, and if it doesn't do what we agreed, you don't pay for it.",
+  },
   fine: "The monthly fee is our guarantee: everything we build keeps doing its job, and if it stops, we fix it. No long-term contract. Cancel any time and your content stays yours.",
 };
 

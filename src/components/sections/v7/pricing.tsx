@@ -77,6 +77,19 @@ export function Pricing() {
           );
         })}
       </div>
+      <div className={s.guarantee}>
+        <svg className={s.seal} width="58" height="58" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+          <circle cx="29" cy="29" r="26" />
+          <circle cx="29" cy="29" r="20.5" className={s.sealInner} />
+          <path d="M20.5 29.5l5.6 5.6L38 23.2" className={s.sealCheck} />
+        </svg>
+        <div>
+          <p className={s.gHead}>
+            {V7_PRICING.guarantee.lead} <em>{V7_PRICING.guarantee.accent}</em>
+          </p>
+          <p className={s.gSub}>{V7_PRICING.guarantee.sub}</p>
+        </div>
+      </div>
       <p className={s.fine}>{V7_PRICING.fine}</p>
     </Section>
   );
