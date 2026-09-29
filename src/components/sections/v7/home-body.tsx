@@ -24,7 +24,7 @@ import {
  *
  * The FAQ moved to /faq, which is where the FAQPage JSON-LD went with it.
  */
-export function HomeBody({ visual }: { visual?: React.ReactNode }) {
+export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: React.ReactNode }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -72,11 +72,16 @@ export function HomeBody({ visual }: { visual?: React.ReactNode }) {
         <Logos />
         <Work />
         <Proof />
-        <How />
-        <Pricing />
-        <Patient />
-        <Founders />
-        <Contact />
+        {/* How we work down to Contact; preview routes swap in their own version */}
+        {lower ?? (
+          <>
+            <How />
+            <Pricing />
+            <Patient />
+            <Founders />
+            <Contact />
+          </>
+        )}
         <PageThreads />
       </div>
     </>
