@@ -1,0 +1,135 @@
+/* Pricing (2026-09-29). See pricing.tsx. */
+
+@property --lift { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+.grid {
+  display: grid;
+  gap: 20px;
+  align-items: stretch;
+}
+@media (min-width: 900px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding-block: 18px; }
+}
+
+/* ── the cards ───────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .62);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .85),
+    0 1px 2px rgba(90, 45, 25, .05),
+    0 22px 50px rgba(90, 45, 25, .10);
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift));
+  transition: --lift 420ms cubic-bezier(.16, 1, .3, 1), box-shadow 420ms ease;
+  will-change: transform;
+  isolation: isolate;
+  overflow: hidden;
+}
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 34px 32px 32px;
+}
+/* the light that follows the pointer */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, .55), transparent 42%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { --lift: -6px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 2px 4px rgba(90, 45, 25, .06), 0 34px 70px rgba(90, 45, 25, .14); }
+  .card:hover::after { opacity: 1; }
+}
+
+/* the middle card: night, raised, a little taller */
+.dark {
+  background: var(--sai-night);
+  color: var(--color-cream);
+  box-shadow:
+    inset 0 0 0 1px var(--color-nglass-edge),
+    0 2px 4px rgba(20, 10, 5, .20),
+    0 34px 80px rgba(40, 20, 10, .32);
+}
+@media (min-width: 900px) {
+  .dark { margin-block: -18px; }
+  .dark .inner { padding-top: 52px; padding-bottom: 50px; }
+}
+.dark::after {
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255, 142, 118, .22), transparent 46%);
+  mix-blend-mode: screen;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dark:hover { box-shadow: inset 0 0 0 1px var(--color-nglass-edge), 0 4px 8px rgba(20, 10, 5, .22), 0 44px 96px rgba(40, 20, 10, .38); }
+}
+.ember {
+  position: absolute;
+  z-index: 0;
+  width: 320px;
+  height: 320px;
+  top: -150px;
+  right: -110px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  filter: blur(80px);
+  opacity: .22;
+  pointer-events: none;
+}
+
+/* ── inside a card ───────────────────────────────────────────────────── */
+.name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+.dark .name { color: var(--color-cream); }
+.note { margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--color-accent-night); }
+.price {
+  margin-top: 22px;
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 2rem + 1.6vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--color-ink);
+}
+.dark .price { color: var(--color-cream); }
+.monthly { margin-top: 10px; font-size: 16px; color: var(--color-ink-2); }
+.dark .monthly { color: var(--color-cream-2); }
+.rule { display: block; height: 1px; margin: 24px 0 20px; background: rgba(23, 19, 16, .10); }
+.dark .rule { background: rgba(245, 241, 232, .14); }
+.body { flex: 1 1 auto; font-size: 17px; line-height: 1.6; color: var(--color-ink-2); text-wrap: pretty; }
+.dark .body { color: var(--color-cream-2); }
+.cta { margin-top: 28px; width: 100%; justify-content: center; }
+.ctaLight { background: var(--color-cream) !important; color: var(--color-ink) !important; }
+.ctaLight:hover { background: #fff !important; }
+.fine { margin-top: 30px; max-width: 72ch; font-size: 15px; line-height: 1.6; color: var(--color-ink-2); }
+
+/* ── the rolling price ──────────────────────────────────────────────── */
+.roll { display: inline-flex; font-feature-settings: "tnum"; }
+.digit { display: inline-block; height: 1em; overflow: hidden; line-height: 1; }
+.strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1500ms cubic-bezier(.16, 1, .3, 1);
+}
+.strip > span { display: block; height: 1em; line-height: 1; }
+.parked { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transform: none; transition: none; }
+  .card::after { display: none; }
+  .strip { transition: none; }
+}
