@@ -83,7 +83,7 @@ export function Header() {
       <div className="mx-auto flex w-fit max-w-[calc(100vw-24px)] items-center gap-1 rounded-full sai-pane-strong py-2 pl-4 pr-2">
         <Link
           href="/"
-          className="flex items-center pr-2 transition-opacity hover:opacity-80"
+          className="relative flex items-center pr-2 transition-opacity after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-[''] hover:opacity-80"
           aria-label="Stephens AI, home"
         >
           <Image
@@ -97,7 +97,7 @@ export function Header() {
         </Link>
 
         <nav
-          className="hidden items-center gap-0.5 md:flex"
+          className="hidden items-center gap-0.5 lg:flex"
           aria-label="Main navigation"
         >
           {NAV_LINKS.map((link) => {
@@ -109,7 +109,7 @@ export function Header() {
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
                   // a warm tint, not white: the pill itself is near-white (Alec, 2026-09-29)
-                  "rounded-full px-3.5 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] transition-colors duration-[220ms] hover:bg-accent/10 hover:text-accent-deep",
+                  "whitespace-nowrap rounded-full px-3.5 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] transition-colors duration-[220ms] hover:bg-accent/10 hover:text-accent-deep",
                   isActive ? "bg-accent/10 text-accent-deep" : "text-ink-2"
                 )}
               >
@@ -130,7 +130,7 @@ export function Header() {
         <button
           ref={triggerRef}
           type="button"
-          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full md:hidden"
+          className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
@@ -171,7 +171,7 @@ export function Header() {
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
-            className="sai-sheet fixed inset-0 z-40 md:hidden"
+            className="sai-sheet fixed inset-0 z-40 lg:hidden"
           >
             <nav
               className="relative flex h-full flex-col items-center justify-center gap-6 px-6"

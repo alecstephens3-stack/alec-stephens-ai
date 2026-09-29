@@ -66,7 +66,7 @@ export function Proof() {
             href={PROOF_LINKS.full.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+            className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
           >
             {PROOF_LINKS.full.label} &rarr;
           </a>
@@ -79,7 +79,7 @@ export function Proof() {
                   href={item.href}
                   target="_blank"
                   rel="noopener"
-                  className="underline underline-offset-4 transition-colors hover:text-ink"
+                  className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] underline underline-offset-4 transition-colors hover:text-ink"
                 >
                   {item.label}
                 </a>

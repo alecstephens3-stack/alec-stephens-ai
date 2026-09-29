@@ -4,8 +4,8 @@ import { SITE_NAME, CONTACT_EMAIL, CASE_STUDY_URL, LINKEDIN_URL } from "@/lib/co
 
 export function Footer() {
   return (
-    <footer className="px-4 pb-8 pt-6 md:px-6" aria-label="Site footer">
-      <div className="mx-auto max-w-5xl rounded-panel sai-pane px-8 py-8">
+    <footer className="px-5 pb-8 pt-6 md:px-8" aria-label="Site footer">
+      <div className="mx-auto max-w-[1000px] rounded-panel sai-pane px-8 py-8">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <Link
             href="/"

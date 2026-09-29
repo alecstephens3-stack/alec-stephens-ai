@@ -62,7 +62,7 @@ export function Work() {
       <div className="sv">
         <ul ref={listRef} className="sv-list" role="tablist" aria-label="Services">
           {items.map((w, i) => (
-            <li key={w.title} className={cn("sv-item", i === active && "is-on")}>
+            <li key={w.title} role="presentation" className={cn("sv-item", i === active && "is-on")}>
               <button
                 type="button"
                 role="tab"
@@ -86,7 +86,7 @@ export function Work() {
                       href={w.link.href}
                       target="_blank"
                       rel="noopener"
-                      className="mt-3 inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+                      className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] mt-3 inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
                     >
                       {w.link.label} &rarr;
                     </a>
