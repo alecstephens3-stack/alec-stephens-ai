@@ -72,8 +72,40 @@ Run it: `npx next dev -p 3217` in the worktree, open localhost:3217.
 - One-pagers: all four rebuilt on Lens v3 and replaced on the LIVE site too (sources in the vault,
   artifacts/case-studies/*-2026-09-28/). PDF grey-box defect now blocked by the converters.
 
-## Next session: the rest of the sections, one at a time, with Alec
-Order on the page after Services: Proof (Wichita Family Vision quote), How it works, Pricing,
-Patient data, Founders, Contact. Rule for copy: go section by section with Alec, match the vibe
-(warm, plain, patient-first), never a sentence-shape formula, flowing sentences.
-Then: re-run website-qa-agent on the whole page; noindex preview deploy on Alec's go; port to main.
+## Session 2026-09-28/29 (continued), state at handoff
+DONE and approved by Alec, word for word unless noted:
+- Hero caption: "Based on our systems in production. Names and amounts are examples."
+- Case study section (WFV): label "Case Study · Wichita Family Vision" (crop-mark stamp stays);
+  headline "Every question used to go through one person." + terracotta "Now anyone working at the
+  front desk finds the answer in seconds."; lead "…Questions like these came up all day, and each
+  one meant putting a patient on hold and pulling the office manager away from their own work.";
+  "In daily use since August 2026" replaced by payoff figures (About 200 hours / About $4,500, the
+  first in terracotta) + a green "Live in production" tinted chip (NO dot) + "Estimated from the
+  clinic's own numbers."
+- Services card 4 final: "Systems built around your practice" … ends "We stay on to keep things
+  running as your practice changes." Services headline and all service copy are final.
+- Case study PAGE (/case-studies/front-desk-knowledge-base) redesigned on Lens v4 and LIVE on
+  stephensai.co (main 2cf4ce6): client logo lockup header (Alec's pick), crop-mark section stamps,
+  framed product shot, payoff figures, "about" not "~". Source: vault
+  artifacts/case-studies/front-desk-knowledge-base-page/index.html (inlined kit; edit then
+  inline_kit.py, then copy to BOTH repos' public/case-studies/front-desk-knowledge-base/index.html).
+- Four one-pagers rebuilt on v4 and LIVE (vault artifacts/case-studies/*-2026-09-28/).
+- Design system is Lens v4 (kit/lens-kit.css "LENS v4" block, SNIPPETS.md top section, CLAUDE.md).
+
+TRIED AND REVERTED (do not re-propose): a two-tone "no label" section opening across the page,
+kit and case study (Alec: "revert"). Also rejected for section labels: hairline rules, terracotta
+line + name, margin note, run-in caps, § section marks, handwriting, folder tabs. The crop-mark
+`.sai-stamp` label STAYS. The floor-plan "practice map", the paper-in hero and the tab window were
+all dropped earlier.
+
+## Next, in order (section by section WITH Alec; show, don't describe; he picks)
+1. Case study section: the links row ("Read the full case study", "More, one page each: Time off
+   and payroll, Vendor bills").
+2. How it works (label "How we work", "How a project goes.", four steps).
+3. Pricing (three tiers; monthly fee line = "our guarantee…"; FAQ already matches).
+4. Patient data (BAA line). 5. Founders ("It's the two of us." + Japan/Korea note).
+6. Contact (night panel, free time audit). 7. Re-run website-qa-agent on the whole page.
+8. Noindex preview link on Alec's go, then port v7 to main (the live homepage).
+Working rules: flowing warm sentences, never a sentence-shape formula; build 3-4 visual options
+when he asks for options and look at them before showing; check `copy_check.py`; restart the dev
+server after CSS changes (`rm -rf .next`), it does not pick up globals.css edits in this worktree.
