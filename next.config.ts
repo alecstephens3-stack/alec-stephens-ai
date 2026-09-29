@@ -7,9 +7,11 @@ const nextConfig: NextConfig = {
     // file in public/jp/. Next serves it at /jp/index.html; this makes /jp work.
     return [
       { source: "/jp", destination: "/jp/index.html" },
-      // Alec's portfolio: static pages generated from
+      // Alec's portfolio: static per-build pages generated from
       // artifacts/scrollcraft/builds/alec-portfolio/ into public/alec/.
-      { source: "/alec", destination: "/alec/index.html" },
+      // The /alec index moved to the app route (src/app/alec, the bench) on
+      // 2026-09-23. The static public/alec/index.html is kept as the old
+      // gallery, reachable at /alec/index.html.
       { source: "/alec/:slug", destination: "/alec/:slug/index.html" },
       // The full front desk case study: self-contained static page from
       // artifacts/case-studies/ in the vault, served on our own domain.
@@ -25,20 +27,43 @@ const nextConfig: NextConfig = {
       // alive: /optometry was the link we handed to prospects.
       { source: "/optometry", destination: "/", permanent: true },
       { source: "/eyecare", destination: "/", permanent: true },
-      // alecstephens.tech is the founder domain on this same project; its
-      // front door is the portfolio. 302 for the first weeks, then 301.
+      // Curtis Cole (Medari Advisors) partner link: the one address he uses
+      // on his partners page, newsletter, blasts and podcast. Visitors land
+      // on the normal home page; the tag marks them as his channel under the
+      // partnership agreement (10% on channel leads). 302 so it can change.
       {
-        source: "/",
-        has: [{ type: "host", value: "alecstephens.tech" }],
-        destination: "https://stephensai.co/alec",
+        source: "/medari",
+        destination: "/?utm_source=medari&utm_medium=partner",
         permanent: false,
       },
+      // One address per page (SEO, 2026-09-28). The same Vercel project also
+      // answers on www.stephensai.co and alecstephens.tech, and every page
+      // used to render in full on both: duplicate copies of the whole site,
+      // and search results were still showing an old alecstephens.tech
+      // title for "Stephens AI". Permanent redirects hand the ranking to
+      // stephensai.co.
       {
-        source: "/",
-        has: [{ type: "host", value: "www.alecstephens.tech" }],
-        destination: "https://stephensai.co/alec",
-        permanent: false,
+        source: "/:path*",
+        has: [{ type: "host", value: "www.stephensai.co" }],
+        destination: "https://stephensai.co/:path*",
+        permanent: true,
       },
+      // alecstephens.tech is the founder domain; its front door is the
+      // portfolio. Was 302 for the first weeks, permanent since 2026-09-28.
+      ...["alecstephens.tech", "www.alecstephens.tech"].flatMap((host) => [
+        {
+          source: "/",
+          has: [{ type: "host" as const, value: host }],
+          destination: "https://stephensai.co/alec",
+          permanent: true,
+        },
+        {
+          source: "/:path+",
+          has: [{ type: "host" as const, value: host }],
+          destination: "https://stephensai.co/:path+",
+          permanent: true,
+        },
+      ]),
     ];
   },
   async headers() {
@@ -49,6 +74,16 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      },
+      {
+        // Last on purpose: when two rules set the same header, the later wins.
+        // The QuickBooks callback carries a one-time code in its address:
+        // never send it on as a referrer, never cache the page.
+        source: "/qb/:path*",
+        headers: [
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "no-store" },
         ],
       },
     ];

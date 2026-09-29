@@ -1,0 +1,40 @@
+/* Eraser curling. Every class here is prefixed g-eraser-. */
+.g-eraser-wrap {
+  width: 100%;
+  /* 3:4 board: cap the width so the whole desk and the score line fit one screen. */
+  max-width: min(520px, 52vh);
+  margin: 0 auto;
+}
+
+.g-eraser-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  background: #D9B896;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 30px rgba(23, 19, 16, 0.14);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: grab;
+}
+
+.g-eraser-canvas.g-eraser-pulling {
+  cursor: grabbing;
+}
+
+.g-eraser-canvas.g-eraser-idle {
+  cursor: default;
+}
+
+.g-eraser-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+}
