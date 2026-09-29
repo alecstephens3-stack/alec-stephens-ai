@@ -165,7 +165,8 @@ export const FOUNDERS = [
     name: "Alec Stephens",
     role: "Co-founder",
     image: "/images/headshot.png",
-    bio: "Built the front desk answers, time off and bills tools at a Kansas eye clinic, working with its office manager and bookkeeper.",
+    // Alec's own line, 2026-09-29
+    bio: "Alec has worked side by side with business owners for 5+ years across multiple industries to build the systems they now use every day.",
   },
   {
     name: "Jusheen Kim",
