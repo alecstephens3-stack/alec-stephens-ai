@@ -147,7 +147,7 @@ export const PATIENT = {
   points: [
     "We sign a BAA before we start.",
     "Most of what we build never touches patient data.",
-    "When it does, it stays in an account in your practice's name.",
+    "When it does, we have the infrastructure to protect your data.",
   ],
   headline:
     "We sign a BAA before we start. Most of what we build never sees patient information.",
