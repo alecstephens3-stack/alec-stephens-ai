@@ -1,0 +1,300 @@
+/* Builder A · Pricing ("Instruments"). The statement is open type on the
+   page, ledger style (dotted leaders, tabular figures, a double rule to
+   close). The estimate is the one object: a white instrument card. */
+
+/* ── the statement ───────────────────────────────────────────── */
+.statement {
+  display: grid;
+  border-top: 1px solid var(--color-rule-strong);
+  border-bottom: 3px double rgba(23, 19, 16, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 900px) {
+  .statement { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.bill {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 0 24px;
+}
+.bill + .bill { border-top: 1px solid var(--color-rule); }
+@media (min-width: 900px) {
+  .bill { padding: 30px 26px 26px; }
+  .bill:first-child { padding-left: 0; }
+  .bill:last-child { padding-right: 0; }
+  .bill + .bill { border-top: 0; border-left: 1px solid var(--color-rule); }
+}
+
+/* The suggested tier reads as the selected column: a light wash between
+   its hairlines, no outline, no badge. */
+.pick { position: relative; }
+.pick::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.5);
+}
+@media (max-width: 899px) {
+  .pick { padding-left: 14px; padding-right: 14px; margin-inline: -14px; }
+  .pick::before { inset: 0; border-radius: 14px; }
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+.note {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-accent-deep);
+}
+.desc {
+  margin-top: 14px;
+  font-size: 17.5px;
+  line-height: 1.55;
+  color: var(--color-ink-2);
+  max-width: 40ch;
+}
+
+.lines { margin-top: auto; padding-top: 22px; display: grid; gap: 2px; }
+.line { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; }
+.k { flex: none; font-size: 17px; color: var(--color-ink-90); }
+.lead {
+  flex: 1 1 auto;
+  min-width: 18px;
+  border-bottom: 1.5px dotted rgba(23, 19, 16, 0.3);
+  transform: translateY(-5px);
+}
+.v {
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+.vBig { font-size: 28px; letter-spacing: -0.022em; line-height: 1.1; }
+
+.terms {
+  margin-top: 16px;
+  max-width: 72ch;
+  font-size: var(--t-fine);
+  line-height: 1.6;
+  color: var(--color-ink-2);
+}
+
+/* ── below the statement: the estimate beside the owner's questions ── */
+.below {
+  margin-top: 56px;
+  display: grid;
+  gap: 44px;
+}
+@media (min-width: 900px) {
+  .below { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: 52px; align-items: start; }
+}
+
+/* the instrument */
+.inst {
+  border-radius: 20px;
+  background: #fffefc;
+  box-shadow: 0 0 0 1px rgba(60, 35, 20, 0.1), 0 22px 46px rgba(60, 35, 20, 0.13);
+  overflow: hidden;
+}
+.instBar {
+  padding: 13px 22px;
+  border-bottom: 1px solid rgba(23, 19, 16, 0.07);
+  background: #f8f4ef;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+}
+.instBody { padding: 20px 22px 24px; }
+@media (min-width: 640px) { .instBody { padding: 22px 28px 28px; } }
+.prompt { font-size: 17px; line-height: 1.5; color: var(--color-ink); }
+
+.ledger { margin-top: 10px; font-variant-numeric: tabular-nums; }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  border-bottom: 1px solid rgba(23, 19, 16, 0.06);
+}
+.op {
+  flex: none;
+  width: 14px;
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.opBlank { color: transparent; }
+.rk { flex: none; font-size: 17px; color: var(--color-ink-90); }
+.row .lead { transform: translateY(1px); align-self: center; border-bottom-color: rgba(23, 19, 16, 0.24); }
+.fixed {
+  flex: none;
+  width: 132px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-ink-2);
+}
+
+.stepper { flex: none; display: inline-flex; align-items: center; }
+.btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 999px;
+  background: #f5f1ec;
+  box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.1);
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.btn svg { position: relative; }
+.btn:hover::before { background: #fff; box-shadow: inset 0 0 0 1px rgba(220, 104, 67, 0.45); }
+.btn:active::before { transform: scale(0.94); }
+.btn:disabled { cursor: default; color: rgba(23, 19, 16, 0.3); }
+.btn:disabled::before { background: transparent; }
+.btn:focus-visible { outline: none; }
+.btn:focus-visible::before { box-shadow: 0 0 0 2px var(--color-accent); }
+
+.num {
+  width: 44px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.num::-webkit-outer-spin-button,
+.num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.num:hover { background: #f8f4ef; }
+.num:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 0; background: #fff; }
+
+/* the total: the kit's accounting double rule, the reader's figure in accent */
+.total {
+  position: relative;
+  margin-top: 16px;
+  padding-top: 18px;
+  border-top: 1.5px solid var(--color-ink);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+}
+.total::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-ink);
+}
+.totalK {
+  padding-bottom: 7px;
+  font-family: var(--font-label);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-ink-2);
+}
+.totalV {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 3.4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  line-height: 1;
+  color: var(--color-accent-display);
+  font-variant-numeric: tabular-nums;
+}
+.after { margin-top: 10px; text-align: right; font-size: 16px; line-height: 1.5; color: var(--color-ink-2); }
+
+@media (max-width: 520px) {
+  .rk { flex: 1 1 auto; min-width: 0; font-size: 16.5px; }
+  .row .lead { display: none; }
+  .after { text-align: left; }
+}
+
+/* ── the owner's questions ───────────────────────────────────── */
+.qs { border-top: 1px solid var(--color-rule-strong); }
+.q { border-bottom: 1px solid var(--color-rule); }
+.qHead {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.qChev { flex: none; color: var(--color-ink-2); transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease; }
+.qOn .qChev { transform: rotate(180deg); color: var(--color-accent); }
+.qHead:hover .qChev { color: var(--color-accent); }
+.qBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 380ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 380ms;
+}
+.qOn .qBody { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows 380ms cubic-bezier(0.16, 1, 0.3, 1); }
+.qBodyIn { overflow: hidden; }
+.qA { padding: 0 0 20px; font-size: 17px; line-height: 1.6; color: var(--color-ink-2); max-width: 58ch; }
+
+.more {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: color 200ms ease;
+}
+.more:hover { color: var(--color-accent-deep); }
+.cta { margin-top: 32px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qBody, .qChev, .btn::before { transition: none; }
+}
