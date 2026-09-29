@@ -1,0 +1,133 @@
+/* DRAFT hero side-strip options (2026-09-29). See hero-ambient.tsx. */
+
+.amb {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 660px;
+  z-index: -1;
+  pointer-events: none;
+}
+@media (max-width: 1099px) {
+  .amb { display: none; }
+}
+
+/* Each strip stops short of the header pill and the headline, fades toward
+   the middle of the page and out before the product window. */
+.side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: max(0px, calc((100% - 900px) / 2));
+  overflow: hidden;
+  -webkit-mask-image:
+    linear-gradient(to var(--inward), #000 35%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 55%, transparent 92%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to var(--inward), #000 35%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 55%, transparent 92%);
+  mask-composite: intersect;
+}
+.left { left: 0; --inward: right; }
+.right { right: 0; --inward: left; }
+
+.canvas { display: block; width: 100%; height: 100%; }
+
+/* ── light through blinds ───────────────────────────────────────────────── */
+.flip { position: absolute; inset: 0; }
+.right .flip { transform: scaleX(-1); }
+.blinds {
+  position: absolute;
+  inset: -25% -60% -25% -40%;
+  background: repeating-linear-gradient(
+    104deg,
+    rgba(255, 250, 242, 0) 0px,
+    rgba(255, 250, 242, 0) 26px,
+    rgba(255, 250, 242, 0.9) 42px,
+    rgba(255, 250, 242, 0.9) 66px,
+    rgba(255, 250, 242, 0) 82px,
+    rgba(255, 250, 242, 0) 100px
+  );
+  opacity: 0.5;
+  will-change: transform;
+  -webkit-mask-image: linear-gradient(158deg, #000 18%, rgba(0, 0, 0, 0.45) 48%, transparent 76%);
+  mask-image: linear-gradient(158deg, #000 18%, rgba(0, 0, 0, 0.45) 48%, transparent 76%);
+  animation: blinds-drift 48s ease-in-out infinite alternate;
+}
+.blindsSoft {
+  opacity: 0.22;
+  background-size: 160% 100%;
+  animation-duration: 31s;
+  animation-delay: -14s;
+}
+@keyframes blinds-drift {
+  from { transform: translate3d(-46px, -12px, 0) skewX(-7deg); }
+  to { transform: translate3d(54px, 20px, 0) skewX(-2deg); }
+}
+
+/* ── the day ────────────────────────────────────────────────────────────── */
+.day { position: absolute; inset: 0; }
+.dayLayer { position: absolute; inset: 0; }
+.future {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 47%, #000 53%);
+  mask-image: linear-gradient(to bottom, transparent 47%, #000 53%);
+}
+.past {
+  -webkit-mask-image: linear-gradient(to bottom, #000 47%, transparent 53%);
+  mask-image: linear-gradient(to bottom, #000 47%, transparent 53%);
+}
+.dayTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 28px;
+  will-change: transform;
+  animation: day-drift 150s linear infinite;
+}
+.dayRight .dayTrack { animation-delay: -60s; }
+@keyframes day-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+.slot {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  padding: 3px 0;
+  border-top: 1px solid rgba(23, 19, 16, 0.05);
+}
+.dayRight .slot { flex-direction: row-reverse; }
+.time {
+  flex: 0 0 44px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding-top: 4px;
+  color: rgba(23, 19, 16, 0.22);
+}
+.dayRight .time { text-align: right; }
+.block {
+  flex: 1 1 auto;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.admin {
+  background: rgba(220, 104, 67, 0.05);
+  border: 1px dashed rgba(220, 104, 67, 0.32);
+}
+.now {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  top: 50%;
+  height: 1px;
+  background: rgba(220, 104, 67, 0.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blinds, .dayTrack { animation: none; }
+}
