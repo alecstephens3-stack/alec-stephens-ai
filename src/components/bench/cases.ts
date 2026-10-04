@@ -83,7 +83,7 @@ export const SITE: Site = {
   "linkedin": "https://www.linkedin.com/in/alec-stephens-55b392213/",
   "upwork": "https://www.upwork.com/freelancers/~0144c4c3757a94de2e",
   "jusheen_linkedin": "https://www.linkedin.com/in/jusheenkim",
-  "updated": "2026-09-16"
+  "updated": "2026-10-04"
 };
 
 export const ABOUT: About = {
@@ -344,97 +344,101 @@ export const CASES: BuildCase[] = [
     "name": "Invoice processing system",
     "short": "Invoice processing",
     "kicker": "Healthcare · optometry · HIPAA",
-    "title": "Invoice filing for a clinic's bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice",
+    "title": "Invoice processing for a clinic's bookkeeper: she never processes an invoice by hand again",
     "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
     "client_short": "Wichita Family Vision",
-    "users": "Built for the clinic's bookkeeper. Tested end to end in the clinic's own AWS account on 2026-09-16; her desk install is the next step",
-    "shipped": "Bedrock live 2026-09-16",
-    "duration": "About 4 weeks, including the compliance re-architecture",
+    "users": "The clinic's bookkeeper, since the install on 2026-10-01",
+    "shipped": "Live 2026-10-01",
+    "duration": "About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API",
     "number": {
-      "value": "0.9¢",
-      "unit": "",
-      "label": "per invoice, 3.4 seconds a file, measured on Claude Sonnet 4.6 in the clinic's account",
-      "basis": "26,904 input and 2,003 output tokens for 12 files at Bedrock on-demand pricing: $0.11 a run."
+      "value": "~200",
+      "unit": "hrs/yr",
+      "label": "of keying and filing off the bookkeeper's desk, at the 50 invoices a week the clinic plans for as it expands",
+      "basis": "50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year."
     },
     "second": {
-      "value": "12 of 12",
+      "value": "5 of 5",
       "unit": "",
-      "label": "synthetic invoices read correctly on 2 models, rotated scans included"
+      "label": "totals right on the 5 real invoices she tested it with; QuickBooks' own bill reader got 2 of them wrong"
     },
     "wall": {
-      "n": "0.9¢ / invoice",
-      "phrase": "to read and file a vendor bill on Claude via AWS Bedrock, HIPAA-compliant, inside the clinic's own account"
+      "n": "~200 hrs/yr",
+      "phrase": "of invoice keying and filing taken off a bookkeeper's desk, with her vendor rules followed every time"
     },
-    "oneliner": "The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.",
-    "broken": "Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks, and filed it by hand into one of 184 vendor folders. The owner's goal was plain: cut her weekly hours in half. The catch: some documents carry patient names, and consumer chat tools carry no HIPAA agreement, so the obvious tool was the wrong tool.",
+    "oneliner": "The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic's vendor rules every time.",
+    "broken": "Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.",
     "built": [
-      "The accounting entry without AI. Approved PDFs flow into QuickBooks bill capture, which fills the bill from the vendor's default category. No model touches the ledger.",
-      "A vision-model filer for the messy input: a program on her PC reads each PDF (rotated scans included), matches it to the vendor folder, proposes the new file name, and shows a review table. Nothing moves until she clicks Go.",
-      "Every move logged and undoable. Unknown vendors are flagged for her instead of guessed. Patient-named documents are filed but never queued for QuickBooks, and their names never enter the log.",
-      "The model call runs on Claude through AWS Bedrock inside the clinic's own AWS account, under the standard AWS BAA, with data retention set to none."
+      "One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.",
+      "Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.",
+      "Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.",
+      "Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one."
     ],
     "changed": [
       {
-        "k": "Reading a bill",
-        "before": "Eyes, then keyboard",
-        "after": "Vision model, 3.4 s a file"
+        "k": "Entering a bill",
+        "before": "Typed by hand from the PDF",
+        "after": "Read, checked in one table, entered on Go"
       },
       {
-        "k": "Filing",
-        "before": "Hand-filed into 184 folders",
-        "after": "Proposed, reviewed, one click"
+        "k": "Filing the PDF",
+        "before": "Renamed and dragged into 1 of 184 folders",
+        "after": "Renamed and filed on the same click"
       },
       {
-        "k": "The accounting entry",
-        "before": "Typed into QuickBooks",
-        "after": "QuickBooks capture, no AI"
+        "k": "Vendor rules",
+        "before": "In one person's head",
+        "after": "Written once, followed every run"
       },
       {
-        "k": "Patient-named documents",
-        "before": "Same pile as everything else",
-        "after": "Flagged, filed, never sent on"
-      },
-      {
-        "k": "Cost per invoice",
-        "before": "Bookkeeper minutes",
-        "after": "0.9 cents of model time"
+        "k": "Totals right on 5 of her real invoices",
+        "before": "3 with QuickBooks' own reader",
+        "after": "All 5"
       }
     ],
-    "math_note": "Measured on 2026-09-16 in the clinic's AWS account: 12 synthetic invoices, 26,904 input and 2,003 output tokens on Claude Sonnet 4.6 at $3 and $15 per million, $0.11 a run, 0.9 cents an invoice, 3.4 seconds a file. The same 12 files read identically on Haiku 4.5 at about 0.3 cents. The hours saved will be measured on her real volume after the install.",
+    "math_note": "The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic's AWS account: about 1 cent an invoice.",
     "quote": null,
     "stack": [
       "Claude on AWS Bedrock",
       "Python",
-      "boto3",
+      "QuickBooks Online Accounting API",
+      "OAuth 2.0",
       "PyMuPDF",
-      "QuickBooks Online bill capture",
+      "PyInstaller",
+      "Amazon S3",
+      "CloudWatch",
+      "Ed25519 signed updates",
       "Windows"
     ],
     "engineer": {
-      "architecture": "A local Python runner: PDF pages to PNG at 150 DPI (3 pages max), one prompt with two backends (Bedrock for production, OpenRouter for synthetic tests only), a deterministic vendor matcher (exceptions, normalized exact, unique containment), a plan step that names files and resolves collisions, a review page on 127.0.0.1, then move, log, and queue for QuickBooks.",
-      "runs_where": "On the bookkeeper's PC against the clinic's network drive. Only the reading step leaves the building, to Bedrock in the clinic's own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.",
-      "tests": "12 synthetic invoices mirroring her real nine plus the untested cases: 5 rotated image-only scans, a bare-date receipt, a paid invoice, a statement with a period end, an unknown vendor, a same-name collision, 2 patient-data documents. 12 of 12 on Sonnet and on Haiku. Full run, undo, and the browser Go path all proven.",
-      "cost": "0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.",
-      "guardrails": "HIPAA: a business associate agreement between Stephens AI and the clinic, the AWS BAA on the clinic's own account, retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.",
-      "tradeoff": "We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic's data stays inside its own boundary. Also chosen: QuickBooks' own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.",
+      "architecture": "A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.",
+      "runs_where": "On the bookkeeper's PC against the clinic's network drive. Reading runs in the clinic's own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic's S3 bucket, and error reports go to its CloudWatch.",
+      "tests": "40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a 9-agent code review found 39 issues; all were fixed and reviewed again by a second agent.",
+      "cost": "About 1 cent an invoice in the clinic's AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.",
+      "guardrails": "Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic's.",
+      "tradeoff": "QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic's own account.",
       "repo": null,
       "repo_note": null
     },
-    "attribution": "I built it: the runner, the Bedrock path and the BAA setup in the clinic's account, the compliance finding that moved the architecture, and the synthetic test set. A second engineer ran the QuickBooks trial tests.",
+    "attribution": "I built it: the app, the QuickBooks integration, the self-update system and the tests. My co-founder worked the QuickBooks setup with me and joined the install.",
     "media": {
-      "hero": "/alec/img/invoice-agent/01-review-page.webp",
-      "alt": "The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row",
-      "caption": "The review page on 12 synthetic invoices. Amounts are invented; nothing moves until Go.",
+      "hero": "/alec/img/invoice-agent/01-review-table-v35.webp",
+      "alt": "The review table with eight invented invoices: new file names, vendor folders, dates, amounts, QuickBooks vendor and account dropdowns, and a note per row, including a Select Optical order going in as a card expense",
+      "caption": "The one table she checks. Invented invoices; nothing moves until Go.",
       "gallery": [
         {
-          "src": "/alec/img/invoice-agent/02-figure-flow.webp",
-          "alt": "Diagram of the filing flow from PDF to QuickBooks",
-          "caption": "Read, match, propose, review, move, queue."
+          "src": "/alec/img/invoice-agent/02-result-v35.webp",
+          "alt": "The result page: five entries in QuickBooks, including a card expense, two documents filed but not entered, one file left for her",
+          "caption": "After Go: what went into QuickBooks, what was filed only, what still needs her."
+        },
+        {
+          "src": "/alec/img/invoice-agent/03-needs-you-v35.webp",
+          "alt": "A result page with one bill waiting because the vendor is not in QuickBooks yet",
+          "caption": "A bill that can't go in yet waits, and goes in with one click once she adds the vendor."
         }
       ]
     },
     "links": [],
-    "compliance": "HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic's own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window."
+    "compliance": "HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic's own AWS account, under the clinic's business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page."
   },
   {
     "slug": "ai-lab",

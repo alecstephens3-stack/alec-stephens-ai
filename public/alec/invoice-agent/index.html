@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Invoice processing system · Wichita Family Vision · Alec Stephens</title>
-<meta name="description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.">
+<meta name="description" content="The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.">
 <link rel="canonical" href="https://stephensai.co/alec/invoice-agent">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Invoice processing system · Wichita Family Vision · Alec Stephens">
-<meta property="og:description" content="The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.">
+<meta property="og:description" content="The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.">
 <meta property="og:url" content="https://stephensai.co/alec/invoice-agent">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,10 +230,14 @@ html, body {
 /* The streak is a background highlight: it paints between the glass and the content,
    never over text or a screenshot (Alec, 2026-09-16: "that diagonal highlight should be
    in the background but not be visible by text or screenshots"). `isolation` on the
-   pane + z-index -1 on the band puts it under everything the pane holds. */
-.sai-streak::before { content:''; position:absolute; z-index: -1; top:-40%; left:-20%; width: 55%; height: 190%; pointer-events:none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.34) 50%, transparent 70%);
-  transform: rotate(2deg); }
+   pane + z-index -1 on the band puts it under everything the pane holds.
+   The band is drawn across the WHOLE pane (inset 0), with its stops in px so it sits the
+   same distance from the top-left corner on any pane size. It used to be a 55%-wide strip,
+   and the glint was cut off at the strip's right edge, which drew a hard vertical line on
+   every pane (Alec, 2026-10-04). layout_lint.py now fails any big gradient overlay whose
+   box ends inside its surface (SEAM). */
+.sai-streak::before { content:''; position:absolute; z-index: -1; inset: 0; border-radius: inherit; pointer-events:none;
+  background: linear-gradient(115deg, transparent 120px, rgba(255,255,255,0.34) 360px, transparent 600px); }
 
 /* A nested tile inside a pane. Never a pane inside a pane. */
 .sai-tile { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
@@ -874,6 +878,238 @@ section.sai-night .sai-fig .port-ink { stroke: var(--sai-cream); }
    PRINT / PDF — frost cannot print. Panes go near-solid, motion stops.
    ========================================================================== */
 
+/* ══════════════════ LENS v4 (2026-09-28) ══════════════════
+   From the stephensai.co v7 homepage, which Alec approved ("im liking it").
+   What changed from v3: the scene is quiet (sky + paper grain, NO drifting
+   lenses or tint pools; floating spheres were banned 2026-09-21), glass is
+   used sparingly, open hairline layouts beat stacks of cards, and the
+   signature object is a dense product window on a framed warm backdrop.
+   Reach for these before a .sai-pane. ── */
+
+/* Quiet scene: put class="sai-quiet" on <body> and leave out the SAI:SCENE marker. */
+body.sai-quiet { background: var(--sai-sky-fallback); background-image: var(--sai-sky); background-attachment: fixed; isolation: isolate; }
+body.sai-quiet::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 180px 180px; }
+
+/* The framed product shot: a warm framed backdrop holding one dense app window.
+   Satellites (.sai-sat) overlap the window's edges and carry any depth. */
+.sai-frame { position: relative; border-radius: 30px; padding: clamp(18px, 4vw, 44px); overflow: visible;
+  background:
+    radial-gradient(120% 90% at 12% 110%, rgba(220,104,67,.50), transparent 55%),
+    radial-gradient(90% 70% at 95% 105%, rgba(244,123,107,.34), transparent 60%),
+    radial-gradient(80% 80% at 70% -10%, rgba(255,247,238,.95), transparent 60%),
+    linear-gradient(180deg, #F4E6DA 0%, #EFCDB6 60%, #E5A98C 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.55), 0 40px 90px rgba(90,45,25,.14); }
+.sai-app { position: relative; background: #FFFEFC; border-radius: 18px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(60,35,20,.10), 0 2px 4px rgba(60,35,20,.06), 0 24px 48px rgba(60,35,20,.16), 0 60px 120px rgba(90,45,25,.18); }
+.sai-app > img { display: block; width: 100%; height: auto; }
+.sai-app-bar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #F7F3EE; border-bottom: 1px solid var(--sai-rule-soft);
+  font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sai-ink-2); }
+.sai-sat { position: absolute; background: #fff; border-radius: 16px; padding: 14px 16px;
+  box-shadow: 0 0 0 1px rgba(60,35,20,.10), 0 18px 40px rgba(60,35,20,.18), 0 40px 90px rgba(90,45,25,.16); }
+.sai-frame-cap { margin-top: 14px; text-align: center; font-size: var(--sai-fs-small); color: var(--sai-ink-2); }
+
+/* Payoff figures: the result in display type, the lead figure in terracotta.
+   Always pair with its source line (e.g. "Estimated from the clinic's own numbers."). */
+.sai-payoff { display: flex; flex-wrap: wrap; gap: 20px 56px; }
+.sai-payoff .n { font-family: var(--sai-font-sans); font-size: clamp(34px, 3.4vw, 46px); font-weight: 500; letter-spacing: -.025em; line-height: 1.05; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.sai-payoff .lead .n { color: var(--sai-accent-deep); }
+.sai-payoff .l { margin-top: 6px; font-size: 18px; color: var(--sai-ink); }
+.sai-payoff-note { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: var(--sai-fs-small); color: var(--sai-ink-2); }
+
+/* Open rows: title + body on hairlines, two columns on desktop. The v4 default
+   for a list of things; no cards, no icons, no caps eyebrows. */
+.sai-rows { display: grid; border-top: 1px solid var(--sai-rule-strong); }
+.sai-rows > * { padding: 24px 0; border-bottom: 1px solid var(--sai-rule); }
+.sai-rows h4 { font-family: var(--sai-font-sans); font-size: 21px; font-weight: 500; line-height: 1.25; color: var(--sai-ink); margin: 0; }
+.sai-rows p { margin-top: 8px; font-size: var(--sai-fs-body); line-height: var(--sai-lh-body); color: var(--sai-ink-2); }
+@media (min-width: 820px) { .sai-rows.two { grid-template-columns: 1fr 1fr; column-gap: 56px; } }
+
+/* Quote card: one real quote from one real person, on white. */
+.sai-quote { background: #FFFCF9; border-radius: 22px; padding: clamp(24px, 3vw, 40px); max-width: 740px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.9), 0 24px 60px rgba(112,62,40,.16); }
+.sai-quote blockquote { margin: 0; font-family: var(--sai-font-sans); font-size: clamp(22px, 1.9vw, 30px); font-weight: 500; line-height: 1.3; letter-spacing: -.012em; color: var(--sai-ink); }
+.sai-quote blockquote::before { content: '\201C'; color: var(--sai-accent-deep); }
+.sai-quote blockquote::after { content: '\201D'; color: var(--sai-accent-deep); }
+.sai-quote figcaption { margin-top: 22px; display: flex; align-items: center; gap: 14px; font-size: var(--sai-fs-body); color: var(--sai-ink-2); }
+.sai-quote figcaption::before { content: ''; width: 32px; height: 2px; border-radius: 2px; background: var(--sai-accent); flex-shrink: 0; }
+.sai-quote figcaption b { color: var(--sai-ink); font-weight: 500; }
+/* Case study header: the client's logo (muted, like the logo row), a hairline, the label,
+   then one line of facts. Opens every v4 case study (Alec's pick, 2026-09-28). */
+.sai-client { display: flex; align-items: center; gap: 18px; }
+.sai-client img { height: 52px; width: auto; opacity: .7; filter: grayscale(1); }
+.sai-client .bar { width: 1px; height: 36px; background: var(--sai-rule-strong); }
+.sai-client .lab { font-family: var(--sai-font-label); font-weight: 600; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--sai-accent-deep); }
+.sai-client-meta { margin-top: 16px; font-size: var(--sai-fs-body); color: var(--sai-ink-2); }
+/* v4 reads multi-line split values left-aligned (right-aligned wraps read ragged). */
+.sai-split .row .v { text-align: left; }
+@media (max-width: 560px) { .sai-split .row { flex-direction: column; align-items: flex-start; gap: 3px; } .sai-split .row .k { flex: none; width: auto; } }
+/* ══════════════════ end LENS v4 ══════════════════ */
+
+/* ══════════════════ LENS v5 (2026-09-30) ══════════════════
+   From the finished stephensai.co homepage, live 2026-09-29 (Alec: "the site
+   is amazing. save it as the new stephens ai design system going forward").
+   v5 keeps everything in v4 and adds the interactive pieces that page proved:
+   a step switcher with a gliding highlight, a tab bar and a notch; price cards
+   that lean toward the pointer with a light that follows it and prices that
+   roll in; a guarantee band; a checked trust strip; the pointer light on a
+   night panel; a tinted hover for pill menus; 44px tap areas.
+   Motion rules that ride with these: pointer-driven effects only on fine
+   pointers (never on touch), reduced motion shows the final state, nothing
+   loops below the hero, and a rolling number ALWAYS renders its real value by
+   default (the digits only "arm" off screen, and print always shows the real
+   value). The behaviours live in lens-kit.js (SAI:JS). ── */
+
+/* Pill menus: a warm tint on hover, never white on a near-white pill (it vanished, 2026-09-29). */
+.sai-dock nav a:hover { color: var(--sai-accent-deep); background: rgba(220,104,67,.10); }
+.sai-dock nav a { white-space: nowrap; }
+
+/* Two-sentence headlines on any surface: the second sentence is terracotta, upright
+   (it rendered cream italic inside a night panel before v5). */
+.sai-display em, .sai-w-title em, h2 em, h3 em { font-style: normal; color: var(--sai-accent); }
+section.sai-night .sai-w-title em, section.sai-night h2 em, section.sai-night h3 em, body.sai-dark .sai-display em { color: var(--sai-accent-night); }
+
+/* A 44px tap area around a small standalone link, without moving it. */
+.sai-hit { position: relative; }
+.sai-hit::after { content: ''; position: absolute; inset: -10px -4px; }
+
+/* ── Step switcher: <div class="sai-steps" data-sai-steps style="--n:3">.
+   A highlight glides behind the chosen step, a terracotta bar sits on the
+   hairline over it, and the frame below has a notch in its top edge that
+   points up at it. Hover, click, tap or arrow keys pick a step. ── */
+.sai-steps { --i: 0; --n: 3; position: relative; }
+.sai-steps-rail { position: relative; border-top: 1px solid var(--sai-rule-strong); }
+.sai-steps-rail ol { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; }
+.sai-steps-rail li { position: relative; display: flex; flex-direction: column; padding: 22px 0; cursor: pointer; }
+.sai-steps-rail li + li { border-top: 1px solid var(--sai-rule); }
+.sai-steps-rail button { all: unset; display: block; cursor: pointer; font-family: var(--sai-font-sans); font-size: 21px; font-weight: 500; line-height: 1.25; letter-spacing: -.01em; color: var(--sai-ink-2); transition: color 250ms ease; }
+.sai-steps-rail button::after { content: ''; position: absolute; inset: 0; border-radius: 18px; }
+.sai-steps-rail button:focus-visible::after { outline: 2px solid var(--sai-accent); outline-offset: -2px; }
+.sai-steps-rail li:hover button, .sai-steps-rail li.on button { color: var(--sai-ink); }
+.sai-steps-rail p { margin-top: 8px; font-size: var(--sai-fs-body); line-height: 1.55; color: var(--sai-ink-2); }
+.sai-steps-start { align-self: flex-start; margin-bottom: 10px; padding: 4px 9px; border-radius: 7px; background: var(--sai-accent-soft); box-shadow: inset 0 0 0 1px var(--sai-accent-line); font-family: var(--sai-font-label); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sai-accent-deep); }
+/* what the step will show: both texts in the markup, the chosen one reads "Shown below" */
+.sai-steps-shows { margin-top: auto; padding-top: 16px; font-size: 15px; font-weight: 500; color: var(--sai-ink-2); }
+.sai-steps-shows .when-on, li.on .sai-steps-shows .when-off { display: none; }
+li.on .sai-steps-shows .when-on { display: inline; color: var(--sai-accent-deep); }
+.sai-steps-glide, .sai-steps-bar, .sai-steps-notch { display: none; }
+.sai-steps-panels { display: grid; }
+.sai-steps-panels > * { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 360ms ease, transform 620ms cubic-bezier(.16,1,.3,1), visibility 0s linear 360ms; }
+.sai-steps-panels > .on { opacity: 1; visibility: visible; transform: none; transition: opacity 360ms ease, transform 620ms cubic-bezier(.16,1,.3,1); }
+.sai-steps-stage { position: relative; margin-top: 24px; }
+@media (min-width: 820px) {
+  .sai-steps-rail ol { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+  .sai-steps-rail li { padding: 30px 24px; }
+  .sai-steps-rail li + li { border-top: 0; }
+  .sai-steps-glide { display: block; position: absolute; z-index: 0; top: 12px; bottom: 8px;
+    left: calc(var(--i) * (100% / var(--n)) + 6px); width: calc(100% / var(--n) - 12px); border-radius: 20px;
+    background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), 0 14px 34px rgba(90,45,25,.08);
+    transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-bar { display: block; position: absolute; z-index: 2; top: -1px; height: 2px; border-radius: 2px; background: var(--sai-accent);
+    left: calc(var(--i) * (100% / var(--n)) + 24px); width: calc(100% / var(--n) - 48px); transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-stage { margin-top: 0; padding-top: 24px; }
+  /* the notch: a corner of the frame's top edge, under the frame so only its upper half shows */
+  .sai-steps-notch { display: block; position: absolute; z-index: 0; top: 13px; width: 22px; height: 22px; border-top-left-radius: 5px;
+    left: calc(var(--i) * (100% / var(--n)) + (100% / var(--n)) / 2 - 11px);
+    background: #F5E8DC; box-shadow: inset 1px 1px 0 rgba(255,255,255,.8), -2px -2px 6px rgba(90,45,25,.07);
+    transform: rotate(45deg); transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-stage > .sai-frame { position: relative; z-index: 1; }
+}
+
+/* ── Price cards: <div class="sai-prices"> of <article class="sai-price" data-sai-tilt>.
+   The recommended tier is .dark (night, raised, a little taller). Each card
+   leans toward the pointer on a spring with a soft light following it. ── */
+@property --sai-lift { syntax: "<length>"; inherits: false; initial-value: 0px; }
+.sai-prices { display: grid; gap: 20px; align-items: stretch; }
+@media (min-width: 900px) { .sai-prices { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding-block: 18px; } }
+.sai-price { position: relative; isolation: isolate; overflow: hidden; border-radius: 28px; background: rgba(255,255,255,.62);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.85), 0 1px 2px rgba(90,45,25,.05), 0 22px 50px rgba(90,45,25,.10);
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--sai-lift));
+  transition: --sai-lift 420ms cubic-bezier(.16,1,.3,1), box-shadow 420ms ease; }
+.sai-price > .in { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; padding: 34px 32px 32px; }
+.sai-price::after { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.55), transparent 42%);
+  mix-blend-mode: soft-light; opacity: 0; transition: opacity 360ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .sai-price:hover { --sai-lift: -6px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 2px 4px rgba(90,45,25,.06), 0 34px 70px rgba(90,45,25,.14); }
+  .sai-price:hover::after { opacity: 1; }
+}
+.sai-price.dark { background: var(--sai-night); color: var(--sai-cream);
+  box-shadow: inset 0 0 0 1px var(--sai-nglass-edge), 0 2px 4px rgba(20,10,5,.20), 0 34px 80px rgba(40,20,10,.32); }
+.sai-price.dark::after { background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.22), transparent 46%); mix-blend-mode: screen; }
+.sai-price.dark::before { content: ''; position: absolute; z-index: 0; width: 320px; height: 320px; top: -150px; right: -110px; border-radius: 50%;
+  background: var(--sai-accent); filter: blur(80px); opacity: .22; pointer-events: none; }
+@media (min-width: 900px) { .sai-price.dark { margin-block: -18px; } .sai-price.dark > .in { padding-top: 52px; padding-bottom: 50px; } }
+.sai-price .name { font-family: var(--sai-font-sans); font-size: 22px; font-weight: 500; line-height: 1.25; color: var(--sai-ink); }
+.sai-price .note { margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--sai-accent-night); }
+.sai-price .price { margin-top: 22px; font-family: var(--sai-font-sans); font-size: clamp(2.6rem, 2rem + 1.6vw, 3.25rem); font-weight: 500; line-height: 1; letter-spacing: -.03em; color: var(--sai-ink); }
+.sai-price .monthly { margin-top: 10px; font-size: 16px; color: var(--sai-ink-2); }
+.sai-price .rule { display: block; height: 1px; margin: 24px 0 20px; background: rgba(23,19,16,.10); }
+/* the value line leads, one sentence of detail follows (Alec, 2026-09-29) */
+.sai-price .lead { font-family: var(--sai-font-sans); font-size: 20px; font-weight: 500; line-height: 1.3; letter-spacing: -.01em; color: var(--sai-ink); text-wrap: balance; }
+.sai-price .body { flex: 1 1 auto; margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--sai-ink-2); text-wrap: pretty; }
+.sai-price .sai-btn { margin-top: 28px; width: 100%; justify-content: center; }
+.sai-price.dark .name, .sai-price.dark .price, .sai-price.dark .lead { color: var(--sai-cream); }
+.sai-price.dark .monthly, .sai-price.dark .body { color: var(--sai-cream-2); }
+.sai-price.dark .rule { background: rgba(245,241,232,.14); }
+.sai-price.dark .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+
+/* A number that rolls into place like an odometer. Markup via SAI:JS from
+   <span class="sai-roll" data-sai-roll="$7,500">$7,500</span>; each digit strip
+   carries --d (its real digit), so print and no-JS always show the real value. */
+.sai-roll { display: inline-flex; font-feature-settings: "tnum"; }
+.sai-roll .dg { display: inline-block; height: 1em; overflow: hidden; line-height: 1; }
+.sai-roll .strip { display: flex; flex-direction: column; transform: translateY(calc(var(--d, 0) * -10%)); transition: transform 1500ms cubic-bezier(.16,1,.3,1); }
+.sai-roll .strip > span { display: block; height: 1em; line-height: 1; }
+.sai-roll.armed .strip { transform: translateY(-90%); transition: none; }
+
+/* ── Guarantee band: a two-tone line beside a fine-line seal (markup in SNIPPETS). ── */
+.sai-guarantee { display: flex; align-items: center; gap: 22px; margin-top: 44px; padding-top: 30px; border-top: 1px solid rgba(23,19,16,.10); }
+.sai-guarantee svg { flex: 0 0 auto; fill: none; stroke: var(--sai-accent); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.sai-guarantee svg .inner { stroke-opacity: .45; stroke-dasharray: 2 3.2; }
+.sai-guarantee svg .tick { stroke-width: 2; }
+.sai-guarantee .head { font-family: var(--sai-font-sans); font-size: clamp(1.45rem, 1.1rem + 1vw, 1.9rem); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; color: var(--sai-ink); text-wrap: balance; }
+.sai-guarantee .head em { font-style: normal; color: var(--sai-accent); }
+.sai-guarantee .sub { margin-top: 8px; max-width: 64ch; font-size: 16.5px; line-height: 1.55; color: var(--sai-ink-2); }
+@media (max-width: 599px) { .sai-guarantee { align-items: flex-start; gap: 16px; } .sai-guarantee svg { width: 44px; height: 44px; } }
+
+/* ── Checked strip: a label and three short facts, one slim band (trust lines). ── */
+.sai-strip { display: grid; gap: 18px; padding: 24px 26px; border-radius: 24px; background: rgba(255,255,255,.5);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), 0 14px 34px rgba(90,45,25,.07); }
+.sai-strip .lab { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sai-accent-deep); white-space: nowrap; }
+.sai-strip ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.sai-strip li { display: flex; align-items: flex-start; gap: 12px; font-size: 16.5px; line-height: 1.45; color: var(--sai-ink); text-wrap: pretty; }
+.sai-strip li::before { content: ''; flex: 0 0 26px; height: 26px; margin-top: -2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' fill='none' stroke='%23DC6843' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='13' cy='13' r='11.5' stroke-width='1.3'/%3E%3Cpath d='M8.4 13.3l3 3 6.2-6.4' stroke-width='1.8'/%3E%3C/svg%3E") center / contain no-repeat; }
+@media (min-width: 900px) {
+  .sai-strip { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 24px; padding: 22px 30px; }
+  .sai-strip ul { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  /* every point built the same: divider, 22px, check, text */
+  .sai-strip li { border-left: 1px solid rgba(23,19,16,.09); padding: 0 18px 0 22px; }
+}
+
+/* ── Pointer light on a night panel: <section class="sai-night" data-sai-glow>.
+   The section's own ::after, so it covers the whole panel; content sits above. ── */
+section.sai-night[data-sai-glow] > *:not(.sai-ember) { position: relative; z-index: 1; }
+section.sai-night[data-sai-glow]::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.15), rgba(255,142,118,.05) 38%, transparent 62%);
+  opacity: 0; transition: opacity 420ms ease; }
+section.sai-night[data-glow="on"]::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai-steps-glide, .sai-steps-bar, .sai-steps-notch, .sai-steps-panels > * { transition: none; }
+  .sai-price { transform: none; transition: none; } .sai-price::after, section.sai-night[data-sai-glow]::after { display: none; }
+  .sai-roll .strip { transition: none; }
+}
+@media print {
+  .sai-price { transform: none !important; } .sai-price::after, section.sai-night[data-sai-glow]::after { display: none !important; }
+  .sai-roll.armed .strip { transform: translateY(calc(var(--d, 0) * -10%)) !important; }
+  .sai-steps-glide, .sai-steps-notch { display: none !important; }
+}
+/* ══════════════════ end LENS v5 ══════════════════ */
+
 @media print {
   .sai-scene { position: absolute; }
   .sai-dock { display: none; }
@@ -901,7 +1137,19 @@ section.sai-night .sai-fig .port-ink { stroke: var(--sai-cream); }
      engine as hard-edged darker rectangles (a blur cannot be printed, so its
      bounding box is). Print the sky gradient alone. (WFV quick guide, 2026-09-10.) */
   .sai-tint, .sai-lens { display: none; }
+  body.sai-quiet::before { display: none; }
+  body.sai-quiet { background-attachment: scroll; }
   * { animation: none !important; }
+  /* Soft shadows print as grey rectangles too: Chrome writes each blurred
+     box-shadow as a soft-masked layer and Preview draws its bounding box
+     (vendor-bills one-pager, 2026-09-28). No shadow, blur or filter survives
+     into print; panes keep their edge with a hairline instead. The PDF
+     converter enforces the same rule and fails any PDF that still has a soft
+     mask. */
+  *, *::before, *::after { box-shadow: none !important; text-shadow: none !important;
+    filter: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .sai-pane, .sai-claim, .sai-tile, .sai-float-stat, .sai-split .col.after,
+  .sai-vital, .sai-callout, .sai-day-window { border: 1px solid rgba(23,19,16,0.10) !important; }
 }
 
 /* ── Behaviour-layer styles (2026-08-28). Pair with lens-kit.js via the JS marker. ── */
@@ -1164,35 +1412,35 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 <main class="sai-page">
 
   <section id="result" data-sc-in data-sc-stagger="70">
-    <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · optometry · HIPAA · Wichita Family Vision · Bedrock live 2026-09-16</span></span>
-    <h1 class="sai-display">Invoice filing for a clinic&#39;s bookkeeper: HIPAA-compliant on Claude via AWS Bedrock, at 0.9 cents an invoice.</h1>
-    <p class="sai-lede">The bookkeeper keyed every vendor bill by hand and filed PDFs into 184 folders. Now a vision model reads each one, proposes the folder, and waits for her click, on a HIPAA-compliant path.</p>
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · optometry · HIPAA · Wichita Family Vision · Live 2026-10-01</span></span>
+    <h1 class="sai-display">Invoice processing for a clinic&#39;s bookkeeper: she never processes an invoice by hand again.</h1>
+    <p class="sai-lede">The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.</p>
     <div class="cs-stats">
       <div class="num acc sai-pane">
-        <span class="v">0.9¢</span>
-        <span class="l">per invoice, 3.4 seconds a file, measured on Claude Sonnet 4.6 in the clinic&#39;s account</span>
-<span class="basis">26,904 input and 2,003 output tokens for 12 files at Bedrock on-demand pricing: $0.11 a run.</span>      </div>
+        <span class="v">~200<span class="u">hrs/yr</span></span>
+        <span class="l">of keying and filing off the bookkeeper&#39;s desk, at the 50 invoices a week the clinic plans for as it expands</span>
+<span class="basis">50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year.</span>      </div>
       <div class="num sai-pane">
-        <span class="v">12 of 12</span>
-        <span class="l">synthetic invoices read correctly on 2 models, rotated scans included</span>
+        <span class="v">5 of 5</span>
+        <span class="l">totals right on the 5 real invoices she tested it with; QuickBooks&#39; own bill reader got 2 of them wrong</span>
       </div>
     </div>
     <div class="hero-grid">
       <div class="media sai-pane sai-streak">
         <figure class="shot">
-          <img src="/alec/img/invoice-agent/01-review-page.webp" srcset="/alec/img/invoice-agent/01-review-page-800.webp 800w, /alec/img/invoice-agent/01-review-page.webp 1600w" sizes="(max-width: 860px) 92vw, 620px" width="1600" height="1200" alt="The review table: 12 files, proposed names and folders, vendor read, date, amount, and a note per row" decoding="async">
-          <figcaption>The review page on 12 synthetic invoices. Amounts are invented; nothing moves until Go.</figcaption>
+          <img src="/alec/img/invoice-agent/01-review-table-v35.webp" srcset="/alec/img/invoice-agent/01-review-table-v35-800.webp 800w, /alec/img/invoice-agent/01-review-table-v35.webp 1600w" sizes="(max-width: 860px) 92vw, 620px" width="1600" height="1200" alt="The review table with eight invented invoices: new file names, vendor folders, dates, amounts, QuickBooks vendor and account dropdowns, and a note per row, including a Select Optical order going in as a card expense" decoding="async">
+          <figcaption>The one table she checks. Invented invoices; nothing moves until Go.</figcaption>
         </figure>
       </div>
       <aside class="facts sai-pane">
         <span class="lbl">At a glance</span>
         <dl>
           <div><dt>Client</dt><dd>Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</dd></div>
-          <div><dt>Who uses it</dt><dd>Built for the clinic&#39;s bookkeeper. Tested end to end in the clinic&#39;s own AWS account on 2026-09-16; her desk install is the next step.</dd></div>
-          <div><dt>Shipped</dt><dd>Bedrock live 2026-09-16. About 4 weeks, including the compliance re-architecture.</dd></div>
-          <div><dt>Stack</dt><dd><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>boto3</li><li>PyMuPDF</li><li>QuickBooks Online bill capture</li><li>Windows</li></ul></dd></div>
-<div><dt>Compliance</dt><dd>HIPAA-compliant by design. Business associate agreements in force with the clinic and with AWS; the model runs in the clinic&#39;s own AWS account with retention off; patient-named documents never reach QuickBooks or a chat window.</dd></div>          <div><dt>Cost to run</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
-          <div><dt>My role</dt><dd>I built it: the runner, the Bedrock path and the BAA setup in the clinic&#39;s account, the compliance finding that moved the architecture, and the synthetic test set. A second engineer ran the QuickBooks trial tests.</dd></div>
+          <div><dt>Who uses it</dt><dd>The clinic&#39;s bookkeeper, since the install on 2026-10-01.</dd></div>
+          <div><dt>Shipped</dt><dd>Live 2026-10-01. About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API.</dd></div>
+          <div><dt>Stack</dt><dd><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>QuickBooks Online Accounting API</li><li>OAuth 2.0</li><li>PyMuPDF</li><li>PyInstaller</li><li>Amazon S3</li><li>CloudWatch</li><li>Ed25519 signed updates</li><li>Windows</li></ul></dd></div>
+<div><dt>Compliance</dt><dd>HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic&#39;s own AWS account, under the clinic&#39;s business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page.</dd></div>          <div><dt>Cost to run</dt><dd>About 1 cent an invoice in the clinic&#39;s AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.</dd></div>
+          <div><dt>My role</dt><dd>I built it: the app, the QuickBooks integration, the self-update system and the tests. My co-founder worked the QuickBooks setup with me and joined the install.</dd></div>
         </dl>
       </aside>
     </div>
@@ -1201,15 +1449,16 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
   <section id="broken" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What was broken</span></span>
     <h3>Before</h3>
-    <p>Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks, and filed it by hand into one of 184 vendor folders. The owner&#39;s goal was plain: cut her weekly hours in half. The catch: some documents carry patient names, and consumer chat tools carry no HIPAA agreement, so the obvious tool was the wrong tool.</p>
+    <p>Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.</p>
   </section>
 
   <section id="built" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What I built</span></span>
     <h3>The build</h3>
-    <ul class="sai-bullets"><li>The accounting entry without AI. Approved PDFs flow into QuickBooks bill capture, which fills the bill from the vendor&#39;s default category. No model touches the ledger.</li><li>A vision-model filer for the messy input: a program on her PC reads each PDF (rotated scans included), matches it to the vendor folder, proposes the new file name, and shows a review table. Nothing moves until she clicks Go.</li><li>Every move logged and undoable. Unknown vendors are flagged for her instead of guessed. Patient-named documents are filed but never queued for QuickBooks, and their names never enter the log.</li><li>The model call runs on Claude through AWS Bedrock inside the clinic&#39;s own AWS account, under the standard AWS BAA, with data retention set to none.</li></ul>
+    <ul class="sai-bullets"><li>One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.</li><li>Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.</li><li>Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.</li><li>Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one.</li></ul>
     <div class="gallery">
-      <figure class="shot"><img src="/alec/img/invoice-agent/02-figure-flow.webp" srcset="/alec/img/invoice-agent/02-figure-flow-800.webp 800w, /alec/img/invoice-agent/02-figure-flow.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="Diagram of the filing flow from PDF to QuickBooks" loading="lazy" decoding="async"><figcaption>Read, match, propose, review, move, queue.</figcaption></figure>
+      <figure class="shot"><img src="/alec/img/invoice-agent/02-result-v35.webp" srcset="/alec/img/invoice-agent/02-result-v35-800.webp 800w, /alec/img/invoice-agent/02-result-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="The result page: five entries in QuickBooks, including a card expense, two documents filed but not entered, one file left for her" loading="lazy" decoding="async"><figcaption>After Go: what went into QuickBooks, what was filed only, what still needs her.</figcaption></figure>
+      <figure class="shot"><img src="/alec/img/invoice-agent/03-needs-you-v35.webp" srcset="/alec/img/invoice-agent/03-needs-you-v35-800.webp 800w, /alec/img/invoice-agent/03-needs-you-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="A result page with one bill waiting because the vendor is not in QuickBooks yet" loading="lazy" decoding="async"><figcaption>A bill that can&#39;t go in yet waits, and goes in with one click once she adds the vendor.</figcaption></figure>
     </div>
   </section>
 
@@ -1219,25 +1468,25 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <div class="sai-split">
       <div class="col before">
         <div class="col-head"><h4>Before</h4><span class="tag old">By hand</span></div>
-<div class="row"><span class="k">Reading a bill</span><span class="v">Eyes, then keyboard</span></div><div class="row"><span class="k">Filing</span><span class="v">Hand-filed into 184 folders</span></div><div class="row"><span class="k">The accounting entry</span><span class="v">Typed into QuickBooks</span></div><div class="row"><span class="k">Patient-named documents</span><span class="v">Same pile as everything else</span></div><div class="row"><span class="k">Cost per invoice</span><span class="v">Bookkeeper minutes</span></div>      </div>
+<div class="row"><span class="k">Entering a bill</span><span class="v">Typed by hand from the PDF</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and dragged into 1 of 184 folders</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">In one person&#39;s head</span></div><div class="row"><span class="k">Totals right on 5 of her real invoices</span><span class="v">3 with QuickBooks&#39; own reader</span></div>      </div>
       <span class="sai-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#B4502C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
       <div class="col after">
         <div class="col-head"><h4>After</h4><span class="tag new">The system</span></div>
-<div class="row"><span class="k">Reading a bill</span><span class="v">Vision model, 3.4 s a file</span></div><div class="row"><span class="k">Filing</span><span class="v">Proposed, reviewed, one click</span></div><div class="row"><span class="k">The accounting entry</span><span class="v">QuickBooks capture, no AI</span></div><div class="row"><span class="k">Patient-named documents</span><span class="v">Flagged, filed, never sent on</span></div><div class="row"><span class="k">Cost per invoice</span><span class="v">0.9 cents of model time</span></div>      </div>
+<div class="row"><span class="k">Entering a bill</span><span class="v">Read, checked in one table, entered on Go</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and filed on the same click</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">Written once, followed every run</span></div><div class="row"><span class="k">Totals right on 5 of her real invoices</span><span class="v">All 5</span></div>      </div>
     </div>
-    <div class="sai-w-note"><strong>Where the numbers come from.</strong> Measured on 2026-09-16 in the clinic&#39;s AWS account: 12 synthetic invoices, 26,904 input and 2,003 output tokens on Claude Sonnet 4.6 at $3 and $15 per million, $0.11 a run, 0.9 cents an invoice, 3.4 seconds a file. The same 12 files read identically on Haiku 4.5 at about 0.3 cents. The hours saved will be measured on her real volume after the install.</div>
+    <div class="sai-w-note"><strong>Where the numbers come from.</strong> The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic&#39;s AWS account: about 1 cent an invoice.</div>
   </section>
 
   <section id="how" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">For engineers</span></span>
     <h3>How it's built</h3>
     <dl class="eng">
-      <div class="wide"><dt>Architecture</dt><dd>A local Python runner: PDF pages to PNG at 150 DPI (3 pages max), one prompt with two backends (Bedrock for production, OpenRouter for synthetic tests only), a deterministic vendor matcher (exceptions, normalized exact, unique containment), a plan step that names files and resolves collisions, a review page on 127.0.0.1, then move, log, and queue for QuickBooks.</dd></div>
-      <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Only the reading step leaves the building, to Bedrock in the clinic&#39;s own AWS account (us-east-1), under the AWS BAA. Stephens AI operates it through an access key scoped to one inference profile.</dd></div>
-      <div><dt>Tests and evals</dt><dd>12 synthetic invoices mirroring her real nine plus the untested cases: 5 rotated image-only scans, a bare-date receipt, a paid invoice, a statement with a period end, an unknown vendor, a same-name collision, 2 patient-data documents. 12 of 12 on Sonnet and on Haiku. Full run, undo, and the browser Go path all proven.</dd></div>
-      <div><dt>Cost and latency</dt><dd>0.9 cents an invoice on Sonnet 4.6, about 0.3 on Haiku 4.5. At any plausible clinic volume that is $2 to $13 a month of AWS.</dd></div>
-      <div><dt>Guardrails</dt><dd>HIPAA: a business associate agreement between Stephens AI and the clinic, the AWS BAA on the clinic&#39;s own account, retention set to none in Bedrock, logging off, the Anthropic use-case form filed. No patient name is ever written to the log or the proposal. Nothing is deleted or overwritten, ever; the tool never creates a folder; a stop-on-first-failure move with a full undo.</dd></div>
-      <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>We moved off Claude Team and Cowork mid-build. They are the easier surface, and the first version ran there, but neither carries a BAA, so the runtime could never read a patient-named file. The Bedrock path costs a compliance program and a Windows installer; it is the only path where the clinic&#39;s data stays inside its own boundary. Also chosen: QuickBooks&#39; own capture for the accounting entry, because a model should not touch a ledger when a deterministic feature already does it.</p></div></dd></div>
+      <div class="wide"><dt>Architecture</dt><dd>A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.</dd></div>
+      <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Reading runs in the clinic&#39;s own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic&#39;s S3 bucket, and error reports go to its CloudWatch.</dd></div>
+      <div><dt>Tests and evals</dt><dd>40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a 9-agent code review found 39 issues; all were fixed and reviewed again by a second agent.</dd></div>
+      <div><dt>Cost and latency</dt><dd>About 1 cent an invoice in the clinic&#39;s AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.</dd></div>
+      <div><dt>Guardrails</dt><dd>Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic&#39;s.</dd></div>
+      <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic&#39;s own account.</p></div></dd></div>
     </dl>
   </section>
 
@@ -1277,7 +1526,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       </span>
       <span class="word">Stephens AI</span>
     </span>
-    <span class="meta"><a href="/">stephensai.co</a> · <a href="/alec">Alec's builds</a> · Updated 2026-09-16</span>
+    <span class="meta"><a href="/">stephensai.co</a> · <a href="/alec">Alec's builds</a> · Updated 2026-10-04</span>
   </footer>
 </main>
 <script src="/alec/scrollcraft.js"></script>
@@ -1303,10 +1552,12 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 </script>
 <!-- SAI:JS -->
 <script>
-/* Lens v3 — behaviour layer. Inlined by scripts/inline_kit.py at the SAI:JS marker.
-   Three things, nothing else: the dock follows the reader, copy buttons copy,
-   segmented toggles switch. Added 2026-08-28 (Alec: "the black part of the pill
-   needs to move", and "little parts of the HTML, when necessary, interactive"). */
+/* Lens — behaviour layer. Inlined by scripts/inline_kit.py at the SAI:JS marker.
+   v3 (2026-08-28): the dock follows the reader, copy buttons copy, segmented
+   toggles switch. v5 (2026-09-30, from the live stephensai.co homepage): the step
+   switcher, price cards that lean toward the pointer, rolling numbers, and the
+   pointer light on a night panel. Pointer effects run on fine pointers only;
+   reduced motion gets the final state. */
 (function () {
   'use strict';
   var OFFSET = 96;
@@ -1367,6 +1618,93 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     };
     seg.querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-value')); }); });
     var first = seg.querySelector('button.on') || seg.querySelector('button'); if (first) apply(first.getAttribute('data-value'));
+  });
+
+  /* ── Lens v5 ── */
+  var mq = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+  var calm = mq('(prefers-reduced-motion: reduce)');
+  var fine = mq('(hover: hover) and (pointer: fine)');
+
+  /* Step switcher: <div class="sai-steps" data-sai-steps> with li steps (each holding a
+     button) and a .sai-steps-panels list in the same order. Hover, focus, click, tap
+     or arrow keys choose; --i drives the glide, the bar and the notch. */
+  document.querySelectorAll('[data-sai-steps]').forEach(function (root) {
+    var items = Array.prototype.slice.call(root.querySelectorAll('.sai-steps-rail li'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.sai-steps-panels > *'));
+    var btns = items.map(function (li) { return li.querySelector('button'); });
+    root.style.setProperty('--n', items.length);
+    var pick = function (i, focus) {
+      root.style.setProperty('--i', i);
+      items.forEach(function (li, j) { li.classList.toggle('on', i === j); });
+      panels.forEach(function (p, j) { p.classList.toggle('on', i === j); p.hidden = false; });
+      btns.forEach(function (b, j) { if (!b) return; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === j ? 'true' : 'false'); b.tabIndex = i === j ? 0 : -1; });
+      if (focus && btns[i]) btns[i].focus();
+    };
+    items.forEach(function (li, i) {
+      li.addEventListener('mouseenter', function () { if (fine) pick(i); });
+      li.addEventListener('click', function () { pick(i); });
+      var b = btns[i]; if (!b) return;
+      b.addEventListener('focus', function () { pick(i); });
+      b.addEventListener('keydown', function (e) {
+        var n = items.length, k = { ArrowRight: (i + 1) % n, ArrowDown: (i + 1) % n, ArrowLeft: (i - 1 + n) % n, ArrowUp: (i - 1 + n) % n, Home: 0, End: n - 1 }[e.key];
+        if (k === undefined) return; e.preventDefault(); pick(k, true);
+      });
+    });
+    var start = items.findIndex(function (li) { return li.classList.contains('on'); });
+    pick(start < 0 ? 0 : start);
+  });
+
+  /* Tilt: [data-sai-tilt] leans toward the pointer on a damped spring (real frame
+     time, so 60 and 120 Hz feel the same) and sets --mx/--my for the light. */
+  if (fine && !calm) document.querySelectorAll('[data-sai-tilt]').forEach(function (el) {
+    var raf = 0, last = 0, active = false, tx = 0, ty = 0, x = 0, y = 0, vx = 0, vy = 0;
+    var step = function (now) {
+      var dt = last ? Math.min(0.032, (now - last) / 1000) : 1 / 60; last = now;
+      vx += (170 * (tx - x) - 22 * vx) * dt; vy += (170 * (ty - y) - 22 * vy) * dt; x += vx * dt; y += vy * dt;
+      el.style.setProperty('--ry', x.toFixed(3) + 'deg'); el.style.setProperty('--rx', y.toFixed(3) + 'deg');
+      var still = Math.abs(tx - x) < 0.005 && Math.abs(ty - y) < 0.005 && Math.abs(vx) < 0.01 && Math.abs(vy) < 0.01;
+      if (still && !active) { raf = 0; last = 0; return; }
+      raf = requestAnimationFrame(step);
+    };
+    var wake = function () { if (!raf) raf = requestAnimationFrame(step); };
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      tx = (px - 0.5) * 7; ty = -(py - 0.5) * 5;
+      el.style.setProperty('--mx', (px * 100).toFixed(1) + '%'); el.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      active = true; wake();
+    });
+    el.addEventListener('pointerleave', function () { tx = 0; ty = 0; active = false; wake(); });
+  });
+
+  /* Rolling numbers: <span class="sai-roll" data-sai-roll="$7,500">$7,500</span>. The real
+     value is always what renders; only a number that starts below the fold arms (digits
+     parked at 9) and rolls in when it arrives. Print always shows the real value (CSS). */
+  document.querySelectorAll('[data-sai-roll]').forEach(function (el, k) {
+    var v = el.getAttribute('data-sai-roll') || el.textContent;
+    el.setAttribute('aria-label', v);
+    el.innerHTML = v.split('').map(function (ch, i) {
+      if (!/\d/.test(ch)) return '<span aria-hidden="true">' + ch + '</span>';
+      var strip = ''; for (var d = 0; d < 10; d++) strip += '<span>' + d + '</span>';
+      return '<span class="dg" aria-hidden="true"><span class="strip" style="--d:' + ch + ';transition-delay:' + (k * 120 + i * 70) + 'ms">' + strip + '</span></span>';
+    }).join('');
+    if (calm || !('IntersectionObserver' in window) || el.getBoundingClientRect().top < window.innerHeight) return;
+    el.classList.add('armed');
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      el.getBoundingClientRect(); el.classList.remove('armed'); io.disconnect();
+    });
+    io.observe(el);
+  });
+
+  /* Pointer light on a night panel: <section class="sai-night" data-sai-glow>. */
+  if (fine && !calm) document.querySelectorAll('section.sai-night[data-sai-glow]').forEach(function (host) {
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
+      host.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      host.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      host.setAttribute('data-glow', 'on');
+    });
+    host.addEventListener('pointerleave', function () { host.removeAttribute('data-glow'); });
   });
 })();
 </script>
