@@ -1,7 +1,7 @@
 /*
  * bench-items.js · the objects on "Alec's bench" (stephensai.co/alec).
  * Alec's workbench seen from above, on the same desk engine and lens as /desk and /play.
- * Each object is an artifact from one of his eight builds (cases.yaml); clicking it opens
+ * Each object is an artifact from one of his nine builds (cases.yaml); clicking it opens
  * that build. `id` and `tool` are both the build's slug, `verb` is its short name.
  *
  * Plain ES module, no imports. Everything is painted through the painters the desk
@@ -11,7 +11,8 @@
  * Item contract (see ../desk/README.md): w x h in design units, draw(ctx, F) paints the
  * object at the origin, ink(ctx, m, F) paints anything handwritten at messiness m
  * (1 = scrawled, 0 = neat). Poses per layout: m = messy [cx, cy, deg], t = tidy [cx, cy, deg].
- * Wide desk 800 x 500, tall 358 x 600. One light, from the top left. The engine casts the
+ * Wide desk 800 x 500, tall 358 x 680 (bench.css makes the phone desk taller than /desk's 600
+ * so Putback gets its own row). One light, from the top left. The engine casts the
  * object's own shadow from its silhouette, so draw() only shades parts sitting on parts.
  */
 
@@ -29,14 +30,15 @@ const POSES = {
   'construction-site': { wide: { m: [500, 368, 6], t: [496, 362, 0] },   tall: { m: [119, 381, 2], t: [118, 378, 0] } },
   'invoice-agent':     { wide: { m: [306, 386, -9], t: [312, 382, 0] },  tall: { m: [255, 512, -1], t: [254, 510, 0] } },
   'pto-payroll':       { wide: { m: [140, 370, 7], t: [134, 364, 0] },   tall: { m: [105, 506, 2], t: [104, 504, 0] } },
+  putback:             { wide: { m: [512, 242, -7], t: [516, 236, 0] },  tall: { m: [176, 622, 4], t: [179, 618, 0] } },
   mug:                 { wide: { m: [644, 236, 18], t: [640, 232, 0] },  tall: null },
   pencil:              { wide: { m: [258, 262, -16], t: [262, 258, 0] }, tall: { m: [232, 116, 88], t: [232, 112, 90] } },
 };
 
 /* the idle lens visits the tidy centre of each build, in a loop around the desk */
 const TOUR = {
-  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll'],
-  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll'],
+  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'putback'],
+  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'putback'],
 };
 export const BENCH_STOPS = {
   wide: TOUR.wide.map(id => POSES[id].wide.t.slice(0, 2)),
@@ -338,10 +340,66 @@ export function buildBenchItems(P) {
     },
     ink(ctx, m, F) {
       ctx.save(); ctx.translate(0, BILL.y);
-      script(ctx, [{ text: '0.9¢', x: 12, y: 80, size: 13, tilt: -0.1 }], m, { font: F.hand, color: BLUE, seed: 1301, weight: 700 });
+      script(ctx, [{ text: '1¢', x: 15, y: 80, size: 13, tilt: -0.1 }], m, { font: F.hand, color: BLUE, seed: 1301, weight: 700 });
       wobble(ctx, circlePts(24.5, 76, 17, 8.4, 16, 2), m, 1302, { width: 0.8, alpha: 0.7 });
       script(ctx, [{ text: 'a bill', x: 47, y: 81, size: 7.5 }], m, { font: F.hand, color: BLUE, seed: 1303 });
       ctx.restore();
+    },
+  });
+
+  /* ============================================================ 3b putback */
+  /* a dental PPO card lying on this week's claims printout; the denied line circled */
+  const PB = { sw: 128, sh: 82, cw: 86, ch: 54 };
+  items.push({
+    id: 'putback', tool: 'putback', name: 'Insurance card', verb: 'Putback',
+    w: 136, h: 92, shadow: 1.2, ...POSES.putback,
+    draw(ctx, F) {
+      const { sw, sh, cw, ch } = PB;
+      const T = 'rgba(34,30,28,0.78)', L = 'rgba(34,30,28,0.32)';
+      // the claims printout, a plain office printer sheet, a little skew
+      ctx.save(); ctx.translate(2, 4); ctx.rotate(0.022);
+      ctx.save(); rr(ctx, 0, 0, sw, sh, 1.2); drop(ctx, 2.2, 0.7, 1.2, 0.18); ctx.fillStyle = '#FBFAF6'; ctx.fill(); ctx.restore();
+      paper(ctx, sw, sh, '#FBFAF6');
+      print(ctx, F, 'CLAIMS THIS WEEK', 7, 10, 5, { label: true, weight: 700, color: 'rgba(34,30,28,0.9)', track: '1px' });
+      print(ctx, F, '11 claims', sw - 7, 10, 4.4, { align: 'right', color: 'rgba(34,30,28,0.55)' });
+      ctx.fillStyle = L; ctx.fillRect(7, 13.5, sw - 14, 0.6);
+      const rows = [['DENIED', '#B5452A', 'CLM-1002', '1,250'], ['NEEDS INFO', '#9A7414', 'CLM-1011', '1,150'], ['PAID', '#3F7A55', 'CLM-1004', '140'], ['PENDING', '#9A7414', 'CLM-1007', '185'], ['CALL', '#5A5650', 'CLM-1010', '95']];
+      rows.forEach(([s, c, id, amt], i) => {
+        const y = 22 + i * 7.6;
+        print(ctx, F, s, 7, y, 4, { label: true, weight: 700, color: c, track: '0.5px' });
+        print(ctx, F, id, 34, y, 4.3, { color: T });
+        print(ctx, F, '$' + amt, sw - 7, y, 4.3, { align: 'right', color: T });
+        ctx.fillStyle = 'rgba(34,30,28,0.07)'; ctx.fillRect(7, y + 2.2, sw - 14, 0.4);
+      });
+      crease(ctx, 0, sh / 2, sw, sh / 2 + 0.4, { dark: 0.08, light: 0.4 });
+      ctx.restore();
+      // the card on top: plastic, dental blue band, embossed numbers, lit from the top left
+      ctx.save(); ctx.translate(44, 32); ctx.rotate(-0.07);
+      ctx.save(); rr(ctx, 0, 0, cw, ch, 4.5); drop(ctx, 2.6, 0.9, 1.6, 0.32); ctx.fillStyle = '#F1F0EC'; ctx.fill(); ctx.restore();
+      ctx.save(); rr(ctx, 0, 0, cw, ch, 4.5); ctx.clip();
+      ctx.fillStyle = '#3E6E86'; ctx.fillRect(0, 0, cw, 14);
+      const g = ctx.createLinearGradient(0, 0, cw, ch);
+      g.addColorStop(0, 'rgba(255,255,255,0.42)'); g.addColorStop(0.5, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(60,50,40,0.13)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, cw, ch);
+      ctx.restore();
+      print(ctx, F, 'DENTAL PPO', 7, 9.6, 5.6, { label: true, weight: 600, color: '#F4F6F8', track: '0.9px' });
+      print(ctx, F, 'Member ID', 7, 24, 4.6, { color: 'rgba(40,40,44,0.7)' });
+      print(ctx, F, 'Group', 7, 41, 4.6, { color: 'rgba(40,40,44,0.7)' });
+      const emboss = (x, y, n) => { for (let i = 0; i < n; i++) { const ex = x + i * 5.2 + (i > 3 ? 3.5 : 0) + (i > 7 ? 3.5 : 0);
+        rr(ctx, ex + 0.45, y + 0.5, 3.5, 5.2, 1); ctx.fillStyle = 'rgba(40,36,34,0.40)'; ctx.fill();
+        rr(ctx, ex - 0.3, y - 0.35, 3.5, 5.2, 1); ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fill();
+        rr(ctx, ex, y, 3.5, 5.2, 1); ctx.fillStyle = '#D8D6D0'; ctx.fill(); } };
+      emboss(7, 27, 12); emboss(7, 44, 6);
+      fingerprint(ctx, cw - 18, ch - 14, 0.5, 0.8, '110,100,92', 0.08);
+      ctx.restore();
+      grainAtop(ctx, this.w, this.h, 0.06);
+    },
+    ink(ctx, m, F) {
+      // the denied line circled on the printout, and the reminder written beside the card
+      ctx.save(); ctx.translate(2, 4); ctx.rotate(0.022);
+      wobble(ctx, circlePts(18, 20.6, 14, 4.6, 16, 2), m, 1401, { width: 0.75, alpha: 0.7, color: RED_PENCIL });
+      ctx.restore();
+      script(ctx, [{ text: '2 days', x: 6, y: 76, size: 10, tilt: -0.08 }, { text: 'ahead', x: 9, y: 86, size: 7.5, tilt: -0.05 }], m, { font: F.hand, color: BLUE, seed: 1402, weight: 700 });
     },
   });
 
@@ -702,7 +760,7 @@ export function buildBenchItems(P) {
   /* the black box the whole company runs on: a mini computer, one status light, a taped label */
   const BX = { x: 2, y: 3, w: 98, h: 70, r: 15 };
   items.push({
-    id: 'aios', tool: 'aios', name: 'The black box', verb: 'My AIOS',
+    id: 'aios', tool: 'aios', name: 'The black box', verb: 'The Bridge',
     w: 114, h: 76, shadow: 2.2, ...POSES['aios'],
     draw(ctx) {
       const { x, y, w: bw, h: bh, r } = BX;

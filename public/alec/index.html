@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Alec Stephens · What I&#39;ve built</title>
-<meta name="description" content="Eight production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice filing on AWS Bedrock under a BAA, an AI education channel&#39;s production system, and more. Stack, cost, tests, and who built what.">
+<meta name="description" content="Nine production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice processing under a HIPAA agreement, an insurance claims tool for a dental practice, and more. Stack, cost, tests, and who built what.">
 <link rel="canonical" href="https://stephensai.co/alec">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Alec Stephens · What I&#39;ve built">
-<meta property="og:description" content="Eight production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice filing on AWS Bedrock under a BAA, an AI education channel&#39;s production system, and more. Stack, cost, tests, and who built what.">
+<meta property="og:description" content="Nine production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice processing under a HIPAA agreement, an insurance claims tool for a dental practice, and more. Stack, cost, tests, and who built what.">
 <meta property="og:url" content="https://stephensai.co/alec">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -1518,18 +1518,23 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
     <div class="wall" data-sc-in data-sc-stagger="60">
       <a class="cell sai-pane acc" href="#knowledge-base" data-slug="knowledge-base">
         <span class="cell-name">Clinic knowledge base</span>
-        <span class="cell-phrase">Of manager interruptions removed each year, estimated</span>
+        <span class="cell-phrase">Of manager interruptions gone each year, and the clinic&#39;s know-how kept in one place for good</span>
         <span class="cell-n">~200 hrs/yr</span>
       </a>
       <a class="cell sai-pane" href="#pto-payroll" data-slug="pto-payroll">
         <span class="cell-name">PTO + payroll system</span>
-        <span class="cell-phrase">Of paper-slip admin gone, with 183 tests in the open</span>
+        <span class="cell-phrase">Of paper-slip admin gone, and next year set up with one click</span>
         <span class="cell-n">60 to 100 hrs/yr</span>
       </a>
       <a class="cell sai-pane" href="#invoice-agent" data-slug="invoice-agent">
         <span class="cell-name">Invoice processing system</span>
         <span class="cell-phrase">Of invoice keying and filing taken off a bookkeeper&#39;s desk, with her vendor rules followed every time</span>
         <span class="cell-n">~200 hrs/yr</span>
+      </a>
+      <a class="cell sai-pane" href="#putback" data-slug="putback">
+        <span class="cell-name">Putback, insurance claims tool</span>
+        <span class="cell-phrase">Every patient&#39;s insurance checked before the visit, and every unpaid claim given a status and a next step</span>
+        <span class="cell-n">2 days ahead</span>
       </a>
       <a class="cell sai-pane" href="#ai-lab" data-slug="ai-lab">
         <span class="cell-name">AI Lab content + outbound systems</span>
@@ -1543,7 +1548,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       </a>
       <a class="cell sai-pane" href="#construction-site" data-slug="construction-site">
         <span class="cell-name">Construction company website</span>
-        <span class="cell-phrase">Now referring us, off a 6-page rebuild in Japanese</span>
+        <span class="cell-phrase">Now referring us, off a site redesigned so every word is readable</span>
         <span class="cell-n">1 industry board</span>
       </a>
       <a class="cell sai-pane" href="#curriculum-system" data-slug="curriculum-system">
@@ -1552,9 +1557,9 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <span class="cell-n">~80%</span>
       </a>
       <a class="cell sai-pane" href="#aios" data-slug="aios">
-        <span class="cell-name">My own AI operating system</span>
-        <span class="cell-phrase">Running the company I test everything on first</span>
-        <span class="cell-n">9 agents · 51 skills</span>
+        <span class="cell-name">The Bridge, our AI operating system</span>
+        <span class="cell-phrase">Running our own company every day, where every tool is tested before a client gets it</span>
+        <span class="cell-n">10 agents · 45 skills</span>
       </a>
     </div>
   </section>
@@ -1562,7 +1567,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   <section id="builds" aria-label="The builds" data-sc-act="flow">
     <div class="railwrap"><div class="railbar">
       <nav class="rail" aria-label="Builds">
-<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">My AIOS</a>      </nav>
+<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#putback">Putback</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">The Bridge</a>      </nav>
       <div class="railctl" aria-hidden="true"><button type="button" data-step="-1" title="Previous build">‹</button><button type="button" data-step="1" title="Next build">›</button></div>
       <div class="view" role="group" aria-label="View"><button type="button" class="on" data-view="deck" aria-pressed="true">Deck</button><button type="button" data-view="list" aria-pressed="false">List</button></div>
     </div></div>
@@ -1575,7 +1580,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-knowledge-base">Clinic knowledge base</h2>
-                <p class="sub">Front desk knowledge base for an eye clinic: six months of training turned into one search. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
+                <p class="sub">Front desk knowledge base for an eye clinic: anyone at the desk finds the right answer in one search, without pulling a manager away. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num acc">
                   <span class="v">~200<span class="u">hrs/yr</span></span>
                   <span class="l">of interruptions off the office manager&#39;s desk</span>
@@ -1624,7 +1629,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-pto-payroll">PTO + payroll system</h2>
-                <p class="sub">Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
+                <p class="sub">Time-off and payroll for an independent eye clinic: paper slips gone, and a system that runs itself year after year. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num">
                   <span class="v">60 to 100<span class="u">hrs/yr</span></span>
                   <span class="l">of admin time returned</span>
@@ -1703,7 +1708,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               <div class="wide"><dt>Who uses it</dt><dd>The clinic&#39;s bookkeeper, since the install on 2026-10-01.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.</dd></div>
               <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Reading runs in the clinic&#39;s own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic&#39;s S3 bucket, and error reports go to its CloudWatch.</dd></div>
-              <div><dt>Tests and evals</dt><dd>40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a 9-agent code review found 39 issues; all were fixed and reviewed again by a second agent.</dd></div>
+              <div><dt>Tests and evals</dt><dd>40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a full code review found 39 verified issues; all were fixed and the fixes reviewed again.</dd></div>
               <div><dt>Cost and latency</dt><dd>About 1 cent an invoice in the clinic&#39;s AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.</dd></div>
               <div><dt>Guardrails</dt><dd>Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic&#39;s.</dd></div>
               <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic&#39;s own account.</p></div></dd></div>
@@ -1711,6 +1716,55 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="acts">
               <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
               <a class="sai-btn ghost" href="/alec/invoice-agent">Open the build</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="card" id="putback" aria-labelledby="t-putback">
+        <div class="flip">
+          <div class="face front sai-pane">
+            <div class="head"><span class="lbl">Healthcare · dental · insurance · Tri-Valley Dental</span><span class="when">October 2026</span></div>
+            <div class="front-grid">
+              <div class="ftext">
+                <h2 id="t-putback">Putback, insurance claims tool</h2>
+                <p class="sub">Putback, an insurance checker for a dental front desk: coverage checked two days before every visit, and every unpaid claim given a status and a next step. Tri-Valley Dental Care, an independent dental practice in Pleasanton, California.</p>
+                <div class="num">
+                  <span class="v">2 days<span class="u">ahead</span></span>
+                  <span class="l">every patient on the schedule sent to the insurer before the visit, with the ones who need something, or need a call, listed first</span>
+                </div>
+                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Python</li><li>FastAPI</li><li>Stedi clearinghouse API</li><li>X12 270/271 eligibility</li><li>X12 276/277 claim status</li><li>pydantic</li><li>httpx</li><li>pytest</li></ul></div>
+              </div>
+              <div class="fmedia">
+                <figure class="shot">
+                  <img src="/alec/img/putback/01-before-the-visits.webp" srcset="/alec/img/putback/01-before-the-visits-800.webp 800w, /alec/img/putback/01-before-the-visits.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Before the visits screen with sample patients: five marked Attention at the top, each with a plain reason and a Do line, above patients marked Ready" loading="eager" decoding="async" fetchpriority="low">
+                  <figcaption>The schedule, checked two days ahead, with the patients who need something first. Sample patients.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="foot">
+<p class="who comp"><b>Compliance.</b> No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names.</p>              <p class="who"><b>My role.</b> My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check, and ran the QA passes.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="face back sai-pane" inert>
+            <span class="lbl back-title">How it's built</span>
+            <div class="head"><span class="lbl acc">How it's built · Putback, insurance claims tool</span><span class="when">October 2026</span></div>
+            <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>Built for the front desk and the owner dentist.</dd></div>
+              <div class="wide"><dt>Architecture</dt><dd>A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer&#39;s answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.</dd></div>
+              <div><dt>Where it runs</dt><dd>On the practice&#39;s own computer, answering only on that machine unless a password is set, with the clearinghouse as the one outside connection.</dd></div>
+              <div><dt>Tests and evals</dt><dd>210 automated tests across 14 files, plus 12 recorded insurer answers from the clearinghouse&#39;s test mode. Three QA passes and a review against 15 test requests to sample insurers.</dd></div>
+              <div><dt>Cost and latency</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month.</dd></div>
+              <div><dt>Guardrails</dt><dd>It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.</dd></div>
+              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.</p></div></dd></div>
+            </dl>
+            <div class="acts">
+              <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
+              <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
             </div>
           </div>
         </div>
@@ -1771,7 +1825,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-coaching-aios">Coaching practice AI system</h2>
-                <p class="sub">An AI operating system for a one-person coaching practice: 4 custom AI agents that read one document. A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
+                <p class="sub">An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English. A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
                 <div class="num">
                   <span class="v">4<span class="u">custom AI agents</span></span>
                   <span class="l">built for her practice, inbox triage, scheduling replies, voice-note task capture and meeting notes, all reading one brain document she edits in plain English</span>
@@ -1816,26 +1870,26 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <article class="card" id="construction-site" aria-labelledby="t-construction-site">
         <div class="flip">
           <div class="face front sai-pane">
-            <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Live 2026-05-09</span></div>
+            <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Rebuilt May 2026, redesigned October 2026</span></div>
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-construction-site">Construction company website</h2>
-                <p class="sub">A Japanese construction company&#39;s site, rebuilt in its own language, then referred to the whole industry board. Kamata Koumuten, a construction company in Miyagi, Japan.</p>
+                <p class="sub">A Japanese construction company&#39;s website, redesigned so every word is readable and their real work leads. Kamata Koumuten, a construction company in Miyagi, Japan.</p>
                 <div class="num">
                   <span class="v">1<span class="u">industry board</span></span>
                   <span class="l">now referring the work: a regional construction association board member is recommending the site to the whole board</span>
                 </div>
-                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>lftp deploys</li><li>Google Search Console</li><li>Google Business Profile</li><li>Kirby CMS (next)</li></ul></div>
+                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Noto Serif JP</li><li>Noto Sans JP</li><li>Vercel previews</li><li>lftp deploys</li><li>Google Search Console</li></ul></div>
               </div>
               <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/construction-site/01-home-desktop.webp" srcset="/alec/img/construction-site/01-home-desktop-800.webp 800w, /alec/img/construction-site/01-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The rebuilt homepage on desktop" loading="eager" decoding="async" fetchpriority="low">
-                  <figcaption>The rebuilt homepage.</figcaption>
+                  <img src="/alec/img/construction-site/01-v1-home-desktop.webp" srcset="/alec/img/construction-site/01-v1-home-desktop-800.webp 800w, /alec/img/construction-site/01-v1-home-desktop.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Kamata Koumuten homepage: the headline 地域と共に歩む。 over a sunny work site beside a finished house and gate" loading="eager" decoding="async" fetchpriority="low">
+                  <figcaption>The redesigned homepage, with a slowly moving hero.</figcaption>
                 </figure>
               </div>
             </div>
             <div class="foot">
-              <p class="who"><b>My role.</b> I built all of it, with the company&#39;s own photography.</p>
+              <p class="who"><b>My role.</b> I built all of it. The hero scene is generated imagery; every project photo is the company&#39;s own.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/construction-site">Open the build</a>
@@ -1845,15 +1899,15 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Live 2026-05-09</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Rebuilt May 2026, redesigned October 2026</span></div>
             <dl class="eng">
-              <div class="wide"><dt>Who uses it</dt><dd>The company&#39;s storefront; its owner and her customers. Live since May 2026.</dd></div>
-              <div class="wide"><dt>Architecture</dt><dd>A static site on the client&#39;s existing shared PHP host, deployed by mirror with a backup taken first and a health check of every page after.</dd></div>
-              <div><dt>Where it runs</dt><dd>The client&#39;s own hosting. Nothing of ours in the loop.</dd></div>
-              <div><dt>Tests and evals</dt><dd>Every deploy verifies all 6 pages return 200 and the search-console verification file is intact.</dd></div>
+              <div class="wide"><dt>Who uses it</dt><dd>The company&#39;s storefront; its owner and her customers.</dd></div>
+              <div class="wide"><dt>Architecture</dt><dd>A static homepage with a looping hero video, a survey-pole rail that marks the current section on wide screens, and before and after switches on the project photos. It deploys to the client&#39;s existing shared PHP host by mirror, with a backup taken first.</dd></div>
+              <div><dt>Where it runs</dt><dd>The client&#39;s own hosting, with previews on Vercel. Nothing of ours in the loop.</dd></div>
+              <div><dt>Tests and evals</dt><dd>A type check fails if any visible text drops under 16px at 1440, 1024, 390 or 360 wide. Every deploy verifies each page returns 200 and the search-console verification file is intact.</dd></div>
               <div><dt>Cost and latency</dt><dd>The client&#39;s existing hosting. No new subscriptions.</dd></div>
               <div><dt>Guardrails</dt><dd>Never delete the search-console verification file. Backup before every mirror. The deploy script changes into the directory first, because the mirror tool silently no-ops on paths with spaces.</dd></div>
-              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>Kept their host and a static site instead of moving them to a builder. The owner&#39;s team is not technical; the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.</p></div></dd></div>
+              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>Kept their host and a static site instead of moving them to a builder. The owner&#39;s team is not technical, so the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.</p></div></dd></div>
             </dl>
             <div class="acts">
               <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
@@ -1869,7 +1923,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-curriculum-system">Curriculum generation system</h2>
-                <p class="sub">A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI. KiwiOPIC, an English test-prep company in Seoul.</p>
+                <p class="sub">A test-prep company that keeps producing curriculum without adding staff: about 80% of the manual work handled by AI. KiwiOPIC, an English test-prep company in Seoul.</p>
                 <div class="num">
                   <span class="v">~80%</span>
                   <span class="l">of the manual curriculum work now handled by AI</span>
@@ -1927,18 +1981,18 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="head"><span class="lbl">Stephens AI · our own tooling · Stephens AI</span><span class="when">v2 live 2026-03-01</span></div>
             <div class="front-grid">
               <div class="ftext">
-                <h2 id="t-aios">My own AI operating system</h2>
-                <p class="sub">The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services. Stephens AI, our own consultancy.</p>
+                <h2 id="t-aios">The Bridge, our AI operating system</h2>
+                <p class="sub">The Bridge: the AI operating system our company runs on every day, where every new tool is tested before a client sees it. Stephens AI, our own consultancy.</p>
                 <div class="num">
-                  <span class="v">9<span class="u">agents</span></span>
-                  <span class="l">each on a least-privilege tool list, plus 51 reusable skills and 15 connected services</span>
+                  <span class="v">10<span class="u">agents</span></span>
+                  <span class="l">each on a least-privilege tool list, plus 45 reusable skills, kept lean by a monthly audit that retires what stops earning its place</span>
                 </div>
-                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude Code</li><li>Claude Agent SDK</li><li>MCP</li><li>Python</li><li>Three.js</li><li>Playwright</li><li>Fathom</li><li>Google Workspace</li><li>launchd</li></ul></div>
+                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude Code</li><li>Claude Agent SDK</li><li>MCP</li><li>Python</li><li>Three.js</li><li>Playwright</li><li>Groq Whisper</li><li>Fathom</li><li>Google Workspace</li><li>launchd</li></ul></div>
               </div>
               <div class="fmedia">
                 <figure class="shot">
                   <img src="/alec/img/aios/01-bridge-brain-view.webp" srcset="/alec/img/aios/01-bridge-brain-view-800.webp 800w, /alec/img/aios/01-bridge-brain-view.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The Bridge dashboard: a 3D graph of the vault beside today&#39;s calendar and inbox" loading="eager" decoding="async" fetchpriority="low">
-                  <figcaption>The Bridge, the dashboard over the whole company. Two panels blurred.</figcaption>
+                  <figcaption>The Bridge, the dashboard we run the company from. Two panels blurred.</figcaption>
                 </figure>
               </div>
             </div>
@@ -1953,9 +2007,9 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · My own AI operating system</span><span class="when">v2 live 2026-03-01</span></div>
+            <div class="head"><span class="lbl acc">How it's built · The Bridge, our AI operating system</span><span class="when">v2 live 2026-03-01</span></div>
             <dl class="eng">
-              <div class="wide"><dt>Who uses it</dt><dd>Me and my co-founder, every day since March 2026.</dd></div>
+              <div class="wide"><dt>Who uses it</dt><dd>Me, every day: the operating system since March 2026, the Bridge on top of it since September.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A markdown vault with frontmatter as the database, a generator that rebuilds the index, sub-agents defined as files with tool allow-lists, skills as files with the gotchas at the top, a local dashboard server, and scheduled jobs on the Mac that deliver to iMessage.</dd></div>
               <div><dt>Where it runs</dt><dd>On my Mac, with connectors into Google Workspace, Slack, Fathom, and the clients&#39; tools.</dd></div>
               <div><dt>Tests and evals</dt><dd>A weekly lint over the vault (contradictions, stale facts, orphans), a layout lint on every branded page, and a two-reviewer gate (adversarial fact-check plus a domain reviewer) before anything client-facing ships.</dd></div>

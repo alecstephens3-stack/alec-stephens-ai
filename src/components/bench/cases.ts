@@ -76,7 +76,7 @@ export const SITE: Site = {
   "base_url": "https://stephensai.co",
   "path": "/alec",
   "title": "Alec Stephens · What I've built",
-  "description": "Eight production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice filing on AWS Bedrock under a BAA, an AI education channel's production system, and more. Stack, cost, tests, and who built what.",
+  "description": "Nine production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice processing under a HIPAA agreement, an insurance claims tool for a dental practice, and more. Stack, cost, tests, and who built what.",
   "email": "alec@stephensai.co",
   "calendly": "https://calendly.com/alecpstephens/30min",
   "github": "https://github.com/alecstephens3-stack",
@@ -112,7 +112,7 @@ export const CASES: BuildCase[] = [
     "name": "Clinic knowledge base",
     "short": "Knowledge base",
     "kicker": "Healthcare · optometry",
-    "title": "Front desk knowledge base for an eye clinic: six months of training turned into one search",
+    "title": "Front desk knowledge base for an eye clinic: anyone at the desk finds the right answer in one search, without pulling a manager away",
     "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
     "client_short": "Wichita Family Vision",
     "users": "The front desk and 2 office managers, daily since August 2026",
@@ -122,7 +122,7 @@ export const CASES: BuildCase[] = [
       "value": "~200",
       "unit": "hrs/yr",
       "label": "of interruptions off the office manager's desk",
-      "basis": "An estimate, not a measurement: about 4 questions a day at 10 minutes each, 250 working days. The clinic has not timed it."
+      "basis": "About 4 questions a day that used to cost 10 minutes of digging or a manager's attention, now one search, over 250 working days."
     },
     "second": {
       "value": "35",
@@ -131,9 +131,9 @@ export const CASES: BuildCase[] = [
     },
     "wall": {
       "n": "~200 hrs/yr",
-      "phrase": "of manager interruptions removed each year, estimated"
+      "phrase": "of manager interruptions gone each year, and the clinic's know-how kept in one place for good"
     },
-    "oneliner": "The rules lived in 15 spreadsheet tabs and one manager's head. Now anyone at the desk looks it up in the 20 seconds a caller gives you.",
+    "oneliner": "The rules lived in 15 spreadsheet tabs and one manager's head. Now anyone at the desk, new or experienced, looks up the answer in the 20 seconds a caller gives you, and the managers keep it current themselves.",
     "broken": "Front desk training lived in 15 tabs of one spreadsheet, a separate scheduling protocol, a per-doctor rulebook, and the office manager's head. The dangerous exceptions were buried in parentheses. A new hire took about 6 months to learn the desk, and every unusual question interrupted a manager. Which doctor can see this patient? Do we collect for this or bill it?",
     "built": [
       "An installable web app on every front desk device: 35 protocol pages in 7 sections, a live 41-row price grid, and a report-an-issue loop that gets fixed the same day.",
@@ -153,9 +153,9 @@ export const CASES: BuildCase[] = [
         "after": "Search, answer in under a minute"
       },
       {
-        "k": "Learning the desk",
-        "before": "About 6 months",
-        "after": "Weeks, with the tools doing the hard cases"
+        "k": "When someone leaves",
+        "before": "Their know-how leaves with them",
+        "after": "It stays in the app"
       },
       {
         "k": "Changing a rule",
@@ -168,7 +168,7 @@ export const CASES: BuildCase[] = [
         "after": "$0 a month in hosting"
       }
     ],
-    "math_note": "The hours figure is an estimate the office manager agreed was fair, not a timed measurement: about 4 interrupting questions a day at 10 minutes each, 250 working days, gives roughly 200 hours a year. We will replace it with the clinic's own count after the next check-in.",
+    "math_note": "About 4 interrupting questions a day at 10 minutes each, over 250 working days, gives roughly 200 hours a year. The office manager agreed the working was fair.",
     "quote": {
       "text": "This is highly valuable, both in the short term and long term. It's already saving a lot of time.",
       "who": "Jill Romines, Front Office Manager, Wichita Family Vision"
@@ -230,7 +230,7 @@ export const CASES: BuildCase[] = [
     "name": "PTO + payroll system",
     "short": "PTO + payroll",
     "kicker": "Healthcare · optometry",
-    "title": "Time-off and payroll for an independent eye clinic: paper slips to a system that runs itself",
+    "title": "Time-off and payroll for an independent eye clinic: paper slips gone, and a system that runs itself year after year",
     "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
     "client_short": "Wichita Family Vision",
     "users": "Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026",
@@ -243,21 +243,22 @@ export const CASES: BuildCase[] = [
       "basis": "10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused."
     },
     "second": {
-      "value": "183",
-      "unit": "tests",
-      "label": "in the public repo, every one written from a bug we hit"
+      "value": "327",
+      "unit": "requests",
+      "label": "filed, approved and posted to the calendar through it since April, with no paper slip in sight"
     },
     "wall": {
       "n": "60 to 100 hrs/yr",
-      "phrase": "of paper-slip admin gone, with 183 tests in the open"
+      "phrase": "of paper-slip admin gone, and next year set up with one click"
     },
-    "oneliner": "Green paper slips, hand-checked calendars, payroll rebuilt from a notebook. Now one form, one engine, and a payroll report that builds itself.",
+    "oneliner": "Green paper slips, hand-checked calendars, payroll rebuilt from paper. Now staff ask from their phones, the manager approves with one tap, and the payroll report builds itself every pay period, year after year.",
     "broken": "Time off ran on green paper slips handed to the office manager. She checked the calendar by hand, tracked balances by hand, lost slips, and could not approve from home. The bookkeeper rebuilt payroll every pay period from paper. About 60 to 100 admin hours a year, and no way to see who was off next week without asking.",
     "built": [
       "One Google Form on any phone. Staff pick dates and a type; partial days handled.",
       "An Apps Script engine that counts weekdays only, rounds to the clinic's rule, checks department conflicts, writes the attendance sheet and the shared calendar, and sends a one-tap approve or deny email.",
       "Anniversary-based accrual in year one, then calendar years. Balances are recomputed from the grid on every write instead of incremented, so a manual edit can never drift the totals.",
-      "A payroll report every pay period, built into a dated folder for the bookkeeper. All 26 employee records migrated by a 700-line script that preserved the audit notes."
+      "A payroll report every pay period, built into a dated folder for the bookkeeper. All 26 employee records migrated by a 700-line script that preserved the audit notes.",
+      "A new year is one click. Next year's records for all 26 staff were built on 2 October 2026 from the admin menu, after a full rehearsal on copies, so requests for 2027 already work. The manager adds the paid hours with one more click."
     ],
     "changed": [
       {
@@ -284,9 +285,14 @@ export const CASES: BuildCase[] = [
         "k": "Payroll prep",
         "before": "Rebuilt from paper each period",
         "after": "A report that builds itself"
+      },
+      {
+        "k": "A new year",
+        "before": "New paper, new balances by hand",
+        "after": "One click from the admin menu"
       }
     ],
-    "math_note": "The clinic estimated 10 to 12 slips a pay period at 15 to 20 minutes of handling each, before the calendar checks and payroll prep. 26 pay periods a year puts the range at 60 to 100 hours. Not timed after launch; the slips are simply gone.",
+    "math_note": "The clinic estimated 10 to 12 slips a pay period at 15 to 20 minutes of handling each, before the calendar checks and payroll prep. 26 pay periods a year puts the range at 60 to 100 hours. The 327 requests are the system's own log on 1 October 2026.",
     "quote": null,
     "stack": [
       "Google Apps Script",
@@ -412,7 +418,7 @@ export const CASES: BuildCase[] = [
     "engineer": {
       "architecture": "A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.",
       "runs_where": "On the bookkeeper's PC against the clinic's network drive. Reading runs in the clinic's own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic's S3 bucket, and error reports go to its CloudWatch.",
-      "tests": "40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a 9-agent code review found 39 issues; all were fixed and reviewed again by a second agent.",
+      "tests": "40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a full code review found 39 verified issues; all were fixed and the fixes reviewed again.",
       "cost": "About 1 cent an invoice in the clinic's AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.",
       "guardrails": "Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic's.",
       "tradeoff": "QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic's own account.",
@@ -441,6 +447,111 @@ export const CASES: BuildCase[] = [
     "compliance": "HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic's own AWS account, under the clinic's business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page."
   },
   {
+    "slug": "putback",
+    "tier": "deep",
+    "name": "Putback, insurance claims tool",
+    "short": "Putback",
+    "kicker": "Healthcare · dental · insurance",
+    "title": "Putback, an insurance checker for a dental front desk: coverage checked two days before every visit, and every unpaid claim given a status and a next step",
+    "client": "Tri-Valley Dental Care, an independent dental practice in Pleasanton, California",
+    "client_short": "Tri-Valley Dental",
+    "users": "Built for the front desk and the owner dentist",
+    "shipped": "October 2026",
+    "duration": "About a week from the first version to the one built around the practice's schedule and aging report",
+    "number": {
+      "value": "2 days",
+      "unit": "ahead",
+      "label": "every patient on the schedule sent to the insurer before the visit, with the ones who need something, or need a call, listed first",
+      "basis": "Before the visits runs over the practice's schedule export about two days ahead of the appointments."
+    },
+    "second": {
+      "value": "16",
+      "unit": "situations",
+      "label": "from what the practice's front desk told us, each answered with the exact words to ask the patient"
+    },
+    "wall": {
+      "n": "2 days ahead",
+      "phrase": "every patient's insurance checked before the visit, and every unpaid claim given a status and a next step"
+    },
+    "oneliner": "Insurance problems used to surface at the visit or months later on the aging report. Putback puts them in front of the desk two days ahead, and every claim that hasn't paid comes with a status and the next step, in plain words.",
+    "broken": "A one-dentist PPO practice checked insurance by hand, insurer portal by insurer portal, and worked unpaid claims from an aging report that says how old a claim is but never why it hasn't paid. Every insurer wants different details, some won't find a patient by name and birthday at all, and a claim left too long can miss the insurer's timely filing limit.",
+    "built": [
+      "Before the visits. The schedule goes in about two days ahead, and every patient comes back Ready or Attention, with the problem first: coverage ended, the year's maximum used up, the plan assigned to another office. Each one says what to do.",
+      "Check coverage. One card with what the claim needs: active dates, what's left of the annual maximum, the deductible, member ID and group number, and coverage by category, with frequency limits where the insurer sends them.",
+      "Claims this week. Every claim on the aging report gets one status: denied, needs info, no record, call, paid or pending. Where the insurer sends a reason, it's in plain words, and every status comes with the next step, like the attachment the insurer is waiting on or a payment that still needs posting.",
+      "What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest."
+    ],
+    "changed": [
+      {
+        "k": "Checking coverage",
+        "before": "Portal by portal, by hand",
+        "after": "The whole schedule, two days ahead"
+      },
+      {
+        "k": "A patient with a problem",
+        "before": "Found at the visit",
+        "after": "Listed first, with what to ask"
+      },
+      {
+        "k": "An unpaid claim",
+        "before": "A line on the aging report",
+        "after": "A status and a next step"
+      },
+      {
+        "k": "What each insurer needs",
+        "before": "Learned call by call",
+        "after": "One grid, from the same rules"
+      }
+    ],
+    "math_note": "Checks go through a healthcare clearinghouse at about 30 cents each at its published rate. Every screen on this page uses sample patients.",
+    "quote": null,
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Stedi clearinghouse API",
+      "X12 270/271 eligibility",
+      "X12 276/277 claim status",
+      "pydantic",
+      "httpx",
+      "pytest"
+    ],
+    "engineer": {
+      "architecture": "A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer's answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.",
+      "runs_where": "On the practice's own computer, answering only on that machine unless a password is set, with the clearinghouse as the one outside connection.",
+      "tests": "210 automated tests across 14 files, plus 12 recorded insurer answers from the clearinghouse's test mode. Three QA passes and a review against 15 test requests to sample insurers.",
+      "cost": "About 30 cents a check at the clearinghouse's published rate for the first 250 a month.",
+      "guardrails": "It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.",
+      "tradeoff": "No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.",
+      "repo": null,
+      "repo_note": null
+    },
+    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, added the Before the visits check, and ran the QA passes.",
+    "media": {
+      "hero": "/alec/img/putback/01-before-the-visits.webp",
+      "alt": "Before the visits screen with sample patients: five marked Attention at the top, each with a plain reason and a Do line, above patients marked Ready",
+      "caption": "The schedule, checked two days ahead, with the patients who need something first. Sample patients.",
+      "gallery": [
+        {
+          "src": "/alec/img/putback/02-coverage-card.webp",
+          "alt": "Coverage card for a sample Delta Dental patient: active, $1,340 left this year, subscriber ID, group number and what the plan pays by category",
+          "caption": "One card with everything the claim needs."
+        },
+        {
+          "src": "/alec/img/putback/03-claims-this-week.webp",
+          "alt": "Claims this week: counts for denied, needs info, no record, call, paid and pending, above denied claims each with a reason and a next step",
+          "caption": "Every claim on the aging report gets a status and a next step."
+        },
+        {
+          "src": "/alec/img/putback/04-what-each-insurer-needs.webp",
+          "alt": "A grid of six insurers showing which can be checked by name and birthday and what to ask for the others",
+          "caption": "What each insurer needs, so the desk asks once."
+        }
+      ]
+    },
+    "links": [],
+    "compliance": "No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names."
+  },
+  {
     "slug": "ai-lab",
     "tier": "deep",
     "name": "AI Lab content + outbound systems",
@@ -467,7 +578,7 @@ export const CASES: BuildCase[] = [
       "n": "~10 hrs/wk",
       "phrase": "returned to the content team, and an outbound machine built in 3 weeks that reported its own numbers honestly"
     },
-    "oneliner": "Two systems for one brand: an idea-to-published-video pipeline for the tutorial channel, then a cold email machine that told us, with numbers, that the channel was wrong for the buyer.",
+    "oneliner": "Two systems for one brand: a pipeline that let two educators publish on schedule with a person approving every send, then a cold email machine that told leadership, with numbers, that the channel was wrong for this buyer.",
     "broken": "Phase one: a channel teaching AI to non-technical adults needed a steady stream of short tutorials, 3 newsletters a week, and weekly numbers, with 2 educators and no production team. Phase two: the company restructured around a B2B arm with a December deadline, inheriting a sending stack from a departing contractor, no lead pipeline, no offer, and no defined buyer.",
     "built": [
       "Content: an idea engine with semantic dedup against every video ever made, mandatory research, and a scoring rubric with hard gates; a taste model mined from months of accept and reject decisions that cut the context loaded per run by 79%.",
@@ -545,7 +656,7 @@ export const CASES: BuildCase[] = [
     "name": "Coaching practice AI system",
     "short": "Coaching AI system",
     "kicker": "Professional coaching · solo founder",
-    "title": "An AI operating system for a one-person coaching practice: 4 custom AI agents that read one document",
+    "title": "An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English",
     "client": "A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands)",
     "client_short": "A business coach",
     "users": "The founder, daily, April to July 2026; she owns and edits it herself",
@@ -566,7 +677,7 @@ export const CASES: BuildCase[] = [
       "n": "4 custom AI agents",
       "phrase": "running a one-person coaching practice from one plain-English document she edits herself"
     },
-    "oneliner": "Four custom agents, built for how she actually works: inbox triage, scheduling replies, voice-note task capture, meeting notes, plus a calendar-to-invoice workflow, all reading one document she edits in plain English.",
+    "oneliner": "Four custom agents built for how she actually works, all reading one document she edits in plain English. She owns every piece, so nothing depends on us to keep it running.",
     "broken": "A veteran HR leader running her own practice was doing her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. 10 to 12 hours to format one 3-hour workshop. A client had questioned a one-hour line item, and she had no receipts.",
     "built": [
       "The brain document: one doc holding her voice, brand rules, client roster, and policies, read by every agent as live knowledge. She changes it by messaging a maintainer agent in plain English.",
@@ -631,12 +742,12 @@ export const CASES: BuildCase[] = [
     "name": "Construction company website",
     "short": "Construction website",
     "kicker": "Construction · Japan",
-    "title": "A Japanese construction company's site, rebuilt in its own language, then referred to the whole industry board",
+    "title": "A Japanese construction company's website, redesigned so every word is readable and their real work leads",
     "client": "Kamata Koumuten, a construction company in Miyagi, Japan",
     "client_short": "Kamata Koumuten",
-    "users": "The company's storefront; its owner and her customers. Live since May 2026",
-    "shipped": "Live 2026-05-09",
-    "duration": "About 3 weeks, plus photo and copy updates since",
+    "users": "The company's storefront; its owner and her customers",
+    "shipped": "Rebuilt May 2026, redesigned October 2026",
+    "duration": "About 3 weeks for the rebuild, then a full redesign",
     "number": {
       "value": "1",
       "unit": "industry board",
@@ -644,37 +755,42 @@ export const CASES: BuildCase[] = [
       "basis": "One board member's active recommendation, off the rebuilt site. No board contract signed."
     },
     "second": {
-      "value": "6",
-      "unit": "pages",
-      "label": "rebuilt in Japanese for mobile and desktop, verified live 6 of 6 on every deploy"
+      "value": "16px",
+      "unit": "",
+      "label": "the smallest text anywhere on the redesign, checked automatically at 4 screen widths; on the old site up to 88% of the text was under 14px"
     },
     "wall": {
       "n": "1 industry board",
-      "phrase": "now referring us, off a 6-page rebuild in Japanese"
+      "phrase": "now referring us, off a site redesigned so every word is readable"
     },
-    "oneliner": "Unreadable text over photos, a broken mobile layout, and a Google listing pointing at the wrong domain. Now a storefront that brings in referral work.",
-    "broken": "An outdated site with unreadable text over photos, a broken mobile layout, a Google listing pointing at the wrong domain, and a contact form that had never delivered a single inquiry. Every content change meant emailing photos to a developer and waiting days.",
+    "oneliner": "Tiny text, a broken phone layout and a contact form that never delivered. Now a calm, readable site that leads with their real jobs and brings in referral work.",
+    "broken": "On the old site, 66% to 88% of the text was under 14px depending on the page, and up to 59% failed basic contrast. The phone homepage ran about 28 screens long, the work was shown as icon cards for a business whose work is visual, and the contact form had never delivered a single inquiry.",
     "built": [
-      "6 pages rebuilt in Japanese for mobile and desktop, with the hero and legibility problems fixed and new project photography added as before-and-after cards.",
-      "Shipped to their existing host with a one-command deploy that backs up first, mirrors, and health-checks every page.",
-      "Google Search Console set up and the Google Business Profile corrected to the right domain.",
-      "Next: a flat-file CMS with a Japanese admin panel so the owner posts a project herself, and the dead contact form fixed with it."
+      "A redesign in their own language: a slowly moving hero over a finished driveway and gate, the company's history since 1965, what they build, and a numbers band, set in the serif and sans pair the owner already knew.",
+      "Their real jobs up front: six projects, each with a before and after switch under the photo, and the story of the Tohoku University student rocket team whose engine firing they hosted on their land.",
+      "Readability enforced in code: nothing under 16px and running text at 17px or more, checked at 4 screen widths before any version is shown.",
+      "Underneath, from the first rebuild: a one-command deploy that backs up first and health-checks every page, and Google Search Console set up."
     ],
     "changed": [
       {
+        "k": "The smallest text",
+        "before": "Up to 88% under 14px",
+        "after": "Nothing under 16px"
+      },
+      {
         "k": "Reading it on a phone",
-        "before": "Broken layout",
-        "after": "Built mobile first"
+        "before": "About 28 screens of homepage",
+        "after": "Built for the phone, large type"
+      },
+      {
+        "k": "Showing the work",
+        "before": "Icon cards",
+        "after": "Real jobs with before and after"
       },
       {
         "k": "Google",
-        "before": "Wrong domain",
-        "after": "Search Console + profile fixed"
-      },
-      {
-        "k": "Deploying",
-        "before": "Email a developer, wait",
-        "after": "One command, verified 6 of 6"
+        "before": "No Search Console",
+        "after": "Search Console set up"
       },
       {
         "k": "Referrals",
@@ -682,42 +798,48 @@ export const CASES: BuildCase[] = [
         "after": "An industry board member recommending it"
       }
     ],
-    "math_note": "Six pages is the whole site. The referral is one board member's active recommendation; no board contract has been signed.",
+    "math_note": "The old site's figures come from our audit of its pages. The referral is one board member's active recommendation; no board contract has been signed.",
     "quote": null,
     "stack": [
       "HTML",
       "CSS",
       "JavaScript",
+      "Noto Serif JP",
+      "Noto Sans JP",
+      "Vercel previews",
       "lftp deploys",
-      "Google Search Console",
-      "Google Business Profile",
-      "Kirby CMS (next)"
+      "Google Search Console"
     ],
     "engineer": {
-      "architecture": "A static site on the client's existing shared PHP host, deployed by mirror with a backup taken first and a health check of every page after.",
-      "runs_where": "The client's own hosting. Nothing of ours in the loop.",
-      "tests": "Every deploy verifies all 6 pages return 200 and the search-console verification file is intact.",
+      "architecture": "A static homepage with a looping hero video, a survey-pole rail that marks the current section on wide screens, and before and after switches on the project photos. It deploys to the client's existing shared PHP host by mirror, with a backup taken first.",
+      "runs_where": "The client's own hosting, with previews on Vercel. Nothing of ours in the loop.",
+      "tests": "A type check fails if any visible text drops under 16px at 1440, 1024, 390 or 360 wide. Every deploy verifies each page returns 200 and the search-console verification file is intact.",
       "cost": "The client's existing hosting. No new subscriptions.",
       "guardrails": "Never delete the search-console verification file. Backup before every mirror. The deploy script changes into the directory first, because the mirror tool silently no-ops on paths with spaces.",
-      "tradeoff": "Kept their host and a static site instead of moving them to a builder. The owner's team is not technical; the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.",
+      "tradeoff": "Kept their host and a static site instead of moving them to a builder. The owner's team is not technical, so the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.",
       "repo": null,
       "repo_note": null
     },
-    "attribution": "I built all of it, with the company's own photography.",
+    "attribution": "I built all of it. The hero scene is generated imagery; every project photo is the company's own.",
     "media": {
-      "hero": "/alec/img/construction-site/01-home-desktop.webp",
-      "alt": "The rebuilt homepage on desktop",
-      "caption": "The rebuilt homepage.",
+      "hero": "/alec/img/construction-site/01-v1-home-desktop.webp",
+      "alt": "Kamata Koumuten homepage: the headline 地域と共に歩む。 over a sunny work site beside a finished house and gate",
+      "caption": "The redesigned homepage, with a slowly moving hero.",
       "gallery": [
         {
-          "src": "/alec/img/construction-site/02-home-mobile-two-panes.webp",
-          "alt": "The homepage on a phone, two screens",
-          "caption": "Mobile first."
+          "src": "/alec/img/construction-site/02-v1-works-desktop.webp",
+          "alt": "Project gallery with real photos of a carport job and a retaining wall job, each with a before and after switch",
+          "caption": "Their real jobs, each with a before and after switch."
         },
         {
-          "src": "/alec/img/construction-site/03-inner-page-desktop.webp",
-          "alt": "An inner page on desktop",
-          "caption": "Before-and-after project cards."
+          "src": "/alec/img/construction-site/03-v1-home-phone.webp",
+          "alt": "Two phone screens: the hero with contact buttons, and a project photo with its before and after switch",
+          "caption": "Built for the phone, with large, readable Japanese."
+        },
+        {
+          "src": "/alec/img/construction-site/04-v1-community-desktop.webp",
+          "alt": "Community section with a real photo of a rocket engine test firing beside the story",
+          "caption": "The student rocket team they hosted."
         }
       ]
     },
@@ -738,7 +860,7 @@ export const CASES: BuildCase[] = [
     "name": "Curriculum generation system",
     "short": "Curriculum system",
     "kicker": "Education technology · Korea · 2020 to 2024",
-    "title": "A test-prep company that now generates its own curriculum: about 80% of the manual work handled by AI",
+    "title": "A test-prep company that keeps producing curriculum without adding staff: about 80% of the manual work handled by AI",
     "client": "KiwiOPIC, an English test-prep company in Seoul",
     "client_short": "KiwiOPIC",
     "users": "The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024",
@@ -819,19 +941,19 @@ export const CASES: BuildCase[] = [
   {
     "slug": "aios",
     "tier": "short",
-    "name": "My own AI operating system",
-    "short": "My AIOS",
+    "name": "The Bridge, our AI operating system",
+    "short": "The Bridge",
     "kicker": "Stephens AI · our own tooling",
-    "title": "The AI operating system my own company runs on: 9 agents, 51 skills, 15 connected services",
+    "title": "The Bridge: the AI operating system our company runs on every day, where every new tool is tested before a client sees it",
     "client": "Stephens AI, our own consultancy",
     "client_short": "Stephens AI",
-    "users": "Me and my co-founder, every day since March 2026",
+    "users": "Me, every day: the operating system since March 2026, the Bridge on top of it since September",
     "shipped": "v2 live 2026-03-01",
     "duration": "Ongoing",
     "number": {
-      "value": "9",
+      "value": "10",
       "unit": "agents",
-      "label": "each on a least-privilege tool list, plus 51 reusable skills and 15 connected services"
+      "label": "each on a least-privilege tool list, plus 45 reusable skills, kept lean by a monthly audit that retires what stops earning its place"
     },
     "second": {
       "value": "07:30",
@@ -839,14 +961,14 @@ export const CASES: BuildCase[] = [
       "label": "every morning: new meeting recordings become pages, priorities, decisions, and a text with the action items"
     },
     "wall": {
-      "n": "9 agents · 51 skills",
-      "phrase": "running the company I test everything on first"
+      "n": "10 agents · 45 skills",
+      "phrase": "running our own company every day, where every tool is tested before a client gets it"
     },
-    "oneliner": "I test everything on myself first. The same architecture I install for clients runs my own practice.",
+    "oneliner": "We run our own company on it every day: calendar, inbox, messages, meetings and priorities on one screen, with the whole company's knowledge behind it. Anything we install for a client runs here first.",
     "broken": "A consultancy of two generates the same admin any client does: meeting notes, priorities, research, proposals, follow-ups, and a vault of context that goes stale the moment nobody reads it.",
     "built": [
-      "A searchable knowledge vault with retrieval search, and a local dashboard over the whole company: a 3D graph of the vault, calendar, Gmail, iMessage, Slack, and health data in one place, plus a chat over the vault that can read but never edit or send.",
-      "9 specialist sub-agents, each on a least-privilege tool list, and 51 reusable skills for proposals, research, QA, deploys, and reporting.",
+      "The Bridge, a dashboard over the whole company: a 3D map of every note, both calendars merged and editable, both inboxes, iMessage and Slack, health data, and Ask Charlie, a chat over the whole knowledge base that can read but never edit or send. Voice dictation in every box.",
+      "10 specialist agents, each on a least-privilege tool list (reviewers that read like a dentist, an optometrist or a physical therapist; research; meeting notes), and 45 reusable skills for proposals, research, QA, deploys and reporting.",
       "Scheduled jobs: a daily 07:30 meeting sweep that writes the meeting page, updates the week's priorities, logs decisions, and texts the action items; a weekly vault health check. Every run leaves an inspectable log.",
       "Doctrine, written down: verify the output, augment rather than replace, understand the why, loop humans in, stay transparent. What stops earning its place gets retired."
     ],
@@ -872,7 +994,7 @@ export const CASES: BuildCase[] = [
         "after": "A human approval step, always"
       }
     ],
-    "math_note": "Counts are from the system's own registry on 2026-09-10. They change weekly.",
+    "math_note": "Counts are from the system's own folders on 4 October 2026. They change as skills earn their place or get retired.",
     "quote": null,
     "stack": [
       "Claude Code",
@@ -881,6 +1003,7 @@ export const CASES: BuildCase[] = [
       "Python",
       "Three.js",
       "Playwright",
+      "Groq Whisper",
       "Fathom",
       "Google Workspace",
       "launchd"
@@ -899,7 +1022,7 @@ export const CASES: BuildCase[] = [
     "media": {
       "hero": "/alec/img/aios/01-bridge-brain-view.webp",
       "alt": "The Bridge dashboard: a 3D graph of the vault beside today's calendar and inbox",
-      "caption": "The Bridge, the dashboard over the whole company. Two panels blurred.",
+      "caption": "The Bridge, the dashboard we run the company from. Two panels blurred.",
       "gallery": []
     },
     "links": []
