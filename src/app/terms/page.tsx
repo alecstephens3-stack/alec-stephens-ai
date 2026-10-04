@@ -134,7 +134,9 @@ const sections: LegalSection[] = [
         <li>
           <strong>Fees exclude third-party costs.</strong> Software
           subscriptions, cloud usage, and similar charges are billed to your own
-          accounts and are your responsibility.
+          accounts and are your responsibility. Insurance checks run through our
+          clearinghouse account, and their cost is included in the monthly fee
+          unless your proposal says otherwise.
         </li>
         <li>
           <strong>Fees exclude taxes.</strong> You are responsible for any
@@ -176,6 +178,12 @@ const sections: LegalSection[] = [
           you, none of it is patient information, and you may export it at any
           time. We identify which arrangement applies before you commit to an
           engagement.
+        </p>
+        <p>
+          One connection is ours: our insurance claims tool reaches insurers
+          through our own account with a clearinghouse, under a Business
+          Associate Agreement between us and the clearinghouse. Your Business
+          Associate Agreement with us names it.
         </p>
         <ul>
           <li>
@@ -348,7 +356,9 @@ const sections: LegalSection[] = [
           </strong>{" "}
           Where a Business Associate Agreement is in place, its return and
           destruction provisions govern. Where a system operates within your own
-          cloud account, we hold nothing to return.
+          cloud account, the data stays in your account, and anything held at
+          our clearinghouse is returned or destroyed as your Business Associate
+          Agreement sets out.
         </li>
         <li>
           <strong>
