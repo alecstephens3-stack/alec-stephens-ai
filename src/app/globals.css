@@ -199,18 +199,17 @@ body {
 
 
 
-/* One specular streak per major pane, maximum. Apply alongside .sai-pane. */
+/* One specular streak per major pane, maximum. Apply alongside .sai-pane.
+   The band covers the whole pane (inset 0) with px stops. It used to be a 55%-wide strip,
+   and the glint was cut off at the strip's edge, drawing a hard vertical line (2026-10-04). */
 .sai-streak { position: relative; overflow: hidden; }
 .sai-streak::before {
   content: '';
   position: absolute;
-  top: -40%;
-  left: -20%;
-  width: 55%;
-  height: 190%;
+  inset: 0;
+  border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.34) 50%, transparent 70%);
-  transform: rotate(2deg);
+  background: linear-gradient(115deg, transparent 120px, rgba(255, 255, 255, 0.34) 360px, transparent 600px);
 }
 
 /* ——— The night window: a dark module embedded in a light page.
