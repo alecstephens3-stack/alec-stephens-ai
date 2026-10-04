@@ -129,3 +129,6 @@
 .desk-root.is-night .bn-hint span:last-child { color: var(--color-cream-2); }
 .desk-root.is-night .bn-hint-k { color: var(--color-accent-night); }
 .bn-lights { min-width: 11.5em; justify-content: center; }
+
+/* nine builds: the phone desk is taller than /desk's so Putback gets its own row (2026-10-04) */
+@media (max-width: 720px) { .bn-root .desk-canvas { aspect-ratio: 358 / 680; } }
