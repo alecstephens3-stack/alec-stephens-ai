@@ -36,6 +36,14 @@ const nextConfig: NextConfig = {
         destination: "/?utm_source=medari&utm_medium=partner",
         permanent: false,
       },
+      // The QR code on our printed business cards (2026-10-04). Lands on the
+      // home page for now; 302 so it can point somewhere else later without
+      // reprinting. The tag counts card scans in analytics.
+      {
+        source: "/card",
+        destination: "/?utm_source=card&utm_medium=print",
+        permanent: false,
+      },
       // One address per page (SEO, 2026-09-28). The same Vercel project also
       // answers on www.stephensai.co and alecstephens.tech, and every page
       // used to render in full on both: duplicate copies of the whole site,
