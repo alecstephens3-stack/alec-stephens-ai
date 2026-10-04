@@ -1,18 +1,18 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/content";
+import { CASES } from "@/components/bench/cases";
 
 // Fixed date, not `new Date()`. Re-stamping every page as modified on every
 // build teaches crawlers the signal is worthless.
 const LAST_CONTENT_CHANGE = new Date("2026-09-17");
 const JP_PAGE_PUBLISHED = new Date("2026-08-31");
-const PORTFOLIO_PUBLISHED = new Date("2026-09-16");
-// The /alec index became the bench on 2026-09-23 and was last edited 09-28.
-const BENCH_UPDATED = new Date("2026-09-28");
+// Every build page was rewritten on 2026-10-04 (nine builds, Putback added).
+const PORTFOLIO_PUBLISHED = new Date("2026-10-04");
+// The /alec index became the bench on 2026-09-23; Putback joined the desk 2026-10-04.
+const BENCH_UPDATED = new Date("2026-10-04");
 const LEGAL_PUBLISHED = new Date("2026-09-17");
-const PORTFOLIO_SLUGS = [
-  "knowledge-base", "pto-payroll", "invoice-agent", "ai-lab",
-  "coaching-aios", "construction-site", "curriculum-system", "aios",
-];
+// Derived from the portfolio data, so a new build can never be left out of the sitemap.
+const PORTFOLIO_SLUGS = CASES.map((c) => c.slug);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
