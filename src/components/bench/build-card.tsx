@@ -87,7 +87,7 @@ export function BuildCard({ c }: { c: BuildCase }) {
             Open the full page
           </Link>
           <a className="sai-btn ghost" href={SITE.calendly} target="_blank" rel="noopener noreferrer">
-            Talk to us
+            Talk to me
           </a>
         </div>
       </footer>

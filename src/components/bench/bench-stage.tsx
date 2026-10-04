@@ -114,7 +114,7 @@ export function BenchStage() {
             {lightsOn ? "Turn off the lights" : "Turn on the lights"}
           </button>
           <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="desk-chip bn-dock-github">GitHub</a>
-          <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" className="sai-btn primary desk-cta">Talk to us</a>
+          <a href={SITE.calendly} target="_blank" rel="noopener noreferrer" className="sai-btn primary desk-cta">Talk to me</a>
         </div>
       </header>
 
