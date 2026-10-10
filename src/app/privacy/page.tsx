@@ -18,9 +18,10 @@ const sections: LegalSection[] = [
       <>
         <p>
           Stephens AI LLC is a Kansas limited liability company that builds
-          internal software and AI systems for independent healthcare practices.
-          In this policy, &quot;Stephens AI,&quot; &quot;we,&quot;
-          &quot;us,&quot; and &quot;our&quot; refer to Stephens AI LLC.
+          software and AI systems for businesses, with a focus on independent
+          healthcare practices. In this policy, &quot;Stephens AI,&quot;
+          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens
+          AI LLC.
           &quot;You&quot; refers to any visitor to <strong>stephensai.co</strong>,
           anyone who contacts us, and any client we work with.
         </p>
@@ -100,7 +101,7 @@ const sections: LegalSection[] = [
     heading: "Information we do not collect",
     body: (
       <>
-        <p>The following do not apply to this website:</p>
+        <p>At present, the following do not apply to this website:</p>
         <ul>
           <li>
             <strong>Analytics and advertising trackers.</strong> The site does
@@ -127,21 +128,17 @@ const sections: LegalSection[] = [
       <>
         <p>
           Like most business-to-business firms, we use commercial
-          business-contact databases to identify practices that may benefit from
-          our services, and we may contact those practices by email. The
-          information involved is limited to business contact information: a
-          name, a role, a work email address, and the practice.
-        </p>
-        <p>
-          We do not build profiles of individuals, we do not combine that
-          information with activity on this website, and we do not use consumer
-          or personal data for outreach.
+          business-contact databases and publicly available information, such
+          as a practice&apos;s website and professional profiles, to identify
+          practices that may benefit from our services and to tailor our
+          messages to them. We may contact those practices by email, phone, or
+          professional networks.
         </p>
         <p>
           If you do not wish to receive further contact from us, reply to any
           message or email{" "}
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, and we will
-          remove your details.
+          stop contacting you.
         </p>
       </>
     ),
@@ -167,9 +164,7 @@ const sections: LegalSection[] = [
           legitimate interest in operating and securing our business.
         </p>
         <p>
-          We do not send marketing newsletters from this website. Should that
-          change, subscription will be opt-in and every message will include an
-          unsubscribe option.
+          Any marketing email we send includes a way to unsubscribe.
         </p>
       </>
     ),
@@ -181,7 +176,8 @@ const sections: LegalSection[] = [
       <>
         <p>
           We use established third-party providers to operate our business. Each
-          receives only the information necessary to perform its function.
+          receives only the information necessary to perform its function. They
+          include the following, and the list changes as our business does.
         </p>
         <table>
           <thead>
@@ -206,6 +202,14 @@ const sections: LegalSection[] = [
             <tr>
               <td>Calendly</td>
               <td>Scheduling</td>
+            </tr>
+            <tr>
+              <td>Fathom</td>
+              <td>Call recording and notes</td>
+            </tr>
+            <tr>
+              <td>Business-contact databases and email platforms</td>
+              <td>Identifying practices and sending outreach</td>
             </tr>
             <tr>
               <td>Anthropic, OpenAI, and Amazon Web Services</td>
@@ -255,19 +259,18 @@ const sections: LegalSection[] = [
               Protected health information is processed by AI tools only under a
               Business Associate Agreement,
             </strong>{" "}
-            and only within an environment covered by that agreement, as
-            described in the following section.
+            as described in the following section.
           </li>
           <li>
-            <strong>We treat AI output as a draft subject to our review.</strong>{" "}
-            The systems we build are designed so that a person reviews actions
-            with consequences before they take effect.
+            <strong>We treat AI output as a draft subject to review.</strong>{" "}
+            Where an error would have consequences, we recommend that a person
+            reviews the output before it takes effect.
           </li>
           <li>
             <strong>
-              We identify the AI providers used in any system we build for you,
+              We will tell you which AI providers a system we build for you uses,
             </strong>{" "}
-            and we will notify you if those providers change.
+            on request.
           </li>
         </ul>
         <p>
@@ -284,19 +287,11 @@ const sections: LegalSection[] = [
       <>
         <p>
           <strong>
-            Do not send protected health information through this website, the
-            contact form, or unencrypted email.
+            Do not send protected health information through this website or
+            its contact form.
           </strong>{" "}
-          These channels are not appropriate for patient information. If such
-          information is sent to us this way, we will delete it and ask you to
-          use a secure channel.
-        </p>
-        <h3>Our approach</h3>
-        <p>
-          Most of the systems we build are designed so that patient information
-          is not involved. Front desk knowledge bases, staff training materials,
-          scheduling rules, bookkeeping, and vendor invoice handling can be built
-          without access to patient records, and that is our default approach.
+          Clients share patient information with us only as their Business
+          Associate Agreement provides.
         </p>
         <h3>Business Associate Agreements</h3>
         <p>
@@ -304,25 +299,12 @@ const sections: LegalSection[] = [
             We sign a Business Associate Agreement with every healthcare
             practice we work with, before work begins, whether or not we expect
             protected health information to be involved.
-          </strong>
+          </strong>{" "}
+          That agreement governs how patient information is used, where it is
+          processed and stored, and how it is returned or destroyed. AI services
+          that process patient information do so under a Business Associate
+          Agreement and do not use it for model training.
         </p>
-        <p>
-          Where an engagement does involve protected health information, the
-          following also apply:
-        </p>
-        <ol>
-          <li>
-            The system operates within the practice&apos;s own cloud account,
-            under the agreement between the practice and that cloud provider,
-            rather than on infrastructure we own. The account belongs to the
-            practice, and any access granted to us may be revoked by the practice.
-          </li>
-          <li>
-            The AI services involved are configured so that the provider does
-            not retain the data after a request is processed and does not use it
-            for model training.
-          </li>
-        </ol>
         <p>
           There is no government or industry certification for HIPAA compliance,
           and we do not claim one. We describe our practices so that a practice
@@ -372,11 +354,9 @@ const sections: LegalSection[] = [
         </p>
         <h3>Access to client systems</h3>
         <p>
-          Access to client systems is limited to the two founders of Stephens
-          AI. We do not use subcontractors, offshore staff, or an outsourced
-          support desk. Our founders are currently based in the United States
-          and in Asia, and access occurs from both locations over encrypted
-          connections. If this changes, we will notify affected clients.
+          Access to client systems is limited to Stephens AI personnel and
+          service providers who need it for the work. Our team works remotely,
+          including from Asia, and access occurs over encrypted connections.
         </p>
         <p>
           No method of transmission or storage is completely secure. If a
@@ -423,8 +403,8 @@ const sections: LegalSection[] = [
       <p>
         Stephens AI is a United States company, and our service providers are
         primarily located in the United States, where your information is
-        stored and processed. Because our founders are based in the United
-        States and in Asia, your information may also be accessed from Asia. If
+        stored and processed. Because our team works remotely, including from
+        Asia, your information may also be accessed from Asia. If
         you contact us from outside the United States, the privacy laws of the
         jurisdictions where your information is handled may differ from those
         of your own. By contacting us, you acknowledge that this transfer is

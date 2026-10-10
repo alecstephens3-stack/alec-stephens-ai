@@ -33,12 +33,15 @@ const sections: LegalSection[] = [
     id: "who-we-are",
     heading: "Who we are",
     body: (
-      <p>
-        Stephens AI LLC is a Kansas limited liability company that builds
-        internal software and AI systems for independent healthcare practices.
-        In these terms, &quot;Stephens AI,&quot; &quot;we,&quot;
-        &quot;us,&quot; and &quot;our&quot; refer to Stephens AI LLC.
-      </p>
+      <>
+        <p>
+          Stephens AI LLC is a Kansas limited liability company that builds
+          software and AI systems for businesses, with a focus on independent
+          healthcare practices. In these terms, &quot;Stephens AI,&quot;
+          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens
+          AI LLC.
+        </p>
+      </>
     ),
   },
   {
@@ -80,18 +83,11 @@ const sections: LegalSection[] = [
     heading: "Engagements",
     body: (
       <>
-        <p>Our engagements generally follow this sequence:</p>
-        <ol>
-          <li>An initial qualifying call at no cost</li>
-          <li>
-            A written proposal setting out scope, deliverables, price, and
-            timeline
-          </li>
-          <li>A discovery call following acceptance of the proposal</li>
-          <li>The build</li>
-          <li>Demonstration, setup, and a recorded walkthrough</li>
-          <li>A post-delivery support window</li>
-        </ol>
+        <p>
+          Each engagement is defined by a written proposal that sets out its
+          scope, deliverables, price, and timeline. We may offer a free
+          discovery call or a paid assessment before a proposal.
+        </p>
         <h3>Order of precedence</h3>
         <p>
           <strong>
@@ -119,24 +115,24 @@ const sections: LegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Project work is fixed price</strong> as stated in the
-          proposal, together with the payment schedule. We price the project,
-          not the hours, unless the proposal states otherwise.
+          <strong>Fees are as stated in your proposal,</strong> together with
+          the payment schedule. A proposal may include project fees, monthly
+          fees, usage charges, or fees tied to results.
         </li>
         <li>
-          <strong>Ongoing support is billed monthly</strong> at the rate stated
-          in the proposal and continues until terminated by either party.
+          <strong>Monthly services are billed monthly</strong> and continue
+          until terminated as these terms or the proposal provide.
         </li>
         <li>
           <strong>Invoices are payable on the terms stated on the invoice.</strong>{" "}
-          If an invoice is past due, we may suspend work after giving you notice.
+          If an invoice is past due, we may suspend work and any service we
+          operate for you after giving you notice.
         </li>
         <li>
-          <strong>Fees exclude third-party costs.</strong> Software
-          subscriptions, cloud usage, and similar charges are billed to your own
-          accounts and are your responsibility. Insurance checks run through our
-          clearinghouse account, and their cost is included in the monthly fee
-          unless your proposal says otherwise.
+          <strong>Fees exclude third-party costs</strong> unless your proposal
+          says otherwise. Software subscriptions, cloud usage, clearinghouse
+          transactions, and similar charges are your responsibility, whether
+          billed to your own accounts or passed through by us.
         </li>
         <li>
           <strong>Fees exclude taxes.</strong> You are responsible for any
@@ -170,20 +166,12 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          The systems we build operate either on services you own, such as your
-          cloud account, email platform, or accounting software, or on
-          infrastructure we operate on your behalf where no protected health
-          information is involved. A front desk knowledge base is an example of
-          the second kind: your content is stored in a database we manage for
-          you, none of it is patient information, and you may export it at any
-          time. We identify which arrangement applies before you commit to an
-          engagement.
-        </p>
-        <p>
-          One connection is ours: our insurance claims tool reaches insurers
-          through our own account with a clearinghouse, under a Business
-          Associate Agreement between us and the clearinghouse. Your Business
-          Associate Agreement with us names it.
+          The systems we build may operate on services you own, such as your
+          cloud account, email platform, or accounting software, on services we
+          operate or contract for on your behalf, such as our clearinghouse
+          account for insurance checks, or on a combination of both. Where
+          protected health information is involved, your Business Associate
+          Agreement with us governs where it is processed and stored.
         </p>
         <ul>
           <li>
@@ -233,18 +221,17 @@ const sections: LegalSection[] = [
           </li>
           <li>
             <strong>We design for human review.</strong> Where an error would
-            have consequences, the systems we build include a step at which a
-            person reviews the output before it takes effect. That step is part
-            of the deliverable. If you elect to remove it, you accept the
-            associated risk.
+            have consequences, we recommend a step at which a person reviews the
+            output before it takes effect. If you choose to operate without one,
+            you accept the associated risk.
           </li>
           <li>
             <strong>We do not guarantee business outcomes.</strong> We warrant
-            that a system performs as described in the proposal. We do not
-            warrant, and the proposal will not state, any particular amount of
-            revenue, time saved, or staff hours reduced, as those results depend
-            on factors outside our control, including how your team uses the
-            system.
+            that a system performs as described in the proposal. Unless a
+            proposal expressly says otherwise, we do not warrant any particular
+            amount of revenue, time saved, or staff hours reduced, as those
+            results depend on factors outside our control, including how your
+            team uses the system.
           </li>
           <li>
             <strong>Our systems do not provide professional advice.</strong>{" "}
@@ -264,41 +251,49 @@ const sections: LegalSection[] = [
         <h3>Deliverables</h3>
         <p>
           <strong>
-            Upon payment in full, the deliverables created specifically for you
-            become your property.
+            Upon payment in full, the custom deliverables created specifically
+            for you under a proposal become your property,
           </strong>{" "}
-          This includes custom code, configuration, written content, and
-          documentation produced for the engagement.
+          unless the proposal says otherwise. This includes custom code,
+          configuration, written content, and documentation produced for the
+          engagement.
+        </p>
+        <h3>Our products</h3>
+        <p>
+          Software we provide to more than one client, such as our insurance
+          claims tool, and any software we provide as a service, remains the
+          property of Stephens AI. You receive the right to use it for as long as
+          your proposal provides and your fees are paid.
         </p>
         <p>
           <strong>Your data remains your property at all times.</strong> You may
-          export it in a standard format during or after the engagement at no
-          charge. Where a system stores content we manage on your behalf, we
-          provide a means of exporting it.
+          export it in a standard format during or after the engagement. Where a
+          system stores content we manage on your behalf, we provide a means of
+          exporting it.
         </p>
         <h3>Retained materials</h3>
         <p>
           We retain ownership of the general tools, templates, patterns, and
           know-how that we bring to an engagement or develop in the course of
-          it. This does not include your content, data, configuration, pricing,
-          procedures, or any other information specific to your practice. Where
-          our pre-existing materials are incorporated into a deliverable, you
+          it. This does not include your content, data, pricing, procedures, or
+          any other information specific to your practice. Where our
+          pre-existing materials are incorporated into a custom deliverable, you
           receive a perpetual, non-exclusive license to use them as part of that
           deliverable.
         </p>
-        <h3>No long-term commitment</h3>
+        <h3>Term</h3>
         <p>
-          Project engagements do not require a long-term contract. Monthly
-          support agreements are month to month and may be terminated by either
-          party on 30 days&apos; notice. Systems that operate on your own
-          accounts continue to function after an engagement ends.
+          Unless a proposal sets a minimum term, project engagements do not
+          require a long-term contract, and monthly services may be terminated
+          by either party on 30 days&apos; notice.
         </p>
         <h3>Use of your name</h3>
         <p>
           We will not identify you publicly, use your logo, or publish details
-          of your engagement without your written permission. Permission may be
-          withdrawn at any time, after which we will remove the relevant
-          material.
+          of your engagement that identify you without your written permission.
+          Permission may be withdrawn at any time, after which we will remove
+          the relevant material. We may describe our work and its results in
+          general terms that do not identify you.
         </p>
       </>
     ),
@@ -311,8 +306,8 @@ const sections: LegalSection[] = [
         Each party will protect the other&apos;s non-public information, use it
         only for purposes of the engagement, and disclose it only to those who
         need it for that purpose. These obligations do not apply to information
-        that is publicly available, that the receiving party already possessed,
-        or that must be disclosed by law. These obligations survive the end of
+        that is publicly available, that the receiving party already possessed or
+        developed independently, or that must be disclosed by law. These obligations survive the end of
         the engagement.
       </p>
     ),
@@ -324,41 +319,14 @@ const sections: LegalSection[] = [
       <ul>
         <li>
           <strong>
-            Our default is that protected health information is not involved.
-          </strong>{" "}
-          Most of the systems we build are designed to operate without access
-          to patient records.
-        </li>
-        <li>
-          <strong>
             We sign a Business Associate Agreement with every healthcare client
             before work begins,
           </strong>{" "}
           whether or not protected health information is expected to be
           involved. Where such an agreement exists, it governs that information
-          and controls over any conflicting provision of these terms.
-        </li>
-        <li>
-          <strong>
-            Systems that process protected health information operate within
-            your own cloud account,
-          </strong>{" "}
-          opened in your practice&apos;s name with your billing. You accept the
-          cloud provider&apos;s Business Associate Agreement directly. The
-          account belongs to you, any access granted to us may be revoked by
-          you, and we configure a spending alert so that usage remains visible.
-          Cloud costs are billed to you directly and are not marked up.
-        </li>
-        <li>
-          <strong>
-            At the end of an engagement, we return the data we hold in a usable
-            format and delete our copies.
-          </strong>{" "}
-          Where a Business Associate Agreement is in place, its return and
-          destruction provisions govern. Where a system operates within your own
-          cloud account, the data stays in your account, and anything held at
-          our clearinghouse is returned or destroyed as your Business Associate
-          Agreement sets out.
+          and controls over any conflicting provision of these terms, including
+          where the information is processed and stored and how it is returned
+          or destroyed at the end of an engagement.
         </li>
         <li>
           <strong>
@@ -368,9 +336,12 @@ const sections: LegalSection[] = [
           with the information available at that time, and keep you informed
           until the matter is resolved. We will cooperate with your own
           notification obligations.
-          </li>
+        </li>
         <li>
-          <strong>Your compliance program remains your responsibility.</strong>{" "}
+          <strong>
+            Your compliance program and your clinical, billing, and claims
+            decisions remain your responsibility.
+          </strong>{" "}
           We build to your requirements and explain how our systems operate. We
           are not your compliance officer, auditor, or legal counsel, and we do
           not certify your practice as compliant with any regulation.
@@ -470,9 +441,10 @@ const sections: LegalSection[] = [
       <>
         <p>
           You agree to defend and indemnify Stephens AI against third-party
-          claims arising from materials you provide to us, from your use of a
-          deliverable in a manner not contemplated by the proposal, or from your
-          breach of these terms or of applicable law.
+          claims arising from materials you provide to us, from clinical,
+          billing, claims, or business decisions you make using our systems,
+          from your use of a deliverable in a manner not contemplated by the
+          proposal, or from your breach of these terms or of applicable law.
         </p>
         <p>
           We will defend and indemnify you against third-party claims that a
@@ -521,32 +493,26 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          Stephens AI is a small firm. This section describes what applies if
-          we are unable to continue supporting you.
+          This section describes what applies if we are unable to continue
+          supporting you.
         </p>
         <ul>
           <li>
-            <strong>We document what we build.</strong> Source code,
-            configuration, and a walkthrough are included with each delivery so
-            that another developer can maintain the system.
+            <strong>We document what we build for you.</strong> Custom
+            deliverables include their source code, configuration, and a
+            walkthrough, so that another developer can maintain them. Our
+            products are provided as described in your proposal.
           </li>
           <li>
             <strong>
-              Systems that operate on your own accounts continue to function
-              independently of Stephens AI.
-            </strong>{" "}
-            They do not depend on a Stephens AI server or license.
+              Custom systems that operate on your own accounts continue to
+              function independently of Stephens AI.
+            </strong>
           </li>
           <li>
-            <strong>
-              For systems we host on your behalf, you may export your content
-              at any time.
-            </strong>{" "}
-            If Stephens AI ceases operations, we will transfer any
-            administrative access we hold, together with your data.
-          </li>
-          <li>
-            <strong>You retain everything you have paid for.</strong>
+            <strong>Your data remains available to you.</strong> If Stephens AI
+            ceases operations, we will return your data and transfer any
+            administrative access we hold to accounts in your name.
           </li>
         </ul>
       </>
@@ -578,6 +544,11 @@ const sections: LegalSection[] = [
           Business Associate Agreement, constitute the entire agreement between
           the parties regarding their subject matter and supersede prior
           discussions. Failure to enforce a provision is not a waiver of it.
+        </p>
+        <h3>Service providers</h3>
+        <p>
+          We may use subcontractors and service providers in performing our
+          services and remain responsible for their work under these terms.
         </p>
         <h3>Assignment</h3>
         <p>
