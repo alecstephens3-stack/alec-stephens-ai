@@ -21,7 +21,7 @@ export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.
-export const LEGAL_UPDATED = "September 17, 2026";
+export const LEGAL_UPDATED = "October 10, 2026";
 export const CASE_STUDY_URL = "https://stephensai.co/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
@@ -186,7 +186,7 @@ export const FAQ_SECTION = {
 export const FAQ = [
   {
     q: "Does any patient information go into this?",
-    a: "Only when the job calls for it. The knowledge base holds none: it's your rules, prices, and protocols, not your charts. For work that does involve patient data, like billing or claims, the system runs inside your own cloud account under a BAA, so the data stays with you and never sits on our servers. We sign a BAA before we start either way.",
+    a: "Only when the job calls for it. The knowledge base holds none: it's your rules, prices, and protocols, not your charts. For work that does involve patient data, like billing or claims, a BAA sets out exactly where it is processed and stored. We sign a BAA before we start either way.",
   },
   {
     q: "Do we have to write the content ourselves?",
