@@ -1,6 +1,6 @@
 import { Section } from "./shell";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { QUOTE, PROOF_LINKS } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 
 /**
  * The proof, once, and after the demonstration rather than before it: you see
@@ -10,21 +10,21 @@ import { QUOTE, PROOF_LINKS } from "@/lib/content";
  * the headline, and a number that appears twice is the habit this whole draft
  * is trying to break. The long narrative stays in the published case study.
  */
-export function Proof() {
+export function Proof({ copy = HOME_EN.proof }: { copy?: HomeCopy["proof"] }) {
   return (
     <Section
       id="proof"
-      kicker={QUOTE.kicker}
+      kicker={copy.kicker}
       titleMax="max-w-[26ch]"
       title={
         <>
-          {QUOTE.title.lead}{" "}
-          <span className="text-accent-display">{QUOTE.title.accent}</span>
+          {copy.title.lead}{" "}
+          <span className="text-accent-display">{copy.title.accent}</span>
         </>
       }
     >
       <AnimateOnScroll>
-        <p className="t-body -mt-4 mb-12 max-w-[56ch] md:mb-14">{QUOTE.problem}</p>
+        <p className="t-body -mt-4 mb-12 max-w-[56ch] md:mb-14">{copy.problem}</p>
       </AnimateOnScroll>
 
       {/* The one glass object in this section: a real quote from a real person. */}
@@ -33,14 +33,20 @@ export function Proof() {
           <blockquote className="m-0">
             <p className="t-title !text-[clamp(1.4rem,1.1rem+1.1vw,1.9rem)] !leading-[1.3]">
               <span className="text-accent-display">&ldquo;</span>
-              {QUOTE.text}
+              {copy.text}
               <span className="text-accent-display">&rdquo;</span>
             </p>
           </blockquote>
+          {/* A translated page keeps the person's own words, smaller, under the translation. */}
+          {copy.original && (
+            <p className="t-fine mt-4">
+              {copy.original.label}: <span lang="en">&ldquo;{copy.original.text}&rdquo;</span>
+            </p>
+          )}
           <figcaption className="mt-7 flex items-start gap-3.5">
             <span aria-hidden="true" className="mt-[13px] h-[2px] w-8 shrink-0 rounded bg-accent" />
             <span className="t-body">
-              <strong>{QUOTE.who}</strong>, {QUOTE.role}
+              <strong>{copy.who}</strong>, {copy.role}
             </span>
           </figcaption>
         </figure>
@@ -48,7 +54,7 @@ export function Proof() {
 
       <AnimateOnScroll delay={60}>
         <div className="pf-pay">
-          {QUOTE.payoff.map((x, i) => (
+          {copy.payoff.map((x, i) => (
             <div key={x.n} className={i === 0 ? "pf-fig is-lead" : "pf-fig"}>
               <p className="pf-n">{x.n}</p>
               <p className="pf-l">{x.l}</p>
@@ -57,22 +63,22 @@ export function Proof() {
         </div>
         <p className="pf-note">
           <span className="pf-live">
-            {QUOTE.status}
+            {copy.status}
           </span>
-          <span className="t-fine">{QUOTE.payoffNote}</span>
+          <span className="t-fine">{copy.payoffNote}</span>
         </p>
         <p className="t-body mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-3">
           <a
-            href={PROOF_LINKS.full.href}
+            href={copy.links.full.href}
             target="_blank"
             rel="noopener noreferrer"
             className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
           >
-            {PROOF_LINKS.full.label} &rarr;
+            {copy.links.full.label} &rarr;
           </a>
           <span className="t-fine">
-            {PROOF_LINKS.more}{" "}
-            {PROOF_LINKS.items.map((item, i) => (
+            {copy.links.more}{" "}
+            {copy.links.items.map((item, i) => (
               <span key={item.href}>
                 {i > 0 && ", "}
                 <a

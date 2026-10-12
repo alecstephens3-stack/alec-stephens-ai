@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight, Kalam, Reenie_Beanie, Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { SkipLink } from "@/components/layout/skip-link";
 import { Scene } from "@/components/ui/scene";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/content";
 import "./globals.css";
@@ -84,14 +85,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${schibstedGrotesk.variable} ${kalam.variable} ${reenie.variable}`}>
+    // suppressHydrationWarning: /kr sets lang="ko" before React loads (see HtmlLang).
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${interTight.variable} ${schibstedGrotesk.variable} ${kalam.variable} ${reenie.variable}`}
+    >
       <body className="antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-cream"
-        >
-          Skip to main content
-        </a>
+        <SkipLink />
         <Scene />
         {/* The header sits OUTSIDE the content wrapper on purpose. Inside it,
             the wrapper's stacking context trapped the header's z-50 below the

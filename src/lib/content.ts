@@ -160,7 +160,10 @@ export const FOUNDERS_SECTION = {
   note: "Every system is built by the two of us, from the first call to the monthly check-in.",
 };
 
-export const FOUNDERS = [
+/** `nameLatin` is for pages in another script (the Korean page shows 김주신, then Ju Sheen Kim). */
+export type Founder = { name: string; nameLatin?: string; role: string; image: string; bio: string };
+
+export const FOUNDERS: Founder[] = [
   {
     name: "Alec Stephens",
     role: "Co-founder",
@@ -410,3 +413,234 @@ export const V7_CONTACT = {
   body: "Tell us what slows your practice down. We'll find where you can get the best results and send you our analysis, the Opportunity Map, yours to keep regardless of the next steps.",
   bookLabel: "Get started",
 };
+
+/* ════════════════════════════════════════════════════════════════════════
+   The home page and the site chrome, by language (2026-10-12, for /kr).
+   The constants above stay the English source. HOME_EN gathers the ones the
+   home page renders, plus the words that used to sit inside the section
+   components (the app windows, the step labels, the form), so the same
+   components can render HOME_KO from content.ko.ts. HomeCopy is HOME_EN's
+   shape, so a Korean line that goes missing fails the build.
+   ════════════════════════════════════════════════════════════════════════ */
+
+export const HOME_EN = {
+  cta: V7_CTA,
+  hero: {
+    kicker: V7_HERO.kicker,
+    headline: V7_HERO.headline,
+    sub: V7_HERO.sub,
+    secondary: V7_HERO.secondary,
+  },
+  /** The product window in the hero: example content, said so in the caption. */
+  heroWindow: {
+    ariaLabel:
+      "Front desk results: about 5 hours back since Monday, 20 questions answered without the office manager, 12 bills entered in QuickBooks, 3 time off requests approved. A search for 'patient running late' opens the policy.",
+    query: "patient running late",
+    brand: "Front Desk",
+    brandInitials: "FD",
+    navFront: "Front desk",
+    navFrontItems: [["Home", ""], ["Answers", "35"], ["Prices", "41"], ["Doctors", "4"], ["Insurance", "12"]],
+    navOffice: "Office",
+    navOfficeItems: ["Bills", "Time off", "Payroll report"],
+    me: "Office manager",
+    meInitials: "OM",
+    title: "Front desk results",
+    meta: "Updated as it happens",
+    stats: [
+      { n: "About 5 hours", l: "back since Monday" },
+      { n: "20", l: "questions answered without the office manager" },
+      { n: "12", l: "bills entered in QuickBooks" },
+      { n: "3", l: "time off requests approved" },
+    ],
+    today: "Today",
+    feed: [
+      { t: "9:14", what: "Patient running late", out: "Answered" },
+      { t: "9:31", what: "Medical supply invoice, $1,284.60", out: "In QuickBooks" },
+      { t: "10:02", what: "Friday, half day", out: "Approved" },
+    ],
+    billsBar: "QuickBooks · bills entered today",
+    bills: [["Medical supplies", "$1,284.60"], ["Janitorial service", "$642.00"], ["Office supplies", "$89.47"]],
+    popQ: "Patient is late. Can we still see them?",
+    popRows: [["Under 15 min", "Check them in."], ["Over 15 min", "Offer the next open slot."]],
+    popFoot: "Found in one search. Nobody walked over to ask.",
+    caption: "Based on our systems in production. Names and amounts are examples.",
+  },
+  logosLabel: V7_LOGOS.label,
+  work: {
+    kicker: V7_WORK.kicker,
+    title: V7_WORK.title,
+    tablistLabel: "Services",
+    items: V7_WORK.items,
+    /** What each service window shows, in the order of `items`. */
+    previews: {
+      answers: {
+        query: "patient running late",
+        question: "Patient is late. Can we still see them?",
+        cases: [
+          { k: "Under 15 minutes", v: "Check them in and tell the doctor's assistant." },
+          { k: "Over 15 minutes", v: "Offer the next open slot today, or rebook." },
+        ],
+        meta: "Policy · updated by the office manager",
+      },
+      bills: {
+        bar: "QuickBooks · bills entered today",
+        rows: [
+          ["Medical supplies", "Supplies", "$1,284.60"],
+          ["Janitorial service", "Cleaning", "$642.00"],
+          ["Office supplies", "Office Supplies", "$89.47"],
+          ["Internet service", "Utilities", "$129.99"],
+        ],
+        meta: "Filed into the right vendor folders. Nothing entered twice.",
+      },
+      timeoff: {
+        title: "Time off request",
+        rows: [["Who", "Front desk"], ["When", "Friday, half day"], ["Balance", "32 hours left this year"]],
+        steps: ["Approved from a phone", "On the office calendar", "In this pay period's payroll report"],
+      },
+      systems: {
+        nodes: [
+          { k: "Your EHR", v: "Patient records" },
+          { k: "Your AWS account", v: "Covered by a BAA" },
+          { k: "Your team", v: "The work, done" },
+        ],
+        meta: "Patient data stays in an account in your practice's name, never on our servers.",
+      },
+    },
+  },
+  patient: { label: PATIENT.label, points: PATIENT.points },
+  proof: {
+    kicker: QUOTE.kicker,
+    title: QUOTE.title,
+    problem: QUOTE.problem,
+    text: QUOTE.text,
+    /** A translated page shows the quote's original words under it. */
+    original: null as { label: string; text: string } | null,
+    who: QUOTE.who,
+    role: QUOTE.role,
+    payoff: QUOTE.payoff,
+    payoffNote: QUOTE.payoffNote,
+    status: QUOTE.status,
+    links: PROOF_LINKS,
+  },
+  how: {
+    kicker: V7_HOW.kicker,
+    title: V7_HOW.title,
+    steps: V7_HOW.steps,
+    tablistLabel: "Working with us, step by step",
+    start: "Start here",
+    shownBelow: "Shown below",
+    /** The three step windows. Example content; statuses stay honest. */
+    windows: {
+      map: {
+        bar: ["Opportunity Map", "Discovery"],
+        title: "Where your practice loses the most",
+        meta: "Ranked, with what we'd do about each",
+        rows: [
+          { where: "Insurance claims left unpaid", fix: "Every claim tracked and followed up until it's paid" },
+          { where: "Unfinished treatment and overdue recalls", fix: "Patients reminded and booked back in" },
+          { where: "Phones and questions that stop the front desk", fix: "Answers your whole team can find in seconds" },
+          { where: "Bills and forms typed in by hand", fix: "Read, entered and ready for review" },
+        ],
+      },
+      build: {
+        bar: ["Your build", "Delivery"],
+        title: "What we're building for you",
+        meta: "From the Opportunity Map, one fix at a time",
+        rows: [
+          { what: "Front desk answers", state: "Live", good: true },
+          { what: "Bills into QuickBooks", state: "Testing with your team", good: false },
+          { what: "Treatment follow-up", state: "Building", good: false },
+          { what: "Claims follow-up", state: "Next", good: false },
+        ],
+        foot: "Runs next to your practice software, not inside it.",
+      },
+      month: {
+        bar: ["This month", "Month to month"],
+        title: "Kept running, and getting better",
+        meta: "What changed since last month",
+        rows: [
+          { what: "New insurance rules added", state: "Done", good: true },
+          { what: "Follow-up timing adjusted to your schedule", state: "Done", good: true },
+          { what: "Monthly report sent to the owner", state: "Sent", good: true },
+          { what: "Monthly check-in with your office manager", state: "Booked", good: false },
+        ],
+        foot: "Your team can still change anything themselves.",
+      },
+    },
+    satellites: {
+      discover: { k: "Sent after the call", t: "Yours to keep, regardless of the next steps." },
+      /** Shows the first pricing tier's name and price. */
+      deliver: { k: "Flat price, in writing" },
+      optimize: { k: "Month to month", t: "Everything keeps doing its job. If it stops, we fix it." },
+    },
+  },
+  pricing: V7_PRICING,
+  founders: {
+    kicker: "Who we are",
+    title: FOUNDERS_SECTION.title,
+    note: FOUNDERS_SECTION.note,
+    people: FOUNDERS,
+  },
+  contact: {
+    kicker: V7_CONTACT.kicker,
+    titleLead: V7_CONTACT.titleLead,
+    titleAccent: V7_CONTACT.titleAccent,
+    body: V7_CONTACT.body,
+    bookLabel: V7_CONTACT.bookLabel,
+    bookHref: CALENDLY,
+    ariaLabel: "Contact",
+    emails: [CONTACT_EMAIL, SECOND_EMAIL],
+  },
+  form: {
+    /** Sent with the message; "ko" also sends a copy to Jusheen (api/contact). */
+    locale: "en",
+    name: "Name",
+    namePlaceholder: "Your name",
+    email: "Email",
+    emailPlaceholder: "you@company.com",
+    message: "Message",
+    messagePlaceholder: "What takes up the most time in your week?",
+    send: "Send",
+    sending: "Sending...",
+    sentTitle: "Message sent.",
+    sentBody: "We'll get back to you by the next business morning.",
+    sendAnother: "Send another message",
+    /** The API's error messages are English: show them only on an English page. */
+    showServerError: true,
+    errorFallback: "Something went wrong.",
+    errorEmail: CONTACT_EMAIL,
+    errorLead: "You can also email us at ",
+    errorTail: ".",
+  },
+};
+
+export type HomeCopy = typeof HOME_EN;
+
+/** The header, footer and skip link, which live in the root layout and pick a language by path. */
+export const CHROME_EN = {
+  lang: "en",
+  home: "/",
+  homeLabel: "Stephens AI, home",
+  skip: "Skip to main content",
+  nav: V7_NAV,
+  cta: V7_CTA,
+  navLabel: "Main navigation",
+  mobileNavLabel: "Mobile navigation",
+  menuLabel: "Site menu",
+  openMenu: "Open menu",
+  closeMenu: "Close menu",
+  close: "Close",
+  footer: {
+    label: "Site footer",
+    navLabel: "Footer navigation",
+    caseStudy: "Case study",
+    workWithUs: { label: "Work with us", href: "/#how" },
+    portfolio: "Alec's portfolio",
+    email: { label: "Email", href: `mailto:${CONTACT_EMAIL}` },
+    llc: "Stephens AI LLC is a Kansas limited liability company based in Wichita, Kansas.",
+    privacy: "Privacy Policy",
+    terms: "Terms of Service",
+  },
+};
+
+export type ChromeCopy = typeof CHROME_EN;

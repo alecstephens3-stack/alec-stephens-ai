@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { V7_NAV as NAV_LINKS, V7_CTA } from "@/lib/content";
+import { KR_PATH } from "@/lib/content.ko";
+import { chromeCopy, localeFromPath, type Locale } from "@/lib/i18n";
 
 /**
  * The Dock: the Lens floating pill header.
@@ -25,6 +26,10 @@ import { V7_NAV as NAV_LINKS, V7_CTA } from "@/lib/content";
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const locale = localeFromPath(pathname);
+  const t = chromeCopy(locale);
+  const NAV_LINKS = t.nav;
+  const koreanBrowser = useSyncExternalStore(subscribeNever, prefersKorean, () => false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -79,12 +84,15 @@ export function Header() {
   }, [isMobileMenuOpen, close]);
 
   return (
-    <header className="fixed left-0 right-0 top-[14px] z-50 md:top-[22px]">
+    <header
+      lang={locale === "ko" ? "ko" : undefined}
+      className="fixed left-0 right-0 top-[14px] z-50 md:top-[22px]"
+    >
       <div className="mx-auto flex w-fit max-w-[calc(100vw-24px)] items-center gap-1 rounded-full sai-pane-strong py-2 pl-4 pr-2">
         <Link
-          href="/"
+          href={t.home}
           className="relative flex items-center pr-2 transition-opacity after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-[''] hover:opacity-80"
-          aria-label="Stephens AI, home"
+          aria-label={t.homeLabel}
         >
           <Image
             src="/logo-light.svg"
@@ -98,7 +106,7 @@ export function Header() {
 
         <nav
           className="hidden items-center gap-0.5 lg:flex"
-          aria-label="Main navigation"
+          aria-label={t.navLabel}
         >
           {NAV_LINKS.map((link) => {
             const isActive = link.href === pathname;
@@ -118,14 +126,16 @@ export function Header() {
             );
           })}
           <a
-            href={V7_CTA.href}
+            href={t.cta.href}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-1.5 rounded-full bg-ink px-4 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-white shadow-[0_8px_20px_rgba(23,19,16,0.2)] transition-all duration-[220ms] hover:-translate-y-px hover:bg-accent"
           >
-            {V7_CTA.short} &rarr;
+            {t.cta.short} &rarr;
           </a>
         </nav>
+
+        {(locale === "ko" || koreanBrowser) && <LanguageToggle locale={locale} />}
 
         <button
           ref={triggerRef}
@@ -134,7 +144,7 @@ export function Header() {
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMobileMenuOpen ? t.closeMenu : t.openMenu}
         >
           <span className="flex flex-col gap-1.5" aria-hidden="true">
             <span
@@ -170,12 +180,13 @@ export function Header() {
             ref={sheetRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Site menu"
+            aria-label={t.menuLabel}
+            lang={locale === "ko" ? "ko" : undefined}
             className="sai-sheet fixed inset-0 z-40 lg:hidden"
           >
             <nav
               className="relative flex h-full flex-col items-center justify-center gap-6 px-6"
-              aria-label="Mobile navigation"
+              aria-label={t.mobileNavLabel}
             >
               {NAV_LINKS.map((link) => (
                 <Link
@@ -188,25 +199,72 @@ export function Header() {
                 </Link>
               ))}
               <a
-                href={V7_CTA.href}
+                href={t.cta.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={close}
                 className="mt-2 rounded-full bg-ink px-7 py-3.5 font-heading text-lg font-medium text-white transition-colors hover:bg-accent"
               >
-                {V7_CTA.short} &rarr;
+                {t.cta.short} &rarr;
               </a>
               <button
                 type="button"
                 onClick={close}
                 className="mt-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2"
               >
-                Close
+                {t.close}
               </button>
             </nav>
           </div>,
           document.body
         )}
     </header>
+  );
+}
+
+/**
+ * EN | 한국어 (2026-10-12). Always shown on /kr. On English pages it shows only
+ * to visitors whose browser asks for Korean first: the English site is for US
+ * practices and never mentions Korea (Alec, 2026-09-29), so they never see it.
+ * The server cannot know the browser's language, so English pages render
+ * without it and it appears once the page is live in a Korean browser.
+ */
+const subscribeNever = () => () => {};
+
+function prefersKorean() {
+  const first = navigator.languages?.[0] ?? navigator.language ?? "";
+  return /^ko\b/i.test(first);
+}
+
+function LanguageToggle({ locale }: { locale: Locale }) {
+  const options = [
+    { lang: "en", label: "EN", href: "/" },
+    { lang: "ko", label: "한국어", href: KR_PATH },
+  ] as const;
+  return (
+    <div
+      role="group"
+      aria-label="Language, 언어"
+      className="ml-1 mr-0.5 flex items-center rounded-full border border-rule p-0.5 lg:ml-2"
+    >
+      {options.map((o) => {
+        const on = o.lang === locale;
+        return (
+          <Link
+            key={o.lang}
+            href={o.href}
+            hrefLang={o.lang}
+            lang={o.lang}
+            aria-current={on ? "true" : undefined}
+            className={cn(
+              "relative whitespace-nowrap rounded-full px-2.5 py-1 font-label text-[13.5px] font-semibold tracking-[0.04em] transition-colors duration-[220ms] after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-['']",
+              on ? "bg-accent/10 text-accent-deep" : "text-ink-2 hover:text-accent-deep"
+            )}
+          >
+            {o.label}
+          </Link>
+        );
+      })}
+    </div>
   );
 }

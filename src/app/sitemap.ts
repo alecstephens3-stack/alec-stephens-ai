@@ -6,6 +6,9 @@ import { CASES } from "@/components/bench/cases";
 // build teaches crawlers the signal is worthless.
 const LAST_CONTENT_CHANGE = new Date("2026-09-17");
 const JP_PAGE_PUBLISHED = new Date("2026-08-31");
+const KR_PAGE_PUBLISHED = new Date("2026-10-12");
+// The home page and its Korean version name each other.
+const HOME_LANGUAGES = { languages: { en: SITE_URL, ko: `${SITE_URL}/kr` } };
 // Every build page was rewritten on 2026-10-04 (nine builds, Putback added).
 const PORTFOLIO_PUBLISHED = new Date("2026-10-04");
 // The /alec index became the bench on 2026-09-23; Putback joined the desk 2026-10-04.
@@ -21,6 +24,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_CONTENT_CHANGE,
       changeFrequency: "monthly",
       priority: 1,
+      alternates: HOME_LANGUAGES,
+    },
+    {
+      // The home page in Korean: same sections, HOME_KO from content.ko.ts.
+      url: `${SITE_URL}/kr`,
+      lastModified: KR_PAGE_PUBLISHED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: HOME_LANGUAGES,
     },
     {
       // Japanese landing page for construction clients. Static file in public/jp,

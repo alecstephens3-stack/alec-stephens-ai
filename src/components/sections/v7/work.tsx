@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { Section } from "../v6/shell";
-import { V7_WORK } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 import n from "./work-notch.module.css";
 
 /**
@@ -16,9 +16,11 @@ import n from "./work-notch.module.css";
  * thread stitch, 2026-09-29). The window is sticky, so the notch is measured
  * against the chosen row on change, on scroll and on resize.
  */
-export function Work() {
+type WorkCopy = HomeCopy["work"];
+
+export function Work({ copy = HOME_EN.work }: { copy?: WorkCopy }) {
   const [active, setActive] = useState(0);
-  const items = V7_WORK.items;
+  const items = copy.items;
   const listRef = useRef<HTMLUListElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [notch, setNotch] = useState<{ y: number; w: number; h: number } | null>(null);
@@ -58,9 +60,9 @@ export function Work() {
   }, [active]);
 
   return (
-    <Section id="work" kicker={V7_WORK.kicker} title={V7_WORK.title} titleMax="max-w-[22ch]">
+    <Section id="work" kicker={copy.kicker} title={copy.title} titleMax="max-w-[22ch]">
       <div className="sv">
-        <ul ref={listRef} className="sv-list" role="tablist" aria-label="Services">
+        <ul ref={listRef} className="sv-list" role="tablist" aria-label={copy.tablistLabel}>
           {items.map((w, i) => (
             <li key={w.title} role="presentation" className={cn("sv-item", i === active && "is-on")}>
               <button
@@ -92,7 +94,7 @@ export function Work() {
                     </a>
                   )}
                   <div className="sv-stage sv-stage-inline" aria-hidden="true">
-                    <Preview i={i} />
+                    <Preview i={i} p={copy.previews} />
                   </div>
                 </div>
               </div>
@@ -111,7 +113,7 @@ export function Work() {
           <div ref={frameRef} className="sv-frame">
             {items.map((w, i) => (
               <div key={w.title} className={cn("sv-shot", i === active && "is-on")}>
-                <Preview i={i} />
+                <Preview i={i} p={copy.previews} />
               </div>
             ))}
           </div>
@@ -125,58 +127,60 @@ const Tick = () => (
   <span className="sv-tick"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 5.7 10 11 4" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
 );
 
-function Preview({ i }: { i: number }) {
+function Preview({ i, p }: { i: number; p: WorkCopy["previews"] }) {
   if (i === 0)
     return (
       <div className="sv-app">
         <div className="sv-search">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.75" stroke="currentColor" strokeWidth="1.6" /><path d="M10.6 10.6 14 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-          patient running late
+          {p.answers.query}
         </div>
-        <p className="sv-h">Patient is late. Can we still see them?</p>
+        <p className="sv-h">{p.answers.question}</p>
         <div className="sv-cases">
-          <div><p className="sv-k">Under 15 minutes</p><p>Check them in and tell the doctor&apos;s assistant.</p></div>
-          <div className="is-hot"><p className="sv-k">Over 15 minutes</p><p>Offer the next open slot today, or rebook.</p></div>
+          {p.answers.cases.map((c, n) => (
+            <div key={c.k} className={n === 1 ? "is-hot" : undefined}><p className="sv-k">{c.k}</p><p>{c.v}</p></div>
+          ))}
         </div>
-        <p className="sv-meta">Policy · updated by the office manager</p>
+        <p className="sv-meta">{p.answers.meta}</p>
       </div>
     );
   if (i === 1)
     return (
       <div className="sv-app">
-        <div className="sv-bar"><span className="sv-qb">qb</span>QuickBooks · bills entered today</div>
-        {[["Medical supplies", "Supplies", "$1,284.60"], ["Janitorial service", "Cleaning", "$642.00"], ["Office supplies", "Office Supplies", "$89.47"], ["Internet service", "Utilities", "$129.99"]].map(([v, a, n]) => (
+        <div className="sv-bar"><span className="sv-qb">qb</span>{p.bills.bar}</div>
+        {p.bills.rows.map(([v, a, n]) => (
           <p key={v} className="sv-row"><Tick /><span>{v}</span><span className="sv-dim">{a}</span><span className="sv-amt">{n}</span></p>
         ))}
-        <p className="sv-meta">Filed into the right vendor folders. Nothing entered twice.</p>
+        <p className="sv-meta">{p.bills.meta}</p>
       </div>
     );
   if (i === 2)
     return (
       <div className="sv-app">
-        <p className="sv-h">Time off request</p>
+        <p className="sv-h">{p.timeoff.title}</p>
         <div className="sv-dl">
-          <p><span>Who</span>Front desk</p>
-          <p><span>When</span>Friday, half day</p>
-          <p><span>Balance</span>32 hours left this year</p>
+          {p.timeoff.rows.map(([k, v]) => (
+            <p key={k}><span>{k}</span>{v}</p>
+          ))}
         </div>
         <div className="sv-steps">
-          <p><Tick />Approved from a phone</p>
-          <p><Tick />On the office calendar</p>
-          <p><Tick />In this pay period&apos;s payroll report</p>
+          {p.timeoff.steps.map((st) => (
+            <p key={st}><Tick />{st}</p>
+          ))}
         </div>
       </div>
     );
   return (
     <div className="sv-app">
       <div className="sv-flow">
-        <div className="sv-node"><p className="sv-k">Your EHR</p><p>Patient records</p></div>
-        <span className="sv-arrow">&rarr;</span>
-        <div className="sv-node is-hot"><p className="sv-k">Your AWS account</p><p>Covered by a BAA</p></div>
-        <span className="sv-arrow">&rarr;</span>
-        <div className="sv-node"><p className="sv-k">Your team</p><p>The work, done</p></div>
+        {p.systems.nodes.map((nd, n) => (
+          <Fragment key={nd.k}>
+            {n > 0 && <span className="sv-arrow">&rarr;</span>}
+            <div className={n === 1 ? "sv-node is-hot" : "sv-node"}><p className="sv-k">{nd.k}</p><p>{nd.v}</p></div>
+          </Fragment>
+        ))}
       </div>
-      <p className="sv-meta">Patient data stays in an account in your practice&apos;s name, never on our servers.</p>
+      <p className="sv-meta">{p.systems.meta}</p>
     </div>
   );
 }

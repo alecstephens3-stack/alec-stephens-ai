@@ -14,6 +14,7 @@ import {
   CONTACT_EMAIL,
   LINKEDIN_URL,
 } from "@/lib/content";
+import { homeCopy, type Locale } from "@/lib/i18n";
 
 /**
  * DRAFT v6 homepage, in the order a stranger reads it: the desk and the
@@ -22,8 +23,19 @@ import {
  * two of us, the patient-data answer, the call.
  *
  * The FAQ moved to /faq, which is where the FAQPage JSON-LD went with it.
+ *
+ * `locale` picks the words (HOME_EN or HOME_KO); the sections are the same.
  */
-export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: React.ReactNode }) {
+export function HomeBody({
+  visual,
+  lower,
+  locale = "en",
+}: {
+  visual?: React.ReactNode;
+  lower?: React.ReactNode;
+  locale?: Locale;
+}) {
+  const c = homeCopy(locale);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -89,18 +101,18 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
         }}
       />
       <div className="relative isolate">
-        <Hero visual={visual} />
-        <Logos />
-        <Work />
-        <PatientStrip />
-        <Proof />
+        <Hero visual={visual} copy={c.hero} cta={c.cta} windowCopy={c.heroWindow} />
+        <Logos label={c.logosLabel} />
+        <Work copy={c.work} />
+        <PatientStrip copy={c.patient} />
+        <Proof copy={c.proof} />
         {/* How we work down to Contact; preview routes swap in their own version */}
         {lower ?? (
           <>
-            <WorkWithUs />
-            <Pricing />
-            <Founders />
-            <Contact />
+            <WorkWithUs copy={c.how} tier={c.pricing.tiers[0]} />
+            <Pricing copy={c.pricing} cta={c.cta} />
+            <Founders copy={c.founders} />
+            <Contact copy={c.contact} form={c.form} />
           </>
         )}
       </div>
