@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Section } from "../v6/shell";
 import { ButtonLink } from "@/components/ui/button";
-import { V7_PRICING, V7_CTA } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 import s from "./pricing.module.css";
 
 /**
@@ -20,7 +20,13 @@ import s from "./pricing.module.css";
  * renders by default, so no one ever reads a parked "$9,999". Every tier's Get started goes to
  * the booking page, tagged with the plan so the booking shows which one.
  */
-export function Pricing() {
+export function Pricing({
+  copy = HOME_EN.pricing,
+  cta = HOME_EN.cta,
+}: {
+  copy?: HomeCopy["pricing"];
+  cta?: HomeCopy["cta"];
+}) {
   const grid = useRef<HTMLDivElement>(null);
   // The real price is the default (server render, no JS, reduced motion, or
   // cards already on screen). Only when the cards start below the fold does
@@ -51,9 +57,9 @@ export function Pricing() {
   }, []);
 
   return (
-    <Section id="pricing" kicker={V7_PRICING.kicker} title={V7_PRICING.title} titleMax="max-w-[24ch]">
+    <Section id="pricing" kicker={copy.kicker} title={copy.title} titleMax="max-w-[24ch]">
       <div ref={grid} className={s.grid}>
-        {V7_PRICING.tiers.map((t, i) => {
+        {copy.tiers.map((t, i) => {
           const dark = "note" in t && !!t.note;
           return (
             <TiltCard key={t.name} dark={dark}>
@@ -67,11 +73,11 @@ export function Pricing() {
               <p className={s.lead}>{t.lead}</p>
               <p className={s.body}>{t.body}</p>
               <ButtonLink
-                href={`${V7_CTA.href}?utm_source=stephensai.co&utm_medium=pricing&utm_content=${t.slug}`}
+                href={`${cta.href}?utm_source=stephensai.co&utm_medium=pricing&utm_content=${t.slug}`}
                 external
                 className={cn(s.cta, dark && s.ctaLight)}
               >
-                {V7_CTA.label}
+                {cta.label}
               </ButtonLink>
             </TiltCard>
           );
@@ -85,12 +91,12 @@ export function Pricing() {
         </svg>
         <div>
           <p className={s.gHead}>
-            {V7_PRICING.guarantee.lead} <em>{V7_PRICING.guarantee.accent}</em>
+            {copy.guarantee.lead} <em>{copy.guarantee.accent}</em>
           </p>
-          <p className={s.gSub}>{V7_PRICING.guarantee.sub}</p>
+          <p className={s.gSub}>{copy.guarantee.sub}</p>
         </div>
       </div>
-      <p className={s.fine}>{V7_PRICING.fine}</p>
+      <p className={s.fine}>{copy.fine}</p>
     </Section>
   );
 }

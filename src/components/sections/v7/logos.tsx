@@ -1,15 +1,15 @@
 import Image from "next/image";
-import { V7_LOGOS } from "@/lib/content";
+import { V7_LOGOS, HOME_EN } from "@/lib/content";
 
 /**
  * Partners (label renamed from "Who we work with", Alec 2026-09-29): one still, grayscale row. Deliberately NOT a moving
  * marquee (a ticker is on the banned list, Alec 2026-09-22). "Work with",
  * not "clients": Medari is a partner.
  */
-export function Logos() {
+export function Logos({ label = HOME_EN.logosLabel }: { label?: string }) {
   return (
-    <section aria-label={V7_LOGOS.label} className="v7-logos">
-      <p className="t-label text-center !text-ink-2">{V7_LOGOS.label}</p>
+    <section aria-label={label} className="v7-logos">
+      <p className="t-label text-center !text-ink-2">{label}</p>
       <ul className="v7-logo-row">
         {V7_LOGOS.items.map((l) => (
           <li key={l.name}>

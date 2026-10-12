@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { CONTACT_EMAIL } from "@/lib/content";
+import { CONTACT_EMAIL, CONTACT_EMAIL_JUSHEEN } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +53,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid submission." }, { status: 400 });
     }
 
-    const { name, email, message, website } = body ?? {};
+    const { name, email, message, website, locale } = body ?? {};
+    // Sent by the Korean page (/kr). Anything else is treated as English.
+    const korean = locale === "ko";
 
     // Honeypot: bots fill every field. Accept silently so they stop retrying.
     if (website) return NextResponse.json({ success: true });
@@ -104,15 +106,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const { data, error } = await resend.emails.send({
+    const mail = {
       from: FROM,
-      to: CONTACT_EMAIL,
       replyTo: email,
-      subject: `New consultation request from ${name}`,
+      subject: `${korean ? "[KR] " : ""}New consultation request from ${name}`,
       text: [`Name: ${name}`, `Email: ${email}`, "", "Message:", message].join(
         "\n"
       ),
-    });
+    };
+    const { data, error } = await resend.emails.send({ ...mail, to: CONTACT_EMAIL });
 
     if (error) {
       console.error("Resend send failed:", error);
@@ -122,6 +124,21 @@ export async function POST(request: Request) {
         },
         { status: 502 }
       );
+    }
+
+    // Korean messages also go to Jusheen, who reads Korean. A separate send on
+    // purpose: on the sandbox sender (CONTACT_FROM_EMAIL unset) Resend rejects
+    // any recipient but the account owner, and as a second `to` that would sink
+    // the whole message. This way the visitor's message always reaches
+    // CONTACT_EMAIL, the [KR] subject tells its reader to pass it on, and a
+    // failed copy is logged, never shown as a failure to the visitor.
+    if (korean) {
+      try {
+        const copy = await resend.emails.send({ ...mail, to: CONTACT_EMAIL_JUSHEEN });
+        if (copy.error) console.error("Resend copy to Jusheen failed:", copy.error);
+      } catch (copyError) {
+        console.error("Resend copy to Jusheen threw:", copyError);
+      }
     }
 
     return NextResponse.json({ success: true, id: data?.id });

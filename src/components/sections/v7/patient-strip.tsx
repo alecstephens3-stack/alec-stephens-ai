@@ -1,4 +1,4 @@
-import { PATIENT } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 import s from "./patient-strip.module.css";
 
 /**
@@ -15,13 +15,13 @@ const Check = () => (
   </svg>
 );
 
-export function PatientStrip() {
+export function PatientStrip({ copy = HOME_EN.patient }: { copy?: HomeCopy["patient"] }) {
   return (
-    <section className={s.wrap} aria-label={PATIENT.label}>
+    <section className={s.wrap} aria-label={copy.label}>
       <div className={s.strip}>
-        <p className={s.label}>{PATIENT.label}</p>
+        <p className={s.label}>{copy.label}</p>
         <ul className={s.points}>
-          {PATIENT.points.map((p) => (
+          {copy.points.map((p) => (
             <li key={p} className={s.point}>
               <Check />
               <span>{p}</span>
