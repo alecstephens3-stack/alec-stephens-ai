@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 
 /**
  * Hero option B v2, "the product, in depth" (Alec, 2026-09-28: "the physics
@@ -19,17 +20,11 @@ import { cn } from "@/lib/utils";
  * The loop sleeps when the hero is off screen or the tab is hidden.
  * Entrance is CSS on an outer wrapper; pointer motion is JS on an inner one,
  * so the two never fight over one transform. Reduced motion: final state.
+ * Every word in the window comes from `copy` (HOME_EN or HOME_KO).
  */
 
-const QUERY = "patient running late";
-
-const FEED = [
-  { t: "9:14", what: "Patient running late", out: "Answered" },
-  { t: "9:31", what: "Medical supply invoice, $1,284.60", out: "In QuickBooks" },
-  { t: "10:02", what: "Friday, half day", out: "Approved" },
-];
-
-export function DepthHero() {
+export function DepthHero({ copy = HOME_EN.heroWindow }: { copy?: HomeCopy["heroWindow"] }) {
+  const query = copy.query;
   const wrap = useRef<HTMLDivElement>(null);
   const win = useRef<HTMLDivElement>(null);
   const s1 = useRef<HTMLDivElement>(null);
@@ -47,18 +42,18 @@ export function DepthHero() {
     const timers: number[] = [];
     const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
     if (reduce) {
-      at(0, () => { setOn(true); setTyped(QUERY.length); setAnswer(true); setFeed(3); setBills(3); setToast(true); });
+      at(0, () => { setOn(true); setTyped(query.length); setAnswer(true); setFeed(3); setBills(3); setToast(true); });
       return () => timers.forEach(clearTimeout);
     }
     at(60, () => setOn(true));
-    for (let i = 1; i <= QUERY.length; i++) at(900 + i * 42, () => setTyped(i));
+    for (let i = 1; i <= query.length; i++) at(900 + i * 42, () => setTyped(i));
     at(300, () => setAnswer(true));
-    const typedAt = 900 + QUERY.length * 42;
+    const typedAt = 900 + query.length * 42;
     at(typedAt + 250, () => setToast(true));
     [0, 1, 2].forEach((i) => at(typedAt + 700 + i * 480, () => setFeed(i + 1)));
     [0, 1, 2].forEach((i) => at(typedAt + 1300 + i * 380, () => setBills(i + 1)));
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [query]);
 
   // pointer physics
   useEffect(() => {
@@ -120,46 +115,49 @@ export function DepthHero() {
         ref={wrap}
         className={cn("dx", on && "is-on")}
         role="img"
-        aria-label="Front desk results: about 5 hours back since Monday, 20 questions answered without the office manager, 12 bills entered in QuickBooks, 3 time off requests approved. A search for 'patient running late' opens the policy."
+        aria-label={copy.ariaLabel}
       >
         <div className="dx-backdrop" aria-hidden="true" />
         <div className="dx-stage" aria-hidden="true">
           <div className="dx-enter dx-enter-win">
             <div ref={win} className="dx-win">
               <aside className="dx-side">
-                <div className="dx-brand"><span className="dx-av">FD</span>Front Desk</div>
-                <p className="dx-nav-h">Front desk</p>
-                {[["Home", ""], ["Answers", "35"], ["Prices", "41"], ["Doctors", "4"], ["Insurance", "12"]].map(([n, c]) => (
-                  <p key={n} className={cn("dx-nav", n === "Home" && "is-on")}><span>{n}</span>{c && <em>{c}</em>}</p>
+                <div className="dx-brand"><span className="dx-av">{copy.brandInitials}</span>{copy.brand}</div>
+                <p className="dx-nav-h">{copy.navFront}</p>
+                {copy.navFrontItems.map(([n, c], i) => (
+                  <p key={n} className={cn("dx-nav", i === 0 && "is-on")}><span>{n}</span>{c && <em>{c}</em>}</p>
                 ))}
-                <p className="dx-nav-h">Office</p>
-                {[["Bills", ""], ["Time off", ""], ["Payroll report", ""]].map(([n]) => (
+                <p className="dx-nav-h">{copy.navOffice}</p>
+                {copy.navOfficeItems.map((n) => (
                   <p key={n} className="dx-nav"><span>{n}</span></p>
                 ))}
-                <div className="dx-me"><span className="dx-av dx-av-sm">OM</span>Office manager</div>
+                <div className="dx-me"><span className="dx-av dx-av-sm">{copy.meInitials}</span>{copy.me}</div>
               </aside>
               <main className="dx-main">
                 <div className="dx-top">
                   <div className="dx-search">
                     <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.75" stroke="currentColor" strokeWidth="1.6" /><path d="M10.6 10.6 14 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-                    <span>{QUERY.slice(0, typed)}</span><span className="dx-caret" />
+                    <span>{query.slice(0, typed)}</span><span className="dx-caret" />
                   </div>
                 </div>
                 <div className={cn("dx-page", answer && "is-in")}>
-                  <p className="dx-h">Front desk results</p>
-                  <p className="dx-meta">Updated as it happens</p>
+                  <p className="dx-h">{copy.title}</p>
+                  <p className="dx-meta">{copy.meta}</p>
                   <div className="dx-stats">
-                    <div className="dx-stat dx-stat-big">
-                      <p className="dx-stat-n">About 5 hours</p>
-                      <p className="dx-stat-l">back since Monday</p>
-                    </div>
-                    <div className="dx-stat"><p className="dx-stat-n">20</p><p className="dx-stat-l">questions answered without the office manager</p></div>
-                    <div className="dx-stat"><p className="dx-stat-n">12</p><p className="dx-stat-l">bills entered in QuickBooks</p></div>
-                    <div className="dx-stat"><p className="dx-stat-n">3</p><p className="dx-stat-l">time off requests approved</p></div>
+                    {copy.stats.map((st, i) =>
+                      i === 0 ? (
+                        <div key={st.l} className="dx-stat dx-stat-big">
+                          <p className="dx-stat-n">{st.n}</p>
+                          <p className="dx-stat-l">{st.l}</p>
+                        </div>
+                      ) : (
+                        <div key={st.l} className="dx-stat"><p className="dx-stat-n">{st.n}</p><p className="dx-stat-l">{st.l}</p></div>
+                      ),
+                    )}
                   </div>
-                  <p className="dx-rel-h">Today</p>
+                  <p className="dx-rel-h">{copy.today}</p>
                   <ol className="dx-feed">
-                    {FEED.map((f, i) => (
+                    {copy.feed.map((f, i) => (
                       <li key={f.what} className={cn("dx-feed-row", i < feed && "is-in")}>
                         <span className="dx-feed-t">{f.t}</span>
                         <span className="dx-feed-w">{f.what}</span>
@@ -174,8 +172,8 @@ export function DepthHero() {
 
           <div className="dx-enter dx-enter-s1">
             <div ref={s1} className="dx-sat dx-bills">
-              <div className="dx-sat-bar"><span className="dx-qb">qb</span>QuickBooks · bills entered today</div>
-              {[["Medical supplies", "$1,284.60"], ["Janitorial service", "$642.00"], ["Office supplies", "$89.47"]].map(([v, a], i) => (
+              <div className="dx-sat-bar"><span className="dx-qb">qb</span>{copy.billsBar}</div>
+              {copy.bills.map(([v, a], i) => (
                 <p key={v} className={cn("dx-bill", i < bills && "is-done")}>
                   <span className="dx-tick"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 5.7 10 11 4" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                   <span>{v}</span><span className="dx-amt">{a}</span>
@@ -186,16 +184,17 @@ export function DepthHero() {
 
           <div className={cn("dx-enter dx-enter-s2", toast && "is-in")}>
             <div ref={s2} className="dx-sat dx-pop">
-              <p className="dx-pop-q">Patient is late. Can we still see them?</p>
-              <p className="dx-pop-r"><span>Under 15 min</span>Check them in.</p>
-              <p className="dx-pop-r"><span>Over 15 min</span>Offer the next open slot.</p>
-              <p className="dx-pop-f">Found in one search. Nobody walked over to ask.</p>
+              <p className="dx-pop-q">{copy.popQ}</p>
+              {copy.popRows.map(([k, v]) => (
+                <p key={k} className="dx-pop-r"><span>{k}</span>{v}</p>
+              ))}
+              <p className="dx-pop-f">{copy.popFoot}</p>
             </div>
           </div>
         </div>
       </div>
       <figcaption className="t-fine mt-5 text-center">
-        Based on our systems in production. Names and amounts are examples.
+        {copy.caption}
       </figcaption>
     </figure>
   );

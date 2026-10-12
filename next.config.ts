@@ -39,6 +39,17 @@ const nextConfig: NextConfig = {
       // The QR code on our printed business cards (2026-10-04). Lands on the
       // home page for now; 302 so it can point somewhere else later without
       // reprinting. The tag counts card scans in analytics.
+      // Phones set to Korean go to the Korean home page (2026-10-12, for the
+      // Seoul investor events); every other phone, including Alec's Japanese
+      // contacts, keeps landing on the English one. First match wins, so this
+      // rule stays above the plain one. The value is matched against the whole
+      // header, so it only fires when Korean is the phone's first language.
+      {
+        source: "/card",
+        has: [{ type: "header", key: "accept-language", value: "[kK][oO](?:[-_,;].*)?" }],
+        destination: "/kr?utm_source=card&utm_medium=print",
+        permanent: false,
+      },
       {
         source: "/card",
         destination: "/?utm_source=card&utm_medium=print",

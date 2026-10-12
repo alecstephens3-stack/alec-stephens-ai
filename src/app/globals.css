@@ -1285,3 +1285,32 @@ body:has(#mobile-menu) .sai-scene { display: none; }
   .draft-crop.t-label { font-size: 13.5px; letter-spacing: .05em; padding-inline: 12px; }
 }
 
+
+/* ════ Korean (/kr), 2026-10-12 ═══════════════════════════════════════════
+   Inter Tight and Schibsted Grotesk carry no Hangul. Each family keeps its
+   Latin face first (prices, names and product words stay in the house type)
+   and falls through to the device's own Korean face for Hangul: Apple SD
+   Gothic Neo on iPhone and Mac, Noto Sans CJK on Android, Malgun Gothic on
+   Windows. No Korean web font: the card QR visitors are on phones whose
+   system Korean is good, and a CJK font is megabytes.
+   The families are custom properties, inherited from wherever lang="ko" is
+   declared (the page wrapper, the header, the footer, <html> on /kr). The
+   base layer lets a utility class on the same element still win. */
+@layer base {
+  [lang="ko"] {
+    --font-sans: var(--font-inter-tight), "Inter Tight", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    --font-heading: var(--font-inter-tight), "Inter Tight", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    --font-label: var(--font-schibsted), "Schibsted Grotesk", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    font-family: var(--font-sans);
+  }
+  /* Korean wraps between words, never inside one. */
+  :lang(ko) {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+}
+/* The Latin tracking is tight for display sizes; Hangul set that tight crowds. */
+:lang(ko) .v7-head { letter-spacing: -0.02em; line-height: 1.16; }
+:lang(ko) .t-title,
+:lang(ko) .t-display { letter-spacing: -0.012em; line-height: 1.28; }
+:lang(ko) .t-label { letter-spacing: 0.02em; }
