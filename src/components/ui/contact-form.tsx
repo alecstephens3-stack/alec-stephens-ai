@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { CONTACT_EMAIL } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 
 const LABEL_CLASS =
@@ -11,7 +11,7 @@ const LABEL_CLASS =
 const FIELD_CLASS =
   "w-full rounded-[12px] border border-rule bg-white/70 px-4 py-3 text-base text-ink placeholder:text-ink-2 transition-colors duration-[220ms] ease-brand focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
 
-export function ContactForm() {
+export function ContactForm({ copy = HOME_EN.form }: { copy?: HomeCopy["form"] }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,21 +32,22 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, locale: copy.locale }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Something went wrong.");
+        throw new Error((copy.showServerError && data.error) || copy.errorFallback);
       }
 
       setStatus("success");
       setFormData({ name: "", email: "", message: "", website: "" });
     } catch (err) {
       setStatus("error");
+      // A network failure throws in the browser's language; keep the page's own.
       setErrorMessage(
-        err instanceof Error ? err.message : "Something went wrong."
+        copy.showServerError && err instanceof Error ? err.message : copy.errorFallback
       );
     }
   };
@@ -55,16 +56,16 @@ export function ContactForm() {
     return (
       <div className="sai-tile rounded-tile p-8 text-center">
         <h3 className="font-heading text-xl font-medium text-ink-90">
-          Message sent.
+          {copy.sentTitle}
         </h3>
         <p className="mt-3 text-base text-ink-2">
-          We&apos;ll get back to you by the next business morning.
+          {copy.sentBody}
         </p>
         <button
           onClick={() => setStatus("idle")}
           className="mt-5 text-[15px] font-medium text-accent transition-colors duration-[220ms] ease-brand hover:text-accent-deep"
         >
-          Send another message
+          {copy.sendAnother}
         </button>
       </div>
     );
@@ -75,7 +76,7 @@ export function ContactForm() {
       <div className="grid gap-5">
         <div>
           <label htmlFor="contact-name" className={LABEL_CLASS}>
-            Name
+            {copy.name}
           </label>
           <input
             id="contact-name"
@@ -86,12 +87,12 @@ export function ContactForm() {
               setFormData((prev) => ({ ...prev, name: e.target.value }))
             }
             className={FIELD_CLASS}
-            placeholder="Your name"
+            placeholder={copy.namePlaceholder}
           />
         </div>
         <div>
           <label htmlFor="contact-email" className={LABEL_CLASS}>
-            Email
+            {copy.email}
           </label>
           <input
             id="contact-email"
@@ -102,14 +103,14 @@ export function ContactForm() {
               setFormData((prev) => ({ ...prev, email: e.target.value }))
             }
             className={FIELD_CLASS}
-            placeholder="you@company.com"
+            placeholder={copy.emailPlaceholder}
           />
         </div>
       </div>
 
       <div>
         <label htmlFor="contact-message" className={LABEL_CLASS}>
-          Message
+          {copy.message}
         </label>
         <textarea
           id="contact-message"
@@ -120,7 +121,7 @@ export function ContactForm() {
             setFormData((prev) => ({ ...prev, message: e.target.value }))
           }
           className={cn(FIELD_CLASS, "resize-none")}
-          placeholder="What takes up the most time in your week?"
+          placeholder={copy.messagePlaceholder}
         />
       </div>
 
@@ -141,14 +142,14 @@ export function ContactForm() {
 
       {status === "error" && (
         <p className="text-[15px] leading-relaxed text-ink-90">
-          {errorMessage} You can also email us at{" "}
+          {errorMessage} {copy.errorLead}
           <a
-            href={`mailto:${CONTACT_EMAIL}`}
+            href={`mailto:${copy.errorEmail}`}
             className="text-accent underline underline-offset-2 hover:text-accent-deep"
           >
-            {CONTACT_EMAIL}
+            {copy.errorEmail}
           </a>
-          .
+          {copy.errorTail}
         </p>
       )}
 
@@ -161,7 +162,7 @@ export function ContactForm() {
           status === "sending" && "cursor-not-allowed opacity-70"
         )}
       >
-        {status === "sending" ? "Sending..." : "Send"}
+        {status === "sending" ? copy.sending : copy.send}
       </Button>
     </form>
   );

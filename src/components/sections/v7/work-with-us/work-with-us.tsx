@@ -4,7 +4,7 @@ import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
 import { cn } from "@/lib/utils";
 import { Section } from "../../v6/shell";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { V7_HOW } from "@/lib/content";
+import { HOME_EN, type HomeCopy } from "@/lib/content";
 import { Satellite, StepWindow } from "./objects";
 import s from "./work-with-us.module.css";
 
@@ -30,10 +30,17 @@ const Arrow = ({ down }: { down?: boolean }) => (
   </svg>
 );
 
-export function WorkWithUs() {
+export function WorkWithUs({
+  copy = HOME_EN.how,
+  tier = HOME_EN.pricing.tiers[0],
+}: {
+  copy?: HomeCopy["how"];
+  /** The first pricing tier, shown on the Deliver step. */
+  tier?: HomeCopy["pricing"]["tiers"][number];
+}) {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const steps = V7_HOW.steps;
+  const steps = copy.steps;
   const n = steps.length;
 
   const onKey = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
@@ -52,13 +59,13 @@ export function WorkWithUs() {
   };
 
   return (
-    <Section id="how" kicker={V7_HOW.kicker} title={V7_HOW.title}>
+    <Section id="how" kicker={copy.kicker} title={copy.title}>
       <AnimateOnScroll>
         <div className={s.how} style={{ "--i": active, "--n": n } as CSSProperties}>
           <div className={s.railWrap}>
             <span className={s.glide} aria-hidden="true" />
             <span className={s.bar} aria-hidden="true" />
-            <ol className={cn("draft-rail", s.rail)} role="tablist" aria-label="Working with us, step by step">
+            <ol className={cn("draft-rail", s.rail)} role="tablist" aria-label={copy.tablistLabel}>
               {steps.map((st, i) => (
                 <li
                   key={st.n}
@@ -66,7 +73,7 @@ export function WorkWithUs() {
                   className={cn(s.step, i === 0 && s.first, i === active && s.on)}
                   onMouseEnter={() => setActive(i)}
                 >
-                  <span className={s.top}>{i === 0 && <span className={s.start}>Start here</span>}</span>
+                  <span className={s.top}>{i === 0 && <span className={s.start}>{copy.start}</span>}</span>
                   <button
                     ref={(el) => {
                       tabs.current[i] = el;
@@ -91,7 +98,7 @@ export function WorkWithUs() {
                   <span className={s.shows} aria-hidden="true">
                     {i === active ? (
                       <>
-                        Shown below <Arrow down />
+                        {copy.shownBelow} <Arrow down />
                       </>
                     ) : (
                       <>
@@ -110,8 +117,8 @@ export function WorkWithUs() {
                   >
                     <div className={cn(s.frame, s.inlineFrame)}>
                       <div className={s.shotIn}>
-                        <StepWindow i={i} />
-                        <Satellite i={i} />
+                        <StepWindow i={i} copy={copy} />
+                        <Satellite i={i} copy={copy} tier={tier} />
                       </div>
                     </div>
                   </div>
@@ -133,8 +140,8 @@ export function WorkWithUs() {
                     aria-labelledby={`wwu-tab-${i}`}
                     className={cn(s.shot, i === active && s.isOn)}
                   >
-                    <StepWindow i={i} />
-                    <Satellite i={i} />
+                    <StepWindow i={i} copy={copy} />
+                    <Satellite i={i} copy={copy} tier={tier} />
                   </div>
                 ))}
               </div>
