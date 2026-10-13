@@ -460,9 +460,7 @@ export function buildBenchItems(P) {
       capsule(66, 66, 0.28, 19, 7.2);
       grainAtop(ctx, this.w, this.h, 0.06);
     },
-    ink(ctx, m, F) {
-      script(ctx, [{ text: '1,046', x: 5, y: 59, size: 10, tilt: -0.06 }, { text: 'pharmacies', x: 6, y: 70, size: 7.2, tilt: -0.04 }], m, { font: F.hand, color: BLUE, seed: 1503, weight: 700 });
-    },
+    // no handwriting on this one: the bottle and the capsules say it (Alec, 13 Oct)
   });
 
   /* ================================================================ 4 ai lab */
