@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Coaching practice AI system · A business coach · Alec Stephens</title>
+<title>Coaching practice AI system · Workthentic · Alec Stephens</title>
 <meta name="description" content="Four custom agents built for how she actually works, all reading one document she edits in plain English. She owns every piece, so nothing depends on us to keep it running.">
 <link rel="canonical" href="https://stephensai.co/alec/coaching-aios">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Coaching practice AI system · A business coach · Alec Stephens">
+<meta property="og:title" content="Coaching practice AI system · Workthentic · Alec Stephens">
 <meta property="og:description" content="Four custom agents built for how she actually works, all reading one document she edits in plain English. She owns every piece, so nothing depends on us to keep it running.">
 <meta property="og:url" content="https://stephensai.co/alec/coaching-aios">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
@@ -1093,6 +1093,8 @@ li.on .sai-steps-shows .when-on { display: inline; color: var(--sai-accent-deep)
 /* ── Pointer light on a night panel: <section class="sai-night" data-sai-glow>.
    The section's own ::after, so it covers the whole panel; content sits above. ── */
 section.sai-night[data-sai-glow] > *:not(.sai-ember) { position: relative; z-index: 1; }
+/* the rule above must not pull a corner stamp back into the flow (it landed on the heading, 2026-10-06) */
+section.sai-night[data-sai-glow] > .sai-stamp.corner { position: absolute; }
 section.sai-night[data-sai-glow]::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
   background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.15), rgba(255,142,118,.05) 38%, transparent 62%);
   opacity: 0; transition: opacity 420ms ease; }
@@ -1412,7 +1414,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 <main class="sai-page">
 
   <section id="result" data-sc-in data-sc-stagger="70">
-    <span class="sai-port"><span class="disc"></span><span class="ptext">Professional coaching · solo founder · A business coach · Live May 2026</span></span>
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Professional coaching · solo founder · Workthentic · Live May 2026</span></span>
     <h1 class="sai-display">An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English.</h1>
     <p class="sai-lede">Four custom agents built for how she actually works, all reading one document she edits in plain English. She owns every piece, so nothing depends on us to keep it running.</p>
     <div class="cs-stats">
@@ -1435,7 +1437,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       <aside class="facts sai-pane">
         <span class="lbl">At a glance</span>
         <dl>
-          <div><dt>Client</dt><dd>A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</dd></div>
+          <div><dt>Client</dt><dd>Workthentic, Taima Ford Beyah&#39;s coaching and HR consulting practice in California (named with her OK, 13 Oct 2026).</dd></div>
           <div><dt>Who uses it</dt><dd>The founder, daily, April to July 2026; she owns and edits it herself.</dd></div>
           <div><dt>Shipped</dt><dd>Live May 2026. About 10 weeks, in phases.</dd></div>
           <div><dt>Stack</dt><dd><ul class="chips"><li>Claude</li><li>ClickUp Super Agents</li><li>ClickUp Brain</li><li>n8n (then)</li><li>Google Calendar</li><li>Google Sheets</li></ul></dd></div>
@@ -1486,6 +1488,12 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     </dl>
   </section>
 
+  <section class="sai-night" data-sc-in>
+    <span class="sai-ember"></span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">In their words</span></span>
+    <p class="quote">“I&#39;m so grateful for our time together. I feel like I was in a class… I don&#39;t regret one moment of it because I learned so much.”</p>
+    <p class="quote-who">Taima Ford Beyah, Founder, Workthentic</p>
+  </section>
 
   <section id="next" class="sai-widget sai-pane" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">Keep going</span></span>

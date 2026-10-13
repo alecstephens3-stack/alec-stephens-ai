@@ -7,6 +7,7 @@ import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
 import { PatientStrip } from "@/components/sections/v7/patient-strip";
 import { Contact } from "@/components/sections/v7/contact";
+import { InTheirWords } from "@/components/sections/v7/in-their-words";
 import {
   SITE_NAME,
   SITE_URL,
@@ -99,6 +100,7 @@ export function HomeBody({ visual, lower }: { visual?: React.ReactNode; lower?: 
           <>
             <WorkWithUs />
             <Pricing />
+            <InTheirWords />
             <Founders />
             <Contact />
           </>
