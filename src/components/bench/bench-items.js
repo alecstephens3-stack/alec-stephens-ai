@@ -1,7 +1,7 @@
 /*
  * bench-items.js · the objects on "Alec's bench" (stephensai.co/alec).
  * Alec's workbench seen from above, on the same desk engine and lens as /desk and /play.
- * Each object is an artifact from one of his nine builds (cases.yaml); clicking it opens
+ * Each object is an artifact from one of his ten builds (cases.yaml); clicking it opens
  * that build. `id` and `tool` are both the build's slug, `verb` is its short name.
  *
  * Plain ES module, no imports. Everything is painted through the painters the desk
@@ -30,15 +30,16 @@ const POSES = {
   'construction-site': { wide: { m: [500, 368, 6], t: [496, 362, 0] },   tall: { m: [119, 381, 2], t: [118, 378, 0] } },
   'invoice-agent':     { wide: { m: [306, 386, -9], t: [312, 382, 0] },  tall: { m: [255, 512, -1], t: [254, 510, 0] } },
   'pto-payroll':       { wide: { m: [140, 370, 7], t: [134, 364, 0] },   tall: { m: [105, 506, 2], t: [104, 504, 0] } },
-  putback:             { wide: { m: [512, 242, -7], t: [516, 236, 0] },  tall: { m: [176, 622, 4], t: [179, 618, 0] } },
+  putback:             { wide: { m: [512, 242, -7], t: [516, 236, 0] },  tall: { m: [148, 622, 4], t: [150, 618, 0] } },
+  'lead-finder':       { wide: { m: [124, 257, 8], t: [120, 252, 0] },   tall: { m: [288, 626, -4], t: [290, 622, 0] } },
   mug:                 { wide: { m: [644, 236, 18], t: [640, 232, 0] },  tall: null },
   pencil:              { wide: { m: [258, 262, -16], t: [262, 258, 0] }, tall: { m: [232, 116, 88], t: [232, 112, 90] } },
 };
 
 /* the idle lens visits the tidy centre of each build, in a loop around the desk */
 const TOUR = {
-  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'putback'],
-  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'putback'],
+  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'lead-finder', 'putback'],
+  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'putback', 'lead-finder'],
 };
 export const BENCH_STOPS = {
   wide: TOUR.wide.map(id => POSES[id].wide.t.slice(0, 2)),
@@ -400,6 +401,67 @@ export function buildBenchItems(P) {
       wobble(ctx, circlePts(18, 20.6, 14, 4.6, 16, 2), m, 1401, { width: 0.75, alpha: 0.7, color: RED_PENCIL });
       ctx.restore();
       script(ctx, [{ text: '2 days', x: 6, y: 76, size: 10, tilt: -0.08 }, { text: 'ahead', x: 9, y: 86, size: 7.5, tilt: -0.05 }], m, { font: F.hand, color: BLUE, seed: 1402, weight: 700 });
+    },
+  });
+
+  /* ======================================================== 3c lead finder */
+  /* an amber pharmacy vial on its side, white child-proof cap, two capsules rolled out */
+  items.push({
+    id: 'lead-finder', tool: 'lead-finder', name: 'Pill bottle', verb: 'Pharmacy lead finder',
+    w: 112, h: 80, shadow: 1.6, ...POSES['lead-finder'],
+    draw(ctx, F) {
+      const vx = 3, vy = 9, vw = 74, vd = 32;      // the vial: length and diameter, lying along x
+      const lx = vx + 13, lw = 42;                 // the wrapped label
+      // the amber body, a cylinder lit from the top left
+      ctx.save(); rr(ctx, vx, vy, vw, vd, 5); drop(ctx, 2.4, 0.8, 1.4, 0.26);
+      const am = ctx.createLinearGradient(0, vy, 0, vy + vd);
+      am.addColorStop(0, '#F4BC6A'); am.addColorStop(0.2, '#DA8C2E'); am.addColorStop(0.62, '#A75912'); am.addColorStop(1, '#6A3309');
+      ctx.fillStyle = am; ctx.fill(); ctx.restore();
+      ctx.save(); rr(ctx, vx, vy, vw, vd, 5); ctx.clip();
+      // capsules inside, dark through the amber, past the label
+      ctx.fillStyle = 'rgba(70,30,6,0.38)';
+      rr(ctx, lx + lw + 3, vy + 14, 14, 6.5, 3.2); ctx.fill();
+      rr(ctx, lx + lw + 6, vy + 22, 13, 6, 3); ctx.fill();
+      // the closed end, a little darker
+      ctx.fillStyle = 'rgba(80,36,6,0.32)'; ctx.fillRect(vx, vy, 2.6, vd);
+      // the label, white paper following the curve
+      const lab = ctx.createLinearGradient(0, vy, 0, vy + vd);
+      lab.addColorStop(0, '#E6E0D5'); lab.addColorStop(0.2, '#FCFAF5'); lab.addColorStop(0.58, '#F0EBE1'); lab.addColorStop(1, '#B8AE9F');
+      ctx.fillStyle = lab; ctx.fillRect(lx, vy, lw, vd);
+      // the window's streak along the top of the amber, either side of the label
+      ctx.fillStyle = 'rgba(255,242,214,0.6)';
+      ctx.fillRect(vx + 3, vy + 4.2, lx - vx - 4, 1.1); ctx.fillRect(lx + lw + 1, vy + 4.2, vx + vw - lx - lw - 3, 1.1);
+      ctx.restore();
+      print(ctx, F, 'Rx', lx + 3, vy + 10.5, 7.5, { weight: 700, color: 'rgba(34,30,28,0.86)' });
+      print(ctx, F, 'COMPOUNDED', lx + 3, vy + 17, 3.7, { label: true, weight: 700, color: ACCENT, track: '0.5px' });
+      ctx.fillStyle = 'rgba(34,30,28,0.28)';
+      [21.5, 25, 28.5].forEach((y, i) => ctx.fillRect(lx + 3, vy + y, lw - 8 - i * 7, 0.6));
+      // the child-proof cap: white plastic, ribbed, a little wider than the vial
+      const cx0 = vx + vw - 1.5, cw = 18, cy0 = vy - 2.5, ch = vd + 5;
+      ctx.save(); rr(ctx, cx0, cy0, cw, ch, 3.6); drop(ctx, 1.8, 0.7, 1.1, 0.24);
+      const cap = ctx.createLinearGradient(0, cy0, 0, cy0 + ch);
+      cap.addColorStop(0, '#FFFFFF'); cap.addColorStop(0.32, '#F3F0EB'); cap.addColorStop(0.8, '#D3CDC4'); cap.addColorStop(1, '#ADA599');
+      ctx.fillStyle = cap; ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(110,100,90,0.32)'; ctx.lineWidth = 0.45;
+      for (let i = 0; i < 9; i++) { const x = cx0 + 2.4 + i * 1.65; ctx.beginPath(); ctx.moveTo(x, cy0 + 1.6); ctx.lineTo(x, cy0 + ch - 1.6); ctx.stroke(); }
+      // two capsules rolled out of the vial
+      const capsule = (x, y, rot, len, d) => {
+        ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+        ctx.save(); rr(ctx, -len / 2, -d / 2, len, d, d / 2); drop(ctx, 1.2, 0.5, 0.8, 0.28); ctx.fillStyle = '#EFE6D8'; ctx.fill(); ctx.restore();
+        ctx.save(); rr(ctx, -len / 2, -d / 2, len, d, d / 2); ctx.clip();
+        ctx.fillStyle = ACCENT; ctx.fillRect(-len / 2, -d / 2, len / 2, d);
+        const sh = ctx.createLinearGradient(0, -d / 2, 0, d / 2);
+        sh.addColorStop(0, 'rgba(255,255,255,0.5)'); sh.addColorStop(0.45, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(60,30,10,0.28)');
+        ctx.fillStyle = sh; ctx.fillRect(-len / 2, -d / 2, len, d);
+        ctx.fillStyle = 'rgba(60,30,10,0.25)'; ctx.fillRect(-0.2, -d / 2, 0.5, d);
+        ctx.restore(); ctx.restore();
+      };
+      capsule(86, 58, -0.55, 20, 7.6);
+      capsule(66, 66, 0.28, 19, 7.2);
+      grainAtop(ctx, this.w, this.h, 0.06);
+    },
+    ink(ctx, m, F) {
+      script(ctx, [{ text: '1,046', x: 5, y: 59, size: 10, tilt: -0.06 }, { text: 'pharmacies', x: 6, y: 70, size: 7.2, tilt: -0.04 }], m, { font: F.hand, color: BLUE, seed: 1503, weight: 700 });
     },
   });
 

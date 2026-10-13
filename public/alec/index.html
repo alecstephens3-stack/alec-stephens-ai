@@ -1538,6 +1538,11 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
         <span class="cell-phrase">Every patient&#39;s insurance checked before the visit, and every unpaid claim given a status and a next step</span>
         <span class="cell-n">2 days ahead</span>
       </a>
+      <a class="cell sai-pane" href="#lead-finder" data-slug="lead-finder">
+        <span class="cell-name">Pharmacy lead finder</span>
+        <span class="cell-phrase">Found state by state from one sentence in his own Claude</span>
+        <span class="cell-n">1,046 pharmacies</span>
+      </a>
       <a class="cell sai-pane" href="#ai-lab" data-slug="ai-lab">
         <span class="cell-name">AI Lab content + outbound systems</span>
         <span class="cell-phrase">Returned to the content team, and an outbound machine built in 3 weeks that reported its own numbers honestly</span>
@@ -1569,7 +1574,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   <section id="builds" aria-label="The builds" data-sc-act="flow">
     <div class="railwrap"><div class="railbar">
       <nav class="rail" aria-label="Builds">
-<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#putback">Putback</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">The Bridge</a>      </nav>
+<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#putback">Putback</a><a href="#lead-finder">Lead finder</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">The Bridge</a>      </nav>
       <div class="railctl" aria-hidden="true"><button type="button" data-step="-1" title="Previous build">‹</button><button type="button" data-step="1" title="Next build">›</button></div>
       <div class="view" role="group" aria-label="View"><button type="button" class="on" data-view="deck" aria-pressed="true">Deck</button><button type="button" data-view="list" aria-pressed="false">List</button></div>
     </div></div>
@@ -1767,6 +1772,55 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
             <div class="acts">
               <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
               <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="card" id="lead-finder" aria-labelledby="t-lead-finder">
+        <div class="flip">
+          <div class="face front sai-pane">
+            <div class="head"><span class="lbl">Healthcare · pharmacy · lead generation · Medari Advisors</span><span class="when">Delivered 30 Sep 2026</span></div>
+            <div class="front-grid">
+              <div class="ftext">
+                <h2 id="t-lead-finder">Pharmacy lead finder</h2>
+                <p class="sub">A lead finder for a healthcare accounting firm: one sentence in Claude, and back comes a checked sheet of real compounding pharmacies with the email each one publishes. Medari Advisors, a tax and accounting firm for healthcare providers in Pryor, Oklahoma.</p>
+                <div class="num">
+                  <span class="v">1,046<span class="u">pharmacies</span></span>
+                  <span class="l">that compound, on the starting lists for Oklahoma, Texas, Kansas and Arkansas, built from the national provider registry with chains, hospitals and specialty companies removed</span>
+                </div>
+                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude plugin (command + skill)</li><li>Python</li><li>NPPES NPI Registry API</li><li>Apify Google Maps scraper</li><li>pytest</li></ul></div>
+              </div>
+              <div class="fmedia">
+                <figure class="shot">
+                  <img src="/alec/img/lead-finder/01-figure-how-it-finds-leads.webp" srcset="/alec/img/lead-finder/01-figure-how-it-finds-leads-800.webp 800w, /alec/img/lead-finder/01-figure-how-it-finds-leads.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Diagram: he asks his Claude for compounding pharmacy leads in Oklahoma; a starting list from the national registry, a Google Maps lookup and a match rule in code produce a sheet with one email per pharmacy, a call list and 5 rows to spot-check" loading="eager" decoding="async" fetchpriority="low">
+                  <figcaption>One sentence in, a checked sheet out. The rules that decide are code.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="foot">
+              <p class="who"><b>My role.</b> I built it, from the call that set the spec to the plugin, the walkthrough video and the first 33 leads.</p>
+              <div class="acts">
+                <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
+                <a class="sai-btn ghost" href="/alec/lead-finder">Open the build</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="face back sai-pane" inert>
+            <span class="lbl back-title">How it's built</span>
+            <div class="head"><span class="lbl acc">How it's built · Pharmacy lead finder</span><span class="when">Delivered 30 Sep 2026</span></div>
+            <dl class="eng">
+              <div class="wide"><dt>Who uses it</dt><dd>The firm&#39;s CEO, in his own Claude; installed and working by 6 Oct 2026.</dd></div>
+              <div class="wide"><dt>Architecture</dt><dd>A Claude plugin with one command and one skill. Everything that decides is code: the state lists are built ahead of time from the NPI registry, and the match and finish steps are Python scripts the skill runs. The model only drives the run and talks to him.</dd></div>
+              <div><dt>Where it runs</dt><dd>In his own Claude desktop app, with the lookup in his own Apify account. Nothing of ours in the loop.</dd></div>
+              <div><dt>Tests and evals</dt><dd>32 script tests, 10 of them regression tests built from a real Oklahoma run. Anthropic&#39;s plugin validator passed on a clean unzip. A fresh agent ran it end to end following only the skill&#39;s instructions, and an independent check then confirmed every email it found.</dd></div>
+              <div><dt>Cost and latency</dt><dd>About half a cent a pharmacy in Apify, measured; the free $5 a month covers about 900.</dd></div>
+              <div><dt>Guardrails</dt><dd>A Google result counts only on a phone match, or a name and town match; otherwise its email is never used. The registry phone is primary and Google&#39;s is noted when it differs. Every batch ends with 5 random rows to spot-check.</dd></div>
+              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>Apify instead of Clay: Apify Starter is $19 a month against $185 for Clay&#39;s cheapest paid plan (checked 29 Sep 2026). Apify&#39;s people add-on was tested and rejected: about 16 cents a pharmacy, and it matched staff from other businesses.</p></div></dd></div>
+            </dl>
+            <div class="acts">
+              <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
+              <a class="sai-btn ghost" href="/alec/lead-finder">Open the build</a>
             </div>
           </div>
         </div>
