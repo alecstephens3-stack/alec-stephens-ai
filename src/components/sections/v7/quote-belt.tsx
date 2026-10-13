@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { Testimonial } from "@/lib/testimonials";
+import type { QuoteCard } from "@/lib/content";
 import styles from "./quote-belt.module.css";
 
 /**
@@ -7,17 +7,21 @@ import styles from "./quote-belt.module.css";
  * quote book in the vault (generated into lib/testimonials.ts), so nothing here
  * is retyped. The list is drawn twice for a seamless loop; the second copy is
  * hidden from screen readers so each quote is read once.
+ * A translated card (the Korean page) shows the person's own words under the
+ * translation, labelled with `originalLabel`.
  */
 export function QuoteBelt({
   items,
   label,
   className,
   cardClassName,
+  originalLabel,
 }: {
-  items: Testimonial[];
+  items: QuoteCard[];
   label: string;
   className?: string;
   cardClassName?: string;
+  originalLabel?: string | null;
 }) {
   // About 9 seconds a card keeps the pace readable at any count.
   const style = { "--qb-dur": `${items.length * 9}s` } as React.CSSProperties;
@@ -33,6 +37,11 @@ export function QuoteBelt({
                 <span className="text-accent-display">&rdquo;</span>
               </p>
             </blockquote>
+            {q.original && (
+              <p className={styles.original}>
+                {originalLabel}: <span lang="en">&ldquo;{q.original}&rdquo;</span>
+              </p>
+            )}
             <figcaption className={styles.who}>
               <span>
                 <strong>{q.name}</strong>

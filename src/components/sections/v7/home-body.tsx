@@ -112,8 +112,8 @@ export function HomeBody({
           <>
             <WorkWithUs copy={c.how} tier={c.pricing.tiers[0]} />
             <Pricing copy={c.pricing} cta={c.cta} />
-            {/* The quotes are people's own English words, so the strip shows on the English page only. */}
-            {locale === "en" && <InTheirWords />}
+            {/* The quotes are people's own English words: /kr translates them and keeps each person's English under the translation. */}
+            <InTheirWords copy={c.inTheirWords} />
             <Founders copy={c.founders} />
             <Contact copy={c.contact} form={c.form} />
           </>

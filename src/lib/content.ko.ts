@@ -30,7 +30,9 @@ import {
   V7_PRICING,
   type ChromeCopy,
   type HomeCopy,
+  type QuoteCard,
 } from "./content";
+import { HOME_TESTIMONIALS, type Testimonial } from "./testimonials";
 
 export const KR_PATH = "/kr";
 
@@ -40,6 +42,59 @@ export const SITE_DESCRIPTION_KO =
   "병원이 수작업에 시간을 빼앗기는 곳을 찾아, 지금 쓰는 도구에 맞춰 그 일을 대신하는 소프트웨어를 만듭니다. 무료 진단 상담으로 시작해 보세요.";
 
 const CTA_KO = { label: "시작하기", short: "시작하기", href: CALENDLY };
+
+/**
+ * The quote belt in Korean (2026-10-13). The English quotes are generated from
+ * the vault's quote book and checked word for word against the recording or
+ * email, so a translation never stands alone: each card keeps the person's own
+ * words under it (원문). Spoken 해요체, like the case study quote.
+ *
+ * Each entry repeats the exact English it translates. If the quote book changes
+ * a quote, its entry stops matching and /kr shows that quote in English until
+ * it is retranslated, so a translation can never drift from what was said.
+ * A new quote with no entry also shows in English.
+ */
+const QUOTES_KO: { id: string; en: string; ko: string }[] = [
+  {
+    id: "wfv-008",
+    en: "I am loving the tool… you've done a great job creating it!",
+    ko: "이 툴 너무 마음에 들어요… 정말 잘 만들어 주셨어요!",
+  },
+  {
+    id: "taima-018",
+    en: "I don't ever feel like you're rushing me, I always feel like you're trying to understand me, and that means a lot to me.",
+    ko: "재촉받는다는 느낌은 한 번도 든 적이 없어요. 늘 저를 이해하려고 하신다는 게 느껴지고, 그게 저한테는 정말 큰 의미예요.",
+  },
+  {
+    id: "wfv-005",
+    en: "It is already saving me some time, and I am getting information back to the team much quicker.",
+    ko: "벌써 시간이 좀 절약되고 있고, 팀에 정보를 훨씬 빨리 전달하고 있어요.",
+  },
+  {
+    id: "taima-020",
+    en: "I appreciate your clear communication… especially the way that you brought me along.",
+    ko: "명확하게 소통해 주셔서 감사해요… 특히 과정 내내 저를 함께하게 해 주신 방식이요.",
+  },
+  {
+    id: "wfv-010",
+    en: "It's made it a lot simpler in terms of tracking when someone's out of the office… that's been a wonderful addition to the payroll.",
+    ko: "누가 언제 자리를 비우는지 파악하기가 훨씬 간단해졌어요… 급여 업무에 정말 훌륭한 보탬이 됐어요.",
+  },
+];
+
+/** Titles, organisation first as Korean writes them. Jill is 원무실장 everywhere on /kr; Gabe's broader title is 실장. */
+const ROLES_KO: Record<string, string> = {
+  "Front Office Manager, Wichita Family Vision": "Wichita Family Vision 원무실장",
+  "Office Manager, Wichita Family Vision": "Wichita Family Vision 실장",
+  "Bookkeeper, Wichita Family Vision": "Wichita Family Vision 경리 담당",
+  "Founder, Workthentic": "Workthentic 창업자",
+};
+
+function inKorean(q: Testimonial): QuoteCard {
+  const role = ROLES_KO[q.role] ?? q.role;
+  const t = QUOTES_KO.find((x) => x.id === q.id && x.en === q.text);
+  return t ? { ...q, text: t.ko, role, original: q.text } : { ...q, role };
+}
 
 export const HOME_KO: HomeCopy = {
   cta: CTA_KO,
@@ -283,6 +338,13 @@ export const HOME_KO: HomeCopy = {
       sub: "보장합니다. 무엇을 만들지는 시작 전에 서면으로 합의하고, 합의한 대로 작동하지 않으면 비용을 받지 않습니다.",
     },
     fine: "월 이용료는 저희의 보증입니다. 저희가 만든 모든 것이 제\u00a0역할을 계속하도록 하고, 멈추면 고칩니다. 장기 계약은 없습니다. 언제든 해지할 수 있으며, 해지 후에도 콘텐츠는 병원의 것입니다.",
+  },
+  inTheirWords: {
+    kicker: "고객의 목소리",
+    title: { lead: "저희가 만든 것을 쓰는 분들이", accent: "직접\u00a0전하는 이야기." },
+    beltLabel: "저희가 만든 시스템을 쓰는 분들의 말",
+    originalLabel: "원문",
+    items: HOME_TESTIMONIALS.map(inKorean),
   },
   founders: {
     kicker: "팀 소개",
