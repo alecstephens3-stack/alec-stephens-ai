@@ -14,6 +14,8 @@ const PORTFOLIO_PUBLISHED = new Date("2026-10-04");
 // The /alec index became the bench on 2026-09-23; Putback joined the desk 2026-10-04.
 const BENCH_UPDATED = new Date("2026-10-04");
 const LEGAL_PUBLISHED = new Date("2026-09-17");
+// ClaimStride's short landing page, 2026-10-13.
+const CLAIMSTRIDE_PUBLISHED = new Date("2026-10-13");
 // Derived from the portfolio data, so a new build can never be left out of the sitemap.
 const PORTFOLIO_SLUGS = CASES.map((c) => c.slug);
 
@@ -46,6 +48,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // Alec's portfolio index. Static files in public/alec, rewrites in next.config.ts.
       url: `${SITE_URL}/alec`,
       lastModified: BENCH_UPDATED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      // ClaimStride, our claims product: the homepage's hero with its worklist in the window.
+      url: `${SITE_URL}/claimstride`,
+      lastModified: CLAIMSTRIDE_PUBLISHED,
       changeFrequency: "monthly",
       priority: 0.8,
     },
