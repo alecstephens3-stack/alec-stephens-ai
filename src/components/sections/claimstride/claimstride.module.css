@@ -130,3 +130,14 @@
 .lockupBy { font-size: 15px; font-weight: 500; color: #46606B; padding-top: 4px; }
 .accent { color: #0E7FA8; }
 .tile .chip { white-space: normal; }
+
+/* This page's sky (Alec, 2026-10-13: "the orange background doesn't fit, do a white or
+   an off white one"): ClaimStride's own cool off-white in place of the warm site sky,
+   on /claimstride only. The warm tint pools and the paper grain go: the grain alone
+   turned the off-white grey. */
+:global(body):has(.page) {
+  --sai-sky: #F6F9F9;
+  --sai-sky-fallback: #F6F9F9;
+}
+:global(body):has(.page) :global(.sai-tint),
+:global(body):has(.page) :global(.draft-grain) { display: none; }

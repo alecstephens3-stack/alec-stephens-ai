@@ -38,7 +38,7 @@ function Lockup() {
 
 export default function ClaimStridePage() {
   return (
-    <section className="v7-hero" style={{ position: "relative", isolation: "isolate" }}>
+    <section className={`v7-hero ${s.page}`} style={{ position: "relative", isolation: "isolate" }}>
       <div className="v7-hero-copy">
         <Lockup />
         <h1 className="v7-head">
