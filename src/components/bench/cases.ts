@@ -559,6 +559,94 @@ export const CASES: BuildCase[] = [
     "compliance": "No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names."
   },
   {
+    "slug": "lead-finder",
+    "tier": "short",
+    "name": "Pharmacy lead finder",
+    "short": "Lead finder",
+    "kicker": "Healthcare · pharmacy · lead generation",
+    "title": "A lead finder for a healthcare accounting firm: one sentence in Claude, and back comes a checked sheet of real compounding pharmacies with the email each one publishes",
+    "client": "Medari Advisors, a tax and accounting firm for healthcare providers in Pryor, Oklahoma",
+    "client_short": "Medari Advisors",
+    "users": "The firm's CEO, in his own Claude; installed and working by 6 Oct 2026",
+    "shipped": "Delivered 30 Sep 2026",
+    "duration": "One day, from the call that set the spec to delivery",
+    "number": {
+      "value": "1,046",
+      "unit": "pharmacies",
+      "label": "that compound, on the starting lists for Oklahoma, Texas, Kansas and Arkansas, built from the national provider registry with chains, hospitals and specialty companies removed",
+      "basis": "Counts on 2026-09-30, one row per phone number: Oklahoma 197, Texas 675, Kansas 99, Arkansas 75."
+    },
+    "second": {
+      "value": "13 of 13",
+      "unit": "",
+      "label": "emails in the first real batch found on the pharmacy's own website, right business and town, by an independent check"
+    },
+    "wall": {
+      "n": "1,046 pharmacies",
+      "phrase": "found state by state from one sentence in his own Claude"
+    },
+    "oneliner": "He grows his pharmacy email list state by state. Now he asks his own Claude for compounding pharmacies in a state and gets a sheet of real, independent ones with the email each publishes, and five random rows to spot-check.",
+    "broken": "The firm grows its independent pharmacy email list, about 1,400 to 1,500 addresses, state by state, starting with Oklahoma's compounding pharmacies. Every lead meant searching one pharmacy at a time: is it independent, does it compound, is it still open, and what email does it publish?",
+    "built": [
+      "A starting list for each state, built by us from the national provider registry: every active pharmacy registered as compounding, with chains, grocery stores, national infusion companies, hospitals and clinics removed, one row per storefront, and the owner or pharmacist in charge as the contact.",
+      "A lookup in his own Apify account: one Google Maps search per pharmacy, reading the contact details its website publishes.",
+      "A match rule in code: a result counts only on a phone match, or a name and town match, so another business's email is never used.",
+      "A finished sheet: junk, web designer and head office addresses dropped, one email per pharmacy, his existing list deduplicated out, stores with no website kept as a call list with phone numbers, and 5 random rows to spot-check."
+    ],
+    "changed": [
+      {
+        "k": "Finding pharmacies",
+        "before": "Searched one at a time",
+        "after": "One sentence in his own Claude"
+      },
+      {
+        "k": "A wrong match",
+        "before": "Easy to miss",
+        "after": "Dropped unless the phone, or name and town, match"
+      },
+      {
+        "k": "Checking the result",
+        "before": "Trust the list",
+        "after": "5 random rows to spot-check"
+      },
+      {
+        "k": "Cost per pharmacy",
+        "before": "His time",
+        "after": "About half a cent"
+      }
+    ],
+    "math_note": "The lookup was measured at $0.0054 a pharmacy, so Apify's free $5 a month covers about 900. In the first 13 real Oklahoma rows, 5 gave usable emails; rural stores often have no website and come back on the call list.",
+    "quote": {
+      "text": "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working.",
+      "who": "Curtis Cole, CEO, Medari Advisors"
+    },
+    "stack": [
+      "Claude plugin (command + skill)",
+      "Python",
+      "NPPES NPI Registry API",
+      "Apify Google Maps scraper",
+      "pytest"
+    ],
+    "engineer": {
+      "architecture": "A Claude plugin with one command and one skill. Everything that decides is code: the state lists are built ahead of time from the NPI registry, and the match and finish steps are Python scripts the skill runs. The model only drives the run and talks to him.",
+      "runs_where": "In his own Claude desktop app, with the lookup in his own Apify account. Nothing of ours in the loop.",
+      "tests": "32 script tests, 10 of them regression tests built from a real Oklahoma run. Anthropic's plugin validator passed on a clean unzip. A fresh agent ran it end to end following only the skill's instructions, and an independent check then confirmed every email it found.",
+      "cost": "About half a cent a pharmacy in Apify, measured; the free $5 a month covers about 900.",
+      "guardrails": "A Google result counts only on a phone match, or a name and town match; otherwise its email is never used. The registry phone is primary and Google's is noted when it differs. Every batch ends with 5 random rows to spot-check.",
+      "tradeoff": "Apify instead of Clay: Apify Starter is $19 a month against $185 for Clay's cheapest paid plan (checked 29 Sep 2026). Apify's people add-on was tested and rejected: about 16 cents a pharmacy, and it matched staff from other businesses.",
+      "repo": null,
+      "repo_note": null
+    },
+    "attribution": "I built it, from the call that set the spec to the plugin, the walkthrough video and the first 33 leads.",
+    "media": {
+      "hero": "/alec/img/lead-finder/01-figure-how-it-finds-leads.webp",
+      "alt": "Diagram: he asks his Claude for compounding pharmacy leads in Oklahoma; a starting list from the national registry, a Google Maps lookup and a match rule in code produce a sheet with one email per pharmacy, a call list and 5 rows to spot-check",
+      "caption": "One sentence in, a checked sheet out. The rules that decide are code.",
+      "gallery": []
+    },
+    "links": []
+  },
+  {
     "slug": "ai-lab",
     "tier": "deep",
     "name": "AI Lab content + outbound systems",

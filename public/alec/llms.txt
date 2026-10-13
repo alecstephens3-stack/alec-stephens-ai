@@ -98,6 +98,27 @@ Guardrails: It never guesses. A check that is missing a detail says what to ask 
 Tradeoff: No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.
 My role: My co-founder built the first version. I rebuilt how it reads each insurer's answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic's server.
 
+## Pharmacy lead finder (https://stephensai.co/alec/lead-finder)
+A lead finder for a healthcare accounting firm: one sentence in Claude, and back comes a checked sheet of real compounding pharmacies with the email each one publishes.
+Client: Medari Advisors, a tax and accounting firm for healthcare providers in Pryor, Oklahoma.
+Who uses it: The firm's CEO, in his own Claude; installed and working by 6 Oct 2026.
+Shipped: Delivered 30 Sep 2026. One day, from the call that set the spec to delivery.
+Headline number: 1,046 pharmacies that compound, on the starting lists for Oklahoma, Texas, Kansas and Arkansas, built from the national provider registry with chains, hospitals and specialty companies removed. Basis: Counts on 2026-09-30, one row per phone number: Oklahoma 197, Texas 675, Kansas 99, Arkansas 75.
+Second number: 13 of 13  emails in the first real batch found on the pharmacy's own website, right business and town, by an independent check.
+What was broken: The firm grows its independent pharmacy email list, about 1,400 to 1,500 addresses, state by state, starting with Oklahoma's compounding pharmacies. Every lead meant searching one pharmacy at a time: is it independent, does it compound, is it still open, and what email does it publish?
+What I built: A starting list for each state, built by us from the national provider registry: every active pharmacy registered as compounding, with chains, grocery stores, national infusion companies, hospitals and clinics removed, one row per storefront, and the owner or pharmacist in charge as the contact. A lookup in his own Apify account: one Google Maps search per pharmacy, reading the contact details its website publishes. A match rule in code: a result counts only on a phone match, or a name and town match, so another business's email is never used. A finished sheet: junk, web designer and head office addresses dropped, one email per pharmacy, his existing list deduplicated out, stores with no website kept as a call list with phone numbers, and 5 random rows to spot-check.
+What changed: Finding pharmacies: Searched one at a time -> One sentence in his own Claude; A wrong match: Easy to miss -> Dropped unless the phone, or name and town, match; Checking the result: Trust the list -> 5 random rows to spot-check; Cost per pharmacy: His time -> About half a cent.
+
+Stack: Claude plugin (command + skill), Python, NPPES NPI Registry API, Apify Google Maps scraper, pytest.
+Architecture: A Claude plugin with one command and one skill. Everything that decides is code: the state lists are built ahead of time from the NPI registry, and the match and finish steps are Python scripts the skill runs. The model only drives the run and talks to him.
+Where it runs: In his own Claude desktop app, with the lookup in his own Apify account. Nothing of ours in the loop.
+Tests: 32 script tests, 10 of them regression tests built from a real Oklahoma run. Anthropic's plugin validator passed on a clean unzip. A fresh agent ran it end to end following only the skill's instructions, and an independent check then confirmed every email it found.
+Cost: About half a cent a pharmacy in Apify, measured; the free $5 a month covers about 900.
+Guardrails: A Google result counts only on a phone match, or a name and town match; otherwise its email is never used. The registry phone is primary and Google's is noted when it differs. Every batch ends with 5 random rows to spot-check.
+Tradeoff: Apify instead of Clay: Apify Starter is $19 a month against $185 for Clay's cheapest paid plan (checked 29 Sep 2026). Apify's people add-on was tested and rejected: about 16 cents a pharmacy, and it matched staff from other businesses.
+My role: I built it, from the call that set the spec to the plugin, the walkthrough video and the first 33 leads.
+Quote: "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working." (Curtis Cole, CEO, Medari Advisors)
+
 ## AI Lab content + outbound systems (https://stephensai.co/alec/ai-lab)
 An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no.
 Client: AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Applied AI Engineer (in-house), contract, March to September 2026.
