@@ -12,6 +12,8 @@
  * artifacts/homepage-trim-2026-09-21/CUTS.md.
  */
 
+import { HOME_TESTIMONIALS, type Testimonial } from "./testimonials";
+
 export const SITE_NAME = "Stephens AI";
 export const SITE_URL = "https://stephensai.co";
 export const CONTACT_EMAIL = "alec@stephensai.co";
@@ -575,6 +577,15 @@ export const HOME_EN = {
     },
   },
   pricing: V7_PRICING,
+  /** The quote belt after the price (Alec, 2026-10-13). The quotes come from testimonials.ts, generated from the vault's quote book. */
+  inTheirWords: {
+    kicker: "In their words",
+    title: { lead: "From the people who use", accent: "what we build." },
+    beltLabel: "Quotes from people we have built for",
+    /** Label for a quote's own words under its translation; none on the English page. */
+    originalLabel: null as string | null,
+    items: HOME_TESTIMONIALS as QuoteCard[],
+  },
   founders: {
     kicker: "Who we are",
     title: FOUNDERS_SECTION.title,
@@ -615,6 +626,9 @@ export const HOME_EN = {
 };
 
 export type HomeCopy = typeof HOME_EN;
+
+/** A card on the quote belt. `original` holds the person's own English words when `text` is a translation. */
+export type QuoteCard = Testimonial & { original?: string };
 
 /** The header, footer and skip link, which live in the root layout and pick a language by path. */
 export const CHROME_EN = {
