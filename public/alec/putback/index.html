@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Putback, insurance claims tool · Tri-Valley Dental · Alec Stephens</title>
+<title>Putback, insurance claims tool · Tri-Valley Dental and Wichita Family Vision · Alec Stephens</title>
 <meta name="description" content="Insurance problems used to surface at the visit or months later on the aging report. Putback puts them in front of the desk two days ahead, and every claim that hasn&#39;t paid comes with a status and the next step, in plain words.">
 <link rel="canonical" href="https://stephensai.co/alec/putback">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Putback, insurance claims tool · Tri-Valley Dental · Alec Stephens">
+<meta property="og:title" content="Putback, insurance claims tool · Tri-Valley Dental and Wichita Family Vision · Alec Stephens">
 <meta property="og:description" content="Insurance problems used to surface at the visit or months later on the aging report. Putback puts them in front of the desk two days ahead, and every claim that hasn&#39;t paid comes with a status and the next step, in plain words.">
 <meta property="og:url" content="https://stephensai.co/alec/putback">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
@@ -1414,8 +1414,8 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 <main class="sai-page">
 
   <section id="result" data-sc-in data-sc-stagger="70">
-    <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · dental · insurance · Tri-Valley Dental · October 2026</span></span>
-    <h1 class="sai-display">Putback, an insurance checker for a dental front desk: coverage checked two days before every visit, and every unpaid claim given a status and a next step.</h1>
+    <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · dental and eye care · insurance · Tri-Valley Dental and Wichita Family Vision · October 2026, live at the eye clinic</span></span>
+    <h1 class="sai-display">Putback, an insurance checker for dental and eye care front desks: problems caught before the visit and before the claim goes out.</h1>
     <p class="sai-lede">Insurance problems used to surface at the visit or months later on the aging report. Putback puts them in front of the desk two days ahead, and every claim that hasn&#39;t paid comes with a status and the next step, in plain words.</p>
     <div class="cs-stats">
       <div class="num acc sai-pane">
@@ -1437,12 +1437,12 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       <aside class="facts sai-pane">
         <span class="lbl">At a glance</span>
         <dl>
-          <div><dt>Client</dt><dd>Tri-Valley Dental Care, an independent dental practice in Pleasanton, California.</dd></div>
-          <div><dt>Who uses it</dt><dd>Built for the front desk and the owner dentist.</dd></div>
-          <div><dt>Shipped</dt><dd>October 2026. About a week from the first version to the one built around the practice&#39;s schedule and aging report.</dd></div>
+          <div><dt>Client</dt><dd>Tri-Valley Dental Care in Pleasanton, California, and Wichita Family Vision, an optometry practice in Wichita, Kansas.</dd></div>
+          <div><dt>Who uses it</dt><dd>The front desk and the owner dentist at the dental practice; the biller at the eye clinic.</dd></div>
+          <div><dt>Shipped</dt><dd>October 2026, live at the eye clinic. About a week from the first version to the one built around the practice&#39;s schedule and aging report.</dd></div>
           <div><dt>Stack</dt><dd><ul class="chips"><li>Python</li><li>FastAPI</li><li>Stedi clearinghouse API</li><li>X12 270/271 eligibility</li><li>X12 276/277 claim status</li><li>pydantic</li><li>httpx</li><li>pytest</li></ul></dd></div>
 <div><dt>Compliance</dt><dd>No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names.</dd></div>          <div><dt>Cost to run</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month.</dd></div>
-          <div><dt>My role</dt><dd>My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check, and ran the QA passes.</dd></div>
+          <div><dt>My role</dt><dd>My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic&#39;s server.</dd></div>
         </dl>
       </aside>
     </div>
@@ -1457,7 +1457,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
   <section id="built" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What I built</span></span>
     <h3>The build</h3>
-    <ul class="sai-bullets"><li>Before the visits. The schedule goes in about two days ahead, and every patient comes back Ready or Attention, with the problem first: coverage ended, the year&#39;s maximum used up, the plan assigned to another office. Each one says what to do.</li><li>Check coverage. One card with what the claim needs: active dates, what&#39;s left of the annual maximum, the deductible, member ID and group number, and coverage by category, with frequency limits where the insurer sends them.</li><li>Claims this week. Every claim on the aging report gets one status: denied, needs info, no record, call, paid or pending. Where the insurer sends a reason, it&#39;s in plain words, and every status comes with the next step, like the attachment the insurer is waiting on or a payment that still needs posting.</li><li>What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest.</li></ul>
+    <ul class="sai-bullets"><li>Before the visits. The schedule goes in about two days ahead, and every patient comes back Ready or Attention, with the problem first: coverage ended, the year&#39;s maximum used up, the plan assigned to another office. Each one says what to do.</li><li>Check coverage. One card with what the claim needs: active dates, what&#39;s left of the annual maximum, the deductible, member ID and group number, and coverage by category, with frequency limits where the insurer sends them.</li><li>Claims this week. Every claim on the aging report gets one status: denied, needs info, no record, call, paid or pending. Where the insurer sends a reason, it&#39;s in plain words, and every status comes with the next step, like the attachment the insurer is waiting on or a payment that still needs posting.</li><li>What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest.</li><li>Claims checked before they go out. For the eye clinic, the day&#39;s claims run against 18 rules, each with its published source (a diagnosis code billable on the visit date, Medicare&#39;s limit on units per visit), and every problem names the box on the claim form and the fix.</li></ul>
     <div class="gallery">
       <figure class="shot"><img src="/alec/img/putback/02-coverage-card.webp" srcset="/alec/img/putback/02-coverage-card-800.webp 800w, /alec/img/putback/02-coverage-card.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="Coverage card for a sample Delta Dental patient: active, $1,340 left this year, subscriber ID, group number and what the plan pays by category" loading="lazy" decoding="async"><figcaption>One card with everything the claim needs.</figcaption></figure>
       <figure class="shot"><img src="/alec/img/putback/03-claims-this-week.webp" srcset="/alec/img/putback/03-claims-this-week-800.webp 800w, /alec/img/putback/03-claims-this-week.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="Claims this week: counts for denied, needs info, no record, call, paid and pending, above denied claims each with a reason and a next step" loading="lazy" decoding="async"><figcaption>Every claim on the aging report gets a status and a next step.</figcaption></figure>
@@ -1485,8 +1485,8 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <h3>How it's built</h3>
     <dl class="eng">
       <div class="wide"><dt>Architecture</dt><dd>A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer&#39;s answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.</dd></div>
-      <div><dt>Where it runs</dt><dd>On the practice&#39;s own computer, answering only on that machine unless a password is set, with the clearinghouse as the one outside connection.</dd></div>
-      <div><dt>Tests and evals</dt><dd>210 automated tests across 14 files, plus 12 recorded insurer answers from the clearinghouse&#39;s test mode. Three QA passes and a review against 15 test requests to sample insurers.</dd></div>
+      <div><dt>Where it runs</dt><dd>For the eye clinic, a small server in the practice&#39;s own AWS account: encrypted disk, sign-in required, and code shipped from a private bucket in that account rather than pulled from GitHub. The dental practice starts on our own AWS account, under its BAA, and moves to an account in the practice&#39;s name at hand-off. The clearinghouse is the one outside connection.</dd></div>
+      <div><dt>Tests and evals</dt><dd>1,795 automated tests across 40 files (counted 13 Oct 2026), plus recorded insurer answers from the clearinghouse&#39;s test mode. Before go-live, an independent code QA and a read-through of every live screen as the front desk; the claim checker&#39;s own independent review found 15 problems, all fixed and each pinned by a test.</dd></div>
       <div><dt>Cost and latency</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month.</dd></div>
       <div><dt>Guardrails</dt><dd>It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.</dd></div>
       <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.</p></div></dd></div>
