@@ -7,6 +7,7 @@ import { Pricing } from "@/components/sections/v7/pricing";
 import { Founders } from "@/components/sections/v6/founders";
 import { PatientStrip } from "@/components/sections/v7/patient-strip";
 import { Contact } from "@/components/sections/v7/contact";
+import { InTheirWords } from "@/components/sections/v7/in-their-words";
 import {
   SITE_NAME,
   SITE_URL,
@@ -111,6 +112,8 @@ export function HomeBody({
           <>
             <WorkWithUs copy={c.how} tier={c.pricing.tiers[0]} />
             <Pricing copy={c.pricing} cta={c.cta} />
+            {/* The quotes are people's own English words, so the strip shows on the English page only. */}
+            {locale === "en" && <InTheirWords />}
             <Founders copy={c.founders} />
             <Contact copy={c.contact} form={c.form} />
           </>

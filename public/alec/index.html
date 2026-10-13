@@ -1093,6 +1093,8 @@ li.on .sai-steps-shows .when-on { display: inline; color: var(--sai-accent-deep)
 /* ── Pointer light on a night panel: <section class="sai-night" data-sai-glow>.
    The section's own ::after, so it covers the whole panel; content sits above. ── */
 section.sai-night[data-sai-glow] > *:not(.sai-ember) { position: relative; z-index: 1; }
+/* the rule above must not pull a corner stamp back into the flow (it landed on the heading, 2026-10-06) */
+section.sai-night[data-sai-glow] > .sai-stamp.corner { position: absolute; }
 section.sai-night[data-sai-glow]::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
   background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.15), rgba(255,142,118,.05) 38%, transparent 62%);
   opacity: 0; transition: opacity 420ms ease; }
@@ -1821,11 +1823,11 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <article class="card" id="coaching-aios" aria-labelledby="t-coaching-aios">
         <div class="flip">
           <div class="face front sai-pane">
-            <div class="head"><span class="lbl">Professional coaching · solo founder · A business coach</span><span class="when">Live May 2026</span></div>
+            <div class="head"><span class="lbl">Professional coaching · solo founder · Workthentic</span><span class="when">Live May 2026</span></div>
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-coaching-aios">Coaching practice AI system</h2>
-                <p class="sub">An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English. A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands).</p>
+                <p class="sub">An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English. Workthentic, Taima Ford Beyah&#39;s coaching and HR consulting practice in California (named with her OK, 13 Oct 2026).</p>
                 <div class="num">
                   <span class="v">4<span class="u">custom AI agents</span></span>
                   <span class="l">built for her practice, inbox triage, scheduling replies, voice-note task capture and meeting notes, all reading one brain document she edits in plain English</span>

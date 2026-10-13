@@ -47,6 +47,14 @@
 .desk-root.is-night .bn-index-btn:hover,
 .desk-root.is-night .bn-index-btn.is-on { color: var(--color-cream); background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.16); }
 
+/* ── quotes (the belt under the desk) ── */
+.bn-quotes { width: min(1040px, 100%); margin-top: clamp(40px, 6vw, 72px); }
+.bn-quotes .bn-label { display: block; margin: 0 0 22px; }
+.desk-root.is-night .bn-quote-card { background: rgba(28, 22, 18, 0.72); border-color: rgba(255, 255, 255, 0.14); }
+.desk-root.is-night .bn-quote-card p,
+.desk-root.is-night .bn-quote-card strong { color: var(--color-cream); }
+.desk-root.is-night .bn-quote-card figcaption { color: var(--color-cream-2); }
+
 /* ── about ── */
 .bn-about {
   width: min(1040px, 100%);

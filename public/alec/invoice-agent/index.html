@@ -1093,6 +1093,8 @@ li.on .sai-steps-shows .when-on { display: inline; color: var(--sai-accent-deep)
 /* ── Pointer light on a night panel: <section class="sai-night" data-sai-glow>.
    The section's own ::after, so it covers the whole panel; content sits above. ── */
 section.sai-night[data-sai-glow] > *:not(.sai-ember) { position: relative; z-index: 1; }
+/* the rule above must not pull a corner stamp back into the flow (it landed on the heading, 2026-10-06) */
+section.sai-night[data-sai-glow] > .sai-stamp.corner { position: absolute; }
 section.sai-night[data-sai-glow]::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
   background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.15), rgba(255,142,118,.05) 38%, transparent 62%);
   opacity: 0; transition: opacity 420ms ease; }
@@ -1490,6 +1492,12 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     </dl>
   </section>
 
+  <section class="sai-night" data-sc-in>
+    <span class="sai-ember"></span>
+    <span class="sai-port on-night"><span class="disc"></span><span class="ptext">In their words</span></span>
+    <p class="quote">“I think that&#39;s very simple and effective… I don&#39;t have to enter [them]. I just have to go back in and pay [them] when it&#39;s an appropriate time to pay [them].”</p>
+    <p class="quote-who">Mary Tangney, Bookkeeper, Wichita Family Vision</p>
+  </section>
 
   <section id="next" class="sai-widget sai-pane" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">Keep going</span></span>
