@@ -51,6 +51,14 @@
   color: var(--color-ink);
 }
 
+/* The person's own words under a translation (the Korean page). */
+.original {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+
 .who {
   margin-top: auto;
   padding-top: 22px;
