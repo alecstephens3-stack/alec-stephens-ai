@@ -457,12 +457,12 @@ export const CASES: BuildCase[] = [
     "tier": "deep",
     "name": "Putback, insurance claims tool",
     "short": "Putback",
-    "kicker": "Healthcare · dental · insurance",
-    "title": "Putback, an insurance checker for a dental front desk: coverage checked two days before every visit, and every unpaid claim given a status and a next step",
-    "client": "Tri-Valley Dental Care, an independent dental practice in Pleasanton, California",
-    "client_short": "Tri-Valley Dental",
-    "users": "Built for the front desk and the owner dentist",
-    "shipped": "October 2026",
+    "kicker": "Healthcare · dental and eye care · insurance",
+    "title": "Putback, an insurance checker for dental and eye care front desks: problems caught before the visit and before the claim goes out",
+    "client": "Tri-Valley Dental Care in Pleasanton, California, and Wichita Family Vision, an optometry practice in Wichita, Kansas",
+    "client_short": "Tri-Valley Dental and Wichita Family Vision",
+    "users": "The front desk and the owner dentist at the dental practice; the biller at the eye clinic",
+    "shipped": "October 2026, live at the eye clinic",
     "duration": "About a week from the first version to the one built around the practice's schedule and aging report",
     "number": {
       "value": "2 days",
@@ -485,7 +485,8 @@ export const CASES: BuildCase[] = [
       "Before the visits. The schedule goes in about two days ahead, and every patient comes back Ready or Attention, with the problem first: coverage ended, the year's maximum used up, the plan assigned to another office. Each one says what to do.",
       "Check coverage. One card with what the claim needs: active dates, what's left of the annual maximum, the deductible, member ID and group number, and coverage by category, with frequency limits where the insurer sends them.",
       "Claims this week. Every claim on the aging report gets one status: denied, needs info, no record, call, paid or pending. Where the insurer sends a reason, it's in plain words, and every status comes with the next step, like the attachment the insurer is waiting on or a payment that still needs posting.",
-      "What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest."
+      "What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest.",
+      "Claims checked before they go out. For the eye clinic, the day's claims run against 18 rules, each with its published source (a diagnosis code billable on the visit date, Medicare's limit on units per visit), and every problem names the box on the claim form and the fix."
     ],
     "changed": [
       {
@@ -523,15 +524,15 @@ export const CASES: BuildCase[] = [
     ],
     "engineer": {
       "architecture": "A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer's answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.",
-      "runs_where": "On the practice's own computer, answering only on that machine unless a password is set, with the clearinghouse as the one outside connection.",
-      "tests": "210 automated tests across 14 files, plus 12 recorded insurer answers from the clearinghouse's test mode. Three QA passes and a review against 15 test requests to sample insurers.",
+      "runs_where": "For the eye clinic, a small server in the practice's own AWS account: encrypted disk, sign-in required, and code shipped from a private bucket in that account rather than pulled from GitHub. The dental practice starts on our own AWS account, under its BAA, and moves to an account in the practice's name at hand-off. The clearinghouse is the one outside connection.",
+      "tests": "1,795 automated tests across 40 files (counted 13 Oct 2026), plus recorded insurer answers from the clearinghouse's test mode. Before go-live, an independent code QA and a read-through of every live screen as the front desk; the claim checker's own independent review found 15 problems, all fixed and each pinned by a test.",
       "cost": "About 30 cents a check at the clearinghouse's published rate for the first 250 a month.",
       "guardrails": "It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.",
       "tradeoff": "No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.",
       "repo": null,
       "repo_note": null
     },
-    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, added the Before the visits check, and ran the QA passes.",
+    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic's server.",
     "media": {
       "hero": "/alec/img/putback/01-before-the-visits.webp",
       "alt": "Before the visits screen with sample patients: five marked Attention at the top, each with a plain reason and a Do line, above patients marked Ready",
@@ -758,7 +759,7 @@ export const CASES: BuildCase[] = [
     "client": "Kamata Koumuten, a construction company in Miyagi, Japan",
     "client_short": "Kamata Koumuten",
     "users": "The company's storefront; its owner and her customers",
-    "shipped": "Rebuilt May 2026, redesigned October 2026",
+    "shipped": "Rebuilt May 2026 (live); full redesign built October 2026, with the owner for sign-off",
     "duration": "About 3 weeks for the rebuild, then a full redesign",
     "number": {
       "value": "1",
@@ -775,7 +776,7 @@ export const CASES: BuildCase[] = [
       "n": "1 industry board",
       "phrase": "now referring us, off a site redesigned so every word is readable"
     },
-    "oneliner": "Tiny text, a broken phone layout and a contact form that never delivered. Now a calm, readable site that leads with their real jobs and brings in referral work.",
+    "oneliner": "Tiny text, a broken phone layout and a contact form that never delivered. The rebuild made it readable and brought in a referral; the full redesign, now with the owner for sign-off, leads with their real jobs.",
     "broken": "On the old site, 66% to 88% of the text was under 14px depending on the page, and up to 59% failed basic contrast. The phone homepage ran about 28 screens long, the work was shown as icon cards for a business whose work is visual, and the contact form had never delivered a single inquiry.",
     "built": [
       "A redesign in their own language: a slowly moving hero over a finished driveway and gate, the company's history since 1965, what they build, and a numbers band, set in the serif and sans pair the owner already knew.",

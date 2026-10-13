@@ -1725,11 +1725,11 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <article class="card" id="putback" aria-labelledby="t-putback">
         <div class="flip">
           <div class="face front sai-pane">
-            <div class="head"><span class="lbl">Healthcare · dental · insurance · Tri-Valley Dental</span><span class="when">October 2026</span></div>
+            <div class="head"><span class="lbl">Healthcare · dental and eye care · insurance · Tri-Valley Dental and Wichita Family Vision</span><span class="when">October 2026, live at the eye clinic</span></div>
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-putback">Putback, insurance claims tool</h2>
-                <p class="sub">Putback, an insurance checker for a dental front desk: coverage checked two days before every visit, and every unpaid claim given a status and a next step. Tri-Valley Dental Care, an independent dental practice in Pleasanton, California.</p>
+                <p class="sub">Putback, an insurance checker for dental and eye care front desks: problems caught before the visit and before the claim goes out. Tri-Valley Dental Care in Pleasanton, California, and Wichita Family Vision, an optometry practice in Wichita, Kansas.</p>
                 <div class="num">
                   <span class="v">2 days<span class="u">ahead</span></span>
                   <span class="l">every patient on the schedule sent to the insurer before the visit, with the ones who need something, or need a call, listed first</span>
@@ -1744,7 +1744,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
               </div>
             </div>
             <div class="foot">
-<p class="who comp"><b>Compliance.</b> No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names.</p>              <p class="who"><b>My role.</b> My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check, and ran the QA passes.</p>
+<p class="who comp"><b>Compliance.</b> No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names.</p>              <p class="who"><b>My role.</b> My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic&#39;s server.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
                 <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
@@ -1754,12 +1754,12 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Putback, insurance claims tool</span><span class="when">October 2026</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Putback, insurance claims tool</span><span class="when">October 2026, live at the eye clinic</span></div>
             <dl class="eng">
-              <div class="wide"><dt>Who uses it</dt><dd>Built for the front desk and the owner dentist.</dd></div>
+              <div class="wide"><dt>Who uses it</dt><dd>The front desk and the owner dentist at the dental practice; the biller at the eye clinic.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer&#39;s answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.</dd></div>
-              <div><dt>Where it runs</dt><dd>On the practice&#39;s own computer, answering only on that machine unless a password is set, with the clearinghouse as the one outside connection.</dd></div>
-              <div><dt>Tests and evals</dt><dd>210 automated tests across 14 files, plus 12 recorded insurer answers from the clearinghouse&#39;s test mode. Three QA passes and a review against 15 test requests to sample insurers.</dd></div>
+              <div><dt>Where it runs</dt><dd>For the eye clinic, a small server in the practice&#39;s own AWS account: encrypted disk, sign-in required, and code shipped from a private bucket in that account rather than pulled from GitHub. The dental practice starts on our own AWS account, under its BAA, and moves to an account in the practice&#39;s name at hand-off. The clearinghouse is the one outside connection.</dd></div>
+              <div><dt>Tests and evals</dt><dd>1,795 automated tests across 40 files (counted 13 Oct 2026), plus recorded insurer answers from the clearinghouse&#39;s test mode. Before go-live, an independent code QA and a read-through of every live screen as the front desk; the claim checker&#39;s own independent review found 15 problems, all fixed and each pinned by a test.</dd></div>
               <div><dt>Cost and latency</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month.</dd></div>
               <div><dt>Guardrails</dt><dd>It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.</dd></div>
               <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.</p></div></dd></div>
@@ -1872,7 +1872,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       <article class="card" id="construction-site" aria-labelledby="t-construction-site">
         <div class="flip">
           <div class="face front sai-pane">
-            <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Rebuilt May 2026, redesigned October 2026</span></div>
+            <div class="head"><span class="lbl">Construction · Japan · Kamata Koumuten</span><span class="when">Rebuilt May 2026 (live); full redesign built October 2026, with the owner for sign-off</span></div>
             <div class="front-grid">
               <div class="ftext">
                 <h2 id="t-construction-site">Construction company website</h2>
@@ -1901,7 +1901,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Rebuilt May 2026, redesigned October 2026</span></div>
+            <div class="head"><span class="lbl acc">How it's built · Construction company website</span><span class="when">Rebuilt May 2026 (live); full redesign built October 2026, with the owner for sign-off</span></div>
             <dl class="eng">
               <div class="wide"><dt>Who uses it</dt><dd>The company&#39;s storefront; its owner and her customers.</dd></div>
               <div class="wide"><dt>Architecture</dt><dd>A static homepage with a looping hero video, a survey-pole rail that marks the current section on wide screens, and before and after switches on the project photos. It deploys to the client&#39;s existing shared PHP host by mirror, with a backup taken first.</dd></div>
