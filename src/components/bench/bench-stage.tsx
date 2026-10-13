@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import type { DeskScene, DeskHover, DeskLight } from "@/components/desk/desk-scene";
 import { DeskWindow } from "@/components/desk/desk-window";
 import { BuildCard, CASES, ABOUT, SITE } from "./index";
+import { QuoteBelt } from "@/components/sections/v7/quote-belt";
+import { ALEC_TESTIMONIALS } from "@/lib/testimonials";
 import "@/components/desk/desk.css";
 import "./bench.css";
 
@@ -153,6 +155,11 @@ export function BenchStage() {
             ))}
           </ul>
         </nav>
+      </section>
+
+      <section className="bn-quotes" aria-labelledby="bn-quotes-title">
+        <h2 id="bn-quotes-title" className="bn-label">In their words</h2>
+        <QuoteBelt items={ALEC_TESTIMONIALS} label="Quotes from people Alec has worked with" cardClassName="bn-quote-card" />
       </section>
 
       <section className="bn-about sai-pane" aria-labelledby="bn-about-name">

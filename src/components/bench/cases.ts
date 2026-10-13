@@ -293,7 +293,10 @@ export const CASES: BuildCase[] = [
       }
     ],
     "math_note": "The clinic estimated 10 to 12 slips a pay period at 15 to 20 minutes of handling each, before the calendar checks and payroll prep. 26 pay periods a year puts the range at 60 to 100 hours. The 327 requests are the system's own log on 1 October 2026.",
-    "quote": null,
+    "quote": {
+      "text": "It is already saving me some time, and I am getting information back to the team much quicker.",
+      "who": "Gabe Walsh, Office Manager, Wichita Family Vision"
+    },
     "stack": [
       "Google Apps Script",
       "Google Forms",
@@ -402,7 +405,10 @@ export const CASES: BuildCase[] = [
       }
     ],
     "math_note": "The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic's AWS account: about 1 cent an invoice.",
-    "quote": null,
+    "quote": {
+      "text": "I think that's very simple and effective… I don't have to enter [them]. I just have to go back in and pay [them] when it's an appropriate time to pay [them].",
+      "who": "Mary Tangney, Bookkeeper, Wichita Family Vision"
+    },
     "stack": [
       "Claude on AWS Bedrock",
       "Python",
@@ -614,7 +620,10 @@ export const CASES: BuildCase[] = [
       }
     ],
     "math_note": "Outbound numbers are from the campaign export for 4 August to 7 September 2026: 4,349 emails, 2,661 businesses, 91 replies of which 51 were human (2.2%), 3 marked interested, 0 confirmed calls. That last number is the point: the system was built to report it honestly, and the restart guide says why. The ~10 hours a week on the content side is the team's own estimate.",
-    "quote": null,
+    "quote": {
+      "text": "You have the double skill set, which is the AI itself plus presenting, and that is more valuable than just the AI.",
+      "who": "Emils Pakarklis, Founder, iPhone Photography School"
+    },
     "stack": [
       "Claude Code",
       "Codex",
@@ -657,8 +666,8 @@ export const CASES: BuildCase[] = [
     "short": "Coaching AI system",
     "kicker": "Professional coaching · solo founder",
     "title": "An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English",
-    "client": "A business coach and HR consultant in California (kept anonymous at her request until her testimonial lands)",
-    "client_short": "A business coach",
+    "client": "Workthentic, Taima Ford Beyah's coaching and HR consulting practice in California (named with her OK, 13 Oct 2026)",
+    "client_short": "Workthentic",
     "users": "The founder, daily, April to July 2026; she owns and edits it herself",
     "shipped": "Live May 2026",
     "duration": "About 10 weeks, in phases",
@@ -708,7 +717,10 @@ export const CASES: BuildCase[] = [
       }
     ],
     "math_note": "The email count is her daily inbox volume during the build; the 115 tasks were the stale backlog archived on 2026-07-20 with an undo manifest kept.",
-    "quote": null,
+    "quote": {
+      "text": "I'm so grateful for our time together. I feel like I was in a class… I don't regret one moment of it because I learned so much.",
+      "who": "Taima Ford Beyah, Founder, Workthentic"
+    },
     "stack": [
       "Claude",
       "ClickUp Super Agents",
@@ -995,7 +1007,10 @@ export const CASES: BuildCase[] = [
       }
     ],
     "math_note": "Counts are from the system's own folders on 4 October 2026. They change as skills earn their place or get retired.",
-    "quote": null,
+    "quote": {
+      "text": "The Hermes agent… thank you so much. This is sick so far. I set it up… and it freaking set the whole thing up.",
+      "who": "Payton Bilodeau, AI educator, AI Lab"
+    },
     "stack": [
       "Claude Code",
       "Claude Agent SDK",

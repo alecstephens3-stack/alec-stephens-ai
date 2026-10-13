@@ -1,0 +1,109 @@
+/* The quote belt: real quotes sliding past slowly, one list drawn twice so the loop
+   has no seam. Hover or keyboard focus stops it; reduced motion gets a still row
+   the reader can scroll. */
+
+.belt {
+  --qb-gap: 22px;
+  position: relative;
+  overflow: hidden;
+  /* The cards' shadow reaches about 100px down; give it room inside the clip and
+     pull the space back with a negative margin, or the clip draws a hard line. */
+  padding-block: 40px 120px;
+  margin-block: -40px -96px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: belt var(--qb-dur, 60s) linear infinite;
+}
+
+.belt:hover .track,
+.belt:focus-within .track {
+  animation-play-state: paused;
+}
+
+.list {
+  display: flex;
+  align-items: stretch;
+  gap: var(--qb-gap);
+  margin: 0;
+  padding: 0 var(--qb-gap) 0 0;
+  list-style: none;
+}
+
+.card {
+  flex: none;
+  width: clamp(290px, 31vw, 410px);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 28px 30px 26px;
+}
+
+.text {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.42;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.who {
+  margin-top: auto;
+  padding-top: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-ink-2);
+}
+
+.who::before {
+  content: "";
+  flex: none;
+  width: 26px;
+  height: 2px;
+  margin-top: 9px;
+  border-radius: 2px;
+  background: var(--color-accent);
+}
+
+.who strong {
+  display: block;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+@keyframes belt {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    width: min(82vw, 330px);
+    padding: 24px 24px 22px;
+  }
+  .text {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .belt {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .track {
+    animation: none;
+  }
+  .copy {
+    display: none;
+  }
+}
