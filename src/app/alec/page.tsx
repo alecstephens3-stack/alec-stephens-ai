@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BenchStage } from "@/components/bench/bench-stage";
-import { SITE } from "@/components/bench";
+import { SITE, ABOUT } from "@/components/bench";
+import { PortfolioBurinFooter } from "@/components/burin/burin-footer";
 import { SITE_URL } from "@/lib/content";
 
 /**
@@ -44,6 +45,7 @@ export default function AlecPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
       />
       <BenchStage />
+      <PortfolioBurinFooter name={ABOUT.name} role={ABOUT.role} email={SITE.email} linkedin={SITE.linkedin} />
     </>
   );
 }

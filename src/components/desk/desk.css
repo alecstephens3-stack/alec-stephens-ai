@@ -52,7 +52,7 @@
 
 /* the desk is its own page: the site header, footer and drifting-lens scene stay out of it */
 body:has(.desk-root) > header,
-body:has(.desk-root) footer,
+body:has(.desk-root) footer:not(.burin-foot),
 body:has(.desk-root) > .sai-scene { display: none !important; }
 
 /* the page background follows the light: the site sky by day, a dark room after hours */
