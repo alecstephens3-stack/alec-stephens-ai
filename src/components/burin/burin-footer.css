@@ -1,0 +1,24 @@
+/* Burin footer: night, the engraved capital on the right, fading into the night on its left edge. */
+.burin-foot { position: relative; overflow: hidden; margin-top: 96px; min-height: 520px;
+  background: radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%); color: var(--color-cream); }
+.burin-foot-art { position: absolute; inset: 0 0 0 auto; width: 58%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 40%); mask-image: linear-gradient(90deg, transparent 0, #000 40%); }
+.burin-foot .sai-burin { display: block; width: 100%; height: 100%; }
+.burin-foot-in { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 72px 28px 40px; }
+.burin-foot-name { font-size: clamp(32px, 4.6vw, 52px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; color: var(--color-cream); }
+.burin-foot-role { margin-top: 8px; font-size: 17px; color: var(--color-cream-2); }
+.burin-foot-links { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.burin-foot-links a { font-size: 15.5px; color: var(--color-cream-2); text-decoration: none; transition: color .2s; }
+.burin-foot-links a:hover { color: var(--color-cream); }
+.burin-foot-legal { margin-top: 120px; max-width: 540px; padding-top: 18px; border-top: 1px solid rgba(245, 241, 232, 0.14);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; font-size: 13.5px; color: var(--color-cream-2); }
+.burin-foot-legal a { color: inherit; text-underline-offset: 4px; }
+.burin-foot-legal a:hover { color: var(--color-cream); }
+.burin-foot-co { font-family: var(--font-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 760px) {
+  .burin-foot { min-height: 0; margin-top: 64px; }
+  .burin-foot-art { position: relative; inset: auto; width: 100%; height: 340px;
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%); mask-image: linear-gradient(180deg, #000 60%, transparent 100%); }
+  .burin-foot-in { padding: 8px 20px 32px; }
+  .burin-foot-legal { margin-top: 48px; }
+}
