@@ -3,6 +3,8 @@ import { ContactForm } from "@/components/ui/contact-form";
 import { DayWindow, NightWindow } from "@/components/ui/lens-primitives";
 import { HOME_EN, type HomeCopy } from "@/lib/content";
 import { CursorGlow } from "./cursor-glow";
+import { ContactBurinBand } from "@/components/burin/contact-burin-band";
+import "@/components/layout/footer-burin.css";
 import glow from "./cursor-glow.module.css";
 
 /**
@@ -50,6 +52,7 @@ export function Contact({
                 <ContactForm copy={form} />
               </DayWindow>
             </div>
+            <ContactBurinBand />
           </NightWindow>
         </AnimateOnScroll>
       </div>
