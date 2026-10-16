@@ -10,6 +10,8 @@ import "./burin-footer.css";
  * A public-domain Roman capital is drawn live as banknote line engraving by /burin.js
  * (a copy of the design system's kit/burin.js): cream lines on night, a soft lens on
  * fine pointers, a still plate on phones and reduced motion.
+ * Plate: Roman Corinthian capital, Walters Art Museum 23188, public domain. Credited here,
+ * not on the page (Alec, 2026-10-17: the visible credit was distracting).
  */
 type SAIBurin = { mount: (el: HTMLCanvasElement) => unknown };
 
@@ -49,7 +51,6 @@ export function PortfolioBurinFooter({ name, role, email, linkedin }: { name: st
           <span className="burin-foot-co">&copy; 2026 Stephens AI LLC</span>
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
-          <span>Corinthian capital, Roman. Walters Art Museum, public domain</span>
         </div>
       </div>
     </footer>
