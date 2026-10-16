@@ -20,3 +20,10 @@
   .site-foot-in { padding: 44px 20px 0; }
   .site-foot-band { height: 260px; margin-top: 20px; }
 }
+
+/* Homepage: the colonnade inside the contact panel, running to its bottom and side edges. */
+.contact-burin { position: relative; z-index: 0; height: 300px; margin: 8px -28px -28px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 40%); mask-image: linear-gradient(180deg, transparent 0, #000 40%); }
+.contact-burin .sai-burin { display: block; width: 100%; height: 100%; }
+@media (min-width: 768px) { .contact-burin { margin: 12px -48px -48px; height: 340px; } }
+

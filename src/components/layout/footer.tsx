@@ -18,6 +18,8 @@ export function Footer() {
   const f = t.footer;
   // ClaimStride keeps its own look, so it closes on the plain glass footer, not the Burin plate (Alec, 2026-10-17).
   if (pathname?.startsWith("/claimstride")) return <PlainFooter locale={locale} />;
+  // The homepages end on the colonnade inside the contact panel, so their footer stays quiet (Alec, 2026-10-17).
+  if (pathname === "/" || pathname === "/kr") return <PlainFooter locale={locale} />;
   return (
     <footer
       className="site-foot"
@@ -74,7 +76,7 @@ export function Footer() {
   );
 }
 
-/** The plain glass footer (the site footer before Burin), kept for ClaimStride's own look. */
+/** The plain glass footer (the site footer before Burin): ClaimStride, and the homepages, whose plate is in the contact panel. */
 function PlainFooter({ locale }: { locale: ReturnType<typeof localeFromPath> }) {
   const t = chromeCopy(locale);
   const f = t.footer;
