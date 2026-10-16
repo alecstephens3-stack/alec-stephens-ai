@@ -1,0 +1,22 @@
+/* Site footer in Burin (2026-10-17): night, links and legal on top, the Jefferson Memorial's
+   colonnade engraved across the bottom, fading up into the night. */
+.site-foot { position: relative; overflow: hidden; margin-top: 72px;
+  background: radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%); color: var(--color-cream); }
+.site-foot-in { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 72px 28px 0; }
+.site-foot-top { display: flex; justify-content: space-between; align-items: center; gap: 22px 30px; flex-wrap: wrap; }
+.site-foot-nav { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.site-foot-nav a { font-size: 15.5px; color: var(--color-cream-2); text-decoration: none; transition: color .2s; }
+.site-foot-nav a:hover { color: var(--color-cream); }
+.site-foot-legal { margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(245, 241, 232, 0.14);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; font-size: 13.5px; color: var(--color-cream-2); }
+.site-foot-legal a { color: inherit; text-underline-offset: 4px; }
+.site-foot-legal a:hover { color: var(--color-cream); text-decoration: underline; }
+.site-foot-co { font-family: var(--font-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.site-foot-band { height: 520px; margin-top: 28px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%); mask-image: linear-gradient(180deg, transparent 0, #000 22%); }
+.site-foot .sai-burin { display: block; width: 100%; height: 100%; }
+@media (max-width: 760px) {
+  .site-foot { margin-top: 56px; }
+  .site-foot-in { padding: 44px 20px 0; }
+  .site-foot-band { height: 260px; margin-top: 20px; }
+}
