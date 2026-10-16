@@ -1463,29 +1463,6 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   .face { animation: none !important; } .card { transition: none; }
   .cell, .rail a, .railctl button { transition: none; }
 }
-
-/* Burin footer: night, the engraved capital on the right, fading into the night on its left edge */
-.burin-foot { position: relative; z-index: 1; overflow: hidden; margin-top: 96px; min-height: 520px;
-  background: var(--sai-night); color: var(--sai-cream); }
-.burin-foot .art { position: absolute; inset: 0 0 0 auto; width: 58%;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 40%); mask-image: linear-gradient(90deg, transparent 0, #000 40%); }
-.burin-foot .sai-burin { display: block; width: 100%; height: 100%; }
-.burin-foot .in { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 72px 28px 40px; }
-.burin-foot .name { font-size: clamp(32px, 4.6vw, 52px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; color: var(--sai-cream); }
-.burin-foot .role { margin-top: 8px; font-size: 17px; color: var(--sai-cream-2); }
-.burin-foot .links { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 26px; }
-.burin-foot .links a { font-size: 15.5px; color: var(--sai-cream-2); text-decoration: none; transition: color .2s; }
-.burin-foot .links a:hover { color: var(--sai-cream); }
-.burin-foot .legal { margin-top: 120px; max-width: 520px; padding-top: 18px; border-top: 1px solid rgba(245,241,232,0.14);
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; font-size: 13.5px; color: var(--sai-cream-2); }
-.burin-foot .legal .co { font-family: var(--sai-font-label); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
-@media (max-width: 760px) {
-  .burin-foot { min-height: 0; margin-top: 64px; }
-  .burin-foot .art { position: relative; inset: auto; width: 100%; height: 340px;
-    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%); mask-image: linear-gradient(180deg, #000 60%, transparent 100%); }
-  .burin-foot .in { padding: 8px 20px 32px; }
-  .burin-foot .legal { margin-top: 48px; }
-}
 </style>
 </head>
 <body>
@@ -2133,19 +2110,36 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
     </dl>
     <p class="cofounder">Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer. <a href="https://www.linkedin.com/in/jusheenkim">LinkedIn</a></p>
   </section>
+
+  <footer class="sai-footer">
+    <span class="lockup">
+      <span class="logo-day">
+<!-- SAI:LOGO -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO -->
+      </span>
+      <span class="logo-night">
+<!-- SAI:LOGO-NIGHT -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#F5F1E8" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO-NIGHT -->
+      </span>
+      <span class="word">Stephens AI</span>
+    </span>
+    <span class="meta"><a href="/">stephensai.co</a> · Updated 2026-10-04</span>
+  </footer>
 </main>
-<!-- Burin footer (the engraved style of the Lens system, 2026-10-17): a public-domain Roman capital
-     drawn live as banknote engraving, cream on night. kit/burin.js in the design system. -->
-<footer class="burin-foot" data-burin-host aria-label="Site footer">
-  <div class="art"><canvas class="sai-burin" data-src="/alec/img/burin/capital-walters-23188.jpg" data-mode="night" data-focus="0.5,0.5" data-zoom="0.95" data-lens aria-hidden="true"></canvas></div>
-  <div class="in">
-    <p class="name">Alec Stephens</p>
-    <p class="role">Applied AI engineer. Co-founder, Stephens AI.</p>
-    <div class="links"><a href="/">stephensai.co</a><a href="https://www.linkedin.com/in/alec-stephens-55b392213/">LinkedIn</a><a href="mailto:alec@stephensai.co">Email</a></div>
-    <div class="legal"><span class="co">Updated 2026-10-17</span><span>Corinthian capital, Roman. Walters Art Museum, public domain</span></div>
-  </div>
-</footer>
-<script src="/alec/burin.js" defer></script>
 <script src="/alec/scrollcraft.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
 <script>
