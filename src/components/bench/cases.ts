@@ -80,7 +80,7 @@ export const SITE: Site = {
   "email": "alec@stephensai.co",
   "calendly": "https://calendly.com/alecpstephens/30min",
   "github": "https://github.com/alecstephens3-stack",
-  "linkedin": "https://www.linkedin.com/in/alec-stephens-55b392213/",
+  "linkedin": "https://www.linkedin.com/in/alecpstephens/",
   "upwork": "https://www.upwork.com/freelancers/~0144c4c3757a94de2e",
   "jusheen_linkedin": "https://www.linkedin.com/in/jusheenkim",
   "updated": "2026-10-04"
