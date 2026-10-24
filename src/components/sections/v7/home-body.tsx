@@ -52,7 +52,7 @@ export function HomeBody({
         image: `${SITE_URL}/og-image.png`,
         sameAs: [
           LINKEDIN_URL,
-          "https://www.linkedin.com/in/alec-stephens-55b392213/",
+          "https://www.linkedin.com/in/alecpstephens/",
           "https://www.linkedin.com/in/jusheenkim",
         ],
         areaServed: ["United States"],
@@ -68,7 +68,7 @@ export function HomeBody({
             name: "Alec Stephens",
             jobTitle: "Co-founder",
             url: `${SITE_URL}/alec`,
-            sameAs: ["https://www.linkedin.com/in/alec-stephens-55b392213/"],
+            sameAs: ["https://www.linkedin.com/in/alecpstephens/"],
           },
           {
             "@type": "Person",
