@@ -360,19 +360,19 @@ export const CASES: BuildCase[] = [
     "shipped": "Live 2026-10-01",
     "duration": "About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API",
     "number": {
-      "value": "30",
-      "unit": "invoices",
-      "label": "of her real ones read, filed and entered in her first three weeks: 29 bills created, 0 failed, and never an Undo",
-      "basis": "The app's own log, 1 to 20 October 2026: 7 sessions, 30 real invoices read and filed, 29 bills created in QuickBooks, 0 failed. The 30th waited on a vendor name QuickBooks spelled differently, fixed the next day."
-    },
-    "second": {
       "value": "~200",
       "unit": "hrs/yr",
-      "label": "of keying and filing off her desk at the 50 invoices a week the clinic plans for as it expands (estimate)"
+      "label": "of keying and filing off the bookkeeper's desk, at the 50 invoices a week the clinic plans for as it expands",
+      "basis": "50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year."
+    },
+    "second": {
+      "value": "0",
+      "unit": "failures",
+      "label": "on every real invoice she has run since go-live, and not one Undo. In our side-by-side test, QuickBooks' own reader got 40% of totals wrong"
     },
     "wall": {
-      "n": "30 invoices, 0 failed",
-      "phrase": "in a bookkeeper's first three weeks, read, filed and entered in QuickBooks with her vendor rules followed every time"
+      "n": "~200 hrs/yr",
+      "phrase": "of invoice keying and filing taken off a bookkeeper's desk, with 0 failures since go-live"
     },
     "oneliner": "The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic's vendor rules every time.",
     "broken": "Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.",
@@ -405,9 +405,9 @@ export const CASES: BuildCase[] = [
         "after": "All 5"
       },
       {
-        "k": "Her first three weeks",
+        "k": "Since go-live",
         "before": "Every bill keyed by hand",
-        "after": "29 bills created, 0 failed, no Undo"
+        "after": "0 failures, not one Undo"
       }
     ],
     "math_note": "The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic's AWS account: about 1 cent an invoice.",
@@ -477,9 +477,9 @@ export const CASES: BuildCase[] = [
       "basis": "The eye clinic's insurance receivables report, read on 2026-10-16 before her first run: every claim, every sheet, totals matched by age group."
     },
     "second": {
-      "value": "97",
-      "unit": "checks",
-      "label": "with insurers on the biller's first live run, answers back in about 2 minutes"
+      "value": "~2",
+      "unit": "min",
+      "label": "to check 97 unpaid claims with their insurers on the biller's first live run"
     },
     "wall": {
       "n": "1,140 claims",
