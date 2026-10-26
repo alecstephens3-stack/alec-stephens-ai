@@ -360,19 +360,19 @@ export const CASES: BuildCase[] = [
     "shipped": "Live 2026-10-01",
     "duration": "About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API",
     "number": {
-      "value": "~200",
-      "unit": "hrs/yr",
-      "label": "of keying and filing off the bookkeeper's desk, at the 50 invoices a week the clinic plans for as it expands",
-      "basis": "50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year."
+      "value": "30",
+      "unit": "invoices",
+      "label": "of her real ones read, filed and entered in her first three weeks: 29 bills created, 0 failed, and never an Undo",
+      "basis": "The app's own log, 1 to 20 October 2026: 7 sessions, 30 real invoices read and filed, 29 bills created in QuickBooks, 0 failed. The 30th waited on a vendor name QuickBooks spelled differently, fixed the next day."
     },
     "second": {
-      "value": "5 of 5",
-      "unit": "",
-      "label": "totals right on the 5 real invoices she tested it with; QuickBooks' own bill reader got 2 of them wrong"
+      "value": "~200",
+      "unit": "hrs/yr",
+      "label": "of keying and filing off her desk at the 50 invoices a week the clinic plans for as it expands (estimate)"
     },
     "wall": {
-      "n": "~200 hrs/yr",
-      "phrase": "of invoice keying and filing taken off a bookkeeper's desk, with her vendor rules followed every time"
+      "n": "30 invoices, 0 failed",
+      "phrase": "in a bookkeeper's first three weeks, read, filed and entered in QuickBooks with her vendor rules followed every time"
     },
     "oneliner": "The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic's vendor rules every time.",
     "broken": "Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.",
@@ -380,6 +380,7 @@ export const CASES: BuildCase[] = [
       "One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.",
       "Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.",
       "Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.",
+      "Kept fast as she used it. After her first weeks, launch went from about 2,100 files unpacked to 181, reading runs three invoices at a time, and the bill memo now says what the bill was for.",
       "Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one."
     ],
     "changed": [
@@ -399,9 +400,14 @@ export const CASES: BuildCase[] = [
         "after": "Written once, followed every run"
       },
       {
-        "k": "Totals right on 5 of her real invoices",
+        "k": "Totals right in a 5-invoice test",
         "before": "3 with QuickBooks' own reader",
         "after": "All 5"
+      },
+      {
+        "k": "Her first three weeks",
+        "before": "Every bill keyed by hand",
+        "after": "29 bills created, 0 failed, no Undo"
       }
     ],
     "math_note": "The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic's AWS account: about 1 cent an invoice.",
@@ -453,110 +459,112 @@ export const CASES: BuildCase[] = [
     "compliance": "HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic's own AWS account, under the clinic's business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page."
   },
   {
-    "slug": "putback",
+    "slug": "claimstride",
     "tier": "deep",
-    "name": "Putback, insurance claims tool",
-    "short": "Putback",
-    "kicker": "Healthcare · dental and eye care · insurance",
-    "title": "Putback, an insurance checker for dental and eye care front desks: problems caught before the visit and before the claim goes out",
-    "client": "Tri-Valley Dental Care in Pleasanton, California, and Wichita Family Vision, an optometry practice in Wichita, Kansas",
-    "client_short": "Tri-Valley Dental and Wichita Family Vision",
-    "users": "The front desk and the owner dentist at the dental practice; the biller at the eye clinic",
-    "shipped": "October 2026, live at the eye clinic",
-    "duration": "About a week from the first version to the one built around the practice's schedule and aging report",
+    "name": "ClaimStride, insurance claims software",
+    "short": "ClaimStride",
+    "kicker": "Healthcare · eye care and dental · insurance",
+    "title": "ClaimStride, insurance claims software for eye care and dental: every unpaid claim checked with the insurer and given its next step",
+    "client": "Wichita Family Vision, an optometry practice in Wichita, Kansas, and Tri-Valley Dental Care in Pleasanton, California",
+    "client_short": "Wichita Family Vision and Tri-Valley Dental",
+    "users": "The biller at the eye clinic; the front desk and the owner dentist at the dental practice",
+    "shipped": "Live on the eye clinic's own server since 2026-10-12; the biller's first live run 2026-10-21",
+    "duration": "About two weeks from the first version to live at the eye clinic",
     "number": {
-      "value": "2 days",
-      "unit": "ahead",
-      "label": "every patient on the schedule sent to the insurer before the visit, with the ones who need something, or need a call, listed first",
-      "basis": "Before the visits runs over the practice's schedule export about two days ahead of the appointments."
+      "value": "1,140",
+      "unit": "claims",
+      "label": "read from the biller's real Compulink report, with every total adding up to hers",
+      "basis": "The eye clinic's insurance receivables report, read on 2026-10-16 before her first run: every claim, every sheet, totals matched by age group."
     },
     "second": {
-      "value": "16",
-      "unit": "situations",
-      "label": "from what the practice's front desk told us, each answered with the exact words to ask the patient"
+      "value": "97",
+      "unit": "checks",
+      "label": "with insurers on the biller's first live run, answers back in about 2 minutes"
     },
     "wall": {
-      "n": "2 days ahead",
-      "phrase": "every patient's insurance checked before the visit, and every unpaid claim given a status and a next step"
+      "n": "1,140 claims",
+      "phrase": "read from a biller's real report, and the unpaid ones checked with their insurers in minutes"
     },
-    "oneliner": "Insurance problems used to surface at the visit or months later on the aging report. Putback puts them in front of the desk two days ahead, and every claim that hasn't paid comes with a status and the next step, in plain words.",
-    "broken": "A one-dentist PPO practice checked insurance by hand, insurer portal by insurer portal, and worked unpaid claims from an aging report that says how old a claim is but never why it hasn't paid. Every insurer wants different details, some won't find a patient by name and birthday at all, and a claim left too long can miss the insurer's timely filing limit.",
+    "oneliner": "An aging report says how old a claim is, never why it hasn't paid. ClaimStride reads the practice's own report, asks each insurer where every unpaid claim stands, and puts the next step on each one, in plain words.",
+    "broken": "The eye clinic's biller carried about 1,200 unpaid claims and worked them from Compulink's aging report, which says how old a claim is but never why it hasn't paid. Finding out meant an insurer portal or a phone call per claim, and a claim left too long can miss the insurer's filing deadline. The dental practice had the same problem on Dentrix, and checked coverage by hand, portal by portal.",
     "built": [
-      "Before the visits. The schedule goes in about two days ahead, and every patient comes back Ready or Attention, with the problem first: coverage ended, the year's maximum used up, the plan assigned to another office. Each one says what to do.",
-      "Check coverage. One card with what the claim needs: active dates, what's left of the annual maximum, the deductible, member ID and group number, and coverage by category, with frequency limits where the insurer sends them.",
-      "Claims this week. Every claim on the aging report gets one status: denied, needs info, no record, call, paid or pending. Where the insurer sends a reason, it's in plain words, and every status comes with the next step, like the attachment the insurer is waiting on or a payment that still needs posting.",
-      "What each insurer needs. A grid built from the same rules the checks run, so the desk knows which insurers can find a patient by name and birthday and what to ask for the rest.",
-      "Claims checked before they go out. For the eye clinic, the day's claims run against 18 rules, each with its published source (a diagnosis code billable on the visit date, Medicare's limit on units per visit), and every problem names the box on the claim form and the fix."
+      "Reads the report the practice already makes. Compulink's insurance receivables report at the eye clinic, in every format and every sheet, and the Dentrix aging report at the dental practice. Nothing has to connect into the practice software.",
+      "Asks every insurer. Each unpaid claim goes to its insurer through a healthcare clearinghouse and comes back with one status: needs action, paid, pending, not on file, or no electronic status for insurers like VSP that don't answer that way.",
+      "The next step on every claim. Where the insurer or its payment file gives a reason, it's written in plain words with numbered steps and the insurer's deadline, so the biller knows what to fix and by when.",
+      "The view the biller asked for. Primary, secondary and tertiary claims kept apart, denied against not yet touched by age group, and the deadlines due in the next 30 days at the top.",
+      "Coverage before the visit. A coverage check per patient with active dates, the deductible and what's left this year. The dental front desk ran its first live check on 2026-10-22.",
+      "A brake on spend. The price shows before a run, a monthly limit stops it, and anything above $10 asks first."
     ],
     "changed": [
       {
+        "k": "Why a claim hasn't paid",
+        "before": "A portal or a call per claim",
+        "after": "Asked of every insurer in one run"
+      },
+      {
+        "k": "What to do next",
+        "before": "Worked out claim by claim",
+        "after": "Written on the claim, with the deadline"
+      },
+      {
+        "k": "The old unpaid claims",
+        "before": "A line on the aging report",
+        "after": "Denied or untouched, by age group"
+      },
+      {
         "k": "Checking coverage",
         "before": "Portal by portal, by hand",
-        "after": "The whole schedule, two days ahead"
-      },
-      {
-        "k": "A patient with a problem",
-        "before": "Found at the visit",
-        "after": "Listed first, with what to ask"
-      },
-      {
-        "k": "An unpaid claim",
-        "before": "A line on the aging report",
-        "after": "A status and a next step"
-      },
-      {
-        "k": "What each insurer needs",
-        "before": "Learned call by call",
-        "after": "One grid, from the same rules"
+        "after": "One check, one card"
       }
     ],
-    "math_note": "Checks go through a healthcare clearinghouse at about 30 cents each at its published rate. Every screen on this page uses sample patients.",
-    "quote": null,
+    "math_note": "Checks go through a healthcare clearinghouse at about 30 cents each, its published rate for the first 250 a month. Every screen on this page is the sample clinic with made-up patients.",
+    "quote": {
+      "text": "I'm really impressed with what you guys have done so far.",
+      "who": "The biller, Wichita Family Vision, after her first live run"
+    },
     "stack": [
       "Python",
       "FastAPI",
+      "Pydantic",
       "Stedi clearinghouse API",
-      "X12 270/271 eligibility",
       "X12 276/277 claim status",
-      "pydantic",
-      "httpx",
+      "X12 270/271 eligibility",
+      "X12 835 payment files",
+      "AWS EC2",
+      "Amazon S3",
+      "AWS SSM",
       "pytest"
     ],
     "engineer": {
-      "architecture": "A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer's answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.",
-      "runs_where": "For the eye clinic, a small server in the practice's own AWS account: encrypted disk, sign-in required, and code shipped from a private bucket in that account rather than pulled from GitHub. The dental practice starts on our own AWS account, under its BAA, and moves to an account in the practice's name at hand-off. The clearinghouse is the one outside connection.",
-      "tests": "1,795 automated tests across 40 files (counted 13 Oct 2026), plus recorded insurer answers from the clearinghouse's test mode. Before go-live, an independent code QA and a read-through of every live screen as the front desk; the claim checker's own independent review found 15 problems, all fixed and each pinned by a test.",
-      "cost": "About 30 cents a check at the clearinghouse's published rate for the first 250 a month.",
-      "guardrails": "It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.",
-      "tradeoff": "No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.",
+      "architecture": "A Python FastAPI service with a server-rendered page. Claim status is X12 276/277 and coverage is 270/271 through Stedi; payment files (835) supply the reason where the insurer sends one. Deterministic code reads every report format and every insurer answer, so the same claim always gets the same status and the same steps. An insurer that doesn't answer electronically is marked for a call rather than given an answer it never sent.",
+      "runs_where": "For the eye clinic, a small server in the practice's own AWS account: encrypted disk, sign-in required, code shipped from a private bucket in that account and released through SSM with a one-command rollback. The dental practice runs in its own AWS account under its BAA and moves into the practice's name at hand-off. The clearinghouse is the one outside connection.",
+      "tests": "2,596 automated tests (22 Oct 2026). Before the biller's first run, her real 1,140-claim report was read with every total matching hers. Every release is tagged and can be rolled back in one command.",
+      "cost": "About 30 cents a check at the clearinghouse's published rate for the first 250 a month. The monthly limit and the confirm step above $10 keep the bill where the practice set it.",
+      "guardrails": "It never guesses. A missing detail says what to ask instead of sending a guess, an insurer with no electronic answer is marked for a call, and the price is shown before anything is sent.",
+      "tradeoff": "No direct connection into Compulink or Dentrix yet. The reports the practice already exports are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.",
       "repo": null,
       "repo_note": null
     },
-    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic's server.",
+    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, built the eye care side and the claims worklist the biller uses, and run its releases on the clinic's server.",
     "media": {
-      "hero": "/alec/img/putback/01-before-the-visits.webp",
-      "alt": "Before the visits screen with sample patients: five marked Attention at the top, each with a plain reason and a Do line, above patients marked Ready",
-      "caption": "The schedule, checked two days ahead, with the patients who need something first. Sample patients.",
+      "hero": "/alec/img/claimstride/01-worklist.webp",
+      "alt": "The claims worklist for a sample eye clinic: counts for needs action, not on file, no electronic status, paid and pending, the unpaid total, and a table of claims by age with denied and not-touched counts",
+      "caption": "The week's claims, checked with the insurers and sorted by what needs action. Sample clinic, made-up patients.",
       "gallery": [
         {
-          "src": "/alec/img/putback/02-coverage-card.webp",
-          "alt": "Coverage card for a sample Delta Dental patient: active, $1,340 left this year, subscriber ID, group number and what the plan pays by category",
-          "caption": "One card with everything the claim needs."
+          "src": "/alec/img/claimstride/02-denied-claim.webp",
+          "alt": "A denied Cigna claim with the reason in plain words, a note not to bill the patient, three numbered steps and an appeal deadline",
+          "caption": "A denied claim: the reason, what not to do, the steps and the deadline."
         },
         {
-          "src": "/alec/img/putback/03-claims-this-week.webp",
-          "alt": "Claims this week: counts for denied, needs info, no record, call, paid and pending, above denied claims each with a reason and a next step",
-          "caption": "Every claim on the aging report gets a status and a next step."
-        },
-        {
-          "src": "/alec/img/putback/04-what-each-insurer-needs.webp",
-          "alt": "A grid of six insurers showing which can be checked by name and birthday and what to ask for the others",
-          "caption": "What each insurer needs, so the desk asks once."
+          "src": "/alec/img/claimstride/03-steps-per-claim.webp",
+          "alt": "Claim cards for VSP with no electronic status, a Medicare secondary claim waiting on the primary EOB, and a Healthy Blue claim to resend",
+          "caption": "Every claim gets its own next step, including the ones an insurer won't answer electronically."
         }
       ]
     },
     "links": [],
-    "compliance": "No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names."
+    "compliance": "Runs inside each practice's own AWS account under its business associate agreement. Sign-in is required, an access record notes who opened or changed a claim by the tool's own reference only, and logs carry request IDs and insurer names, never patient details. The clearinghouse is the one outside connection, under its own BAA."
   },
   {
     "slug": "lead-finder",
