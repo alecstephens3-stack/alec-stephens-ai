@@ -1225,6 +1225,11 @@ body.sai-dark .sai-float-stat { background: rgba(255,255,255,0.08); border: 1px 
 body.sai-dark .sai-float-stat .n { color: var(--sai-cream); } body.sai-dark .sai-float-stat .n em { color: var(--sai-accent-night); }
 body.sai-dark .sai-float-stat .l { color: var(--sai-cream-2); }
 body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.10); color: var(--sai-cream); }
+
+/* ── Burin · the engraved style (2026-10-17) ───────────────────────────────────────────────
+   A public-domain plate drawn live as banknote line engraving by kit/burin.js (the BURIN
+   marker). The canvas fills its box: give the box the size. Markup and rules: SNIPPETS.md. */
+canvas.sai-burin { display: block; width: 100%; height: 100%; }
 </style>
 <!-- /SAI:KIT -->
 <style>
@@ -1419,12 +1424,12 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <p class="sai-lede">The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.</p>
     <div class="cs-stats">
       <div class="num acc sai-pane">
-        <span class="v">~200<span class="u">hrs/yr</span></span>
-        <span class="l">of keying and filing off the bookkeeper&#39;s desk, at the 50 invoices a week the clinic plans for as it expands</span>
-<span class="basis">50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year.</span>      </div>
+        <span class="v">30<span class="u">invoices</span></span>
+        <span class="l">of her real ones read, filed and entered in her first three weeks: 29 bills created, 0 failed, and never an Undo</span>
+<span class="basis">The app&#39;s own log, 1 to 20 October 2026: 7 sessions, 30 real invoices read and filed, 29 bills created in QuickBooks, 0 failed. The 30th waited on a vendor name QuickBooks spelled differently, fixed the next day.</span>      </div>
       <div class="num sai-pane">
-        <span class="v">5 of 5</span>
-        <span class="l">totals right on the 5 real invoices she tested it with; QuickBooks&#39; own bill reader got 2 of them wrong</span>
+        <span class="v">~200<span class="u">hrs/yr</span></span>
+        <span class="l">of keying and filing off her desk at the 50 invoices a week the clinic plans for as it expands (estimate)</span>
       </div>
     </div>
     <div class="hero-grid">
@@ -1457,7 +1462,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
   <section id="built" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
     <span class="sai-port"><span class="disc"></span><span class="ptext">What I built</span></span>
     <h3>The build</h3>
-    <ul class="sai-bullets"><li>One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.</li><li>Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.</li><li>Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.</li><li>Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one.</li></ul>
+    <ul class="sai-bullets"><li>One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.</li><li>Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.</li><li>Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.</li><li>Kept fast as she used it. After her first weeks, launch went from about 2,100 files unpacked to 181, reading runs three invoices at a time, and the bill memo now says what the bill was for.</li><li>Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one.</li></ul>
     <div class="gallery">
       <figure class="shot"><img src="/alec/img/invoice-agent/02-result-v35.webp" srcset="/alec/img/invoice-agent/02-result-v35-800.webp 800w, /alec/img/invoice-agent/02-result-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="The result page: five entries in QuickBooks, including a card expense, two documents filed but not entered, one file left for her" loading="lazy" decoding="async"><figcaption>After Go: what went into QuickBooks, what was filed only, what still needs her.</figcaption></figure>
       <figure class="shot"><img src="/alec/img/invoice-agent/03-needs-you-v35.webp" srcset="/alec/img/invoice-agent/03-needs-you-v35-800.webp 800w, /alec/img/invoice-agent/03-needs-you-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="A result page with one bill waiting because the vendor is not in QuickBooks yet" loading="lazy" decoding="async"><figcaption>A bill that can&#39;t go in yet waits, and goes in with one click once she adds the vendor.</figcaption></figure>
@@ -1470,11 +1475,11 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <div class="sai-split">
       <div class="col before">
         <div class="col-head"><h4>Before</h4><span class="tag old">By hand</span></div>
-<div class="row"><span class="k">Entering a bill</span><span class="v">Typed by hand from the PDF</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and dragged into 1 of 184 folders</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">In one person&#39;s head</span></div><div class="row"><span class="k">Totals right on 5 of her real invoices</span><span class="v">3 with QuickBooks&#39; own reader</span></div>      </div>
+<div class="row"><span class="k">Entering a bill</span><span class="v">Typed by hand from the PDF</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and dragged into 1 of 184 folders</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">In one person&#39;s head</span></div><div class="row"><span class="k">Totals right in a 5-invoice test</span><span class="v">3 with QuickBooks&#39; own reader</span></div><div class="row"><span class="k">Her first three weeks</span><span class="v">Every bill keyed by hand</span></div>      </div>
       <span class="sai-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#B4502C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
       <div class="col after">
         <div class="col-head"><h4>After</h4><span class="tag new">The system</span></div>
-<div class="row"><span class="k">Entering a bill</span><span class="v">Read, checked in one table, entered on Go</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and filed on the same click</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">Written once, followed every run</span></div><div class="row"><span class="k">Totals right on 5 of her real invoices</span><span class="v">All 5</span></div>      </div>
+<div class="row"><span class="k">Entering a bill</span><span class="v">Read, checked in one table, entered on Go</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and filed on the same click</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">Written once, followed every run</span></div><div class="row"><span class="k">Totals right in a 5-invoice test</span><span class="v">All 5</span></div><div class="row"><span class="k">Her first three weeks</span><span class="v">29 bills created, 0 failed, no Undo</span></div>      </div>
     </div>
     <div class="sai-w-note"><strong>Where the numbers come from.</strong> The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic&#39;s AWS account: about 1 cent an invoice.</div>
   </section>
@@ -1503,7 +1508,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
     <span class="sai-port"><span class="disc"></span><span class="ptext">Keep going</span></span>
     <div class="nextprev">
       <a class="sai-pane" href="/alec/pto-payroll"><span class="n">Previous build</span><span class="t">PTO + payroll system</span><span class="n">60 to 100 hrs/yr · of paper-slip admin gone, and next year set up with one click</span></a>
-      <a class="sai-pane" href="/alec/putback"><span class="n">Next build</span><span class="t">Putback, insurance claims tool</span><span class="n">2 days ahead · every patient&#39;s insurance checked before the visit, and every unpaid claim given a status and a next step</span></a>
+      <a class="sai-pane" href="/alec/claimstride"><span class="n">Next build</span><span class="t">ClaimStride, insurance claims software</span><span class="n">1,140 claims · read from a biller&#39;s real report, and the unpaid ones checked with their insurers in minutes</span></a>
     </div>
     <div class="links"><a class="sai-btn ghost" href="/alec">All 10 builds</a><a class="sai-btn ghost" href="mailto:alec@stephensai.co">Email Alec</a></div>
   </section>

@@ -12,7 +12,7 @@
  * object at the origin, ink(ctx, m, F) paints anything handwritten at messiness m
  * (1 = scrawled, 0 = neat). Poses per layout: m = messy [cx, cy, deg], t = tidy [cx, cy, deg].
  * Wide desk 800 x 500, tall 358 x 680 (bench.css makes the phone desk taller than /desk's 600
- * so Putback gets its own row). One light, from the top left. The engine casts the
+ * so ClaimStride gets its own row). One light, from the top left. The engine casts the
  * object's own shadow from its silhouette, so draw() only shades parts sitting on parts.
  */
 
@@ -30,7 +30,7 @@ const POSES = {
   'construction-site': { wide: { m: [500, 368, 6], t: [496, 362, 0] },   tall: { m: [119, 381, 2], t: [118, 378, 0] } },
   'invoice-agent':     { wide: { m: [306, 386, -9], t: [312, 382, 0] },  tall: { m: [255, 512, -1], t: [254, 510, 0] } },
   'pto-payroll':       { wide: { m: [140, 370, 7], t: [134, 364, 0] },   tall: { m: [105, 506, 2], t: [104, 504, 0] } },
-  putback:             { wide: { m: [512, 242, -7], t: [516, 236, 0] },  tall: { m: [148, 622, 4], t: [150, 618, 0] } },
+  claimstride:         { wide: { m: [512, 242, -7], t: [516, 236, 0] },  tall: { m: [148, 622, 4], t: [150, 618, 0] } },
   'lead-finder':       { wide: { m: [124, 257, 8], t: [120, 252, 0] },   tall: { m: [288, 626, -4], t: [290, 622, 0] } },
   mug:                 { wide: { m: [644, 236, 18], t: [640, 232, 0] },  tall: null },
   pencil:              { wide: { m: [258, 262, -16], t: [262, 258, 0] }, tall: { m: [232, 116, 88], t: [232, 112, 90] } },
@@ -38,8 +38,8 @@ const POSES = {
 
 /* the idle lens visits the tidy centre of each build, in a loop around the desk */
 const TOUR = {
-  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'lead-finder', 'putback'],
-  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'putback', 'lead-finder'],
+  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'lead-finder', 'claimstride'],
+  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'claimstride', 'lead-finder'],
 };
 export const BENCH_STOPS = {
   wide: TOUR.wide.map(id => POSES[id].wide.t.slice(0, 2)),
@@ -348,12 +348,12 @@ export function buildBenchItems(P) {
     },
   });
 
-  /* ============================================================ 3b putback */
+  /* ============================================================ 3b claimstride */
   /* a dental PPO card lying on this week's claims printout; the denied line circled */
   const PB = { sw: 128, sh: 82, cw: 86, ch: 54 };
   items.push({
-    id: 'putback', tool: 'putback', name: 'Insurance card', verb: 'Putback',
-    w: 136, h: 92, shadow: 1.2, ...POSES.putback,
+    id: 'claimstride', tool: 'claimstride', name: 'Insurance card', verb: 'ClaimStride',
+    w: 136, h: 92, shadow: 1.2, ...POSES.claimstride,
     draw(ctx, F) {
       const { sw, sh, cw, ch } = PB;
       const T = 'rgba(34,30,28,0.78)', L = 'rgba(34,30,28,0.32)';

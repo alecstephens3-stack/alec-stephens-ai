@@ -1225,6 +1225,11 @@ body.sai-dark .sai-float-stat { background: rgba(255,255,255,0.08); border: 1px 
 body.sai-dark .sai-float-stat .n { color: var(--sai-cream); } body.sai-dark .sai-float-stat .n em { color: var(--sai-accent-night); }
 body.sai-dark .sai-float-stat .l { color: var(--sai-cream-2); }
 body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.10); color: var(--sai-cream); }
+
+/* ── Burin · the engraved style (2026-10-17) ───────────────────────────────────────────────
+   A public-domain plate drawn live as banknote line engraving by kit/burin.js (the BURIN
+   marker). The canvas fills its box: give the box the size. Markup and rules: SNIPPETS.md. */
+canvas.sai-burin { display: block; width: 100%; height: 100%; }
 </style>
 <!-- /SAI:KIT -->
 <style>
@@ -1530,13 +1535,13 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
       </a>
       <a class="cell sai-pane" href="#invoice-agent" data-slug="invoice-agent">
         <span class="cell-name">Invoice processing system</span>
-        <span class="cell-phrase">Of invoice keying and filing taken off a bookkeeper&#39;s desk, with her vendor rules followed every time</span>
-        <span class="cell-n">~200 hrs/yr</span>
+        <span class="cell-phrase">In a bookkeeper&#39;s first three weeks, read, filed and entered in QuickBooks with her vendor rules followed every time</span>
+        <span class="cell-n">30 invoices, 0 failed</span>
       </a>
-      <a class="cell sai-pane" href="#putback" data-slug="putback">
-        <span class="cell-name">Putback, insurance claims tool</span>
-        <span class="cell-phrase">Every patient&#39;s insurance checked before the visit, and every unpaid claim given a status and a next step</span>
-        <span class="cell-n">2 days ahead</span>
+      <a class="cell sai-pane" href="#claimstride" data-slug="claimstride">
+        <span class="cell-name">ClaimStride, insurance claims software</span>
+        <span class="cell-phrase">Read from a biller&#39;s real report, and the unpaid ones checked with their insurers in minutes</span>
+        <span class="cell-n">1,140 claims</span>
       </a>
       <a class="cell sai-pane" href="#lead-finder" data-slug="lead-finder">
         <span class="cell-name">Pharmacy lead finder</span>
@@ -1574,7 +1579,7 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
   <section id="builds" aria-label="The builds" data-sc-act="flow">
     <div class="railwrap"><div class="railbar">
       <nav class="rail" aria-label="Builds">
-<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#putback">Putback</a><a href="#lead-finder">Lead finder</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">The Bridge</a>      </nav>
+<a href="#knowledge-base" class="on" aria-current="true">Knowledge base</a><a href="#pto-payroll">PTO + payroll</a><a href="#invoice-agent">Invoice processing</a><a href="#claimstride">ClaimStride</a><a href="#lead-finder">Lead finder</a><a href="#ai-lab">AI Lab</a><a href="#coaching-aios">Coaching AI system</a><a href="#construction-site">Construction website</a><a href="#curriculum-system">Curriculum system</a><a href="#aios">The Bridge</a>      </nav>
       <div class="railctl" aria-hidden="true"><button type="button" data-step="-1" title="Previous build">‹</button><button type="button" data-step="1" title="Next build">›</button></div>
       <div class="view" role="group" aria-label="View"><button type="button" class="on" data-view="deck" aria-pressed="true">Deck</button><button type="button" data-view="list" aria-pressed="false">List</button></div>
     </div></div>
@@ -1687,8 +1692,8 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
                 <h2 id="t-invoice-agent">Invoice processing system</h2>
                 <p class="sub">Invoice processing for a clinic&#39;s bookkeeper: she never processes an invoice by hand again. Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</p>
                 <div class="num">
-                  <span class="v">~200<span class="u">hrs/yr</span></span>
-                  <span class="l">of keying and filing off the bookkeeper&#39;s desk, at the 50 invoices a week the clinic plans for as it expands</span>
+                  <span class="v">30<span class="u">invoices</span></span>
+                  <span class="l">of her real ones read, filed and entered in her first three weeks: 29 bills created, 0 failed, and never an Undo</span>
                 </div>
                 <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>QuickBooks Online Accounting API</li><li>OAuth 2.0</li><li>PyMuPDF</li><li>PyInstaller</li><li>Amazon S3</li><li>CloudWatch</li><li>Ed25519 signed updates</li><li>Windows</li></ul></div>
               </div>
@@ -1727,51 +1732,51 @@ body.sai-dark .fig text { fill: var(--sai-cream); } body.sai-dark .fig text.mute
           </div>
         </div>
       </article>
-      <article class="card" id="putback" aria-labelledby="t-putback">
+      <article class="card" id="claimstride" aria-labelledby="t-claimstride">
         <div class="flip">
           <div class="face front sai-pane">
-            <div class="head"><span class="lbl">Healthcare · dental and eye care · insurance · Tri-Valley Dental and Wichita Family Vision</span><span class="when">October 2026, live at the eye clinic</span></div>
+            <div class="head"><span class="lbl">Healthcare · eye care and dental · insurance · Wichita Family Vision and Tri-Valley Dental</span><span class="when">Live on the eye clinic&#39;s own server since 2026-10-12; the biller&#39;s first live run 2026-10-21</span></div>
             <div class="front-grid">
               <div class="ftext">
-                <h2 id="t-putback">Putback, insurance claims tool</h2>
-                <p class="sub">Putback, an insurance checker for dental and eye care front desks: problems caught before the visit and before the claim goes out. Tri-Valley Dental Care in Pleasanton, California, and Wichita Family Vision, an optometry practice in Wichita, Kansas.</p>
+                <h2 id="t-claimstride">ClaimStride, insurance claims software</h2>
+                <p class="sub">ClaimStride, insurance claims software for eye care and dental: every unpaid claim checked with the insurer and given its next step. Wichita Family Vision, an optometry practice in Wichita, Kansas, and Tri-Valley Dental Care in Pleasanton, California.</p>
                 <div class="num">
-                  <span class="v">2 days<span class="u">ahead</span></span>
-                  <span class="l">every patient on the schedule sent to the insurer before the visit, with the ones who need something, or need a call, listed first</span>
+                  <span class="v">1,140<span class="u">claims</span></span>
+                  <span class="l">read from the biller&#39;s real Compulink report, with every total adding up to hers</span>
                 </div>
-                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Python</li><li>FastAPI</li><li>Stedi clearinghouse API</li><li>X12 270/271 eligibility</li><li>X12 276/277 claim status</li><li>pydantic</li><li>httpx</li><li>pytest</li></ul></div>
+                <div class="stack"><span class="lbl">Stack</span><ul class="chips"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>Stedi clearinghouse API</li><li>X12 276/277 claim status</li><li>X12 270/271 eligibility</li><li>X12 835 payment files</li><li>AWS EC2</li><li>Amazon S3</li><li>AWS SSM</li><li>pytest</li></ul></div>
               </div>
               <div class="fmedia">
                 <figure class="shot">
-                  <img src="/alec/img/putback/01-before-the-visits.webp" srcset="/alec/img/putback/01-before-the-visits-800.webp 800w, /alec/img/putback/01-before-the-visits.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="Before the visits screen with sample patients: five marked Attention at the top, each with a plain reason and a Do line, above patients marked Ready" loading="eager" decoding="async" fetchpriority="low">
-                  <figcaption>The schedule, checked two days ahead, with the patients who need something first. Sample patients.</figcaption>
+                  <img src="/alec/img/claimstride/01-worklist.webp" srcset="/alec/img/claimstride/01-worklist-800.webp 800w, /alec/img/claimstride/01-worklist.webp 1600w" sizes="(max-width: 760px) 92vw, 420px" width="1600" height="1200" alt="The claims worklist for a sample eye clinic: counts for needs action, not on file, no electronic status, paid and pending, the unpaid total, and a table of claims by age with denied and not-touched counts" loading="eager" decoding="async" fetchpriority="low">
+                  <figcaption>The week&#39;s claims, checked with the insurers and sorted by what needs action. Sample clinic, made-up patients.</figcaption>
                 </figure>
               </div>
             </div>
             <div class="foot">
-<p class="who comp"><b>Compliance.</b> No real patient data goes through it until business associate agreements are signed, and then only under those agreements. It never asks for a Social Security number, never sends a guessed detail to an insurer, and its logs carry only request IDs and insurer names.</p>              <p class="who"><b>My role.</b> My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, added the Before the visits check and the claim checker, ran the QA passes, and put it live on the eye clinic&#39;s server.</p>
+<p class="who comp"><b>Compliance.</b> Runs inside each practice&#39;s own AWS account under its business associate agreement. Sign-in is required, an access record notes who opened or changed a claim by the tool&#39;s own reference only, and logs carry request IDs and insurer names, never patient details. The clearinghouse is the one outside connection, under its own BAA.</p>              <p class="who"><b>My role.</b> My co-founder built the first version. I rebuilt how it reads each insurer&#39;s answers, built the eye care side and the claims worklist the biller uses, and run its releases on the clinic&#39;s server.</p>
               <div class="acts">
                 <button type="button" class="sai-btn primary flipbtn" data-flip="back" aria-pressed="false">How it's built</button>
-                <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
+                <a class="sai-btn ghost" href="/alec/claimstride">Open the build</a>
               </div>
             </div>
           </div>
 
           <div class="face back sai-pane" inert>
             <span class="lbl back-title">How it's built</span>
-            <div class="head"><span class="lbl acc">How it's built · Putback, insurance claims tool</span><span class="when">October 2026, live at the eye clinic</span></div>
+            <div class="head"><span class="lbl acc">How it's built · ClaimStride, insurance claims software</span><span class="when">Live on the eye clinic&#39;s own server since 2026-10-12; the biller&#39;s first live run 2026-10-21</span></div>
             <dl class="eng">
-              <div class="wide"><dt>Who uses it</dt><dd>The front desk and the owner dentist at the dental practice; the biller at the eye clinic.</dd></div>
-              <div class="wide"><dt>Architecture</dt><dd>A Python service with a one-page web front end. Coverage checks are X12 270/271 eligibility requests through Stedi; claim status is 276/277. Deterministic code reads every insurer&#39;s answer: plan-year against coverage dates, ranked maximum and deductible rows, split categories (a crown at 60% beside a repair at 90%), DeltaCare facility matching. The schedule and the aging report come in as the exports the desk already makes, so nothing has to connect into the practice software.</dd></div>
-              <div><dt>Where it runs</dt><dd>For the eye clinic, a small server in the practice&#39;s own AWS account: encrypted disk, sign-in required, and code shipped from a private bucket in that account rather than pulled from GitHub. The dental practice starts on our own AWS account, under its BAA, and moves to an account in the practice&#39;s name at hand-off. The clearinghouse is the one outside connection.</dd></div>
-              <div><dt>Tests and evals</dt><dd>1,795 automated tests across 40 files (counted 13 Oct 2026), plus recorded insurer answers from the clearinghouse&#39;s test mode. Before go-live, an independent code QA and a read-through of every live screen as the front desk; the claim checker&#39;s own independent review found 15 problems, all fixed and each pinned by a test.</dd></div>
-              <div><dt>Cost and latency</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month.</dd></div>
-              <div><dt>Guardrails</dt><dd>It never guesses. A check that is missing a detail says what to ask the patient instead of sending a guess, and an incomplete search never tells the desk to resubmit. An insurer that does not answer claim status electronically, like MetLife, is marked Call rather than given an answer it never sent.</dd></div>
-              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>No direct connection into Dentrix yet. The schedule export and aging report the desk already makes are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.</p></div></dd></div>
+              <div class="wide"><dt>Who uses it</dt><dd>The biller at the eye clinic; the front desk and the owner dentist at the dental practice.</dd></div>
+              <div class="wide"><dt>Architecture</dt><dd>A Python FastAPI service with a server-rendered page. Claim status is X12 276/277 and coverage is 270/271 through Stedi; payment files (835) supply the reason where the insurer sends one. Deterministic code reads every report format and every insurer answer, so the same claim always gets the same status and the same steps. An insurer that doesn&#39;t answer electronically is marked for a call rather than given an answer it never sent.</dd></div>
+              <div><dt>Where it runs</dt><dd>For the eye clinic, a small server in the practice&#39;s own AWS account: encrypted disk, sign-in required, code shipped from a private bucket in that account and released through SSM with a one-command rollback. The dental practice runs in its own AWS account under its BAA and moves into the practice&#39;s name at hand-off. The clearinghouse is the one outside connection.</dd></div>
+              <div><dt>Tests and evals</dt><dd>2,596 automated tests (22 Oct 2026). Before the biller&#39;s first run, her real 1,140-claim report was read with every total matching hers. Every release is tagged and can be rolled back in one command.</dd></div>
+              <div><dt>Cost and latency</dt><dd>About 30 cents a check at the clearinghouse&#39;s published rate for the first 250 a month. The monthly limit and the confirm step above $10 keep the bill where the practice set it.</dd></div>
+              <div><dt>Guardrails</dt><dd>It never guesses. A missing detail says what to ask instead of sending a guess, an insurer with no electronic answer is marked for a call, and the price is shown before anything is sent.</dd></div>
+              <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>No direct connection into Compulink or Dentrix yet. The reports the practice already exports are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.</p></div></dd></div>
             </dl>
             <div class="acts">
               <button type="button" class="sai-btn primary flipbtn" data-flip="front" aria-pressed="false">Back to the result</button>
-              <a class="sai-btn ghost" href="/alec/putback">Open the build</a>
+              <a class="sai-btn ghost" href="/alec/claimstride">Open the build</a>
             </div>
           </div>
         </div>
