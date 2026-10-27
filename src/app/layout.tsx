@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { Scene } from "@/components/ui/scene";
+import { VisitBeacon } from "@/components/visit-beacon";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/content";
 import "./globals.css";
 
@@ -103,6 +104,7 @@ export default function RootLayout({
         <div className="relative isolate">
           <main id="main-content">{children}</main>
           <Footer />
+          <VisitBeacon />
         </div>
       </body>
     </html>
