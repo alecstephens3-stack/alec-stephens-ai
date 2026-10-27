@@ -92,6 +92,16 @@ const sections: LegalSection[] = [
             an IP address, the page requested, and a timestamp. We use these
             logs only to operate and secure the site.
           </li>
+          <li>
+            We keep a record of visits to this website: the page viewed, the
+            date and time, the site or link that referred you (including any
+            campaign tag in that link), your approximate location (city, region
+            and country, as estimated by our hosting provider), and your device
+            type, browser and language. We do not store your IP address. Visits
+            are grouped by a code that changes every day and is not used to
+            identify you. We use this record to understand how people find the
+            site.
+          </li>
         </ul>
       </>
     ),
@@ -104,9 +114,9 @@ const sections: LegalSection[] = [
         <p>At present, the following do not apply to this website:</p>
         <ul>
           <li>
-            <strong>Analytics and advertising trackers.</strong> The site does
-            not use Google Analytics, advertising pixels, or third-party tracking
-            scripts.
+            <strong>Advertising trackers and tracking scripts.</strong> The site
+            does not use Google Analytics, advertising pixels, or third-party
+            tracking scripts.
           </li>
           <li>
             <strong>Tracking cookies.</strong> The site does not place
