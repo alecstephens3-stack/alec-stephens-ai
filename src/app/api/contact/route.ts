@@ -26,6 +26,13 @@ const resend = process.env.RESEND_API_KEY
 const FROM =
   process.env.CONTACT_FROM_EMAIL ?? "Stephens AI <onboarding@resend.dev>";
 
+// Where the message is delivered. The sandbox sender above only delivers to the
+// Resend account owner's own address, so since the v4 rebuild (2026-08-14)
+// moved CONTACT_EMAIL to alec@stephensai.co, every send was rejected with a 502
+// (found 2026-10-28). Deliver to the owner address until stephensai.co is
+// verified in Resend; then set CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL in Vercel.
+const TO = process.env.CONTACT_TO_EMAIL ?? "alecstephens3@gmail.com";
+
 // Per-instance throttle. Good enough for a marketing form; swap for a shared
 // store if the site ever runs on more than a handful of lambdas.
 const hits = new Map<string, number[]>();
@@ -53,7 +60,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid submission." }, { status: 400 });
     }
 
-    const { name, email, message, website, locale } = body ?? {};
+    const { name, email, message, website, locale, subject } = body ?? {};
     // Sent by the Korean page (/kr). Anything else is treated as English.
     const korean = locale === "ko";
 
@@ -109,12 +116,16 @@ export async function POST(request: Request) {
     const mail = {
       from: FROM,
       replyTo: email,
-      subject: `${korean ? "[KR] " : ""}New consultation request from ${name}`,
+      // A page of our own (a client's picks page) can name its own subject line.
+      subject:
+        typeof subject === "string" && subject.trim()
+          ? subject.trim().slice(0, 120)
+          : `${korean ? "[KR] " : ""}New consultation request from ${name}`,
       text: [`Name: ${name}`, `Email: ${email}`, "", "Message:", message].join(
         "\n"
       ),
     };
-    const { data, error } = await resend.emails.send({ ...mail, to: CONTACT_EMAIL });
+    const { data, error } = await resend.emails.send({ ...mail, to: TO });
 
     if (error) {
       console.error("Resend send failed:", error);
