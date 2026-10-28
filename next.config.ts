@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
       // v4 folded the eyecare page into the home page. Keep the old URLs
       // alive: /optometry was the link we handed to prospects.
       { source: "/optometry", destination: "/", permanent: true },
+      // A link pasted at the end of a sentence picks up the full stop
+      // ("…/index.html.") and 404s. Curtis's picks link did on 2026-10-28.
+      { source: "/share/:slug/index.html.", destination: "/share/:slug/index.html", permanent: false },
       { source: "/eyecare", destination: "/", permanent: true },
       // Putback was renamed ClaimStride (2026-10-13); the portfolio page moved with it.
       { source: "/alec/putback", destination: "/alec/claimstride", permanent: true },
