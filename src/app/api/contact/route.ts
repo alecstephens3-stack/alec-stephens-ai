@@ -31,7 +31,23 @@ const FROM =
 // moved CONTACT_EMAIL to alec@stephensai.co, every send was rejected with a 502
 // (found 2026-10-28). Deliver to the owner address until stephensai.co is
 // verified in Resend; then set CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL in Vercel.
-const TO = process.env.CONTACT_TO_EMAIL ?? "alecstephens3@gmail.com";
+const OWNER = "alecstephens3@gmail.com";
+const TO = process.env.CONTACT_TO_EMAIL ?? OWNER;
+const SANDBOX = !process.env.CONTACT_FROM_EMAIL;
+
+/**
+ * Health check for the weekly monitor (Hermes cron, texts Alec only on a fail).
+ * It can't prove a delivery without sending one, so it checks the two settings
+ * that broke it before: a key exists, and the sandbox sender is only pointed at
+ * the one address it can deliver to. No addresses or keys are returned.
+ */
+export async function GET() {
+  const ok = !!resend && (!SANDBOX || TO === OWNER);
+  return NextResponse.json(
+    { ok, key: !!resend, sender: SANDBOX ? "sandbox" : "verified", recipientAllowed: !SANDBOX || TO === OWNER },
+    { status: ok ? 200 : 500 },
+  );
+}
 
 // Per-instance throttle. Good enough for a marketing form; swap for a shared
 // store if the site ever runs on more than a handful of lambdas.
@@ -125,7 +141,14 @@ export async function POST(request: Request) {
         "\n"
       ),
     };
-    const { data, error } = await resend.emails.send({ ...mail, to: TO });
+    let { data, error } = await resend.emails.send({ ...mail, to: TO });
+
+    // Safety net: if the main address is ever refused, send it to the one
+    // address the account always accepts, so a visitor's message is never lost.
+    if (error && TO !== OWNER) {
+      console.error("Resend send failed, retrying to the owner address:", error);
+      ({ data, error } = await resend.emails.send({ ...mail, to: OWNER, subject: `[Form fallback] ${mail.subject}` }));
+    }
 
     if (error) {
       console.error("Resend send failed:", error);
