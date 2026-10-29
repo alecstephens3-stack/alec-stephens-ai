@@ -19,6 +19,16 @@ const nextConfig: NextConfig = {
         source: "/case-studies/front-desk-knowledge-base",
         destination: "/case-studies/front-desk-knowledge-base/index.html",
       },
+      // Short case studies for practice owners (29 Oct 2026), built by
+      // artifacts/case-studies/build_short_pages.py in the vault.
+      {
+        source: "/case-studies/time-off-and-payroll",
+        destination: "/case-studies/time-off-and-payroll/index.html",
+      },
+      {
+        source: "/case-studies/vendor-bills",
+        destination: "/case-studies/vendor-bills/index.html",
+      },
     ];
   },
   async redirects() {

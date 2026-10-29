@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Bills into QuickBooks for an Optometry Clinic: Case Study | Stephens AI</title>
+<meta name="description" content="How a Wichita optometry clinic stopped typing vendor bills into QuickBooks. About 200 hours a year back, and no failed bills since it went live.">
+<link rel="canonical" href="https://stephensai.co/case-studies/vendor-bills">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Stephens AI">
+<meta property="og:title" content="Vendor Bills into QuickBooks for an Optometry Clinic: Case Study | Stephens AI">
+<meta property="og:description" content="How a Wichita optometry clinic stopped typing vendor bills into QuickBooks. About 200 hours a year back, and no failed bills since it went live.">
+<meta property="og:url" content="https://stephensai.co/case-studies/vendor-bills">
+<meta property="og:image" content="https://stephensai.co/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/icon.svg">
+<!-- SAI:FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400..600;1,400..600&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<!-- /SAI:FONTS -->
+<!-- SAI:KIT -->
+<style>
+/* ============================================================================
+   Stephens AI — "Lens" v3 · THE KIT
+   ----------------------------------------------------------------------------
+   The single stylesheet for every branded HTML artifact. One vocabulary
+   (.sai-*), tokens + primitives + explainer widgets, no build step.
+
+   DO NOT hand-copy this into an artifact. Put the SAI:KIT marker comment in
+   the head and run:  python3 scripts/inline_kit.py <file.html>
+   (The marker is never written literally in here — it would nest inside the
+   payload and break the inliner's idempotency fence.)
+
+   Canonical visual reference: explorations/2026-07-20-liquid-glass/final-h-lens.html
+   Live component gallery:     kit/gallery.html
+   Rules of the system:        ../CLAUDE.md
+   ========================================================================== */
+
+:root {
+  /* ——— Ink & cream ——— */
+  --sai-ink:       #171310;   /* primary text on light */
+  --sai-ink-90:    #241E19;   /* headings emphasis */
+  --sai-ink-2:     #6E6258;   /* secondary text — the LIGHTEST allowed for reading */
+  --sai-cream:     #F5F1E8;   /* primary text on night surfaces */
+  --sai-cream-2:   #B3AB9E;   /* secondary text on night — the floor on dark */
+
+  /* ——— Accent ——— */
+  --sai-accent:        #DC6843;
+  --sai-accent-deep:   #C55532;                 /* hover / pressed on light */
+  --sai-accent-night:  #FF8E76;                 /* the accent on night surfaces */
+  --sai-accent-soft:   rgba(220,104,67,0.08);   /* tinted fills, verdict strips */
+  --sai-accent-line:   rgba(220,104,67,0.18);   /* tinted borders */
+  --sai-salmon:        #F47B6B;                 /* SCENE color (tint pools). Not for components. */
+
+  /* ——— The scene ——— */
+  --sai-sky: linear-gradient(180deg, #F3EEE8 0%, #F7E7DA 42%, #F7DCC9 74%, #F2CFB8 100%);
+  --sai-sky-fallback: #F5E9DE;
+  --sai-night: radial-gradient(130% 130% at 22% -12%, #241B15 0%, #150F0B 58%, #0D0A08 100%);
+  --sai-night-fallback: #100C0E;
+
+  --sai-tint-1: #DC6843;   /* opacity ~.10 */
+  --sai-tint-2: #F47B6B;   /* opacity ~.12 */
+  --sai-tint-3: #A8988A;   /* opacity ~.12 */
+
+  /* ——— Glass ——— */
+  --sai-glass:        rgba(255,255,255,0.55);  /* structural panes */
+  --sai-glass-strong: rgba(255,255,255,0.78);  /* floating layers that must pop */
+  --sai-glass-tile:   rgba(255,255,255,0.48);  /* nested tiles inside a pane */
+  --sai-glass-edge:   rgba(255,255,255,0.85);  /* 1px borders */
+  --sai-glass-blur:   30px;
+  --sai-glass-saturate: 1.5;
+  --sai-pane-shadow: 0 14px 44px rgba(112,62,40,0.13),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-pane-shadow-hover: 0 22px 56px rgba(112,62,40,0.19),
+                     inset 0 1px 0 rgba(255,255,255,0.95),
+                     inset 0 -1px 0 rgba(23,19,16,0.04);
+  --sai-float-shadow: 0 24px 54px rgba(112,62,40,0.22), inset 0 1px 0 #fff;
+
+  /* ——— Night glass ——— */
+  --sai-nglass:       rgba(255,255,255,0.065);
+  --sai-nglass-tile:  rgba(255,255,255,0.035);
+  --sai-nglass-edge:  rgba(255,255,255,0.12);
+  --sai-nrule:        rgba(255,255,255,0.11);
+  --sai-nrule-soft:   rgba(255,255,255,0.06);
+  --sai-npane-shadow: 0 24px 60px rgba(40,20,10,0.35), inset 0 1px 0 rgba(255,255,255,0.10);
+  --sai-daysheet:     rgba(250,247,241,0.96);  /* the "day window" inside dark */
+
+  /* ——— Status (ledger chips ONLY — never decorative) ——— */
+  --sai-status-good:        #2E7A56;  --sai-status-good-tint:  rgba(46,122,86,0.12);
+  --sai-status-warn:        #946A12;  --sai-status-warn-tint:  rgba(176,130,40,0.16);
+  --sai-status-bad:         #B23A2F;  --sai-status-bad-tint:   rgba(178,58,47,0.10);
+  --sai-status-good-night:  #7BD8A8;  --sai-status-good-night-tint: rgba(75,214,151,0.13);
+  --sai-status-warn-night:  #E4BC66;  --sai-status-warn-night-tint: rgba(200,155,60,0.15);
+  --sai-status-bad-night:   #F09A8E;  --sai-status-bad-night-tint:  rgba(210,95,80,0.16);
+
+  /* ——— Rules ——— */
+  --sai-rule:        rgba(23,19,16,0.10);
+  --sai-rule-soft:   rgba(23,19,16,0.06);
+  --sai-rule-strong: rgba(23,19,16,0.16);
+  --sai-hollow:      rgba(23,19,16,0.035);   /* the recessed "before" wash */
+
+  /* ——— Type ——— */
+  --sai-font-sans:  'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+  --sai-font-label: 'Schibsted Grotesk', 'Inter Tight', sans-serif;
+
+  --sai-fs-display: clamp(38px, 5vw, 58px);
+  --sai-fs-h1:      clamp(34px, 4.6vw, 48px);
+  --sai-fs-h2:      24px;
+  --sai-fs-h3:      18.5px;
+  --sai-fs-stat:    44px;
+  --sai-fs-body:    17px;
+  --sai-fs-sub:     15.5px;   /* secondary lines under headings */
+  --sai-fs-label:   14.5px;   /* Schibsted caps labels (13.5px absolute label floor) */
+  --sai-fs-small:   15px;
+  --sai-fs-micro:   13px;     /* ABSOLUTE floor for any text */
+
+  --sai-lh-display: 1.02;
+  --sai-lh-heading: 1.05;
+  --sai-lh-body:    1.55;
+
+  --sai-ls-display: -0.032em;
+  --sai-ls-heading: -0.02em;
+  --sai-ls-label:    0.05em;   /* Schibsted caps tracking */
+
+  --sai-fw-regular: 400;
+  --sai-fw-medium:  500;   /* display + headings — never 700 for Inter Tight display */
+  --sai-fw-bold:    600;   /* in-line emphasis, Schibsted labels */
+  --sai-fw-label:   600;   /* Schibsted caps */
+  --sai-fw-numeral: 700;   /* Schibsted numerals (timestamps, rungs, step numbers) */
+
+  /* ——— Radii ——— */
+  --sai-radius-chip:   8px;
+  --sai-radius-flag:   10px;
+  --sai-radius-tile:   18px;
+  --sai-radius-card:   22px;
+  --sai-radius-panel:  26px;
+  --sai-radius-window: 30px;
+  --sai-radius-pill:   999px;
+
+  /* ——— Space ——— */
+  --sai-space-1: 4px;  --sai-space-2: 8px;   --sai-space-3: 12px; --sai-space-4: 16px;
+  --sai-space-5: 24px; --sai-space-6: 32px;  --sai-space-7: 48px; --sai-space-8: 64px;
+
+  /* ——— Motion ——— */
+  --sai-ease:      cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sai-dur-fast:  150ms;
+  --sai-dur-base:  220ms;
+  --sai-dur-slow:  350ms;
+  --sai-drift:     16s;    /* lens drift period; vary per lens (11-24s) */
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--sai-sky-fallback);
+  color: var(--sai-ink);
+  font-family: var(--sai-font-sans);
+  font-size: var(--sai-fs-body);
+  line-height: var(--sai-lh-body);
+  overflow-x: clip;   /* clip, never hidden: hidden makes body a scroll container and silently disables every position: sticky stage (2026-09-14) */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================================
+   THE SCENE — fixed sky, tint pools, drifting lenses.
+   Markup is emitted by the SAI:SCENE marker.
+   For scroll-through day-to-night pages swap position to absolute.
+   ========================================================================== */
+
+.sai-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: var(--sai-sky); }
+.sai-tint { position: absolute; border-radius: 50%; filter: blur(100px); }
+.sai-tint.t1 { width: 600px; height: 600px; background: var(--sai-tint-1); opacity: .10; top: -200px; right: -160px; }
+.sai-tint.t2 { width: 520px; height: 520px; background: var(--sai-tint-2); opacity: .12; top: 36%; left: -200px; }
+.sai-tint.t3 { width: 620px; height: 620px; background: var(--sai-tint-3); opacity: .12; bottom: -260px; right: 22%; }
+
+.sai-lens {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.30) 14%, rgba(255,255,255,0.05) 38%, transparent 60%),
+    radial-gradient(circle at 50% 88%, rgba(220,104,67,0.28) 0%, rgba(220,104,67,0.08) 34%, transparent 55%),
+    radial-gradient(circle at 50% 115%, rgba(243,206,184,0.55) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(255,255,255,0.16) 88%, rgba(255,255,255,0.42) 99%);
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow:
+    inset -10px -14px 30px rgba(220,104,67,0.13),
+    inset 8px 12px 26px rgba(255,255,255,0.38),
+    0 26px 52px rgba(112,62,40,0.14);
+  animation: sai-drift var(--sai-drift) ease-in-out infinite alternate;
+}
+.sai-lens::before { content:''; position:absolute; top: 11%; left: 17%; width: 36%; height: 18%;
+  border-radius: 50%; background: rgba(255,255,255,0.9); filter: blur(5px); transform: rotate(-20deg); }
+.sai-lens::after { content:''; position:absolute; bottom: 7%; left: 30%; width: 40%; height: 12%;
+  border-radius: 50%; background: rgba(220,104,67,0.30); filter: blur(9px); }
+.sai-lens.far  { filter: blur(5px);   opacity: .6; }
+.sai-lens.mid  { filter: blur(1.5px); opacity: .85; }
+.sai-lens.near { opacity: 1; }
+@keyframes sai-drift { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+
+/* Placement presets — the balanced 5-lens arrangement. */
+.sai-lens.l1 { width: 150px; height: 150px; top: 9%;  right: 6%;  --sai-drift: 17s; }
+.sai-lens.l2 { width: 64px;  height: 64px;  top: 24%; left: 4%;   --sai-drift: 13s; }
+.sai-lens.l3 { width: 96px;  height: 96px;  top: 47%; right: 12%; --sai-drift: 21s; }
+.sai-lens.l4 { width: 42px;  height: 42px;  top: 66%; left: 9%;   --sai-drift: 11s; }
+.sai-lens.l5 { width: 210px; height: 210px; bottom: -60px; right: 30%; --sai-drift: 24s; }
+
+/* ==========================================================================
+   LAYOUT & SURFACES
+   ========================================================================== */
+
+.sai-page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto;
+  padding: 116px clamp(20px, 4vw, 48px) 88px; }
+.sai-page.no-dock { padding-top: 64px; }
+
+.sai-pane {
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge);
+  box-shadow: var(--sai-pane-shadow);
+}
+.sai-streak { position: relative; overflow: hidden; isolation: isolate; }
+/* The streak is a background highlight: it paints between the glass and the content,
+   never over text or a screenshot (Alec, 2026-09-16: "that diagonal highlight should be
+   in the background but not be visible by text or screenshots"). `isolation` on the
+   pane + z-index -1 on the band puts it under everything the pane holds.
+   The band is drawn across the WHOLE pane (inset 0), with its stops in px so it sits the
+   same distance from the top-left corner on any pane size. It used to be a 55%-wide strip,
+   and the glint was cut off at the strip's right edge, which drew a hard vertical line on
+   every pane (Alec, 2026-10-04). layout_lint.py now fails any big gradient overlay whose
+   box ends inside its surface (SEAM). */
+.sai-streak::before { content:''; position:absolute; z-index: -1; inset: 0; border-radius: inherit; pointer-events:none;
+  background: linear-gradient(115deg, transparent 120px, rgba(255,255,255,0.34) 360px, transparent 600px); }
+
+/* A nested tile inside a pane. Never a pane inside a pane. */
+.sai-tile { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+  padding: 22px 26px; }                      /* bare tiles carry their own inset (2026-09-13) */
+.sai-tile > :first-child { margin-top: 0; }
+.sai-tile > :last-child { margin-bottom: 0; }
+@media (max-width: 720px) { .sai-tile { padding: 18px 20px; } }
+
+/* The standard section block. */
+.sai-widget { padding: 36px; border-radius: var(--sai-radius-window); margin-bottom: 34px; position: relative; }
+.sai-widget > h3, .sai-w-title { font-size: var(--sai-fs-h2); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-heading); line-height: 1.15; margin-bottom: 4px; }
+.sai-w-sub { color: var(--sai-ink-2); font-size: var(--sai-fs-sub); margin-bottom: 26px; }
+.sai-w-note { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--sai-rule-soft);
+  color: var(--sai-ink-2); font-size: 14.5px; }
+.sai-w-note strong { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* Display type. */
+.sai-display { font-size: var(--sai-fs-display); font-weight: var(--sai-fw-medium);
+  letter-spacing: var(--sai-ls-display); line-height: var(--sai-lh-display); max-width: 21ch; }
+.sai-display em, .sai-h1 em { font-style: normal; color: var(--sai-accent); }
+.sai-lede { margin-top: 18px; font-size: 19px; color: var(--sai-ink-2); max-width: 56ch; }
+.sai-lede b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+/* ==========================================================================
+   MARKERS — porthole, stamp, tick flag, bubble bullets, ledger chip.
+   NO dot-pills. Ever.
+   ========================================================================== */
+
+.sai-port { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+.sai-port .disc { width: 26px; height: 26px; border-radius: 50%; flex: none;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 30%, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(220,104,67,0.5) 0%, transparent 60%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 4px rgba(220,104,67,0.25), 0 4px 10px rgba(112,62,40,0.18); }
+.sai-port .ptext { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); }
+.sai-port.on-night .disc {
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.06) 30%, transparent 55%),
+    radial-gradient(circle at 50% 82%, rgba(255,142,118,0.55) 0%, transparent 62%),
+    linear-gradient(180deg, #322734 0%, #100C0E 100%);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35), 0 0 14px rgba(255,142,118,0.25); }
+.sai-port.on-night .ptext { color: var(--sai-accent-night); }
+
+.sai-stamp { position: relative; display: inline-block; font-family: var(--sai-font-label); font-size: 13.5px;
+  font-weight: var(--sai-fw-label); letter-spacing: .07em; text-transform: uppercase; padding: 8px 14px; color: var(--sai-accent); }
+.sai-stamp::before { content:''; position:absolute; top:0; left:0; width: 12px; height: 12px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; }
+.sai-stamp::after  { content:''; position:absolute; bottom:0; right:0; width: 12px; height: 12px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; }
+.sai-stamp.on-night { color: var(--sai-accent-night); }
+.sai-stamp.corner { position: absolute; top: 26px; right: 28px; }
+
+.sai-flag { display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label); letter-spacing: .01em;
+  color: var(--sai-ink-90); padding: 6px 14px 6px 8px; border-radius: var(--sai-radius-flag);
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(112,62,40,0.10); white-space: nowrap; }
+.sai-flag .tick { width: 4px; align-self: stretch; border-radius: 2px; background: var(--sai-accent); }
+
+ul.sai-bullets { list-style: none; }
+ul.sai-bullets li { position: relative; padding: 7px 0 7px 30px; }
+ul.sai-bullets li b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+ul.sai-bullets li::before { content:''; position:absolute; left: 0; top: 10px; width: 15px; height: 15px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+
+.sai-status { display:inline-flex; align-items:stretch; border:1px solid var(--sai-rule);
+  border-radius: var(--sai-radius-chip); overflow:hidden; background: rgba(255,255,255,0.8); }
+.sai-status .kw { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 10px 15px; display:flex; align-items:center; }
+.sai-status .detail { font: 500 15px var(--sai-font-sans); color: var(--sai-ink-90); padding: 10px 16px;
+  border-left: 1px solid var(--sai-rule); display:flex; align-items:center; }
+.sai-status.good .kw { color: var(--sai-status-good); background: var(--sai-status-good-tint); }
+.sai-status.warn .kw { color: var(--sai-status-warn); background: var(--sai-status-warn-tint); }
+.sai-status.bad  .kw { color: var(--sai-status-bad);  background: var(--sai-status-bad-tint); }
+.sai-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ==========================================================================
+   CHROME — dock, buttons, footer
+   ========================================================================== */
+
+.sai-dock { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; align-items: center; gap: 22px; padding: 12px 22px; border-radius: var(--sai-radius-pill);
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(26px) saturate(1.6); -webkit-backdrop-filter: blur(26px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 12px 36px rgba(112,62,40,0.16), inset 0 1px 0 #fff; white-space: nowrap; }
+.sai-dock .mark { width: 27px; height: 27px; display: block; }
+.sai-dock .word { font-size: 17.5px; font-weight: var(--sai-fw-medium); letter-spacing: -0.01em; }
+.sai-dock nav { display: flex; gap: 6px; }
+.sai-dock nav a { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--sai-ink-2);
+  padding: 8px 14px; border-radius: var(--sai-radius-pill); transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-dock nav a:hover { color: var(--sai-ink); background: rgba(255,255,255,0.75); }
+.sai-dock nav a.on { color: #fff; background: var(--sai-ink); }
+@media (max-width: 720px) { .sai-dock nav { display: none; } }
+
+.sai-btn { display:inline-block; text-decoration:none; cursor: pointer; border: none;
+  font: 500 14.5px var(--sai-font-sans); border-radius: var(--sai-radius-pill); padding: 14px 26px;
+  transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-btn.primary { background: var(--sai-ink); color: #fff; box-shadow: 0 8px 20px rgba(23,19,16,0.2); }
+.sai-btn.primary:hover { background: var(--sai-accent); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(220,104,67,0.35); }
+.sai-btn.ghost { color: var(--sai-ink); background: rgba(255,255,255,0.62); border: 1px solid var(--sai-glass-edge);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
+.sai-btn.ghost:hover { background: rgba(255,255,255,0.8); transform: translateY(-2px); }
+
+.sai-footer { margin-top: 60px; display:flex; justify-content:space-between; align-items:center; gap: 20px; flex-wrap: wrap; }
+.sai-footer .lockup { display:flex; align-items:center; gap: 12px; }
+.sai-footer .lockup .mark { width: 25px; height: 25px; }
+.sai-footer .lockup .word { font-size: 16.5px; font-weight: var(--sai-fw-medium); }
+.sai-footer .meta { font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); }
+
+/* ==========================================================================
+   MODES — night window in a light page, day window in a dark one.
+   `night` is ALWAYS section-scoped. A bare .night once inherited a whole
+   section's padding onto a marker span and drew phantom boxes.
+   ========================================================================== */
+
+section.sai-night {
+  border-radius: var(--sai-radius-window); padding: 36px; margin-bottom: 34px; color: var(--sai-cream);
+  background: var(--sai-night);
+  border: 1px solid var(--sai-nglass-edge);
+  box-shadow: var(--sai-npane-shadow);
+  position: relative; overflow: hidden;
+}
+section.sai-night .sai-ember { position:absolute; width: 380px; height: 380px; border-radius: 50%; filter: blur(90px);
+  background: var(--sai-accent); opacity: .2; top: -120px; right: -80px; pointer-events: none; }
+section.sai-night .sai-ember.left { top: auto; right: auto; bottom: -140px; left: -100px; opacity: .15; }
+section.sai-night > h3, section.sai-night .sai-w-title { color: var(--sai-cream); }
+section.sai-night .sai-w-sub { color: var(--sai-cream-2); }
+section.sai-night .sai-w-note { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-w-note strong { color: var(--sai-cream); }
+section.sai-night .sai-tile { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+/* Bullet lead-ins carry an explicit ink color on light, so they render near-black
+   on night without this. Every other component had its night override; this one
+   was the gap. */
+section.sai-night ul.sai-bullets li b { color: var(--sai-cream); }
+
+.sai-day-window { position: relative; border-radius: 20px; padding: 28px; background: var(--sai-daysheet); color: var(--sai-ink);
+  border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 18px 44px rgba(0,0,0,0.4), inset 0 1px 0 #fff; }
+.sai-day-window .cap { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 12px; }
+
+/* The floating stat layer. Parent pane needs >= 72px bottom padding. */
+.sai-float-stat { position: absolute; right: 28px; bottom: -34px; z-index: 3;
+  display: flex; gap: 26px; padding: 22px 30px; border-radius: var(--sai-radius-card);
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95); box-shadow: var(--sai-float-shadow); }
+.sai-float-stat .n { font-size: 34px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.sai-float-stat .n em { font-style: normal; color: var(--sai-accent); }
+.sai-float-stat .l { margin-top: 6px; font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+@media (max-width: 860px) { .sai-float-stat { position: static; margin-top: 18px; flex-wrap: wrap; gap: 18px; } }
+
+/* ==========================================================================
+   ██ WIDGET 1 — BEFORE / AFTER SPLIT  (.sai-split)
+   The argument made before a word is read. The "before" column is deliberately
+   NOT glass: flat, recessed, dashed, dead. The "after" column is lifted glass
+   with the win outline. The asymmetry IS the content.
+   ========================================================================== */
+
+.sai-split { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; position: relative; align-items: start; }
+
+.sai-split .col { border-radius: 20px; padding: 26px; }
+
+/* BEFORE — a hollow in the page. No blur, no lift, no life. */
+.sai-split .col.before {
+  background: var(--sai-hollow);
+  border: 1px dashed var(--sai-rule-strong);
+  box-shadow: inset 0 2px 6px rgba(23,19,16,0.04);
+  color: var(--sai-ink-2);
+}
+/* AFTER — lifted glass, wearing the win outline. */
+.sai-split .col.after {
+  background: var(--sai-glass-strong);
+  backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: var(--sai-float-shadow);
+  outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+}
+
+.sai-split .col-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.sai-split .col-head h4 { font-size: var(--sai-fs-h3); font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-split .col.before .col-head h4 { color: var(--sai-ink-2); }
+.sai-split .tag { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; padding: 5px 12px; border-radius: var(--sai-radius-pill); }
+.sai-split .tag.old { color: var(--sai-ink-2); border: 1px solid var(--sai-rule-strong); }
+.sai-split .tag.new { color: #fff; background: var(--sai-accent); }
+
+.sai-split .row { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0;
+  border-bottom: 1px solid var(--sai-rule-soft); font-size: var(--sai-fs-sub); }
+.sai-split .row:last-child { border-bottom: none; padding-bottom: 0; }
+.sai-split .row .k { color: var(--sai-ink-2); flex: none; }
+.sai-split .col.before .row .k { color: rgba(110,98,88,0.75); }
+.sai-split .row .v { text-align: right; font-weight: var(--sai-fw-bold); }
+.sai-split .col.before .row .v { color: var(--sai-ink-2); font-weight: var(--sai-fw-regular); }
+.sai-split .col.after  .row .v { color: var(--sai-ink-90); }
+
+/* The transition lens: a real lens sitting in the gutter between the columns. */
+.sai-split .sai-turn {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 34%, transparent 58%),
+    radial-gradient(circle at 50% 84%, rgba(220,104,67,0.45) 0%, transparent 62%),
+    linear-gradient(180deg, #F9EFE6 0%, #F2CFB8 100%);
+  border: 1.5px solid rgba(255,255,255,0.95);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.9), inset 0 -3px 6px rgba(220,104,67,0.25), 0 8px 20px rgba(112,62,40,0.22); }
+.sai-split .sai-turn svg { width: 17px; height: 17px; display: block; }
+
+@media (max-width: 780px) {
+  .sai-split { grid-template-columns: 1fr; gap: 44px; }
+  .sai-split .sai-turn { top: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+}
+
+/* Night variant. */
+section.sai-night .sai-split .col.before { background: rgba(255,255,255,0.025); border-color: var(--sai-nrule);
+  box-shadow: none; color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after { background: rgba(255,255,255,0.10);
+  border-color: var(--sai-nglass-edge); outline-color: var(--sai-accent-night);
+  box-shadow: 0 20px 44px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.12); }
+section.sai-night .sai-split .col-head h4 { color: var(--sai-cream); }
+section.sai-night .sai-split .col.before .col-head h4 { color: var(--sai-cream-2); }
+section.sai-night .sai-split .tag.old { color: var(--sai-cream-2); border-color: var(--sai-nrule); }
+section.sai-night .sai-split .tag.new { color: #1A120E; background: var(--sai-accent-night); }
+section.sai-night .sai-split .row { border-bottom-color: var(--sai-nrule-soft); }
+section.sai-night .sai-split .row .k,
+section.sai-night .sai-split .col.before .row .k,
+section.sai-night .sai-split .col.before .row .v { color: var(--sai-cream-2); }
+section.sai-night .sai-split .col.after .row .v { color: var(--sai-cream); }
+
+/* ==========================================================================
+   ██ WIDGET 2 — LEDGER MATH  (.sai-ledger)
+   The quantified argument, laid out like an accountant's page: dotted leaders,
+   a single rule above the total, a double rule under it. The number lands in
+   terracotta because the number is the pitch.
+   ========================================================================== */
+
+.sai-ledger { font-variant-numeric: tabular-nums; }
+
+.sai-ledger .line { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; }
+.sai-ledger .line .k { color: var(--sai-ink-90); font-size: var(--sai-fs-sub); flex: none; max-width: 62%; }
+.sai-ledger .line .lead { flex: 1 1 auto; border-bottom: 1.5px dotted var(--sai-rule-strong); transform: translateY(-4px); min-width: 18px; }
+.sai-ledger .line .v { flex: none; font-size: 17px; font-weight: var(--sai-fw-bold); color: var(--sai-ink); }
+.sai-ledger .line .v .unit { font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); font-size: 14.5px; margin-left: 3px; }
+
+/* The operator gutter: × + − sitting in the margin like working shown. */
+.sai-ledger .line .op { flex: none; width: 18px; text-align: center; font-family: var(--sai-font-label);
+  font-size: 14px; font-weight: var(--sai-fw-numeral); color: var(--sai-accent); }
+.sai-ledger .line .op.blank { color: transparent; }
+
+/* An assumption note hanging under a line. */
+.sai-ledger .basis { margin: -4px 0 8px 28px; font-size: var(--sai-fs-micro); color: var(--sai-ink-2); max-width: 60ch; }
+
+/* Subtotal: single rule. */
+.sai-ledger .line.subtotal { border-top: 1px solid var(--sai-rule); margin-top: 6px; padding-top: 15px; }
+
+/* The total: accounting double-rule, the number in accent at stat size. */
+.sai-ledger .total { position: relative; margin-top: 14px; padding-top: 20px; border-top: 1.5px solid var(--sai-ink);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.sai-ledger .total::before { content:''; position: absolute; top: 3px; left: 0; right: 0; height: 1px; background: var(--sai-ink); }
+.sai-ledger .total .k { font-family: var(--sai-font-label); font-size: var(--sai-fs-label); font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); padding-bottom: 8px; }
+.sai-ledger .total .v { font-size: var(--sai-fs-stat); font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-accent); }
+.sai-ledger .total .v .unit { font-size: 19px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 6px; letter-spacing: 0; }
+
+/* Optional second reading under the total ("that's 1.5 weeks of one FTE"). */
+.sai-ledger .restate { margin-top: 20px; font-size: var(--sai-fs-sub); color: var(--sai-ink-2); }
+.sai-ledger .restate b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+
+@media (max-width: 620px) {
+  .sai-ledger .line { flex-wrap: wrap; }
+  .sai-ledger .line .k { max-width: none; }
+}
+
+section.sai-night .sai-ledger .line .k { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .v { color: var(--sai-cream); }
+section.sai-night .sai-ledger .line .lead { border-bottom-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .line .op { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .basis, section.sai-night .sai-ledger .restate { color: var(--sai-cream-2); }
+section.sai-night .sai-ledger .line.subtotal { border-top-color: var(--sai-nrule); }
+section.sai-night .sai-ledger .total { border-top-color: var(--sai-cream); }
+section.sai-night .sai-ledger .total::before { background: var(--sai-cream); }
+section.sai-night .sai-ledger .total .v { color: var(--sai-accent-night); }
+section.sai-night .sai-ledger .total .k { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 3 — DECISION PATH  (.sai-path)
+   A rail with lens beads. Linear for "how it runs", forked for "what to do
+   when". This is the front-desk-protocol primitive: condition, route, outcome.
+   ========================================================================== */
+
+.sai-path { position: relative; padding-left: 34px; }
+/* The rail, fading at both ends so it never hard-stops. */
+.sai-path::before { content:''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, transparent 0%, var(--sai-accent-line) 5%, var(--sai-accent-line) 95%, transparent 100%); }
+
+.sai-path .step { position: relative; padding-bottom: 22px; }
+.sai-path .step:last-child { padding-bottom: 0; }
+
+/* The bead: a miniature lens sitting on the rail. */
+.sai-path .step::before { content:''; position: absolute; left: -34px; top: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* A decision point gets a bigger, brighter bead. */
+.sai-path .step.fork::before { width: 22px; height: 22px; left: -36px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+
+.sai-path .step .num { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .06em; color: var(--sai-accent); display: block; margin-bottom: 3px; }
+.sai-path .step h4 { font-size: 17.5px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-path .step p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 62ch; }
+
+/* The fork: sibling outcomes side by side. */
+.sai-path .branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(212px, 1fr)); gap: 12px; margin-top: 16px; }
+.sai-path .branch { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 16px 18px 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+/* The condition chip: leads with an accent bar, never a dot. */
+.sai-path .branch .cond { display: inline-flex; align-items: stretch; gap: 8px; margin-bottom: 9px;
+  font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-accent); }
+.sai-path .branch .cond::before { content:''; width: 3px; border-radius: 2px; background: var(--sai-accent); flex: none; }
+.sai-path .branch .out { font-size: var(--sai-fs-small); color: var(--sai-ink-90); }
+.sai-path .branch .out b { font-weight: var(--sai-fw-bold); }
+.sai-path .branch .sai-status { margin-top: 12px; }
+/* The recommended branch. */
+.sai-path .branch.win { background: var(--sai-glass-strong); outline: 1.5px solid var(--sai-accent); outline-offset: -1.5px;
+  box-shadow: 0 10px 26px rgba(112,62,40,0.14), inset 0 1px 0 #fff; }
+
+/* A terminal step (the path ends here). */
+.sai-path .step.end::before { background: var(--sai-accent); border-color: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 5px rgba(220,104,67,0.12), 0 3px 8px rgba(112,62,40,0.22); }
+
+section.sai-night .sai-path::before { background: linear-gradient(180deg, transparent 0%, rgba(255,142,118,0.28) 5%, rgba(255,142,118,0.28) 95%, transparent 100%); }
+section.sai-night .sai-path .step h4 { color: var(--sai-cream); }
+section.sai-night .sai-path .step p  { color: var(--sai-cream-2); }
+section.sai-night .sai-path .step .num { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-path .branch .cond { color: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .cond::before { background: var(--sai-accent-night); }
+section.sai-night .sai-path .branch .out { color: var(--sai-cream); }
+section.sai-night .sai-path .branch.win { background: rgba(255,255,255,0.10); outline-color: var(--sai-accent-night); }
+
+/* ==========================================================================
+   ██ WIDGET 4 — VITALS READOUT  (.sai-vitals)
+   Metrics against a benchmark. The bar shows where you are, the tick shows
+   where you should be, and the gap between them is the sale. Bars are ALWAYS
+   accent — good/warn/bad belong to the verdict chip only.
+   ========================================================================== */
+
+.sai-vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 14px; }
+
+.sai-vital { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
+  border-radius: var(--sai-radius-tile); padding: 22px 22px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 4px 14px rgba(112,62,40,0.07); }
+
+/* min-height reserves two label lines so a wrapping label never knocks its
+   card's value and gauge out of line with its neighbours. */
+.sai-vital .label { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2);
+  line-height: 1.35; min-height: 2.7em; }
+.sai-vital .value { margin-top: 9px; font-size: 38px; font-weight: var(--sai-fw-medium); letter-spacing: -0.03em;
+  line-height: 1; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.sai-vital .value .unit { font-size: 17px; font-weight: var(--sai-fw-regular); color: var(--sai-ink-2); margin-left: 3px; letter-spacing: 0; }
+
+/* The gauge. Set --at (current) and --target as percentages. */
+.sai-vital .gauge { position: relative; margin-top: 20px; height: 7px; border-radius: var(--sai-radius-pill);
+  background: rgba(23,19,16,0.07); box-shadow: inset 0 1px 2px rgba(23,19,16,0.06); }
+.sai-vital .gauge .fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--at, 50%);
+  border-radius: var(--sai-radius-pill); background: var(--sai-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 1px 4px rgba(220,104,67,0.35); }
+/* The benchmark tick: a hairline gate the fill either reaches or doesn't. */
+.sai-vital .gauge .mark-t { position: absolute; left: var(--target, 75%); top: -6px; bottom: -6px; width: 2px;
+  background: var(--sai-ink); border-radius: 1px; }
+.sai-vital .gauge .mark-t::after { content: attr(data-label); position: absolute; left: 50%; top: -20px;
+  transform: translateX(-50%); white-space: nowrap;
+  font-family: var(--sai-font-label); font-size: var(--sai-fs-micro); font-weight: var(--sai-fw-label);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--sai-ink-2); }
+.sai-vital .gauge.has-label { margin-top: 36px; }
+
+.sai-vital .verdict { margin-top: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sai-vital .delta { font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-vital .delta b { color: var(--sai-ink-90); font-weight: var(--sai-fw-bold); }
+.sai-vital .sai-status .kw { padding: 7px 11px; font-size: 13.5px; }
+.sai-vital .sai-status .detail { padding: 7px 12px; font-size: 14px; }
+
+section.sai-night .sai-vital { background: var(--sai-nglass-tile); border-color: var(--sai-nglass-edge); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07); }
+section.sai-night .sai-vital .label, section.sai-night .sai-vital .delta { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .value { color: var(--sai-cream); }
+section.sai-night .sai-vital .value .unit { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .gauge { background: rgba(255,255,255,0.09); box-shadow: none; }
+section.sai-night .sai-vital .gauge .fill { background: var(--sai-accent-night); box-shadow: 0 0 10px rgba(255,142,118,0.4); }
+section.sai-night .sai-vital .gauge .mark-t { background: var(--sai-cream); }
+section.sai-night .sai-vital .gauge .mark-t::after { color: var(--sai-cream-2); }
+section.sai-night .sai-vital .delta b { color: var(--sai-cream); }
+section.sai-night .sai-status { background: rgba(255,255,255,0.06); border-color: var(--sai-nrule); }
+section.sai-night .sai-status .detail { color: var(--sai-cream); border-left-color: var(--sai-nrule); }
+section.sai-night .sai-status.good .kw { color: var(--sai-status-good-night); background: var(--sai-status-good-night-tint); }
+section.sai-night .sai-status.warn .kw { color: var(--sai-status-warn-night); background: var(--sai-status-warn-night-tint); }
+section.sai-night .sai-status.bad  .kw { color: var(--sai-status-bad-night);  background: var(--sai-status-bad-night-tint); }
+
+/* ==========================================================================
+   ██ WIDGET 5 — SOURCE TRACK  (.sai-track)
+   A timestamped spine through a video, a call, or a project. Schibsted
+   numerals in the gutter — exactly what the numeral weight exists for.
+   ========================================================================== */
+
+.sai-track { display: grid; grid-template-columns: 74px 1fr; }
+
+.sai-track .when { grid-column: 1; text-align: right; padding: 3px 20px 0 0;
+  font-family: var(--sai-font-label); font-size: 14px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .01em; color: var(--sai-accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.sai-track .entry { grid-column: 2; position: relative; padding: 0 0 24px 26px;
+  border-left: 2px solid var(--sai-accent-line); }
+.sai-track .entry:last-child { border-left-color: transparent; padding-bottom: 0; }
+/* Bead on the spine. */
+.sai-track .entry::before { content:''; position: absolute; left: -8px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 42%, transparent 62%),
+    radial-gradient(circle at 50% 86%, rgba(220,104,67,0.5) 0%, transparent 62%),
+    linear-gradient(180deg, #F7E7DA 0%, #F2CFB8 100%);
+  border: 1px solid rgba(255,255,255,0.92);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -1.5px 3px rgba(220,104,67,0.3), 0 3px 7px rgba(112,62,40,0.18); }
+/* The moment that matters: bigger bead, headline in accent. */
+.sai-track .entry.key::before { width: 19px; height: 19px; left: -10.5px; top: 1px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(220,104,67,0.35),
+              0 4px 10px rgba(112,62,40,0.2), 0 0 0 5px rgba(220,104,67,0.09); }
+.sai-track .entry.key h4 { color: var(--sai-accent); }
+
+.sai-track .entry h4 { font-size: 17px; font-weight: var(--sai-fw-bold); letter-spacing: -0.01em; color: var(--sai-ink-90); }
+.sai-track .entry p { font-size: var(--sai-fs-sub); color: var(--sai-ink-2); margin-top: 5px; max-width: 64ch; }
+.sai-track .entry .sai-status { margin-top: 12px; }
+
+@media (max-width: 560px) {
+  .sai-track { grid-template-columns: 58px 1fr; }
+  .sai-track .when { padding-right: 14px; font-size: 13.5px; }
+  .sai-track .entry { padding-left: 20px; }
+}
+
+section.sai-night .sai-track .when { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry { border-left-color: rgba(255,142,118,0.26); }
+section.sai-night .sai-track .entry:last-child { border-left-color: transparent; }
+section.sai-night .sai-track .entry h4 { color: var(--sai-cream); }
+section.sai-night .sai-track .entry.key h4 { color: var(--sai-accent-night); }
+section.sai-night .sai-track .entry p { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ██ WIDGET 6 — CLAIM CARD  (.sai-claim)
+   The idea-extraction unit. Somebody's claim, attributed, then the verdict
+   strip: what it actually means for us. The strip is the whole point — a
+   claim without a "so what" is a screenshot.
+   ========================================================================== */
+
+.sai-claim { border-radius: var(--sai-radius-card); overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+  background: var(--sai-glass);
+  backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--sai-glass-blur)) saturate(var(--sai-glass-saturate));
+  border: 1px solid var(--sai-glass-edge); box-shadow: var(--sai-pane-shadow); }
+
+/* flex:1 pushes every verdict strip to the card's bottom edge, so a row of
+   claim cards lines its strips up regardless of quote length. */
+.sai-claim .body { padding: 26px 28px 24px; flex: 1; }
+.sai-claim .quote { font-size: 21px; font-weight: var(--sai-fw-medium); letter-spacing: -0.018em;
+  line-height: 1.34; color: var(--sai-ink-90); max-width: 46ch; }
+.sai-claim .quote em { font-style: normal; color: var(--sai-accent); }
+
+.sai-claim .attrib { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--sai-rule-soft);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 14.5px; color: var(--sai-ink-2); }
+.sai-claim .attrib .who { font-weight: var(--sai-fw-bold); color: var(--sai-ink-90); }
+.sai-claim .attrib .at { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-numeral);
+  letter-spacing: .02em; color: var(--sai-accent); font-variant-numeric: tabular-nums; }
+
+/* The verdict strip — the sanctioned use of accent-soft. */
+.sai-claim .verdict { padding: 18px 28px 20px; background: var(--sai-accent-soft);
+  border-top: 1px solid var(--sai-accent-line); }
+.sai-claim .verdict .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 7px; }
+.sai-claim .verdict p { font-size: var(--sai-fs-small); color: var(--sai-ink-90); max-width: 62ch; }
+.sai-claim .verdict p b { font-weight: var(--sai-fw-bold); }
+
+/* Stack claim cards in a grid when there are several. Stretch, not start —
+   equal heights are what let the verdict strips align. */
+.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: stretch; }
+
+section.sai-night .sai-claim { background: var(--sai-nglass); border-color: var(--sai-nglass-edge);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.09); }
+section.sai-night .sai-claim .quote { color: var(--sai-cream); }
+section.sai-night .sai-claim .quote em { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .attrib { color: var(--sai-cream-2); border-top-color: var(--sai-nrule-soft); }
+section.sai-night .sai-claim .attrib .who { color: var(--sai-cream); }
+section.sai-night .sai-claim .attrib .at { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict { background: rgba(255,142,118,0.09); border-top-color: rgba(255,142,118,0.2); }
+section.sai-night .sai-claim .verdict .cap { color: var(--sai-accent-night); }
+section.sai-night .sai-claim .verdict p { color: var(--sai-cream); }
+
+/* ==========================================================================
+   CALLOUT — the v2 survivor: registration crop marks on a glass pane.
+   Never a left-border bar.
+   ========================================================================== */
+
+.sai-callout { position: relative; padding: 26px 30px; border-radius: var(--sai-radius-tile);
+  background: var(--sai-glass-strong); border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(112,62,40,0.10); }
+.sai-callout::before, .sai-callout::after { content:''; position: absolute; width: 16px; height: 16px; }
+.sai-callout::before { top: 10px; left: 10px; border-top: 2px solid var(--sai-accent); border-left: 2px solid var(--sai-accent); }
+.sai-callout::after { bottom: 10px; right: 10px; border-bottom: 2px solid var(--sai-accent); border-right: 2px solid var(--sai-accent); }
+.sai-callout .cap { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label);
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-accent); margin-bottom: 8px; }
+.sai-callout p { font-size: 17px; color: var(--sai-ink-90); max-width: 62ch; }
+
+/* ==========================================================================
+   TABLE — hairline rows, no zebra striping.
+   ========================================================================== */
+
+.sai-table { width: 100%; border-collapse: collapse; font-size: var(--sai-fs-sub); }
+.sai-table th { text-align: left; font-size: 13.5px; font-weight: var(--sai-fw-bold); text-transform: uppercase;
+  letter-spacing: .05em; color: var(--sai-ink-2); padding: 0 16px 12px 0; border-bottom: 1px solid var(--sai-rule-strong); }
+.sai-table td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--sai-rule-soft); color: var(--sai-ink-90); vertical-align: top; }
+.sai-table tr:last-child td { border-bottom: none; }
+.sai-table td.num { font-family: var(--sai-font-label); font-weight: var(--sai-fw-numeral); color: var(--sai-accent);
+  font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+section.sai-night .sai-table th { color: var(--sai-cream-2); border-bottom-color: var(--sai-nrule); }
+section.sai-night .sai-table td { color: var(--sai-cream); border-bottom-color: var(--sai-nrule-soft); }
+section.sai-night .sai-table td.num { color: var(--sai-accent-night); }
+section.sai-night .sai-table td i { color: var(--sai-cream-2); }
+
+/* ==========================================================================
+   ENTRANCE — one staggered rise, then only the lenses move.
+   ========================================================================== */
+
+@keyframes sai-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.sai-rise { animation: sai-rise 700ms var(--sai-ease) both; }
+.sai-rise:nth-child(1) { animation-delay: 0ms; }
+.sai-rise:nth-child(2) { animation-delay: 60ms; }
+.sai-rise:nth-child(3) { animation-delay: 120ms; }
+.sai-rise:nth-child(4) { animation-delay: 180ms; }
+.sai-rise:nth-child(5) { animation-delay: 240ms; }
+.sai-rise:nth-child(6) { animation-delay: 300ms; }
+.sai-rise:nth-child(7) { animation-delay: 360ms; }
+.sai-rise:nth-child(8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai-rise { animation: none; }
+  .sai-lens { animation: none; }
+}
+
+/* ==========================================================================
+   ██ FIGURES — hand-drawn concept diagrams  (.sai-fig)
+   Adopted 2026-08-25 (Alec: "more of that, on the default, on the regular").
+   A figure is an inline SVG that carries an argument: a position, a gap, a
+   loop, a two-way failure, a target. Drawn with the system's own marks, never
+   a chart library, never an icon set, never sample data. Archetypes + rules:
+   kit/figures.md
+   ========================================================================== */
+
+.sai-fig { margin: 26px 0 6px; overflow-x: auto; }
+.sai-fig svg { width: 100%; min-width: 640px; height: auto; display: block; overflow: visible; }
+.sai-fig .cap { font-family: var(--sai-font-label); font-weight: var(--sai-fw-label); font-size: 13.5px;
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; color: var(--sai-ink-2); margin-top: 12px; }
+
+/* text */
+.sai-fig text { font-family: var(--sai-font-sans); fill: var(--sai-ink); font-size: 15px; }
+.sai-fig text.lbl { font-family: var(--sai-font-label); font-weight: var(--sai-fw-bold); font-size: 13.5px;
+  letter-spacing: var(--sai-ls-label); text-transform: uppercase; fill: var(--sai-ink-2); }
+.sai-fig text.lbl.acc { fill: var(--sai-accent-deep); }
+.sai-fig text.big { font-family: var(--sai-font-label); font-weight: var(--sai-fw-bold); font-size: 22px; fill: var(--sai-ink); }
+.sai-fig text.big.acc { fill: var(--sai-accent); }
+.sai-fig text.sm { font-size: 14px; fill: var(--sai-ink-2); }
+.sai-fig text.strong, .sai-fig tspan.strong { font-weight: var(--sai-fw-medium); fill: var(--sai-ink); }
+
+/* strokes */
+.sai-fig .hair { stroke: var(--sai-rule); stroke-width: 1; fill: none; }
+.sai-fig .hair-strong { stroke: var(--sai-rule-strong); stroke-width: 1.2; fill: none; }
+.sai-fig .ink-line { stroke: var(--sai-ink); stroke-width: 1.6; fill: none; }
+.sai-fig .ink-line.soft { stroke: var(--sai-ink-2); }
+.sai-fig .acc-line { stroke: var(--sai-accent); stroke-width: 2.4; fill: none; }
+.sai-fig .dash { stroke-dasharray: 5 6; }
+
+/* fills + marks */
+.sai-fig .acc-fill { fill: rgba(220,104,67,0.14); }
+.sai-fig .acc-solid { fill: var(--sai-accent); }
+.sai-fig .hollow { fill: var(--sai-hollow); }
+.sai-fig .glass { fill: rgba(255,255,255,0.62); stroke: rgba(255,255,255,0.9); }
+.sai-fig .node { fill: rgba(255,255,255,0.66); stroke: rgba(23,19,16,0.14); stroke-width: 1.2; }
+.sai-fig .node.win { stroke: var(--sai-accent); stroke-width: 2; }
+.sai-fig .port { fill: #fff; stroke: var(--sai-accent); stroke-width: 2.2; }
+.sai-fig .port-ink { fill: #fff; stroke: var(--sai-ink); stroke-width: 1.6; }
+.sai-fig .zone { fill: rgba(220,104,67,0.07); stroke: var(--sai-accent); stroke-width: 1.4; stroke-dasharray: 6 6; }
+.sai-fig .arrow-ink { fill: var(--sai-ink); }
+.sai-fig .arrow-acc { fill: var(--sai-accent); }
+
+/* night variant */
+section.sai-night .sai-fig .cap { color: var(--sai-cream-2); }
+section.sai-night .sai-fig text, section.sai-night .sai-fig text.big,
+section.sai-night .sai-fig text.strong, section.sai-night .sai-fig tspan.strong { fill: var(--sai-cream); }
+section.sai-night .sai-fig text.lbl, section.sai-night .sai-fig text.sm { fill: var(--sai-cream-2); }
+section.sai-night .sai-fig text.lbl.acc, section.sai-night .sai-fig text.big.acc { fill: var(--sai-accent-night); }
+section.sai-night .sai-fig .hair { stroke: var(--sai-nrule-soft); }
+section.sai-night .sai-fig .hair-strong { stroke: var(--sai-nrule); }
+section.sai-night .sai-fig .ink-line { stroke: var(--sai-cream); }
+section.sai-night .sai-fig .ink-line.soft { stroke: var(--sai-cream-2); }
+section.sai-night .sai-fig .acc-line, section.sai-night .sai-fig .node.win,
+section.sai-night .sai-fig .port, section.sai-night .sai-fig .zone { stroke: var(--sai-accent-night); }
+section.sai-night .sai-fig .acc-fill { fill: rgba(255,142,118,0.16); }
+section.sai-night .sai-fig .zone { fill: rgba(255,142,118,0.08); }
+section.sai-night .sai-fig .acc-solid, section.sai-night .sai-fig .arrow-acc { fill: var(--sai-accent-night); }
+section.sai-night .sai-fig .arrow-ink { fill: var(--sai-cream); }
+section.sai-night .sai-fig .hollow { fill: var(--sai-nglass-tile); }
+section.sai-night .sai-fig .glass, section.sai-night .sai-fig .node { fill: var(--sai-nglass); stroke: var(--sai-nglass-edge); }
+section.sai-night .sai-fig .port, section.sai-night .sai-fig .port-ink { fill: #1A130F; }
+section.sai-night .sai-fig .port-ink { stroke: var(--sai-cream); }
+
+/* ==========================================================================
+   PRINT / PDF — frost cannot print. Panes go near-solid, motion stops.
+   ========================================================================== */
+
+/* ══════════════════ LENS v4 (2026-09-28) ══════════════════
+   From the stephensai.co v7 homepage, which Alec approved ("im liking it").
+   What changed from v3: the scene is quiet (sky + paper grain, NO drifting
+   lenses or tint pools; floating spheres were banned 2026-09-21), glass is
+   used sparingly, open hairline layouts beat stacks of cards, and the
+   signature object is a dense product window on a framed warm backdrop.
+   Reach for these before a .sai-pane. ── */
+
+/* Quiet scene: put class="sai-quiet" on <body> and leave out the SAI:SCENE marker. */
+body.sai-quiet { background: var(--sai-sky-fallback); background-image: var(--sai-sky); background-attachment: fixed; isolation: isolate; }
+body.sai-quiet::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 180px 180px; }
+
+/* The framed product shot: a warm framed backdrop holding one dense app window.
+   Satellites (.sai-sat) overlap the window's edges and carry any depth. */
+.sai-frame { position: relative; border-radius: 30px; padding: clamp(18px, 4vw, 44px); overflow: visible;
+  background:
+    radial-gradient(120% 90% at 12% 110%, rgba(220,104,67,.50), transparent 55%),
+    radial-gradient(90% 70% at 95% 105%, rgba(244,123,107,.34), transparent 60%),
+    radial-gradient(80% 80% at 70% -10%, rgba(255,247,238,.95), transparent 60%),
+    linear-gradient(180deg, #F4E6DA 0%, #EFCDB6 60%, #E5A98C 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.55), 0 40px 90px rgba(90,45,25,.14); }
+.sai-app { position: relative; background: #FFFEFC; border-radius: 18px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(60,35,20,.10), 0 2px 4px rgba(60,35,20,.06), 0 24px 48px rgba(60,35,20,.16), 0 60px 120px rgba(90,45,25,.18); }
+.sai-app > img { display: block; width: 100%; height: auto; }
+.sai-app-bar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #F7F3EE; border-bottom: 1px solid var(--sai-rule-soft);
+  font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sai-ink-2); }
+.sai-sat { position: absolute; background: #fff; border-radius: 16px; padding: 14px 16px;
+  box-shadow: 0 0 0 1px rgba(60,35,20,.10), 0 18px 40px rgba(60,35,20,.18), 0 40px 90px rgba(90,45,25,.16); }
+.sai-frame-cap { margin-top: 14px; text-align: center; font-size: var(--sai-fs-small); color: var(--sai-ink-2); }
+
+/* Payoff figures: the result in display type, the lead figure in terracotta.
+   Always pair with its source line (e.g. "Estimated from the clinic's own numbers."). */
+.sai-payoff { display: flex; flex-wrap: wrap; gap: 20px 56px; }
+.sai-payoff .n { font-family: var(--sai-font-sans); font-size: clamp(34px, 3.4vw, 46px); font-weight: 500; letter-spacing: -.025em; line-height: 1.05; color: var(--sai-ink); font-variant-numeric: tabular-nums; }
+.sai-payoff .lead .n { color: var(--sai-accent-deep); }
+.sai-payoff .l { margin-top: 6px; font-size: 18px; color: var(--sai-ink); }
+.sai-payoff-note { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: var(--sai-fs-small); color: var(--sai-ink-2); }
+
+/* Open rows: title + body on hairlines, two columns on desktop. The v4 default
+   for a list of things; no cards, no icons, no caps eyebrows. */
+.sai-rows { display: grid; border-top: 1px solid var(--sai-rule-strong); }
+.sai-rows > * { padding: 24px 0; border-bottom: 1px solid var(--sai-rule); }
+.sai-rows h4 { font-family: var(--sai-font-sans); font-size: 21px; font-weight: 500; line-height: 1.25; color: var(--sai-ink); margin: 0; }
+.sai-rows p { margin-top: 8px; font-size: var(--sai-fs-body); line-height: var(--sai-lh-body); color: var(--sai-ink-2); }
+@media (min-width: 820px) { .sai-rows.two { grid-template-columns: 1fr 1fr; column-gap: 56px; } }
+
+/* Quote card: one real quote from one real person, on white. */
+.sai-quote { background: #FFFCF9; border-radius: 22px; padding: clamp(24px, 3vw, 40px); max-width: 740px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.9), 0 24px 60px rgba(112,62,40,.16); }
+.sai-quote blockquote { margin: 0; font-family: var(--sai-font-sans); font-size: clamp(22px, 1.9vw, 30px); font-weight: 500; line-height: 1.3; letter-spacing: -.012em; color: var(--sai-ink); }
+.sai-quote blockquote::before { content: '\201C'; color: var(--sai-accent-deep); }
+.sai-quote blockquote::after { content: '\201D'; color: var(--sai-accent-deep); }
+.sai-quote figcaption { margin-top: 22px; display: flex; align-items: center; gap: 14px; font-size: var(--sai-fs-body); color: var(--sai-ink-2); }
+.sai-quote figcaption::before { content: ''; width: 32px; height: 2px; border-radius: 2px; background: var(--sai-accent); flex-shrink: 0; }
+.sai-quote figcaption b { color: var(--sai-ink); font-weight: 500; }
+/* Case study header: the client's logo (muted, like the logo row), a hairline, the label,
+   then one line of facts. Opens every v4 case study (Alec's pick, 2026-09-28). */
+.sai-client { display: flex; align-items: center; gap: 18px; }
+.sai-client img { height: 52px; width: auto; opacity: .7; filter: grayscale(1); }
+.sai-client .bar { width: 1px; height: 36px; background: var(--sai-rule-strong); }
+.sai-client .lab { font-family: var(--sai-font-label); font-weight: 600; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--sai-accent-deep); }
+.sai-client-meta { margin-top: 16px; font-size: var(--sai-fs-body); color: var(--sai-ink-2); }
+/* v4 reads multi-line split values left-aligned (right-aligned wraps read ragged). */
+.sai-split .row .v { text-align: left; }
+@media (max-width: 560px) { .sai-split .row { flex-direction: column; align-items: flex-start; gap: 3px; } .sai-split .row .k { flex: none; width: auto; } }
+/* ══════════════════ end LENS v4 ══════════════════ */
+
+/* ══════════════════ LENS v5 (2026-09-30) ══════════════════
+   From the finished stephensai.co homepage, live 2026-09-29 (Alec: "the site
+   is amazing. save it as the new stephens ai design system going forward").
+   v5 keeps everything in v4 and adds the interactive pieces that page proved:
+   a step switcher with a gliding highlight, a tab bar and a notch; price cards
+   that lean toward the pointer with a light that follows it and prices that
+   roll in; a guarantee band; a checked trust strip; the pointer light on a
+   night panel; a tinted hover for pill menus; 44px tap areas.
+   Motion rules that ride with these: pointer-driven effects only on fine
+   pointers (never on touch), reduced motion shows the final state, nothing
+   loops below the hero, and a rolling number ALWAYS renders its real value by
+   default (the digits only "arm" off screen, and print always shows the real
+   value). The behaviours live in lens-kit.js (SAI:JS). ── */
+
+/* Pill menus: a warm tint on hover, never white on a near-white pill (it vanished, 2026-09-29). */
+.sai-dock nav a:hover { color: var(--sai-accent-deep); background: rgba(220,104,67,.10); }
+.sai-dock nav a { white-space: nowrap; }
+
+/* Two-sentence headlines on any surface: the second sentence is terracotta, upright
+   (it rendered cream italic inside a night panel before v5). */
+.sai-display em, .sai-w-title em, h2 em, h3 em { font-style: normal; color: var(--sai-accent); }
+section.sai-night .sai-w-title em, section.sai-night h2 em, section.sai-night h3 em, body.sai-dark .sai-display em { color: var(--sai-accent-night); }
+
+/* A 44px tap area around a small standalone link, without moving it. */
+.sai-hit { position: relative; }
+.sai-hit::after { content: ''; position: absolute; inset: -10px -4px; }
+
+/* ── Step switcher: <div class="sai-steps" data-sai-steps style="--n:3">.
+   A highlight glides behind the chosen step, a terracotta bar sits on the
+   hairline over it, and the frame below has a notch in its top edge that
+   points up at it. Hover, click, tap or arrow keys pick a step. ── */
+.sai-steps { --i: 0; --n: 3; position: relative; }
+.sai-steps-rail { position: relative; border-top: 1px solid var(--sai-rule-strong); }
+.sai-steps-rail ol { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; }
+.sai-steps-rail li { position: relative; display: flex; flex-direction: column; padding: 22px 0; cursor: pointer; }
+.sai-steps-rail li + li { border-top: 1px solid var(--sai-rule); }
+.sai-steps-rail button { all: unset; display: block; cursor: pointer; font-family: var(--sai-font-sans); font-size: 21px; font-weight: 500; line-height: 1.25; letter-spacing: -.01em; color: var(--sai-ink-2); transition: color 250ms ease; }
+.sai-steps-rail button::after { content: ''; position: absolute; inset: 0; border-radius: 18px; }
+.sai-steps-rail button:focus-visible::after { outline: 2px solid var(--sai-accent); outline-offset: -2px; }
+.sai-steps-rail li:hover button, .sai-steps-rail li.on button { color: var(--sai-ink); }
+.sai-steps-rail p { margin-top: 8px; font-size: var(--sai-fs-body); line-height: 1.55; color: var(--sai-ink-2); }
+.sai-steps-start { align-self: flex-start; margin-bottom: 10px; padding: 4px 9px; border-radius: 7px; background: var(--sai-accent-soft); box-shadow: inset 0 0 0 1px var(--sai-accent-line); font-family: var(--sai-font-label); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sai-accent-deep); }
+/* what the step will show: both texts in the markup, the chosen one reads "Shown below" */
+.sai-steps-shows { margin-top: auto; padding-top: 16px; font-size: 15px; font-weight: 500; color: var(--sai-ink-2); }
+.sai-steps-shows .when-on, li.on .sai-steps-shows .when-off { display: none; }
+li.on .sai-steps-shows .when-on { display: inline; color: var(--sai-accent-deep); }
+.sai-steps-glide, .sai-steps-bar, .sai-steps-notch { display: none; }
+.sai-steps-panels { display: grid; }
+.sai-steps-panels > * { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 360ms ease, transform 620ms cubic-bezier(.16,1,.3,1), visibility 0s linear 360ms; }
+.sai-steps-panels > .on { opacity: 1; visibility: visible; transform: none; transition: opacity 360ms ease, transform 620ms cubic-bezier(.16,1,.3,1); }
+.sai-steps-stage { position: relative; margin-top: 24px; }
+@media (min-width: 820px) {
+  .sai-steps-rail ol { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+  .sai-steps-rail li { padding: 30px 24px; }
+  .sai-steps-rail li + li { border-top: 0; }
+  .sai-steps-glide { display: block; position: absolute; z-index: 0; top: 12px; bottom: 8px;
+    left: calc(var(--i) * (100% / var(--n)) + 6px); width: calc(100% / var(--n) - 12px); border-radius: 20px;
+    background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), 0 14px 34px rgba(90,45,25,.08);
+    transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-bar { display: block; position: absolute; z-index: 2; top: -1px; height: 2px; border-radius: 2px; background: var(--sai-accent);
+    left: calc(var(--i) * (100% / var(--n)) + 24px); width: calc(100% / var(--n) - 48px); transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-stage { margin-top: 0; padding-top: 24px; }
+  /* the notch: a corner of the frame's top edge, under the frame so only its upper half shows */
+  .sai-steps-notch { display: block; position: absolute; z-index: 0; top: 13px; width: 22px; height: 22px; border-top-left-radius: 5px;
+    left: calc(var(--i) * (100% / var(--n)) + (100% / var(--n)) / 2 - 11px);
+    background: #F5E8DC; box-shadow: inset 1px 1px 0 rgba(255,255,255,.8), -2px -2px 6px rgba(90,45,25,.07);
+    transform: rotate(45deg); transition: left 560ms cubic-bezier(.16,1,.3,1); }
+  .sai-steps-stage > .sai-frame { position: relative; z-index: 1; }
+}
+
+/* ── Price cards: <div class="sai-prices"> of <article class="sai-price" data-sai-tilt>.
+   The recommended tier is .dark (night, raised, a little taller). Each card
+   leans toward the pointer on a spring with a soft light following it. ── */
+@property --sai-lift { syntax: "<length>"; inherits: false; initial-value: 0px; }
+.sai-prices { display: grid; gap: 20px; align-items: stretch; }
+@media (min-width: 900px) { .sai-prices { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding-block: 18px; } }
+.sai-price { position: relative; isolation: isolate; overflow: hidden; border-radius: 28px; background: rgba(255,255,255,.62);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.85), 0 1px 2px rgba(90,45,25,.05), 0 22px 50px rgba(90,45,25,.10);
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--sai-lift));
+  transition: --sai-lift 420ms cubic-bezier(.16,1,.3,1), box-shadow 420ms ease; }
+.sai-price > .in { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; padding: 34px 32px 32px; }
+.sai-price::after { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.55), transparent 42%);
+  mix-blend-mode: soft-light; opacity: 0; transition: opacity 360ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .sai-price:hover { --sai-lift: -6px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 2px 4px rgba(90,45,25,.06), 0 34px 70px rgba(90,45,25,.14); }
+  .sai-price:hover::after { opacity: 1; }
+}
+.sai-price.dark { background: var(--sai-night); color: var(--sai-cream);
+  box-shadow: inset 0 0 0 1px var(--sai-nglass-edge), 0 2px 4px rgba(20,10,5,.20), 0 34px 80px rgba(40,20,10,.32); }
+.sai-price.dark::after { background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.22), transparent 46%); mix-blend-mode: screen; }
+.sai-price.dark::before { content: ''; position: absolute; z-index: 0; width: 320px; height: 320px; top: -150px; right: -110px; border-radius: 50%;
+  background: var(--sai-accent); filter: blur(80px); opacity: .22; pointer-events: none; }
+@media (min-width: 900px) { .sai-price.dark { margin-block: -18px; } .sai-price.dark > .in { padding-top: 52px; padding-bottom: 50px; } }
+.sai-price .name { font-family: var(--sai-font-sans); font-size: 22px; font-weight: 500; line-height: 1.25; color: var(--sai-ink); }
+.sai-price .note { margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--sai-accent-night); }
+.sai-price .price { margin-top: 22px; font-family: var(--sai-font-sans); font-size: clamp(2.6rem, 2rem + 1.6vw, 3.25rem); font-weight: 500; line-height: 1; letter-spacing: -.03em; color: var(--sai-ink); }
+.sai-price .monthly { margin-top: 10px; font-size: 16px; color: var(--sai-ink-2); }
+.sai-price .rule { display: block; height: 1px; margin: 24px 0 20px; background: rgba(23,19,16,.10); }
+/* the value line leads, one sentence of detail follows (Alec, 2026-09-29) */
+.sai-price .lead { font-family: var(--sai-font-sans); font-size: 20px; font-weight: 500; line-height: 1.3; letter-spacing: -.01em; color: var(--sai-ink); text-wrap: balance; }
+.sai-price .body { flex: 1 1 auto; margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--sai-ink-2); text-wrap: pretty; }
+.sai-price .sai-btn { margin-top: 28px; width: 100%; justify-content: center; }
+.sai-price.dark .name, .sai-price.dark .price, .sai-price.dark .lead { color: var(--sai-cream); }
+.sai-price.dark .monthly, .sai-price.dark .body { color: var(--sai-cream-2); }
+.sai-price.dark .rule { background: rgba(245,241,232,.14); }
+.sai-price.dark .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+
+/* A number that rolls into place like an odometer. Markup via SAI:JS from
+   <span class="sai-roll" data-sai-roll="$7,500">$7,500</span>; each digit strip
+   carries --d (its real digit), so print and no-JS always show the real value. */
+.sai-roll { display: inline-flex; font-feature-settings: "tnum"; }
+.sai-roll .dg { display: inline-block; height: 1em; overflow: hidden; line-height: 1; }
+.sai-roll .strip { display: flex; flex-direction: column; transform: translateY(calc(var(--d, 0) * -10%)); transition: transform 1500ms cubic-bezier(.16,1,.3,1); }
+.sai-roll .strip > span { display: block; height: 1em; line-height: 1; }
+.sai-roll.armed .strip { transform: translateY(-90%); transition: none; }
+
+/* ── Guarantee band: a two-tone line beside a fine-line seal (markup in SNIPPETS). ── */
+.sai-guarantee { display: flex; align-items: center; gap: 22px; margin-top: 44px; padding-top: 30px; border-top: 1px solid rgba(23,19,16,.10); }
+.sai-guarantee svg { flex: 0 0 auto; fill: none; stroke: var(--sai-accent); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.sai-guarantee svg .inner { stroke-opacity: .45; stroke-dasharray: 2 3.2; }
+.sai-guarantee svg .tick { stroke-width: 2; }
+.sai-guarantee .head { font-family: var(--sai-font-sans); font-size: clamp(1.45rem, 1.1rem + 1vw, 1.9rem); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; color: var(--sai-ink); text-wrap: balance; }
+.sai-guarantee .head em { font-style: normal; color: var(--sai-accent); }
+.sai-guarantee .sub { margin-top: 8px; max-width: 64ch; font-size: 16.5px; line-height: 1.55; color: var(--sai-ink-2); }
+@media (max-width: 599px) { .sai-guarantee { align-items: flex-start; gap: 16px; } .sai-guarantee svg { width: 44px; height: 44px; } }
+
+/* ── Checked strip: a label and three short facts, one slim band (trust lines). ── */
+.sai-strip { display: grid; gap: 18px; padding: 24px 26px; border-radius: 24px; background: rgba(255,255,255,.5);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), 0 14px 34px rgba(90,45,25,.07); }
+.sai-strip .lab { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sai-accent-deep); white-space: nowrap; }
+.sai-strip ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.sai-strip li { display: flex; align-items: flex-start; gap: 12px; font-size: 16.5px; line-height: 1.45; color: var(--sai-ink); text-wrap: pretty; }
+.sai-strip li::before { content: ''; flex: 0 0 26px; height: 26px; margin-top: -2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' fill='none' stroke='%23DC6843' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='13' cy='13' r='11.5' stroke-width='1.3'/%3E%3Cpath d='M8.4 13.3l3 3 6.2-6.4' stroke-width='1.8'/%3E%3C/svg%3E") center / contain no-repeat; }
+@media (min-width: 900px) {
+  .sai-strip { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 24px; padding: 22px 30px; }
+  .sai-strip ul { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  /* every point built the same: divider, 22px, check, text */
+  .sai-strip li { border-left: 1px solid rgba(23,19,16,.09); padding: 0 18px 0 22px; }
+}
+
+/* ── Pointer light on a night panel: <section class="sai-night" data-sai-glow>.
+   The section's own ::after, so it covers the whole panel; content sits above. ── */
+section.sai-night[data-sai-glow] > *:not(.sai-ember) { position: relative; z-index: 1; }
+/* the rule above must not pull a corner stamp back into the flow (it landed on the heading, 2026-10-06) */
+section.sai-night[data-sai-glow] > .sai-stamp.corner { position: absolute; }
+section.sai-night[data-sai-glow]::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(255,142,118,.15), rgba(255,142,118,.05) 38%, transparent 62%);
+  opacity: 0; transition: opacity 420ms ease; }
+section.sai-night[data-glow="on"]::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sai-steps-glide, .sai-steps-bar, .sai-steps-notch, .sai-steps-panels > * { transition: none; }
+  .sai-price { transform: none; transition: none; } .sai-price::after, section.sai-night[data-sai-glow]::after { display: none; }
+  .sai-roll .strip { transition: none; }
+}
+@media print {
+  .sai-price { transform: none !important; } .sai-price::after, section.sai-night[data-sai-glow]::after { display: none !important; }
+  .sai-roll.armed .strip { transform: translateY(calc(var(--d, 0) * -10%)) !important; }
+  .sai-steps-glide, .sai-steps-notch { display: none !important; }
+}
+/* ══════════════════ end LENS v5 ══════════════════ */
+
+@media print {
+  .sai-scene { position: absolute; }
+  .sai-dock { display: none; }
+  .sai-pane, .sai-claim { background: rgba(255,255,255,0.92); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-split .col.after, .sai-float-stat { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .sai-widget, section.sai-night, .sai-claim, .sai-vital { break-inside: avoid; }
+  .sai-fig { overflow: visible; break-inside: avoid; }
+  .sai-fig svg { min-width: 0; }
+  /* Small gradient discs (portholes, path beads, bubble bullets, track dots, the
+     split arrow) are rasterized by Chrome's PDF engine into a square bitmap with a
+     seam through the middle. Flatten them for print: one solid fill, no inset
+     shadows, and lift the bead above the rail so the line never crosses it.
+     (WFV quick guide, 2026-09-10.) */
+  .sai-port .disc, ul.sai-bullets li::before, .sai-path .step::before,
+  .sai-track .entry::before, .sai-split .sai-turn {
+    background: #F3D3BC; border-color: #FFFFFF; box-shadow: none; }
+  .sai-path .step::before, .sai-track .entry::before { z-index: 1; }
+  .sai-path .step.fork::before { box-shadow: 0 0 0 5px rgba(220,104,67,0.09); }
+  .sai-path .step.end::before { background: var(--sai-accent); box-shadow: 0 0 0 5px rgba(220,104,67,0.12); }
+  .sai-port.on-night .disc { background: #3A2A22; border-color: rgba(255,255,255,0.35); }
+  /* The specular streak is a translucent overlay; the PDF engine paints it over
+     the text beneath, so headings change color mid-word. Print without it. */
+  .sai-streak::before { display: none; }
+  /* The scene's blurred tint pools and the glass lenses are rasterized by the PDF
+     engine as hard-edged darker rectangles (a blur cannot be printed, so its
+     bounding box is). Print the sky gradient alone. (WFV quick guide, 2026-09-10.) */
+  .sai-tint, .sai-lens { display: none; }
+  body.sai-quiet::before { display: none; }
+  body.sai-quiet { background-attachment: scroll; }
+  * { animation: none !important; }
+  /* Soft shadows print as grey rectangles too: Chrome writes each blurred
+     box-shadow as a soft-masked layer and Preview draws its bounding box
+     (vendor-bills one-pager, 2026-09-28). No shadow, blur or filter survives
+     into print; panes keep their edge with a hairline instead. The PDF
+     converter enforces the same rule and fails any PDF that still has a soft
+     mask. */
+  *, *::before, *::after { box-shadow: none !important; text-shadow: none !important;
+    filter: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .sai-pane, .sai-claim, .sai-tile, .sai-float-stat, .sai-split .col.after,
+  .sai-vital, .sai-callout, .sai-day-window { border: 1px solid rgba(23,19,16,0.10) !important; }
+}
+
+/* ── Behaviour-layer styles (2026-08-28). Pair with lens-kit.js via the JS marker. ── */
+.sai-page section[id] { scroll-margin-top: 96px; }
+.sai-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: var(--sai-radius-pill);
+  background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.8); }
+.sai-seg button { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--sai-ink-2); background: transparent; border: none; cursor: pointer;
+  padding: 8px 14px; border-radius: var(--sai-radius-pill); transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-seg button:hover { color: var(--sai-ink); background: rgba(255,255,255,0.75); }
+.sai-seg button.on { color: #fff; background: var(--sai-ink); }
+section.sai-night .sai-seg { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.14); }
+section.sai-night .sai-seg button { color: var(--sai-cream-2); }
+section.sai-night .sai-seg button.on { color: var(--sai-ink); background: var(--sai-cream); }
+.sai-copy { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: var(--sai-fw-label); letter-spacing: .04em;
+  text-transform: uppercase; color: var(--sai-ink); background: rgba(255,255,255,0.7); border: 1px solid rgba(23,19,16,0.14);
+  border-radius: var(--sai-radius-pill); padding: 7px 14px; cursor: pointer; transition: all var(--sai-dur-base) var(--sai-ease); }
+.sai-copy:hover { border-color: var(--sai-accent); color: var(--sai-accent); }
+.sai-copy.done { color: #fff; background: var(--sai-ink); border-color: var(--sai-ink); }
+[hidden] { display: none !important; }
+
+/* ── Night contrast guard (2026-08-28). Alec: "$22,000 is unreadable in dark mode; careful with black on black."
+   Every bold/strong inside a night window is cream unless a more specific rule says accent. ── */
+section.sai-night b, section.sai-night strong { color: var(--sai-cream); }
+section.sai-night .sai-ledger .restate b, section.sai-night .sai-ledger .basis b { color: var(--sai-cream); }
+section.sai-night .sai-callout { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--sai-cream); }
+section.sai-night .sai-callout .cap { color: var(--sai-accent-night); }
+section.sai-night .sai-callout p { color: var(--sai-cream); }
+section.sai-night .sai-callout::before, section.sai-night .sai-callout::after { border-color: var(--sai-accent-night); }
+section.sai-night ul.sai-bullets li { color: var(--sai-cream-2); }
+section.sai-night ul.sai-bullets li b { color: var(--sai-cream); }
+section.sai-night .sai-w-note { color: var(--sai-cream-2); border-color: var(--sai-nrule); }
+section.sai-night .sai-w-sub, section.sai-night p { color: var(--sai-cream-2); }
+section.sai-night h3, section.sai-night h4, section.sai-night .sai-w-title { color: var(--sai-cream); }
+section.sai-night .sai-copy { color: var(--sai-cream); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.16); }
+section.sai-night .sai-copy.done { color: var(--sai-ink); background: var(--sai-cream); border-color: var(--sai-cream); }
+section.sai-night .sai-btn.ghost { color: var(--sai-cream); border-color: rgba(255,255,255,0.28); }
+section.sai-night .sai-btn.ghost:hover { border-color: var(--sai-accent-night); color: var(--sai-accent-night); }
+section.sai-night .sai-btn.primary { background: var(--sai-cream); color: var(--sai-ink); }
+section.sai-night .sai-btn.primary:hover { background: #fff; }
+section.sai-night .sai-btn.ghost { background: rgba(255,255,255,0.06); }
+section.sai-night .sai-btn.ghost:hover { background: rgba(255,255,255,0.12); }
+
+/* ── Lens Night: page-level dark mode. Adopted 2026-08-28 (Alec: "save that as our dark mode").
+   Put class="sai-dark" on <body>, make every content section a section.sai-night, use the
+   LOGO-NIGHT marker in the dock and footer. The 95+ night rules do the widget work; this block
+   darkens the scene, the dock, the hero and turns night windows into dark glass over the night sky.
+   Reference page: explorations/2026-08-28-full-dark/dark-sample.html ── */
+body.sai-dark { background: var(--sai-night-fallback); color: var(--sai-cream); }
+body.sai-dark .sai-scene { background: var(--sai-night); }
+body.sai-dark .sai-tint.t1 { opacity: .14; } body.sai-dark .sai-tint.t2 { opacity: .10; } body.sai-dark .sai-tint.t3 { opacity: .12; }
+body.sai-dark .sai-lens { opacity: .55; }
+body.sai-dark .sai-dock { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+body.sai-dark .sai-dock .word { color: var(--sai-cream); }
+body.sai-dark .sai-dock nav a { color: var(--sai-cream-2); }
+body.sai-dark .sai-dock nav a:hover { color: var(--sai-cream); background: rgba(255,255,255,0.1); }
+body.sai-dark .sai-dock nav a.on { color: var(--sai-ink); background: var(--sai-cream); }
+body.sai-dark .sai-display { color: var(--sai-cream); }
+body.sai-dark .sai-display em { color: var(--sai-accent-night); }
+body.sai-dark .sai-lede { color: var(--sai-cream-2); }
+body.sai-dark .sai-lede b { color: var(--sai-cream); }
+body.sai-dark .sai-port .ptext { color: var(--sai-accent-night); }
+body.sai-dark .sai-footer, body.sai-dark .sai-footer .word, body.sai-dark .sai-footer .meta { color: var(--sai-cream-2); }
+body.sai-dark section.sai-night { background: rgba(255,255,255,0.045);
+  backdrop-filter: blur(30px) saturate(1.4); -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.14); }
+body.sai-dark .sai-float-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+body.sai-dark .sai-float-stat .n { color: var(--sai-cream); } body.sai-dark .sai-float-stat .n em { color: var(--sai-accent-night); }
+body.sai-dark .sai-float-stat .l { color: var(--sai-cream-2); }
+body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.10); color: var(--sai-cream); }
+
+/* ── Burin · the engraved style (2026-10-17) ───────────────────────────────────────────────
+   A public-domain plate drawn live as banknote line engraving by kit/burin.js (the BURIN
+   marker). The canvas fills its box: give the box the size. Markup and rules: SNIPPETS.md. */
+canvas.sai-burin { display: block; width: 100%; height: 100%; }
+</style>
+<!-- /SAI:KIT -->
+<style>
+  /* Page layout and the rebuilt product screens. Surfaces, type and colour come from the kit. */
+  .cs { max-width: 1040px; margin: 0 auto; padding: 128px 20px 0; }
+  @media (min-width: 768px) { .cs { padding: 150px 32px 0; } }
+  .cs section { padding-top: clamp(72px, 10vh, 112px); }
+  .cs section:first-child { padding-top: 0; }
+  .cs .sai-display { margin-top: 22px; max-width: 22ch; font-size: clamp(36px, 4.4vw, 54px); }
+  .cs h2 { margin-top: 18px; font-family: var(--sai-font-sans); font-weight: 500; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.14; letter-spacing: -.022em; color: var(--sai-ink); max-width: 24ch; }
+  .cs .lede { margin-top: 24px; max-width: 54ch; font-size: 21px; line-height: 1.55; color: var(--sai-ink-90); }
+  .cs .sub { margin-top: 12px; font-size: 19px; color: var(--sai-ink-2); max-width: 56ch; }
+  .cs .sai-payoff { margin-top: 40px; }
+  .cs .sai-payoff .l { font-size: 18px; }
+  .cs .sai-payoff-note span { font-size: 16px; }
+  .cs .sai-steps { margin-top: 36px; }
+  .cs .sai-steps-rail p { font-size: 18px; }
+  .cs .shot-cap { margin-top: 16px; font-size: 16px; color: var(--sai-ink-2); }
+  .cs .sai-split, .cs .sai-strip { margin-top: 40px; }
+  .cs .sai-split .row .k { font-size: 15px; }
+  .cs .sai-split .row .v { font-size: 18px; line-height: 1.45; }
+  .cs .sai-strip li { font-size: 18px; }
+  .cs .sai-quote { margin-top: 22px; }
+  .cs .cta { margin-top: clamp(72px, 10vh, 112px); }
+  .cs .cta .sai-night { padding: clamp(28px, 5vw, 56px); }
+  .cs .cta h2 { color: var(--sai-cream); margin-top: 16px; }
+  .cs .cta p.body { margin-top: 16px; max-width: 48ch; font-size: 19px; line-height: 1.6; color: var(--sai-cream-2); }
+  .cs .cta .row-cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+  .cs .cta a.mail { color: var(--sai-cream-2); font-size: 17px; text-decoration: none; }
+  .cs .cta a.mail:hover { color: var(--sai-accent-night); }
+  .cs .sai-footer { margin-top: 56px; }
+  .sai-footer .meta a { color: inherit; }
+
+  /* Rebuilt screens: real layout, sample data, never smaller than 15px. */
+  .scr { padding: clamp(20px, 4vw, 40px); color: var(--sai-ink); font-size: 18px; line-height: 1.45; }
+  .scr .ttl { font-size: clamp(21px, 2.4vw, 26px); font-weight: 600; letter-spacing: -.01em; }
+  .scr .meta { margin-top: 4px; font-size: 16px; color: var(--sai-ink-2); }
+  .scr .fields { margin-top: 22px; display: grid; gap: 0; border-top: 1px solid var(--sai-rule); }
+  .scr .fields > div { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--sai-rule); }
+  .scr .fields dt { font-size: 16px; color: var(--sai-ink-2); }
+  .scr .fields dd { margin: 0; font-weight: 500; }
+  .scr .fields dd b { color: var(--sai-accent-deep); font-weight: 600; }
+  .scr .acts { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .scr .b { display: inline-block; padding: 13px 26px; border-radius: 12px; font-size: 18px; font-weight: 600; }
+  .scr .b.go { background: var(--sai-status-good); color: #fff; }
+  .scr .b.no { background: #fff; color: var(--sai-status-bad); box-shadow: inset 0 0 0 1.5px var(--sai-status-bad); }
+  .scr .b.ink { background: var(--sai-ink); color: #fff; }
+  .scr .fine { margin-top: 16px; font-size: 15px; color: var(--sai-ink-2); }
+  .scr .phone { max-width: 380px; margin: 0 auto; padding: 22px 20px 26px; border-radius: 30px; background: #fff; box-shadow: 0 0 0 9px #241E19, 0 18px 40px rgba(23,19,16,.18); }
+  .scr .phone .fields > div { grid-template-columns: 1fr; gap: 4px; }
+  .scr .phone .b { display: block; text-align: center; margin-top: 20px; }
+  .scr .list { margin-top: 20px; border-top: 1px solid var(--sai-rule); }
+  .scr .item { display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--sai-rule); }
+  .scr .item .who { font-weight: 600; }
+  .scr .item .sm { font-size: 16px; color: var(--sai-ink-2); font-weight: 400; }
+  .scr .item .amt { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+  .scr .item .st { grid-column: 1 / -1; }
+  .scr .pill { display: inline-block; padding: 4px 11px; border-radius: 8px; font-family: var(--sai-font-label); font-size: 14.5px; font-weight: 600; letter-spacing: .03em; }
+  .scr .pill.ok { color: var(--sai-status-good); background: var(--sai-status-good-tint); }
+  .scr .pill.mid { color: var(--sai-ink-2); background: var(--sai-hollow); box-shadow: inset 0 0 0 1px var(--sai-rule); }
+  .scr .pill.you { color: var(--sai-status-warn); background: var(--sai-status-warn-tint); }
+  .scr .pill + .why { margin-left: 8px; font-size: 16px; color: var(--sai-ink-2); }
+  .scr .done { margin-top: 20px; display: grid; gap: 10px; }
+  .scr .done li { list-style: none; display: flex; gap: 12px; align-items: baseline; }
+  .scr .done li::before { content: '\2713'; color: var(--sai-status-good); font-weight: 700; }
+  .scr .done { padding: 0; }
+  .scr .file { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--sai-rule); }
+  .scr .file .ic { flex: 0 0 34px; height: 42px; border-radius: 5px; background: #F4E3DC; box-shadow: inset 0 0 0 1.5px var(--sai-accent-line); position: relative; }
+  .scr .file .ic::after { content: 'PDF'; position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 700 10.5px var(--sai-font-label); color: var(--sai-accent-deep); letter-spacing: .04em; }
+  @media (min-width: 720px) {
+    .scr .item { grid-template-columns: minmax(0, 1fr) auto minmax(220px, 34%); }
+    .scr .item .st { grid-column: auto; }
+  }
+</style>
+</head>
+<body class="sai-quiet">
+<div class="sai-dock">
+  <!-- SAI:LOGO -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO -->
+  <span class="word">Stephens AI</span>
+  <nav><a class="on" href="#result">RESULT</a><a href="#how">HOW IT WORKS</a><a href="#change">BEFORE AND AFTER</a><a href="#talk">GET STARTED</a></nav>
+</div>
+<main class="cs">
+  <section id="result">
+    <div class="sai-client"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOgAAABgCAYAAAAXSj7NAAAwhElEQVR4nO3dBbQtVf0H8HkXDExsMZ5d2IGFio2tmCgqIhZgo1igKGIHBioKiiAYGIiKoqLY3d3dXYgB778+4/3etd+8mTMz555zif/5rXXWqZk9e/b8uva6zTfffENVVdW6deuqDRs21O+bbbZZ/T4GnHvyySfX72Bpaal+5feAcfNfeW7glFNOqb/nt80337z+zcu8vJfjlOM6J8fmexPK+yzHLscce+8LWMA84L///W+1bmlpaQWLIWZJTNMApM/ggTOd6Uz1OwL7z3/+03sN8wixZBzj1hNeJp424iuvF2LtGn/S/wtYwGkF1m255ZYrEvSkk06qLnWpS1V3utOdauRFSJGCbVIlBH3Ws561+stf/lIdffTR1a9+9auaEK93vetVN73pTauvfOUr1THHHLNCFP67wQ1uUN3kJjepznzmM9fEhGh/85vf1AT4ne98p/r2t79d/fvf/67+8Y9/VDvuuGP9m3G22Wab6gc/+EE9t4te9KLVda5znXp+5z//+astttii+v3vf18dddRR1c9//vPqLGc5S3W2s52tvm6TEM3ZdffYY4/qm9/8ZvXpT3+6/v3Sl750daMb3WiFKWTOYQbGOec5z1kzi7/97W8TmcQCFrBaeNvb3lZtvuWWW9ZfIPq//vWv6mc/+1n1xz/+sTrooIMGD/SHP/yhuvvd716/hwC++93vVne5y12qd77zndXVr3716nvf+15NELvttltNCJgBQjz++OOrX//619XnP//56q9//Wt9bchvDISy9957V6973etqwtxzzz2r5zznOTUTQMDGRIgXuMAFqktc4hLVrrvuWj3+8Y+v3vKWt1Qf+MAHqi984Qv1OOc617lqxhCGg/Cf/OQnV1e60pWqE044oWYwfv/Tn/5UE/o+++zTea8f//jHq8985jP1vBawgHkC4bFu/fr1K2KAJIP84I53vGN15JFH1tKizS6LVP3FL35R3frWt66JJbal340FEMAVr3jF6u9//3v93xe/+MXqzW9+c02YiLENIrW9PvWpT9UE+rnPfa4m4p122ql6//vfX5397GevGQqp5t2xF7rQhWoJaO6uiajf+MY3Vp/85Cdr4j/Pec5TE+cNb3jDmtjvete71ueRtFF5zel+97tfdcABB6zY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" alt="Wichita Family Vision"><span class="bar"></span><span class="lab">Case study</span></div>
+    <p class="sai-client-meta">Optometry · Wichita, Kansas · Live since October 2026</p>
+    <h1 class="sai-display">Every vendor bill used to be typed in by hand. <em>Now the bookkeeper checks one screen and clicks Go.</em></h1>
+    <p class="lede">It's separate from QuickBooks: a small app on the bookkeeper's computer that connects to QuickBooks Online. It reads each scanned bill, files it in the right vendor folder and shows her one short list to check. One click and the bills are in QuickBooks.</p>
+    <div class="sai-payoff"><div class="lead"><p class="n">About 200 hours</p><p class="l">a year of typing and filing, gone</p></div><div><p class="n">0 failed bills</p><p class="l">since it went live</p></div></div>
+    <p class="sai-payoff-note"><span class="sai-status good"><span class="kw">Intuit-approved connection</span></span><span>Approved by Intuit to connect to live QuickBooks books. Hours estimated at 50 bills a week, about 5 minutes each.</span></p>
+  </section>
+  <section id="how">
+    <span class="sai-stamp">How it works</span>
+    <h2>Scan the bills. Check one screen. Click Go.</h2>
+    <p class="sub">Click a step to see the screen.</p>
+    <div class="sai-steps" data-sai-steps>
+      <div class="sai-steps-rail"><span class="sai-steps-glide"></span><span class="sai-steps-bar"></span>
+        <ol><li class="on"><span class="sai-steps-start">Start here</span><button type="button">1. Scan the bills</button><p>Scan at the copier or save the PDF into one folder.</p><span class="sai-steps-shows"><span class="when-off">See this step &rarr;</span><span class="when-on">Shown below &darr;</span></span></li><li><button type="button">2. Check one screen</button><p>Each bill read and matched to its vendor. Anything unclear is flagged, never guessed.</p><span class="sai-steps-shows"><span class="when-off">See this step &rarr;</span><span class="when-on">Shown below &darr;</span></span></li><li><button type="button">3. Bills are in QuickBooks</button><p>Vendor, date, number and amount entered. Nothing is paid.</p><span class="sai-steps-shows"><span class="when-off">See this step &rarr;</span><span class="when-on">Shown below &darr;</span></span></li></ol>
+      </div>
+      <div class="sai-steps-stage"><span class="sai-steps-notch"></span>
+        <div class="sai-frame"><div class="sai-steps-panels"><div class="sai-app on"><div class="sai-app-bar">The Invoices folder</div><div class="scr"><p class="ttl">Invoices folder</p><p class="meta">Scanned at the copier or saved from email</p>
+<div class="list">
+<div class="file"><span class="ic"></span><span>Scan_0914_01.pdf</span></div>
+<div class="file"><span class="ic"></span><span>Scan_0914_02.pdf</span></div>
+<div class="file"><span class="ic"></span><span>Scan_0914_03.pdf</span></div>
+<div class="file"><span class="ic"></span><span>Scan_0914_04.pdf</span></div></div>
+<p class="fine">Open the app and it reads every file in the folder.</p></div></div><div class="sai-app"><div class="sai-app-bar">File invoices · the review screen</div><div class="scr"><p class="ttl">File invoices</p><p class="meta">4 files. 2 ready, 1 statement, 1 needs you.</p>
+<div class="list">
+<div class="item"><span class="who">Sam's Club <span class="sm">Sep 14</span></span><span class="amt">$177.85</span><span class="st"><span class="pill ok">Ready</span></span></div>
+<div class="item"><span class="who">Amazon <span class="sm">Sep 10</span></span><span class="amt">$103.68</span><span class="st"><span class="pill ok">Ready</span></span></div>
+<div class="item"><span class="who">Marchon <span class="sm">Sep 9</span></span><span class="amt">$286.40</span><span class="st"><span class="pill mid">Statement</span><span class="why">filed, not a bill</span></span></div>
+<div class="item"><span class="who">Kansas Gas Service <span class="sm">Sep 5</span></span><span class="amt">$94.12</span><span class="st"><span class="pill you">Needs you</span><span class="why">pick a folder</span></span></div></div>
+<div class="acts"><span class="b ink">Go</span></div></div></div><div class="sai-app"><div class="sai-app-bar">File invoices · done</div><div class="scr"><p class="ttl">Filed 3 files. 2 bills entered in QuickBooks.</p><p class="meta">1 file is waiting for you</p>
+<ul class="done"><li>Sam's Club, $177.85, entered as a bill</li><li>Amazon, $103.68, entered as a bill</li>
+<li>Marchon statement filed in its vendor folder</li></ul>
+<div class="list"><div class="item"><span class="who">Kansas Gas Service</span><span class="amt">$94.12</span><span class="st"><span class="pill you">Needs you</span><span class="why">no folder yet</span></span></div></div>
+<p class="fine">Nothing is paid. Undo takes the files back and removes the bills.</p></div></div></div></div>
+      </div>
+    </div>
+    <p class="shot-cap">Sample vendors and amounts. The screens are simplified from the real ones.</p>
+  </section>
+  <section id="change">
+    <span class="sai-stamp">Before and after</span>
+    <h2>What changed in the office.</h2>
+    <div class="sai-split">
+      <div class="col before"><div class="col-head"><h4>Before</h4><span class="tag old">By hand</span></div><div class="row"><span class="k">Entry</span><span class="v">Every bill typed into QuickBooks by hand</span></div><div class="row"><span class="k">Filing</span><span class="v">Each PDF renamed and filed into one of 184 vendor folders</span></div><div class="row"><span class="k">Accuracy</span><span class="v">QuickBooks has its own bill reader. On the clinic's real bills in our test, it got 40% of the totals wrong</span></div></div>
+      <span class="sai-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#B4502C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+      <div class="col after"><div class="col-head"><h4>After</h4><span class="tag new">Automatic</span></div><div class="row"><span class="k">Entry</span><span class="v">Bills created with one click, and repeats skipped</span></div><div class="row"><span class="k">Filing</span><span class="v">Renamed and moved to the right folder</span></div><div class="row"><span class="k">Accuracy</span><span class="v">Ours got every total right</span></div></div>
+    </div>
+    <div class="sai-strip"><p class="lab">Patient data</p><ul><li>Lab bills can carry patient names, so each one is read in the practice's own cloud account, under a HIPAA agreement.</li><li>Nothing is kept after the read.</li><li>QuickBooks gets the vendor, date, number and amount, never the page.</li></ul></div>
+  </section>
+  <section id="talk">
+    <span class="sai-stamp">In their words</span>
+    <figure class="sai-quote">
+      <blockquote>That's very simple and effective &hellip; I don't have to enter [them]. I just have to go back in and pay [them] when it's an appropriate time.</blockquote>
+      <figcaption><span><b>Mary Tangney</b>, Bookkeeper, Wichita Family Vision</span></figcaption>
+    </figure>
+    <div class="cta">
+      <section class="sai-night">
+        <span class="sai-ember"></span>
+        <span class="sai-stamp on-night">Get started</span>
+        <h2>30 minutes. You keep the map.</h2>
+        <p class="body">Tell us how bills get into your books today. We'll send you an Opportunity Map with the fix for each thing we find, yours to keep whether you hire us or not.</p>
+        <div class="row-cta">
+          <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Get started</a>
+          <a class="mail" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+        </div>
+      </section>
+    </div>
+  </section>
+  <footer class="sai-footer">
+    <span class="lockup"><!-- SAI:LOGO -->
+<svg class="mark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#0D0C0B" stroke-width="18" stroke-linecap="round">
+    <path d="M 143 50.5 Q 143 30.5 119 30.5 L 81 30.5 Q 57 30.5 57 54.5 Q 57 76.5 75.06 99.5"/>
+    <path d="M 124.94 100.5 Q 143 123.5 143 145.5 Q 143 169.5 119 169.5 L 81 169.5 Q 57 169.5 57 149.5"/>
+  </g>
+  <circle cx="100" cy="100" r="11.5" fill="#DC6843"/>
+</svg>
+<!-- /SAI:LOGO --><span class="word">Stephens AI</span></span>
+    <span class="meta"><a href="/">stephensai.co</a> · Case study · October 2026</span>
+  </footer>
+</main>
+<!-- SAI:JS -->
+<script>
+/* Lens — behaviour layer. Inlined by scripts/inline_kit.py at the SAI:JS marker.
+   v3 (2026-08-28): the dock follows the reader, copy buttons copy, segmented
+   toggles switch. v5 (2026-09-30, from the live stephensai.co homepage): the step
+   switcher, price cards that lean toward the pointer, rolling numbers, and the
+   pointer light on a night panel. Pointer effects run on fine pointers only;
+   reduced motion gets the final state. */
+(function () {
+  'use strict';
+  var OFFSET = 96;
+
+  /* Dock: the active pill follows scroll and moves on click. */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sai-dock nav a[href^="#"]'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function setOn(i) { links.forEach(function (a, j) { a.classList.toggle('on', i === j); }); }
+  function top(el) { return el.getBoundingClientRect().top + window.scrollY; }
+  function spy() {
+    var y = window.scrollY + OFFSET + 8, cur = -1;
+    targets.forEach(function (t, i) { if (t && top(t) <= y) cur = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) cur = links.length - 1;
+    setOn(cur);
+  }
+  if (links.length) {
+    links.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = targets[i]; if (!t) return;
+        e.preventDefault(); setOn(i);
+        window.scrollTo({ top: top(t) - OFFSET, behavior: (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+        if (history.replaceState) history.replaceState(null, '', '#' + t.id);
+      });
+    });
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () { spy(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener('load', spy); spy();
+  }
+
+  /* Copy buttons: <button class="sai-copy" data-sai-copy="#id">. Copies the target's text. */
+  document.querySelectorAll('[data-sai-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var t = document.querySelector(btn.getAttribute('data-sai-copy')); if (!t) return;
+      var label = btn.textContent;
+      var done = function () { btn.textContent = btn.getAttribute('data-sai-done') || 'Copied'; btn.classList.add('done');
+        setTimeout(function () { btn.textContent = label; btn.classList.remove('done'); }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t.innerText).then(done);
+      else { var r = document.createRange(); r.selectNodeContents(t); var s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); s.removeAllRanges(); done(); }
+    });
+  });
+
+  /* Segmented toggles: <div class="sai-seg" data-sai-seg="name"><button data-value="a" class="on">…</button></div>
+     Elements with data-sai-show="name:a" show only for that value.
+     Elements with data-sai-val="name" data-sai-map='{"a":"text"}' swap their text. */
+  document.querySelectorAll('[data-sai-seg]').forEach(function (seg) {
+    var name = seg.getAttribute('data-sai-seg');
+    var apply = function (value) {
+      seg.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-value') === value); });
+      document.querySelectorAll('[data-sai-show^="' + name + ':"]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-sai-show').slice(name.length + 1) !== value;
+      });
+      document.querySelectorAll('[data-sai-val="' + name + '"]').forEach(function (el) {
+        try { var map = JSON.parse(el.getAttribute('data-sai-map')); if (value in map) el.textContent = map[value]; } catch (e) {}
+      });
+    };
+    seg.querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-value')); }); });
+    var first = seg.querySelector('button.on') || seg.querySelector('button'); if (first) apply(first.getAttribute('data-value'));
+  });
+
+  /* ── Lens v5 ── */
+  var mq = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+  var calm = mq('(prefers-reduced-motion: reduce)');
+  var fine = mq('(hover: hover) and (pointer: fine)');
+
+  /* Step switcher: <div class="sai-steps" data-sai-steps> with li steps (each holding a
+     button) and a .sai-steps-panels list in the same order. Hover, focus, click, tap
+     or arrow keys choose; --i drives the glide, the bar and the notch. */
+  document.querySelectorAll('[data-sai-steps]').forEach(function (root) {
+    var items = Array.prototype.slice.call(root.querySelectorAll('.sai-steps-rail li'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.sai-steps-panels > *'));
+    var btns = items.map(function (li) { return li.querySelector('button'); });
+    root.style.setProperty('--n', items.length);
+    var pick = function (i, focus) {
+      root.style.setProperty('--i', i);
+      items.forEach(function (li, j) { li.classList.toggle('on', i === j); });
+      panels.forEach(function (p, j) { p.classList.toggle('on', i === j); p.hidden = false; });
+      btns.forEach(function (b, j) { if (!b) return; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === j ? 'true' : 'false'); b.tabIndex = i === j ? 0 : -1; });
+      if (focus && btns[i]) btns[i].focus();
+    };
+    items.forEach(function (li, i) {
+      li.addEventListener('mouseenter', function () { if (fine) pick(i); });
+      li.addEventListener('click', function () { pick(i); });
+      var b = btns[i]; if (!b) return;
+      b.addEventListener('focus', function () { pick(i); });
+      b.addEventListener('keydown', function (e) {
+        var n = items.length, k = { ArrowRight: (i + 1) % n, ArrowDown: (i + 1) % n, ArrowLeft: (i - 1 + n) % n, ArrowUp: (i - 1 + n) % n, Home: 0, End: n - 1 }[e.key];
+        if (k === undefined) return; e.preventDefault(); pick(k, true);
+      });
+    });
+    var start = items.findIndex(function (li) { return li.classList.contains('on'); });
+    pick(start < 0 ? 0 : start);
+  });
+
+  /* Tilt: [data-sai-tilt] leans toward the pointer on a damped spring (real frame
+     time, so 60 and 120 Hz feel the same) and sets --mx/--my for the light. */
+  if (fine && !calm) document.querySelectorAll('[data-sai-tilt]').forEach(function (el) {
+    var raf = 0, last = 0, active = false, tx = 0, ty = 0, x = 0, y = 0, vx = 0, vy = 0;
+    var step = function (now) {
+      var dt = last ? Math.min(0.032, (now - last) / 1000) : 1 / 60; last = now;
+      vx += (170 * (tx - x) - 22 * vx) * dt; vy += (170 * (ty - y) - 22 * vy) * dt; x += vx * dt; y += vy * dt;
+      el.style.setProperty('--ry', x.toFixed(3) + 'deg'); el.style.setProperty('--rx', y.toFixed(3) + 'deg');
+      var still = Math.abs(tx - x) < 0.005 && Math.abs(ty - y) < 0.005 && Math.abs(vx) < 0.01 && Math.abs(vy) < 0.01;
+      if (still && !active) { raf = 0; last = 0; return; }
+      raf = requestAnimationFrame(step);
+    };
+    var wake = function () { if (!raf) raf = requestAnimationFrame(step); };
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      tx = (px - 0.5) * 7; ty = -(py - 0.5) * 5;
+      el.style.setProperty('--mx', (px * 100).toFixed(1) + '%'); el.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      active = true; wake();
+    });
+    el.addEventListener('pointerleave', function () { tx = 0; ty = 0; active = false; wake(); });
+  });
+
+  /* Rolling numbers: <span class="sai-roll" data-sai-roll="$7,500">$7,500</span>. The real
+     value is always what renders; only a number that starts below the fold arms (digits
+     parked at 9) and rolls in when it arrives. Print always shows the real value (CSS). */
+  document.querySelectorAll('[data-sai-roll]').forEach(function (el, k) {
+    var v = el.getAttribute('data-sai-roll') || el.textContent;
+    el.setAttribute('aria-label', v);
+    el.innerHTML = v.split('').map(function (ch, i) {
+      if (!/\d/.test(ch)) return '<span aria-hidden="true">' + ch + '</span>';
+      var strip = ''; for (var d = 0; d < 10; d++) strip += '<span>' + d + '</span>';
+      return '<span class="dg" aria-hidden="true"><span class="strip" style="--d:' + ch + ';transition-delay:' + (k * 120 + i * 70) + 'ms">' + strip + '</span></span>';
+    }).join('');
+    if (calm || !('IntersectionObserver' in window) || el.getBoundingClientRect().top < window.innerHeight) return;
+    el.classList.add('armed');
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      el.getBoundingClientRect(); el.classList.remove('armed'); io.disconnect();
+    });
+    io.observe(el);
+  });
+
+  /* Pointer light on a night panel: <section class="sai-night" data-sai-glow>. */
+  if (fine && !calm) document.querySelectorAll('section.sai-night[data-sai-glow]').forEach(function (host) {
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
+      host.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      host.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      host.setAttribute('data-glow', 'on');
+    });
+    host.addEventListener('pointerleave', function () { host.removeAttribute('data-glow'); });
+  });
+})();
+</script>
+<!-- /SAI:JS -->
+</body>
+</html>
