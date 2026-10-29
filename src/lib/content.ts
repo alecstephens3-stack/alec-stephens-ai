@@ -121,8 +121,8 @@ export const PROOF_LINKS = {
   full: { label: "Read the full case study", href: CASE_STUDY_URL },
   more: "More, one page each:",
   items: [
-    { label: "Time off and payroll", href: "/case-studies/time-off-and-payroll.pdf" },
-    { label: "Vendor bills", href: "/case-studies/vendor-bills.pdf" },
+    { label: "Time off and payroll", href: "/case-studies/time-off-and-payroll" },
+    { label: "Vendor bills", href: "/case-studies/vendor-bills" },
   ],
 };
 
@@ -323,12 +323,12 @@ export const V7_WORK = {
     {
       title: "Bills into QuickBooks",
       body: "Invoices read, filed and entered straight into QuickBooks through our own app, approved by Intuit. Your bookkeeper checks them instead of typing them.",
-      link: { label: "One-page summary", href: "/case-studies/vendor-bills.pdf" },
+      link: { label: "Case study", href: "/case-studies/vendor-bills" },
     },
     {
       title: "Time off and payroll",
       body: "For practices still on paper slips or a spreadsheet: requests, approvals, the calendar and the payroll report in one place.",
-      link: { label: "One-page summary", href: "/case-studies/time-off-and-payroll.pdf" },
+      link: { label: "Case study", href: "/case-studies/time-off-and-payroll" },
     },
     {
       title: "Systems built around your practice",
