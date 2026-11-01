@@ -741,7 +741,7 @@ section.sai-night .sai-track .entry p { color: var(--sai-cream-2); }
 
 /* Stack claim cards in a grid when there are several. Stretch, not start —
    equal heights are what let the verdict strips align. */
-.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: stretch; }
+.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; align-items: stretch; }
 
 section.sai-night .sai-claim { background: var(--sai-nglass); border-color: var(--sai-nglass-edge);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -1302,6 +1302,11 @@ canvas.sai-burin { display: block; width: 100%; height: 100%; }
     .scr .item { grid-template-columns: minmax(0, 1fr) auto minmax(220px, 34%); }
     .scr .item .st { grid-column: auto; }
   }
+  /* A product animation (Stageshow scene, 1 Nov 2026): an iframe at the scene's own aspect */
+  .cs-anim { margin: 44px auto 0; max-width: 720px; container-type: inline-size; }
+  .cs-anim iframe { display: block; width: 100%; aspect-ratio: 720 / 430; border: 0; }
+  @container (max-width: 639px) { .cs-anim iframe { aspect-ratio: 358 / 356; } }
+  .cs-anim figcaption { margin-top: 12px; text-align: center; font-size: 15px; color: var(--sai-ink-2); }
 </style>
 </head>
 <body class="sai-quiet">
@@ -1326,6 +1331,7 @@ canvas.sai-burin { display: block; width: 100%; height: 100%; }
     <p class="lede">It's separate from QuickBooks: a small app on the bookkeeper's computer that connects to QuickBooks Online. It reads each scanned bill, files it in the right vendor folder and shows her one short list to check. One click and the bills are in QuickBooks.</p>
     <div class="sai-payoff"><div class="lead"><p class="n">About 200 hours</p><p class="l">a year of typing and filing, gone</p></div><div><p class="n">0 failed bills</p><p class="l">since it went live</p></div></div>
     <p class="sai-payoff-note"><span class="sai-status good"><span class="kw">Intuit-approved connection</span></span><span>Approved by Intuit to connect to live QuickBooks books. Hours estimated at 50 bills a week, about 5 minutes each.</span></p>
+    <figure class="cs-anim"><iframe src="/animations/file-invoices/index.html" title="File Invoices reading three bills and filing them into QuickBooks" loading="lazy"></iframe><figcaption>One run, start to finish. Sample vendors and amounts.</figcaption></figure>
   </section>
   <section id="how">
     <span class="sai-stamp">How it works</span>

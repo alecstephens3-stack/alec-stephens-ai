@@ -742,7 +742,7 @@ section.sai-night .sai-track .entry p { color: var(--sai-cream-2); }
 
 /* Stack claim cards in a grid when there are several. Stretch, not start —
    equal heights are what let the verdict strips align. */
-.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: stretch; }
+.sai-claims { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; align-items: stretch; }
 
 section.sai-night .sai-claim { background: var(--sai-nglass); border-color: var(--sai-nglass-edge);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
