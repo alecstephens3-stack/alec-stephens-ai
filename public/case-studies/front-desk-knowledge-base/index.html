@@ -236,9 +236,8 @@ html, body {
    never over text or a screenshot (Alec, 2026-09-16: "that diagonal highlight should be
    in the background but not be visible by text or screenshots"). `isolation` on the
    pane + z-index -1 on the band puts it under everything the pane holds. */
-.sai-streak::before { content:''; position:absolute; z-index: -1; top:-40%; left:-20%; width: 55%; height: 190%; pointer-events:none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.34) 50%, transparent 70%);
-  transform: rotate(2deg); }
+.sai-streak::before { content:''; position:absolute; z-index: -1; inset: 0; border-radius: inherit; pointer-events:none;
+  background: linear-gradient(115deg, transparent 120px, rgba(255,255,255,0.34) 360px, transparent 600px); }
 
 /* A nested tile inside a pane. Never a pane inside a pane. */
 .sai-tile { background: var(--sai-glass-tile); border: 1px solid rgba(255,255,255,0.7);
@@ -1096,6 +1095,12 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
   @media (max-width: 720px) {
     .cs .sai-sat { position: relative; left: auto; right: auto; top: auto; bottom: auto; max-width: none; margin-top: 12px; }
   }
+
+  /* A product animation (Stageshow scene, 1 Nov 2026): an iframe at the scene's own aspect */
+  .cs-anim { margin: 44px auto 0; max-width: 720px; container-type: inline-size; }
+  .cs-anim iframe { display: block; width: 100%; aspect-ratio: var(--aw, 720) / var(--ah, 390); border: 0; }
+  @container (max-width: 639px) { .cs-anim iframe { aspect-ratio: 358 / 356; } }
+  .cs-anim figcaption { margin-top: 12px; text-align: center; font-size: 15px; color: var(--sai-ink-2); }
 </style>
 </head>
 <body class="sai-quiet">
@@ -1127,6 +1132,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
       <div><p class="n">$8,000 to $12,000</p><p class="l">a year more from shorter training</p></div>
     </div>
     <p class="sai-payoff-note"><span class="sai-status good"><span class="kw">Live in production</span></span><span>Estimated from the clinic's own numbers. How we got them is below.</span></p>
+    <figure class="cs-anim" style="--aw:720;--ah:420"><iframe src="/animations/front-desk/index.html" title="The front desk knowledge base answering a question during a live call" loading="lazy"></iframe><figcaption>A question on a live call, answered in seconds. Sample page and rule, screens simplified.</figcaption></figure>
     <figure class="shot">
       <div class="sai-frame">
         <div class="sai-app">
