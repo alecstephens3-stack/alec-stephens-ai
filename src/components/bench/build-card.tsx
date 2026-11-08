@@ -415,7 +415,9 @@ function Shot({
             alt=""
             decoding="async"
             {...load}
-            style={{ width: `${(img.w / w) * 100}%`, left: `${(-x / w) * 100}%`, top: `${(-y / h) * 100}%` }}
+            // margin-top % is measured against the box's width, so the offset stays true to the
+            // image's scale even when the stage stretches the box taller than the crop.
+            style={{ width: `${(img.w / w) * 100}%`, left: `${(-x / w) * 100}%`, top: 0, marginTop: `${(-y / w) * 100}%` }}
           />
         </div>
       </div>
