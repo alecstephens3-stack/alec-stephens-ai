@@ -19,7 +19,14 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/alec`,
     title: SITE.title,
     description: SITE.description,
-    images: [{ url: "/og-image.png" }],
+    // Thumbnail A, picked by Alec 8 Nov 2026 (source: artifacts/portfolio-thumbnail-2026-11-08 in the vault).
+    images: [{ url: "/og-alec.png", width: 1200, height: 627, alt: "What I've built: 10 builds for clinics and businesses, by Alec Stephens" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+    images: ["/og-alec.png"],
   },
 };
 
