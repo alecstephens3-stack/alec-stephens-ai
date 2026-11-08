@@ -162,7 +162,7 @@ export const CASES: BuildCase[] = [
           "h": 1200,
           "crop": [
             110,
-            190,
+            140,
             1400
           ]
         }
@@ -437,8 +437,8 @@ export const CASES: BuildCase[] = [
           "h": 1200,
           "crop": [
             30,
-            216,
-            820
+            222,
+            860
           ]
         }
       },
@@ -458,9 +458,9 @@ export const CASES: BuildCase[] = [
           "w": 1600,
           "h": 1200,
           "crop": [
-            760,
-            200,
-            840
+            738,
+            222,
+            862
           ]
         }
       },
@@ -473,9 +473,9 @@ export const CASES: BuildCase[] = [
           "w": 1600,
           "h": 1200,
           "crop": [
-            80,
-            150,
-            1440
+            57,
+            170,
+            1486
           ]
         }
       }
