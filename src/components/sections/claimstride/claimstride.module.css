@@ -1,8 +1,38 @@
-/* ClaimStride's hero window (2026-10-13). The frame, entrance and parallax are the
-   homepage's .dx classes (globals.css); this file gives the backdrop ClaimStride's
-   sky and puts ClaimStride's own look (direction 8, "C-check") inside the window:
-   ink #0A1C26, ocean #0E7FA8, mint #3FD69B, Instrument Sans. */
+/* /claimstride (rebuilt 2026-11-08). The page is Stephens AI's; the product frames
+   and accents wear ClaimStride's own look (direction 8, "C-check"): ink #0A1C26,
+   ocean #0E7FA8, mint #3FD69B, Instrument Sans inside the product only. The depth
+   frame (.dx) and the services switcher (.sv) are the homepage's, from globals.css;
+   this file re-tints them for ClaimStride. */
 
+/* ── This page's sky (Alec, 2026-10-13: "do a white or an off white one") ── */
+:global(body):has(.page) {
+  --sai-sky: #F6F9F9;
+  --sai-sky-fallback: #F6F9F9;
+  --draft-crop-lead: #3FD69B;
+  --draft-crop-trail: #0E7FA8;
+}
+.page :global(.draft-crop.t-label) { color: #0A6E95; }
+:global(body):has(.page) :global(.sai-tint),
+:global(body):has(.page) :global(.draft-grain) { display: none; }
+
+/* ── Hero copy ── */
+.lockup { display: inline-flex; align-items: center; gap: 10px; color: #0A1C26; }
+.lockupName { font-size: 26px; font-weight: 700; letter-spacing: -.035em; line-height: 1; }
+.lockupBy { font-size: 15px; font-weight: 500; color: #46606B; padding-top: 4px; }
+.accent { color: #0E7FA8; }
+.status {
+  display: flex; width: fit-content; margin: 18px auto 0; overflow: hidden;
+  border-radius: 10px; background: #fff; box-shadow: 0 0 0 1px rgba(10, 28, 38, .10);
+  font-size: 15px; color: #0A1C26;
+}
+.status > span { padding: 6px 12px; }
+.statusK {
+  background: #DDF3E8; color: #14663F;
+  font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+}
+
+/* ── The depth frame, sized to the scene's app window (648x402 of its 720x420) ── */
+.dx { height: auto !important; aspect-ratio: 1180 / 706; }
 .dx :global(.dx-backdrop) {
   background:
     radial-gradient(120% 90% at 10% 110%, rgba(14, 127, 168, .42), transparent 55%),
@@ -11,133 +41,152 @@
     linear-gradient(180deg, #E6F2F5 0%, #C9E3EB 58%, #9CCBDA 100%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6), 0 40px 90px rgba(10, 28, 38, .14);
 }
-
+.dx :global(.dx-backdrop::after) { display: none; }
+.dx :global(.dx-enter-win) { left: 9%; right: 9%; top: 6.5%; bottom: 8.5%; }
 .win {
-  grid-template-columns: minmax(0, 1fr) !important;
-  grid-template-rows: auto minmax(0, 1fr);
-  background: linear-gradient(180deg, #DDEEF3 0, #EAF4F6 220px, #F3F7F7 100%);
-  color: #0A1C26;
-  font-variant-numeric: tabular-nums;
-  box-shadow: 0 0 0 1px rgba(10, 28, 38, .10), 0 2px 4px rgba(10, 28, 38, .06), 0 24px 48px rgba(10, 28, 38, .16), 0 60px 120px rgba(10, 40, 55, .18);
+  display: block !important; background: transparent !important; border-radius: 22px !important;
+  box-shadow: 0 2px 4px rgba(10, 28, 38, .06), 0 24px 48px rgba(10, 28, 38, .16), 0 60px 120px rgba(10, 40, 55, .18) !important;
 }
+.scene { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 22px; }
+.sceneFrame { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; pointer-events: none; }
+.poster { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* the ink bar */
-.bar {
-  display: flex; align-items: center; gap: 18px;
-  margin: 12px 12px 0; padding: 8px 10px 8px 14px;
-  border-radius: 16px; background: rgba(10, 28, 38, .95); color: #EAF4F6;
-  box-shadow: 0 10px 24px rgba(10, 28, 38, .2);
+/* satellite 1: the report count, ink, with the pointer light */
+.ink {
+  position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px;
+  padding: 16px 22px; background: #0A1C26 !important; color: #EAF4F6; max-width: 400px;
+  box-shadow: 0 18px 40px rgba(10, 28, 38, .3), 0 40px 90px rgba(10, 40, 55, .18) !important;
 }
-.brand { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; letter-spacing: -.035em; }
-.navPill {
-  padding: 6px 14px; border-radius: 10px; background: #0E7FA8; color: #fff;
-  font-size: 14px; font-weight: 700; box-shadow: 0 6px 16px rgba(14, 127, 168, .4);
-}
-.office { margin-left: auto; font-size: 14px; color: #BBD0D6; white-space: nowrap; }
-.office b { color: #fff; font-weight: 600; }
+.glow { position: absolute; inset: 0; pointer-events: none; transition: opacity 420ms ease; }
+.inkN { position: relative; font-size: 50px; font-weight: 700; letter-spacing: -.03em; line-height: 1; color: #5CC8EC; font-variant-numeric: tabular-nums; }
+.inkT { position: relative; display: flex; flex-direction: column; line-height: 1.3; }
+.inkT b { font-size: 17px; }
+.inkT span { font-size: 14px; color: #A7BFC6; }
 
-.body { padding: 18px 26px 22px; display: flex; flex-direction: column; min-height: 0; }
-.kick { font-size: 14px; font-weight: 700; color: #0A6E95; }
-.h { margin-top: 2px; font-size: 26px; font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+/* satellite 2: the first live run */
+.run { padding: 14px 18px 16px; color: #0A1C26; }
+.runH { display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600; color: #46606B; }
+.runTick { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #0A1C26; }
+.runN { margin-top: 10px; font-size: 30px; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+.runT { margin-top: 6px; font-size: 15px; line-height: 1.4; color: #2B4651; }
 
-/* status chips: a word and a colour, kept out of the brand's own colours */
-.chip { display: inline-block; align-self: flex-start; padding: 2px 8px; border-radius: 5px; border: 1px solid; font-size: 13px; font-weight: 700; line-height: 1.35; white-space: nowrap; }
-.bad { color: #9B1C1C; background: #FBE3E1; border-color: #F0C4C0; }
-.mute { color: #39424D; background: #EAEDF0; border-color: #D3D8DE; }
-.good { color: #14663F; background: #DDF3E8; border-color: #BFE5CF; }
-
-.tiles { margin-top: 14px; max-width: 690px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.tile {
-  display: flex; flex-direction: column; gap: 4px; padding: 11px 13px; border-radius: 14px;
-  background: rgba(255, 255, 255, .7); border: 1px solid rgba(255, 255, 255, .9);
-  box-shadow: inset 0 1px 0 #fff, 0 6px 16px rgba(10, 28, 38, .06);
-}
-.n { font-size: 28px; font-weight: 700; letter-spacing: -.03em; line-height: 1; margin-top: auto; padding-top: 4px; }
-.sub { font-size: 13px; color: #46606B; }
-
-/* the claim card */
-.card {
-  margin-top: 12px; display: grid; grid-template-columns: 118px minmax(0, 1fr) 96px; gap: 14px;
-  padding: 14px 16px; border-radius: 16px;
-  background: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .92);
-  box-shadow: inset 0 1px 0 #fff, 0 10px 24px rgba(10, 28, 38, .08);
-  opacity: 0; transform: translateY(10px);
-  transition: opacity 600ms ease, transform 800ms cubic-bezier(.16, 1, .3, 1);
-}
-.cardIn { opacity: 1; transform: none; }
-.who { display: flex; flex-direction: column; gap: 1px; font-size: 14px; color: #46606B; }
-.who b { font-size: 16px; color: #0A1C26; letter-spacing: -.01em; }
-.id { font-size: 13px; font-weight: 600; }
-.mid { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.lead { font-size: 16px; font-weight: 700; color: #7F3604; letter-spacing: -.01em; }
-.why { font-size: 14.5px; line-height: 1.4; }
-.steps { margin: 2px 0 0 18px; list-style: decimal; display: flex; flex-direction: column; gap: 4px; }
-.steps li { padding-left: 2px; font-size: 13.5px; line-height: 1.4; opacity: 0; transform: translateY(6px); transition: opacity 500ms ease, transform 700ms cubic-bezier(.16, 1, .3, 1); }
-.steps li::marker { color: #46606B; }
-.steps .shown { opacity: 1; transform: none; }
-.amt { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; font-size: 13px; color: #46606B; }
-.amt b { font-size: 19px; color: #0A1C26; letter-spacing: -.02em; }
+.dx :global(.dx-enter-s1) { left: 2%; bottom: 26px; width: auto; }
+.dx :global(.dx-enter-s2) { right: 2%; top: 30px; bottom: auto; width: 270px; }
 
 /* the rolling counter */
 .roll { display: inline-flex; }
 .rollDigit { display: inline-block; height: 1em; overflow: hidden; line-height: 1; }
-.rollDigit + .rollDigit { margin-left: -.06em; }
 .rollStrip { display: flex; flex-direction: column; transition: transform 1400ms cubic-bezier(.16, 1, .3, 1); }
 .rollStrip span { display: block; height: 1em; line-height: 1; }
 
-/* satellite 1: the days-left counter, ink, with the pointer light */
-.days {
-  position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px;
-  padding: 16px 22px; background: #0A1C26 !important; color: #EAF4F6;
-  box-shadow: 0 18px 40px rgba(10, 28, 38, .3), 0 40px 90px rgba(10, 40, 55, .18) !important;
-}
-.glow { position: absolute; inset: 0; pointer-events: none; transition: opacity 420ms ease; }
-.daysN { position: relative; font-size: 54px; font-weight: 700; letter-spacing: -.03em; line-height: 1; color: #5CC8EC; }
-.daysT { position: relative; display: flex; flex-direction: column; line-height: 1.3; }
-.daysT b { font-size: 16px; }
-.daysT span { font-size: 14px; color: #A7BFC6; }
-
-/* satellite 2: the Payor Note, copied */
-.note { padding: 14px 16px; }
-.noteH { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 700; color: #0A1C26; }
-.noteTick { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #E6F2F5; }
-.noteT { margin-top: 9px; padding: 9px 11px; border-radius: 10px; background: #F3F7F7; box-shadow: inset 0 0 0 1px rgba(10, 28, 38, .08); font-size: 13.5px; line-height: 1.45; color: #142B36; }
-.noteF { margin-top: 8px; font-size: 13px; line-height: 1.4; color: #46606B; }
-
-/* where the satellites sit on this hero */
-.dx :global(.dx-enter-s1) { left: 2.5%; bottom: 30px; width: auto; }
-.dx :global(.dx-enter-s2) { right: 2%; top: 26px; bottom: auto; width: 330px; }
-
 @media (max-width: 900px) {
-  .bar { gap: 10px; flex-wrap: wrap; }
-  .office { margin-left: 0; flex-basis: 100%; white-space: normal; }
-  .navPill { display: none; }
-  .body { padding: 16px 16px 20px; }
-  .h { font-size: 22px; }
-  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .card { grid-template-columns: minmax(0, 1fr); }
-  .amt { align-items: flex-start; }
-  .dx :global(.dx-enter-s1) { width: auto; align-self: flex-start; margin-top: -24px; }
-  .dx :global(.dx-enter-s2) { width: 92%; top: auto; }
+  .dx { aspect-ratio: auto; }
+  .dx :global(.dx-enter-win) { left: auto; right: auto; top: auto; bottom: auto; }
+  .win, .scene { height: auto; }
+  .poster { height: auto; }
+  .dx :global(.dx-enter-s2) { order: -1; width: 86%; align-self: flex-end; margin-bottom: -16px; z-index: 2; top: auto; right: auto; }
+  .dx :global(.dx-enter-s1) { width: 92%; margin-top: -14px; z-index: 2; left: auto; bottom: auto; align-self: flex-start; }
+  .ink { max-width: none; padding: 14px 18px; gap: 14px; }
+  .inkN { font-size: 40px; }
 }
+
+/* ── How it works: the homepage switcher in ClaimStride's colours ── */
+.sv :global(.sv-chev) { color: #46606B; }
+.sv :global(.sv-item.is-on .sv-chev) { color: #0E7FA8; }
+.stepN {
+  display: inline-grid; place-items: center; width: 30px; height: 30px; margin-right: 12px; vertical-align: 2px;
+  border-radius: 999px; background: #E6F2F5; color: #0A6E95;
+  font-family: var(--font-label); font-size: 14px; font-weight: 700;
+  transition: background-color 250ms ease, color 250ms ease;
+}
+.sv :global(.sv-item.is-on) .stepN { background: #0A1C26; color: #fff; }
+.frame {
+  padding: 22px !important;
+  background:
+    radial-gradient(110% 90% at 10% 110%, rgba(14, 127, 168, .40), transparent 55%),
+    radial-gradient(80% 80% at 80% -10%, rgba(247, 252, 253, .95), transparent 60%),
+    linear-gradient(180deg, #E6F2F5 0%, #C9E3EB 70%, #A9D2DF 100%) !important;
+}
+.shot {
+  display: block; width: 100%; height: auto; border-radius: 14px; background: #EAF4F6;
+  box-shadow: 0 0 0 1px rgba(10, 28, 38, .10), 0 24px 48px rgba(10, 28, 38, .16);
+}
+@media (max-width: 640px) {
+  .inline picture { display: block; }
+  .inline .shot { aspect-ratio: 1; object-fit: cover; object-position: 0 0; }
+}
+.inline .shot { box-shadow: 0 0 0 1px rgba(10, 28, 38, .10), 0 12px 28px rgba(10, 28, 38, .12); }
+.notchWrap {
+  position: absolute; z-index: 1; left: -14px; top: calc(var(--ny) - 15px);
+  width: 15px; height: 30px;
+  filter: drop-shadow(-1px 0 0 rgba(255, 255, 255, .8)) drop-shadow(-3px 2px 4px rgba(10, 40, 55, .10));
+  transition: top 420ms cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+.notch {
+  position: absolute; inset: 0;
+  clip-path: path("M15 0 L1.8 13.2 Q0 15 1.8 16.8 L15 30 Z");
+  background:
+    radial-gradient(110% 90% at 10% 110%, rgba(14, 127, 168, .40), transparent 55%),
+    radial-gradient(80% 80% at 80% -10%, rgba(247, 252, 253, .95), transparent 60%),
+    linear-gradient(180deg, #E6F2F5 0%, #C9E3EB 70%, #A9D2DF 100%);
+  background-size: var(--fw) var(--fh);
+  background-position: 0 calc(15px - var(--ny));
+  background-repeat: no-repeat;
+  transition: background-position 420ms cubic-bezier(.16, 1, .3, 1);
+}
+
+/* ── On the board: four cards and the biller's words ── */
+.features { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .features { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.feature {
+  padding: 24px 24px 26px; border-radius: 22px;
+  background: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .95);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(10, 28, 38, .06), 0 14px 34px rgba(10, 28, 38, .08);
+}
+.featureK { font-family: var(--font-heading); font-size: 20px; font-weight: 500; letter-spacing: -.01em; color: #0A1C26; }
+.featureK::before { content: ""; display: block; width: 26px; height: 3px; margin-bottom: 16px; border-radius: 2px; background: #0E7FA8; }
+.featureV { margin-top: 10px; font-size: 17px; line-height: 1.55; color: #2B4651; }
+
+.quote {
+  margin-top: 28px; padding: clamp(28px, 4vw, 48px); border-radius: 28px;
+  background: #0A1C26; color: #EAF4F6;
+  box-shadow: 0 24px 60px rgba(10, 28, 38, .22);
+}
+.quoteT { font-family: var(--font-heading); font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; max-width: 34ch; text-wrap: pretty; }
+.quoteW { margin-top: 18px; font-size: 16px; color: #A7BFC6; }
+.quoteW::before { content: ""; display: inline-block; width: 22px; height: 2px; margin-right: 12px; vertical-align: 5px; background: #3FD69B; }
+
+/* ── Under the hood ── */
+.under {
+  padding: clamp(24px, 3.4vw, 40px); border-radius: 28px;
+  background: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .95);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(10, 28, 38, .06), 0 14px 34px rgba(10, 28, 38, .08);
+}
+.underLead { font-size: clamp(19px, 1.6vw, 22px); font-weight: 500; color: #0A1C26; }
+.underGrid { margin-top: 22px; display: grid; gap: 0 32px; grid-template-columns: 1.6fr 1fr 1fr; }
+.underRow { padding-top: 16px; border-top: 1px solid rgba(10, 28, 38, .10); }
+.underRow dt { font-size: 16px; font-weight: 600; color: #0A1C26; }
+.underRow dd { margin-top: 6px; font-size: 16px; line-height: 1.5; color: #2B4651; }
+.chips { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+  padding: 6px 12px; border-radius: 8px; background: #EAF4F6; color: #0A1C26;
+  font-family: var(--font-label); font-size: 14px; font-weight: 600; letter-spacing: .01em;
+}
+@media (max-width: 760px) { .underGrid { grid-template-columns: 1fr; gap: 16px; } }
+
+/* ── Closing call to action ── */
+.cta { text-align: center; padding: clamp(36px, 5vw, 64px) clamp(20px, 4vw, 56px); border-radius: 30px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(90% 120% at 0% 120%, rgba(14, 127, 168, .30), transparent 60%),
+    radial-gradient(70% 100% at 100% 120%, rgba(63, 214, 155, .22), transparent 60%),
+    linear-gradient(180deg, #F3F9FA 0%, #DCEEF3 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), 0 30px 70px rgba(10, 28, 38, .10);
+}
+.ctaH { font-family: var(--font-heading); font-size: clamp(26px, 3vw, 38px); font-weight: 500; letter-spacing: -.025em; line-height: 1.15; color: #0A1C26; max-width: 22ch; margin-inline: auto; text-wrap: balance; }
+.ctaT { margin: 14px auto 0; max-width: 46ch; font-size: 18px; line-height: 1.55; color: #2B4651; }
+
 @media (prefers-reduced-motion: reduce) {
-  .card, .rollStrip, .steps li { transition: none; }
+  .rollStrip, .notchWrap, .notch, .stepN { transition: none; }
 }
-
-/* the page's own two touches: the lockup over the headline, the accent in ocean */
-.lockup { display: inline-flex; align-items: center; gap: 10px; color: #0A1C26; }
-.lockupName { font-size: 26px; font-weight: 700; letter-spacing: -.035em; line-height: 1; }
-.lockupBy { font-size: 15px; font-weight: 500; color: #46606B; padding-top: 4px; }
-.accent { color: #0E7FA8; }
-.tile .chip { white-space: normal; }
-
-/* This page's sky (Alec, 2026-10-13: "the orange background doesn't fit, do a white or
-   an off white one"): ClaimStride's own cool off-white in place of the warm site sky,
-   on /claimstride only. The warm tint pools and the paper grain go: the grain alone
-   turned the off-white grey. */
-:global(body):has(.page) {
-  --sai-sky: #F6F9F9;
-  --sai-sky-fallback: #F6F9F9;
-}
-:global(body):has(.page) :global(.sai-tint),
-:global(body):has(.page) :global(.draft-grain) { display: none; }
