@@ -74,10 +74,6 @@ export default function ClaimStridePage() {
       <section className="v7-hero" style={{ position: "relative", isolation: "isolate" }}>
         <div className="v7-hero-copy">
           <Lockup />
-          <p className={s.status}>
-            <span className={s.statusK}>Live</span>
-            <span>at an eye clinic</span>
-          </p>
           <h1 className="v7-head">
             Your stuck claims, with the reason and <span className={s.accent}>the next step</span>.
           </h1>
