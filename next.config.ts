@@ -43,6 +43,9 @@ const nextConfig: NextConfig = {
       // Putback was renamed ClaimStride (2026-10-13); the portfolio page moved with it.
       { source: "/alec/putback", destination: "/alec/claimstride", permanent: true },
       { source: "/alec/putback/:rest*", destination: "/alec/claimstride", permanent: true },
+      // The curriculum build came off the bench (8 Nov 2026); it is one line in About now.
+      { source: "/alec/curriculum-system", destination: "/alec", permanent: true },
+      { source: "/alec/curriculum-system/:rest*", destination: "/alec", permanent: true },
       // Curtis Cole (Medari Advisors) partner link: the one address he uses
       // on his partners page, newsletter, blasts and podcast. Visitors land
       // on the normal home page; the tag marks them as his channel under the

@@ -1,50 +1,40 @@
-// GENERATED from cases.yaml by export_ts.py
+// GENERATED from cases.yaml (v2) by export_ts.py
 // (stephens-ai/artifacts/scrollcraft/builds/alec-portfolio). Do not edit by hand:
-// change cases.yaml, then run `python3 export_ts.py`.
+// change cases.yaml, run `python3 build.py`, then `python3 export_ts.py`.
 
-export type Figure = { value: string; unit: string; label: string };
+/** A public image URL with its natural size. Screens have a -800.webp twin; posters don't. */
+export type Img = { src: string; w: number; h: number };
+export type Result = { value: string; unit: string; label: string; basis?: string };
+/** One step of the flow. A shot's crop is [x, y, width] in the image's own pixels; height follows the window's shape. */
+export type FlowStep = {
+  step: string;
+  how: string;
+  shows: { kind: "anim" } | ({ kind: "shot"; crop: [number, number, number] | null } & Img);
+};
+export type Anim = { scene: string; w: number; h: number; title: string; caption: string; poster: { desktop: Img; phone: Img } };
 
 export type BuildCase = {
   slug: string;
-  tier: "deep" | "short";
+  tier: "full" | "short";
   name: string;
-  short: string;
   kicker: string;
-  title: string;
-  client: string;
+  line: string;
   client_short: string;
-  users: string;
-  shipped: string;
-  duration: string;
-  /** The headline figure. `basis` says how it was worked out. */
-  number: Figure & { basis?: string };
-  second: Figure;
-  wall: { n: string; phrase: string };
-  oneliner: string;
-  broken: string;
-  built: string[];
-  changed: { k: string; before: string; after: string }[];
-  math_note: string;
+  status: string;
+  results: Result[];
+  flow: FlowStep[];
+  built: { lead: string; text: string }[];
+  before_after: { k: string; before: string; after: string }[];
   quote: { text: string; who: string } | null;
-  compliance?: string;
   stack: string[];
-  engineer: {
-    architecture: string;
-    runs_where: string;
-    tests: string;
-    cost: string;
-    guardrails: string;
-    tradeoff: string;
-    repo: string | null;
-    repo_note: string | null;
-  };
-  attribution: string;
-  /** Image paths are public URLs (/alec/img/...). Each has a -800 twin. */
+  eng: { architecture: string; choice: string; tests: string; cost?: string; runs_where?: string };
+  repos: { label: string; url: string }[];
+  role: string;
   media: {
-    hero: string | null;
-    alt: string | null;
-    caption: string | null;
-    gallery: { src: string; alt: string; caption: string }[];
+    animation: Anim | null;
+    /** `phone`: a stacked version of a dense figure, shown under 640px instead of the hero. */
+    hero: Img & { alt: string; caption: string; phone?: Img };
+    gallery: (Img & { alt: string; caption: string })[];
   };
   links: { label: string; url: string }[];
 };
@@ -76,26 +66,23 @@ export const SITE: Site = {
   "base_url": "https://stephensai.co",
   "path": "/alec",
   "title": "Alec Stephens · What I've built",
-  "description": "Nine production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice processing under a HIPAA agreement, an insurance claims tool for a dental practice, and more. Stack, cost, tests, and who built what.",
+  "description": "10 builds I've shipped: insurance claims software, computer-use agents, invoice processing under a HIPAA agreement, a clinic knowledge base, a PTO and payroll system, and more.",
   "email": "alec@stephensai.co",
   "calendly": "https://calendly.com/alecpstephens/30min",
   "github": "https://github.com/alecstephens3-stack",
   "linkedin": "https://www.linkedin.com/in/alecpstephens/",
   "upwork": "https://www.upwork.com/freelancers/~0144c4c3757a94de2e",
   "jusheen_linkedin": "https://www.linkedin.com/in/jusheenkim",
-  "updated": "2026-10-04"
+  "updated": "2026-11-08"
 };
 
 export const ABOUT: About = {
   "name": "Alec Stephens",
   "role": "Applied AI engineer. Co-founder, Stephens AI.",
   "paragraphs": [
-    "I build systems that get my clients real results, and I absolutely love doing it.",
-    "My experience runs across the board: healthcare clinics, coaching businesses, a nine-figure education company, construction firms in Japan, and more.",
-    "I got here sideways, hired in Seoul to write English lessons and leaving with the company's curriculum running on an AI production line.",
-    "What I do best is diagnose where a build will make a client money or save them time, then work alongside them to make it happen.",
-    "Today I run Stephens AI with my co-founder Jusheen Kim, an ex-J.P. Morgan lead engineer. Our home turf is healthcare, where the work has to be HIPAA-compliant: a business associate agreement in force with the clinic, and the AI running on Claude via AWS Bedrock inside the clinic's own account, so patient data never leaves it.",
-    "Outside Stephens AI, I also take contracts as an applied AI or forward-deployed engineer. And if you're ready to grow your business, it would be my pleasure to get you the results you need."
+    "I build AI software that takes admin work off clinic staff, and I love doing it. In healthcare, patient data stays in the clinic's own AWS account, under its BAA.",
+    "I made 200+ AI tutorial videos for a nine-figure education company. Before that I was hired in Seoul to write English lessons, and left with about 80% of the manual curriculum work handled by AI.",
+    "I also take contracts as an applied AI or forward-deployed engineer."
   ],
   "credentials": [
     "Upwork: 5+ years, 100% Job Success",
@@ -107,160 +94,756 @@ export const ABOUT: About = {
 
 export const CASES: BuildCase[] = [
   {
-    "slug": "knowledge-base",
-    "tier": "deep",
-    "name": "Clinic knowledge base",
-    "short": "Knowledge base",
-    "kicker": "Healthcare · optometry",
-    "title": "Front desk knowledge base for an eye clinic: anyone at the desk finds the right answer in one search, without pulling a manager away",
-    "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
+    "slug": "claimstride",
+    "tier": "full",
+    "name": "ClaimStride",
+    "kicker": "Eye care · insurance · HIPAA",
+    "line": "Asks every insurer where each unpaid claim stands and writes the next step, for eye care and dental.",
     "client_short": "Wichita Family Vision",
-    "users": "The front desk and 2 office managers, daily since August 2026",
-    "shipped": "Live 2026-08-07",
-    "duration": "About 6 weeks from scope to live",
-    "number": {
-      "value": "~200",
-      "unit": "hrs/yr",
-      "label": "of interruptions off the office manager's desk",
-      "basis": "About 4 questions a day that used to cost 10 minutes of digging or a manager's attention, now one search, over 250 working days."
-    },
-    "second": {
-      "value": "35",
-      "unit": "pages",
-      "label": "of protocol, plus a 41-row price grid, maintained by the staff themselves"
-    },
-    "wall": {
-      "n": "~200 hrs/yr",
-      "phrase": "of manager interruptions gone each year, and the clinic's know-how kept in one place for good"
-    },
-    "oneliner": "The rules lived in 15 spreadsheet tabs and one manager's head. Now anyone at the desk, new or experienced, looks up the answer in the 20 seconds a caller gives you, and the managers keep it current themselves.",
-    "broken": "Front desk training lived in 15 tabs of one spreadsheet, a separate scheduling protocol, a per-doctor rulebook, and the office manager's head. The dangerous exceptions were buried in parentheses. A new hire took about 6 months to learn the desk, and every unusual question interrupted a manager. Which doctor can see this patient? Do we collect for this or bill it?",
-    "built": [
-      "An installable web app on every front desk device: 35 protocol pages in 7 sections, a live 41-row price grid, and a report-an-issue loop that gets fixed the same day.",
-      "4 decision tools that force the buried exceptions open: which doctors a patient can see, the right price with prompt-pay, whether to collect or bill a refraction, and how urgent a symptom is.",
-      "In-app editing for 2 named managers, with revision history in plain English and one-click restore. No developer in the loop for a content change.",
-      "Google sign-in restricted to the clinic's domain, row-level security on every table, sanitized rendering that fails closed, a monthly export as the backup."
-    ],
-    "changed": [
+    "status": "Live at an eye clinic",
+    "results": [
       {
-        "k": "Where the rules live",
-        "before": "15 spreadsheet tabs, a protocol doc, a rulebook, one person's memory",
-        "after": "One searchable app, 35 pages, 4 tools"
+        "value": "1,140",
+        "unit": "claims",
+        "label": "read from the biller's real report, every total matching hers"
       },
+      {
+        "value": "About 2",
+        "unit": "min",
+        "label": "to get insurer status on 97 unpaid claims in AR",
+        "basis": "The biller's first live run, on her real claims."
+      }
+    ],
+    "flow": [
+      {
+        "step": "Read the claims report",
+        "how": "ClaimStride reads the claims report the practice already exports, every format and every sheet. Nothing plugs into the practice software.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/claimstride/10-board.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            100,
+            210,
+            1400
+          ]
+        }
+      },
+      {
+        "step": "Ask every insurer",
+        "how": "Every unpaid claim goes to its insurer in one run, through a healthcare clearinghouse, and comes back with a clear status.",
+        "shows": {
+          "kind": "anim"
+        }
+      },
+      {
+        "step": "Sort by what's needed",
+        "how": "Claims are sorted by what they need: denials grouped by reason and age, and the nearest filing deadlines first.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/claimstride/11-claim-detail.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            100,
+            110,
+            1400
+          ]
+        }
+      },
+      {
+        "step": "Write the next step",
+        "how": "Each claim gets its next step in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/claimstride/12-next-steps.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            110,
+            190,
+            1400
+          ]
+        }
+      }
+    ],
+    "built": [
+      {
+        "lead": "Reads their own report",
+        "text": "It works from the claims report the practice already exports, in every format and every sheet, at the eye clinic and the dental office. Nothing has to plug into the practice software."
+      },
+      {
+        "lead": "Asks every insurer",
+        "text": "Each unpaid claim goes to its insurer through a healthcare clearinghouse and comes back with one clear status: needs action, paid, pending, or not on file."
+      },
+      {
+        "lead": "A next step on every claim",
+        "text": "Where the insurer or its payment file gives a reason, ClaimStride writes it in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when."
+      },
+      {
+        "lead": "The board the biller asked for",
+        "text": "Primary, secondary and tertiary claims kept apart, denials sorted by reason and age, and the nearest deadlines first. The cost shows before every run, with a monthly limit."
+      }
+    ],
+    "before_after": [
+      {
+        "k": "Why a claim hasn't paid",
+        "before": "A portal or a call per claim",
+        "after": "Asked of every insurer in one run"
+      }
+    ],
+    "quote": {
+      "text": "This all reads very accurate… it really truly gives you everything that you would need at a quick glance.",
+      "who": "The biller, Wichita Family Vision"
+    },
+    "stack": [
+      "Claude on AWS Bedrock",
+      "Python",
+      "FastAPI",
+      "Stedi API",
+      "X12 276/277",
+      "X12 270/271",
+      "AWS",
+      "pytest"
+    ],
+    "eng": {
+      "architecture": "A FastAPI service. Plain code parses the report and every X12 answer; Claude on Bedrock reads scanned EOBs. Same claim, same status.",
+      "choice": "Exported reports instead of a vendor integration, so it runs on day one. No electronic answer means a call, never a guess.",
+      "tests": "2,596 automated tests.",
+      "cost": "About 30 cents a check.",
+      "runs_where": "The clinic's own AWS account, under its BAA."
+    },
+    "repos": [],
+    "role": "My co-founder built the first version. I rebuilt how it reads insurer answers and built the eye care side.",
+    "media": {
+      "animation": {
+        "scene": "claimstride-board",
+        "w": 720,
+        "h": 420,
+        "title": "The ClaimStride board sorting a sample clinic's unpaid claims by what needs action",
+        "caption": "Claims sorted by what needs action.",
+        "poster": {
+          "desktop": {
+            "src": "/alec/img/claimstride/anim-claimstride-board-desktop.webp",
+            "w": 1440,
+            "h": 840
+          },
+          "phone": {
+            "src": "/alec/img/claimstride/anim-claimstride-board-phone.webp",
+            "w": 780,
+            "h": 776
+          }
+        }
+      },
+      "hero": {
+        "src": "/alec/img/claimstride/10-board.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "The ClaimStride board for a sample eye clinic: open claims by age in colored cards, and an age table split by primary, secondary and tertiary",
+        "caption": "Sample clinic, made-up patients."
+      },
+      "gallery": [
+        {
+          "src": "/alec/img/claimstride/11-claim-detail.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The denials list for a sample clinic, filtered by how each claim was denied, with one denied claim opened",
+          "caption": "Denials, sorted by reason."
+        },
+        {
+          "src": "/alec/img/claimstride/12-next-steps.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "A denied sample claim opened with the reason in plain words, numbered steps and the appeal deadline",
+          "caption": "A denial's steps and deadline."
+        }
+      ]
+    },
+    "links": []
+  },
+  {
+    "slug": "agents",
+    "tier": "full",
+    "name": "Computer-use agents",
+    "kicker": "Medical practice · AI agents",
+    "line": "Two Claude agents that work a medical practice's software through its screen, because a single office can't get an API.",
+    "client_short": "A medical practice",
+    "status": "Passing practice runs",
+    "results": [],
+    "flow": [
+      {
+        "step": "Read the day's list",
+        "how": "Each run starts from the practice software's own report, so the agent works from the same list the staff would.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/agents/01-report-viewer.webp",
+          "w": 1280,
+          "h": 800,
+          "crop": null
+        }
+      },
+      {
+        "step": "One at a time",
+        "how": "Code hands the model one item at a time in a short, fresh conversation, so a mistake on one chart can't carry into the next.",
+        "shows": {
+          "kind": "anim"
+        }
+      },
+      {
+        "step": "Code verifies each click",
+        "how": "Code checks every click against what the screen shows. Asked to discard someone else's unsaved note, the agent answers No.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/agents/02-unsaved-note.webp",
+          "w": 1280,
+          "h": 800,
+          "crop": null
+        }
+      },
+      {
+        "step": "Re-run to confirm",
+        "how": "A second pass confirms the work from the practice app's own record. Routine clicks replay without the AI and stop the moment the screen changes.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/agents/03-payment-repost-popup.webp",
+          "w": 1280,
+          "h": 800,
+          "crop": null
+        }
+      }
+    ],
+    "built": [
+      {
+        "lead": "Payment files agent",
+        "text": "It signs in to the practice software over Remote Desktop, exports the day's ERAs (insurance payment files) and hands them to ClaimStride, so payments are read without anyone opening a menu."
+      },
+      {
+        "lead": "Chart sign-off agent",
+        "text": "It works the doctor's sign-off queue one chart at a time: it opens the exam, signs it, marks the visit's tests reviewed, and leaves anything unusual on a short list for the doctor."
+      },
+      {
+        "lead": "Guards in code, not the prompt",
+        "text": "Code keeps the list, the budget and the record of every step. The agent can't report a click it hasn't seen the result of, and it answers No when asked to discard someone else's note."
+      },
+      {
+        "lead": "Repeat jobs, no AI",
+        "text": "Routine clicks it has learned replay with no model at all, so they cost nothing to run. The moment the screen looks different, replay stops and the agent takes over again."
+      }
+    ],
+    "before_after": [
+      {
+        "k": "Payment files",
+        "before": "Stuck inside the practice software",
+        "after": "Exported for ClaimStride by an agent"
+      },
+      {
+        "k": "Chart sign-off",
+        "before": "Clicked through by hand each weekend",
+        "after": "Exceptions left for the doctor"
+      }
+    ],
+    "quote": null,
+    "stack": [
+      "Claude computer use",
+      "Python",
+      "Playwright",
+      "FreeRDP",
+      "AWS Systems Manager",
+      "pytest"
+    ],
+    "eng": {
+      "architecture": "Code keeps the list, the budget and the record. The model gets one short conversation per item, so a mistake can't carry into the next.",
+      "choice": "Guards live in code, not the prompt. A report sent in the same turn as a click is refused: it describes a screen the model hasn't seen.",
+      "tests": "Scored from the practice app's own record. A sloppy script has to fail the scorer.",
+      "runs_where": "A cloud computer we manage, with no inbound ports."
+    },
+    "repos": [
+      {
+        "label": "computer-use-agents",
+        "url": "https://github.com/alecstephens3-stack/computer-use-agents"
+      }
+    ],
+    "role": "I built both agents, the practice app they're scored on and the cloud computer they run on.",
+    "media": {
+      "animation": {
+        "scene": "chart-signoff",
+        "w": 720,
+        "h": 420,
+        "title": "The chart sign-off agent working through a practice queue of charts",
+        "caption": "The sign-off agent on a practice copy with made-up patients.",
+        "poster": {
+          "desktop": {
+            "src": "/alec/img/agents/anim-chart-signoff-desktop.webp",
+            "w": 1440,
+            "h": 840
+          },
+          "phone": {
+            "src": "/alec/img/agents/anim-chart-signoff-phone.webp",
+            "w": 780,
+            "h": 620
+          }
+        }
+      },
+      "hero": {
+        "src": "/alec/img/agents/01-report-viewer.webp",
+        "w": 1280,
+        "h": 800,
+        "alt": "The report the queue agent reads first, in the public practice app with made-up data",
+        "caption": "The report the agent reads first."
+      },
+      "gallery": [
+        {
+          "src": "/alec/img/agents/02-unsaved-note.webp",
+          "w": 1280,
+          "h": 800,
+          "alt": "A pop-up offering to discard another user's unsaved note, in the practice app",
+          "caption": "Asked to discard someone else's note, it answers No."
+        }
+      ]
+    },
+    "links": []
+  },
+  {
+    "slug": "invoice-agent",
+    "tier": "full",
+    "name": "Invoice processing system",
+    "kicker": "Eye care · bookkeeping · HIPAA",
+    "line": "Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.",
+    "client_short": "Wichita Family Vision",
+    "status": "Live since Oct 2026",
+    "results": [
+      {
+        "value": "About 200",
+        "unit": "hrs/yr",
+        "label": "of keying and filing off the bookkeeper's desk",
+        "basis": "50 invoices a week at about 5 minutes each."
+      },
+      {
+        "value": "0",
+        "unit": "failures",
+        "label": "since go-live, and she has never had to undo a bill",
+        "basis": "QuickBooks' own reader got 40% of totals wrong in our test. Ours got every one right."
+      }
+    ],
+    "flow": [
+      {
+        "step": "PDF lands in folder",
+        "how": "A vendor bill lands in her Invoices folder as a PDF or a scan, exactly as it does today. Nothing changes about how bills arrive.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/invoice-agent/01-review-table-v35.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            30,
+            216,
+            820
+          ]
+        }
+      },
+      {
+        "step": "Claude reads it",
+        "how": "Claude on AWS Bedrock reads each page inside the clinic's own AWS account, under its BAA. The model only reads; it decides nothing.",
+        "shows": {
+          "kind": "anim"
+        }
+      },
+      {
+        "step": "Her rules decide",
+        "how": "Plain code applies her filing rules: statement, invoice and card-paid vendors each go their own way, and possible duplicates come to her first.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/invoice-agent/01-review-table-v35.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            760,
+            200,
+            840
+          ]
+        }
+      },
+      {
+        "step": "Entered on one click",
+        "how": "She checks one table and clicks once. Each bill is renamed, filed and entered in QuickBooks, and every run can be undone.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/invoice-agent/02-result-v35.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            80,
+            150,
+            1440
+          ]
+        }
+      }
+    ],
+    "built": [
+      {
+        "lead": "One review table",
+        "text": "Every PDF in the Invoices folder is read and shown on one page: new file name, vendor folder, date, amount, QuickBooks vendor and account, prefilled from 12 months of her own coding."
+      },
+      {
+        "lead": "Her rules, in code",
+        "text": "Statement vendors, invoice-by-invoice vendors and card-paid vendors each follow her rule. Anything that might already be in QuickBooks is shown to her instead of entered twice."
+      },
+      {
+        "lead": "Straight into QuickBooks",
+        "text": "Bills and card expenses go in through the QuickBooks API from our own read, so QuickBooks never re-reads a page. A bill that can't go in yet waits, then goes in with one click."
+      },
+      {
+        "lead": "Looks after itself",
+        "text": "Signed updates install when she closes the app, every run can be undone, and an error report reaches us the moment something goes wrong. When a vendor rule changes, the update keeps the old rules too."
+      }
+    ],
+    "before_after": [
+      {
+        "k": "Filing the PDF",
+        "before": "Dragged into 1 of 184 folders",
+        "after": "Renamed and filed on the same click"
+      }
+    ],
+    "quote": {
+      "text": "I think that's very simple and effective… I don't have to enter [them].",
+      "who": "Mary Tangney, Bookkeeper, Wichita Family Vision"
+    },
+    "stack": [
+      "Claude on AWS Bedrock",
+      "Python",
+      "QuickBooks Online API",
+      "PyMuPDF",
+      "CloudWatch"
+    ],
+    "eng": {
+      "architecture": "A one-file Windows app. Claude on Bedrock only reads each PDF; deterministic code does the rest, through to the QuickBooks API.",
+      "choice": "The model only extracts fields. Matching, accounts, duplicate checks and filing are plain code from her rules, so the same bill always lands the same way.",
+      "tests": "40 offline QuickBooks cases and 25 browser checks.",
+      "cost": "About 1 cent an invoice.",
+      "runs_where": "Her PC and the clinic's AWS account."
+    },
+    "repos": [
+      {
+        "label": "bill-intake",
+        "url": "https://github.com/alecstephens3-stack/bill-intake"
+      }
+    ],
+    "role": "I built the app and its QuickBooks integration.",
+    "media": {
+      "animation": {
+        "scene": "file-invoices",
+        "w": 720,
+        "h": 390,
+        "title": "File Invoices reading three bills: two go into QuickBooks, one waits for the bookkeeper",
+        "caption": "The odd bill waits for her.",
+        "poster": {
+          "desktop": {
+            "src": "/alec/img/invoice-agent/anim-file-invoices-desktop.webp",
+            "w": 1440,
+            "h": 780
+          },
+          "phone": {
+            "src": "/alec/img/invoice-agent/anim-file-invoices-phone.webp",
+            "w": 780,
+            "h": 712
+          }
+        }
+      },
+      "hero": {
+        "src": "/alec/img/invoice-agent/01-review-table-v35.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "The review table with eight invented invoices: new file names, vendor folders, dates, amounts, QuickBooks vendor and account, and a note per row",
+        "caption": "Her review table, invented invoices."
+      },
+      "gallery": [
+        {
+          "src": "/alec/img/invoice-agent/02-result-v35.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The result page: entries made in QuickBooks, documents filed only, and one file left for her",
+          "caption": "After Go."
+        },
+        {
+          "src": "/alec/img/invoice-agent/03-needs-you-v35.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "A result page with one bill waiting because the vendor is not in QuickBooks yet",
+          "caption": "One bill waiting."
+        }
+      ]
+    },
+    "links": []
+  },
+  {
+    "slug": "knowledge-base",
+    "tier": "full",
+    "name": "Front desk knowledge base",
+    "kicker": "Eye care · front desk",
+    "line": "Anyone at the front desk finds the right answer in one search, without pulling a manager away.",
+    "client_short": "Wichita Family Vision",
+    "status": "Live since Aug 2026",
+    "results": [
+      {
+        "value": "About 200",
+        "unit": "hrs/yr",
+        "label": "of front-desk time returned",
+        "basis": "About 4 questions a day at 10 minutes each, now one search."
+      },
+      {
+        "value": "35",
+        "unit": "pages",
+        "label": "plus a 41-price grid, kept current by the managers"
+      }
+    ],
+    "flow": [
+      {
+        "step": "A caller asks",
+        "how": "A caller asks something unusual, and whoever is at the desk can answer it during the call instead of putting them on hold.",
+        "shows": {
+          "kind": "anim"
+        }
+      },
+      {
+        "step": "Search one box",
+        "how": "One search box across every page and price. It's plain search, not a chat box, so it can never invent a rule.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/knowledge-base/01-kb-home.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            100,
+            0,
+            1400
+          ]
+        }
+      },
+      {
+        "step": "Answer on screen",
+        "how": "Decision guides answer the tricky ones on screen: which doctor can see this patient, the right price, and whether to collect or bill.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/knowledge-base/04-kb-eligibility-tool.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            100,
+            0,
+            1400
+          ]
+        }
+      },
+      {
+        "step": "Managers keep it current",
+        "how": "Two managers keep it current right in the browser, with revision history and one-click restore. No developer needed for a content change.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/knowledge-base/02-kb-editing.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            100,
+            0,
+            1400
+          ]
+        }
+      }
+    ],
+    "built": [
+      {
+        "lead": "Answers in one search",
+        "text": "35 pages of front desk protocol in 7 sections and a live 41-price grid, on every front desk device and searchable from one box, with no AI to invent a rule."
+      },
+      {
+        "lead": "Decision guides",
+        "text": "Guides that bring the buried exceptions to the surface: which doctors a patient can see, the right price with prompt-pay, whether to collect or bill a refraction, and how urgent a symptom is."
+      },
+      {
+        "lead": "Managers edit it themselves",
+        "text": "Two managers edit any page in the browser, with revision history in plain English and one-click restore. No developer is needed for a content change."
+      },
+      {
+        "lead": "Locked to the clinic",
+        "text": "Only clinic Google logins get in, and only the two managers can edit. Pages are sanitized as they render, and a monthly export keeps a full backup."
+      }
+    ],
+    "before_after": [
       {
         "k": "An unusual question",
         "before": "Interrupt a manager",
-        "after": "Search, answer in under a minute"
+        "after": "One search, answered on the call"
       },
       {
         "k": "When someone leaves",
-        "before": "Their know-how leaves with them",
+        "before": "Their know-how leaves too",
         "after": "It stays in the app"
-      },
-      {
-        "k": "Changing a rule",
-        "before": "Email the developer, wait",
-        "after": "Edit in the browser, history kept"
-      },
-      {
-        "k": "Cost to run",
-        "before": "Manager time",
-        "after": "$0 a month in hosting"
       }
     ],
-    "math_note": "About 4 interrupting questions a day at 10 minutes each, over 250 working days, gives roughly 200 hours a year. The office manager agreed the working was fair.",
     "quote": {
       "text": "This is highly valuable, both in the short term and long term. It's already saving a lot of time.",
       "who": "Jill Romines, Front Office Manager, Wichita Family Vision"
     },
     "stack": [
       "Supabase",
-      "PostgreSQL with row-level security",
+      "Postgres RLS",
       "Google OAuth",
-      "Vanilla JS PWA",
+      "PWA",
       "Vercel",
-      "GitHub Actions",
-      "DOMPurify",
-      "Claude Code"
+      "DOMPurify"
     ],
-    "engineer": {
-      "architecture": "Static PWA on Vercel reading page content, prices, and revisions from Supabase over the REST API. Editors are a Postgres table; RLS gives everyone read and 2 named emails write. Rendering sanitizes at read time, not only at save, so a REST write can never reach a reader unfiltered.",
-      "runs_where": "Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic's domain. Installed as a PWA on the front desk iPad and PCs.",
-      "tests": "21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.",
-      "cost": "$0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.",
-      "guardrails": "A pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.",
-      "tradeoff": "We built a plain PWA with search instead of the AI assistant layer the first scope had. Search on 35 well-structured pages answers the front desk's question faster than a chat box, costs nothing to run, and never invents a rule. The assistant is on the roadmap only if search ever fails a real staff question.",
-      "repo": "https://github.com/alecstephens3-stack/supabase-team-knowledge-base",
-      "repo_note": "The pattern, rebuilt without any clinic content: RLS, domain-gated auth, revision history, sanitizer, offline sync."
+    "eng": {
+      "architecture": "A static PWA reading from Supabase. Row-level security lets everyone read and two named editors write.",
+      "choice": "Row-level security, not app checks: only the two editors can write, whatever the browser sends.",
+      "tests": "A no-dependency test suite gates every deploy. Pages sanitized at render.",
+      "runs_where": "The front desk tablet and PCs."
     },
-    "attribution": "I built it: the content model from the clinic's front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, and the tests. A second engineer ran the pre-merge security review and the deployment.",
-    "media": {
-      "hero": "/alec/img/knowledge-base/01-kb-home.webp",
-      "alt": "The front desk knowledge base home screen: a search box, quick-pick chips, and the four decision tools",
-      "caption": "The home screen the front desk sees. Clinic logo blurred; everything else is the live app.",
-      "gallery": [
-        {
-          "src": "/alec/img/knowledge-base/02-kb-editing.webp",
-          "alt": "In-app editing with revision history",
-          "caption": "Managers edit in the browser; every change is kept and can be restored."
-        },
-        {
-          "src": "/alec/img/knowledge-base/04-kb-eligibility-tool.webp",
-          "alt": "The provider eligibility decision tool",
-          "caption": "The eligibility tool: answer 4 questions, get the doctors this patient can see."
-        },
-        {
-          "src": "/alec/img/knowledge-base/06-kb-on-tablet.webp",
-          "alt": "The knowledge base installed on a tablet",
-          "caption": "Installed on the front desk tablet as an app."
-        }
-      ]
-    },
-    "links": [
+    "repos": [
       {
-        "label": "The pattern on GitHub",
+        "label": "supabase-team-knowledge-base",
         "url": "https://github.com/alecstephens3-stack/supabase-team-knowledge-base"
       }
     ],
-    "compliance": "Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic's domain, a business associate agreement in force with the practice."
+    "role": "I built it, from the content model to in-app editing.",
+    "media": {
+      "animation": {
+        "scene": "front-desk",
+        "w": 720,
+        "h": 420,
+        "title": "The front desk knowledge base answering a question during a live call",
+        "caption": "A caller's question, answered in seconds.",
+        "poster": {
+          "desktop": {
+            "src": "/alec/img/knowledge-base/anim-front-desk-desktop.webp",
+            "w": 1440,
+            "h": 840
+          },
+          "phone": {
+            "src": "/alec/img/knowledge-base/anim-front-desk-phone.webp",
+            "w": 780,
+            "h": 712
+          }
+        }
+      },
+      "hero": {
+        "src": "/alec/img/knowledge-base/01-kb-home.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "The front desk knowledge base home screen: a search box, quick-pick chips, and the decision guides",
+        "caption": "The home screen the front desk uses."
+      },
+      "gallery": [
+        {
+          "src": "/alec/img/knowledge-base/02-kb-editing.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "In-app editing with revision history",
+          "caption": "Every edit kept."
+        },
+        {
+          "src": "/alec/img/knowledge-base/04-kb-eligibility-tool.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The provider eligibility decision guide",
+          "caption": "A decision guide."
+        },
+        {
+          "src": "/alec/img/knowledge-base/06-kb-on-tablet.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The knowledge base installed on a tablet",
+          "caption": "On the tablet."
+        }
+      ]
+    },
+    "links": []
   },
   {
     "slug": "pto-payroll",
-    "tier": "deep",
-    "name": "PTO + payroll system",
-    "short": "PTO + payroll",
-    "kicker": "Healthcare · optometry",
-    "title": "Time-off and payroll for an independent eye clinic: paper slips gone, and a system that runs itself year after year",
-    "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
+    "tier": "full",
+    "name": "PTO and payroll system",
+    "kicker": "Eye care · operations",
+    "line": "Staff request time off from a phone, the manager approves in one tap, and payroll prep builds itself every pay period.",
     "client_short": "Wichita Family Vision",
-    "users": "Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026",
-    "shipped": "Live April 2026",
-    "duration": "About 8 weeks, then 3 months of fixes found in production",
-    "number": {
-      "value": "60 to 100",
-      "unit": "hrs/yr",
-      "label": "of admin time returned",
-      "basis": "10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused."
-    },
-    "second": {
-      "value": "327",
-      "unit": "requests",
-      "label": "filed, approved and posted to the calendar through it since April, with no paper slip in sight"
-    },
-    "wall": {
-      "n": "60 to 100 hrs/yr",
-      "phrase": "of paper-slip admin gone, and next year set up with one click"
-    },
-    "oneliner": "Green paper slips, hand-checked calendars, payroll rebuilt from paper. Now staff ask from their phones, the manager approves with one tap, and the payroll report builds itself every pay period, year after year.",
-    "broken": "Time off ran on green paper slips handed to the office manager. She checked the calendar by hand, tracked balances by hand, lost slips, and could not approve from home. The bookkeeper rebuilt payroll every pay period from paper. About 60 to 100 admin hours a year, and no way to see who was off next week without asking.",
-    "built": [
-      "One Google Form on any phone. Staff pick dates and a type; partial days handled.",
-      "An Apps Script engine that counts weekdays only, rounds to the clinic's rule, checks department conflicts, writes the attendance sheet and the shared calendar, and sends a one-tap approve or deny email.",
-      "Anniversary-based accrual in year one, then calendar years. Balances are recomputed from the grid on every write instead of incremented, so a manual edit can never drift the totals.",
-      "A payroll report every pay period, built into a dated folder for the bookkeeper. All 26 employee records migrated by a 700-line script that preserved the audit notes.",
-      "A new year is one click. Next year's records for all 26 staff were built on 2 October 2026 from the admin menu, after a full rehearsal on copies, so requests for 2027 already work. The manager adds the paid hours with one more click."
+    "status": "Runs every pay period",
+    "results": [
+      {
+        "value": "60 to 100",
+        "unit": "hrs/yr",
+        "label": "of admin time returned, and the paper process gone",
+        "basis": "Slip handling, calendar checks and payroll prep."
+      }
     ],
-    "changed": [
+    "flow": [
+      {
+        "step": "Request on a phone",
+        "how": "Staff request time off on one form from any phone, picking dates and a type, partial days included. The green paper slip is gone.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/pto-payroll/03-form-on-phone.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": null
+        }
+      },
+      {
+        "step": "One-tap approval",
+        "how": "The manager approves or denies with one tap from an email, in the office or anywhere else, with the request's details right there.",
+        "shows": {
+          "kind": "anim"
+        }
+      },
+      {
+        "step": "Calendar updates itself",
+        "how": "Approved time off counts weekdays only, follows the clinic's rounding rule, and lands on the attendance sheet and the shared calendar by itself.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/pto-payroll/01-figure-flow.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            450,
+            230,
+            1080
+          ]
+        }
+      },
+      {
+        "step": "Payroll report builds",
+        "how": "Every pay period, a payroll report builds itself in a dated folder for the bookkeeper. No one prepares it from paper.",
+        "shows": {
+          "kind": "shot",
+          "src": "/alec/img/pto-payroll/01-figure-flow.webp",
+          "w": 1600,
+          "h": 1200,
+          "crop": [
+            1040,
+            700,
+            560
+          ]
+        }
+      }
+    ],
+    "built": [
+      {
+        "lead": "One form, any phone",
+        "text": "Staff pick their dates and a type on one Google Form from any phone, partial days included. The request goes straight to the manager by email."
+      },
+      {
+        "lead": "One-tap approval",
+        "text": "The manager approves or denies from that email. The script counts weekdays only, rounds to the clinic's rule, checks department conflicts, and writes the attendance sheet and shared calendar."
+      },
+      {
+        "lead": "Balances that can't drift",
+        "text": "Accrual follows each hire anniversary, and every balance is recalculated from the grid on every change instead of added to, so a manual edit can never throw the totals off."
+      },
+      {
+        "lead": "Payroll and new years",
+        "text": "A payroll report lands in a dated folder for the bookkeeper every pay period, and next year's records for the whole staff are built with one click from the admin menu."
+      }
+    ],
+    "before_after": [
       {
         "k": "Filing a request",
         "before": "A green paper slip",
@@ -269,454 +852,183 @@ export const CASES: BuildCase[] = [
       {
         "k": "Approving",
         "before": "In the office, on paper",
-        "after": "One tap in an email, from anywhere"
-      },
-      {
-        "k": "The calendar",
-        "before": "Checked by hand",
-        "after": "Events post themselves"
-      },
-      {
-        "k": "Balances",
-        "before": "Hand-tracked, drifted",
-        "after": "Recomputed on every write"
-      },
-      {
-        "k": "Payroll prep",
-        "before": "Rebuilt from paper each period",
-        "after": "A report that builds itself"
-      },
-      {
-        "k": "A new year",
-        "before": "New paper, new balances by hand",
-        "after": "One click from the admin menu"
+        "after": "One tap, from anywhere"
       }
     ],
-    "math_note": "The clinic estimated 10 to 12 slips a pay period at 15 to 20 minutes of handling each, before the calendar checks and payroll prep. 26 pay periods a year puts the range at 60 to 100 hours. The 327 requests are the system's own log on 1 October 2026.",
     "quote": {
       "text": "It is already saving me some time, and I am getting information back to the team much quicker.",
       "who": "Gabe Walsh, Office Manager, Wichita Family Vision"
     },
     "stack": [
-      "Google Apps Script",
+      "Apps Script",
       "Google Forms",
-      "Google Sheets",
-      "Google Calendar",
-      "Gmail",
+      "Sheets",
+      "Calendar",
       "clasp",
-      "Node test runner"
+      "Node"
     ],
-    "engineer": {
-      "architecture": "Form submit trigger into a bound Apps Script project of about 7,000 lines: validation, weekday and anniversary math, attendance-sheet writes, a calendar owned by a Workspace user the script runs as, approve and deny links served by a pinned web-app deployment, and a payroll builder on a time trigger.",
-      "runs_where": "Entirely inside the clinic's Google Workspace. No server, no SaaS bill, $0 a month.",
-      "tests": "183 regression assertions in the public repo, run with Node, no dependencies. Sections cover accrual routing, weekend-aware date math, partial days, recompute-on-write balance integrity, and the migration.",
-      "cost": "$0 a month to run. Built at an hourly rate for the clinic.",
-      "guardrails": "The web app URL is read from a config sheet, never from the script API, because the API returns a hidden test deployment. Every change that touches the approve button rolls the pinned deployment; skipping that once put new code on form-submit and old code on approvals. Error emails go to me, action emails go to the manager, so a test can never land in her inbox.",
-      "tradeoff": "Apps Script over a hosted app. The clinic already paid for Google Workspace, the office manager lives in Sheets, and the data never leaves their account. A hosted app would have meant a login, a bill, and a vendor for a 26-person office. The cost of that choice is a deployment model with sharp edges, which the tests and the runbook now cover.",
-      "repo": "https://github.com/alecstephens3-stack/apps-script-pto-payroll",
-      "repo_note": "Anniversary-aware period routing, recompute-on-write balances, no dependencies, 183 tests."
+    "eng": {
+      "architecture": "A form trigger into Apps Script: date and accrual math, sheet and calendar writes, a timed payroll builder.",
+      "choice": "Apps Script over a hosted app: the clinic already pays for Google Workspace, and the data never leaves.",
+      "tests": "A 22-check programmatic suite.",
+      "runs_where": "Inside the clinic's own Google Workspace."
     },
-    "attribution": "I built it: the engine, the accrual and date math, the migration, the payroll report, the tests, and the guides. A second engineer added the employee-management dialogs and audited the sheets.",
-    "media": {
-      "hero": "/alec/img/pto-payroll/01-figure-flow.webp",
-      "alt": "Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report",
-      "caption": "One form, one engine, five outputs.",
-      "gallery": [
-        {
-          "src": "/alec/img/pto-payroll/02-pto-approval-email.webp",
-          "alt": "The approve or deny email",
-          "caption": "The manager approves from her phone."
-        },
-        {
-          "src": "/alec/img/pto-payroll/03-form-on-phone.webp",
-          "alt": "The request form on a phone",
-          "caption": "The whole intake is one form."
-        },
-        {
-          "src": "/alec/img/pto-payroll/04-tests-183-green.webp",
-          "alt": "Terminal output: 183 tests passing",
-          "caption": "183 assertions, green."
-        }
-      ]
-    },
-    "links": [
+    "repos": [
       {
-        "label": "Public repo, 183 tests",
+        "label": "apps-script-pto-payroll",
         "url": "https://github.com/alecstephens3-stack/apps-script-pto-payroll"
       }
     ],
-    "compliance": "Employee data only, no patient data, kept entirely inside the clinic's own Google Workspace. Built under the same business associate agreement as the clinic's other systems."
-  },
-  {
-    "slug": "invoice-agent",
-    "tier": "deep",
-    "name": "Invoice processing system",
-    "short": "Invoice processing",
-    "kicker": "Healthcare · optometry · HIPAA",
-    "title": "Invoice processing for a clinic's bookkeeper: she never processes an invoice by hand again",
-    "client": "Wichita Family Vision, an independent optometry practice in Wichita, Kansas",
-    "client_short": "Wichita Family Vision",
-    "users": "The clinic's bookkeeper, since the install on 2026-10-01",
-    "shipped": "Live 2026-10-01",
-    "duration": "About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API",
-    "number": {
-      "value": "~200",
-      "unit": "hrs/yr",
-      "label": "of keying and filing off the bookkeeper's desk, at the 50 invoices a week the clinic plans for as it expands",
-      "basis": "50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year."
-    },
-    "second": {
-      "value": "0",
-      "unit": "failures",
-      "label": "on every real invoice she has run since go-live, and not one Undo. In our side-by-side test, QuickBooks' own reader got 40% of totals wrong"
-    },
-    "wall": {
-      "n": "~200 hrs/yr",
-      "phrase": "of invoice keying and filing taken off a bookkeeper's desk, with 0 failures since go-live"
-    },
-    "oneliner": "The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic's vendor rules every time.",
-    "broken": "Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.",
-    "built": [
-      "One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.",
-      "Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.",
-      "Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.",
-      "Kept fast as she used it. After her first weeks, launch went from about 2,100 files unpacked to 181, reading runs three invoices at a time, and the bill memo now says what the bill was for.",
-      "Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one."
-    ],
-    "changed": [
-      {
-        "k": "Entering a bill",
-        "before": "Typed by hand from the PDF",
-        "after": "Read, checked in one table, entered on Go"
-      },
-      {
-        "k": "Filing the PDF",
-        "before": "Renamed and dragged into 1 of 184 folders",
-        "after": "Renamed and filed on the same click"
-      },
-      {
-        "k": "Vendor rules",
-        "before": "In one person's head",
-        "after": "Written once, followed every run"
-      },
-      {
-        "k": "Totals right in a 5-invoice test",
-        "before": "3 with QuickBooks' own reader",
-        "after": "All 5"
-      },
-      {
-        "k": "Since go-live",
-        "before": "Every bill keyed by hand",
-        "after": "0 failures, not one Undo"
-      }
-    ],
-    "math_note": "The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic's AWS account: about 1 cent an invoice.",
-    "quote": {
-      "text": "I think that's very simple and effective… I don't have to enter [them]. I just have to go back in and pay [them] when it's an appropriate time to pay [them].",
-      "who": "Mary Tangney, Bookkeeper, Wichita Family Vision"
-    },
-    "stack": [
-      "Claude on AWS Bedrock",
-      "Python",
-      "QuickBooks Online Accounting API",
-      "OAuth 2.0",
-      "PyMuPDF",
-      "PyInstaller",
-      "Amazon S3",
-      "CloudWatch",
-      "Ed25519 signed updates",
-      "Windows"
-    ],
-    "engineer": {
-      "architecture": "A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.",
-      "runs_where": "On the bookkeeper's PC against the clinic's network drive. Reading runs in the clinic's own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic's S3 bucket, and error reports go to its CloudWatch.",
-      "tests": "40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a full code review found 39 verified issues; all were fixed and the fixes reviewed again.",
-      "cost": "About 1 cent an invoice in the clinic's AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.",
-      "guardrails": "Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic's.",
-      "tradeoff": "QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic's own account.",
-      "repo": null,
-      "repo_note": null
-    },
-    "attribution": "I built it: the app, the QuickBooks integration, the self-update system and the tests. My co-founder worked the QuickBooks setup with me and joined the install.",
+    "role": "I built the engine, the migration and the payroll report.",
     "media": {
-      "hero": "/alec/img/invoice-agent/01-review-table-v35.webp",
-      "alt": "The review table with eight invented invoices: new file names, vendor folders, dates, amounts, QuickBooks vendor and account dropdowns, and a note per row, including a Select Optical order going in as a card expense",
-      "caption": "The one table she checks. Invented invoices; nothing moves until Go.",
+      "animation": {
+        "scene": "time-off",
+        "w": 720,
+        "h": 450,
+        "title": "A time off request sent from a phone, approved from the manager's email",
+        "caption": "Asked on a phone, approved from an email.",
+        "poster": {
+          "desktop": {
+            "src": "/alec/img/pto-payroll/anim-time-off-desktop.webp",
+            "w": 1440,
+            "h": 900
+          },
+          "phone": {
+            "src": "/alec/img/pto-payroll/anim-time-off-phone.webp",
+            "w": 780,
+            "h": 712
+          }
+        }
+      },
+      "hero": {
+        "src": "/alec/img/pto-payroll/01-figure-flow.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "Diagram: one form feeds an Apps Script engine that writes the attendance sheet, shared calendar, approval email, balances, and payroll report",
+        "caption": "One form, one engine."
+      },
       "gallery": [
         {
-          "src": "/alec/img/invoice-agent/02-result-v35.webp",
-          "alt": "The result page: five entries in QuickBooks, including a card expense, two documents filed but not entered, one file left for her",
-          "caption": "After Go: what went into QuickBooks, what was filed only, what still needs her."
+          "src": "/alec/img/pto-payroll/02-pto-approval-email.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The approve or deny email",
+          "caption": "One-tap approval."
         },
         {
-          "src": "/alec/img/invoice-agent/03-needs-you-v35.webp",
-          "alt": "A result page with one bill waiting because the vendor is not in QuickBooks yet",
-          "caption": "A bill that can't go in yet waits, and goes in with one click once she adds the vendor."
+          "src": "/alec/img/pto-payroll/03-form-on-phone.webp",
+          "w": 1600,
+          "h": 1200,
+          "alt": "The request form on a phone",
+          "caption": "The form."
         }
       ]
     },
-    "links": [],
-    "compliance": "HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic's own AWS account, under the clinic's business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page."
+    "links": []
   },
   {
-    "slug": "claimstride",
-    "tier": "deep",
-    "name": "ClaimStride, insurance claims software",
-    "short": "ClaimStride",
-    "kicker": "Healthcare · eye care and dental · insurance",
-    "title": "ClaimStride, insurance claims software for eye care and dental: every unpaid claim checked with the insurer and given its next step",
-    "client": "Wichita Family Vision, an optometry practice in Wichita, Kansas, and Tri-Valley Dental Care in Pleasanton, California",
-    "client_short": "Wichita Family Vision and Tri-Valley Dental",
-    "users": "The biller at the eye clinic; the front desk and the owner dentist at the dental practice",
-    "shipped": "Live on the eye clinic's own server since 2026-10-12; the biller's first live run 2026-10-21",
-    "duration": "About two weeks from the first version to live at the eye clinic",
-    "number": {
-      "value": "1,140",
-      "unit": "claims",
-      "label": "read from the biller's real Compulink report, with every total adding up to hers",
-      "basis": "The eye clinic's insurance receivables report, read on 2026-10-16 before her first run: every claim, every sheet, totals matched by age group."
-    },
-    "second": {
-      "value": "~2",
-      "unit": "min",
-      "label": "to check 97 unpaid claims with their insurers on the biller's first live run"
-    },
-    "wall": {
-      "n": "1,140 claims",
-      "phrase": "read from a biller's real report, and the unpaid ones checked with their insurers in minutes"
-    },
-    "oneliner": "An aging report says how old a claim is, never why it hasn't paid. ClaimStride reads the practice's own report, asks each insurer where every unpaid claim stands, and puts the next step on each one, in plain words.",
-    "broken": "The eye clinic's biller carried about 1,200 unpaid claims and worked them from Compulink's aging report, which says how old a claim is but never why it hasn't paid. Finding out meant an insurer portal or a phone call per claim, and a claim left too long can miss the insurer's filing deadline. The dental practice had the same problem on Dentrix, and checked coverage by hand, portal by portal.",
-    "built": [
-      "Reads the report the practice already makes. Compulink's insurance receivables report at the eye clinic, in every format and every sheet, and the Dentrix aging report at the dental practice. Nothing has to connect into the practice software.",
-      "Asks every insurer. Each unpaid claim goes to its insurer through a healthcare clearinghouse and comes back with one status: needs action, paid, pending, not on file, or no electronic status for insurers like VSP that don't answer that way.",
-      "The next step on every claim. Where the insurer or its payment file gives a reason, it's written in plain words with numbered steps and the insurer's deadline, so the biller knows what to fix and by when.",
-      "The view the biller asked for. Primary, secondary and tertiary claims kept apart, denied against not yet touched by age group, and the deadlines due in the next 30 days at the top.",
-      "Coverage before the visit. A coverage check per patient with active dates, the deductible and what's left this year. The dental front desk ran its first live check on 2026-10-22.",
-      "A brake on spend. The price shows before a run, a monthly limit stops it, and anything above $10 asks first."
-    ],
-    "changed": [
-      {
-        "k": "Why a claim hasn't paid",
-        "before": "A portal or a call per claim",
-        "after": "Asked of every insurer in one run"
-      },
-      {
-        "k": "What to do next",
-        "before": "Worked out claim by claim",
-        "after": "Written on the claim, with the deadline"
-      },
-      {
-        "k": "The old unpaid claims",
-        "before": "A line on the aging report",
-        "after": "Denied or untouched, by age group"
-      },
-      {
-        "k": "Checking coverage",
-        "before": "Portal by portal, by hand",
-        "after": "One check, one card"
-      }
-    ],
-    "math_note": "Checks go through a healthcare clearinghouse at about 30 cents each, its published rate for the first 250 a month. Every screen on this page is the sample clinic with made-up patients.",
-    "quote": {
-      "text": "I'm really impressed with what you guys have done so far.",
-      "who": "The biller, Wichita Family Vision, after her first live run"
-    },
-    "stack": [
-      "Python",
-      "FastAPI",
-      "Pydantic",
-      "Stedi clearinghouse API",
-      "X12 276/277 claim status",
-      "X12 270/271 eligibility",
-      "X12 835 payment files",
-      "AWS EC2",
-      "Amazon S3",
-      "AWS SSM",
-      "pytest"
-    ],
-    "engineer": {
-      "architecture": "A Python FastAPI service with a server-rendered page. Claim status is X12 276/277 and coverage is 270/271 through Stedi; payment files (835) supply the reason where the insurer sends one. Deterministic code reads every report format and every insurer answer, so the same claim always gets the same status and the same steps. An insurer that doesn't answer electronically is marked for a call rather than given an answer it never sent.",
-      "runs_where": "For the eye clinic, a small server in the practice's own AWS account: encrypted disk, sign-in required, code shipped from a private bucket in that account and released through SSM with a one-command rollback. The dental practice runs in its own AWS account under its BAA and moves into the practice's name at hand-off. The clearinghouse is the one outside connection.",
-      "tests": "2,596 automated tests (22 Oct 2026). Before the biller's first run, her real 1,140-claim report was read with every total matching hers. Every release is tagged and can be rolled back in one command.",
-      "cost": "About 30 cents a check at the clearinghouse's published rate for the first 250 a month. The monthly limit and the confirm step above $10 keep the bill where the practice set it.",
-      "guardrails": "It never guesses. A missing detail says what to ask instead of sending a guess, an insurer with no electronic answer is marked for a call, and the price is shown before anything is sent.",
-      "tradeoff": "No direct connection into Compulink or Dentrix yet. The reports the practice already exports are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.",
-      "repo": null,
-      "repo_note": null
-    },
-    "attribution": "My co-founder built the first version. I rebuilt how it reads each insurer's answers, built the eye care side and the claims worklist the biller uses, and run its releases on the clinic's server.",
-    "media": {
-      "hero": "/alec/img/claimstride/01-worklist.webp",
-      "alt": "The claims worklist for a sample eye clinic: counts for needs action, not on file, no electronic status, paid and pending, the unpaid total, and a table of claims by age with denied and not-touched counts",
-      "caption": "The week's claims, checked with the insurers and sorted by what needs action. Sample clinic, made-up patients.",
-      "gallery": [
-        {
-          "src": "/alec/img/claimstride/02-denied-claim.webp",
-          "alt": "A denied Cigna claim with the reason in plain words, a note not to bill the patient, three numbered steps and an appeal deadline",
-          "caption": "A denied claim: the reason, what not to do, the steps and the deadline."
-        },
-        {
-          "src": "/alec/img/claimstride/03-steps-per-claim.webp",
-          "alt": "Claim cards for VSP with no electronic status, a Medicare secondary claim waiting on the primary EOB, and a Healthy Blue claim to resend",
-          "caption": "Every claim gets its own next step, including the ones an insurer won't answer electronically."
-        }
-      ]
-    },
-    "links": [],
-    "compliance": "Runs inside each practice's own AWS account under its business associate agreement. Sign-in is required, an access record notes who opened or changed a claim by the tool's own reference only, and logs carry request IDs and insurer names, never patient details. The clearinghouse is the one outside connection, under its own BAA."
-  },
-  {
-    "slug": "lead-finder",
+    "slug": "aios",
     "tier": "short",
-    "name": "Pharmacy lead finder",
-    "short": "Lead finder",
-    "kicker": "Healthcare · pharmacy · lead generation",
-    "title": "A lead finder for a healthcare accounting firm: one sentence in Claude, and back comes a checked sheet of real compounding pharmacies with the email each one publishes",
-    "client": "Medari Advisors, a tax and accounting firm for healthcare providers in Pryor, Oklahoma",
-    "client_short": "Medari Advisors",
-    "users": "The firm's CEO, in his own Claude; installed and working by 6 Oct 2026",
-    "shipped": "Delivered 30 Sep 2026",
-    "duration": "One day, from the call that set the spec to delivery",
-    "number": {
-      "value": "1,046",
-      "unit": "pharmacies",
-      "label": "that compound, on the starting lists for Oklahoma, Texas, Kansas and Arkansas, built from the national provider registry with chains, hospitals and specialty companies removed",
-      "basis": "Counts on 2026-09-30, one row per phone number: Oklahoma 197, Texas 675, Kansas 99, Arkansas 75."
-    },
-    "second": {
-      "value": "13 of 13",
-      "unit": "",
-      "label": "emails in the first real batch found on the pharmacy's own website, right business and town, by an independent check"
-    },
-    "wall": {
-      "n": "1,046 pharmacies",
-      "phrase": "found state by state from one sentence in his own Claude"
-    },
-    "oneliner": "He grows his pharmacy email list state by state. Now he asks his own Claude for compounding pharmacies in a state and gets a sheet of real, independent ones with the email each publishes, and five random rows to spot-check.",
-    "broken": "The firm grows its independent pharmacy email list, about 1,400 to 1,500 addresses, state by state, starting with Oklahoma's compounding pharmacies. Every lead meant searching one pharmacy at a time: is it independent, does it compound, is it still open, and what email does it publish?",
-    "built": [
-      "A starting list for each state, built by us from the national provider registry: every active pharmacy registered as compounding, with chains, grocery stores, national infusion companies, hospitals and clinics removed, one row per storefront, and the owner or pharmacist in charge as the contact.",
-      "A lookup in his own Apify account: one Google Maps search per pharmacy, reading the contact details its website publishes.",
-      "A match rule in code: a result counts only on a phone match, or a name and town match, so another business's email is never used.",
-      "A finished sheet: junk, web designer and head office addresses dropped, one email per pharmacy, his existing list deduplicated out, stores with no website kept as a call list with phone numbers, and 5 random rows to spot-check."
-    ],
-    "changed": [
+    "name": "Our AI operating system",
+    "kicker": "Stephens AI · internal",
+    "line": "The system our company runs on every day. Anything we install for a client runs here first.",
+    "client_short": "Stephens AI",
+    "status": "In daily use",
+    "results": [
       {
-        "k": "Finding pharmacies",
-        "before": "Searched one at a time",
-        "after": "One sentence in his own Claude"
-      },
-      {
-        "k": "A wrong match",
-        "before": "Easy to miss",
-        "after": "Dropped unless the phone, or name and town, match"
-      },
-      {
-        "k": "Checking the result",
-        "before": "Trust the list",
-        "after": "5 random rows to spot-check"
-      },
-      {
-        "k": "Cost per pharmacy",
-        "before": "His time",
-        "after": "About half a cent"
+        "value": "12",
+        "unit": "agents",
+        "label": "each with least-privilege permissions, plus 47 skills"
       }
     ],
-    "math_note": "The lookup was measured at $0.0054 a pharmacy, so Apify's free $5 a month covers about 900. In the first 13 real Oklahoma rows, 5 gave usable emails; rural stores often have no website and come back on the call list.",
-    "quote": {
-      "text": "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working.",
-      "who": "Curtis Cole, CEO, Medari Advisors"
-    },
-    "stack": [
-      "Claude plugin (command + skill)",
-      "Python",
-      "NPPES NPI Registry API",
-      "Apify Google Maps scraper",
-      "pytest"
+    "flow": [],
+    "built": [
+      {
+        "lead": "The Bridge",
+        "text": "One dashboard over the whole company: a 3D map of every note, both calendars, both inboxes, messages and meetings, and a chat over the knowledge base that can read but never send."
+      },
+      {
+        "lead": "Specialist agents",
+        "text": "Agents on least-privilege tool lists: reviewers that read like a dentist or an optometrist, research, meeting notes. Reusable skills cover proposals, QA, deploys and reporting."
+      },
+      {
+        "lead": "Jobs that run themselves",
+        "text": "A daily meeting sweep writes the notes, updates the week's priorities, logs decisions and texts the action items. A weekly health check keeps the knowledge base clean, and every run leaves a log."
+      }
     ],
-    "engineer": {
-      "architecture": "A Claude plugin with one command and one skill. Everything that decides is code: the state lists are built ahead of time from the NPI registry, and the match and finish steps are Python scripts the skill runs. The model only drives the run and talks to him.",
-      "runs_where": "In his own Claude desktop app, with the lookup in his own Apify account. Nothing of ours in the loop.",
-      "tests": "32 script tests, 10 of them regression tests built from a real Oklahoma run. Anthropic's plugin validator passed on a clean unzip. A fresh agent ran it end to end following only the skill's instructions, and an independent check then confirmed every email it found.",
-      "cost": "About half a cent a pharmacy in Apify, measured; the free $5 a month covers about 900.",
-      "guardrails": "A Google result counts only on a phone match, or a name and town match; otherwise its email is never used. The registry phone is primary and Google's is noted when it differs. Every batch ends with 5 random rows to spot-check.",
-      "tradeoff": "Apify instead of Clay: Apify Starter is $19 a month against $185 for Clay's cheapest paid plan (checked 29 Sep 2026). Apify's people add-on was tested and rejected: about 16 cents a pharmacy, and it matched staff from other businesses.",
-      "repo": null,
-      "repo_note": null
+    "before_after": [],
+    "quote": null,
+    "stack": [
+      "Claude Code",
+      "Claude Code headless",
+      "MCP",
+      "Python",
+      "Three.js"
+    ],
+    "eng": {
+      "architecture": "A markdown vault as the database; agents and skills as files with allow-lists.",
+      "choice": "Files over a database: every agent and person can read them, all in git.",
+      "tests": "Tested guard scripts and a weekly vault lint."
     },
-    "attribution": "I built it, from the call that set the spec to the plugin, the walkthrough video and the first 33 leads.",
+    "repos": [
+      {
+        "label": "claude-code-operating-system",
+        "url": "https://github.com/alecstephens3-stack/claude-code-operating-system"
+      },
+      {
+        "label": "claude-code-voice-mod",
+        "url": "https://github.com/alecstephens3-stack/claude-code-voice-mod"
+      },
+      {
+        "label": "lens-design-system",
+        "url": "https://github.com/alecstephens3-stack/lens-design-system"
+      }
+    ],
+    "role": "I built all of it.",
     "media": {
-      "hero": "/alec/img/lead-finder/01-figure-how-it-finds-leads.webp",
-      "alt": "Diagram: he asks his Claude for compounding pharmacy leads in Oklahoma; a starting list from the national registry, a Google Maps lookup and a match rule in code produce a sheet with one email per pharmacy, a call list and 5 rows to spot-check",
-      "caption": "One sentence in, a checked sheet out. The rules that decide are code.",
+      "animation": null,
+      "hero": {
+        "src": "/alec/img/aios/01-bridge-brain-view.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "The Bridge dashboard: a 3D graph of the vault beside today's calendar and inbox",
+        "caption": "The Bridge, our company dashboard."
+      },
       "gallery": []
     },
     "links": []
   },
   {
     "slug": "ai-lab",
-    "tier": "deep",
-    "name": "AI Lab content + outbound systems",
-    "short": "AI Lab",
-    "kicker": "AI education · content and outbound systems",
-    "title": "An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no",
-    "client": "AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Applied AI Engineer (in-house), contract, March to September 2026",
+    "tier": "short",
+    "name": "AI Lab content systems",
+    "kicker": "AI education · content",
+    "line": "AI tutorials for a nine-figure education company, on a pipeline I built.",
     "client_short": "AI Lab, iPhone Photography School",
-    "users": "2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials",
-    "shipped": "March to September 2026",
-    "duration": "6 months, in two phases",
-    "number": {
-      "value": "~10",
-      "unit": "hrs/wk",
-      "label": "returned to a two-person content team by an idea-to-published pipeline, a person approving every send",
-      "basis": "The team's own estimate of the hours the idea engine, publishing pipeline, newsletter builder and KPI report took off the week."
-    },
-    "second": {
-      "value": "320",
-      "unit": "mailboxes",
-      "label": "on 10 domains, grown from 104 on 2 in 3 weeks, with a rule check on every email before it could send"
-    },
-    "wall": {
-      "n": "~10 hrs/wk",
-      "phrase": "returned to the content team, and an outbound machine built in 3 weeks that reported its own numbers honestly"
-    },
-    "oneliner": "Two systems for one brand: a pipeline that let two educators publish on schedule with a person approving every send, then a cold email machine that told leadership, with numbers, that the channel was wrong for this buyer.",
-    "broken": "Phase one: a channel teaching AI to non-technical adults needed a steady stream of short tutorials, 3 newsletters a week, and weekly numbers, with 2 educators and no production team. Phase two: the company restructured around a B2B arm with a December deadline, inheriting a sending stack from a departing contractor, no lead pipeline, no offer, and no defined buyer.",
-    "built": [
-      "Content: an idea engine with semantic dedup against every video ever made, mandatory research, and a scoring rubric with hard gates; a taste model mined from months of accept and reject decisions that cut the context loaded per run by 79%.",
-      "Content: a one-command publishing pipeline with a loudness gate at a fixed -14 LUFS, Wistia upload into the right series, tracker write, thumbnail set; a Monday, Wednesday, Friday newsletter builder that stages a verified test send for a human to approve; a weekly KPI report leadership reads.",
-      "Outbound: sourcing from Google Maps and public registries, Claude research writing one factual opener per business, an automated rule gate on every email, and 2-step plain-text sequences from 320 mailboxes on 10 domains under capacity rules, at about $1 per 30 leads.",
-      "Offer and ICP: 11 niches scored on 2026 data and cut to one buyer with a kill date; 2 complete three-tier offer chains; a savings calculator; the delivery playbook for a workshop product; a clean two-day wind-down with a full export and a restart guide."
-    ],
-    "changed": [
+    "status": "Mar to Sep 2026",
+    "results": [
       {
-        "k": "Deciding what to film",
-        "before": "A gut call and a spreadsheet",
-        "after": "Scored ideas that pass hard gates"
-      },
-      {
-        "k": "Publishing a video",
-        "before": "Manual upload, manual tracker",
-        "after": "One command, loudness-gated"
-      },
-      {
-        "k": "Newsletters",
-        "before": "Written by hand 3 times a week",
-        "after": "Built, staged, approved by a person"
-      },
-      {
-        "k": "Sending capacity",
-        "before": "2 domains, 104 mailboxes",
-        "after": "10 domains, 320 mailboxes, warmed"
-      },
-      {
-        "k": "What the data said",
-        "before": "Unknown",
-        "after": "2.2% human replies; the question beat the pitch every A/B; not the channel for this buyer"
+        "value": "200+",
+        "unit": "videos",
+        "label": "teaching AI to non-technical adults"
       }
     ],
-    "math_note": "Outbound numbers are from the campaign export for 4 August to 7 September 2026: 4,349 emails, 2,661 businesses, 91 replies of which 51 were human (2.2%), 3 marked interested, 0 confirmed calls. That last number is the point: the system was built to report it honestly, and the restart guide says why. The ~10 hours a week on the content side is the team's own estimate.",
+    "flow": [],
+    "built": [
+      {
+        "lead": "Idea engine",
+        "text": "New video ideas are checked against everything already made, researched first, then scored on a rubric with hard gates, so only strong ideas reach a script."
+      },
+      {
+        "lead": "Publishing in one command",
+        "text": "Upload into the right Wistia series, a loudness check before members hear it, the tracker updated and the thumbnail set. A newsletter builder stages each send for a person to approve."
+      },
+      {
+        "lead": "Across models",
+        "text": "I taught Grok on the X API alongside Claude and OpenAI, and built the shared context so Claude Code and Codex worked from the same rules."
+      }
+    ],
+    "before_after": [],
     "quote": {
       "text": "You have the double skill set, which is the AI itself plus presenting, and that is more valuable than just the AI.",
       "who": "Emils Pakarklis, Founder, iPhone Photography School"
@@ -725,33 +1037,30 @@ export const CASES: BuildCase[] = [
       "Claude Code",
       "Codex",
       "MCP",
-      "Python",
       "Wistia API",
-      "Circle",
-      "Customer.io",
-      "Smartlead",
-      "Clay",
-      "Apify",
-      "Google Workspace",
-      "Slack",
-      "Kie image API",
-      "Whisper"
+      "X API"
     ],
-    "engineer": {
-      "architecture": "A shared context layer (voice, rules, trackers, decisions) synced to both Claude Code and Codex, so any agent picks up where the last one stopped. Skills for each job: video ideas, post-video, newsletter build and publish, KPI report, lead enrich, lead check, email capacity. MCP and API connections into Wistia, Circle, the email platform, Google Workspace, and Slack.",
-      "runs_where": "On the educators' machines, with a person pressing start. Sending ran on Smartlead over Microsoft mailboxes; sourcing on Apify and free registries; the KPI report published to a stable link.",
-      "tests": "A rule gate on every cold email (no years, no street names, no clinical language, no 'AI', sign-off matches the inbox), run as a script before any batch. A lint on the KPI report before publish, with a corrections trail when a number was wrong. Every capacity number came from the script, never from memory.",
-      "cost": "About $1 per 30 researched leads. The content pipeline ran on existing subscriptions.",
-      "guardrails": "A human approves every send: newsletters stage a verified test, campaigns stay drafts until a person activates them. Capacity rules (2 emails per inbox, 100 per domain per day, 14-day warm-up) enforced in code. The whole outbound system was wound down in 2 days with a full export and a restart guide.",
-      "tradeoff": "The opinion question beat the direct pitch in every A/B pair, so we stopped pitching. And when the numbers said cold email was not the channel for this buyer, we reported that instead of optimizing the copy again. The system's job was to make that finding checkable.",
-      "repo": null,
-      "repo_note": "The live proof pages (offer chains, ICP decision, KPI report, savings calculator) are still up on Vercel; links on request."
+    "eng": {
+      "architecture": "Shared context files for Claude Code and Codex, feeding scripts, publishing, newsletters and a weekly KPI report.",
+      "choice": "Models draft, a person publishes.",
+      "tests": "A lint on the KPI report."
     },
-    "attribution": "I built all of it as the in-house Applied AI Engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.",
+    "repos": [],
+    "role": "I built it as the in-house Applied AI Engineer.",
     "media": {
-      "hero": "/alec/img/ai-lab/01-figure-architecture.webp",
-      "alt": "Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report, connected to the video host, community, email platform, Google Workspace, and Slack",
-      "caption": "One shared context layer, agents in two tools, connections into the tools the team already used.",
+      "animation": null,
+      "hero": {
+        "src": "/alec/img/ai-lab/01-figure-architecture.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "Diagram: a shared context layer feeding the idea engine, publishing pipeline, newsletter builder, and KPI report",
+        "caption": "One context layer, two coding agents.",
+        "phone": {
+          "src": "/alec/img/ai-lab/01-figure-architecture-phone.webp",
+          "w": 780,
+          "h": 2364
+        }
+      },
       "gallery": []
     },
     "links": []
@@ -760,87 +1069,58 @@ export const CASES: BuildCase[] = [
     "slug": "coaching-aios",
     "tier": "short",
     "name": "Coaching practice AI system",
-    "short": "Coaching AI system",
-    "kicker": "Professional coaching · solo founder",
-    "title": "An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English",
-    "client": "Workthentic, Taima Ford Beyah's coaching and HR consulting practice in California (named with her OK, 13 Oct 2026)",
+    "kicker": "Coaching · solo founder",
+    "line": "AI agents for a one-person coaching practice, all reading one document she edits in plain English.",
     "client_short": "Workthentic",
-    "users": "The founder, daily, April to July 2026; she owns and edits it herself",
-    "shipped": "Live May 2026",
-    "duration": "About 10 weeks, in phases",
-    "number": {
-      "value": "4",
-      "unit": "custom AI agents",
-      "label": "built for her practice, inbox triage, scheduling replies, voice-note task capture and meeting notes, all reading one brain document she edits in plain English",
-      "basis": "Phase A shipped and live: the Brain Doc plus 4 ClickUp Super Agents (Email Manager, Scheduling, Brain Dump, Maintainer), with meeting notes on a scheduled routine she owns."
-    },
-    "second": {
-      "value": "115 of 115",
-      "unit": "",
-      "label": "stale tasks archived in one sweep, fully reversible, because every agent stamps its work"
-    },
-    "wall": {
-      "n": "4 custom AI agents",
-      "phrase": "running a one-person coaching practice from one plain-English document she edits herself"
-    },
-    "oneliner": "Four custom agents built for how she actually works, all reading one document she edits in plain English. She owns every piece, so nothing depends on us to keep it running.",
-    "broken": "A veteran HR leader running her own practice was doing her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. 10 to 12 hours to format one 3-hour workshop. A client had questioned a one-hour line item, and she had no receipts.",
+    "status": "Delivered",
+    "results": [],
+    "flow": [],
     "built": [
-      "The brain document: one doc holding her voice, brand rules, client roster, and policies, read by every agent as live knowledge. She changes it by messaging a maintainer agent in plain English.",
-      "4 agents inside her project tool: inbox triage that defaults to skip and cites the source message, scheduling that drafts the reply inside the task, voice-note capture that splits and routes, and meeting notes on a scheduled routine she owns.",
-      "Calendar to invoice: on the first of the month it reads both calendars, parses client and service codes from the events, and writes hours to a color-coded sheet. Receipts, automatically.",
-      "Every agent stamps its work, so output is always attributable and sweepable. That made a 115-task cleanup safe, reversible, and rehearsed in a sandbox first."
-    ],
-    "changed": [
       {
-        "k": "Inbox",
-        "before": "Read everything herself",
-        "after": "13 to 15 a day triaged, sources cited"
+        "lead": "One brain document",
+        "text": "Her voice, brand rules, client roster and policies live in one doc that every agent reads. She changes it by messaging a maintainer agent in plain English."
       },
       {
-        "k": "Scheduling replies",
-        "before": "Written by hand",
-        "after": "Drafted inside the task"
+        "lead": "Agents for the busywork",
+        "text": "Inbox triage that cites its source, scheduling replies drafted inside the task, voice notes split and routed, and meeting notes on a routine she owns."
       },
       {
-        "k": "Invoicing proof",
-        "before": "None",
-        "after": "Calendar to sheet, monthly"
-      },
-      {
-        "k": "Changing a rule",
-        "before": "Re-prompt every tool",
-        "after": "Edit one document"
+        "lead": "Calendar to invoice",
+        "text": "On the first of the month it reads both calendars, pulls client and service codes from the events, and writes the hours to a color-coded sheet ready for invoicing."
       }
     ],
-    "math_note": "The email count is her daily inbox volume during the build; the 115 tasks were the stale backlog archived on 2026-07-20 with an undo manifest kept.",
+    "before_after": [],
     "quote": {
-      "text": "I'm so grateful for our time together. I feel like I was in a class… I don't regret one moment of it because I learned so much.",
+      "text": "I'm so grateful for our time together. I feel like I was in a class… I learned so much.",
       "who": "Taima Ford Beyah, Founder, Workthentic"
     },
     "stack": [
       "Claude",
       "ClickUp Super Agents",
-      "ClickUp Brain",
-      "n8n (then)",
       "Google Calendar",
       "Google Sheets"
     ],
-    "engineer": {
-      "architecture": "No-code agents configured in plain English inside ClickUp, all pointed at one Brain Doc as shared knowledge. A maintainer agent is the only writer to that doc. One integration workflow for calendar to sheet, because that step crosses tools.",
-      "runs_where": "Inside her own ClickUp and Google accounts. She owns every piece; the exit shipped a portable 7-file operating system and a 15-page printed system tour.",
-      "tests": "A regression test per agent after a scope-creep incident, where the maintainer rewrote unrelated sections; instructions hardened with a self-check step. The 115-task sweep was rehearsed in a sandbox before it ran.",
-      "cost": "About $20 a month in tooling.",
-      "guardrails": "Every agent defaults to skip, forces the assignee and a source stamp on every task it creates, and must cite the inbox message it acted on. No agent sends email.",
-      "tradeoff": "Native ClickUp agents instead of a custom stack. Less power, but she can read and change every instruction herself, and there is nothing of ours to maintain. A one-person practice needs a system she owns, not a vendor.",
-      "repo": null,
-      "repo_note": null
+    "eng": {
+      "architecture": "No-code agents in her project software, all reading one brain document.",
+      "choice": "Native agents, so she can read and change every instruction herself.",
+      "tests": "Regression tests on the maintainer agent's edit rules."
     },
-    "attribution": "I built all of it.",
+    "repos": [],
+    "role": "I built all of it, and she owns every piece.",
     "media": {
-      "hero": "/alec/img/coaching-aios/01-figure-brain-and-agents.webp",
-      "alt": "Diagram: one brain document read by four agents, with a maintainer agent as its only editor",
-      "caption": "One document, four agents, one maintainer.",
+      "animation": null,
+      "hero": {
+        "src": "/alec/img/coaching-aios/01-figure-brain-and-agents.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "Diagram: one brain document read by four agents, with a maintainer agent as its only editor",
+        "caption": "One document behind every agent.",
+        "phone": {
+          "src": "/alec/img/coaching-aios/01-figure-brain-and-agents-phone.webp",
+          "w": 780,
+          "h": 2170
+        }
+      },
       "gallery": []
     },
     "links": []
@@ -849,106 +1129,71 @@ export const CASES: BuildCase[] = [
     "slug": "construction-site",
     "tier": "short",
     "name": "Construction company website",
-    "short": "Construction website",
     "kicker": "Construction · Japan",
-    "title": "A Japanese construction company's website, redesigned so every word is readable and their real work leads",
-    "client": "Kamata Koumuten, a construction company in Miyagi, Japan",
+    "line": "A readable redesign for a Japanese construction company, with an editor so their office can change the site themselves.",
     "client_short": "Kamata Koumuten",
-    "users": "The company's storefront; its owner and her customers",
-    "shipped": "Rebuilt May 2026 (live); full redesign built October 2026, with the owner for sign-off",
-    "duration": "About 3 weeks for the rebuild, then a full redesign",
-    "number": {
-      "value": "1",
-      "unit": "industry board",
-      "label": "now referring the work: a regional construction association board member is recommending the site to the whole board",
-      "basis": "One board member's active recommendation, off the rebuilt site. No board contract signed."
-    },
-    "second": {
-      "value": "16px",
-      "unit": "",
-      "label": "the smallest text anywhere on the redesign, checked automatically at 4 screen widths; on the old site up to 88% of the text was under 14px"
-    },
-    "wall": {
-      "n": "1 industry board",
-      "phrase": "now referring us, off a site redesigned so every word is readable"
-    },
-    "oneliner": "Tiny text, a broken phone layout and a contact form that never delivered. The rebuild made it readable and brought in a referral; the full redesign, now with the owner for sign-off, leads with their real jobs.",
-    "broken": "On the old site, 66% to 88% of the text was under 14px depending on the page, and up to 59% failed basic contrast. The phone homepage ran about 28 screens long, the work was shown as icon cards for a business whose work is visual, and the contact form had never delivered a single inquiry.",
+    "status": "Live since Oct 2026",
+    "results": [],
+    "flow": [],
     "built": [
-      "A redesign in their own language: a slowly moving hero over a finished driveway and gate, the company's history since 1965, what they build, and a numbers band, set in the serif and sans pair the owner already knew.",
-      "Their real jobs up front: six projects, each with a before and after switch under the photo, and the story of the Tohoku University student rocket team whose engine firing they hosted on their land.",
-      "Readability enforced in code: nothing under 16px and running text at 17px or more, checked at 4 screen widths before any version is shown.",
-      "Underneath, from the first rebuild: a one-command deploy that backs up first and health-checks every page, and Google Search Console set up."
+      {
+        "lead": "A redesign in their language",
+        "text": "A slow-moving hero over a finished driveway and gate, the company's history, what they build, and the serif and sans type pair the owner already knew."
+      },
+      {
+        "lead": "Real jobs up front",
+        "text": "Their own projects, each with a before and after switch under the photo, plus the story of the university rocket team whose engine test they hosted on their land."
+      },
+      {
+        "lead": "They edit it",
+        "text": "Words and photos on every page change in the browser, with undo. Every update deploys with a backup first and a health check on every page."
+      }
     ],
-    "changed": [
+    "before_after": [
       {
         "k": "The smallest text",
         "before": "Up to 88% under 14px",
-        "after": "Nothing under 16px"
-      },
-      {
-        "k": "Reading it on a phone",
-        "before": "About 28 screens of homepage",
-        "after": "Built for the phone, large type"
-      },
-      {
-        "k": "Showing the work",
-        "before": "Icon cards",
-        "after": "Real jobs with before and after"
-      },
-      {
-        "k": "Google",
-        "before": "No Search Console",
-        "after": "Search Console set up"
-      },
-      {
-        "k": "Referrals",
-        "before": "None from the site",
-        "after": "An industry board member recommending it"
+        "after": "Large and readable"
       }
     ],
-    "math_note": "The old site's figures come from our audit of its pages. The referral is one board member's active recommendation; no board contract has been signed.",
     "quote": null,
     "stack": [
       "HTML",
       "CSS",
       "JavaScript",
-      "Noto Serif JP",
-      "Noto Sans JP",
-      "Vercel previews",
-      "lftp deploys",
+      "PHP",
       "Google Search Console"
     ],
-    "engineer": {
-      "architecture": "A static homepage with a looping hero video, a survey-pole rail that marks the current section on wide screens, and before and after switches on the project photos. It deploys to the client's existing shared PHP host by mirror, with a backup taken first.",
-      "runs_where": "The client's own hosting, with previews on Vercel. Nothing of ours in the loop.",
-      "tests": "A type check fails if any visible text drops under 16px at 1440, 1024, 390 or 360 wide. Every deploy verifies each page returns 200 and the search-console verification file is intact.",
-      "cost": "The client's existing hosting. No new subscriptions.",
-      "guardrails": "Never delete the search-console verification file. Backup before every mirror. The deploy script changes into the directory first, because the mirror tool silently no-ops on paths with spaces.",
-      "tradeoff": "Kept their host and a static site instead of moving them to a builder. The owner's team is not technical, so the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.",
-      "repo": null,
-      "repo_note": null
+    "eng": {
+      "architecture": "Static pages on her own host; the editor saves back to the HTML.",
+      "choice": "Our own small editor over a CMS: no licence, no build step.",
+      "tests": "Editor and attack tests, plus a type-size test at 4 widths."
     },
-    "attribution": "I built all of it. The hero scene is generated imagery; every project photo is the company's own.",
+    "repos": [],
+    "role": "I built all of it.",
     "media": {
-      "hero": "/alec/img/construction-site/01-v1-home-desktop.webp",
-      "alt": "Kamata Koumuten homepage: the headline 地域と共に歩む。 over a sunny work site beside a finished house and gate",
-      "caption": "The redesigned homepage, with a slowly moving hero.",
+      "animation": null,
+      "hero": {
+        "src": "/alec/img/construction-site/01-v1-home-desktop.webp",
+        "w": 1600,
+        "h": 1200,
+        "alt": "Kamata Koumuten homepage: the headline 地域と共に歩む。 over a sunny work site beside a finished house and gate",
+        "caption": "The homepage."
+      },
       "gallery": [
         {
           "src": "/alec/img/construction-site/02-v1-works-desktop.webp",
+          "w": 1600,
+          "h": 1200,
           "alt": "Project gallery with real photos of a carport job and a retaining wall job, each with a before and after switch",
-          "caption": "Their real jobs, each with a before and after switch."
+          "caption": "Real jobs, before and after."
         },
         {
           "src": "/alec/img/construction-site/03-v1-home-phone.webp",
+          "w": 1600,
+          "h": 1200,
           "alt": "Two phone screens: the hero with contact buttons, and a project photo with its before and after switch",
-          "caption": "Built for the phone, with large, readable Japanese."
-        },
-        {
-          "src": "/alec/img/construction-site/04-v1-community-desktop.webp",
-          "alt": "Community section with a real photo of a rocket engine test firing beside the story",
-          "caption": "The student rocket team they hosted."
+          "caption": "Built for the phone."
         }
       ]
     },
@@ -956,185 +1201,65 @@ export const CASES: BuildCase[] = [
       {
         "label": "kamata-koumuten.co.jp",
         "url": "https://kamata-koumuten.co.jp"
-      },
-      {
-        "label": "The Japanese offer page, stephensai.co/jp",
-        "url": "https://stephensai.co/jp"
       }
     ]
   },
   {
-    "slug": "curriculum-system",
+    "slug": "lead-finder",
     "tier": "short",
-    "name": "Curriculum generation system",
-    "short": "Curriculum system",
-    "kicker": "Education technology · Korea · 2020 to 2024",
-    "title": "A test-prep company that keeps producing curriculum without adding staff: about 80% of the manual work handled by AI",
-    "client": "KiwiOPIC, an English test-prep company in Seoul",
-    "client_short": "KiwiOPIC",
-    "users": "The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024",
-    "shipped": "2020 to 2024",
-    "duration": "4 years, built while working there",
-    "number": {
-      "value": "~80%",
-      "unit": "",
-      "label": "of the manual curriculum work now handled by AI",
-      "basis": "Per Alec, confirmed 2026-07-25; the company's own estimate."
-    },
-    "second": {
-      "value": "95%+",
-      "unit": "",
-      "label": "transcription and feedback accuracy on learners' spoken answers"
-    },
-    "wall": {
-      "n": "~80%",
-      "phrase": "of a curriculum team's manual work now handled by AI"
-    },
-    "oneliner": "Hired to write English lessons. Left having turned the company's production line into an AI-assisted pipeline.",
-    "broken": "Every practice question, model answer, and lesson for a computer-delivered oral proficiency interview was written by hand by a small team. I was hired to write that curriculum.",
+    "name": "Pharmacy lead finder",
+    "kicker": "Healthcare · lead generation",
+    "line": "One sentence in his own Claude returns a sheet of compounding pharmacies, each with its published email.",
+    "client_short": "Medari Advisors",
+    "status": "Delivered",
+    "results": [],
+    "flow": [],
     "built": [
-      "Question generation: a pipeline that produces OPIc-style interview questions across the exam's topics and difficulty levels, in the register the test actually uses.",
-      "Curriculum generation: lesson and test material drafted, formatted, and run through a review cycle, with the model taking the first pass and a human the last.",
-      "A speaking feedback loop: speech-to-text wired to a language model so learners' spoken answers were transcribed and scored, at 95%+ accuracy.",
-      "Process automation between drafting and publishing, and the team trained on the new workflows as they were built."
-    ],
-    "changed": [
       {
-        "k": "Writing questions",
-        "before": "By hand, one at a time",
-        "after": "Generated per topic and level, reviewed"
+        "lead": "Lists from the registry",
+        "text": "A starting list for each state from the national provider registry: every active compounding pharmacy, with chains, grocery stores, hospitals and clinics removed, and the owner or pharmacist in charge as the contact."
       },
       {
-        "k": "Production time",
-        "before": "Baseline",
-        "after": "About 40% less"
+        "lead": "A lookup in his account",
+        "text": "One Google Maps search per pharmacy in his own Apify account, reading the contact details each pharmacy's website publishes."
       },
       {
-        "k": "Feedback",
-        "before": "A teacher, days later",
-        "after": "Transcribed and scored, 95%+"
-      },
-      {
-        "k": "Headcount",
-        "before": "Would have grown",
-        "after": "200+ curriculum hours shipped without hiring"
+        "lead": "A finished sheet",
+        "text": "Junk and head-office addresses dropped, one email per pharmacy, his existing list removed, and stores with no website kept as a call list with phone numbers."
       }
     ],
-    "math_note": "These figures are the company's own estimates as Alec reported them; there is no primary artifact in our records. Treat the percentages as approximate.",
-    "quote": null,
-    "stack": [
-      "LLM APIs",
-      "speech-to-text APIs",
-      "prompt pipelines",
-      "automated review cycles"
-    ],
-    "engineer": {
-      "architecture": "Prompt pipelines per content type, a human-last review cycle, and a transcription-plus-scoring loop for spoken answers.",
-      "runs_where": "Inside the company's own tooling at the time.",
-      "tests": "Model-first, human-last review on every published item; accuracy tracked on the feedback loop.",
-      "cost": "Not recorded.",
-      "guardrails": "A human signed off on every published lesson.",
-      "tradeoff": "Generate the first draft, never the final. The register of the test is narrow enough that a model drafts it well and a teacher's last pass keeps it honest.",
-      "repo": null,
-      "repo_note": null
-    },
-    "attribution": "I built it, as the English curriculum specialist who became the AI integration lead.",
-    "media": {
-      "hero": null,
-      "alt": null,
-      "caption": null,
-      "gallery": []
-    },
-    "links": []
-  },
-  {
-    "slug": "aios",
-    "tier": "short",
-    "name": "The Bridge, our AI operating system",
-    "short": "The Bridge",
-    "kicker": "Stephens AI · our own tooling",
-    "title": "The Bridge: the AI operating system our company runs on every day, where every new tool is tested before a client sees it",
-    "client": "Stephens AI, our own consultancy",
-    "client_short": "Stephens AI",
-    "users": "Me, every day: the operating system since March 2026, the Bridge on top of it since September",
-    "shipped": "v2 live 2026-03-01",
-    "duration": "Ongoing",
-    "number": {
-      "value": "10",
-      "unit": "agents",
-      "label": "each on a least-privilege tool list, plus 45 reusable skills, kept lean by a monthly audit that retires what stops earning its place"
-    },
-    "second": {
-      "value": "07:30",
-      "unit": "",
-      "label": "every morning: new meeting recordings become pages, priorities, decisions, and a text with the action items"
-    },
-    "wall": {
-      "n": "10 agents · 45 skills",
-      "phrase": "running our own company every day, where every tool is tested before a client gets it"
-    },
-    "oneliner": "We run our own company on it every day: calendar, inbox, messages, meetings and priorities on one screen, with the whole company's knowledge behind it. Anything we install for a client runs here first.",
-    "broken": "A consultancy of two generates the same admin any client does: meeting notes, priorities, research, proposals, follow-ups, and a vault of context that goes stale the moment nobody reads it.",
-    "built": [
-      "The Bridge, a dashboard over the whole company: a 3D map of every note, both calendars merged and editable, both inboxes, iMessage and Slack, health data, and Ask Charlie, a chat over the whole knowledge base that can read but never edit or send. Voice dictation in every box.",
-      "10 specialist agents, each on a least-privilege tool list (reviewers that read like a dentist, an optometrist or a physical therapist; research; meeting notes), and 45 reusable skills for proposals, research, QA, deploys and reporting.",
-      "Scheduled jobs: a daily 07:30 meeting sweep that writes the meeting page, updates the week's priorities, logs decisions, and texts the action items; a weekly vault health check. Every run leaves an inspectable log.",
-      "Doctrine, written down: verify the output, augment rather than replace, understand the why, loop humans in, stay transparent. What stops earning its place gets retired."
-    ],
-    "changed": [
-      {
-        "k": "After a client call",
-        "before": "Notes typed up later, or not",
-        "after": "Page, priorities, decisions, text by 07:30"
-      },
-      {
-        "k": "Finding a fact",
-        "before": "Grep and memory",
-        "after": "Retrieval search over the vault"
-      },
-      {
-        "k": "A repeated job",
-        "before": "Re-explained each time",
-        "after": "A skill with the gotchas encoded"
-      },
-      {
-        "k": "Sending anything",
-        "before": "Whatever the model decided",
-        "after": "A human approval step, always"
-      }
-    ],
-    "math_note": "Counts are from the system's own folders on 4 October 2026. They change as skills earn their place or get retired.",
+    "before_after": [],
     "quote": {
-      "text": "The Hermes agent… thank you so much. This is sick so far. I set it up… and it freaking set the whole thing up.",
-      "who": "Payton Bilodeau, AI educator, AI Lab"
+      "text": "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working.",
+      "who": "Curtis Cole, CEO, Medari Advisors"
     },
     "stack": [
-      "Claude Code",
-      "Claude Agent SDK",
-      "MCP",
+      "Claude plugin",
       "Python",
-      "Three.js",
-      "Playwright",
-      "Groq Whisper",
-      "Fathom",
-      "Google Workspace",
-      "launchd"
+      "NPI Registry API",
+      "Apify"
     ],
-    "engineer": {
-      "architecture": "A markdown vault with frontmatter as the database, a generator that rebuilds the index, sub-agents defined as files with tool allow-lists, skills as files with the gotchas at the top, a local dashboard server, and scheduled jobs on the Mac that deliver to iMessage.",
-      "runs_where": "On my Mac, with connectors into Google Workspace, Slack, Fathom, and the clients' tools.",
-      "tests": "A weekly lint over the vault (contradictions, stale facts, orphans), a layout lint on every branded page, and a two-reviewer gate (adversarial fact-check plus a domain reviewer) before anything client-facing ships.",
-      "cost": "One subscription plus about $10 a month of API credits.",
-      "guardrails": "Every agent runs on a least-privilege allow-list. Nothing is sent, deleted, or deployed without a fresh yes. Every scheduled job leaves a trace.",
-      "tradeoff": "Files over a database. A vault of markdown is slower to query than Postgres, but every agent, every human, and every future rebuild can read it, and the whole thing is in git.",
-      "repo": null,
-      "repo_note": null
+    "eng": {
+      "architecture": "A Claude plugin; Python scripts decide, the model drives the run.",
+      "choice": "Code accepts an email only on a registry phone or name-and-town match, never a guess.",
+      "tests": "Script tests built from a real run."
     },
-    "attribution": "I built all of it.",
+    "repos": [],
+    "role": "I built it, from the spec call to the plugin and walkthrough video.",
     "media": {
-      "hero": "/alec/img/aios/01-bridge-brain-view.webp",
-      "alt": "The Bridge dashboard: a 3D graph of the vault beside today's calendar and inbox",
-      "caption": "The Bridge, the dashboard we run the company from. Two panels blurred.",
+      "animation": null,
+      "hero": {
+        "src": "/alec/img/lead-finder/01-figure-how-it-finds-leads.webp",
+        "w": 1600,
+        "h": 900,
+        "alt": "Diagram: he asks his Claude for compounding pharmacy leads; a registry list, a Google Maps lookup and a match rule in code produce a sheet with one email per pharmacy",
+        "caption": "One sentence in, a sheet of pharmacies out.",
+        "phone": {
+          "src": "/alec/img/lead-finder/01-figure-how-it-finds-leads-phone.webp",
+          "w": 780,
+          "h": 1768
+        }
+      },
       "gallery": []
     },
     "links": []

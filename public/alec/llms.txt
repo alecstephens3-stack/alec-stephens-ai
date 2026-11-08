@@ -1,227 +1,158 @@
 # Alec Stephens · What I've built
 
-Nine production builds with the numbers: a clinic knowledge base, a PTO and payroll system, invoice processing under a HIPAA agreement, an insurance claims tool for a dental practice, and more. Stack, cost, tests, and who built what.
+10 builds I've shipped: insurance claims software, computer-use agents, invoice processing under a HIPAA agreement, a clinic knowledge base, a PTO and payroll system, and more.
 
 Index: https://stephensai.co/alec
 
 ## About
 Applied AI engineer. Co-founder, Stephens AI.
-I build systems that get my clients real results, and I absolutely love doing it.
-My experience runs across the board: healthcare clinics, coaching businesses, a nine-figure education company, construction firms in Japan, and more.
-I got here sideways, hired in Seoul to write English lessons and leaving with the company's curriculum running on an AI production line.
-What I do best is diagnose where a build will make a client money or save them time, then work alongside them to make it happen.
-Today I run Stephens AI with my co-founder Jusheen Kim, an ex-J.P. Morgan lead engineer. Our home turf is healthcare, where the work has to be HIPAA-compliant: a business associate agreement in force with the clinic, and the AI running on Claude via AWS Bedrock inside the clinic's own account, so patient data never leaves it.
-Outside Stephens AI, I also take contracts as an applied AI or forward-deployed engineer. And if you're ready to grow your business, it would be my pleasure to get you the results you need.
+I build AI software that takes admin work off clinic staff, and I love doing it. In healthcare, patient data stays in the clinic's own AWS account, under its BAA.
+I made 200+ AI tutorial videos for a nine-figure education company. Before that I was hired in Seoul to write English lessons, and left with about 80% of the manual curriculum work handled by AI.
+I also take contracts as an applied AI or forward-deployed engineer.
+Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer.
 
-## Clinic knowledge base (https://stephensai.co/alec/knowledge-base)
-Front desk knowledge base for an eye clinic: anyone at the desk finds the right answer in one search, without pulling a manager away.
-Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
-Who uses it: The front desk and 2 office managers, daily since August 2026.
-Shipped: Live 2026-08-07. About 6 weeks from scope to live.
-Headline number: ~200 hrs/yr of interruptions off the office manager's desk. Basis: About 4 questions a day that used to cost 10 minutes of digging or a manager's attention, now one search, over 250 working days.
-Second number: 35 pages of protocol, plus a 41-row price grid, maintained by the staff themselves.
-What was broken: Front desk training lived in 15 tabs of one spreadsheet, a separate scheduling protocol, a per-doctor rulebook, and the office manager's head. The dangerous exceptions were buried in parentheses. A new hire took about 6 months to learn the desk, and every unusual question interrupted a manager. Which doctor can see this patient? Do we collect for this or bill it?
-What I built: An installable web app on every front desk device: 35 protocol pages in 7 sections, a live 41-row price grid, and a report-an-issue loop that gets fixed the same day. 4 decision tools that force the buried exceptions open: which doctors a patient can see, the right price with prompt-pay, whether to collect or bill a refraction, and how urgent a symptom is. In-app editing for 2 named managers, with revision history in plain English and one-click restore. No developer in the loop for a content change. Google sign-in restricted to the clinic's domain, row-level security on every table, sanitized rendering that fails closed, a monthly export as the backup.
-What changed: Where the rules live: 15 spreadsheet tabs, a protocol doc, a rulebook, one person's memory -> One searchable app, 35 pages, 4 tools; An unusual question: Interrupt a manager -> Search, answer in under a minute; When someone leaves: Their know-how leaves with them -> It stays in the app; Changing a rule: Email the developer, wait -> Edit in the browser, history kept; Cost to run: Manager time -> $0 a month in hosting.
-Compliance: Built for a HIPAA-covered clinic with zero patient data in it by design: protocols and prices only, sign-in locked to the clinic's domain, a business associate agreement in force with the practice.
-Stack: Supabase, PostgreSQL with row-level security, Google OAuth, Vanilla JS PWA, Vercel, GitHub Actions, DOMPurify, Claude Code.
-Architecture: Static PWA on Vercel reading page content, prices, and revisions from Supabase over the REST API. Editors are a Postgres table; RLS gives everyone read and 2 named emails write. Rendering sanitizes at read time, not only at save, so a REST write can never reach a reader unfiltered.
-Where it runs: Vercel (app), Supabase free tier (content, auth, revisions), Google Workspace sign-in locked to the clinic's domain. Installed as a PWA on the front desk iPad and PCs.
-Tests: 21 regression tests plus a DOM-free sync-logic suite (31 assertions) covering restore, refresh, and the offline editor guard. Every test was written from a bug we actually hit.
-Cost: $0 a month to host. The clinic pays a small monthly retainer for the editing feature and a pass-through for the database tier.
-Guardrails: A pre-merge security review caught 2 cross-site-scripting holes: page HTML was sanitized on save but not on render, and the editor parsed pasted HTML into the live DOM before cleaning it. Both fixed by sanitizing at render, failing closed. Monthly JSON export is the backup because the free tier keeps none.
-Tradeoff: We built a plain PWA with search instead of the AI assistant layer the first scope had. Search on 35 well-structured pages answers the front desk's question faster than a chat box, costs nothing to run, and never invents a rule. The assistant is on the roadmap only if search ever fails a real staff question.
-My role: I built it: the content model from the clinic's front-desk documents, the 35 pages and 4 decision tools, in-app editing with revision history, and the tests. A second engineer ran the pre-merge security review and the deployment.
-Quote: "This is highly valuable, both in the short term and long term. It's already saving a lot of time." (Jill Romines, Front Office Manager, Wichita Family Vision)
-Code: https://github.com/alecstephens3-stack/supabase-team-knowledge-base
+## ClaimStride (https://stephensai.co/alec/claimstride)
+Asks every insurer where each unpaid claim stands and writes the next step, for eye care and dental.
+Status: Live at an eye clinic. Client: Wichita Family Vision. Eye care · insurance · HIPAA.
+Result: 1,140 claims read from the biller's real report, every total matching hers.
+Result: About 2 min to get insurer status on 97 unpaid claims in AR. Basis: The biller's first live run, on her real claims.
+How it works: 1. Read the claims report: ClaimStride reads the claims report the practice already exports, every format and every sheet. Nothing plugs into the practice software. 2. Ask every insurer: Every unpaid claim goes to its insurer in one run, through a healthcare clearinghouse, and comes back with a clear status. 3. Sort by what's needed: Claims are sorted by what they need: denials grouped by reason and age, and the nearest filing deadlines first. 4. Write the next step: Each claim gets its next step in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when.
+What I built: Reads their own report: It works from the claims report the practice already exports, in every format and every sheet, at the eye clinic and the dental office. Nothing has to plug into the practice software. Asks every insurer: Each unpaid claim goes to its insurer through a healthcare clearinghouse and comes back with one clear status: needs action, paid, pending, or not on file. A next step on every claim: Where the insurer or its payment file gives a reason, ClaimStride writes it in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when. The board the biller asked for: Primary, secondary and tertiary claims kept apart, denials sorted by reason and age, and the nearest deadlines first. The cost shows before every run, with a monthly limit.
+What changed: Why a claim hasn't paid: A portal or a call per claim -> Asked of every insurer in one run.
+Quote: "This all reads very accurate… it really truly gives you everything that you would need at a quick glance." (The biller, Wichita Family Vision)
+Design choice: Exported reports instead of a vendor integration, so it runs on day one. No electronic answer means a call, never a guess.
+Architecture: A FastAPI service. Plain code parses the report and every X12 answer; Claude on Bedrock reads scanned EOBs. Same claim, same status.
+Tests: 2,596 automated tests.
+Cost: About 30 cents a check.
+Runs on: The clinic's own AWS account, under its BAA.
+Stack: Claude on AWS Bedrock, Python, FastAPI, Stedi API, X12 276/277, X12 270/271, AWS, pytest.
+My role: My co-founder built the first version. I rebuilt how it reads insurer answers and built the eye care side.
 
-## PTO + payroll system (https://stephensai.co/alec/pto-payroll)
-Time-off and payroll for an independent eye clinic: paper slips gone, and a system that runs itself year after year.
-Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
-Who uses it: Every employee files from a phone; the office manager approves; the bookkeeper runs payroll from it. Live since April 2026.
-Shipped: Live April 2026. About 8 weeks, then 3 months of fixes found in production.
-Headline number: 60 to 100 hrs/yr of admin time returned. Basis: 10 to 12 paper slips a pay period at 15 to 20 minutes each, plus the manual calendar checks and payroll prep they caused.
-Second number: 327 requests filed, approved and posted to the calendar through it since April, with no paper slip in sight.
-What was broken: Time off ran on green paper slips handed to the office manager. She checked the calendar by hand, tracked balances by hand, lost slips, and could not approve from home. The bookkeeper rebuilt payroll every pay period from paper. About 60 to 100 admin hours a year, and no way to see who was off next week without asking.
-What I built: One Google Form on any phone. Staff pick dates and a type; partial days handled. An Apps Script engine that counts weekdays only, rounds to the clinic's rule, checks department conflicts, writes the attendance sheet and the shared calendar, and sends a one-tap approve or deny email. Anniversary-based accrual in year one, then calendar years. Balances are recomputed from the grid on every write instead of incremented, so a manual edit can never drift the totals. A payroll report every pay period, built into a dated folder for the bookkeeper. All 26 employee records migrated by a 700-line script that preserved the audit notes. A new year is one click. Next year's records for all 26 staff were built on 2 October 2026 from the admin menu, after a full rehearsal on copies, so requests for 2027 already work. The manager adds the paid hours with one more click.
-What changed: Filing a request: A green paper slip -> A form on any phone; Approving: In the office, on paper -> One tap in an email, from anywhere; The calendar: Checked by hand -> Events post themselves; Balances: Hand-tracked, drifted -> Recomputed on every write; Payroll prep: Rebuilt from paper each period -> A report that builds itself; A new year: New paper, new balances by hand -> One click from the admin menu.
-Compliance: Employee data only, no patient data, kept entirely inside the clinic's own Google Workspace. Built under the same business associate agreement as the clinic's other systems.
-Stack: Google Apps Script, Google Forms, Google Sheets, Google Calendar, Gmail, clasp, Node test runner.
-Architecture: Form submit trigger into a bound Apps Script project of about 7,000 lines: validation, weekday and anniversary math, attendance-sheet writes, a calendar owned by a Workspace user the script runs as, approve and deny links served by a pinned web-app deployment, and a payroll builder on a time trigger.
-Where it runs: Entirely inside the clinic's Google Workspace. No server, no SaaS bill, $0 a month.
-Tests: 183 regression assertions in the public repo, run with Node, no dependencies. Sections cover accrual routing, weekend-aware date math, partial days, recompute-on-write balance integrity, and the migration.
-Cost: $0 a month to run. Built at an hourly rate for the clinic.
-Guardrails: The web app URL is read from a config sheet, never from the script API, because the API returns a hidden test deployment. Every change that touches the approve button rolls the pinned deployment; skipping that once put new code on form-submit and old code on approvals. Error emails go to me, action emails go to the manager, so a test can never land in her inbox.
-Tradeoff: Apps Script over a hosted app. The clinic already paid for Google Workspace, the office manager lives in Sheets, and the data never leaves their account. A hosted app would have meant a login, a bill, and a vendor for a 26-person office. The cost of that choice is a deployment model with sharp edges, which the tests and the runbook now cover.
-My role: I built it: the engine, the accrual and date math, the migration, the payroll report, the tests, and the guides. A second engineer added the employee-management dialogs and audited the sheets.
-Quote: "It is already saving me some time, and I am getting information back to the team much quicker." (Gabe Walsh, Office Manager, Wichita Family Vision)
-Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll
+## Computer-use agents (https://stephensai.co/alec/agents)
+Two Claude agents that work a medical practice's software through its screen, because a single office can't get an API.
+Status: Passing practice runs. Client: A medical practice. Medical practice · AI agents.
+How it works: 1. Read the day's list: Each run starts from the practice software's own report, so the agent works from the same list the staff would. 2. One at a time: Code hands the model one item at a time in a short, fresh conversation, so a mistake on one chart can't carry into the next. 3. Code verifies each click: Code checks every click against what the screen shows. Asked to discard someone else's unsaved note, the agent answers No. 4. Re-run to confirm: A second pass confirms the work from the practice app's own record. Routine clicks replay without the AI and stop the moment the screen changes.
+What I built: Payment files agent: It signs in to the practice software over Remote Desktop, exports the day's ERAs (insurance payment files) and hands them to ClaimStride, so payments are read without anyone opening a menu. Chart sign-off agent: It works the doctor's sign-off queue one chart at a time: it opens the exam, signs it, marks the visit's tests reviewed, and leaves anything unusual on a short list for the doctor. Guards in code, not the prompt: Code keeps the list, the budget and the record of every step. The agent can't report a click it hasn't seen the result of, and it answers No when asked to discard someone else's note. Repeat jobs, no AI: Routine clicks it has learned replay with no model at all, so they cost nothing to run. The moment the screen looks different, replay stops and the agent takes over again.
+What changed: Payment files: Stuck inside the practice software -> Exported for ClaimStride by an agent; Chart sign-off: Clicked through by hand each weekend -> Exceptions left for the doctor.
+Design choice: Guards live in code, not the prompt. A report sent in the same turn as a click is refused: it describes a screen the model hasn't seen.
+Architecture: Code keeps the list, the budget and the record. The model gets one short conversation per item, so a mistake can't carry into the next.
+Tests: Scored from the practice app's own record. A sloppy script has to fail the scorer.
+Runs on: A cloud computer we manage, with no inbound ports.
+Stack: Claude computer use, Python, Playwright, FreeRDP, AWS Systems Manager, pytest.
+Code: https://github.com/alecstephens3-stack/computer-use-agents
+My role: I built both agents, the practice app they're scored on and the cloud computer they run on.
 
 ## Invoice processing system (https://stephensai.co/alec/invoice-agent)
-Invoice processing for a clinic's bookkeeper: she never processes an invoice by hand again.
-Client: Wichita Family Vision, an independent optometry practice in Wichita, Kansas.
-Who uses it: The clinic's bookkeeper, since the install on 2026-10-01.
-Shipped: Live 2026-10-01. About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API.
-Headline number: ~200 hrs/yr of keying and filing off the bookkeeper's desk, at the 50 invoices a week the clinic plans for as it expands. Basis: 50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year.
-Second number: 0 failures on every real invoice she has run since go-live, and not one Undo. In our side-by-side test, QuickBooks' own reader got 40% of totals wrong.
-What was broken: Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.
-What I built: One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go. Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone. Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason. Kept fast as she used it. After her first weeks, launch went from about 2,100 files unpacked to 181, reading runs three invoices at a time, and the bill memo now says what the bill was for. Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one.
-What changed: Entering a bill: Typed by hand from the PDF -> Read, checked in one table, entered on Go; Filing the PDF: Renamed and dragged into 1 of 184 folders -> Renamed and filed on the same click; Vendor rules: In one person's head -> Written once, followed every run; Totals right in a 5-invoice test: 3 with QuickBooks' own reader -> All 5; Since go-live: Every bill keyed by hand -> 0 failures, not one Undo.
-Compliance: HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic's own AWS account, under the clinic's business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page.
-Stack: Claude on AWS Bedrock, Python, QuickBooks Online Accounting API, OAuth 2.0, PyMuPDF, PyInstaller, Amazon S3, CloudWatch, Ed25519 signed updates, Windows.
-Architecture: A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.
-Where it runs: On the bookkeeper's PC against the clinic's network drive. Reading runs in the clinic's own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic's S3 bucket, and error reports go to its CloudWatch.
-Tests: 40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a full code review found 39 verified issues; all were fixed and the fixes reviewed again.
-Cost: About 1 cent an invoice in the clinic's AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.
-Guardrails: Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic's.
-Tradeoff: QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic's own account.
-My role: I built it: the app, the QuickBooks integration, the self-update system and the tests. My co-founder worked the QuickBooks setup with me and joined the install.
-Quote: "I think that's very simple and effective… I don't have to enter [them]. I just have to go back in and pay [them] when it's an appropriate time to pay [them]." (Mary Tangney, Bookkeeper, Wichita Family Vision)
+Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.
+Status: Live since Oct 2026. Client: Wichita Family Vision. Eye care · bookkeeping · HIPAA.
+Result: About 200 hrs/yr of keying and filing off the bookkeeper's desk. Basis: 50 invoices a week at about 5 minutes each.
+Result: 0 failures since go-live, and she has never had to undo a bill. Basis: QuickBooks' own reader got 40% of totals wrong in our test. Ours got every one right.
+How it works: 1. PDF lands in folder: A vendor bill lands in her Invoices folder as a PDF or a scan, exactly as it does today. Nothing changes about how bills arrive. 2. Claude reads it: Claude on AWS Bedrock reads each page inside the clinic's own AWS account, under its BAA. The model only reads; it decides nothing. 3. Her rules decide: Plain code applies her filing rules: statement, invoice and card-paid vendors each go their own way, and possible duplicates come to her first. 4. Entered on one click: She checks one table and clicks once. Each bill is renamed, filed and entered in QuickBooks, and every run can be undone.
+What I built: One review table: Every PDF in the Invoices folder is read and shown on one page: new file name, vendor folder, date, amount, QuickBooks vendor and account, prefilled from 12 months of her own coding. Her rules, in code: Statement vendors, invoice-by-invoice vendors and card-paid vendors each follow her rule. Anything that might already be in QuickBooks is shown to her instead of entered twice. Straight into QuickBooks: Bills and card expenses go in through the QuickBooks API from our own read, so QuickBooks never re-reads a page. A bill that can't go in yet waits, then goes in with one click. Looks after itself: Signed updates install when she closes the app, every run can be undone, and an error report reaches us the moment something goes wrong. When a vendor rule changes, the update keeps the old rules too.
+What changed: Filing the PDF: Dragged into 1 of 184 folders -> Renamed and filed on the same click.
+Quote: "I think that's very simple and effective… I don't have to enter [them]." (Mary Tangney, Bookkeeper, Wichita Family Vision)
+Design choice: The model only extracts fields. Matching, accounts, duplicate checks and filing are plain code from her rules, so the same bill always lands the same way.
+Architecture: A one-file Windows app. Claude on Bedrock only reads each PDF; deterministic code does the rest, through to the QuickBooks API.
+Tests: 40 offline QuickBooks cases and 25 browser checks.
+Cost: About 1 cent an invoice.
+Runs on: Her PC and the clinic's AWS account.
+Stack: Claude on AWS Bedrock, Python, QuickBooks Online API, PyMuPDF, CloudWatch.
+Code: https://github.com/alecstephens3-stack/bill-intake
+My role: I built the app and its QuickBooks integration.
 
-## ClaimStride, insurance claims software (https://stephensai.co/alec/claimstride)
-ClaimStride, insurance claims software for eye care and dental: every unpaid claim checked with the insurer and given its next step.
-Client: Wichita Family Vision, an optometry practice in Wichita, Kansas, and Tri-Valley Dental Care in Pleasanton, California.
-Who uses it: The biller at the eye clinic; the front desk and the owner dentist at the dental practice.
-Shipped: Live on the eye clinic's own server since 2026-10-12; the biller's first live run 2026-10-21. About two weeks from the first version to live at the eye clinic.
-Headline number: 1,140 claims read from the biller's real Compulink report, with every total adding up to hers. Basis: The eye clinic's insurance receivables report, read on 2026-10-16 before her first run: every claim, every sheet, totals matched by age group.
-Second number: ~2 min to check 97 unpaid claims with their insurers on the biller's first live run.
-What was broken: The eye clinic's biller carried about 1,200 unpaid claims and worked them from Compulink's aging report, which says how old a claim is but never why it hasn't paid. Finding out meant an insurer portal or a phone call per claim, and a claim left too long can miss the insurer's filing deadline. The dental practice had the same problem on Dentrix, and checked coverage by hand, portal by portal.
-What I built: Reads the report the practice already makes. Compulink's insurance receivables report at the eye clinic, in every format and every sheet, and the Dentrix aging report at the dental practice. Nothing has to connect into the practice software. Asks every insurer. Each unpaid claim goes to its insurer through a healthcare clearinghouse and comes back with one status: needs action, paid, pending, not on file, or no electronic status for insurers like VSP that don't answer that way. The next step on every claim. Where the insurer or its payment file gives a reason, it's written in plain words with numbered steps and the insurer's deadline, so the biller knows what to fix and by when. The view the biller asked for. Primary, secondary and tertiary claims kept apart, denied against not yet touched by age group, and the deadlines due in the next 30 days at the top. Coverage before the visit. A coverage check per patient with active dates, the deductible and what's left this year. The dental front desk ran its first live check on 2026-10-22. A brake on spend. The price shows before a run, a monthly limit stops it, and anything above $10 asks first.
-What changed: Why a claim hasn't paid: A portal or a call per claim -> Asked of every insurer in one run; What to do next: Worked out claim by claim -> Written on the claim, with the deadline; The old unpaid claims: A line on the aging report -> Denied or untouched, by age group; Checking coverage: Portal by portal, by hand -> One check, one card.
-Compliance: Runs inside each practice's own AWS account under its business associate agreement. Sign-in is required, an access record notes who opened or changed a claim by the tool's own reference only, and logs carry request IDs and insurer names, never patient details. The clearinghouse is the one outside connection, under its own BAA.
-Stack: Python, FastAPI, Pydantic, Stedi clearinghouse API, X12 276/277 claim status, X12 270/271 eligibility, X12 835 payment files, AWS EC2, Amazon S3, AWS SSM, pytest.
-Architecture: A Python FastAPI service with a server-rendered page. Claim status is X12 276/277 and coverage is 270/271 through Stedi; payment files (835) supply the reason where the insurer sends one. Deterministic code reads every report format and every insurer answer, so the same claim always gets the same status and the same steps. An insurer that doesn't answer electronically is marked for a call rather than given an answer it never sent.
-Where it runs: For the eye clinic, a small server in the practice's own AWS account: encrypted disk, sign-in required, code shipped from a private bucket in that account and released through SSM with a one-command rollback. The dental practice runs in its own AWS account under its BAA and moves into the practice's name at hand-off. The clearinghouse is the one outside connection.
-Tests: 2,596 automated tests (22 Oct 2026). Before the biller's first run, her real 1,140-claim report was read with every total matching hers. Every release is tagged and can be rolled back in one command.
-Cost: About 30 cents a check at the clearinghouse's published rate for the first 250 a month. The monthly limit and the confirm step above $10 keep the bill where the practice set it.
-Guardrails: It never guesses. A missing detail says what to ask instead of sending a guess, an insurer with no electronic answer is marked for a call, and the price is shown before anything is sent.
-Tradeoff: No direct connection into Compulink or Dentrix yet. The reports the practice already exports are enough to run on, and an approved integration costs thousands up front. A direct connection comes once enough practices on the same software are using it.
-My role: My co-founder built the first version. I rebuilt how it reads each insurer's answers, built the eye care side and the claims worklist the biller uses, and run its releases on the clinic's server.
-Quote: "I'm really impressed with what you guys have done so far." (The biller, Wichita Family Vision, after her first live run)
+## Front desk knowledge base (https://stephensai.co/alec/knowledge-base)
+Anyone at the front desk finds the right answer in one search, without pulling a manager away.
+Status: Live since Aug 2026. Client: Wichita Family Vision. Eye care · front desk.
+Result: About 200 hrs/yr of front-desk time returned. Basis: About 4 questions a day at 10 minutes each, now one search.
+Result: 35 pages plus a 41-price grid, kept current by the managers.
+How it works: 1. A caller asks: A caller asks something unusual, and whoever is at the desk can answer it during the call instead of putting them on hold. 2. Search one box: One search box across every page and price. It's plain search, not a chat box, so it can never invent a rule. 3. Answer on screen: Decision guides answer the tricky ones on screen: which doctor can see this patient, the right price, and whether to collect or bill. 4. Managers keep it current: Two managers keep it current right in the browser, with revision history and one-click restore. No developer needed for a content change.
+What I built: Answers in one search: 35 pages of front desk protocol in 7 sections and a live 41-price grid, on every front desk device and searchable from one box, with no AI to invent a rule. Decision guides: Guides that bring the buried exceptions to the surface: which doctors a patient can see, the right price with prompt-pay, whether to collect or bill a refraction, and how urgent a symptom is. Managers edit it themselves: Two managers edit any page in the browser, with revision history in plain English and one-click restore. No developer is needed for a content change. Locked to the clinic: Only clinic Google logins get in, and only the two managers can edit. Pages are sanitized as they render, and a monthly export keeps a full backup.
+What changed: An unusual question: Interrupt a manager -> One search, answered on the call; When someone leaves: Their know-how leaves too -> It stays in the app.
+Quote: "This is highly valuable, both in the short term and long term. It's already saving a lot of time." (Jill Romines, Front Office Manager, Wichita Family Vision)
+Design choice: Row-level security, not app checks: only the two editors can write, whatever the browser sends.
+Architecture: A static PWA reading from Supabase. Row-level security lets everyone read and two named editors write.
+Tests: A no-dependency test suite gates every deploy. Pages sanitized at render.
+Runs on: The front desk tablet and PCs.
+Stack: Supabase, Postgres RLS, Google OAuth, PWA, Vercel, DOMPurify.
+Code: https://github.com/alecstephens3-stack/supabase-team-knowledge-base
+My role: I built it, from the content model to in-app editing.
 
-## Pharmacy lead finder (https://stephensai.co/alec/lead-finder)
-A lead finder for a healthcare accounting firm: one sentence in Claude, and back comes a checked sheet of real compounding pharmacies with the email each one publishes.
-Client: Medari Advisors, a tax and accounting firm for healthcare providers in Pryor, Oklahoma.
-Who uses it: The firm's CEO, in his own Claude; installed and working by 6 Oct 2026.
-Shipped: Delivered 30 Sep 2026. One day, from the call that set the spec to delivery.
-Headline number: 1,046 pharmacies that compound, on the starting lists for Oklahoma, Texas, Kansas and Arkansas, built from the national provider registry with chains, hospitals and specialty companies removed. Basis: Counts on 2026-09-30, one row per phone number: Oklahoma 197, Texas 675, Kansas 99, Arkansas 75.
-Second number: 13 of 13  emails in the first real batch found on the pharmacy's own website, right business and town, by an independent check.
-What was broken: The firm grows its independent pharmacy email list, about 1,400 to 1,500 addresses, state by state, starting with Oklahoma's compounding pharmacies. Every lead meant searching one pharmacy at a time: is it independent, does it compound, is it still open, and what email does it publish?
-What I built: A starting list for each state, built by us from the national provider registry: every active pharmacy registered as compounding, with chains, grocery stores, national infusion companies, hospitals and clinics removed, one row per storefront, and the owner or pharmacist in charge as the contact. A lookup in his own Apify account: one Google Maps search per pharmacy, reading the contact details its website publishes. A match rule in code: a result counts only on a phone match, or a name and town match, so another business's email is never used. A finished sheet: junk, web designer and head office addresses dropped, one email per pharmacy, his existing list deduplicated out, stores with no website kept as a call list with phone numbers, and 5 random rows to spot-check.
-What changed: Finding pharmacies: Searched one at a time -> One sentence in his own Claude; A wrong match: Easy to miss -> Dropped unless the phone, or name and town, match; Checking the result: Trust the list -> 5 random rows to spot-check; Cost per pharmacy: His time -> About half a cent.
+## PTO and payroll system (https://stephensai.co/alec/pto-payroll)
+Staff request time off from a phone, the manager approves in one tap, and payroll prep builds itself every pay period.
+Status: Runs every pay period. Client: Wichita Family Vision. Eye care · operations.
+Result: 60 to 100 hrs/yr of admin time returned, and the paper process gone. Basis: Slip handling, calendar checks and payroll prep.
+How it works: 1. Request on a phone: Staff request time off on one form from any phone, picking dates and a type, partial days included. The green paper slip is gone. 2. One-tap approval: The manager approves or denies with one tap from an email, in the office or anywhere else, with the request's details right there. 3. Calendar updates itself: Approved time off counts weekdays only, follows the clinic's rounding rule, and lands on the attendance sheet and the shared calendar by itself. 4. Payroll report builds: Every pay period, a payroll report builds itself in a dated folder for the bookkeeper. No one prepares it from paper.
+What I built: One form, any phone: Staff pick their dates and a type on one Google Form from any phone, partial days included. The request goes straight to the manager by email. One-tap approval: The manager approves or denies from that email. The script counts weekdays only, rounds to the clinic's rule, checks department conflicts, and writes the attendance sheet and shared calendar. Balances that can't drift: Accrual follows each hire anniversary, and every balance is recalculated from the grid on every change instead of added to, so a manual edit can never throw the totals off. Payroll and new years: A payroll report lands in a dated folder for the bookkeeper every pay period, and next year's records for the whole staff are built with one click from the admin menu.
+What changed: Filing a request: A green paper slip -> A form on any phone; Approving: In the office, on paper -> One tap, from anywhere.
+Quote: "It is already saving me some time, and I am getting information back to the team much quicker." (Gabe Walsh, Office Manager, Wichita Family Vision)
+Design choice: Apps Script over a hosted app: the clinic already pays for Google Workspace, and the data never leaves.
+Architecture: A form trigger into Apps Script: date and accrual math, sheet and calendar writes, a timed payroll builder.
+Tests: A 22-check programmatic suite.
+Runs on: Inside the clinic's own Google Workspace.
+Stack: Apps Script, Google Forms, Sheets, Calendar, clasp, Node.
+Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll
+My role: I built the engine, the migration and the payroll report.
 
-Stack: Claude plugin (command + skill), Python, NPPES NPI Registry API, Apify Google Maps scraper, pytest.
-Architecture: A Claude plugin with one command and one skill. Everything that decides is code: the state lists are built ahead of time from the NPI registry, and the match and finish steps are Python scripts the skill runs. The model only drives the run and talks to him.
-Where it runs: In his own Claude desktop app, with the lookup in his own Apify account. Nothing of ours in the loop.
-Tests: 32 script tests, 10 of them regression tests built from a real Oklahoma run. Anthropic's plugin validator passed on a clean unzip. A fresh agent ran it end to end following only the skill's instructions, and an independent check then confirmed every email it found.
-Cost: About half a cent a pharmacy in Apify, measured; the free $5 a month covers about 900.
-Guardrails: A Google result counts only on a phone match, or a name and town match; otherwise its email is never used. The registry phone is primary and Google's is noted when it differs. Every batch ends with 5 random rows to spot-check.
-Tradeoff: Apify instead of Clay: Apify Starter is $19 a month against $185 for Clay's cheapest paid plan (checked 29 Sep 2026). Apify's people add-on was tested and rejected: about 16 cents a pharmacy, and it matched staff from other businesses.
-My role: I built it, from the call that set the spec to the plugin, the walkthrough video and the first 33 leads.
-Quote: "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working." (Curtis Cole, CEO, Medari Advisors)
+## Our AI operating system (https://stephensai.co/alec/aios)
+The system our company runs on every day. Anything we install for a client runs here first.
+Status: In daily use. Client: Stephens AI. Stephens AI · internal.
+Result: 12 agents each with least-privilege permissions, plus 47 skills.
+What I built: The Bridge: One dashboard over the whole company: a 3D map of every note, both calendars, both inboxes, messages and meetings, and a chat over the knowledge base that can read but never send. Specialist agents: Agents on least-privilege tool lists: reviewers that read like a dentist or an optometrist, research, meeting notes. Reusable skills cover proposals, QA, deploys and reporting. Jobs that run themselves: A daily meeting sweep writes the notes, updates the week's priorities, logs decisions and texts the action items. A weekly health check keeps the knowledge base clean, and every run leaves a log.
+Design choice: Files over a database: every agent and person can read them, all in git.
+Architecture: A markdown vault as the database; agents and skills as files with allow-lists.
+Tests: Tested guard scripts and a weekly vault lint.
+Stack: Claude Code, Claude Code headless, MCP, Python, Three.js.
+Code: https://github.com/alecstephens3-stack/claude-code-operating-system
+Code: https://github.com/alecstephens3-stack/claude-code-voice-mod
+Code: https://github.com/alecstephens3-stack/lens-design-system
+My role: I built all of it.
 
-## AI Lab content + outbound systems (https://stephensai.co/alec/ai-lab)
-An AI education channel run as a system, then an outbound machine built in 3 weeks and instrumented so the data could say no.
-Client: AI Lab, the AI education brand inside iPhone Photography School (a 1M+ audience company, Latvia). Applied AI Engineer (in-house), contract, March to September 2026.
-Who uses it: 2 educators, an operations lead, and a leadership team reading the weekly numbers; members watching the tutorials.
-Shipped: March to September 2026. 6 months, in two phases.
-Headline number: ~10 hrs/wk returned to a two-person content team by an idea-to-published pipeline, a person approving every send. Basis: The team's own estimate of the hours the idea engine, publishing pipeline, newsletter builder and KPI report took off the week.
-Second number: 320 mailboxes on 10 domains, grown from 104 on 2 in 3 weeks, with a rule check on every email before it could send.
-What was broken: Phase one: a channel teaching AI to non-technical adults needed a steady stream of short tutorials, 3 newsletters a week, and weekly numbers, with 2 educators and no production team. Phase two: the company restructured around a B2B arm with a December deadline, inheriting a sending stack from a departing contractor, no lead pipeline, no offer, and no defined buyer.
-What I built: Content: an idea engine with semantic dedup against every video ever made, mandatory research, and a scoring rubric with hard gates; a taste model mined from months of accept and reject decisions that cut the context loaded per run by 79%. Content: a one-command publishing pipeline with a loudness gate at a fixed -14 LUFS, Wistia upload into the right series, tracker write, thumbnail set; a Monday, Wednesday, Friday newsletter builder that stages a verified test send for a human to approve; a weekly KPI report leadership reads. Outbound: sourcing from Google Maps and public registries, Claude research writing one factual opener per business, an automated rule gate on every email, and 2-step plain-text sequences from 320 mailboxes on 10 domains under capacity rules, at about $1 per 30 leads. Offer and ICP: 11 niches scored on 2026 data and cut to one buyer with a kill date; 2 complete three-tier offer chains; a savings calculator; the delivery playbook for a workshop product; a clean two-day wind-down with a full export and a restart guide.
-What changed: Deciding what to film: A gut call and a spreadsheet -> Scored ideas that pass hard gates; Publishing a video: Manual upload, manual tracker -> One command, loudness-gated; Newsletters: Written by hand 3 times a week -> Built, staged, approved by a person; Sending capacity: 2 domains, 104 mailboxes -> 10 domains, 320 mailboxes, warmed; What the data said: Unknown -> 2.2% human replies; the question beat the pitch every A/B; not the channel for this buyer.
-
-Stack: Claude Code, Codex, MCP, Python, Wistia API, Circle, Customer.io, Smartlead, Clay, Apify, Google Workspace, Slack, Kie image API, Whisper.
-Architecture: A shared context layer (voice, rules, trackers, decisions) synced to both Claude Code and Codex, so any agent picks up where the last one stopped. Skills for each job: video ideas, post-video, newsletter build and publish, KPI report, lead enrich, lead check, email capacity. MCP and API connections into Wistia, Circle, the email platform, Google Workspace, and Slack.
-Where it runs: On the educators' machines, with a person pressing start. Sending ran on Smartlead over Microsoft mailboxes; sourcing on Apify and free registries; the KPI report published to a stable link.
-Tests: A rule gate on every cold email (no years, no street names, no clinical language, no 'AI', sign-off matches the inbox), run as a script before any batch. A lint on the KPI report before publish, with a corrections trail when a number was wrong. Every capacity number came from the script, never from memory.
-Cost: About $1 per 30 researched leads. The content pipeline ran on existing subscriptions.
-Guardrails: A human approves every send: newsletters stage a verified test, campaigns stay drafts until a person activates them. Capacity rules (2 emails per inbox, 100 per domain per day, 14-day warm-up) enforced in code. The whole outbound system was wound down in 2 days with a full export and a restart guide.
-Tradeoff: The opinion question beat the direct pitch in every A/B pair, so we stopped pitching. And when the numbers said cold email was not the channel for this buyer, we reported that instead of optimizing the copy again. The system's job was to make that finding checkable.
-My role: I built all of it as the in-house Applied AI Engineer, alongside a second educator on the content side. The sending stack was inherited from a departing contractor and rebuilt.
+## AI Lab content systems (https://stephensai.co/alec/ai-lab)
+AI tutorials for a nine-figure education company, on a pipeline I built.
+Status: Mar to Sep 2026. Client: AI Lab, iPhone Photography School. AI education · content.
+Result: 200+ videos teaching AI to non-technical adults.
+What I built: Idea engine: New video ideas are checked against everything already made, researched first, then scored on a rubric with hard gates, so only strong ideas reach a script. Publishing in one command: Upload into the right Wistia series, a loudness check before members hear it, the tracker updated and the thumbnail set. A newsletter builder stages each send for a person to approve. Across models: I taught Grok on the X API alongside Claude and OpenAI, and built the shared context so Claude Code and Codex worked from the same rules.
 Quote: "You have the double skill set, which is the AI itself plus presenting, and that is more valuable than just the AI." (Emils Pakarklis, Founder, iPhone Photography School)
+Design choice: Models draft, a person publishes.
+Architecture: Shared context files for Claude Code and Codex, feeding scripts, publishing, newsletters and a weekly KPI report.
+Tests: A lint on the KPI report.
+Stack: Claude Code, Codex, MCP, Wistia API, X API.
+My role: I built it as the in-house Applied AI Engineer.
 
 ## Coaching practice AI system (https://stephensai.co/alec/coaching-aios)
-An AI operating system for a one-person coaching practice: 4 custom agents she runs and changes herself, in plain English.
-Client: Workthentic, Taima Ford Beyah's coaching and HR consulting practice in California (named with her OK, 13 Oct 2026).
-Who uses it: The founder, daily, April to July 2026; she owns and edits it herself.
-Shipped: Live May 2026. About 10 weeks, in phases.
-Headline number: 4 custom AI agents built for her practice, inbox triage, scheduling replies, voice-note task capture and meeting notes, all reading one brain document she edits in plain English. Basis: Phase A shipped and live: the Brain Doc plus 4 ClickUp Super Agents (Email Manager, Scheduling, Brain Dump, Maintainer), with meeting notes on a scheduled routine she owns.
-Second number: 115 of 115  stale tasks archived in one sweep, fully reversible, because every agent stamps its work.
-What was broken: A veteran HR leader running her own practice was doing her own inbox triage, scheduling, task capture, meeting notes, and invoice prep by hand. 10 to 12 hours to format one 3-hour workshop. A client had questioned a one-hour line item, and she had no receipts.
-What I built: The brain document: one doc holding her voice, brand rules, client roster, and policies, read by every agent as live knowledge. She changes it by messaging a maintainer agent in plain English. 4 agents inside her project tool: inbox triage that defaults to skip and cites the source message, scheduling that drafts the reply inside the task, voice-note capture that splits and routes, and meeting notes on a scheduled routine she owns. Calendar to invoice: on the first of the month it reads both calendars, parses client and service codes from the events, and writes hours to a color-coded sheet. Receipts, automatically. Every agent stamps its work, so output is always attributable and sweepable. That made a 115-task cleanup safe, reversible, and rehearsed in a sandbox first.
-What changed: Inbox: Read everything herself -> 13 to 15 a day triaged, sources cited; Scheduling replies: Written by hand -> Drafted inside the task; Invoicing proof: None -> Calendar to sheet, monthly; Changing a rule: Re-prompt every tool -> Edit one document.
-
-Stack: Claude, ClickUp Super Agents, ClickUp Brain, n8n (then), Google Calendar, Google Sheets.
-Architecture: No-code agents configured in plain English inside ClickUp, all pointed at one Brain Doc as shared knowledge. A maintainer agent is the only writer to that doc. One integration workflow for calendar to sheet, because that step crosses tools.
-Where it runs: Inside her own ClickUp and Google accounts. She owns every piece; the exit shipped a portable 7-file operating system and a 15-page printed system tour.
-Tests: A regression test per agent after a scope-creep incident, where the maintainer rewrote unrelated sections; instructions hardened with a self-check step. The 115-task sweep was rehearsed in a sandbox before it ran.
-Cost: About $20 a month in tooling.
-Guardrails: Every agent defaults to skip, forces the assignee and a source stamp on every task it creates, and must cite the inbox message it acted on. No agent sends email.
-Tradeoff: Native ClickUp agents instead of a custom stack. Less power, but she can read and change every instruction herself, and there is nothing of ours to maintain. A one-person practice needs a system she owns, not a vendor.
-My role: I built all of it.
-Quote: "I'm so grateful for our time together. I feel like I was in a class… I don't regret one moment of it because I learned so much." (Taima Ford Beyah, Founder, Workthentic)
+AI agents for a one-person coaching practice, all reading one document she edits in plain English.
+Status: Delivered. Client: Workthentic. Coaching · solo founder.
+What I built: One brain document: Her voice, brand rules, client roster and policies live in one doc that every agent reads. She changes it by messaging a maintainer agent in plain English. Agents for the busywork: Inbox triage that cites its source, scheduling replies drafted inside the task, voice notes split and routed, and meeting notes on a routine she owns. Calendar to invoice: On the first of the month it reads both calendars, pulls client and service codes from the events, and writes the hours to a color-coded sheet ready for invoicing.
+Quote: "I'm so grateful for our time together. I feel like I was in a class… I learned so much." (Taima Ford Beyah, Founder, Workthentic)
+Design choice: Native agents, so she can read and change every instruction herself.
+Architecture: No-code agents in her project software, all reading one brain document.
+Tests: Regression tests on the maintainer agent's edit rules.
+Stack: Claude, ClickUp Super Agents, Google Calendar, Google Sheets.
+My role: I built all of it, and she owns every piece.
 
 ## Construction company website (https://stephensai.co/alec/construction-site)
-A Japanese construction company's website, redesigned so every word is readable and their real work leads.
-Client: Kamata Koumuten, a construction company in Miyagi, Japan.
-Who uses it: The company's storefront; its owner and her customers.
-Shipped: Rebuilt May 2026 (live); full redesign built October 2026, with the owner for sign-off. About 3 weeks for the rebuild, then a full redesign.
-Headline number: 1 industry board now referring the work: a regional construction association board member is recommending the site to the whole board. Basis: One board member's active recommendation, off the rebuilt site. No board contract signed.
-Second number: 16px  the smallest text anywhere on the redesign, checked automatically at 4 screen widths; on the old site up to 88% of the text was under 14px.
-What was broken: On the old site, 66% to 88% of the text was under 14px depending on the page, and up to 59% failed basic contrast. The phone homepage ran about 28 screens long, the work was shown as icon cards for a business whose work is visual, and the contact form had never delivered a single inquiry.
-What I built: A redesign in their own language: a slowly moving hero over a finished driveway and gate, the company's history since 1965, what they build, and a numbers band, set in the serif and sans pair the owner already knew. Their real jobs up front: six projects, each with a before and after switch under the photo, and the story of the Tohoku University student rocket team whose engine firing they hosted on their land. Readability enforced in code: nothing under 16px and running text at 17px or more, checked at 4 screen widths before any version is shown. Underneath, from the first rebuild: a one-command deploy that backs up first and health-checks every page, and Google Search Console set up.
-What changed: The smallest text: Up to 88% under 14px -> Nothing under 16px; Reading it on a phone: About 28 screens of homepage -> Built for the phone, large type; Showing the work: Icon cards -> Real jobs with before and after; Google: No Search Console -> Search Console set up; Referrals: None from the site -> An industry board member recommending it.
-
-Stack: HTML, CSS, JavaScript, Noto Serif JP, Noto Sans JP, Vercel previews, lftp deploys, Google Search Console.
-Architecture: A static homepage with a looping hero video, a survey-pole rail that marks the current section on wide screens, and before and after switches on the project photos. It deploys to the client's existing shared PHP host by mirror, with a backup taken first.
-Where it runs: The client's own hosting, with previews on Vercel. Nothing of ours in the loop.
-Tests: A type check fails if any visible text drops under 16px at 1440, 1024, 390 or 360 wide. Every deploy verifies each page returns 200 and the search-console verification file is intact.
-Cost: The client's existing hosting. No new subscriptions.
-Guardrails: Never delete the search-console verification file. Backup before every mirror. The deploy script changes into the directory first, because the mirror tool silently no-ops on paths with spaces.
-Tradeoff: Kept their host and a static site instead of moving them to a builder. The owner's team is not technical, so the cheapest thing to maintain is a folder of HTML they own, plus a small CMS later for the one job they actually do themselves: posting a finished project.
-My role: I built all of it. The hero scene is generated imagery; every project photo is the company's own.
-
-## Curriculum generation system (https://stephensai.co/alec/curriculum-system)
-A test-prep company that keeps producing curriculum without adding staff: about 80% of the manual work handled by AI.
-Client: KiwiOPIC, an English test-prep company in Seoul.
-Who uses it: The curriculum team and thousands of learners preparing for the OPIc speaking test, 2020 to 2024.
-Shipped: 2020 to 2024. 4 years, built while working there.
-Headline number: ~80%  of the manual curriculum work now handled by AI. Basis: Per Alec, confirmed 2026-07-25; the company's own estimate.
-Second number: 95%+  transcription and feedback accuracy on learners' spoken answers.
-What was broken: Every practice question, model answer, and lesson for a computer-delivered oral proficiency interview was written by hand by a small team. I was hired to write that curriculum.
-What I built: Question generation: a pipeline that produces OPIc-style interview questions across the exam's topics and difficulty levels, in the register the test actually uses. Curriculum generation: lesson and test material drafted, formatted, and run through a review cycle, with the model taking the first pass and a human the last. A speaking feedback loop: speech-to-text wired to a language model so learners' spoken answers were transcribed and scored, at 95%+ accuracy. Process automation between drafting and publishing, and the team trained on the new workflows as they were built.
-What changed: Writing questions: By hand, one at a time -> Generated per topic and level, reviewed; Production time: Baseline -> About 40% less; Feedback: A teacher, days later -> Transcribed and scored, 95%+; Headcount: Would have grown -> 200+ curriculum hours shipped without hiring.
-
-Stack: LLM APIs, speech-to-text APIs, prompt pipelines, automated review cycles.
-Architecture: Prompt pipelines per content type, a human-last review cycle, and a transcription-plus-scoring loop for spoken answers.
-Where it runs: Inside the company's own tooling at the time.
-Tests: Model-first, human-last review on every published item; accuracy tracked on the feedback loop.
-Cost: Not recorded.
-Guardrails: A human signed off on every published lesson.
-Tradeoff: Generate the first draft, never the final. The register of the test is narrow enough that a model drafts it well and a teacher's last pass keeps it honest.
-My role: I built it, as the English curriculum specialist who became the AI integration lead.
-
-## The Bridge, our AI operating system (https://stephensai.co/alec/aios)
-The Bridge: the AI operating system our company runs on every day, where every new tool is tested before a client sees it.
-Client: Stephens AI, our own consultancy.
-Who uses it: Me, every day: the operating system since March 2026, the Bridge on top of it since September.
-Shipped: v2 live 2026-03-01. Ongoing.
-Headline number: 10 agents each on a least-privilege tool list, plus 45 reusable skills, kept lean by a monthly audit that retires what stops earning its place.
-Second number: 07:30  every morning: new meeting recordings become pages, priorities, decisions, and a text with the action items.
-What was broken: A consultancy of two generates the same admin any client does: meeting notes, priorities, research, proposals, follow-ups, and a vault of context that goes stale the moment nobody reads it.
-What I built: The Bridge, a dashboard over the whole company: a 3D map of every note, both calendars merged and editable, both inboxes, iMessage and Slack, health data, and Ask Charlie, a chat over the whole knowledge base that can read but never edit or send. Voice dictation in every box. 10 specialist agents, each on a least-privilege tool list (reviewers that read like a dentist, an optometrist or a physical therapist; research; meeting notes), and 45 reusable skills for proposals, research, QA, deploys and reporting. Scheduled jobs: a daily 07:30 meeting sweep that writes the meeting page, updates the week's priorities, logs decisions, and texts the action items; a weekly vault health check. Every run leaves an inspectable log. Doctrine, written down: verify the output, augment rather than replace, understand the why, loop humans in, stay transparent. What stops earning its place gets retired.
-What changed: After a client call: Notes typed up later, or not -> Page, priorities, decisions, text by 07:30; Finding a fact: Grep and memory -> Retrieval search over the vault; A repeated job: Re-explained each time -> A skill with the gotchas encoded; Sending anything: Whatever the model decided -> A human approval step, always.
-
-Stack: Claude Code, Claude Agent SDK, MCP, Python, Three.js, Playwright, Groq Whisper, Fathom, Google Workspace, launchd.
-Architecture: A markdown vault with frontmatter as the database, a generator that rebuilds the index, sub-agents defined as files with tool allow-lists, skills as files with the gotchas at the top, a local dashboard server, and scheduled jobs on the Mac that deliver to iMessage.
-Where it runs: On my Mac, with connectors into Google Workspace, Slack, Fathom, and the clients' tools.
-Tests: A weekly lint over the vault (contradictions, stale facts, orphans), a layout lint on every branded page, and a two-reviewer gate (adversarial fact-check plus a domain reviewer) before anything client-facing ships.
-Cost: One subscription plus about $10 a month of API credits.
-Guardrails: Every agent runs on a least-privilege allow-list. Nothing is sent, deleted, or deployed without a fresh yes. Every scheduled job leaves a trace.
-Tradeoff: Files over a database. A vault of markdown is slower to query than Postgres, but every agent, every human, and every future rebuild can read it, and the whole thing is in git.
+A readable redesign for a Japanese construction company, with an editor so their office can change the site themselves.
+Status: Live since Oct 2026. Client: Kamata Koumuten. Construction · Japan.
+What I built: A redesign in their language: A slow-moving hero over a finished driveway and gate, the company's history, what they build, and the serif and sans type pair the owner already knew. Real jobs up front: Their own projects, each with a before and after switch under the photo, plus the story of the university rocket team whose engine test they hosted on their land. They edit it: Words and photos on every page change in the browser, with undo. Every update deploys with a backup first and a health check on every page.
+What changed: The smallest text: Up to 88% under 14px -> Large and readable.
+Design choice: Our own small editor over a CMS: no licence, no build step.
+Architecture: Static pages on her own host; the editor saves back to the HTML.
+Tests: Editor and attack tests, plus a type-size test at 4 widths.
+Stack: HTML, CSS, JavaScript, PHP, Google Search Console.
 My role: I built all of it.
-Quote: "The Hermes agent… thank you so much. This is sick so far. I set it up… and it freaking set the whole thing up." (Payton Bilodeau, AI educator, AI Lab)
+
+## Pharmacy lead finder (https://stephensai.co/alec/lead-finder)
+One sentence in his own Claude returns a sheet of compounding pharmacies, each with its published email.
+Status: Delivered. Client: Medari Advisors. Healthcare · lead generation.
+What I built: Lists from the registry: A starting list for each state from the national provider registry: every active compounding pharmacy, with chains, grocery stores, hospitals and clinics removed, and the owner or pharmacist in charge as the contact. A lookup in his account: One Google Maps search per pharmacy in his own Apify account, reading the contact details each pharmacy's website publishes. A finished sheet: Junk and head-office addresses dropped, one email per pharmacy, his existing list removed, and stores with no website kept as a call list with phone numbers.
+Quote: "This is great. Thanks for the explainer video, well done! I have installed the plug-in and it's working." (Curtis Cole, CEO, Medari Advisors)
+Design choice: Code accepts an email only on a registry phone or name-and-town match, never a guess.
+Architecture: A Claude plugin; Python scripts decide, the model drives the run.
+Tests: Script tests built from a real run.
+Stack: Claude plugin, Python, NPI Registry API, Apify.
+My role: I built it, from the spec call to the plugin and walkthrough video.
 
 ## Contact
 Email alec@stephensai.co · Call https://calendly.com/alecpstephens/30min · GitHub https://github.com/alecstephens3-stack · LinkedIn https://www.linkedin.com/in/alecpstephens/
+
+Updated 2026-11-08

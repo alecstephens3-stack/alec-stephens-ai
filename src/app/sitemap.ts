@@ -9,10 +9,10 @@ const JP_PAGE_PUBLISHED = new Date("2026-08-31");
 const KR_PAGE_PUBLISHED = new Date("2026-10-12");
 // The home page and its Korean version name each other.
 const HOME_LANGUAGES = { languages: { en: SITE_URL, ko: `${SITE_URL}/kr` } };
-// Every build page was rewritten on 2026-10-04 (nine builds, Putback added).
-const PORTFOLIO_PUBLISHED = new Date("2026-10-04");
-// The /alec index became the bench on 2026-09-23; Putback joined the desk 2026-10-04.
-const BENCH_UPDATED = new Date("2026-10-04");
+// Every build page was rebuilt on 2026-11-08 (v2: the stage window, ten builds, agents added).
+const PORTFOLIO_PUBLISHED = new Date("2026-11-08");
+// The /alec index became the bench on 2026-09-23; its build window was rebuilt 2026-11-08.
+const BENCH_UPDATED = new Date("2026-11-08");
 const LEGAL_PUBLISHED = new Date("2026-09-17");
 // ClaimStride's short landing page, 2026-10-13.
 const CLAIMSTRIDE_PUBLISHED = new Date("2026-10-13");

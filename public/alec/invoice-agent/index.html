@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Invoice processing system · Wichita Family Vision · Alec Stephens</title>
-<meta name="description" content="The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.">
+<title>Invoice processing system · Alec Stephens</title>
+<meta name="description" content="Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.">
 <link rel="canonical" href="https://stephensai.co/alec/invoice-agent">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Invoice processing system · Wichita Family Vision · Alec Stephens">
-<meta property="og:description" content="The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.">
+<meta property="og:title" content="Invoice processing system · Alec Stephens">
+<meta property="og:description" content="Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.">
 <meta property="og:url" content="https://stephensai.co/alec/invoice-agent">
 <meta property="og:image" content="https://stephensai.co/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -1278,7 +1278,7 @@ body { font-family: var(--sai-font-sans); color: var(--pg-ink); background: var(
 body.sai-dark { background: var(--sai-night-fallback); }
 h1, h2, h3, h4 { text-wrap: balance; }
 p { text-wrap: pretty; }
-.sai-page { padding-top: 36px; }
+.sai-page { padding-top: 120px; }
 a { color: inherit; }
 ::selection { background: rgba(220,104,67,0.22); }
 :focus-visible { outline: 2px solid var(--sai-accent); outline-offset: 3px; border-radius: 6px; }
@@ -1323,74 +1323,116 @@ body.sai-dark .shot figcaption, body.sai-dark .cap { color: var(--sai-cream-2); 
 .sai-footer .meta a { color: inherit; }
 </style>
 <style>
-.sai-page { padding-top: 116px; }
-.sai-dock .back { font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; color: var(--pg-ink-2); text-decoration: none; }
+/* The side page for one build (v2, 2026-11-08): the window's story at reading length.
+   Glance header, the animation (poster on phones and for reduced motion), the flow with its
+   screens, what was built, before and after, the quote, the engineering, the code. */
+.sai-dock .back { font-family: var(--sai-font-label); font-size: 14px; font-weight: 600; color: var(--pg-ink-2); text-decoration: none; white-space: nowrap; }
 .sai-dock .back:hover { color: var(--pg-ink); }
 .sai-dock .logo-day, .sai-dock .logo-night { width: 27px; height: 27px; } .sai-dock .logo-day .mark, .sai-dock .logo-night .mark { width: 27px; height: 27px; }
 .sai-dock .mode { padding: 7px 12px; }
-@media (max-width: 720px) { .sai-dock .mode { display: none; } }
-.sai-dock .sai-btn { padding: 9px 16px; font-size: 13.5px; }
-@media (max-width: 720px) { .sai-dock .back { display: none; } }
-#result .sai-display { max-width: 24ch; }
-#result { margin-bottom: 34px; }
-.cs-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 30px; }
-@media (max-width: 640px) { .cs-stats { grid-template-columns: 1fr; } }
-.cs-stats .num { padding: 22px 24px 24px; border-radius: 22px; }
-.anim { margin: 30px auto 0; max-width: 720px; container-type: inline-size; }
-.anim iframe { display: block; width: 100%; aspect-ratio: var(--aw, 720) / var(--ah, 390); border: 0; }
-@container (max-width: 639px) { .anim iframe { aspect-ratio: 358 / 356; } }
-.anim figcaption { margin-top: 12px; text-align: center; font-size: 15px; color: var(--sai-ink-2); }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; margin-top: 30px; align-items: start; }
-@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
-.media { padding: 18px; border-radius: 26px; }
-.media .shot figcaption, .media .cap { padding: 10px 16px 12px; }
-.media .shot { box-shadow: none; border: 1px solid var(--sai-rule-soft); }
-.fig-shot { padding: 18px 20px 8px; overflow-x: auto; }
-.fig-shot svg { width: 100%; min-width: 340px; height: auto; display: block; }
-.media video { display: block; width: 100%; height: auto; border-radius: 14px; background: #000; }
-.facts { padding: 22px 24px 26px; border-radius: 26px; }
-.facts dl { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 12px 0 0; }
-.facts dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 3px; }
-.facts dd { margin: 0; font-size: 15.5px; line-height: 1.5; }
-.sai-widget h3 { margin-top: 0; }
-.eng { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 26px; margin-top: 8px; }
-@media (max-width: 760px) { .eng { grid-template-columns: 1fr; } }
-.eng dt { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); margin: 0 0 4px; }
-.eng dd { margin: 0; font-size: 16px; line-height: 1.5; }
-.eng .wide { grid-column: 1 / -1; }
-.eng .sai-callout { margin: 0; }
-.eng .sai-callout p { margin: 0; }
-@media (max-width: 620px) { .sai-split .row { flex-wrap: wrap; gap: 4px 14px; } .sai-split .row .k { flex: 1 1 100%; } .sai-split .row .v { text-align: left; } }
-.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.sai-dock .sai-btn { padding: 9px 16px; font-size: 13.5px; white-space: nowrap; }
+@media (max-width: 720px) { .sai-dock .mode, .sai-dock nav { display: none; } }
+
+.cs-head { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr); gap: 40px; align-items: center; }
+.cs-head h1 { margin: 14px 0 0; font-size: clamp(36px, 4.4vw, 52px); font-weight: 500; line-height: 1.06; letter-spacing: -0.025em; }
+.cs-head .sai-status { margin-top: 16px; }
+.sai-status .detail:first-child { border-left: 0; }
+.cs-head .sai-lede { margin-top: 16px; font-size: 18px; }
+.cs-figs { display: flex; flex-wrap: wrap; gap: 18px 36px; margin-top: 26px; }
+.cs-fig .n { font-size: clamp(34px, 3.6vw, 44px); font-weight: 500; letter-spacing: -0.025em; line-height: 1.04; color: var(--pg-ink); font-variant-numeric: tabular-nums; }
+.cs-fig.lead .n { color: var(--sai-accent-deep); }
+.cs-fig .n .u { font-size: 0.5em; }
+.cs-fig .l { margin-top: 6px; font-size: 16px; color: var(--pg-ink); max-width: 30ch; }
+.cs-fig .b { margin-top: 4px; font-size: 14.5px; color: var(--pg-ink-2); max-width: 36ch; }
+@media (max-width: 860px) { .cs-head { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+
+/* the product: live scene on fine pointers and wide screens, the still everywhere else */
+.anim { margin: 0; }
+.anim .live { display: none; position: relative; width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 0 0 1px rgba(60,35,20,.08), 0 24px 50px rgba(60,35,20,.16); background: #F5E8DC; }
+.anim .live iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; }
+.anim .still img { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 0 0 1px rgba(60,35,20,.08), 0 24px 50px rgba(60,35,20,.16); }
+.anim.is-live .live { display: block; }
+.anim.is-live .still { display: none; }
+.anim figcaption { margin-top: 12px; font-size: 15px; color: var(--pg-ink-2); }
+.app { background: #FFFEFC; border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(60,35,20,.1), 0 2px 4px rgba(60,35,20,.06), 0 24px 48px rgba(60,35,20,.16); }
+.app > img, .app > picture > img { display: block; width: 100%; height: auto; }
+.crop { position: relative; overflow: hidden; width: 100%; }
+.crop img { position: absolute; max-width: none; height: auto; display: block; }
+.fit { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; background: #FFFEFC; }
+.fit img { display: block; max-width: 100%; max-height: 100%; width: auto; height: 100%; object-fit: contain; }
+
+.cs-sec { margin-top: 84px; }
+.cs-sec > h2 { margin: 0; font-size: clamp(26px, 2.8vw, 34px); font-weight: 500; letter-spacing: -0.02em; }
+.cs-sec > .sub { margin-top: 8px; font-size: 17px; color: var(--pg-ink-2); max-width: 60ch; }
+
+/* the flow: each step beside its screen */
+.steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 34px; }
+.steps li { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 34px; align-items: center; padding-top: 28px; border-top: 1px solid var(--pg-rule); }
+.steps li:first-child { border-top: 0; padding-top: 0; }
+.steps .k { position: relative; }
+.steps h3 { margin: 0; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+.steps p { margin-top: 8px; font-size: 17px; color: var(--pg-ink-2); }
+.steps .frame { padding: 16px; border-radius: 22px; background: radial-gradient(120% 90% at 12% 110%, rgba(220,104,67,.42), transparent 55%), radial-gradient(80% 80% at 70% -10%, rgba(255,247,238,.95), transparent 60%), linear-gradient(180deg, #F5E8DC 0%, #EFCDB6 62%, #E5A98C 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
+@media (max-width: 760px) { .steps li { grid-template-columns: minmax(0, 1fr); gap: 16px; } .steps .frame { padding: 10px; border-radius: 18px; } }
+
+/* what I built: open rows */
+.built { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 40px; border-top: 1px solid var(--sai-rule-strong); }
+.built.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 34px; }
+.built.n1 { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 860px) { .built.n3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .built { grid-template-columns: minmax(0, 1fr); } }
+.built > div { padding: 22px 0; border-bottom: 1px solid var(--pg-rule); }
+.built h3 { margin: 0; font-size: 18.5px; font-weight: 600; }
+.built p { margin-top: 6px; font-size: 17px; color: var(--pg-ink-2); }
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+.gallery figure { margin: 0; }
+.gallery figure.wide { grid-column: 1 / -1; }
+.gallery figcaption { margin-top: 10px; font-size: 14.5px; color: var(--pg-ink-2); }
 @media (max-width: 640px) { .gallery { grid-template-columns: 1fr; } }
-.gallery .shot { box-shadow: 0 10px 28px rgba(112,62,40,0.12); }
-.quote { font-size: clamp(22px, 2.8vw, 30px); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; max-width: 30ch; margin: 8px 0 14px; }
-.quote-who { color: var(--sai-cream-2); font-size: 15.5px; }
-.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-.nextprev { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* before and after */
+.ba { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px 14px; align-items: stretch; }
+.ba .h { font-family: var(--sai-font-label); font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--pg-ink-2); }
+.ba .k { align-self: center; font-weight: 600; font-size: 16.5px; }
+.ba .was, .ba .now { border-radius: 14px; padding: 14px 18px; font-size: 17px; }
+.ba .was { color: var(--pg-ink-2); background: rgba(23,19,16,.035); border: 1px dashed var(--sai-rule-strong); }
+.ba .now { color: var(--pg-ink); background: #fff; border: 1px solid rgba(220,104,67,.22); box-shadow: 0 6px 16px rgba(112,62,40,.08); }
+@media (max-width: 640px) { .ba { grid-template-columns: 1fr 1fr; } .ba .h.first { display: none; } .ba .k { grid-column: 1 / -1; margin-top: 10px; } }
+
+.quote { margin-top: 0; }
+.quote p.q { margin: 10px 0 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; max-width: 32ch; color: var(--sai-cream); }
+.quote p.who { margin-top: 14px; font-size: 15.5px; color: var(--sai-cream-2); }
+
+/* engineering */
+.eng-choice { margin-top: 24px; font-size: clamp(20px, 2.2vw, 25px); font-weight: 500; line-height: 1.4; letter-spacing: -0.01em; max-width: 46ch; }
+.eng { margin: 26px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 34px; border-top: 1px solid var(--sai-rule-strong); }
+.eng > div { padding: 18px 0; border-bottom: 1px solid var(--pg-rule); }
+.eng .wide { grid-column: 1 / -1; }
+.eng dt { font-size: 15px; font-weight: 600; color: var(--pg-ink); }
+.eng dd { margin: 4px 0 0; font-size: 17px; color: var(--pg-ink-2); }
+@media (max-width: 640px) { .eng { grid-template-columns: 1fr; } }
+.stack { margin-top: 22px; }
+.repos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 22px; }
+.repo { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 18px; background: #fff; border: 1px solid var(--sai-rule); box-shadow: 0 8px 22px rgba(112,62,40,.1); color: var(--pg-ink); text-decoration: none; min-width: 0; transition: transform 160ms var(--ease); }
+.repo:hover { transform: translateY(-2px); }
+.repo svg { flex: none; }
+.repo .nm { display: flex; flex-direction: column; min-width: 0; }
+.repo .ow { font-size: 14px; color: var(--pg-ink-2); }
+.repo .rp { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.role { margin-top: 26px; font-size: 17px; color: var(--pg-ink-2); max-width: 64ch; }
+.role b { color: var(--pg-ink); font-weight: 600; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+.nextprev { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
 @media (max-width: 640px) { .nextprev { grid-template-columns: 1fr; } }
-.nextprev a { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: 22px; text-decoration: none; color: var(--pg-ink); transition: transform 160ms var(--ease), box-shadow 160ms var(--ease); }
-.nextprev a:hover { transform: translateY(-3px); box-shadow: 0 18px 44px var(--pg-shadow-strong); }
+.nextprev a { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-radius: 22px; text-decoration: none; color: var(--pg-ink); transition: transform 160ms var(--ease); }
+.nextprev a:hover { transform: translateY(-3px); }
 .nextprev .t { font-size: 17px; font-weight: 600; }
 .nextprev .n { font-size: 14.5px; color: var(--pg-ink-2); }
-body.sai-dark .fig-shot { background: rgba(24,18,14,0.9); } body.sai-dark .fig-shot text { fill: var(--sai-cream); } body.sai-dark .fig-shot text.mute { fill: var(--sai-cream-2); } body.sai-dark .fig-shot rect.frame { stroke: var(--sai-cream); }
-body.sai-dark .facts, body.sai-dark .media, body.sai-dark .num.sai-pane { color: var(--sai-cream); }
-body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { color: var(--sai-cream); }
+body.sai-dark .repo, body.sai-dark .ba .now { background: rgba(255,255,255,.06); color: var(--sai-cream); }
 </style>
 </head>
-<body>
-<!-- SAI:SCENE -->
-<div class="sai-scene">
-  <div class="sai-tint t1"></div>
-  <div class="sai-tint t2"></div>
-  <div class="sai-tint t3"></div>
-  <div class="sai-lens near l1"></div>
-  <div class="sai-lens mid  l2"></div>
-  <div class="sai-lens far  l3"></div>
-  <div class="sai-lens mid  l4"></div>
-  <div class="sai-lens far  l5"></div>
-</div>
-<!-- /SAI:SCENE -->
+<body class="sai-quiet">
 <div class="sai-dock">
   <span class="logo-day">
 <!-- SAI:LOGO -->
@@ -1415,105 +1457,102 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
 <!-- /SAI:LOGO-NIGHT -->
   </span>
   <a class="back" href="/alec">All builds</a>
-  <nav><a class="on" href="#result">RESULT</a><a href="#broken">BROKEN</a><a href="#built">BUILT</a><a href="#changed">CHANGED</a><a href="#how">HOW</a><a href="#next">NEXT</a></nav>
+  <nav><a href="#how">HOW</a><a href="#eng">ENGINEERING</a></nav>
   <button class="mode" type="button" id="modeBtn" aria-pressed="false">Night</button>
-  <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Book a call</a>
+  <a class="sai-btn primary" href="https://calendly.com/alecpstephens/30min">Talk to me</a>
 </div>
 
 <main class="sai-page">
 
-  <section id="result" data-sc-in data-sc-stagger="70">
-    <span class="sai-port"><span class="disc"></span><span class="ptext">Healthcare · optometry · HIPAA · Wichita Family Vision · Live 2026-10-01</span></span>
-    <h1 class="sai-display">Invoice processing for a clinic&#39;s bookkeeper: she never processes an invoice by hand again.</h1>
-    <p class="sai-lede">The bookkeeper used to key every vendor bill into QuickBooks and file every PDF by hand. Now she checks one table and clicks Go: each invoice is read, filed in the right vendor folder and entered in QuickBooks, following the clinic&#39;s vendor rules every time.</p>
-    <div class="cs-stats">
-      <div class="num acc sai-pane">
-        <span class="v">~200<span class="u">hrs/yr</span></span>
-        <span class="l">of keying and filing off the bookkeeper&#39;s desk, at the 50 invoices a week the clinic plans for as it expands</span>
-<span class="basis">50 invoices a week, the volume the clinic plans for as it expands its services, at about 5 minutes each to key the bill into QuickBooks, rename the PDF and file it, over 50 working weeks: about 4 hours a week, about 200 hours a year.</span>      </div>
-      <div class="num sai-pane">
-        <span class="v">0<span class="u">failures</span></span>
-        <span class="l">on every real invoice she has run since go-live, and not one Undo. In our side-by-side test, QuickBooks&#39; own reader got 40% of totals wrong</span>
+  <header class="cs-head" id="top">
+    <div>
+      <span class="sai-port"><span class="disc"></span><span class="ptext">Eye care · bookkeeping · HIPAA</span></span>
+      <h1>Invoice processing system</h1>
+      <span class="sai-status good"><span class="kw">Live</span><span class="detail">since Oct 2026</span></span>
+      <p class="sai-lede">Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.</p>
+      <div class="cs-figs">
+        <div class="cs-fig lead">
+          <p class="n">About 200<span class="u"> hrs/yr</span></p>
+          <p class="l">of keying and filing off the bookkeeper&#39;s desk</p>
+<p class="b">50 invoices a week at about 5 minutes each.</p>        </div>
+        <div class="cs-fig">
+          <p class="n">0<span class="u"> failures</span></p>
+          <p class="l">since go-live, and she has never had to undo a bill</p>
+<p class="b">QuickBooks&#39; own reader got 40% of totals wrong in our test. Ours got every one right.</p>        </div>
       </div>
     </div>
-    <figure class="anim" style="--aw:720;--ah:390"><iframe src="/animations/file-invoices/index.html" title="File Invoices reading three bills: two go into QuickBooks, one waits for the bookkeeper" loading="lazy"></iframe><figcaption>One run: the bills are read and checked, the ready ones go into QuickBooks, and the one that doesn&#39;t add up waits for her. Sample vendors and amounts, screens simplified.</figcaption></figure>
-    <div class="hero-grid">
-      <div class="media sai-pane sai-streak">
-        <figure class="shot">
-          <img src="/alec/img/invoice-agent/01-review-table-v35.webp" srcset="/alec/img/invoice-agent/01-review-table-v35-800.webp 800w, /alec/img/invoice-agent/01-review-table-v35.webp 1600w" sizes="(max-width: 860px) 92vw, 620px" width="1600" height="1200" alt="The review table with eight invented invoices: new file names, vendor folders, dates, amounts, QuickBooks vendor and account dropdowns, and a note per row, including a Select Optical order going in as a card expense" decoding="async">
-          <figcaption>The one table she checks. Invented invoices; nothing moves until Go.</figcaption>
-        </figure>
-      </div>
-      <aside class="facts sai-pane">
-        <span class="lbl">At a glance</span>
-        <dl>
-          <div><dt>Client</dt><dd>Wichita Family Vision, an independent optometry practice in Wichita, Kansas.</dd></div>
-          <div><dt>Who uses it</dt><dd>The clinic&#39;s bookkeeper, since the install on 2026-10-01.</dd></div>
-          <div><dt>Shipped</dt><dd>Live 2026-10-01. About 5 weeks from first scoping to install, including a rebuild onto the QuickBooks API.</dd></div>
-          <div><dt>Stack</dt><dd><ul class="chips"><li>Claude on AWS Bedrock</li><li>Python</li><li>QuickBooks Online Accounting API</li><li>OAuth 2.0</li><li>PyMuPDF</li><li>PyInstaller</li><li>Amazon S3</li><li>CloudWatch</li><li>Ed25519 signed updates</li><li>Windows</li></ul></dd></div>
-<div><dt>Compliance</dt><dd>HIPAA compliant by design. Pages are read by Claude on AWS Bedrock inside the clinic&#39;s own AWS account, under the clinic&#39;s business associate agreement with AWS. Invoices that name a patient go through that same protected path as every other page. QuickBooks only ever receives the vendor, date, invoice number and amount, never the page, and error reports leave out every file name and anything read off a page.</dd></div>          <div><dt>Cost to run</dt><dd>About 1 cent an invoice in the clinic&#39;s AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.</dd></div>
-          <div><dt>My role</dt><dd>I built it: the app, the QuickBooks integration, the self-update system and the tests. My co-founder worked the QuickBooks setup with me and joined the install.</dd></div>
-        </dl>
-      </aside>
+    <div>
+      <figure class="anim" data-anim="file-invoices" data-w="720" data-h="390">
+        <div class="live" style="aspect-ratio: 720 / 390"><iframe data-src="/animations/file-invoices/index.html" title="File Invoices reading three bills: two go into QuickBooks, one waits for the bookkeeper" width="720" height="390"></iframe></div>
+        <picture class="still">
+          <source media="(max-width: 640px)" srcset="/alec/img/invoice-agent/anim-file-invoices-phone.webp">
+          <img src="/alec/img/invoice-agent/anim-file-invoices-desktop.webp" alt="File Invoices reading three bills: two go into QuickBooks, one waits for the bookkeeper" width="1440" height="780" fetchpriority="high">
+        </picture>
+        <figcaption>The odd bill waits for her.</figcaption>
+      </figure>
     </div>
+  </header>
+
+  <section class="cs-sec" id="how" data-sc-in>
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li>
+        <div class="k"><h3>PDF lands in folder</h3><p>A vendor bill lands in her Invoices folder as a PDF or a scan, exactly as it does today. Nothing changes about how bills arrive.</p></div>
+        <div class="frame"><div class="app"><div class="crop" role="img" aria-label="PDF lands in folder" style="aspect-ratio:1.8462"><img src="/alec/img/invoice-agent/01-review-table-v35.webp" srcset="/alec/img/invoice-agent/01-review-table-v35-800.webp 800w, /alec/img/invoice-agent/01-review-table-v35.webp 1600w" sizes="(max-width: 760px) 160vw, 1100px" alt="" loading="lazy" decoding="async" style="width:195.122%;left:-3.659%;top:-48.630%"></div></div></div>
+      </li>
+      <li>
+        <div class="k"><h3>Claude reads it</h3><p>Claude on AWS Bedrock reads each page inside the clinic&#39;s own AWS account, under its BAA. The model only reads; it decides nothing.</p></div>
+        <div class="frame"><div class="app"><img src="/alec/img/invoice-agent/anim-file-invoices-desktop.webp" alt="File Invoices reading three bills: two go into QuickBooks, one waits for the bookkeeper" width="1440" height="780" loading="lazy" decoding="async"></div></div>
+      </li>
+      <li>
+        <div class="k"><h3>Her rules decide</h3><p>Plain code applies her filing rules: statement, invoice and card-paid vendors each go their own way, and possible duplicates come to her first.</p></div>
+        <div class="frame"><div class="app"><div class="crop" role="img" aria-label="Her rules decide" style="aspect-ratio:1.8462"><img src="/alec/img/invoice-agent/01-review-table-v35.webp" srcset="/alec/img/invoice-agent/01-review-table-v35-800.webp 800w, /alec/img/invoice-agent/01-review-table-v35.webp 1600w" sizes="(max-width: 760px) 160vw, 1100px" alt="" loading="lazy" decoding="async" style="width:190.476%;left:-90.476%;top:-43.956%"></div></div></div>
+      </li>
+      <li>
+        <div class="k"><h3>Entered on one click</h3><p>She checks one table and clicks once. Each bill is renamed, filed and entered in QuickBooks, and every run can be undone.</p></div>
+        <div class="frame"><div class="app"><div class="crop" role="img" aria-label="Entered on one click" style="aspect-ratio:1.8462"><img src="/alec/img/invoice-agent/02-result-v35.webp" srcset="/alec/img/invoice-agent/02-result-v35-800.webp 800w, /alec/img/invoice-agent/02-result-v35.webp 1600w" sizes="(max-width: 760px) 160vw, 1100px" alt="" loading="lazy" decoding="async" style="width:111.111%;left:-5.556%;top:-19.231%"></div></div></div>
+      </li>
+    </ol>
   </section>
 
-  <section id="broken" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
-    <span class="sai-port"><span class="disc"></span><span class="ptext">What was broken</span></span>
-    <h3>Before</h3>
-    <p>Every vendor bill arrived as a PDF or a scan. The bookkeeper read each one, typed it into QuickBooks and filed it by hand into one of 184 vendor folders, keeping a set of rules in her head: frame vendors go in by their monthly statement, some lab vendors invoice by invoice, card-paid orders as expenses. The clinic plans for 50 invoices a week as it expands its services, and the owner wanted none of it to depend on one person. Some pages name patients, so ordinary AI tools without a HIPAA agreement were ruled out from the start.</p>
-  </section>
-
-  <section id="built" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
-    <span class="sai-port"><span class="disc"></span><span class="ptext">What I built</span></span>
-    <h3>The build</h3>
-    <ul class="sai-bullets"><li>One review table. Every PDF in the Invoices folder is read and shown on a single page: the new file name, the vendor folder, the date, the amount, the QuickBooks vendor and the expense account, prefilled from how she has coded that vendor over the last 12 months. She fixes anything in place and clicks Go.</li><li>Her rules, in code. Frame vendors go in by statement and their invoices are filed only; lab vendors go in invoice by invoice; card-paid vendors go in as card expenses on the right card, dated the order date. Anything that might already be in QuickBooks is shown to her instead of entered twice, and every run can be undone.</li><li>Straight into QuickBooks through its API. Bills and card expenses are created from our own read, so QuickBooks never re-reads a page. A bill that cannot go in yet waits safely and goes in with one click once she fixes the reason.</li><li>Kept fast as she used it. After her first weeks, launch went from about 2,100 files unpacked to 181, reading runs three invoices at a time, and the bill memo now says what the bill was for.</li><li>Built to be looked after from a distance. Fixes arrive as signed updates that install when she closes the app, and an error report reaches us the moment something goes wrong. When she tells us a vendor rule changed, the next update edits her Filing Rules file and keeps a copy of the old one.</li></ul>
+  <section class="cs-sec" id="built" data-sc-in>
+    <h2>What I built</h2>
+    <div class="built n4">
+<div><h3>One review table</h3><p>Every PDF in the Invoices folder is read and shown on one page: new file name, vendor folder, date, amount, QuickBooks vendor and account, prefilled from 12 months of her own coding.</p></div><div><h3>Her rules, in code</h3><p>Statement vendors, invoice-by-invoice vendors and card-paid vendors each follow her rule. Anything that might already be in QuickBooks is shown to her instead of entered twice.</p></div><div><h3>Straight into QuickBooks</h3><p>Bills and card expenses go in through the QuickBooks API from our own read, so QuickBooks never re-reads a page. A bill that can&#39;t go in yet waits, then goes in with one click.</p></div><div><h3>Looks after itself</h3><p>Signed updates install when she closes the app, every run can be undone, and an error report reaches us the moment something goes wrong. When a vendor rule changes, the update keeps the old rules too.</p></div>    </div>
     <div class="gallery">
-      <figure class="shot"><img src="/alec/img/invoice-agent/02-result-v35.webp" srcset="/alec/img/invoice-agent/02-result-v35-800.webp 800w, /alec/img/invoice-agent/02-result-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="The result page: five entries in QuickBooks, including a card expense, two documents filed but not entered, one file left for her" loading="lazy" decoding="async"><figcaption>After Go: what went into QuickBooks, what was filed only, what still needs her.</figcaption></figure>
-      <figure class="shot"><img src="/alec/img/invoice-agent/03-needs-you-v35.webp" srcset="/alec/img/invoice-agent/03-needs-you-v35-800.webp 800w, /alec/img/invoice-agent/03-needs-you-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="A result page with one bill waiting because the vendor is not in QuickBooks yet" loading="lazy" decoding="async"><figcaption>A bill that can&#39;t go in yet waits, and goes in with one click once she adds the vendor.</figcaption></figure>
+      <figure class=""><div class="app"><img src="/alec/img/invoice-agent/02-result-v35.webp" srcset="/alec/img/invoice-agent/02-result-v35-800.webp 800w, /alec/img/invoice-agent/02-result-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="The result page: entries made in QuickBooks, documents filed only, and one file left for her" loading="lazy" decoding="async"></div><figcaption>After Go.</figcaption></figure>
+      <figure class=""><div class="app"><img src="/alec/img/invoice-agent/03-needs-you-v35.webp" srcset="/alec/img/invoice-agent/03-needs-you-v35-800.webp 800w, /alec/img/invoice-agent/03-needs-you-v35.webp 1600w" sizes="(max-width: 640px) 92vw, 480px" width="1600" height="1200" alt="A result page with one bill waiting because the vendor is not in QuickBooks yet" loading="lazy" decoding="async"></div><figcaption>One bill waiting.</figcaption></figure>
     </div>
+    <div class="ba" role="table" aria-label="Before and after">
+      <span class="h first" role="columnheader"></span><span class="h" role="columnheader">Before</span><span class="h" role="columnheader">After</span>
+<span class="k" role="rowheader">Filing the PDF</span><span class="was" role="cell">Dragged into 1 of 184 folders</span><span class="now" role="cell">Renamed and filed on the same click</span>    </div>
   </section>
 
-  <section id="changed" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
-    <span class="sai-port"><span class="disc"></span><span class="ptext">What changed</span></span>
-    <h3>Before and after</h3>
-    <div class="sai-split">
-      <div class="col before">
-        <div class="col-head"><h4>Before</h4><span class="tag old">By hand</span></div>
-<div class="row"><span class="k">Entering a bill</span><span class="v">Typed by hand from the PDF</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and dragged into 1 of 184 folders</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">In one person&#39;s head</span></div><div class="row"><span class="k">Totals right in a 5-invoice test</span><span class="v">3 with QuickBooks&#39; own reader</span></div><div class="row"><span class="k">Since go-live</span><span class="v">Every bill keyed by hand</span></div>      </div>
-      <span class="sai-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#B4502C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
-      <div class="col after">
-        <div class="col-head"><h4>After</h4><span class="tag new">The system</span></div>
-<div class="row"><span class="k">Entering a bill</span><span class="v">Read, checked in one table, entered on Go</span></div><div class="row"><span class="k">Filing the PDF</span><span class="v">Renamed and filed on the same click</span></div><div class="row"><span class="k">Vendor rules</span><span class="v">Written once, followed every run</span></div><div class="row"><span class="k">Totals right in a 5-invoice test</span><span class="v">All 5</span></div><div class="row"><span class="k">Since go-live</span><span class="v">0 failures, not one Undo</span></div>      </div>
-    </div>
-    <div class="sai-w-note"><strong>Where the numbers come from.</strong> The hours figure is a planning estimate, not a measurement: 50 invoices a week (the volume the clinic plans for as it expands) at about 5 minutes each to key, rename and file by hand, over 50 working weeks. She still checks the table, and the app puts an odd one to her rather than guessing (a possible duplicate, a zero-dollar rewards order). Running cost measured in the clinic&#39;s AWS account: about 1 cent an invoice.</div>
-  </section>
-
-  <section id="how" class="sai-widget sai-pane sai-streak" data-night-widget data-sc-in>
-    <span class="sai-port"><span class="disc"></span><span class="ptext">For engineers</span></span>
-    <h3>How it's built</h3>
-    <dl class="eng">
-      <div class="wide"><dt>Architecture</dt><dd>A one-file Windows app that serves its own page on 127.0.0.1. The model only reads: each PDF goes to Claude Sonnet 4.6 on Bedrock. Everything after the read is deterministic code: vendor matching against her folders and her Filing Rules, which documents become bills, card expenses or nothing, the usual account from 12 months of her QuickBooks history, duplicate checks on vendor, number, date and amount, then bills or card expenses through the QuickBooks Online Accounting API with idempotent requests.</dd></div>
-      <div><dt>Where it runs</dt><dd>On the bookkeeper&#39;s PC against the clinic&#39;s network drive. Reading runs in the clinic&#39;s own AWS account (us-east-1) under its BAA; QuickBooks is reached through OAuth, authorized by a company admin; signed updates come from the clinic&#39;s S3 bucket, and error reports go to its CloudWatch.</dd></div>
-      <div><dt>Tests and evals</dt><dd>40 offline cases against a fake QuickBooks; 25 browser checks on the real page; 22 update and reporting tests; every Windows build swaps itself between two real builds in CI. Before the install, a full code review found 39 verified issues; all were fixed and the fixes reviewed again.</dd></div>
-      <div><dt>Cost and latency</dt><dd>About 1 cent an invoice in the clinic&#39;s AWS account, measured from its Bedrock usage: a few dollars a month at 50 invoices a week.</dd></div>
-      <div><dt>Guardrails</dt><dd>Nothing moves until she clicks Go. Undo moves the files back first, then removes only those bills, never a paid one. A possible duplicate is put to her, never entered or skipped silently. Updates are signed and only swap in when she closes the app, so a running session is never disturbed. Testing runs on invented invoices on our own account, never on the clinic&#39;s.</dd></div>
-      <div class="wide"><dt>The tradeoff we chose</dt><dd><div class="sai-callout"><div class="cap">Why this way and not the other</div><p>QuickBooks can read bills itself, and version 2 used that: on her real invoices it got 2 of 5 totals wrong, reading a discount as a charge and a unit price as the total. Version 3 keeps the reading in our model and writes the entry through the API with her rules in code. Claude Team and Cowork were the easier surface, but neither carries a BAA, so the reader moved to Bedrock in the clinic&#39;s own account.</p></div></dd></div>
-    </dl>
-  </section>
-
-  <section class="sai-night" data-sc-in>
+  <section class="sai-night cs-sec quote" data-sc-in>
     <span class="sai-ember"></span>
     <span class="sai-port on-night"><span class="disc"></span><span class="ptext">In their words</span></span>
-    <p class="quote">“I think that&#39;s very simple and effective… I don&#39;t have to enter [them]. I just have to go back in and pay [them] when it&#39;s an appropriate time to pay [them].”</p>
-    <p class="quote-who">Mary Tangney, Bookkeeper, Wichita Family Vision</p>
+    <p class="q">“I think that&#39;s very simple and effective… I don&#39;t have to enter [them].”</p>
+    <p class="who">Mary Tangney, Bookkeeper, Wichita Family Vision</p>
   </section>
 
-  <section id="next" class="sai-widget sai-pane" data-night-widget data-sc-in>
-    <span class="sai-port"><span class="disc"></span><span class="ptext">Keep going</span></span>
+  <section class="cs-sec" id="eng" data-sc-in>
+    <h2>Engineering</h2>
+    <p class="eng-choice">The model only extracts fields. Matching, accounts, duplicate checks and filing are plain code from her rules, so the same bill always lands the same way.</p>
+    <dl class="eng">
+      <div class="wide"><dt>How it fits together</dt><dd>A one-file Windows app. Claude on Bedrock only reads each PDF; deterministic code does the rest, through to the QuickBooks API.</dd></div>
+      <div><dt>Tested</dt><dd>40 offline QuickBooks cases and 25 browser checks.</dd></div>
+<div><dt>Cost to run</dt><dd>About 1 cent an invoice.</dd></div><div><dt>Runs on</dt><dd>Her PC and the clinic&#39;s AWS account.</dd></div>    </dl>
+    <ul class="chips stack"><li>Claude on AWS Bedrock</li><li>Python</li><li>QuickBooks Online API</li><li>PyMuPDF</li><li>CloudWatch</li></ul>
+    <div class="repos">
+      <a class="repo" href="https://github.com/alecstephens3-stack/bill-intake"><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="nm"><span class="ow">alecstephens3-stack /</span><span class="rp">bill-intake</span></span></a>
+    </div>
+    <p class="role"><b>My role.</b> I built the app and its QuickBooks integration.</p>
+  </section>
+
+  <section class="cs-sec" id="next" data-sc-in>
     <div class="nextprev">
-      <a class="sai-pane" href="/alec/pto-payroll"><span class="n">Previous build</span><span class="t">PTO + payroll system</span><span class="n">60 to 100 hrs/yr · of paper-slip admin gone, and next year set up with one click</span></a>
-      <a class="sai-pane" href="/alec/claimstride"><span class="n">Next build</span><span class="t">ClaimStride, insurance claims software</span><span class="n">1,140 claims · read from a biller&#39;s real report, and the unpaid ones checked with their insurers in minutes</span></a>
+      <a class="sai-pane" href="/alec/agents"><span class="n">Previous build</span><span class="t">Computer-use agents</span><span class="n">Passing practice runs</span></a>
+      <a class="sai-pane" href="/alec/knowledge-base"><span class="n">Next build</span><span class="t">Front desk knowledge base</span><span class="n">Live since Aug 2026</span></a>
     </div>
     <div class="links"><a class="sai-btn ghost" href="/alec">All 10 builds</a><a class="sai-btn ghost" href="mailto:alec@stephensai.co">Email Alec</a></div>
   </section>
@@ -1544,7 +1583,7 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
       </span>
       <span class="word">Stephens AI</span>
     </span>
-    <span class="meta"><a href="/">stephensai.co</a> · <a href="/alec">Alec's builds</a> · Updated 2026-10-04</span>
+    <span class="meta"><a href="/">stephensai.co</a> · <a href="/alec">Alec's builds</a> · Updated 2026-11-08</span>
   </footer>
 </main>
 <script src="/alec/scrollcraft.js"></script>
@@ -1566,6 +1605,22 @@ body.sai-dark .sai-widget h3, body.sai-dark .facts dd, body.sai-dark .eng dd { c
   }
   applyMode(readMode(), false);
   if (btn) btn.addEventListener('click', function () { applyMode(body.classList.contains('sai-dark') ? 'day' : 'night', true); });
+})();
+</script>
+<script>
+/* The live scene runs only where it reads well: a fine pointer, a wide screen, motion allowed.
+   Everyone else keeps the still. The scene draws at its own size and is scaled to the box. */
+(function () {
+  var q = '(min-width: 641px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+  if (!window.matchMedia || !matchMedia(q).matches) return;
+  document.querySelectorAll('.anim[data-anim]').forEach(function (fig) {
+    var box = fig.querySelector('.live'), f = box.querySelector('iframe'), w = +fig.dataset.w, h = +fig.dataset.h;
+    f.style.width = w + 'px'; f.style.height = h + 'px';
+    fig.classList.add('is-live');
+    var fit = function () { f.style.transform = 'scale(' + box.clientWidth / w + ')'; };
+    fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(box);
+    f.src = f.dataset.src;
+  });
 })();
 </script>
 <!-- SAI:JS -->

@@ -1,7 +1,7 @@
 /*
  * bench-items.js · the objects on "Alec's bench" (stephensai.co/alec).
  * Alec's workbench seen from above, on the same desk engine and lens as /desk and /play.
- * Each object is an artifact from one of his ten builds (cases.yaml); clicking it opens
+ * Each object is an artifact from one of his builds (cases.yaml); clicking it opens
  * that build. `id` and `tool` are both the build's slug, `verb` is its short name.
  *
  * Plain ES module, no imports. Everything is painted through the painters the desk
@@ -26,7 +26,7 @@ const POSES = {
   'ai-lab':            { wide: { m: [326, 130, 8], t: [322, 126, 0] },   tall: { m: [285, 121, 2], t: [284, 118, 0] } },
   'coaching-aios':     { wide: { m: [486, 120, -5], t: [482, 114, 0] },  tall: { m: [113, 244, -2], t: [112, 240, 0] } },
   'aios':              { wide: { m: [680, 114, 9], t: [676, 108, 0] },   tall: { m: [265, 253, 3], t: [266, 250, 0] } },
-  'curriculum-system': { wide: { m: [676, 358, -7], t: [672, 352, 0] },  tall: { m: [273, 380, 92], t: [274, 378, 90] } },
+  agents:              { wide: { m: [676, 358, -7], t: [672, 352, 0] },  tall: { m: [273, 380, 92], t: [274, 378, 90] } },
   'construction-site': { wide: { m: [500, 368, 6], t: [496, 362, 0] },   tall: { m: [119, 381, 2], t: [118, 378, 0] } },
   'invoice-agent':     { wide: { m: [306, 386, -9], t: [312, 382, 0] },  tall: { m: [255, 512, -1], t: [254, 510, 0] } },
   'pto-payroll':       { wide: { m: [140, 370, 7], t: [134, 364, 0] },   tall: { m: [105, 506, 2], t: [104, 504, 0] } },
@@ -38,8 +38,8 @@ const POSES = {
 
 /* the idle lens visits the tidy centre of each build, in a loop around the desk */
 const TOUR = {
-  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'curriculum-system', 'construction-site', 'invoice-agent', 'pto-payroll', 'lead-finder', 'claimstride'],
-  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'curriculum-system', 'invoice-agent', 'pto-payroll', 'claimstride', 'lead-finder'],
+  wide: ['knowledge-base', 'ai-lab', 'coaching-aios', 'aios', 'agents', 'construction-site', 'invoice-agent', 'pto-payroll', 'lead-finder', 'claimstride'],
+  tall: ['knowledge-base', 'ai-lab', 'aios', 'coaching-aios', 'construction-site', 'agents', 'invoice-agent', 'pto-payroll', 'claimstride', 'lead-finder'],
 };
 export const BENCH_STOPS = {
   wide: TOUR.wide.map(id => POSES[id].wide.t.slice(0, 2)),
@@ -728,91 +728,50 @@ export function buildBenchItems(P) {
     },
   });
 
-  /* ===================================================== 7 curriculum system */
-  /* the OPIc textbook, earbuds on it, a pencilled bookmark in its pages */
-  const BK = { x: 0, y: 1, w: 124, h: 98 };
+  /* ========================================================= 7 computer-use agents */
+  /* the chart sign-off queue: a manila folder, the printed queue on it, three charts ticked
+     and the agent's pointer resting on the next one. Made-up practice, no names. */
   items.push({
-    id: 'curriculum-system', tool: 'curriculum-system', name: 'Textbook', verb: 'Curriculum system',
-    w: 146, h: 100, shadow: 1.8, ...POSES['curriculum-system'],
+    id: 'agents', tool: 'agents', name: 'Sign-off queue', verb: 'Computer-use agents',
+    w: 146, h: 100, shadow: 1.8, ...POSES['agents'],
     draw(ctx, F) {
-      const { x, y, w: bw, h: bh } = BK;
-      // the bookmark, standing out of the fore-edge
-      ctx.save(); rr(ctx, bw - 14, 58, 34, 14, 0.8); ctx.fillStyle = '#D9C39E'; ctx.fill();
-      const bg = ctx.createLinearGradient(0, 58, 0, 72); bg.addColorStop(0, 'rgba(255,255,255,0.3)'); bg.addColorStop(1, 'rgba(90,60,30,0.14)');
-      ctx.fillStyle = bg; ctx.fill(); ctx.restore();
-      // the page block, a hair of it showing past the cover on the fore-edge and the foot
-      ctx.save(); ctx.translate(x, y);
-      rr(ctx, 2, 2, bw - 0.5, bh - 0.5, 2); ctx.fillStyle = '#EDE6D6'; ctx.fill();
-      ctx.strokeStyle = 'rgba(120,100,76,0.25)'; ctx.lineWidth = 0.3;
-      for (let k = 0; k < 4; k++) { ctx.beginPath(); ctx.moveTo(bw + 0.6 - k * 0.4, 6); ctx.lineTo(bw + 0.6 - k * 0.4, bh - 2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(6, bh + 0.6 - k * 0.4); ctx.lineTo(bw - 2, bh + 0.6 - k * 0.4); ctx.stroke(); }
-      // the cover
-      const cover = () => poly(ctx, [[0, 0], [bw - 2, 0], [bw - 2, bh - 7], [bw - 8, bh - 2], [0, bh - 2]], [2, 2.5, 3, 3, 2]);
-      cover(); ctx.fillStyle = '#F0E7D4'; ctx.fill();
-      ctx.save(); cover(); ctx.clip();
-      light(ctx, 0, 0, bw, bh, 0.34, 0.14);
-      ctx.fillStyle = '#2F6368'; ctx.fillRect(0, 0, bw, 24);
-      const band = ctx.createLinearGradient(0, 0, 0, 24); band.addColorStop(0, 'rgba(255,255,255,0.14)'); band.addColorStop(1, 'rgba(0,0,0,0.12)');
-      ctx.fillStyle = band; ctx.fillRect(0, 0, bw, 24);
-      print(ctx, F, 'OPIc ENGLISH', 16, 14.8, 5.6, { label: true, weight: 700, color: '#F3EDE0', track: '1.8px' });
-      // a speech bubble, the book's one graphic
-      ctx.save(); ctx.strokeStyle = 'rgba(243,237,224,0.9)'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.ellipse(bw - 20, 11.5, 7.4, 5.6, 0, 0.5, Math.PI * 2 + 0.2); ctx.lineTo(bw - 12, 19); ctx.closePath(); ctx.stroke();
-      [-3, 0, 3].forEach(d => { ctx.beginPath(); ctx.arc(bw - 20 + d, 11.5, 0.8, 0, 7); ctx.fillStyle = 'rgba(243,237,224,0.9)'; ctx.fill(); });
+      // the folder: back cover with its tab, a hair of the front cover's edge below the sheet
+      ctx.save();
+      poly(ctx, [[0, 10], [0, 98], [140, 98], [140, 10], [52, 10], [47, 2], [6, 2], [2, 10]], [3, 3, 3, 3, 1.5, 2, 2, 1.5]);
+      ctx.fillStyle = '#DDBF86'; ctx.fill();
+      ctx.save(); ctx.clip(); light(ctx, 0, 0, 140, 100, 0.3, 0.12); ctx.restore();
+      ctx.strokeStyle = 'rgba(110,80,40,0.28)'; ctx.lineWidth = 0.5; ctx.stroke();
+      print(ctx, F, 'SIGN-OFF', 10, 8.2, 4.4, { label: true, weight: 700, color: 'rgba(60,40,20,0.7)', track: '1px' });
       ctx.restore();
-      print(ctx, F, '오픽 영어', 16, 44, 15, { weight: 700, color: INK });
-      print(ctx, F, 'Speaking practice  ·  IM to AL', 16, 53.5, 4.8, { color: 'rgba(23,19,16,0.6)' });
-      ctx.fillStyle = ACCENT; ctx.fillRect(16, 58, 14, 1.2);
-      ctx.fillStyle = 'rgba(23,19,16,0.25)'; ctx.fillRect(16, 84, bw - 32, 0.5);
-      print(ctx, F, 'KiwiOPIC', 16, 91.5, 5, { label: true, weight: 700, color: 'rgba(23,19,16,0.72)', track: '1px' });
-      print(ctx, F, 'Seoul', bw - 16, 91.5, 4.2, { align: 'right', color: 'rgba(23,19,16,0.45)' });
-      // the spine hinge, and scuffs from a backpack
-      crease(ctx, 8.5, 0, 8.5, bh - 2, { dark: 0.28, light: 0.7, w: 0.8 });
-      const sr = mulberry(1701); ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineCap = 'round';
-      for (let i = 0; i < 10; i++) { const sx = 14 + sr() * (bw - 24), sy = 26 + sr() * 60; ctx.lineWidth = 0.3 + sr() * 0.4; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + 3 + sr() * 7, sy + (sr() - 0.5) * 2); ctx.stroke(); }
+      // the printed queue, laid a little crooked on the folder
+      ctx.save(); ctx.translate(14, 15); ctx.rotate(-0.02);
+      drop(ctx, 2.2, 0.6, 1.2, 0.28); rr(ctx, 0, 0, 116, 78, 1.2); ctx.fillStyle = '#FBF8F1'; ctx.fill(); noDrop(ctx);
+      print(ctx, F, 'Chart sign-off queue', 8, 10, 6, { weight: 600, color: INK });
+      print(ctx, F, 'Practice copy', 108, 10, 4.2, { align: 'right', color: 'rgba(23,19,16,0.5)' });
+      ctx.fillStyle = 'rgba(23,19,16,0.16)'; ctx.fillRect(8, 14, 100, 0.5);
+      for (let r = 0; r < 5; r++) {
+        const y = 22 + r * 11;
+        ctx.strokeStyle = 'rgba(23,19,16,0.45)'; ctx.lineWidth = 0.6; rr(ctx, 8, y - 3.6, 5, 5, 0.8); ctx.stroke();
+        if (r < 3) {
+          ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.1; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+          ctx.beginPath(); ctx.moveTo(9.1, y - 1.2); ctx.lineTo(10.4, y + 0.3); ctx.lineTo(12.6, y - 2.6); ctx.stroke();
+        }
+        ctx.fillStyle = r < 3 ? 'rgba(23,19,16,0.22)' : 'rgba(23,19,16,0.4)';
+        ctx.fillRect(18, y - 1.8, 30 + ((r * 13) % 17), 1.4);
+        ctx.fillRect(70, y - 1.8, 16 + ((r * 7) % 9), 1.4);
+        if (r < 4) { ctx.fillStyle = 'rgba(23,19,16,0.08)'; ctx.fillRect(8, y + 4.6, 100, 0.4); }
+      }
+      // the agent's pointer, resting on the fourth chart
+      ctx.save(); ctx.translate(60, 52); ctx.rotate(-0.12);
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 13); ctx.lineTo(3.2, 10); ctx.lineTo(5.6, 15); ctx.lineTo(7.6, 14); ctx.lineTo(5.2, 9.2); ctx.lineTo(9.4, 9); ctx.closePath();
+      drop(ctx, 1.2, 0.4, 0.8, 0.35); ctx.fillStyle = INK; ctx.fill(); noDrop(ctx);
+      ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 0.9; ctx.lineJoin = 'round'; ctx.stroke();
       ctx.restore();
-      // the bumped corner at the foot, folded back and gone pale
-      ctx.save(); ctx.beginPath(); ctx.moveTo(bw - 2, bh - 7); ctx.lineTo(bw - 8, bh - 2); ctx.lineTo(bw - 7.2, bh - 6.2); ctx.closePath();
-      ctx.fillStyle = '#F8F2E6'; drop(ctx, 1.6, -0.5, -0.5, 0.3); ctx.fill(); ctx.restore();
-      cover(); ctx.strokeStyle = 'rgba(80,60,40,0.2)'; ctx.lineWidth = 0.5; ctx.stroke();
       ctx.restore();
-
-      // wired earbuds, dropped on the cover
-      const cable = (pts, wd = 1.1) => {
-        ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        const path = () => { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i += 3) ctx.bezierCurveTo(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], pts[i + 2][0], pts[i + 2][1]); };
-        path(); drop(ctx, 1.4, 0.6, 1, 0.35); ctx.strokeStyle = '#D8D5CF'; ctx.lineWidth = wd; ctx.stroke(); noDrop(ctx);
-        path(); ctx.strokeStyle = 'rgba(255,255,255,0.85)'; ctx.lineWidth = wd * 0.4; ctx.stroke();
-        ctx.restore();
-      };
-      const Y = [74, 78];
-      cable([[86, 64], [84, 70], [78, 72], Y]);
-      cable([[103, 72], [96, 76], [84, 74], Y]);
-      cable([Y, [68, 86], [58, 78], [50, 73]], 1.2);
-      rr(ctx, Y[0] - 1.6, Y[1] - 2.4, 3.2, 4.8, 1.2); ctx.fillStyle = '#E6E3DD'; ctx.fill();   // the splitter
-      // the jack, lying where the cable ends
-      ctx.save(); ctx.translate(50, 73); ctx.rotate(Math.PI * 1.03);
-      drop(ctx, 1.4, 0.6, 1, 0.35); rr(ctx, 0, -1.6, 7, 3.2, 1); ctx.fillStyle = '#E4E1DB'; ctx.fill(); noDrop(ctx);
-      rr(ctx, 7, -0.7, 5, 1.4, 0.6); ctx.fillStyle = steel(ctx, 0, -0.7, 0, 0.7); ctx.fill();
-      ctx.fillStyle = 'rgba(40,36,32,0.6)'; ctx.fillRect(9.2, -0.7, 0.4, 1.4); ctx.fillRect(10.6, -0.7, 0.4, 1.4);
-      ctx.restore();
-      const bud = (cx, cy, rot) => {
-        ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
-        ctx.save(); drop(ctx, 2, 0.8, 1.4, 0.4); rr(ctx, -1.6, 2, 3.2, 10, 1.4); ctx.fillStyle = '#ECEAE5'; ctx.fill(); ctx.restore();
-        ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 4.6, 0, 7); drop(ctx, 2.2, 0.8, 1.4, 0.45); ctx.fillStyle = '#EFEDE8'; ctx.fill(); ctx.restore();
-        const hg = ctx.createRadialGradient(-1.6, -1.8, 0.3, 0, 0, 4.8);
-        hg.addColorStop(0, '#FFFFFF'); hg.addColorStop(0.6, '#E9E6E0'); hg.addColorStop(1, '#B9B4AB');
-        ctx.beginPath(); ctx.arc(0, 0, 4.6, 0, 7); ctx.fillStyle = hg; ctx.fill();
-        ctx.beginPath(); ctx.ellipse(0.8, -0.6, 1.8, 1.4, 0.4, 0, 7); ctx.fillStyle = 'rgba(60,56,52,0.55)'; ctx.fill();   // the grille
-        ctx.fillStyle = steel(ctx, 0, 11, 0, 12.6); ctx.fillRect(-1.3, 11.2, 2.6, 1.2);
-        ctx.restore();
-      };
-      bud(88, 51, 0.15); bud(106, 60, -0.35);
       grainAtop(ctx, this.w, this.h, 0.06);
     },
     ink(ctx, m, F) {
-      script(ctx, [{ text: 'p.48', x: 127, y: 68.2, size: 7.2, tilt: -0.05 }], m, { font: F.hand, color: GRAPHITE, seed: 1711 });
-      wobble(ctx, [[139.5, 61], [139.8, 66.5]], m, 1712, { color: GRAPHITE, width: 0.6, alpha: 0.7 });
-      wobble(ctx, [[141.5, 61.2], [141.8, 66.3]], m, 1713, { color: GRAPHITE, width: 0.6, alpha: 0.7 });
+      script(ctx, [{ text: 'leave the odd ones', x: 70, y: 96, size: 6.4, tilt: -0.04 }], m, { font: F.hand, color: GRAPHITE, seed: 1721 });
     },
   });
 

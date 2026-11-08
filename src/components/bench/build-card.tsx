@@ -2,290 +2,429 @@
 
 import "./build-card.css";
 
-import Link from "next/link";
-import { useId, useRef, useState } from "react";
-import { BracketStamp, BubbleList } from "@/components/ui/lens-primitives";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { SITE, type BuildCase } from "./cases";
+import { SITE, type BuildCase, type FlowStep, type Img, type Result } from "./cases";
 
 /**
- * The window for one build on Alec's bench. It replaces the two-sided card of
- * the old /alec page: "The build" is the business side (the number, the
- * screenshot, what was broken, what I built, what changed), "The engineering"
- * is the back of the card. Every word comes from cases.yaml via cases.ts.
+ * The window a build opens in on Alec's bench: "the stage turns" (V2, Alec's pick, 8 Nov 2026).
  *
- * It renders inside DeskWindow, which owns the glass pane, the close button
- * and the scroll. Layout answers to the window's width (container queries),
- * so it reads the same in a 760px pane and on a 340px phone.
+ * The first view is a glance, about 40 to 60 words: the name, the status, one line, the lead
+ * number, and the product on a framed stage. Under the words, a short menu. Each entry turns the
+ * stage into that view in place (the flow step by step with its screens, what changed, their
+ * words, the engineering) while the stage keeps its size. A highlight glides to the chosen entry.
+ *
+ * Every word comes from cases.yaml through cases.ts. It renders inside DeskWindow, which owns the
+ * glass pane, the close button and the scroll.
  */
-export function BuildCard({ c }: { c: BuildCase }) {
-  const [side, setSide] = useState<"build" | "eng">("build");
-  const uid = useId();
-  const rootRef = useRef<HTMLElement>(null);
-  const titleId = `${uid}-title`;
-  const panelId = `${uid}-panel`;
 
-  const flip = (next: "build" | "eng") => {
-    if (next === side) return;
-    setSide(next);
-    // Keep the switch in view: if the reader flipped from further down, bring
-    // the top of the new side back up inside the window's own scroll.
-    const sw = rootRef.current?.querySelector<HTMLElement>(".bc-switch");
-    if (!sw) return;
-    const scroller = sw.closest(".dw-scroll");
-    const top = scroller ? scroller.getBoundingClientRect().top : 0;
-    if (sw.getBoundingClientRect().top < top) sw.scrollIntoView({ block: "start" });
+type ViewId = "see" | "how" | "changed" | "words" | "eng";
+
+function menuFor(c: BuildCase): { id: ViewId; label: string }[] {
+  const m: { id: ViewId; label: string }[] = [{ id: "see", label: c.media.animation ? "See it working" : "See it" }];
+  if (c.flow.length) m.push({ id: "how", label: "How it works" });
+  const changed = c.before_after.length > 0 || c.results.length > 1;
+  if (changed || c.built.length) m.push({ id: "changed", label: changed ? "What changed" : "What I built" });
+  if (c.quote) m.push({ id: "words", label: "In their words" });
+  m.push({ id: "eng", label: "Engineering" });
+  return m;
+}
+
+/** The live scene only where it reads well: a fine pointer, a wide screen, motion allowed. */
+const LIVE_Q = "(min-width: 641px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+function useMedia(q: string) {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(q);
+    const sync = () => setOn(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, [q]);
+  return on;
+}
+
+export function BuildCard({ c }: { c: BuildCase }) {
+  const menu = menuFor(c);
+  const [view, setView] = useState<ViewId>("see");
+  const idx = Math.max(0, menu.findIndex((m) => m.id === view));
+  const a = c.media.animation;
+  const ratio = a ? a.w / a.h : c.media.hero.w / c.media.hero.h;
+  const lead = c.results[0];
+  const stageRef = useRef<HTMLDivElement>(null);
+  const viewRef = useRef<HTMLDivElement>(null);
+  // A sheet longer than the stage scrolls inside it; mark it so its foot fades instead of cutting text.
+  useEffect(() => {
+    const el = viewRef.current?.firstElementChild as HTMLElement | null;
+    if (!el) return;
+    const check = () => {
+      el.classList.remove("is-overflow");
+      if (el.scrollHeight > el.clientHeight + 2) el.classList.add("is-overflow");
+    };
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [view]);
+  const pick = (id: ViewId) => {
+    setView(id);
+    // On a phone the menu sits under the stage: bring the stage back into view so the tap shows something.
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // Land on the lead number when there is one, so its line is never cut under the close button.
+      const target = (stageRef.current?.parentElement?.querySelector(".bc-lead") as HTMLElement | null) ?? stageRef.current;
+      requestAnimationFrame(() => target?.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" }));
+    }
   };
 
   return (
-    <article className="bc" aria-labelledby={titleId} ref={rootRef}>
-      <header className="bc-head">
-        <BracketStamp>{c.kicker}</BracketStamp>
-        <h2 id={titleId} className="t-title bc-title">
-          {c.title}
-        </h2>
-        <p className="bc-meta">
-          <span>{c.client_short}</span>
-          <span aria-hidden="true"> · </span>
-          <span>{c.shipped}</span>
-          <span aria-hidden="true"> · </span>
-          <span>{c.duration}</span>
-        </p>
-      </header>
+    <article
+      className={cn("bc", view !== "see" && "is-tall")}
+      aria-labelledby={`bc-${c.slug}`}
+      style={{ ["--i" as string]: idx, ["--ratio" as string]: ratio }}
+    >
+      <div className="bc-words">
+        <h2 id={`bc-${c.slug}`} className="bc-name">{c.name.replace(/-/g, "\u2011")}</h2>
+        <StatusChip status={c.status} />
+        <p className="bc-line">{c.line}</p>
+        {lead ? <Figure r={lead} lead basis={false} className="bc-lead" /> : null}
 
-      <div className="bc-switch" role="group" aria-label="Which side of this build">
-        <button
-          type="button"
-          className={cn("bc-seg", side === "build" && "is-on")}
-          aria-pressed={side === "build"}
-          aria-controls={panelId}
-          onClick={() => flip("build")}
-        >
-          The build
-        </button>
-        <button
-          type="button"
-          className={cn("bc-seg", side === "eng" && "is-on")}
-          aria-pressed={side === "eng"}
-          aria-controls={panelId}
-          onClick={() => flip("eng")}
-        >
-          The engineering
-        </button>
+        <nav className="bc-menu" aria-label={`More about ${c.name}`}>
+          <span className="bc-menu-glide" aria-hidden="true" />
+          {menu.map((m) => (
+            <button key={m.id} type="button" aria-pressed={view === m.id} className={cn(view === m.id && "on")} onClick={() => pick(m.id)}>
+              <span>{m.label}</span>
+              <Chevron />
+            </button>
+          ))}
+        </nav>
+        <a className="bc-page" href={`/alec/${c.slug}`}>
+          Full page
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M5 11l6-6M6 5h5v5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
       </div>
 
-      <div id={panelId} className="bc-side" key={side}>
-        {side === "build" ? <BuildSide c={c} /> : <EngineeringSide c={c} />}
-      </div>
-
-      <footer className="bc-foot">
-        <p className="bc-role">
-          <b>My role.</b> {c.attribution}
-        </p>
-        <div className="bc-acts">
-          <Link className="sai-btn primary" href={`/alec/${c.slug}`}>
-            Open the full page
-          </Link>
-          <a className="sai-btn ghost" href={SITE.calendly} target="_blank" rel="noopener noreferrer">
-            Talk to me
-          </a>
+      <div className="bc-stage" ref={stageRef}>
+        <div className="bc-frame" aria-live="polite">
+          <div className="bc-view" key={view} ref={viewRef}>
+            {view === "see" ? <See c={c} /> : null}
+            {view === "how" ? <Steps c={c} ratio={ratio} /> : null}
+            {view === "changed" ? <Changed c={c} /> : null}
+            {view === "words" ? <Words c={c} /> : null}
+            {view === "eng" ? <Eng c={c} /> : null}
+          </div>
         </div>
-      </footer>
+      </div>
     </article>
   );
 }
 
-function Figure({ v, unit, className }: { v: string; unit: string; className: string }) {
+/* ── the views ───────────────────────────────────────────────────────────────── */
+
+function See({ c }: { c: BuildCase }) {
+  const live = useMedia(LIVE_Q);
+  const phone = useMedia("(max-width: 640px)");
+  const a = c.media.animation;
+  if (!a) {
+    const ph = c.media.hero.phone;
+    if (phone && ph) return <TallFigure img={ph} alt={c.media.hero.alt} />;
+    return <Shot img={c.media.hero} alt={c.media.hero.alt} eager className="bc-see" />;
+  }
+  if (live) return <Scene a={a} />;
+  const p = phone ? a.poster.phone : a.poster.desktop;
   return (
-    <span className={className}>
-      {v}
-      {unit ? <span className="bc-unit"> {unit}</span> : null}
+    // Posters are single stills sized for their slot; next/image adds nothing here.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="bc-poster" src={p.src} width={p.w} height={p.h} alt={a.title} loading="eager" fetchPriority="high" decoding="async" />
+  );
+}
+
+/** A dense figure's stacked phone twin: its top shows, and one tap opens the whole thing. */
+function TallFigure({ img, alt }: { img: Img; alt: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={cn("bc-app bc-tall", open && "is-open")}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={img.src} width={img.w} height={img.h} alt={alt} loading="eager" fetchPriority="high" decoding="async" />
+      <button type="button" className="bc-tall-btn" aria-expanded={open} onClick={() => setOpen(!open)}>
+        {open ? "Show less" : "Show all"}
+      </button>
+    </div>
+  );
+}
+
+/** The scene is drawn for its own width and reflows below it, so it renders at that size and is scaled to the box. */
+function Scene({ a }: { a: NonNullable<BuildCase["media"]["animation"]> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setScale(e.contentRect.width / a.w));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [a.w]);
+  return (
+    <div ref={ref} className="bc-scene" style={{ aspectRatio: `${a.w} / ${a.h}` }}>
+      <iframe src={`/animations/${a.scene}/index.html`} title={a.title} style={{ width: a.w, height: a.h, transform: `scale(${scale})` }} />
+    </div>
+  );
+}
+
+function Steps({ c, ratio }: { c: BuildCase; ratio: number }) {
+  const [on, setOn] = useState(0);
+  const fine = useRef(false);
+  useEffect(() => {
+    fine.current = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  }, []);
+  const st = c.flow[on];
+  return (
+    <div className="bc-steps" style={{ ["--sn" as string]: c.flow.length }}>
+      <div className="bc-steps-rail" role="group" aria-label="Step by step">
+        {c.flow.map((f, i) => (
+          <button
+            key={f.step}
+            type="button"
+            aria-pressed={on === i}
+            className={cn(on === i && "on")}
+            onClick={() => setOn(i)}
+            onMouseEnter={() => { if (fine.current) setOn(i); }}
+          >
+            {f.step}
+          </button>
+        ))}
+      </div>
+      {st ? (
+        <div className="bc-steps-shot" key={on}>
+          <StepPicture c={c} f={st} ratio={ratio} />
+        </div>
+      ) : null}
+      {st ? (
+        <p className="bc-steps-note" key={`n${on}`}>
+          <b>{st.step}</b> {st.how}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function StepPicture({ c, f, ratio }: { c: BuildCase; f: FlowStep; ratio: number }) {
+  const a = c.media.animation;
+  if (f.shows.kind === "anim") {
+    if (!a) return null;
+    const p = a.poster.desktop;
+    return (
+      <div className="bc-app">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="bc-fill" src={p.src} width={p.w} height={p.h} alt={a.title} decoding="async" />
+      </div>
+    );
+  }
+  const s = f.shows;
+  return <Shot img={s} alt={f.step} crop={s.crop ? [s.crop[0], s.crop[1], s.crop[2], Math.round(s.crop[2] / ratio)] : undefined} fit={!s.crop} />;
+}
+
+function Changed({ c }: { c: BuildCase }) {
+  const rest = c.results.slice(1);
+  return (
+    <div className="bc-sheet bc-changed">
+      {rest.map((r) => <Figure key={r.label} r={r} className="bc-second" />)}
+      {c.before_after.length ? <BeforeAfter rows={c.before_after} /> : null}
+      <ul className={cn("bc-built", c.built.length === 4 ? "is-four" : "is-stack")}>
+        {c.built.map((b) => (
+          <li key={b.lead}>
+            <h3>{b.lead}</h3>
+            <p>{b.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Words({ c }: { c: BuildCase }) {
+  return (
+    <div className="bc-words-view">
+      {c.quote ? (
+        <figure className="bc-quote">
+          <blockquote>{c.quote.text}</blockquote>
+          <figcaption>{c.quote.who}</figcaption>
+        </figure>
+      ) : null}
+      <Foot c={c} />
+    </div>
+  );
+}
+
+function Eng({ c }: { c: BuildCase }) {
+  const e = c.eng;
+  const facts: [string, string | undefined][] = [
+    ["How it fits together", e.architecture],
+    ["Tested", e.tests],
+    ["Cost to run", e.cost],
+    ["Runs on", e.runs_where],
+  ];
+  return (
+    <div className="bc-sheet bc-eng">
+      <p className="bc-choice">{e.choice}</p>
+      <dl className="bc-facts">
+        {facts
+          .filter(([, v]) => v)
+          .map(([k, v]) => (
+            <div key={k}>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+      </dl>
+      <ul className="bc-chips" aria-label="Stack">
+        {c.stack.map((s) => <li key={s}>{s}</li>)}
+      </ul>
+      {c.repos.length ? (
+        <div className="bc-repos">
+          {c.repos.map((r) => <RepoCard key={r.url} url={r.url} />)}
+        </div>
+      ) : null}
+      {!c.quote ? <Foot c={c} /> : null}
+    </div>
+  );
+}
+
+/* ── pieces ──────────────────────────────────────────────────────────────────── */
+
+function Foot({ c }: { c: BuildCase }) {
+  return (
+    <div className="bc-foot">
+      <p className="bc-role">{c.role}</p>
+      <div className="bc-acts">
+        <a className="sai-btn primary" href={SITE.calendly} target="_blank" rel="noopener noreferrer">Talk to me</a>
+      </div>
+    </div>
+  );
+}
+
+function Chevron() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M6 3.5l4.5 4.5L6 12.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** A ledger status chip: the keyword on a tint, the rest as the fact. Never a dot-pill. */
+function StatusChip({ status }: { status: string }) {
+  const m = status.match(/^(Live|Early access|Delivered|Passing practice runs|In daily use|Runs every pay period)\b\s*(.*)$/);
+  // A status that isn't one of the state keywords (a date range, say) is a plain fact: no tinted keyword.
+  if (!m) {
+    return (
+      <span className="bc-status">
+        <span className="detail">{status}</span>
+      </span>
+    );
+  }
+  return (
+    <span className="bc-status">
+      <span className="kw">{m[1]}</span>
+      {m[2] ? <span className="detail">{m[2]}</span> : null}
     </span>
   );
 }
 
-function BuildSide({ c }: { c: BuildCase }) {
+/** A result in display type. The whole figure, unit included, is one colour. */
+function Figure({ r, lead = false, basis = true, className }: { r: Result; lead?: boolean; basis?: boolean; className?: string }) {
   return (
-    <>
-      <div className="bc-figures">
-        <div className="bc-fig is-main">
-          <Figure v={c.number.value} unit={c.number.unit} className="bc-v" />
-          <span className="bc-l">{c.number.label}</span>
-          {c.number.basis ? <p className="bc-basis">{c.number.basis}</p> : null}
-        </div>
-        <div className="bc-fig is-second">
-          <Figure v={c.second.value} unit={c.second.unit} className="bc-v" />
-          <span className="bc-l">{c.second.label}</span>
-        </div>
-      </div>
+    <div className={cn("bc-fig", lead && "is-lead", className)}>
+      <p className="bc-fig-n">
+        {r.value}
+        {r.unit ? <span className="bc-fig-u"> {r.unit}</span> : null}
+      </p>
+      <p className="bc-fig-l">{r.label}</p>
+      {basis && r.basis ? <p className="bc-fig-b">{r.basis}</p> : null}
+    </div>
+  );
+}
 
-      {c.media.hero ? (
-        <figure className="bc-shot">
-          {/* Static webp pairs already sized for the page (1600 + 800); next/image adds nothing here. */}
+function BeforeAfter({ rows }: { rows: BuildCase["before_after"] }) {
+  return (
+    <div className="bc-ba" role="table" aria-label="Before and after">
+      <div className="bc-ba-head" role="row">
+        <span role="columnheader"><span className="bc-sr">What</span></span>
+        <span role="columnheader">Before</span>
+        <span role="columnheader">After</span>
+      </div>
+      {rows.map((r) => (
+        <div className="bc-ba-row" role="row" key={r.k}>
+          <span role="rowheader" className="bc-ba-k">{r.k}</span>
+          <span role="cell" className="bc-ba-was">{r.before}</span>
+          <span role="cell" className="bc-ba-now">{r.after}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RepoCard({ url }: { url: string }) {
+  const [owner, name] = url.replace(/^https?:\/\/(www\.)?github\.com\//, "").split("/");
+  return (
+    <a className="bc-repo" href={url} target="_blank" rel="noopener noreferrer">
+      <svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+        />
+      </svg>
+      <span className="bc-repo-nm">
+        <span className="bc-repo-ow">{owner} /</span>
+        <span>{name}</span>
+      </span>
+    </a>
+  );
+}
+
+/** A screen, a crop of one ([x, y, w, h] in its own pixels), or the whole screen fitted to the stage. */
+function Shot({
+  img,
+  alt,
+  crop,
+  fit = false,
+  eager = false,
+  className,
+}: {
+  img: Img;
+  alt: string;
+  crop?: [number, number, number, number];
+  fit?: boolean;
+  eager?: boolean;
+  className?: string;
+}) {
+  const small = img.src.replace(/\.webp$/, "-800.webp");
+  const srcSet = `${small} 800w, ${img.src} ${img.w}w`;
+  const load = eager ? ({ loading: "eager", fetchPriority: "high" } as const) : ({ loading: "lazy" } as const);
+  if (crop) {
+    const [x, y, w, h] = crop;
+    return (
+      <div className={cn("bc-app", className)}>
+        <div className="bc-crop" style={{ aspectRatio: `${w} / ${h}` }} role="img" aria-label={alt}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={c.media.hero}
-            srcSet={`${c.media.hero.replace(/\.webp$/, "-800.webp")} 800w, ${c.media.hero} 1600w`}
-            sizes="(max-width: 800px) 92vw, 700px"
-            width={1600}
-            height={1200}
-            alt={c.media.alt ?? ""}
-            loading="lazy"
+            src={img.src}
+            srcSet={srcSet}
+            sizes="(max-width: 640px) 160vw, 1100px"
+            alt=""
             decoding="async"
+            {...load}
+            style={{ width: `${(img.w / w) * 100}%`, left: `${(-x / w) * 100}%`, top: `${(-y / h) * 100}%` }}
           />
-          {c.media.caption ? <figcaption>{c.media.caption}</figcaption> : null}
-        </figure>
-      ) : c.slug === "curriculum-system" ? (
-        <CurriculumFigure />
-      ) : null}
-
-      <p className="bc-pull">{c.oneliner}</p>
-
-      <section className="bc-sec">
-        <h3 className="bc-h">What was broken</h3>
-        <p className="bc-p">{c.broken}</p>
-      </section>
-
-      <section className="bc-sec">
-        <h3 className="bc-h">What I built</h3>
-        <BubbleList className="bc-list" items={c.built} />
-      </section>
-
-      <section className="bc-sec">
-        <h3 className="bc-h">What changed</h3>
-        <table className="bc-table">
-          <thead>
-            <tr>
-              <th scope="col">
-                <span className="bc-sr">What</span>
-              </th>
-              <th scope="col">Before</th>
-              <th scope="col">After</th>
-            </tr>
-          </thead>
-          <tbody>
-            {c.changed.map((r) => (
-              <tr key={r.k}>
-                <th scope="row">{r.k}</th>
-                <td data-label="Before">{r.before}</td>
-                <td data-label="After">{r.after}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p className="bc-note">
-          <b>Where the numbers come from.</b> {c.math_note}
-        </p>
-      </section>
-
-      {c.quote ? (
-        <blockquote className="bc-quote">
-          <p>&ldquo;{c.quote.text}&rdquo;</p>
-          <footer>{c.quote.who}</footer>
-        </blockquote>
-      ) : null}
-
-      {c.compliance ? (
-        <p className="bc-p bc-comp">
-          <b>Compliance.</b> {c.compliance}
-        </p>
-      ) : null}
-    </>
-  );
-}
-
-function EngineeringSide({ c }: { c: BuildCase }) {
-  const e = c.engineer;
-  return (
-    <>
-      <p className="bc-p bc-users">
-        <b>Who uses it.</b> {c.users}.
-      </p>
-      <dl className="bc-eng">
-        <div className="is-wide">
-          <dt>Architecture</dt>
-          <dd>{e.architecture}</dd>
         </div>
-        <div>
-          <dt>Where it runs</dt>
-          <dd>{e.runs_where}</dd>
-        </div>
-        <div>
-          <dt>Tests and evals</dt>
-          <dd>{e.tests}</dd>
-        </div>
-        <div>
-          <dt>Cost</dt>
-          <dd>{e.cost}</dd>
-        </div>
-        <div>
-          <dt>Guardrails</dt>
-          <dd>{e.guardrails}</dd>
-        </div>
-      </dl>
-
-      <div className="draft-crop is-block bc-tradeoff">
-        <h3 className="bc-h">The tradeoff we chose</h3>
-        <p className="bc-p">{e.tradeoff}</p>
       </div>
-
-      {e.repo || e.repo_note ? (
-        <section className="bc-sec">
-          <h3 className="bc-h">Code</h3>
-          {e.repo ? (
-            <p className="bc-p">
-              <a className="bc-repo" href={e.repo} target="_blank" rel="noopener noreferrer">
-                {e.repo.replace(/^https?:\/\//, "")}
-              </a>
-            </p>
-          ) : null}
-          {e.repo_note ? <p className="bc-note">{e.repo_note}</p> : null}
-        </section>
-      ) : null}
-
-      <section className="bc-sec">
-        <h3 className="bc-h">Stack</h3>
-        <ul className="bc-chips">
-          {c.stack.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-      </section>
-
-      {c.links.length ? (
-        <div className="bc-links">
-          {c.links.map((l) => (
-            <a key={l.url} className="sai-btn ghost" href={l.url} target="_blank" rel="noopener noreferrer">
-              {l.label}
-            </a>
-          ))}
-        </div>
-      ) : null}
-    </>
-  );
-}
-
-/** The one build with no screenshot: the same production line, before and after. */
-function CurriculumFigure() {
+    );
+  }
   return (
-    <figure className="bc-shot bc-drawn">
-      <svg
-        viewBox="0 0 360 232"
-        role="img"
-        aria-label="Share of the curriculum work: before, all by hand; after, about 80 percent by AI with a human last pass"
-      >
-        <text x="0" y="18" className="lbl">BEFORE · 2020</text>
-        <rect x="0" y="30" width="360" height="48" rx="10" className="frame" />
-        <text x="14" y="60" className="txt">All of it written by hand</text>
-        <text x="0" y="118" className="lbl">AFTER · 2024</text>
-        <rect x="0" y="130" width="360" height="48" rx="10" className="frame" />
-        <rect x="0" y="130" width="288" height="48" rx="10" className="share" />
-        <text x="14" y="160" className="txt">~80% drafted by the pipeline</text>
-        <text x="298" y="160" className="txt sm">Human</text>
-        <line x1="288" y1="186" x2="288" y2="206" className="tick" />
-        <text x="288" y="226" textAnchor="middle" className="lbl acc">~80%</text>
-      </svg>
-      <figcaption>The same production line, before and after. Width is share of the work.</figcaption>
-    </figure>
+    <div className={cn("bc-app", fit && "is-fit", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={img.src} srcSet={srcSet} sizes="(max-width: 640px) 92vw, 680px" width={img.w} height={img.h} alt={alt} decoding="async" {...load} />
+    </div>
   );
 }

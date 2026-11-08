@@ -21,7 +21,7 @@ import "./bench.css";
  */
 
 const ARIA_LABEL =
-  "Alec's workbench seen from above, with one object on it for each of the eight builds listed below. A round trial lens drifts across it, bringing whatever is under the glass into focus. Click an object to open its build.";
+  "Alec's workbench seen from above, with one object on it for each of the builds listed below. A round trial lens drifts across it, bringing whatever is under the glass into focus. Click an object to open its build.";
 
 // The lights: on is a warm afternoon on the bench, off is the lamp after hours.
 // The portfolio always opens with the lights on.
@@ -106,7 +106,7 @@ export function BenchStage() {
 
   return (
     <div className={cn("desk-root bn-root", night && "is-night", ready && "is-ready")}>
-      <header className="desk-dock sai-pane" role="banner">
+      <header className="desk-dock sai-pane sai-dock" role="banner">
         <Link href="/" className="desk-brand" aria-label="Stephens AI home">
           <Image src={night ? "/logo-dark.svg" : "/logo-light.svg"} alt="" width={122} height={22} priority />
         </Link>
@@ -125,7 +125,8 @@ export function BenchStage() {
           <h1 id="bn-title" className="bn-display"><span className="sr-only">Alec Stephens: </span>Portfolio</h1>
           <p className="desk-lede bn-hint">
             <span className="bn-hint-k">Hint</span>
-            <span>Move the lens over an object and click on it to see each project</span>
+            <span className="bn-hint-fine">Move the lens over an object and click on it to see each project</span>
+            <span className="bn-hint-touch">Tap an object to see each project</span>
           </p>
         </div>
 
@@ -159,7 +160,7 @@ export function BenchStage() {
 
       <section className="bn-quotes" aria-labelledby="bn-quotes-title">
         <h2 id="bn-quotes-title" className="bn-label">In their words</h2>
-        <QuoteBelt items={ALEC_TESTIMONIALS} label="Quotes from people Alec has worked with" cardClassName="bn-quote-card" />
+        <QuoteBelt items={ALEC_TESTIMONIALS} label="Quotes from people Alec has worked with" className="bn-belt" cardClassName="bn-quote-card" />
       </section>
 
       <section className="bn-about sai-pane" aria-labelledby="bn-about-name">
@@ -181,7 +182,7 @@ export function BenchStage() {
         </div>
       </section>
 
-      <DeskWindow open={!!open} title={open ? open.name : ""} onClose={closeWindow}>
+      <DeskWindow open={!!open} title={open ? open.name : ""} onClose={closeWindow} className="bc-window">
         {open ? <BuildCard key={open.slug} c={open} /> : null}
       </DeskWindow>
     </div>

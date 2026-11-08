@@ -132,11 +132,25 @@
 /* ── the hint under the headline ── */
 .bn-hint { display: inline-flex; align-items: baseline; gap: 10px; max-width: none; white-space: nowrap; font-size: clamp(17px, 1.45vw, 20px); font-weight: 400; color: var(--color-ink-2); }
 @media (max-width: 720px) { .bn-hint { white-space: normal; flex-direction: column; align-items: center; gap: 4px; max-width: 30ch; } }
-.bn-hint-k { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-accent-deep); }
-.bn-hint span:last-child { color: var(--color-ink-2); font-weight: 400; }
-.desk-root.is-night .bn-hint span:last-child { color: var(--color-cream-2); }
+.bn-hint-k { font-family: var(--font-label); font-size: 13.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-accent-deep); }
+.bn-hint-fine, .bn-hint-touch { color: var(--color-ink-2); font-weight: 400; }
+.desk-root.is-night .bn-hint-fine, .desk-root.is-night .bn-hint-touch { color: var(--color-cream-2); }
+/* touch screens have no lens to move: say what works there (global fix, 8 Nov) */
+.bn-hint-touch { display: none; }
+@media (hover: none), (pointer: coarse), (max-width: 640px) { .bn-hint-fine { display: none; } .bn-hint-touch { display: inline; } }
 .desk-root.is-night .bn-hint-k { color: var(--color-accent-night); }
 .bn-lights { min-width: 11.5em; justify-content: center; }
 
 /* nine builds: the phone desk is taller than /desk's so Putback gets its own row (2026-10-04) */
 @media (max-width: 720px) { .bn-root .desk-canvas { aspect-ratio: 358 / 680; } }
+
+/* the lamp's pool reaches 8% past the desk on each side; on a phone the desk is full width, so
+   that reach became 17px of sideways scroll at 390 (global fix, 8 Nov). Keep it inside the screen. */
+@media (max-width: 720px) {
+  .bn-root .desk-frame::after { left: 0; right: 0; }
+}
+
+/* the quote belt runs edge to edge, so a card leaves at the screen's edge instead of being cut
+   inside a box mid-page (global fix, 8 Nov). The root clips the breakout so it never scrolls sideways. */
+.bn-root { overflow-x: clip; }
+.bn-quotes .bn-belt { margin-inline: calc(50% - 50vw); }
