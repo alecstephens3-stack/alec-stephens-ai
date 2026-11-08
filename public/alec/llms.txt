@@ -87,7 +87,7 @@ What changed: Filing a request: A green paper slip -> A form on any phone; Appro
 Quote: "It is already saving me some time, and I am getting information back to the team much quicker." (Gabe Walsh, Office Manager, Wichita Family Vision)
 Design choice: Apps Script over a hosted app: the clinic already pays for Google Workspace, and the data never leaves.
 Architecture: A form trigger into Apps Script: date and accrual math, sheet and calendar writes, a timed payroll builder.
-Tests: A 22-check programmatic suite.
+Tests: 183 regression checks across 5 suites in the public repo, all passing.
 Runs on: Inside the clinic's own Google Workspace.
 Stack: Apps Script, Google Forms, Sheets, Calendar, clasp, Node.
 Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll

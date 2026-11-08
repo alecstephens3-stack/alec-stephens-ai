@@ -870,7 +870,7 @@ export const CASES: BuildCase[] = [
     "eng": {
       "architecture": "A form trigger into Apps Script: date and accrual math, sheet and calendar writes, a timed payroll builder.",
       "choice": "Apps Script over a hosted app: the clinic already pays for Google Workspace, and the data never leaves.",
-      "tests": "A 22-check programmatic suite.",
+      "tests": "183 regression checks across 5 suites in the public repo, all passing.",
       "runs_where": "Inside the clinic's own Google Workspace."
     },
     "repos": [
