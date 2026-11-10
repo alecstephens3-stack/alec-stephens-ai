@@ -1,0 +1,98 @@
+/* The two free tools on /claimstride (2026-11-10). Page chrome is Stephens AI's;
+   the accent inside the tools is ClaimStride's ocean, like the rest of this page. */
+.wrap { display: grid; gap: 34px; }
+.tool {
+  --tool-accent: #0E7FA8;
+  --tool-accent-soft: rgba(14, 127, 168, 0.10);
+  border-radius: 30px; padding: 36px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 2px 4px rgba(10, 28, 38, 0.05), 0 30px 70px rgba(10, 28, 38, 0.10);
+}
+.tool p { margin: 0; }
+.ask { margin: 0 0 6px; font: 500 clamp(24px, 2.8vw, 32px)/1.15 var(--font-heading); letter-spacing: -0.02em; color: var(--color-ink); }
+.askline { margin: 0 0 26px !important; color: var(--color-ink-2); font-size: 16px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; align-items: start; }
+
+/* time calculator */
+.field { margin-bottom: 22px; }
+.lab { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 16px; color: var(--color-ink); margin-bottom: 10px; }
+.hint { color: var(--color-ink-2); font-size: 14px; }
+.stepper {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center;
+  border-radius: 16px; background: #fff; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.12), 0 1px 2px rgba(23, 19, 16, 0.05);
+}
+.stepper button { height: 56px; border: 0; background: transparent; font: 500 26px var(--font-sans); color: var(--color-ink-2); cursor: pointer; }
+.stepper button:hover { background: var(--tool-accent-soft); color: var(--tool-accent); }
+.stepper input {
+  height: 56px; width: 100%; min-width: 0; border: 0; background: transparent; text-align: center;
+  font: 500 26px var(--font-sans); color: var(--color-ink); font-variant-numeric: tabular-nums; -moz-appearance: textfield;
+}
+.stepper input:focus { outline: none; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.stepper:focus-within { box-shadow: inset 0 0 0 2px var(--tool-accent), 0 0 0 4px var(--tool-accent-soft); }
+.range { width: 100%; margin: 12px 0 0; accent-color: var(--color-ink); height: 28px; }
+
+.month { border-radius: 22px; background: #FFFEFC; box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.08); padding: 24px 24px 20px; }
+.monthHead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.monthHead b { font-size: 16px; font-weight: 600; color: var(--color-ink); }
+.monthHead span { font-size: 14px; color: var(--color-ink-2); }
+.cal { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.dow { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-2); text-align: center; padding-bottom: 4px; }
+.day { position: relative; height: 44px; border-radius: 10px; background: #EEF3F4; overflow: hidden; }
+.day i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--tool-accent); border-radius: 10px 0 0 10px; transition: width 380ms cubic-bezier(.16, 1, .3, 1); }
+.dayFull i { border-radius: 10px; }
+.bigs { display: flex; flex-wrap: wrap; gap: 14px 34px; margin-top: 22px; }
+.n { font: 500 clamp(40px, 4.6vw, 56px)/1 var(--font-heading); letter-spacing: -0.025em; font-variant-numeric: tabular-nums; color: var(--color-ink); }
+.lead .n { color: #0A6E95; }
+.l { margin-top: 8px !important; font-size: 15px; color: var(--color-ink-2); }
+.working { margin-top: 16px !important; font-size: 15px; line-height: 1.5; color: var(--color-ink-2); }
+.working b { color: var(--color-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* filing deadline */
+.tfFields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+.tfFields label { display: flex; flex-direction: column; gap: 8px; font-size: 16px; color: var(--color-ink); }
+.tfFields input, .tfFields select {
+  min-height: 54px; width: 100%; box-sizing: border-box; padding: 0 14px; border: 0; border-radius: 14px;
+  background: #fff; box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.12);
+  font: 500 18px var(--font-sans); color: var(--color-ink);
+}
+.tfFields input, .tfFields select { min-width: 0; }
+.tfFields input:focus, .tfFields select:focus { outline: none; box-shadow: inset 0 0 0 2px var(--tool-accent), 0 0 0 4px var(--tool-accent-soft); }
+.full { grid-column: 1 / -1; }
+.tfOut { margin-top: 26px; border-radius: 22px; background: #FFFEFC; box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.08); padding: 26px 26px 22px; }
+.tfTop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; min-height: 62px; color: var(--color-ink-2); }
+.tfDays { font: 500 clamp(44px, 5vw, 62px)/1 var(--font-heading); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--color-ink); }
+.tfDays small { font-size: 20px; letter-spacing: 0; color: var(--color-ink-2); margin-left: 6px; }
+.status { display: inline-flex; flex-wrap: wrap; align-items: stretch; border-radius: 8px; overflow: hidden; font-size: 15px; color: var(--color-ink); box-shadow: inset 0 0 0 1px rgba(23, 19, 16, 0.08); }
+.status > span { padding: 7px 11px; }
+.kw { font-family: var(--font-label); font-size: 13.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.good .kw { background: var(--color-status-good-tint); color: var(--color-status-good); }
+.warn .kw { background: var(--color-status-warn-tint); color: var(--color-status-warn); }
+.bad .kw { background: var(--color-status-bad-tint); color: var(--color-status-bad); }
+.line { position: relative; margin: 40px 6px 8px; height: 12px; border-radius: 99px; background: rgba(23, 19, 16, 0.08); }
+.used { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: #0A1C26; transition: width 380ms cubic-bezier(.16, 1, .3, 1); }
+.warnZone { position: absolute; top: 0; bottom: 0; right: 0; border-radius: 0 99px 99px 0; background: repeating-linear-gradient(135deg, rgba(178, 58, 47, 0.32) 0 6px, rgba(178, 58, 47, 0.10) 6px 12px); }
+.today {
+  position: absolute; top: -30px; transform: translateX(-50%); white-space: nowrap;
+  font-family: var(--font-label); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink);
+  transition: left 380ms cubic-bezier(.16, 1, .3, 1);
+}
+.today::after { content: ""; position: absolute; left: 50%; top: 22px; width: 2px; height: 26px; margin-left: -1px; background: var(--tool-accent); }
+.ends { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font-size: 14px; color: var(--color-ink-2); }
+.tfNote { margin-top: 16px !important; font-size: 14.5px; line-height: 1.5; color: var(--color-ink-2); }
+.tfNote a { color: var(--color-ink-2); text-decoration: underline; text-underline-offset: 3px; }
+
+.ctaRow { margin-top: 26px; display: flex; gap: 12px 18px; align-items: center; flex-wrap: wrap; }
+.ctaRow p { flex: 1 1 240px; color: var(--color-ink-2); font-size: 15.5px; line-height: 1.45; }
+
+@media (prefers-reduced-motion: reduce) {
+  .day i, .used, .today { transition: none; }
+}
+@media (max-width: 860px) {
+  .tool { padding: 26px 20px; border-radius: 24px; }
+  .cols { grid-template-columns: 1fr; gap: 26px; }
+  .tfFields { grid-template-columns: 1fr; }
+  .month { padding: 20px 16px 16px; }
+  .tfOut { padding: 22px 16px 18px; }
+}

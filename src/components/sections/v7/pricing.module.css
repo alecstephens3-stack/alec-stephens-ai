@@ -134,7 +134,7 @@
   font-weight: 500; line-height: 1.2; letter-spacing: -.02em;
   color: var(--color-ink); text-wrap: balance;
 }
-.gHead em { font-style: normal; color: var(--color-accent); }
+.gHead em { font-style: normal; color: var(--color-accent-display); }
 .gSub { margin-top: 8px; max-width: 64ch; font-size: 16.5px; line-height: 1.55; color: var(--color-ink-2); }
 @media (max-width: 599px) {
   .guarantee { align-items: flex-start; gap: 16px; }

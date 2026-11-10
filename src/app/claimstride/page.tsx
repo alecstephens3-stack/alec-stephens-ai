@@ -4,6 +4,8 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { Section } from "@/components/sections/v6/shell";
 import { ClaimStrideHero } from "@/components/sections/claimstride/claimstride-hero";
 import { ClaimStrideSteps } from "@/components/sections/claimstride/claimstride-steps";
+import { TimeCalculator, FilingDeadline } from "@/components/sections/claimstride/claimstride-tools";
+import t from "@/components/sections/claimstride/claimstride-tools.module.css";
 import { SITE_URL, V7_CTA } from "@/lib/content";
 import { instrument } from "@/components/sections/claimstride/font";
 import s from "@/components/sections/claimstride/claimstride.module.css";
@@ -98,6 +100,13 @@ export default function ClaimStridePage() {
 
       <Section id="how" kicker="How it works" title="From the report you already run to the next step on each claim." titleMax="max-w-[24ch]">
         <ClaimStrideSteps />
+      </Section>
+
+      <Section id="try" kicker="Try it" title="Two quick answers, with your own numbers." titleMax="max-w-[22ch]">
+        <div className={t.wrap}>
+          <FilingDeadline />
+          <TimeCalculator />
+        </div>
       </Section>
 
       <Section kicker="On the board" title="Everything the biller needs to work a claim, in one place." titleMax="max-w-[22ch]">
