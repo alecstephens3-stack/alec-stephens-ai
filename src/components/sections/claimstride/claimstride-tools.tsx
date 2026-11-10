@@ -164,7 +164,7 @@ export function TimeCalculator() {
         </div>
       </div>
       <div className={s.ctaRow}>
-        <ButtonLink href={`${V7_CTA.href}?utm_source=stephensai.co&utm_medium=claimstride&utm_content=time-calculator`} external>
+        <ButtonLink href={`${V7_CTA.href}?utm_source=syntegrityai.com&utm_medium=claimstride&utm_content=time-calculator`} external>
           {V7_CTA.label}
         </ButtonLink>
         <p>On the free call we look at which of those hours ClaimStride can take back, with your real numbers.</p>
@@ -291,7 +291,7 @@ export function FilingDeadline() {
         )}
       </div>
       <div className={s.ctaRow}>
-        <ButtonLink href={`${V7_CTA.href}?utm_source=stephensai.co&utm_medium=claimstride&utm_content=filing-deadline`} external>
+        <ButtonLink href={`${V7_CTA.href}?utm_source=syntegrityai.com&utm_medium=claimstride&utm_content=filing-deadline`} external>
           {V7_CTA.label}
         </ButtonLink>
         <p>ClaimStride shows every unpaid claim&apos;s nearest deadline on one board. The free call is where we look at yours.</p>

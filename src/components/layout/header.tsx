@@ -96,7 +96,7 @@ export function Header() {
         >
           <Image
             src="/logo-light.svg"
-            alt="Stephens AI"
+            alt="Syntegrity"
             width={180}
             height={40}
             priority

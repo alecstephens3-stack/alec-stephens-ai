@@ -11,7 +11,7 @@ import { CONTACT_EMAIL } from "@/lib/content";
 export const metadata: Metadata = {
   title: "File Invoices and QuickBooks",
   description:
-    "What Stephens AI's File Invoices app does in a practice's QuickBooks Online company, and how to disconnect it.",
+    "What Syntegrity's File Invoices app does in a practice's QuickBooks Online company, and how to disconnect it.",
   robots: { index: false, follow: false },
 };
 
@@ -21,7 +21,7 @@ export default function QuickBooksInfo() {
       <div className="mx-auto max-w-3xl">
         <section className="rounded-panel sai-pane px-7 py-9 md:px-10 md:py-11">
           <p className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-accent-deep">
-            Stephens AI LLC
+            Syntegrity
           </p>
           <h1 className="mt-3 font-heading text-[34px] font-medium leading-[1.08] tracking-[-0.025em] text-ink md:text-[44px]">
             File Invoices and QuickBooks

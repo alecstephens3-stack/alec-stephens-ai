@@ -180,7 +180,7 @@ export function DeskStage() {
   return (
     <div className={cn("desk-root", night && "is-night", ready && "is-ready")}>
       <header className="desk-dock sai-pane" role="banner">
-        <Link href="/" className="desk-brand" aria-label="Stephens AI home">
+        <Link href="/" className="desk-brand" aria-label="Syntegrity home">
           <Image src={night ? "/logo-dark.svg" : "/logo-light.svg"} alt="" width={122} height={22} priority />
         </Link>
         <span className="desk-dock-title">The front desk</span>

@@ -5,7 +5,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_JUSHEEN, SITE_URL } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms governing use of stephensai.co and engagements with Stephens AI LLC, including proposals, payment, ownership of deliverables, use of AI, support, and limitation of liability.",
+    "The terms governing use of syntegrityai.com and engagements with Syntegrity, including proposals, payment, ownership of deliverables, use of AI, support, and limitation of liability.",
   alternates: { canonical: `${SITE_URL}/terms` },
   robots: { index: true, follow: true },
 };
@@ -17,8 +17,8 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          These terms govern your use of <strong>stephensai.co</strong> and any
-          engagement of Stephens AI LLC for services. By using the website or
+          These terms govern your use of <strong>syntegrityai.com</strong> and any
+          engagement of Syntegrity for services. By using the website or
           accepting a proposal from us, you agree to these terms.
         </p>
         <p>
@@ -35,11 +35,10 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          Stephens AI LLC is a Kansas limited liability company that builds
+          Syntegrity is the trade name of Stephens AI LLC, a Kansas limited liability company that builds
           software and AI systems for businesses, with a focus on independent
-          healthcare practices. In these terms, &quot;Stephens AI,&quot;
-          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens
-          AI LLC.
+          healthcare practices. In these terms, &quot;Syntegrity,&quot;
+          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens AI LLC.
         </p>
       </>
     ),
@@ -51,7 +50,7 @@ const sections: LegalSection[] = [
       <>
         <p>
           You may view, share, and reference this website. The text, design,
-          diagrams, and case material on it are the property of Stephens AI and
+          diagrams, and case material on it are the property of Syntegrity and
           may not be republished in substantial part without our permission.
         </p>
         <p>You agree not to:</p>
@@ -204,7 +203,7 @@ const sections: LegalSection[] = [
           systems we deliver. Information you provide to us may be processed by
           these tools in the course of the engagement.{" "}
           <strong>
-            By engaging Stephens AI, you consent to this use.
+            By engaging Syntegrity, you consent to this use.
           </strong>{" "}
           Our Privacy Policy describes how we select and configure these tools
           and how protected health information is handled.
@@ -262,7 +261,7 @@ const sections: LegalSection[] = [
         <p>
           Software we provide to more than one client, such as our insurance
           claims tool, and any software we provide as a service, remains the
-          property of Stephens AI. You receive the right to use it for as long as
+          property of Syntegrity. You receive the right to use it for as long as
           your proposal provides and your fees are paid.
         </p>
         <p>
@@ -440,7 +439,7 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          You agree to defend and indemnify Stephens AI against third-party
+          You agree to defend and indemnify Syntegrity against third-party
           claims arising from materials you provide to us, from clinical,
           billing, claims, or business decisions you make using our systems,
           from your use of a deliverable in a manner not contemplated by the
@@ -506,11 +505,11 @@ const sections: LegalSection[] = [
           <li>
             <strong>
               Custom systems that operate on your own accounts continue to
-              function independently of Stephens AI.
+              function independently of Syntegrity.
             </strong>
           </li>
           <li>
-            <strong>Your data remains available to you.</strong> If Stephens AI
+            <strong>Your data remains available to you.</strong> If Syntegrity
             ceases operations, we will return your data and transfer any
             administrative access we hold to accounts in your name.
           </li>
@@ -599,7 +598,7 @@ const sections: LegalSection[] = [
       <>
         <p>Questions regarding these terms may be directed to either founder:</p>
         <p>
-          <strong>Stephens AI LLC</strong>
+          <strong>Syntegrity (Stephens AI LLC)</strong>
           <br />
           A Kansas limited liability company
           <br />
@@ -618,7 +617,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Terms of Service"
-      summary="These terms govern use of this website and engagements with Stephens AI LLC, including how proposals control an engagement, ownership of deliverables, our use of AI, support, and the limits of our liability."
+      summary="These terms govern use of this website and engagements with Syntegrity, including how proposals control an engagement, ownership of deliverables, our use of AI, support, and the limits of our liability."
       sections={sections}
     />
   );

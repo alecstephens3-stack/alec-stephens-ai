@@ -9,7 +9,7 @@ import { FAQ, FAQ_SECTION, SITE_URL, CALENDLY, CONTACT } from "@/lib/content";
  * here with it.
  */
 export const metadata: Metadata = {
-  title: "Questions clinics ask | Stephens AI",
+  title: "Questions clinics ask | Syntegrity",
   description: FAQ_SECTION.summary,
   alternates: { canonical: `${SITE_URL}/faq` },
 };

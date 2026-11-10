@@ -79,12 +79,12 @@ export function HomeBody({
         ],
       },
       {
-        // Tells Google the site's name is "Stephens AI", so results show the
+        // Tells Google the site's name is "Syntegrity", so results show the
         // brand rather than the bare domain.
         "@type": "WebSite",
         "@id": `${SITE_URL}#website`,
         name: SITE_NAME,
-        alternateName: ["Stephens AI LLC", "stephensai.co"],
+        alternateName: ["Syntegrity AI", "Stephens AI", "syntegrityai.com"],
         url: SITE_URL,
         publisher: { "@id": `${SITE_URL}#business` },
       },

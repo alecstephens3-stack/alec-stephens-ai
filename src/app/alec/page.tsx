@@ -40,7 +40,7 @@ const personJsonLd = {
   url: `${SITE_URL}/alec`,
   jobTitle: "Co-founder",
   email: `mailto:${SITE.email}`,
-  worksFor: { "@type": "Organization", "@id": `${SITE_URL}#business`, name: "Stephens AI", url: SITE_URL },
+  worksFor: { "@type": "Organization", "@id": `${SITE_URL}#business`, name: "Syntegrity", url: SITE_URL },
   sameAs: [SITE.linkedin, SITE.github],
 };
 

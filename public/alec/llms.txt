@@ -2,16 +2,16 @@
 
 10 builds I've shipped: insurance claims software, computer-use agents, invoice processing under a HIPAA agreement, a clinic knowledge base, a PTO and payroll system, and more.
 
-Index: https://stephensai.co/alec
+Index: https://syntegrityai.com/alec
 
 ## About
-Applied AI engineer. Co-founder, Stephens AI.
+Applied AI engineer. Co-founder, Syntegrity.
 I build AI software that takes admin work off clinic staff, and I love doing it. In healthcare, patient data stays in the clinic's own AWS account, under its BAA.
 I made 200+ AI tutorial videos for a nine-figure education company. Before that I was hired in Seoul to write English lessons, and left with about 80% of the manual curriculum work handled by AI.
 I also take contracts as an applied AI or forward-deployed engineer.
 Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer.
 
-## ClaimStride (https://stephensai.co/alec/claimstride)
+## ClaimStride (https://syntegrityai.com/alec/claimstride)
 Asks every insurer where each unpaid claim stands and writes the next step, for eye care and dental.
 Status: Live at an eye clinic. Client: Wichita Family Vision. Eye care · insurance · HIPAA.
 Result: 1,140 claims read from the biller's real report, every total matching hers.
@@ -28,7 +28,7 @@ Runs on: The clinic's own AWS account, under its BAA.
 Stack: Claude on AWS Bedrock, Python, FastAPI, Stedi API, X12 276/277, X12 270/271, AWS, pytest.
 My role: My co-founder built the first version. I rebuilt how it reads insurer answers and built the eye care side.
 
-## Computer-use agents (https://stephensai.co/alec/agents)
+## Computer-use agents (https://syntegrityai.com/alec/agents)
 Two Claude agents that work a medical practice's software through its screen, because a single office can't get an API.
 Status: Passing practice runs. Client: A medical practice. Medical practice · AI agents.
 How it works: 1. Read the day's list: Each run starts from the practice software's own report, so the agent works from the same list the staff would. 2. One at a time: Code hands the model one item at a time in a short, fresh conversation, so a mistake on one chart can't carry into the next. 3. Code verifies each click: Code checks every click against what the screen shows. Asked to discard someone else's unsaved note, the agent answers No. 4. Re-run to confirm: A second pass confirms the work from the practice app's own record. Routine clicks replay without the AI and stop the moment the screen changes.
@@ -42,7 +42,7 @@ Stack: Claude computer use, Python, Playwright, FreeRDP, AWS Systems Manager, py
 Code: https://github.com/alecstephens3-stack/computer-use-agents
 My role: I built both agents, the practice app they're scored on and the cloud computer they run on.
 
-## Invoice processing system (https://stephensai.co/alec/invoice-agent)
+## Invoice processing system (https://syntegrityai.com/alec/invoice-agent)
 Each vendor bill is read, filed and entered in QuickBooks in one click, so the bookkeeper never keys one by hand.
 Status: Live since Oct 2026. Client: Wichita Family Vision. Eye care · bookkeeping · HIPAA.
 Result: About 200 hrs/yr of keying and filing off the bookkeeper's desk. Basis: 50 invoices a week at about 5 minutes each.
@@ -60,7 +60,7 @@ Stack: Claude on AWS Bedrock, Python, QuickBooks Online API, PyMuPDF, CloudWatch
 Code: https://github.com/alecstephens3-stack/bill-intake
 My role: I built the app and its QuickBooks integration.
 
-## Front desk knowledge base (https://stephensai.co/alec/knowledge-base)
+## Front desk knowledge base (https://syntegrityai.com/alec/knowledge-base)
 Anyone at the front desk finds the right answer in one search, without pulling a manager away.
 Status: Live since Aug 2026. Client: Wichita Family Vision. Eye care · front desk.
 Result: About 200 hrs/yr of front-desk time returned. Basis: About 4 questions a day at 10 minutes each, now one search.
@@ -77,7 +77,7 @@ Stack: Supabase, Postgres RLS, Google OAuth, PWA, Vercel, DOMPurify.
 Code: https://github.com/alecstephens3-stack/supabase-team-knowledge-base
 My role: I built it, from the content model to in-app editing.
 
-## PTO and payroll system (https://stephensai.co/alec/pto-payroll)
+## PTO and payroll system (https://syntegrityai.com/alec/pto-payroll)
 Staff request time off from a phone, the manager approves in one tap, and payroll prep builds itself every pay period.
 Status: Runs every pay period. Client: Wichita Family Vision. Eye care · operations.
 Result: 60 to 100 hrs/yr of admin time returned, and the paper process gone. Basis: Slip handling, calendar checks and payroll prep.
@@ -93,9 +93,9 @@ Stack: Apps Script, Google Forms, Sheets, Calendar, clasp, Node.
 Code: https://github.com/alecstephens3-stack/apps-script-pto-payroll
 My role: I built the engine, the migration and the payroll report.
 
-## Our AI operating system (https://stephensai.co/alec/aios)
+## Our AI operating system (https://syntegrityai.com/alec/aios)
 The system our company runs on every day. Anything we install for a client runs here first.
-Status: In daily use. Client: Stephens AI. Stephens AI · internal.
+Status: In daily use. Client: Syntegrity. Syntegrity · internal.
 Result: 12 agents each with least-privilege permissions, plus 47 skills.
 What I built: The Bridge: One dashboard over the whole company: a 3D map of every note, both calendars, both inboxes, messages and meetings, and a chat over the knowledge base that can read but never send. Specialist agents: Agents on least-privilege tool lists: reviewers that read like a dentist or an optometrist, research, meeting notes. Reusable skills cover proposals, QA, deploys and reporting. Jobs that run themselves: A daily meeting sweep writes the notes, updates the week's priorities, logs decisions and texts the action items. A weekly health check keeps the knowledge base clean, and every run leaves a log.
 Design choice: Files over a database: every agent and person can read them, all in git.
@@ -107,7 +107,7 @@ Code: https://github.com/alecstephens3-stack/claude-code-voice-mod
 Code: https://github.com/alecstephens3-stack/lens-design-system
 My role: I built all of it.
 
-## AI Lab content systems (https://stephensai.co/alec/ai-lab)
+## AI Lab content systems (https://syntegrityai.com/alec/ai-lab)
 AI tutorials for a nine-figure education company, on a pipeline I built.
 Status: Mar to Sep 2026. Client: AI Lab, iPhone Photography School. AI education · content.
 Result: 200+ videos teaching AI to non-technical adults.
@@ -119,7 +119,7 @@ Tests: A lint on the KPI report.
 Stack: Claude Code, Codex, MCP, Wistia API, X API.
 My role: I built it as the in-house Applied AI Engineer.
 
-## Coaching practice AI system (https://stephensai.co/alec/coaching-aios)
+## Coaching practice AI system (https://syntegrityai.com/alec/coaching-aios)
 AI agents for a one-person coaching practice, all reading one document she edits in plain English.
 Status: Delivered. Client: Workthentic. Coaching · solo founder.
 What I built: One brain document: Her voice, brand rules, client roster and policies live in one doc that every agent reads. She changes it by messaging a maintainer agent in plain English. Agents for the busywork: Inbox triage that cites its source, scheduling replies drafted inside the task, voice notes split and routed, and meeting notes on a routine she owns. Calendar to invoice: On the first of the month it reads both calendars, pulls client and service codes from the events, and writes the hours to a color-coded sheet ready for invoicing.
@@ -130,7 +130,7 @@ Tests: Regression tests on the maintainer agent's edit rules.
 Stack: Claude, ClickUp Super Agents, Google Calendar, Google Sheets.
 My role: I built all of it, and she owns every piece.
 
-## Construction company website (https://stephensai.co/alec/construction-site)
+## Construction company website (https://syntegrityai.com/alec/construction-site)
 A readable redesign for a Japanese construction company, with an editor so their office can change the site themselves.
 Status: Live since Oct 2026. Client: Kamata Koumuten. Construction · Japan.
 What I built: A redesign in their language: A slow-moving hero over a finished driveway and gate, the company's history, what they build, and the serif and sans type pair the owner already knew. Real jobs up front: Their own projects, each with a before and after switch under the photo, plus the story of the university rocket team whose engine test they hosted on their land. They edit it: Words and photos on every page change in the browser, with undo. Every update deploys with a backup first and a health check on every page.
@@ -141,7 +141,7 @@ Tests: Editor and attack tests, plus a type-size test at 4 widths.
 Stack: HTML, CSS, JavaScript, PHP, Google Search Console.
 My role: I built all of it.
 
-## Pharmacy lead finder (https://stephensai.co/alec/lead-finder)
+## Pharmacy lead finder (https://syntegrityai.com/alec/lead-finder)
 One sentence in his own Claude returns a sheet of compounding pharmacies, each with its published email.
 Status: Delivered. Client: Medari Advisors. Healthcare · lead generation.
 What I built: Lists from the registry: A starting list for each state from the national provider registry: every active compounding pharmacy, with chains, grocery stores, hospitals and clinics removed, and the owner or pharmacist in charge as the contact. A lookup in his account: One Google Maps search per pharmacy in his own Apify account, reading the contact details each pharmacy's website publishes. A finished sheet: Junk and head-office addresses dropped, one email per pharmacy, his existing list removed, and stores with no website kept as a call list with phone numbers.

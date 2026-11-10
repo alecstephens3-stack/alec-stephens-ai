@@ -12,7 +12,7 @@ import s from "@/components/sections/claimstride/claimstride.module.css";
 
 /**
  * ClaimStride (rebuilt 2026-11-08, from the portfolio makeover of the same day).
- * The page is Stephens AI's (header, footer, type, buttons, the services switcher);
+ * The page is Syntegrity's (header, footer, type, buttons, the services switcher);
  * the product frames wear ClaimStride's own look. Every number traces to
  * context/portfolio.md §4 in the vault; the build copy is the portfolio's
  * (artifacts/scrollcraft/builds/alec-portfolio/cases.yaml, claimstride).
@@ -20,14 +20,14 @@ import s from "@/components/sections/claimstride/claimstride.module.css";
 
 const TITLE = "ClaimStride";
 const DESCRIPTION =
-  "ClaimStride checks each unpaid claim with its insurer and writes the next step, nearest timely filing deadline first. Claims software for eye care and dental practices, by Stephens AI.";
+  "ClaimStride checks each unpaid claim with its insurer and writes the next step, nearest timely filing deadline first. Claims software for eye care and dental practices, by Syntegrity.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${SITE_URL}/claimstride` },
-  openGraph: { title: `${TITLE} by Stephens AI`, description: DESCRIPTION, url: `${SITE_URL}/claimstride` },
-  twitter: { title: `${TITLE} by Stephens AI`, description: DESCRIPTION },
+  openGraph: { title: `${TITLE} by Syntegrity`, description: DESCRIPTION, url: `${SITE_URL}/claimstride` },
+  twitter: { title: `${TITLE} by Syntegrity`, description: DESCRIPTION },
 };
 
 const FEATURES = [
@@ -65,7 +65,7 @@ function Lockup() {
         <path d="M34 52 L58 18" fill="none" stroke="#1FB57A" strokeWidth="9" strokeLinecap="round" />
       </svg>
       <span className={s.lockupName}>ClaimStride</span>
-      <span className={s.lockupBy}>by Stephens AI</span>
+      <span className={s.lockupBy}>by Syntegrity</span>
     </span>
   );
 }

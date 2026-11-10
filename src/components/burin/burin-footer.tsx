@@ -20,12 +20,12 @@ export function PortfolioBurinFooter({ name, role, email, linkedin }: { name: st
         <p className="burin-foot-name">{name}</p>
         <p className="burin-foot-role">{role}</p>
         <div className="burin-foot-links">
-          <Link href="/">stephensai.co</Link>
+          <Link href="/">syntegrityai.com</Link>
           <a href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={`mailto:${email}`}>Email</a>
         </div>
         <div className="burin-foot-legal">
-          <span className="burin-foot-co">&copy; 2026 Stephens AI LLC</span>
+          <span className="burin-foot-co">&copy; 2026 Syntegrity</span>
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
         </div>

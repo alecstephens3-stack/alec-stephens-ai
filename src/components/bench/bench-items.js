@@ -1,5 +1,5 @@
 /*
- * bench-items.js · the objects on "Alec's bench" (stephensai.co/alec).
+ * bench-items.js · the objects on "Alec's bench" (syntegrityai.com/alec).
  * Alec's workbench seen from above, on the same desk engine and lens as /desk and /play.
  * Each object is an artifact from one of his builds (cases.yaml); clicking it opens
  * that build. `id` and `tool` are both the build's slug, `verb` is its short name.

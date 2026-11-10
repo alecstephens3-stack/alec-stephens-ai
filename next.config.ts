@@ -75,15 +75,15 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       // One address per page (SEO, 2026-09-28). The same Vercel project also
-      // answers on www.stephensai.co and alecstephens.tech, and every page
+      // answers on www.syntegrityai.com and alecstephens.tech, and every page
       // used to render in full on both: duplicate copies of the whole site,
       // and search results were still showing an old alecstephens.tech
-      // title for "Stephens AI". Permanent redirects hand the ranking to
-      // stephensai.co.
+      // title for "Syntegrity". Permanent redirects hand the ranking to
+      // syntegrityai.com.
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.stephensai.co" }],
-        destination: "https://stephensai.co/:path*",
+        has: [{ type: "host", value: "www.syntegrityai.com" }],
+        destination: "https://syntegrityai.com/:path*",
         permanent: true,
       },
       // alecstephens.tech is the founder domain; its front door is the
@@ -92,13 +92,13 @@ const nextConfig: NextConfig = {
         {
           source: "/",
           has: [{ type: "host" as const, value: host }],
-          destination: "https://stephensai.co/alec",
+          destination: "https://syntegrityai.com/alec",
           permanent: true,
         },
         {
           source: "/:path+",
           has: [{ type: "host" as const, value: host }],
-          destination: "https://stephensai.co/:path+",
+          destination: "https://syntegrityai.com/:path+",
           permanent: true,
         },
       ]),

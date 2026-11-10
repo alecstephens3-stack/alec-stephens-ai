@@ -402,7 +402,7 @@ export const HOME_KO: HomeCopy = {
 export const CHROME_KO: ChromeCopy = {
   lang: "ko",
   home: KR_PATH,
-  homeLabel: "Stephens AI 홈",
+  homeLabel: "Syntegrity 홈",
   skip: "본문 바로가기",
   nav: [
     { label: "서비스", href: `${KR_PATH}#work` },
@@ -425,7 +425,7 @@ export const CHROME_KO: ChromeCopy = {
     workWithUs: { label: "진행 방식", href: `${KR_PATH}#how` },
     portfolio: "알렉의 포트폴리오(영문)",
     email: { label: "이메일", href: `mailto:${CONTACT_EMAIL_JUSHEEN}` },
-    llc: "Stephens AI LLC는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사입니다.",
+    llc: "Syntegrity는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사 Stephens AI LLC의 상호입니다.",
     privacy: "개인정보처리방침(영문)",
     terms: "이용약관(영문)",
   },

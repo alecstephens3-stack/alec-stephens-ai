@@ -24,7 +24,7 @@ const resend = process.env.RESEND_API_KEY
 // Once stephensai.co (or send.stephensai.co) shows Verified in Resend, set
 // CONTACT_FROM_EMAIL in Vercel and this default stops being used.
 const FROM =
-  process.env.CONTACT_FROM_EMAIL ?? "Stephens AI <onboarding@resend.dev>";
+  process.env.CONTACT_FROM_EMAIL ?? "Syntegrity <onboarding@resend.dev>";
 
 // Where the message is delivered. The sandbox sender above only delivers to the
 // Resend account owner's own address, so since the v4 rebuild (2026-08-14)

@@ -63,7 +63,7 @@ export type About = {
 };
 
 export const SITE: Site = {
-  "base_url": "https://stephensai.co",
+  "base_url": "https://syntegrityai.com",
   "path": "/alec",
   "title": "Alec Stephens · What I've built",
   "description": "10 builds I've shipped: insurance claims software, computer-use agents, invoice processing under a HIPAA agreement, a clinic knowledge base, a PTO and payroll system, and more.",
@@ -78,7 +78,7 @@ export const SITE: Site = {
 
 export const ABOUT: About = {
   "name": "Alec Stephens",
-  "role": "Applied AI engineer. Co-founder, Stephens AI.",
+  "role": "Applied AI engineer. Co-founder, Syntegrity.",
   "paragraphs": [
     "I build AI software that takes admin work off clinic staff, and I love doing it. In healthcare, patient data stays in the clinic's own AWS account, under its BAA.",
     "I made 200+ AI tutorial videos for a nine-figure education company. Before that I was hired in Seoul to write English lessons, and left with about 80% of the manual curriculum work handled by AI.",
@@ -86,7 +86,7 @@ export const ABOUT: About = {
   ],
   "credentials": [
     "Upwork: 5+ years, 100% Job Success",
-    "Stephens AI LLC, Kansas"
+    "Syntegrity, Kansas"
   ],
   "cofounder": "Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer.",
   "headshot": "/alec/img/alec.jpg"
@@ -930,9 +930,9 @@ export const CASES: BuildCase[] = [
     "slug": "aios",
     "tier": "short",
     "name": "Our AI operating system",
-    "kicker": "Stephens AI · internal",
+    "kicker": "Syntegrity · internal",
     "line": "The system our company runs on every day. Anything we install for a client runs here first.",
-    "client_short": "Stephens AI",
+    "client_short": "Syntegrity",
     "status": "In daily use",
     "results": [
       {

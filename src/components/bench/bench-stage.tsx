@@ -13,7 +13,7 @@ import "@/components/desk/desk.css";
 import "./bench.css";
 
 /**
- * Alec's bench: stephensai.co/alec (2026-09-23). The same desk engine and lens
+ * Alec's bench: syntegrityai.com/alec (2026-09-23). The same desk engine and lens
  * as /desk and /play, with one object per build on it. A click opens the build
  * in the glass window over the desk. The index strip under the desk reaches
  * every build without hunting, for keyboards and phones. The about copy is the
@@ -107,7 +107,7 @@ export function BenchStage() {
   return (
     <div className={cn("desk-root bn-root", night && "is-night", ready && "is-ready")}>
       <header className="desk-dock sai-pane sai-dock" role="banner">
-        <Link href="/" className="desk-brand" aria-label="Stephens AI home">
+        <Link href="/" className="desk-brand" aria-label="Syntegrity home">
           <Image src={night ? "/logo-dark.svg" : "/logo-light.svg"} alt="" width={122} height={22} priority />
         </Link>
         <span className="desk-dock-title">Alec Stephens · builds</span>

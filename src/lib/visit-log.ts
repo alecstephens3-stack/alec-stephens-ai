@@ -1,6 +1,6 @@
 /**
  * The visit log: one row per real page view, written to a Google Sheet that
- * Stephens AI owns (the Apps Script web app behind VISIT_LOG_URL). It runs in
+ * Syntegrity owns (the Apps Script web app behind VISIT_LOG_URL). It runs in
  * the proxy, on the server, so it needs no cookie, no script in the page, and
  * an ad blocker cannot switch it off. No IP address is stored: the "visitor"
  * value is a hash of IP + browser + a salt that changes every day, enough to
@@ -30,7 +30,7 @@ export type VisitRow = {
   visitor: string;
 };
 
-export const SITE_HOST = "stephensai.co";
+export const SITE_HOST = "syntegrityai.com";
 export const OPT_OUT_COOKIE = "sai_notrack";
 
 const BOT_UA =
@@ -54,7 +54,7 @@ export function cleanPath(path: string): string {
 
 // Order matters: Gemini lives on a google.com subdomain, Gmail too.
 const SOURCES: [RegExp, string][] = [
-  [/(^|\.)stephensai\.co$/, "(inside the site)"],
+  [/(^|\.)syntegrityai\.com$/, "(inside the site)"],
   [/(^|\.)alecstephens\.tech$/, "alecstephens.tech"],
   [/^gemini\.google\./, "Gemini"],
   [/^mail\.google\./, "Email (Gmail)"],
@@ -170,7 +170,7 @@ export async function buildRow(
 ): Promise<VisitRow> {
   const ua = h.get("user-agent") ?? "";
   const utmSource = query.get("utm_source") ?? "";
-  const internal = /(^|\.)stephensai\.co$/.test(hostOf(referrer));
+  const internal = /(^|\.)syntegrityai\.com$/.test(hostOf(referrer));
   const ip = (h.get("x-forwarded-for") ?? "").split(",")[0].trim();
   const now = new Date();
   return {

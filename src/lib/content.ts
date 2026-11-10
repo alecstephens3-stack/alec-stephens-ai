@@ -14,8 +14,8 @@
 
 import { HOME_TESTIMONIALS, type Testimonial } from "./testimonials";
 
-export const SITE_NAME = "Stephens AI";
-export const SITE_URL = "https://stephensai.co";
+export const SITE_NAME = "Syntegrity";
+export const SITE_URL = "https://syntegrityai.com";
 export const CONTACT_EMAIL = "alec@stephensai.co";
 export const SECOND_EMAIL = "jusheen@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
@@ -24,7 +24,7 @@ export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.
 export const LEGAL_UPDATED = "October 10, 2026";
-export const CASE_STUDY_URL = "https://stephensai.co/case-studies/front-desk-knowledge-base";
+export const CASE_STUDY_URL = "https://syntegrityai.com/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
 export const SITE_TAGLINE = "Less busywork for clinics, dental and eye care practices";
@@ -634,7 +634,7 @@ export type QuoteCard = Testimonial & { original?: string };
 export const CHROME_EN = {
   lang: "en",
   home: "/",
-  homeLabel: "Stephens AI, home",
+  homeLabel: "Syntegrity, home",
   skip: "Skip to main content",
   nav: V7_NAV,
   cta: V7_CTA,
@@ -651,7 +651,7 @@ export const CHROME_EN = {
     workWithUs: { label: "Work with us", href: "/#how" },
     portfolio: "Alec's portfolio",
     email: { label: "Email", href: `mailto:${CONTACT_EMAIL}` },
-    llc: "Stephens AI LLC is a Kansas limited liability company based in Wichita, Kansas.",
+    llc: "Syntegrity is the trade name of Stephens AI LLC, a Kansas limited liability company based in Wichita, Kansas.",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
   },

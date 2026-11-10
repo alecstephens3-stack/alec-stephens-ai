@@ -5,7 +5,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_JUSHEEN, SITE_URL } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How Stephens AI LLC collects, uses, and protects information from visitors to stephensai.co and from the practices we work with, including our use of AI tools and our handling of patient information.",
+    "How Syntegrity collects, uses, and protects information from visitors to syntegrityai.com and from the practices we work with, including our use of AI tools and our handling of patient information.",
   alternates: { canonical: `${SITE_URL}/privacy` },
   robots: { index: true, follow: true },
 };
@@ -17,16 +17,15 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          Stephens AI LLC is a Kansas limited liability company that builds
+          Syntegrity is the trade name of Stephens AI LLC, a Kansas limited liability company that builds
           software and AI systems for businesses, with a focus on independent
-          healthcare practices. In this policy, &quot;Stephens AI,&quot;
-          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens
-          AI LLC.
-          &quot;You&quot; refers to any visitor to <strong>stephensai.co</strong>,
+          healthcare practices. In this policy, &quot;Syntegrity,&quot;
+          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens AI LLC.
+          &quot;You&quot; refers to any visitor to <strong>syntegrityai.com</strong>,
           anyone who contacts us, and any client we work with.
         </p>
         <p>
-          Stephens AI is the party responsible for the information described in
+          Syntegrity is the party responsible for the information described in
           this policy. Contact details are provided at the end of this page.
         </p>
       </>
@@ -284,7 +283,7 @@ const sections: LegalSection[] = [
           </li>
         </ul>
         <p>
-          By engaging Stephens AI, you consent to our use of these tools in
+          By engaging Syntegrity, you consent to our use of these tools in
           delivering our services.
         </p>
       </>
@@ -364,7 +363,7 @@ const sections: LegalSection[] = [
         </p>
         <h3>Access to client systems</h3>
         <p>
-          Access to client systems is limited to Stephens AI personnel and
+          Access to client systems is limited to Syntegrity personnel and
           service providers who need it for the work. Our team works remotely,
           including from Asia, and access occurs over encrypted connections.
         </p>
@@ -411,7 +410,7 @@ const sections: LegalSection[] = [
     heading: "International data transfers",
     body: (
       <p>
-        Stephens AI is a United States company, and our service providers are
+        Syntegrity is a United States company, and our service providers are
         primarily located in the United States, where your information is
         stored and processed. Because our team works remotely, including from
         Asia, your information may also be accessed from Asia. If
@@ -456,7 +455,7 @@ const sections: LegalSection[] = [
           founder:
         </p>
         <p>
-          <strong>Stephens AI LLC</strong>
+          <strong>Syntegrity (Stephens AI LLC)</strong>
           <br />
           A Kansas limited liability company
           <br />
@@ -475,7 +474,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
-      summary="This policy describes what information Stephens AI LLC collects through this website and in the course of our business, how we use it, how we use AI tools, and how we handle patient information."
+      summary="This policy describes what information Syntegrity collects through this website and in the course of our business, how we use it, how we use AI tools, and how we handle patient information."
       sections={sections}
     />
   );

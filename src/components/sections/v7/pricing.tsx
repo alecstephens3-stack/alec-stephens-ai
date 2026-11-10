@@ -73,7 +73,7 @@ export function Pricing({
               <p className={s.lead}>{t.lead}</p>
               <p className={s.body}>{t.body}</p>
               <ButtonLink
-                href={`${cta.href}?utm_source=stephensai.co&utm_medium=pricing&utm_content=${t.slug}`}
+                href={`${cta.href}?utm_source=syntegrityai.com&utm_medium=pricing&utm_content=${t.slug}`}
                 external
                 className={cn(s.cta, dark && s.ctaLight)}
               >

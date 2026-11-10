@@ -24,7 +24,7 @@ import {
  * bots almost never do. Not counted: prefetches, files, preview deployments,
  * bots, and anyone carrying the opt-out cookie.
  *
- * Our own visits: open stephensai.co/?notrack=1 once on each browser to stop
+ * Our own visits: open syntegrityai.com/?notrack=1 once on each browser to stop
  * counting it, ?notrack=0 to count it again. The cookie only ever exists on
  * browsers that asked for it.
  */
