@@ -16,14 +16,14 @@ import s from "@/components/sections/stride/stride.module.css";
 
 const TITLE = "Stride Agents";
 const DESCRIPTION =
-  "Stride Agents do the jobs that only exist as clicks inside your practice software, on screen, the way a person does, and only after your doctor says yes. By Syntegrity.";
+  "Stride Agents do the jobs that only exist as clicks inside your practice software, on screen, the way a person does, and only after your doctor says yes. By Stephens AI.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: `${SITE_URL}/stride-agents` },
-  openGraph: { title: `${TITLE} by Syntegrity`, description: DESCRIPTION, url: `${SITE_URL}/stride-agents` },
-  twitter: { title: `${TITLE} by Syntegrity`, description: DESCRIPTION },
+  openGraph: { title: `${TITLE} by Stephens AI`, description: DESCRIPTION, url: `${SITE_URL}/stride-agents` },
+  twitter: { title: `${TITLE} by Stephens AI`, description: DESCRIPTION },
 };
 
 const THREAD = [
@@ -72,7 +72,7 @@ function Lockup() {
     <span className={s.lockup}>
       <span className={s.mark} aria-hidden="true" />
       <span className={s.lockupName}>Stride Agents</span>
-      <span className={s.lockupBy}>by Syntegrity</span>
+      <span className={s.lockupBy}>by Stephens AI</span>
     </span>
   );
 }
