@@ -335,6 +335,28 @@ export const V7_WORK = {
       },
     },
     {
+      // Second on purpose (Alec, 2026-11-11): Stride Agents, the family name beside ClaimStride.
+      // `agent` is this item's own preview: the doctor's text thread beside a made-up screen.
+      // Never name the practice software here.
+      title: "Stride Agents",
+      body: "Some jobs only exist as clicks inside your practice software. Your doctor texts the job, a Stride Agent confirms once, then does it on screen the way a person would.",
+      link: { label: "See Stride Agents", href: "/stride-agents" },
+      agent: {
+        thread: [
+          { me: true, t: "Sign off Nov 2 to 6" },
+          { me: false, t: "I'll sign the finished exams for Nov 2 to Nov 6 as you. Reply yes to start." },
+          { me: true, t: "Yes" },
+          { me: false, t: "Done. 67 exams signed." },
+        ],
+        bar: "Practice software · made-up screen",
+        rows: [
+          { d: "Exam · Nov 2", st: "Signed", now: false },
+          { d: "Exam · Nov 3", st: "Sign", now: true },
+        ],
+        meta: "A text starts the run. The agent does the clicks.",
+      },
+    },
+    {
       title: "Front desk answers",
       body: "Every rule, price and exception in one place staff can search, kept current by your office manager. Systems live in production from Kansas to California.",
       link: { label: "Case study", href: CASE_STUDY_URL },

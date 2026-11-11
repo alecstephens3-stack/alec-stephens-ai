@@ -137,8 +137,36 @@ type Board = Extract<WorkCopy["items"][number], { board: unknown }>["board"];
 function ItemPreview({ items, i, p }: { items: WorkCopy["items"]; i: number; p: WorkCopy["previews"] }) {
   const w = items[i];
   if ("board" in w && w.board) return <ClaimsBoard b={w.board} />;
-  const shared = items.slice(0, i).filter((x) => !("board" in x && x.board)).length;
+  if ("agent" in w && w.agent) return <AgentPreview a={w.agent} />;
+  const shared = items.slice(0, i).filter((x) => !("board" in x && x.board) && !("agent" in x && x.agent)).length;
   return <Preview i={shared} p={p} />;
+}
+
+type Agent = Extract<WorkCopy["items"][number], { agent: unknown }>["agent"];
+
+/** Stride Agents (2026-11-11): the text thread that starts a run, over a made-up screen. */
+function AgentPreview({ a }: { a: Agent }) {
+  return (
+    <div className="sv-app">
+      <div className="sv-thread">
+        {a.thread.map((m) => (
+          <p key={m.t} className={m.me ? "sv-msg is-me" : "sv-msg"}>
+            {m.t}
+          </p>
+        ))}
+      </div>
+      <div className="sv-screen">
+        <p className="sv-screen-bar">{a.bar}</p>
+        {a.rows.map((r) => (
+          <p key={r.d} className={r.now ? "sv-screen-row is-now" : "sv-screen-row"}>
+            <span>{r.d}</span>
+            <span className="sv-screen-st">{r.st}</span>
+          </p>
+        ))}
+      </div>
+      <p className="sv-meta">{a.meta}</p>
+    </div>
+  );
 }
 
 function ClaimsBoard({ b }: { b: Board }) {
