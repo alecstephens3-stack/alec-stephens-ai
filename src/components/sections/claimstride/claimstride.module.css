@@ -15,6 +15,10 @@
 /* The whole page, header and footer included, swaps the site's terracotta for ClaimStride's ocean
    (Alec, 2026-11-11: terracotta clashes with the blue). #0A6E95 under white text is 5.7:1. */
 :global(body):has(.page) {
+  /* The site's warm brown shadows turn cool on this page (header pill, footer card, panes). */
+  --shadow-pane: 0 14px 44px rgba(10, 60, 84, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(10, 28, 38, 0.04);
+  --shadow-pane-hover: 0 22px 56px rgba(10, 60, 84, 0.17), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(10, 28, 38, 0.04);
+  --shadow-float: 0 24px 54px rgba(10, 60, 84, 0.18), inset 0 1px 0 #fff;
   --color-btn: #0A6E95;
   --color-btn-hover: #085C7E;
   --color-btn-shadow: rgba(10, 110, 149, 0.26);
@@ -215,3 +219,6 @@
 @media (prefers-reduced-motion: reduce) {
   .rollStrip, .notchWrap, .notch, .stepN { transition: none; }
 }
+
+/* The hero's floating card: the same shape, a cool shadow. */
+.page :global(.dx-sat) { box-shadow: 0 0 0 1px rgba(10, 28, 38, .10), 0 18px 40px rgba(10, 28, 38, .18), 0 40px 90px rgba(10, 60, 84, .16); }

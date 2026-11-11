@@ -7,6 +7,10 @@
   --sai-sky-fallback: #F6F9F9;
   --draft-crop-lead: #3FD69B;
   --draft-crop-trail: #0E7FA8;
+  /* The site's warm brown shadows turn cool on this page (header pill, footer card, panes). */
+  --shadow-pane: 0 14px 44px rgba(10, 60, 84, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(10, 28, 38, 0.04);
+  --shadow-pane-hover: 0 22px 56px rgba(10, 60, 84, 0.17), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(10, 28, 38, 0.04);
+  --shadow-float: 0 24px 54px rgba(10, 60, 84, 0.18), inset 0 1px 0 #fff;
   --color-btn: #0A6E95;
   --color-btn-hover: #085C7E;
   --color-btn-shadow: rgba(10, 110, 149, 0.26);
