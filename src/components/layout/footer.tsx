@@ -17,7 +17,8 @@ export function Footer() {
   const t = chromeCopy(locale);
   const f = t.footer;
   // ClaimStride keeps its own look, so it closes on the plain glass footer, not the Burin plate (Alec, 2026-10-17).
-  if (pathname?.startsWith("/claimstride")) return <PlainFooter locale={locale} />;
+  // On the two Stride pages the logo dot is ocean too, so nothing terracotta is left (Alec, 2026-11-11).
+  if (pathname?.startsWith("/claimstride") || pathname?.startsWith("/stride-agents")) return <PlainFooter locale={locale} ocean />;
   // The homepages end on the colonnade inside the contact panel, so their footer stays quiet (Alec, 2026-10-17).
   if (pathname === "/" || pathname === "/kr") return <PlainFooter locale={locale} />;
   return (
@@ -77,7 +78,7 @@ export function Footer() {
 }
 
 /** The plain glass footer (the site footer before Burin): ClaimStride, and the homepages, whose plate is in the contact panel. */
-function PlainFooter({ locale }: { locale: ReturnType<typeof localeFromPath> }) {
+function PlainFooter({ locale, ocean = false }: { locale: ReturnType<typeof localeFromPath>; ocean?: boolean }) {
   const t = chromeCopy(locale);
   const f = t.footer;
   return (
@@ -94,7 +95,7 @@ function PlainFooter({ locale }: { locale: ReturnType<typeof localeFromPath> }) 
             aria-label={t.homeLabel}
           >
             <Image
-              src="/logo-light.svg"
+              src={ocean ? "/logo-light-ocean.svg" : "/logo-light.svg"}
               alt="Syntegrity"
               width={160}
               height={36}
