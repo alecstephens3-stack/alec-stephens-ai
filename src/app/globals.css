@@ -39,6 +39,7 @@
   --color-accent-deep: #8F3616;
   --color-btn: #A94A2A;         /* primary button fill (deep terracotta, 2026-11-10) */
   --color-btn-hover: #933F22;
+  --color-btn-shadow: rgba(169, 74, 42, 0.26);
   --color-accent-night: #FF8E76;
   --color-accent-soft: rgba(220, 104, 67, 0.08);
   --color-accent-line: rgba(220, 104, 67, 0.18);
