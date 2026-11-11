@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/v7/hero";
 import { Logos } from "@/components/sections/v7/logos";
+import { ClaimsBand } from "@/components/sections/v7/claims-band";
 import { Work } from "@/components/sections/v7/work";
 import { Proof } from "@/components/sections/v6/proof";
 import { WorkWithUs } from "@/components/sections/v7/work-with-us/work-with-us";
@@ -102,7 +103,14 @@ export function HomeBody({
         }}
       />
       <div className="relative isolate">
-        <Hero visual={visual} copy={c.hero} cta={c.cta} windowCopy={c.heroWindow} />
+        {/* The ClaimStride line is English only for now: the Korean page keeps its own copy. */}
+        <Hero
+          visual={visual}
+          copy={c.hero}
+          cta={c.cta}
+          windowCopy={c.heroWindow}
+          below={locale === "en" ? <ClaimsBand /> : undefined}
+        />
         <Logos label={c.logosLabel} />
         <Work copy={c.work} />
         <PatientStrip copy={c.patient} />

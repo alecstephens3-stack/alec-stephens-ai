@@ -21,7 +21,10 @@ export function Hero({
   copy = HOME_EN.hero,
   cta = HOME_EN.cta,
   windowCopy = HOME_EN.heroWindow,
+  below,
 }: {
+  /** One quiet line under the buttons (the ClaimStride pointer, 2026-11-11). */
+  below?: React.ReactNode;
   visual?: React.ReactNode;
   copy?: HomeCopy["hero"];
   cta?: HomeCopy["cta"];
@@ -43,6 +46,7 @@ export function Hero({
             {copy.secondary.label}
           </ButtonLink>
         </div>
+        {below}
       </div>
       <div className="v7-hero-window">{visual ?? <DepthHero copy={windowCopy} />}</div>
     </section>

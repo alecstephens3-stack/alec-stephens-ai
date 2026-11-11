@@ -240,6 +240,7 @@ export const CONTACT = {
 
 export const V7_NAV = [
   { label: "Services", href: "/#work" },
+  { label: "ClaimStride", href: "/claimstride" },
   { label: "Work with us", href: "/#how" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Founders", href: "/#about" },
@@ -316,6 +317,24 @@ export const V7_WORK = {
   title: "Your staff can focus on patients. We handle the rest.",
   items: [
     {
+      // First on purpose (Alec + Ju Sheen, 2026-11-11): claims is the flagship. `board` is this
+      // item's own preview window; the other items keep the shared `previews` in their order.
+      title: "Claims follow-up",
+      body: "Each unpaid claim is checked with its insurer, so your biller sees where it stands and what to do next. It works from the claims report your practice software already produces. Now in early access.",
+      link: { label: "See ClaimStride", href: "/claimstride" },
+      board: {
+        bar: "Unpaid claims · checked with insurers today",
+        rows: [
+          { what: "Eye exam · medical plan", status: "Denied", next: "Add the referral and send it again.", hot: true },
+          { what: "Glasses · vision plan", status: "In process", next: "Nothing to do. Look again next week.", hot: false },
+          { what: "Office visit · medical plan", status: "Not on file", next: "Send the claim again.", hot: false },
+          { what: "Contact lens fitting · second plan", status: "Waiting", next: "The first plan pays first. No action yet.", hot: false },
+        ],
+        nextLabel: "Next",
+        meta: "Example claims. Each one shows where it stands and the next step.",
+      },
+    },
+    {
       title: "Front desk answers",
       body: "Every rule, price and exception in one place staff can search, kept current by your office manager. Systems live in production from Kansas to California.",
       link: { label: "Case study", href: CASE_STUDY_URL },
@@ -336,6 +355,9 @@ export const V7_WORK = {
     },
   ],
 };
+
+/** The band under the hero that points at ClaimStride (2026-11-11). English homepage only. */
+export const V7_CLAIMS_BAND = { ask: "Behind on unpaid claims?", label: "See ClaimStride", href: "/claimstride" };
 
 export const V7_HOW = {
   kicker: "Work with us",

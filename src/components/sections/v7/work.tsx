@@ -94,7 +94,7 @@ export function Work({ copy = HOME_EN.work }: { copy?: WorkCopy }) {
                     </a>
                   )}
                   <div className="sv-stage sv-stage-inline" aria-hidden="true">
-                    <Preview i={i} p={copy.previews} />
+                    <ItemPreview items={items} i={i} p={copy.previews} />
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export function Work({ copy = HOME_EN.work }: { copy?: WorkCopy }) {
           <div ref={frameRef} className="sv-frame">
             {items.map((w, i) => (
               <div key={w.title} className={cn("sv-shot", i === active && "is-on")}>
-                <Preview i={i} p={copy.previews} />
+                <ItemPreview items={items} i={i} p={copy.previews} />
               </div>
             ))}
           </div>
@@ -126,6 +126,38 @@ export function Work({ copy = HOME_EN.work }: { copy?: WorkCopy }) {
 const Tick = () => (
   <span className="sv-tick"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 5.7 10 11 4" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
 );
+
+type Board = Extract<WorkCopy["items"][number], { board: unknown }>["board"];
+
+/**
+ * An item that carries its own `board` (claims follow-up, 2026-11-11) draws that. Every other
+ * item uses the shared previews, counted in order among the items without a board, so a page
+ * whose copy has no board item (the Korean one) renders exactly as before.
+ */
+function ItemPreview({ items, i, p }: { items: WorkCopy["items"]; i: number; p: WorkCopy["previews"] }) {
+  const w = items[i];
+  if ("board" in w && w.board) return <ClaimsBoard b={w.board} />;
+  const shared = items.slice(0, i).filter((x) => !("board" in x && x.board)).length;
+  return <Preview i={shared} p={p} />;
+}
+
+function ClaimsBoard({ b }: { b: Board }) {
+  return (
+    <div className="sv-app">
+      <div className="sv-bar">{b.bar}</div>
+      <div className="sv-claims">
+        {b.rows.map((r) => (
+          <div key={r.what} className={r.hot ? "sv-claim is-hot" : "sv-claim"}>
+            <p>{r.what}</p>
+            <p className="sv-claim-st">{r.status}</p>
+            <p className="sv-claim-nx"><span>{b.nextLabel}</span>{r.next}</p>
+          </div>
+        ))}
+      </div>
+      <p className="sv-meta">{b.meta}</p>
+    </div>
+  );
+}
 
 function Preview({ i, p }: { i: number; p: WorkCopy["previews"] }) {
   if (i === 0)
