@@ -1248,6 +1248,24 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 .sv-row { display: grid; grid-template-columns: 20px minmax(0,1fr) auto 84px; gap: 10px; align-items: center; font-size: 15px; color: var(--color-ink); }
 .sv-dim { color: rgba(23,19,16,.5); font-size: 14px; }
 .sv-amt { text-align: right; font-variant-numeric: tabular-nums; }
+.sv-claims { display: grid; }
+.sv-claim { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3px 14px; padding: 11px 0; border-bottom: 1px solid rgba(23,19,16,.07); font-size: 15px; line-height: 1.4; color: var(--color-ink); }
+.sv-claim:last-child { border-bottom: 0; }
+.sv-claim-st { font-family: var(--font-label); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-2); align-self: center; }
+.sv-claim.is-hot .sv-claim-st { color: var(--color-accent-deep); }
+.sv-claim-nx { grid-column: 1 / -1; font-size: 14px; color: #6E6258; }
+.sv-claim-nx span { margin-right: 8px; font-weight: 600; color: var(--color-ink-2); }
+/* The line under the hero that points at ClaimStride (2026-11-11): ink on a hairline, no fill. */
+.v7-claims-band { margin-top: 22px; }
+.v7-hero-copy .v7-claims-band { display: flex; justify-content: center; }
+.v7-hero--split .v7-claims-band { justify-content: flex-start; }
+.v7-claims-link { display: inline-flex; max-width: 100%; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 10px 18px; border-radius: 14px; text-align: left; border: 1px solid rgba(23,19,16,.14); background: rgba(255,255,255,.55); font-size: 17px; line-height: 1.35; color: var(--color-ink); transition: background-color 220ms ease, border-color 220ms ease; }
+.v7-claims-link:hover { background: rgba(255,255,255,.9); border-color: rgba(23,19,16,.28); }
+.v7-claims-ask { color: var(--color-ink-2); }
+.v7-claims-go { white-space: nowrap; font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.v7-claims-arrow { font-size: 18px; transition: transform 220ms ease; }
+.v7-claims-link:hover .v7-claims-arrow { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .v7-claims-link, .v7-claims-arrow { transition: none; } .v7-claims-link:hover .v7-claims-arrow { transform: none; } }
 .sv-tick { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--color-ink); color: #fff; flex-shrink: 0; }
 .sv-dl { display: grid; gap: 8px; }
 .sv-dl p { display: grid; grid-template-columns: 90px 1fr; font-size: 15px; color: var(--color-ink); }
@@ -1353,3 +1371,4 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 :lang(ko) .t-title,
 :lang(ko) .t-display { letter-spacing: -0.012em; line-height: 1.28; }
 :lang(ko) .t-label { letter-spacing: 0.02em; }
+
