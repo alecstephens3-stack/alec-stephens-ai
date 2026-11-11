@@ -1519,10 +1519,10 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
         <p class="sub">30分の無料相談で、今のサイトの状態と、作る目的を伺います。その場で概算をお伝えします。<span class="u">売り込みはしません。</span></p>
         <a class="big" href="tel:08033352109">080-3335-2109</a>
         <div class="hrs">平日 9:00〜18:00（日本時間）</div>
-        <a class="mail" href="mailto:alec@stephensai.co">alec@stephensai.co</a>
+        <a class="mail" href="mailto:alec@syntegrityai.com">alec@syntegrityai.com</a>
       </div>
       <div>
-        <form class="f" id="form" action="mailto:alec@stephensai.co" method="get" data-api="/api/contact">
+        <form class="f" id="form" action="mailto:alec@syntegrityai.com" method="get" data-api="/api/contact">
           <div class="two">
             <div><label for="co">会社名</label><input id="co" name="company" required></div>
             <div><label for="nm">お名前</label><input id="nm" name="name" required></div>
@@ -1536,14 +1536,14 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
           <div class="privacy">いただいた情報は、ご相談への返信以外には使いません。</div>
           <div><button class="sai-btn primary" type="submit">送信する</button></div>
         </form>
-        <div class="sai-tile sent" id="sent"><h4>ありがとうございます。</h4><p>内容を受け取りました。翌営業日までに、alec@stephensai.co からご返信します。</p></div>
+        <div class="sai-tile sent" id="sent"><h4>ありがとうございます。</h4><p>内容を受け取りました。翌営業日までに、alec@syntegrityai.com からご返信します。</p></div>
       </div>
     </div>
   </section>
 
   <div class="sai-pane foot">
     <div><b>Syntegrity<span style="white-space:nowrap">（シンテグリティ）</span></b>Stephens AI LLC・米国カンザス州登記<br>代表　アレック・スティーブンス<span style="white-space:nowrap">（Alec Stephens）</span><br>宮城県仙台市<br>ウェブサイト制作・業務のAI活用支援</div>
-    <div><b>連絡先</b><a href="tel:08033352109">080-3335-2109</a><br><a href="mailto:alec@stephensai.co">alec@stephensai.co</a><br>平日 9:00〜18:00（日本時間）</div>
+    <div><b>連絡先</b><a href="tel:08033352109">080-3335-2109</a><br><a href="mailto:alec@syntegrityai.com">alec@syntegrityai.com</a><br>平日 9:00〜18:00（日本時間）</div>
     <div><b>リンク</b><a href="https://kamata-koumuten.co.jp/" target="_blank" rel="noopener">制作実績：鎌田工務店</a><br><a href="https://syntegrityai.com/">English site</a>（会社案内）</div>
   </div>
   <div class="copy">© 2026 Syntegrity</div>
@@ -1661,7 +1661,7 @@ body.sai-dark .sai-pane { background: rgba(255,255,255,0.045); border-color: rgb
     fetch(form.getAttribute('data-api'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){ if(!r.ok) throw new Error(r.status); form.style.display='none'; sent.style.display='block'; })
       .catch(function(){ btn.disabled=false; btn.textContent='送信する';
-        location.href='mailto:alec@stephensai.co?subject='+encodeURIComponent('ホームページ制作のご相談：'+f.company.value)+'&body='+encodeURIComponent('お名前：'+f.name.value+'\nメール：'+f.email.value+'\n'+message); });
+        location.href='mailto:alec@syntegrityai.com?subject='+encodeURIComponent('ホームページ制作のご相談：'+f.company.value)+'&body='+encodeURIComponent('お名前：'+f.name.value+'\nメール：'+f.email.value+'\n'+message); });
   });
 
   /* mobile action bar after the hero */

@@ -10,7 +10,9 @@ What it changes: the name (Stephens AI -> Syntegrity), the web address
 (stephensai.co -> syntegrityai.com), the logo word, the Japanese company line.
 
 What it leaves alone on purpose:
-- email addresses (@stephensai.co): syntegrityai.com has no mailboxes yet.
+- email addresses other than Alec's (@stephensai.co). alec@ moved to
+  alec@syntegrityai.com on 2026-11-11 (mail verified arriving); the old address
+  still works as an alias. Ju Sheen's new address is not verified, so his stays.
 - the QuickBooks connection address (stephensai.co/qb/callback): Intuit only
   knows that one, and Mary's File Invoices app uses stephensai.co.
 - the LinkedIn company page link (linkedin.com/company/stephensai).
@@ -35,11 +37,14 @@ SCAN = ["src", "public", "next.config.ts"]
 # Files where only the display name changes, never the web address (their
 # comments are about the stephensai.co email-sending domain).
 NAME_ONLY = {"src/app/api/contact/route.ts"}
+# Files where Alec's old address stays: the contact route's notes and the
+# QuickBooks callback page Mary's File Invoices app opens.
+KEEP_ALEC_EMAIL = {"src/app/api/contact/route.ts", "src/app/qb/callback/connection-code.tsx"}
 
 ENT = "\x00ENTITY\x00"
 OLD = "\x00OLDNAME\x00"  # the old name, kept where it must stay
 PROTECT = [
-    r"[\w.+-]+@stephensai\.co",          # email addresses
+    r"\b(?!alec@)[\w.+-]+@stephensai\.co",  # email addresses, except Alec's (moved 2026-11-11)
     r"(?:https://)?stephensai\.co/qb/callback",  # Intuit redirect address
     r"send\.stephensai\.co",
     r"stephens-ai-design-system",
@@ -105,6 +110,8 @@ def convert(text: str, rel: str) -> str:
         saved.append(m.group(0))
         return f"\x00K{len(saved) - 1}\x00"
 
+    if rel in KEEP_ALEC_EMAIL:
+        text = re.sub(r"alec@stephensai\.co", keep, text)
     for pat in PROTECT:
         text = re.sub(pat, keep, text)
     for pat, rep in LEGAL:

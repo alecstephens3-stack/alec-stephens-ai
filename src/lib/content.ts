@@ -16,7 +16,7 @@ import { HOME_TESTIMONIALS, type Testimonial } from "./testimonials";
 
 export const SITE_NAME = "Syntegrity";
 export const SITE_URL = "https://syntegrityai.com";
-export const CONTACT_EMAIL = "alec@stephensai.co";
+export const CONTACT_EMAIL = "alec@syntegrityai.com";
 export const SECOND_EMAIL = "jusheen@stephensai.co";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
 export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";

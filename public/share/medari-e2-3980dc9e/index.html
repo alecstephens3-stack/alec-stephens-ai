@@ -1360,9 +1360,9 @@ textarea.cc-field{min-height:110px;resize:vertical}
     .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
     .then(function(x){
       if(x.ok){status.textContent="Got it, thanks Curtis. We'll take it from here.";btn.textContent="Send again"}
-      else{status.textContent="That didn't go through. Please email alec@stephensai.co and we'll sort it out."}
+      else{status.textContent="That didn't go through. Please email alec@syntegrityai.com and we'll sort it out."}
     })
-    .catch(function(){status.textContent="That didn't go through. Please email alec@stephensai.co and we'll sort it out."})
+    .catch(function(){status.textContent="That didn't go through. Please email alec@syntegrityai.com and we'll sort it out."})
     .then(function(){btn.disabled=false});
   });
   if(st.thumb){var a=document.querySelector('input[name="thumb"][value="'+st.thumb+'"]');if(a)a.checked=true}

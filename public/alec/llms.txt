@@ -153,6 +153,6 @@ Stack: Claude plugin, Python, NPI Registry API, Apify.
 My role: I built it, from the spec call to the plugin and walkthrough video.
 
 ## Contact
-Email alec@stephensai.co · Call https://calendly.com/alecpstephens/30min · GitHub https://github.com/alecstephens3-stack · LinkedIn https://www.linkedin.com/in/alecpstephens/
+Email alec@syntegrityai.com · Call https://calendly.com/alecpstephens/30min · GitHub https://github.com/alecstephens3-stack · LinkedIn https://www.linkedin.com/in/alecpstephens/
 
 Updated 2026-11-08

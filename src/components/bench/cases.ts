@@ -67,7 +67,7 @@ export const SITE: Site = {
   "path": "/alec",
   "title": "Alec Stephens · What I've built",
   "description": "10 builds I've shipped: insurance claims software, computer-use agents, invoice processing under a HIPAA agreement, a clinic knowledge base, a PTO and payroll system, and more.",
-  "email": "alec@stephensai.co",
+  "email": "alec@syntegrityai.com",
   "calendly": "https://calendly.com/alecpstephens/30min",
   "github": "https://github.com/alecstephens3-stack",
   "linkedin": "https://www.linkedin.com/in/alecpstephens/",
