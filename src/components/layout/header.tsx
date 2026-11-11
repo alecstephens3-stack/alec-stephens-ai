@@ -95,7 +95,7 @@ export function Header() {
           aria-label={t.homeLabel}
         >
           <Image
-            src="/logo-light.svg"
+            src={pathname?.startsWith("/claimstride") || pathname?.startsWith("/stride-agents") ? "/logo-light-ocean.svg" : "/logo-light.svg"}
             alt="Stephens AI"
             width={180}
             height={40}
