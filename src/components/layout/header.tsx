@@ -129,7 +129,7 @@ export function Header() {
             href={t.cta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-1.5 rounded-full bg-[var(--color-btn)] px-4 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-white shadow-[0_8px_20px_rgba(169,74,42,0.26)] transition-all duration-[220ms] hover:-translate-y-px hover:bg-[var(--color-btn-hover)]"
+            className="ml-1.5 rounded-full bg-[var(--color-btn)] px-4 py-2 font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-white shadow-[0_8px_20px_var(--color-btn-shadow)] transition-all duration-[220ms] hover:-translate-y-px hover:bg-[var(--color-btn-hover)]"
           >
             {t.cta.short} &rarr;
           </a>

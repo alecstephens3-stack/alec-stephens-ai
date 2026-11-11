@@ -17,6 +17,7 @@
 :global(body):has(.page) {
   --color-btn: #0A6E95;
   --color-btn-hover: #085C7E;
+  --color-btn-shadow: rgba(10, 110, 149, 0.26);
   --color-accent: #0E7FA8;
   --color-accent-display: #0A6E95;
   --color-accent-deep: #0A5F82;
