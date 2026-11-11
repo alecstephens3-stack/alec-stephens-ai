@@ -49,13 +49,42 @@ const FEATURES = [
   },
 ];
 
+/* Plain words for a practice owner (11 Nov 2026: the list of code tools meant nothing to them). */
 const UNDER = [
-  { k: "How it fits together", v: "A FastAPI service. Plain code parses the report and every insurer answer; Claude on AWS Bedrock reads scanned EOBs. Same claim, same status, every run." },
-  { k: "Tested", v: "2,596 automated tests." },
-  { k: "Cost to run", v: "About 30 cents a check." },
+  { k: "Where your data lives", v: "On a private server set up for your practice alone, under a signed BAA." },
+  { k: "Who can sign in", v: "Only your practice's own people." },
+  { k: "What a lookup costs", v: "You see the cost before every run, and you set a monthly limit." },
+  { k: "How it's tested", v: "2,596 automated tests run before every release." },
 ];
 
-const STACK = ["Claude on AWS Bedrock", "Python", "FastAPI", "Stedi API", "X12 276/277", "X12 270/271", "AWS", "pytest"];
+/* Real use at Wichita Family Vision (context/portfolio.md, build 4). Named with Dr. Stephens's OK. */
+const REAL = [
+  { n: "1,140 claims", l: "read from the biller's own report, with every total adding up" },
+  { n: "97 insurer checks", l: "on her real claims, answers back in about 2 minutes" },
+];
+
+/* Price set by Alec on 11 Nov 2026 (decisions/log.md). */
+const PRICE = [
+  {
+    k: "First run on your own report",
+    n: "$1,199",
+    u: "one time",
+    v: "Send the claims report you already run. We check your unpaid claims with their insurers, up to 300 lookups, and walk your biller through where each one stands and the next step.",
+  },
+  {
+    k: "Then, each month",
+    n: "$599",
+    u: "a month per location",
+    v: "300 insurer lookups a month are included, and more are 35 cents each. Setup is quoted after your first run, because it depends on your practice software.",
+  },
+];
+
+const BESIDE = [
+  { k: "It gets the answer", v: "ClaimStride asks the insurer where each claim stands, so your biller starts with an answer and the next step." },
+  { k: "Payment files are read for you", v: "ERAs and scanned EOBs are read as they arrive, so a denial shows its codes in plain words." },
+  { k: "Nothing to switch off", v: "It works from the report you already export. Your claims tool and your clearinghouse stay as they are." },
+  { k: "The nearest deadline comes first", v: "Claims are ordered by timely filing deadline, so the ones about to expire are worked first." },
+];
 
 function Lockup() {
   return (
@@ -98,6 +127,21 @@ export default function ClaimStridePage() {
         </div>
       </section>
 
+      <Section>
+        <AnimateOnScroll className={s.real}>
+          <p className={s.realLead}>In real use at Wichita Family Vision, an eye clinic in Kansas</p>
+          <div className={s.realNums}>
+            {REAL.map((r) => (
+              <div key={r.n}>
+                <p className={s.realN}>{r.n}</p>
+                <p className={s.realL}>{r.l}</p>
+              </div>
+            ))}
+          </div>
+          <p className={s.realNote}>The screens on this page use made-up patients, so no real patient is ever shown.</p>
+        </AnimateOnScroll>
+      </Section>
+
       <Section id="how" kicker="How it works" title="From the report you already run to the next step on each claim." titleMax="max-w-[24ch]">
         <ClaimStrideSteps />
       </Section>
@@ -124,12 +168,43 @@ export default function ClaimStridePage() {
               &ldquo;This all reads very accurate&hellip; it really truly gives you everything that you would need at a
               quick glance.&rdquo;
             </blockquote>
-            <figcaption className={s.quoteW}>The biller at a Kansas eye clinic, reviewing the board on her own claims</figcaption>
+            <figcaption className={s.quoteW}>The biller at Wichita Family Vision, reviewing the board on her own claims</figcaption>
           </figure>
         </AnimateOnScroll>
       </Section>
 
-      <Section kicker="How it's built" title="It works from exported reports, so there's no vendor integration to wait for." titleMax="max-w-[26ch]">
+      <Section kicker="Next to what you use" title="Keep your claims tool and your clearinghouse. ClaimStride does the follow-up they leave to your biller." titleMax="max-w-[28ch]">
+        <div className={s.features}>
+          {BESIDE.map((f, i) => (
+            <AnimateOnScroll key={f.k} delay={i * 80} className={s.feature}>
+              <p className={s.featureK}>{f.k}</p>
+              <p className={s.featureV}>{f.v}</p>
+            </AnimateOnScroll>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="price" kicker="Price" title="See your own stuck claims first. Then decide." titleMax="max-w-[22ch]">
+        <div className={s.prices}>
+          {PRICE.map((p, i) => (
+            <AnimateOnScroll key={p.k} delay={i * 80} className={s.price}>
+              <p className={s.priceK}>{p.k}</p>
+              <p className={s.priceN}>
+                {p.n} <span>{p.u}</span>
+              </p>
+              <p className={s.priceV}>{p.v}</p>
+            </AnimateOnScroll>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <ButtonLink href={V7_CTA.href} external>
+            {V7_CTA.label}
+          </ButtonLink>
+          <p className={s.priceNote}>It starts with a free 30-minute call.</p>
+        </div>
+      </Section>
+
+      <Section kicker="How it's set up" title="It works from exported reports, so there's no vendor integration to wait for." titleMax="max-w-[26ch]">
         <AnimateOnScroll className={s.under}>
           <p className={s.underLead}>No electronic answer means a call, never a guess.</p>
           <dl className={s.underGrid}>
@@ -140,11 +215,6 @@ export default function ClaimStridePage() {
               </div>
             ))}
           </dl>
-          <ul className={s.chips} aria-label="Built with">
-            {STACK.map((c) => (
-              <li key={c}>{c}</li>
-            ))}
-          </ul>
         </AnimateOnScroll>
       </Section>
 
