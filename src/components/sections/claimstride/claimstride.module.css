@@ -12,6 +12,20 @@
   --draft-crop-trail: #0E7FA8;
 }
 .page :global(.draft-crop.t-label) { color: #0A6E95; }
+/* The whole page, header and footer included, swaps the site's terracotta for ClaimStride's ocean
+   (Alec, 2026-11-11: terracotta clashes with the blue). #0A6E95 under white text is 5.7:1. */
+:global(body):has(.page) {
+  --color-btn: #0A6E95;
+  --color-btn-hover: #085C7E;
+  --color-accent: #0E7FA8;
+  --color-accent-display: #0A6E95;
+  --color-accent-deep: #0A5F82;
+  --color-accent-night: #5CC8EC;
+  --color-accent-soft: rgba(14, 127, 168, 0.08);
+  --color-accent-line: rgba(14, 127, 168, 0.18);
+}
+:global(body):has(.page) :global(.sai-btn.primary) { box-shadow: 0 8px 20px rgba(10, 110, 149, 0.26); }
+:global(body):has(.page) :global(.sai-btn.primary:hover) { box-shadow: 0 12px 26px rgba(8, 92, 126, 0.34); }
 :global(body):has(.page) :global(.sai-tint),
 :global(body):has(.page) :global(.draft-grain) { display: none; }
 
