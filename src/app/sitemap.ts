@@ -59,6 +59,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      // ClaimStride, our claims product: the homepage's hero with its worklist in the window.
+      url: `${SITE_URL}/stride-agents`,
+      lastModified: CLAIMSTRIDE_PUBLISHED,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/case-studies/front-desk-knowledge-base`,
       lastModified: LEGAL_PUBLISHED,
       changeFrequency: "monthly",
