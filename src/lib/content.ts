@@ -17,9 +17,9 @@ import { HOME_TESTIMONIALS, type Testimonial } from "./testimonials";
 export const SITE_NAME = "Syntegrity";
 export const SITE_URL = "https://syntegrityai.com";
 export const CONTACT_EMAIL = "alec@syntegrityai.com";
-export const SECOND_EMAIL = "jusheen@stephensai.co";
+export const SECOND_EMAIL = "jusheen@syntegrityai.com";
 export const CALENDLY = "https://calendly.com/alecpstephens/30min";
-export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
+export const CONTACT_EMAIL_JUSHEEN = "jusheen@syntegrityai.com";
 
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.

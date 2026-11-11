@@ -12,7 +12,7 @@ What it changes: the name (Stephens AI -> Syntegrity), the web address
 What it leaves alone on purpose:
 - email addresses other than Alec's (@stephensai.co). alec@ moved to
   alec@syntegrityai.com on 2026-11-11 (mail verified arriving); the old address
-  still works as an alias. Ju Sheen's new address is not verified, so his stays.
+  still works as an alias. Ju Sheen's moved the same day (Alec confirmed it works).
 - the QuickBooks connection address (stephensai.co/qb/callback): Intuit only
   knows that one, and Mary's File Invoices app uses stephensai.co.
 - the LinkedIn company page link (linkedin.com/company/stephensai).
@@ -44,7 +44,7 @@ KEEP_ALEC_EMAIL = {"src/app/api/contact/route.ts", "src/app/qb/callback/connecti
 ENT = "\x00ENTITY\x00"
 OLD = "\x00OLDNAME\x00"  # the old name, kept where it must stay
 PROTECT = [
-    r"\b(?!alec@)[\w.+-]+@stephensai\.co",  # email addresses, except Alec's (moved 2026-11-11)
+    r"\b(?!alec@|jusheen@)[\w.+-]+@stephensai\.co",  # email addresses, except the two founders' (moved 2026-11-11)
     r"(?:https://)?stephensai\.co/qb/callback",  # Intuit redirect address
     r"send\.stephensai\.co",
     r"stephens-ai-design-system",
