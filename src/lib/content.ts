@@ -308,6 +308,7 @@ export const V7_LOGOS = {
     { name: "Workthentic", src: "/logos/workthentic.png", w: 209, h: 96, size: 44 },
     { name: "Kamata Koumuten", src: "/logos/kamata.png", w: 543, h: 96, size: 32 },
     { name: "Medari Advisors", src: "/logos/medari.png", w: 239, h: 96, size: 44 },
+    { name: "Stedi", src: "/logos/stedi.png", w: 269, h: 96, size: 28 },
     { name: "Tri-Valley Dental Care", src: "/logos/trivalley.png", w: 723, h: 96, size: 26 },
   ],
 };
