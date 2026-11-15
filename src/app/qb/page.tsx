@@ -21,7 +21,7 @@ export default function QuickBooksInfo() {
       <div className="mx-auto max-w-3xl">
         <section className="rounded-panel sai-pane px-7 py-9 md:px-10 md:py-11">
           <p className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-accent-deep">
-            Syntegrity
+            Syntegrity LLC
           </p>
           <h1 className="mt-3 font-heading text-[34px] font-medium leading-[1.08] tracking-[-0.025em] text-ink md:text-[44px]">
             File Invoices and QuickBooks

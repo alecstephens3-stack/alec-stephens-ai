@@ -25,7 +25,7 @@ export function PortfolioBurinFooter({ name, role, email, linkedin }: { name: st
           <a href={`mailto:${email}`}>Email</a>
         </div>
         <div className="burin-foot-legal">
-          <span className="burin-foot-co">&copy; 2026 Syntegrity</span>
+          <span className="burin-foot-co">&copy; 2026 Syntegrity LLC</span>
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
         </div>

@@ -45,7 +45,7 @@ export function HomeBody({
         "@type": "ProfessionalService",
         "@id": `${SITE_URL}#business`,
         name: SITE_NAME,
-        legalName: "Stephens AI LLC",
+        legalName: "Syntegrity LLC",
         description: SITE_DESCRIPTION,
         url: SITE_URL,
         email: CONTACT_EMAIL,

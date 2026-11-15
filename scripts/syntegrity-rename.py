@@ -16,10 +16,11 @@ What it leaves alone on purpose:
 - the QuickBooks connection address (stephensai.co/qb/callback): Intuit only
   knows that one, and Mary's File Invoices app uses stephensai.co.
 - the LinkedIn company page link (linkedin.com/company/stephensai).
-- the legal entity: until Kansas approves the name change (form mailed
-  2026-11-05) the company is Stephens AI LLC, so the legal pages say
-  "Syntegrity is the trade name of Stephens AI LLC". Once approved, run with
-  --kansas-approved and every legal line becomes Syntegrity LLC.
+- the former legal name: Kansas approved the name change on 2026-11-12, so
+  both sites now name the company Syntegrity LLC, and the legal lines on main
+  already say it with "(formerly Stephens AI LLC)" beside it. Every
+  "formerly Stephens AI" phrase (and its Korean and Japanese forms) is kept
+  as written. --kansas-approved is still accepted and does nothing.
 
 Idempotent: running it twice changes nothing the second time.
 """
@@ -29,8 +30,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-APPROVED = "--kansas-approved" in sys.argv
-ENTITY = "Syntegrity LLC" if APPROVED else "Stephens AI LLC"
+ENTITY = "Syntegrity LLC"  # Kansas approved the rename 2026-11-12
 
 TEXT_EXT = {".ts", ".tsx", ".js", ".mjs", ".css", ".html", ".txt", ".svg", ".md", ".json"}
 SCAN = ["src", "public", "next.config.ts"]
@@ -49,45 +49,19 @@ PROTECT = [
     r"send\.stephensai\.co",
     r"stephens-ai-design-system",
     r"/dev/stephens-ai/",
-    # entity lines this script already wrote (keeps a second run a no-op)
-    r"trade name of Stephens AI LLC",
-    r"\(Stephens AI LLC\)",
-    r"유한책임회사 Stephens AI LLC의",
-    r"Stephens AI LLC・",
-    r'"Syntegrity AI", "Stephens AI"',
+    # the former legal name, kept on purpose (Kansas approved 2026-11-12)
+    r"formerly Stephens AI(?: LLC)?",
+    r"구 Stephens AI LLC",
+    r"旧社名 Stephens AI LLC",
+    r'"Syntegrity AI", "Stephens AI"',  # structured data this script already wrote
 ]
 
 S = r"Stephens\s+AI"
-# Legal sentences, rewritten before the generic swap. ENT keeps the entity name.
+# Legal lines: main names Syntegrity LLC itself (since 2026-11-15), so the only
+# rewrite left is the structured-data alias list.
 LEGAL = [
-    # "X LLC is a Kansas limited liability company that builds ..."
-    (rf"{S}\s+LLC is a Kansas limited liability company",
-     "Syntegrity LLC is a Kansas limited liability company" if APPROVED else
-     f"Syntegrity is the trade name of {ENT}, a Kansas limited liability company"),
-    # "... refer to Stephens AI LLC."
-    (rf"refer to {S}\s+LLC\.", f"refer to {ENT}."),
-    # contact blocks at the end of the legal pages
-    (rf"<strong>{S}\s+LLC</strong>",
-     f"<strong>{ENT}</strong>" if APPROVED else f"<strong>Syntegrity ({ENT})</strong>"),
-    # the site footer sentence about the company
-    (rf"{S}\s+LLC is a Kansas limited liability company based in Wichita, Kansas\.",
-     "Syntegrity LLC is a Kansas limited liability company based in Wichita, Kansas." if APPROVED else
-     f"Syntegrity is the trade name of {ENT}, a Kansas limited liability company based in Wichita, Kansas."),
-    # Korean version of the same sentence
-    (rf"{S}\s+LLC는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사입니다\.",
-     "Syntegrity LLC는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사입니다." if APPROVED else
-     f"Syntegrity는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사 {ENT}의 상호입니다."),
-    # footer copyright line, built from SITE_NAME + " LLC"
-    (r"getFullYear\(\)\} \{SITE_NAME\}(?! LLC)", "getFullYear()} {SITE_NAME} LLC") if APPROVED else
-    (r"getFullYear\(\)\} \{SITE_NAME\} LLC", "getFullYear()} {SITE_NAME}"),
-    # structured data for Google
-    (rf'legalName: "{S}\s+LLC"', f'legalName: "{ENT}"'),
     (rf'alternateName: \["{S}\s+LLC", "stephensai\.co"\]',
      'alternateName: ["Syntegrity AI", "' + OLD + '", "syntegrityai.com"]'),
-    # Japanese company block
-    (rf"<b>{S}\s+LLC<span style=\"white-space:nowrap\">（スティーブンス・エーアイ）</span></b>米国カンザス州登記",
-     "<b>Syntegrity<span style=\"white-space:nowrap\">（シンテグリティ）</span></b>"
-     + ("米国カンザス州登記" if APPROVED else f"{ENT}・米国カンザス州登記")),
 ]
 
 GENERIC = [
@@ -144,7 +118,7 @@ def main() -> None:
         if new != old:
             f.write_text(new, encoding="utf-8")
             changed += 1
-    print(f"{changed} files changed ({'Kansas approved' if APPROVED else 'trade-name wording'})")
+    print(f"{changed} files changed")
 
     # Leftover check: every remaining mention, for a person to read.
     out = subprocess.run(
