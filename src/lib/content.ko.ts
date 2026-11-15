@@ -425,7 +425,7 @@ export const CHROME_KO: ChromeCopy = {
     workWithUs: { label: "진행 방식", href: `${KR_PATH}#how` },
     portfolio: "알렉의 포트폴리오(영문)",
     email: { label: "이메일", href: `mailto:${CONTACT_EMAIL_JUSHEEN}` },
-    llc: "Stephens AI LLC는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사입니다.",
+    llc: "Syntegrity LLC(구 Stephens AI LLC)는 미국 캔자스주 위치토에 있는 캔자스주 유한책임회사입니다.",
     privacy: "개인정보처리방침(영문)",
     terms: "이용약관(영문)",
   },

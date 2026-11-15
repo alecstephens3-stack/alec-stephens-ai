@@ -5,7 +5,7 @@ import { CONTACT_EMAIL, CONTACT_EMAIL_JUSHEEN, SITE_URL } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms governing use of stephensai.co and engagements with Stephens AI LLC, including proposals, payment, ownership of deliverables, use of AI, support, and limitation of liability.",
+    "The terms governing use of stephensai.co and engagements with Syntegrity LLC, including proposals, payment, ownership of deliverables, use of AI, support, and limitation of liability.",
   alternates: { canonical: `${SITE_URL}/terms` },
   robots: { index: true, follow: true },
 };
@@ -18,7 +18,7 @@ const sections: LegalSection[] = [
       <>
         <p>
           These terms govern your use of <strong>stephensai.co</strong> and any
-          engagement of Stephens AI LLC for services. By using the website or
+          engagement of Syntegrity LLC for services. By using the website or
           accepting a proposal from us, you agree to these terms.
         </p>
         <p>
@@ -35,11 +35,11 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          Stephens AI LLC is a Kansas limited liability company that builds
-          software and AI systems for businesses, with a focus on independent
-          healthcare practices. In these terms, &quot;Stephens AI,&quot;
-          &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to Stephens
-          AI LLC.
+          Syntegrity LLC (formerly Stephens AI LLC) is a Kansas limited
+          liability company that builds software and AI systems for
+          businesses, with a focus on independent healthcare practices. In
+          these terms, &quot;Stephens AI,&quot; &quot;we,&quot; &quot;us,&quot;
+          and &quot;our&quot; refer to Syntegrity LLC.
         </p>
       </>
     ),
@@ -599,7 +599,7 @@ const sections: LegalSection[] = [
       <>
         <p>Questions regarding these terms may be directed to either founder:</p>
         <p>
-          <strong>Stephens AI LLC</strong>
+          <strong>Syntegrity LLC</strong> (formerly Stephens AI LLC)
           <br />
           A Kansas limited liability company
           <br />
@@ -618,7 +618,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Terms of Service"
-      summary="These terms govern use of this website and engagements with Stephens AI LLC, including how proposals control an engagement, ownership of deliverables, our use of AI, support, and the limits of our liability."
+      summary="These terms govern use of this website and engagements with Syntegrity LLC, including how proposals control an engagement, ownership of deliverables, our use of AI, support, and the limits of our liability."
       sections={sections}
     />
   );

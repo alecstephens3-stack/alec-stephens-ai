@@ -60,7 +60,7 @@ export function Footer() {
         <div className="site-foot-legal">
           {/* The year is the build's on the server and the visitor's here: they differ only across New Year. */}
           <span suppressHydrationWarning className="site-foot-co">
-            &copy; {new Date().getFullYear()} {SITE_NAME} LLC
+            &copy; {new Date().getFullYear()} Syntegrity LLC
           </span>
           <span>{f.llc}</span>
           <Link href="/privacy">{f.privacy}</Link>
@@ -147,7 +147,7 @@ function PlainFooter({ locale, ocean = false }: { locale: ReturnType<typeof loca
             suppressHydrationWarning
             className="font-label text-[13.5px] font-semibold uppercase tracking-[0.05em] text-ink-2"
           >
-            &copy; {new Date().getFullYear()} {SITE_NAME} LLC
+            &copy; {new Date().getFullYear()} Syntegrity LLC
           </p>
           <p className="mt-1.5 text-[13.5px] text-ink-2">
             {f.llc}

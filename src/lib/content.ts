@@ -23,7 +23,7 @@ export const CONTACT_EMAIL_JUSHEEN = "jusheen@stephensai.co";
 
 // Shown on /privacy and /terms. Bump this whenever either page changes in
 // substance, not for typo fixes.
-export const LEGAL_UPDATED = "October 10, 2026";
+export const LEGAL_UPDATED = "November 15, 2026";
 export const CASE_STUDY_URL = "https://stephensai.co/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
@@ -695,7 +695,7 @@ export const CHROME_EN = {
     workWithUs: { label: "Work with us", href: "/#how" },
     portfolio: "Alec's portfolio",
     email: { label: "Email", href: `mailto:${CONTACT_EMAIL}` },
-    llc: "Stephens AI LLC is a Kansas limited liability company based in Wichita, Kansas.",
+    llc: "Syntegrity LLC (formerly Stephens AI LLC) is a Kansas limited liability company based in Wichita, Kansas.",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
   },
