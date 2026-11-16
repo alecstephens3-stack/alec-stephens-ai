@@ -181,47 +181,127 @@ export const FOUNDERS: Founder[] = [
   },
 ];
 
+// Rewritten 16 Nov 2026 (Alec: "so outdated"). The old set only described the knowledge base.
+// Every fact below is already stated elsewhere on the site (services, price card, /claimstride,
+// /stride-agents). Grouped by topic; FAQ stays as the flat list for the FAQPage structured data.
 export const FAQ_SECTION = {
   kicker: "Common questions",
-  title: "A few questions you'll probably have.",
+  title: "Questions clinics ask before they start.",
   summary:
-    "The questions clinics ask us on the first call, answered before you spend one.",
+    "Straight answers on patient data, our guarantee, and what happens after you say yes.",
 };
 
-export const FAQ = [
+export type FaqItem = { q: string; a: string };
+export type FaqGroup = { id: string; title: string; items: FaqItem[] };
+
+export const FAQ_GROUPS: FaqGroup[] = [
   {
-    q: "Does any patient information go into this?",
-    a: "Only when the job calls for it. The knowledge base holds none: it's your rules, prices, and protocols, not your charts. For work that does involve patient data, like billing or claims, a BAA sets out exactly where it is processed and stored. We sign a BAA before we start either way.",
+    id: "start",
+    title: "Getting started",
+    items: [
+      {
+        q: "What does Stephens AI do?",
+        a: "We find where your practice loses time and money, then build the fix around the tools you already use. Today that means claims follow-up, agents that do the clicking inside your practice software, front desk answers, bills into QuickBooks, and time off and payroll.",
+      },
+      {
+        q: "What happens on the first call?",
+        a: "It is free and takes about 30 minutes. You tell us what slows your practice down, and we find where you can get the best results. Afterwards we send you our analysis, the Opportunity Map, which is yours to keep whatever you decide next.",
+      },
+      {
+        q: "How long until our staff are using it?",
+        a: "About 30 days for one build. Your team is involved early on, so by launch it fits the way they already work.",
+      },
+      {
+        q: "Is this only for eye care?",
+        a: "No. We build for independent healthcare practices. Our systems run today in an eye clinic in Kansas and a dental practice in California.",
+      },
+    ],
   },
   {
-    q: "Do we have to write the content ourselves?",
-    a: "No. You share the documents you already have, as they are. We read through them, figure out what's current and what's stale, write the pages, and check each one with your office manager before it goes in.",
+    id: "data",
+    title: "Patient data",
+    items: [
+      {
+        q: "Does any patient information go into this?",
+        a: "Only when the job calls for it, and we sign a BAA before we start either way. Most of what we build never touches patient data. Front desk answers, for example, hold your rules, prices and protocols, not your charts.",
+      },
+      {
+        q: "Where does patient data live when a job needs it?",
+        a: "On systems set up for your practice alone, under a signed BAA. ClaimStride runs on a private server for your practice, and only your own people can sign in. A Stride Agent works on a computer set up for your practice, and no patient screen is opened before the BAA is signed.",
+      },
+    ],
   },
   {
-    q: "Does it matter what practice software we use?",
-    a: "No. Most of what we build sits alongside your practice software rather than inside it, so it works with whatever you have. If a job does need to connect to your system, we scope that with you on the first call.",
+    id: "claims",
+    title: "Claims follow-up",
+    items: [
+      {
+        q: "What is ClaimStride?",
+        a: "It checks each unpaid claim with its insurer, so your billing specialist sees where every claim stands and what to do next. It works from the claims report your practice software already produces. It is in early access now.",
+      },
+      {
+        q: "Which practice software does it work with?",
+        a: "It works from Compulink and Dentrix reports today. If you use something else, tell us on the free call and we will look at the report your system produces.",
+      },
+      {
+        q: "What does ClaimStride cost?",
+        a: "$1,199 for a first run: you send the claims report you already run, we check your unpaid claims with their insurers, up to 300 lookups, and walk your billing specialist through where each one stands. After that it is $599 a month per location with 300 lookups included, and more are 35 cents each. Setup is quoted after your first run, because it depends on your practice software.",
+      },
+    ],
   },
   {
-    q: "Who keeps it up to date after launch?",
-    a: "Your office manager, right inside the knowledge base. Every change is saved and can be undone with one click. If you'd rather we go through it with your office manager every so often, that's what the monthly support is for.",
+    id: "agents",
+    title: "Stride Agents",
+    items: [
+      {
+        q: "What is a Stride Agent?",
+        a: "Some jobs only exist as clicks inside your practice software. Your doctor texts the job, and a Stride Agent does it on screen the way a person would.",
+      },
+      {
+        q: "Does an agent ever act without asking?",
+        a: "No. A text from your doctor starts every run, and the agent confirms what it is about to do once before it begins. When it finishes, it texts back what it did.",
+      },
+    ],
   },
   {
-    q: "How long until staff are using it?",
-    a: "About 30 days for one build. Your team is involved early on, so by launch it's answering the questions they were already asking.",
+    id: "terms",
+    title: "Guarantee and terms",
+    items: [
+      {
+        q: "What if it doesn't do what you said?",
+        a: "Then you don't pay for it. What we will build is agreed in writing before we start, and if it doesn't do what we agreed, you get your money back.",
+      },
+      {
+        q: "What is the monthly fee for, and are we locked in?",
+        a: "The monthly fee is our guarantee that everything we build keeps doing its job, and if it stops, we fix it. There is no long-term contract. You can cancel any time and your content stays yours.",
+      },
+    ],
   },
   {
-    q: "Is this only for the front desk?",
-    a: "No. It started there because that's where the interruptions were. Any role with rules people carry in their heads works the same way.",
-  },
-  {
-    q: "What does it cost?",
-    a: "Three flat prices: $4,500, $7,500 or $20,000 for the build, then $399, $699 or $1,499 a month. Your free discovery call tells you which fits. The monthly fee is our guarantee that everything we build keeps doing its job. No hourly billing and no long-term contract.",
-  },
-  {
-    q: "Does our IT company have to do anything?",
-    a: "No. There's nothing for them to install. It opens in a browser, doesn't need admin rights, and nothing on your server changes.",
+    id: "team",
+    title: "Your team and your systems",
+    items: [
+      {
+        q: "Does it matter what practice software we use?",
+        a: "Usually not. Most of what we build sits alongside your practice software, not inside it, so it works with whatever you have. If a job does need to connect to your system, we scope that with you on the first call.",
+      },
+      {
+        q: "Does our IT company have to do anything?",
+        a: "Usually not. Most of what we build opens in a browser, with nothing to install and no change to your server. If a job needs more than that, we tell you before we start.",
+      },
+      {
+        q: "Do we have to write anything ourselves?",
+        a: "No. You share the documents you already have, as they are. We read through them, work out what is current and what is stale, and check our work with your office manager before it goes live.",
+      },
+      {
+        q: "Who keeps it up to date after launch?",
+        a: "We keep every build running under the monthly fee. Your front desk answers are yours to edit: your office manager changes them in place, and every change is saved and can be undone.",
+      },
+    ],
   },
 ];
+
+export const FAQ: FaqItem[] = FAQ_GROUPS.flatMap((g) => g.items);
 
 export const CONTACT = {
   kicker: "Book a call",
