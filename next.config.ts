@@ -88,17 +88,18 @@ const nextConfig: NextConfig = {
       },
       // alecstephens.tech is the founder domain; its front door is the
       // portfolio. Was 302 for the first weeks, permanent since 2026-09-28.
+      // Points at syntegrityai.com since 2026-11-17 (Alec: matches the new name).
       ...["alecstephens.tech", "www.alecstephens.tech"].flatMap((host) => [
         {
           source: "/",
           has: [{ type: "host" as const, value: host }],
-          destination: "https://stephensai.co/alec",
+          destination: "https://syntegrityai.com/alec",
           permanent: true,
         },
         {
           source: "/:path+",
           has: [{ type: "host" as const, value: host }],
-          destination: "https://stephensai.co/:path+",
+          destination: "https://syntegrityai.com/:path+",
           permanent: true,
         },
       ]),
