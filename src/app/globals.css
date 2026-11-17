@@ -1273,7 +1273,7 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 .v7-claims-link { display: inline-flex; max-width: 100%; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 10px 18px; border-radius: 14px; text-align: left; border: 1px solid rgba(23,19,16,.14); background: rgba(255,255,255,.55); font-size: 17px; line-height: 1.35; color: var(--color-ink); transition: background-color 220ms ease, border-color 220ms ease; }
 .v7-claims-link:hover { background: rgba(255,255,255,.9); border-color: rgba(23,19,16,.28); }
 .v7-claims-ask { color: var(--color-ink-2); }
-.v7-claims-go { white-space: nowrap; font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.v7-claims-go { white-space: nowrap; font-weight: 500; }
 .v7-claims-arrow { font-size: 18px; transition: transform 220ms ease; }
 .v7-claims-link:hover .v7-claims-arrow { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) { .v7-claims-link, .v7-claims-arrow { transition: none; } .v7-claims-link:hover .v7-claims-arrow { transform: none; } }
@@ -1416,3 +1416,15 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 .draft-crop.is-block::after { display: none; }
 .draft-crop-frame::before, .draft-crop-frame::after { display: none; }
+
+/* ——— Arrow link (17 Nov 2026, Alec's pick "Disc arrow"): a text link whose arrow sits in the same
+   shaded disc as the section mark. Replaces the terracotta underline + "→". Markup:
+   <a class="arrow-link"><span>Label</span><span class="arrow-link-ar" aria-hidden="true" /></a> ——— */
+:root { --arrow-disc: linear-gradient(135deg, #F6A682, #D95F3A); --arrow-disc-shadow: 2px 3px 5px rgba(23,19,16,.22); --arrow-glyph: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%23FFFCF8%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E"); }
+.arrow-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.arrow-link-ar { flex: none; display: block; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--arrow-glyph) center / 14px no-repeat, var(--arrow-disc);
+  box-shadow: var(--arrow-disc-shadow); transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.arrow-link:hover .arrow-link-ar, .v7-claims-link:hover .arrow-link-ar { transform: translateX(5px); }
+.arrow-link--night .arrow-link-ar { --arrow-disc: linear-gradient(135deg, #FFB39E, #F4744F); --arrow-disc-shadow: 2px 3px 7px rgba(244,123,107,.6); --arrow-glyph: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%232A120B%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E"); width: 26px; height: 26px; }
+@media (prefers-reduced-motion: reduce) { .arrow-link-ar { transition: none; } .arrow-link:hover .arrow-link-ar, .v7-claims-link:hover .arrow-link-ar { transform: none; } }

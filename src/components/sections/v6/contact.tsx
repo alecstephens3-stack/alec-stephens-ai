@@ -24,9 +24,9 @@ export function Contact() {
                     href={CALENDLY}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
+                    className="arrow-link arrow-link--night self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
                   >
-                    {CONTACT.bookLabel} &rarr;
+                    <span>{CONTACT.bookLabel}</span><span className="arrow-link-ar" aria-hidden="true" />
                   </a>
                   <a href={`mailto:${CONTACT_EMAIL}`} className="self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
                     {CONTACT_EMAIL}

@@ -13,7 +13,7 @@ export function ClaimsBand({ copy = V7_CLAIMS_BAND }: { copy?: typeof V7_CLAIMS_
         <span>
           <span className="v7-claims-ask">{copy.ask}</span> <span className="v7-claims-go">{copy.label}</span>
         </span>
-        <span className="v7-claims-arrow" aria-hidden="true">&rarr;</span>
+        <span className="arrow-link-ar" aria-hidden="true" />
       </Link>
     </div>
   );
