@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Kalam, Reenie_Beanie, Schibsted_Grotesk } from "next/font/google";
+import { Inter_Tight, Kalam, Reenie_Beanie } from "next/font/google";
+import localFont from "next/font/local";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
@@ -15,10 +16,13 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
-const schibstedGrotesk = Schibsted_Grotesk({
+/* Schibsted Grotesk is served from our own files (17 Nov 2026). Google's font server began
+   returning it at an address the build tool cannot read, which failed builds at random. */
+const schibstedGrotesk = localFont({
   variable: "--font-schibsted",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  src: [
+    { path: "./fonts/schibsted-grotesk-latin-wght-normal.woff2", weight: "400 900", style: "normal" },
+  ],
   display: "swap",
 });
 
