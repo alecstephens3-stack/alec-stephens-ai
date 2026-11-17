@@ -32,15 +32,16 @@ export function Contact({
                   {copy.titleLead} <span className="text-accent-night">{copy.titleAccent}</span>
                 </h2>
                 <p className="t-body mt-5 max-w-[40ch] !text-cream-2">{copy.body}</p>
-                <div className="mt-8 flex flex-col gap-2.5">
+                <div className="mt-8 flex flex-col gap-3">
                   <a
                     href={copy.bookHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="arrow-link arrow-link--night relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
+                    className="cta-coral self-start"
                   >
-                    <span>{copy.bookLabel}</span><span className="arrow-link-ar" aria-hidden="true" />
+                    {copy.bookLabel}
                   </a>
+                  {copy.bookNote && <p className="cta-coral-note">{copy.bookNote}</p>}
                   {copy.emails.map((email) => (
                     <a key={email} href={`mailto:${email}`} className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
                       {email}

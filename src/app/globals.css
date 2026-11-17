@@ -1428,3 +1428,17 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 .arrow-link:hover .arrow-link-ar, .v7-claims-link:hover .arrow-link-ar { transform: translateX(5px); }
 .arrow-link--night .arrow-link-ar { --arrow-disc: linear-gradient(135deg, #FFB39E, #F4744F); --arrow-disc-shadow: 2px 3px 7px rgba(244,123,107,.6); --arrow-glyph: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%232A120B%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E"); width: 26px; height: 26px; }
 @media (prefers-reduced-motion: reduce) { .arrow-link-ar { transition: none; } .arrow-link:hover .arrow-link-ar, .v7-claims-link:hover .arrow-link-ar { transform: none; } }
+
+/* ——— Coral button (17 Nov 2026, Alec): the "Get started" in the dark contact block. It was a small
+   caps link the size of the email addresses under it; now it is the brightest thing in the block. ——— */
+.cta-coral { display: inline-flex; align-items: center; gap: 11px; min-height: 52px; padding: 0 24px 0 26px;
+  border-radius: 999px; font-family: var(--font-sans); font-size: 17px; font-weight: 600; line-height: 1; color: #1F0E08;
+  background: linear-gradient(135deg, #FFB39E, #F4744F); box-shadow: 0 8px 22px rgba(244,116,79,.42);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
+.cta-coral::after { content: ''; flex: none; width: 18px; height: 12px; background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%231F0E08%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.cta-coral:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(244,116,79,.55); }
+.cta-coral:hover::after { transform: translateX(4px); }
+.cta-coral:focus-visible { outline: 2px solid #F5F1E8; outline-offset: 3px; }
+.cta-coral-note { margin-top: 4px; font-size: 16px; color: #D9D2C6; }
+@media (prefers-reduced-motion: reduce) { .cta-coral, .cta-coral::after { transition: none; } .cta-coral:hover, .cta-coral:hover::after { transform: none; } }
