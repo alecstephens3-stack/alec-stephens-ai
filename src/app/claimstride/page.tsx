@@ -32,12 +32,12 @@ export const metadata: Metadata = {
 
 const FEATURES = [
   {
-    k: "Each biller's own board",
+    k: "Each billing specialist's own board",
     v: "Everyone who works claims sets their own layout and colours, so the board opens the way they work.",
   },
   {
     k: "Notes on every claim",
-    v: "A status, a follow-up date and a note sit on each claim, right where the biller works it.",
+    v: "A status, a follow-up date and a note sit on each claim, right where the billing specialist works it.",
   },
   {
     k: "Payment files read too",
@@ -59,7 +59,7 @@ const UNDER = [
 
 /* Real use at Wichita Family Vision (context/portfolio.md, build 4). Named with Dr. Stephens's OK. */
 const REAL = [
-  { n: "1,140 claims", l: "read from the biller's own report, with every total adding up" },
+  { n: "1,140 claims", l: "read from the billing specialist's own report, with every total adding up" },
   { n: "97 insurer checks", l: "on her real claims, answers back in about 2 minutes" },
 ];
 
@@ -69,7 +69,7 @@ const PRICE = [
     k: "First run on your own report",
     n: "$1,199",
     u: "one time",
-    v: "Send the claims report you already run. We check your unpaid claims with their insurers, up to 300 lookups, and walk your biller through where each one stands and the next step.",
+    v: "Send the claims report you already run. We check your unpaid claims with their insurers, up to 300 lookups, and walk your billing specialist through where each one stands and the next step.",
   },
   {
     k: "Then, each month",
@@ -80,7 +80,7 @@ const PRICE = [
 ];
 
 const BESIDE = [
-  { k: "It gets the answer", v: "ClaimStride asks the insurer where each claim stands, so your biller starts with an answer and the next step." },
+  { k: "It gets the answer", v: "ClaimStride asks the insurer where each claim stands, so your billing specialist starts with an answer and the next step." },
   { k: "Payment files are read for you", v: "ERAs and scanned EOBs are read as they arrive, so a denial shows its codes in plain words." },
   { k: "Nothing to switch off", v: "It works from the report you already export. Your claims tool and your clearinghouse stay as they are." },
   { k: "The nearest deadline comes first", v: "Claims are ordered by timely filing deadline, so the ones about to expire are worked first." },
@@ -110,7 +110,7 @@ export default function ClaimStridePage() {
           </h1>
           <p className="v7-sub">
             ClaimStride checks each unpaid claim with its insurer through a clearinghouse, then puts them in front of
-            your biller with the next step, nearest timely filing deadline first. For eye care and dental practices.
+            your billing specialist with the next step, nearest timely filing deadline first. For eye care and dental practices.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink href={V7_CTA.href} external>
@@ -153,7 +153,7 @@ export default function ClaimStridePage() {
         </div>
       </Section>
 
-      <Section kicker="On the board" title="Everything the biller needs to work a claim, in one place." titleMax="max-w-[22ch]">
+      <Section kicker="On the board" title="Everything the billing specialist needs to work a claim, in one place." titleMax="max-w-[22ch]">
         <div className={s.features}>
           {FEATURES.map((f, i) => (
             <AnimateOnScroll key={f.k} delay={i * 80} className={s.feature}>
@@ -168,12 +168,12 @@ export default function ClaimStridePage() {
               &ldquo;This all reads very accurate&hellip; it really truly gives you everything that you would need at a
               quick glance.&rdquo;
             </blockquote>
-            <figcaption className={s.quoteW}>The biller at Wichita Family Vision, reviewing the board on her own claims</figcaption>
+            <figcaption className={s.quoteW}>The billing specialist at Wichita Family Vision, reviewing the board on her own claims</figcaption>
           </figure>
         </AnimateOnScroll>
       </Section>
 
-      <Section kicker="Next to what you use" title="Keep your claims tool and your clearinghouse. ClaimStride does the follow-up they leave to your biller." titleMax="max-w-[28ch]">
+      <Section kicker="Next to what you use" title="Keep your claims tool and your clearinghouse. ClaimStride does the follow-up they leave to your billing specialist." titleMax="max-w-[28ch]">
         <div className={s.features}>
           {BESIDE.map((f, i) => (
             <AnimateOnScroll key={f.k} delay={i * 80} className={s.feature}>
