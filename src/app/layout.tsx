@@ -93,6 +93,7 @@ export default function RootLayout({
       className={`${interTight.variable} ${schibstedGrotesk.variable} ${kalam.variable} ${reenie.variable}`}
     >
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: "try{var m=location.search.match(/link=(pill|disc)/);if(m)document.documentElement.dataset.link=m[1]}catch(e){}" }} />
         <SkipLink />
         <Scene />
         {/* The header sits OUTSIDE the content wrapper on purpose. Inside it,

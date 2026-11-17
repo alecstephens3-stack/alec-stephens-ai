@@ -47,9 +47,9 @@ export default function FaqPage() {
             href={CALENDLY}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+            className="arrow-link font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
           >
-            {CONTACT.bookLabel} &rarr;
+            <span>{CONTACT.bookLabel}</span><span className="arrow-link-ar" aria-hidden="true" />
           </a>{" "}
           <Link href="/" className="t-fine underline underline-offset-4">
             Back to the homepage

@@ -1416,3 +1416,19 @@ body:has(#mobile-menu) .sai-scene { display: none; }
 }
 .draft-crop.is-block::after { display: none; }
 .draft-crop-frame::before, .draft-crop-frame::after { display: none; }
+
+/* ——— Arrow link (preview, 17 Nov 2026): add ?link=disc or ?link=pill to any address to see each style.
+   With no parameter the link looks as it always has. ——— */
+.arrow-link-ar::after { content: "\2192"; margin-left: .3em; }
+html[data-link] .arrow-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+html[data-link] .arrow-link-ar::after { content: none; }
+html[data-link] .arrow-link-ar { flex: none; display: block; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+html[data-link="disc"] .arrow-link-ar { width: 30px; height: 30px; border-radius: 50%;
+  background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%23FFFCF8%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") center / 14px no-repeat, linear-gradient(135deg, #F6A682, #D95F3A);
+  box-shadow: 2px 3px 5px rgba(23,19,16,.22); }
+html[data-link="disc"] .arrow-link:hover .arrow-link-ar { transform: translateX(5px); }
+html[data-link="pill"] .arrow-link { background: #FFFCF8; padding: 9px 17px 9px 19px; border-radius: 999px;
+  box-shadow: 3px 4px 9px rgba(220,104,67,.38); transition: transform .25s, box-shadow .25s; }
+html[data-link="pill"] .arrow-link-ar { width: 18px; height: 12px; background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 18 12%22 fill=%22none%22%3E%3Cpath d=%22M1 6h15M11 1.2 16 6l-5 4.8%22 stroke=%22%23C55532%22 stroke-width=%221.9%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") center / contain no-repeat; }
+html[data-link="pill"] .arrow-link:hover { transform: translate(-1px,-2px); box-shadow: 5px 7px 14px rgba(220,104,67,.45); color: var(--color-ink); }
+html[data-link="pill"] .arrow-link:hover .arrow-link-ar { transform: translateX(3px); }

@@ -88,9 +88,9 @@ export function Work({ copy = HOME_EN.work }: { copy?: WorkCopy }) {
                       href={w.link.href}
                       target="_blank"
                       rel="noopener"
-                      className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] mt-3 inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+                      className="arrow-link relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] mt-3 inline-block font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
                     >
-                      {w.link.label} &rarr;
+                      <span>{w.link.label}</span><span className="arrow-link-ar" aria-hidden="true" />
                     </a>
                   )}
                   <div className="sv-stage sv-stage-inline" aria-hidden="true">
