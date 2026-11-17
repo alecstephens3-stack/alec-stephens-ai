@@ -72,9 +72,9 @@ export function Proof({ copy = HOME_EN.proof }: { copy?: HomeCopy["proof"] }) {
             href={copy.links.full.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
+            className="arrow-link relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] font-medium text-ink underline decoration-accent decoration-2 underline-offset-[6px] transition-colors hover:text-accent-deep"
           >
-            {copy.links.full.label} &rarr;
+            <span>{copy.links.full.label}</span><span className="arrow-link-ar" aria-hidden="true" />
           </a>
           <span className="t-fine">
             {copy.links.more}{" "}
