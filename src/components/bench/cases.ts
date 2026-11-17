@@ -105,13 +105,13 @@ export const CASES: BuildCase[] = [
       {
         "value": "1,140",
         "unit": "claims",
-        "label": "read from the biller's real report, every total matching hers"
+        "label": "read from the billing specialist's real report, every total matching hers"
       },
       {
         "value": "About 2",
         "unit": "min",
         "label": "to get insurer status on 97 unpaid claims in AR",
-        "basis": "The biller's first live run, on her real claims."
+        "basis": "The billing specialist's first live run, on her real claims."
       }
     ],
     "flow": [
@@ -154,7 +154,7 @@ export const CASES: BuildCase[] = [
       },
       {
         "step": "Write the next step",
-        "how": "Each claim gets its next step in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when.",
+        "how": "Each claim gets its next step in plain words, with numbered steps and the timely filing deadline, so the billing specialist knows what to fix and by when.",
         "shows": {
           "kind": "shot",
           "src": "/alec/img/claimstride/12-next-steps.webp",
@@ -179,10 +179,10 @@ export const CASES: BuildCase[] = [
       },
       {
         "lead": "A next step on every claim",
-        "text": "Where the insurer or its payment file gives a reason, ClaimStride writes it in plain words, with numbered steps and the timely filing deadline, so the biller knows what to fix and by when."
+        "text": "Where the insurer or its payment file gives a reason, ClaimStride writes it in plain words, with numbered steps and the timely filing deadline, so the billing specialist knows what to fix and by when."
       },
       {
-        "lead": "The board the biller asked for",
+        "lead": "The board the billing specialist asked for",
         "text": "Primary, secondary and tertiary claims kept apart, denials sorted by reason and age, and the nearest deadlines first. The cost shows before every run, with a monthly limit."
       }
     ],
@@ -195,7 +195,7 @@ export const CASES: BuildCase[] = [
     ],
     "quote": {
       "text": "This all reads very accurate… it really truly gives you everything that you would need at a quick glance.",
-      "who": "The biller, Wichita Family Vision"
+      "who": "The billing specialist, Wichita Family Vision"
     },
     "stack": [
       "Claude on AWS Bedrock",

@@ -212,7 +212,7 @@ export function ClaimStrideHero() {
               <span className={s.inkN}><Roll value="1,140" go={counts} /></span>
               <span className={s.inkT}>
                 <b>claims read</b>
-                <span>from a biller&apos;s real aging report, every total matching her own</span>
+                <span>from a billing specialist&apos;s real aging report, every total matching her own</span>
               </span>
             </div>
           </div>

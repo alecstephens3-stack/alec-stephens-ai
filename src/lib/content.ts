@@ -400,7 +400,7 @@ export const V7_WORK = {
       // First on purpose (Alec + Ju Sheen, 2026-11-11): claims is the flagship. `board` is this
       // item's own preview window; the other items keep the shared `previews` in their order.
       title: "Claims follow-up",
-      body: "Each unpaid claim is checked with its insurer, so your biller sees where it stands and what to do next. It works from the claims report your practice software already produces. Now in early access.",
+      body: "Each unpaid claim is checked with its insurer, so your billing specialist sees where it stands and what to do next. It works from the claims report your practice software already produces. Now in early access.",
       link: { label: "See ClaimStride", href: "/claimstride" },
       board: {
         bar: "Unpaid claims · checked with insurers today",

@@ -16,7 +16,7 @@ import s from "./claimstride.module.css";
 const STEPS = [
   {
     title: "Read the claims report",
-    body: "ClaimStride reads the aging report your biller already exports, every format and every sheet. Nothing gets installed in your practice software, and nobody waits on a vendor integration.",
+    body: "ClaimStride reads the aging report your billing specialist already exports, every format and every sheet. Nothing gets installed in your practice software, and nobody waits on a vendor integration.",
     img: "step-1-report",
     phone: "step-1-report-phone",
     w: 1440,
