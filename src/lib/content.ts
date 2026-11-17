@@ -778,7 +778,7 @@ export const CHROME_EN = {
     workWithUs: { label: "Work with us", href: "/#how" },
     portfolio: "Alec's portfolio",
     email: { label: "Email", href: `mailto:${CONTACT_EMAIL}` },
-    llc: "Syntegrity LLC (formerly Stephens AI LLC) is a Kansas limited liability company based in Wichita, Kansas.",
+    llc: "Syntegrity LLC is a Kansas limited liability company based in Wichita, Kansas.",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
   },

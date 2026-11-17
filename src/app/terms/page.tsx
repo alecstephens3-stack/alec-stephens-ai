@@ -35,7 +35,7 @@ const sections: LegalSection[] = [
     body: (
       <>
         <p>
-          Syntegrity LLC (formerly Stephens AI LLC) is a Kansas limited
+          Syntegrity LLC is a Kansas limited
           liability company that builds software and AI systems for
           businesses, with a focus on independent healthcare practices. In
           these terms, &quot;Syntegrity,&quot; &quot;we,&quot; &quot;us,&quot;
@@ -599,7 +599,7 @@ const sections: LegalSection[] = [
       <>
         <p>Questions regarding these terms may be directed to either founder:</p>
         <p>
-          <strong>Syntegrity LLC</strong> (formerly Stephens AI LLC)
+          <strong>Syntegrity LLC</strong>
           <br />
           A Kansas limited liability company
           <br />

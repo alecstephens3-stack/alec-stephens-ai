@@ -16,11 +16,10 @@ What it leaves alone on purpose:
 - the QuickBooks connection address (stephensai.co/qb/callback): Intuit only
   knows that one, and Mary's File Invoices app uses stephensai.co.
 - the LinkedIn company page link (linkedin.com/company/stephensai).
-- the former legal name: Kansas approved the name change on 2026-11-12, so
-  both sites now name the company Syntegrity LLC, and the legal lines on main
-  already say it with "(formerly Stephens AI LLC)" beside it. Every
-  "formerly Stephens AI" phrase (and its Korean and Japanese forms) is kept
-  as written. --kansas-approved is still accepted and does nothing.
+- the former legal name: Kansas approved the name change on 2026-11-12. Main
+  (stephensai.co) says "Syntegrity LLC (formerly Stephens AI LLC)"; this branch
+  drops the "formerly" part in every language (Alec, 2026-11-17).
+  --kansas-approved is still accepted and does nothing.
 
 Idempotent: running it twice changes nothing the second time.
 """
@@ -49,11 +48,14 @@ PROTECT = [
     r"send\.stephensai\.co",
     r"stephens-ai-design-system",
     r"/dev/stephens-ai/",
-    # the former legal name, kept on purpose (Kansas approved 2026-11-12)
-    r"formerly Stephens AI(?: LLC)?",
-    r"구 Stephens AI LLC",
-    r"旧社名 Stephens AI LLC",
     r'"Syntegrity AI", "Stephens AI"',  # structured data this script already wrote
+]
+
+# The former legal name: stephensai.co shows it, syntegrityai.com does not (Alec, 2026-11-17).
+STRIP = [
+    (r"\s*\(formerly Stephens AI(?: LLC)?\)", ""),
+    (r"\(구 Stephens AI LLC\)", ""),
+    (r"旧社名 Stephens AI LLC・", ""),
 ]
 
 S = r"Stephens\s+AI"
@@ -86,6 +88,8 @@ def convert(text: str, rel: str) -> str:
 
     if rel in KEEP_ALEC_EMAIL:
         text = re.sub(r"alec@stephensai\.co", keep, text)
+    for pat, rep in STRIP:
+        text = re.sub(pat, rep, text)
     for pat in PROTECT:
         text = re.sub(pat, keep, text)
     for pat, rep in LEGAL:

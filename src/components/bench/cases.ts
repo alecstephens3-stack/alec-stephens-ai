@@ -86,7 +86,7 @@ export const ABOUT: About = {
   ],
   "credentials": [
     "Upwork: 5+ years, 100% Job Success",
-    "Syntegrity LLC (formerly Stephens AI), Kansas"
+    "Syntegrity LLC, Kansas"
   ],
   "cofounder": "Co-founder: Jusheen Kim, ex-J.P. Morgan lead software engineer.",
   "headshot": "/alec/img/alec.jpg"
