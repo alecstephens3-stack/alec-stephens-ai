@@ -373,6 +373,8 @@ export const HOME_KO: HomeCopy = {
     titleAccent: "첫\u00a0단계는 무료입니다.",
     body: "병원 업무를 더디게 만드는 일을 알려 주세요. 가장 좋은 결과를 낼 수 있는 곳을 찾아 분석 결과인 Opportunity Map을 보내 드립니다. 이후 진행 여부와 관계없이 그대로 가지셔도 됩니다.",
     bookLabel: "시작하기",
+    // The English line is "We'd love to talk with you." Left empty until Ju Sheen writes the Korean.
+    bookNote: "",
     bookHref: CALENDLY,
     ariaLabel: "문의",
     // Ju Sheen first: he reads Korean.

@@ -538,6 +538,7 @@ export const V7_CONTACT = {
   titleAccent: "The first step is free.",
   body: "Tell us what slows your practice down. We'll find where you can get the best results and send you our analysis, the Opportunity Map, yours to keep regardless of the next steps.",
   bookLabel: "Get started",
+  bookNote: "We'd love to talk with you.",
 };
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -722,6 +723,7 @@ export const HOME_EN = {
     titleAccent: V7_CONTACT.titleAccent,
     body: V7_CONTACT.body,
     bookLabel: V7_CONTACT.bookLabel,
+    bookNote: V7_CONTACT.bookNote as string,
     bookHref: CALENDLY,
     ariaLabel: "Contact",
     emails: [CONTACT_EMAIL, SECOND_EMAIL],
