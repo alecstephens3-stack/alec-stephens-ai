@@ -191,8 +191,8 @@ export default function StrideAgentsPage() {
             <span className={s.chip}>Live</span>
             <p className={s.jobK}>Payment files</p>
             <p className={s.jobV}>Collects the insurer payment files and loads them into ClaimStride, so nobody downloads them by hand.</p>
-            <Link href="/claimstride" className={s.jobLink}>
-              See ClaimStride &rarr;
+            <Link href="/claimstride" className={`arrow-link ${s.jobLink}`}>
+              <span>See ClaimStride</span><span className="arrow-link-ar" aria-hidden="true" />
             </Link>
           </AnimateOnScroll>
           <AnimateOnScroll delay={160} className={`${s.job} ${s.jobAsk}`}>

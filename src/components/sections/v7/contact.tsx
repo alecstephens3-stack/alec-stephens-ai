@@ -37,9 +37,9 @@ export function Contact({
                     href={copy.bookHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
+                    className="arrow-link arrow-link--night relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start font-label text-[15px] font-semibold uppercase tracking-[0.06em] text-accent-night transition-opacity hover:opacity-80"
                   >
-                    {copy.bookLabel} &rarr;
+                    <span>{copy.bookLabel}</span><span className="arrow-link-ar" aria-hidden="true" />
                   </a>
                   {copy.emails.map((email) => (
                     <a key={email} href={`mailto:${email}`} className="relative after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] self-start text-[17px] text-cream-2 transition-colors hover:text-accent-night">
