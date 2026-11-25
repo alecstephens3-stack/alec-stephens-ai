@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/button";
 import { DepthHero } from "./hero-depth";
-import { HOME_EN, type HomeCopy } from "@/lib/content";
+import { HOME_EN, V7_HERO_KICKER_MEDARI, type HomeCopy } from "@/lib/content";
+import { HeroKicker } from "./hero-kicker";
 
 /**
  * The v7 hero, layout C "survey split" (Alec's pick, 2026-11-10, from four
@@ -33,7 +34,10 @@ export function Hero({
   return (
     <section className="v7-hero v7-hero--split" style={{ position: "relative", isolation: "isolate" }}>
       <div className="v7-hero-copy">
-        <p className="t-label">{copy.kicker}</p>
+        <HeroKicker
+          text={copy.kicker}
+          medariText={copy === HOME_EN.hero ? V7_HERO_KICKER_MEDARI : undefined}
+        />
         <h1 className="v7-head">
           {copy.headline.lead} {copy.headline.accent}
         </h1>

@@ -27,7 +27,7 @@ export const LEGAL_UPDATED = "November 15, 2026";
 export const CASE_STUDY_URL = "https://syntegrityai.com/case-studies/front-desk-knowledge-base";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/stephensai";
 
-export const SITE_TAGLINE = "Less busywork for clinics, dental and eye care practices";
+export const SITE_TAGLINE = "Less busywork for clinics, pharmacies, dental and eye care practices";
 
 export const SITE_DESCRIPTION =
   "We find where your practice loses hours to work done by hand, then build software that does it, around the tools you already use. Get started with a free discovery call.";
@@ -213,7 +213,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       },
       {
         q: "Is this only for eye care?",
-        a: "No. We build for independent healthcare practices. Our systems run today in an eye clinic in Kansas and a dental practice in California.",
+        a: "No. We build for independent healthcare practices and pharmacies. Our systems run today in an eye clinic in Kansas and a dental practice in California.",
       },
     ],
   },
@@ -331,7 +331,7 @@ export const V7_NAV = [
 export const V7_CTA = { label: "Get started", short: "Get started", href: CALENDLY };
 
 export const V7_HERO = {
-  kicker: "For independent healthcare practices",
+  kicker: "For independent healthcare practices and pharmacies",
   headline: { lead: "Less busywork.", accent: "More time for patients." },
   /** Word for word from the Medari partners-page line sent to Curtis 2026-09-25 (Alec, 2026-09-28). */
   sub: "We diagnose where practices can save time and increase profit, then build the solutions that get them there.",
@@ -339,6 +339,9 @@ export const V7_HERO = {
   proof: "About 260 to 300 hours a year back at one Kansas eye clinic, from two builds.",
   proofCaveat: "Estimated from the clinic's own numbers.",
 };
+
+/** Hero label for visitors from the Medari partner link: Curtis's list is mostly pharmacy owners (26 Nov 2026). */
+export const V7_HERO_KICKER_MEDARI = "For independent pharmacies and healthcare practices";
 
 /** The window in the hero: three real tools, drawn with names and prices left out. */
 export const V7_WINDOW = {
