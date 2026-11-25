@@ -28,6 +28,8 @@ export type VisitRow = {
   os: string;
   language: string;
   visitor: string;
+  /** Which site the visit was on; the shared sheet's Site column. */
+  site: string;
 };
 
 export const SITE_HOST = "syntegrityai.com";
@@ -189,6 +191,7 @@ export async function buildRow(
     ...describeAgent(ua),
     language: (h.get("accept-language") ?? "").split(",")[0],
     visitor: await visitorId(secret, ip, ua, now.toISOString().slice(0, 10)),
+    site: SITE_HOST,
   };
 }
 
